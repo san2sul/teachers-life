@@ -3,5 +3,5 @@
    예: googleClientId: "123456789-abcdefg.apps.googleusercontent.com"
    만드는 방법: README.txt의 '구글 로그인 · 컴퓨터와 휴대폰 연동' 참고 */
 window.TL_CONFIG = {
-  googleClientId: ""
+  googleClientId: "1006591459754-qpgvthu6asm6bln7rpr2ltq8jkcup683.apps.googleusercontent.com"
 };
