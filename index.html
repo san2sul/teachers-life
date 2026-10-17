@@ -716,6 +716,7 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
   </details>
   <details class="card" id="d-ver"><summary>앱 정보 · 버전 기록 <span class="sub" id="verTag"></span></summary>
     <p class="note" id="verMaker"></p>
+    <p class="note"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
     <div class="abslist" id="verList"></div>
   </details>
   <p class="note" style="text-align:center" id="verFoot"></p>
@@ -738,8 +739,9 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.0.0", APP_DATE="2026-10-17", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.0.1", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.0.1",date:"2026-10-18",items:["개인정보처리방침 페이지(privacy.html) 추가: 구글 앱 게시(프로덕션)에 필요한 주소","설정 → 앱 정보에 개인정보처리방침 링크"]},
   {v:"5.0.0",date:"2026-10-17",items:["구글 로그인: 내 구글 계정으로 로그인해 컴퓨터(크롬)와 휴대폰에서 같은 자료로 작업 (학급·명단·출석·시간표·수업 메모·일정 자동 동기화)","자료는 내 구글 드라이브의 앱 전용 숨김 폴더에 저장, 두 기기에서 동시에 고친 내용은 자동으로 합치기, 처음 연동할 때 합치기·바꾸기 선택","화면 위 동기화 표시(동기화됨·올릴 내용 있음·연동하려면 누르기)","컴퓨터에서 엑셀·CSV·백업 파일을 앱 화면에 끌어다 놓아 올리기, 넓은 화면에서 더 넓게 보기","config.js에 구글 클라이언트 ID를 넣어 모든 기기에 로그인 설정 적용"]},
   {v:"4.9.1",date:"2026-10-13",items:["일정 추가 시간 버튼에 ‘1교시 이전’ 추가 (1교시 시작 1시간 전~10분 전, 예: 08:00~08:50)"]},
   {v:"4.9.0",date:"2026-10-13",items:["결석 학생 연락: 연락을 마친 학생은 ‘연락 완료’로 표시해 연락 알림에서 빼기 (출결은 결석 그대로 저장)","연락 완료 학생은 한꺼번에 보내기에서 빠지고 ‘연락 완료’ 칸으로 이동, 완료 시각 표시, 완료 취소·모두 완료 가능","출석 화면 결석 학생에 ‘연락 완료’ 표시"]},
