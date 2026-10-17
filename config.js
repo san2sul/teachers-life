@@ -1,0 +1,7 @@
+/* 교사의 생활 설정 파일
+   구글 로그인(컴퓨터·휴대폰 연동)을 쓰려면 아래 따옴표 안에 구글 클라이언트 ID를 붙여 넣고 다시 올리세요.
+   예: googleClientId: "123456789-abcdefg.apps.googleusercontent.com"
+   만드는 방법: README.txt의 '구글 로그인 · 컴퓨터와 휴대폰 연동' 참고 */
+window.TL_CONFIG = {
+  googleClientId: ""
+};
