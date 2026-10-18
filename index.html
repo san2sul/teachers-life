@@ -353,6 +353,9 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .chip.otag.pos.ed button[data-tg]{color:var(--present)}.chip.otag.neg.ed button[data-tg]{color:var(--absent)}
 .utoast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:31;background:var(--ink);color:var(--bg);border-radius:12px;padding:8px 8px 8px 14px;display:flex;align-items:center;gap:10px;font-size:.88rem;box-shadow:0 4px 14px rgba(0,0,0,.2);max-width:calc(100vw - 32px)}
 .utoast span{flex:1;min-width:0}.utoast button{white-space:nowrap;flex:0 0 auto;appearance:none;border:0;background:var(--accent-soft);color:var(--accent);font:inherit;font-weight:700;border-radius:8px;padding:6px 10px;cursor:pointer}
+.chip.evc[aria-pressed="false"]{background:var(--paper);color:var(--ink);border-style:dashed}.chip.evc[aria-pressed="true"]::before{content:"✓ "}
+.chip.ghost2{min-height:30px;font-size:.78rem;color:var(--muted)}
+.shlb small{font-weight:400}
 .eorow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.eorow:first-child{border-top:0}.eorow.dim{opacity:.55}
 .eorow small{color:var(--muted);font-weight:400}.eost img{width:90px;height:36px;border:1px solid var(--line);border-radius:6px;background:#fff;display:block}.eost em{font-style:normal;font-size:.78rem;color:var(--muted)}
 .chip.ghost{color:var(--absent);border-color:var(--absent)}
@@ -804,8 +807,9 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.3.1", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.3.2", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.3.2",date:"2026-10-18",items:["수행평가 전표 올리기 고침: 두 줄 제목·병합된 칸(예: ‘수행평가 영역’ 아래 ‘실험(40)’)이 있는 학교 전표에서도 항목을 찾아 ‘학생에게 보여 줄 칸’이 켜지도록","값이 저장되지 않은 수식 칸(SUM·AVERAGE·사칙연산)은 앱에서 계산해 읽기, 그래도 못 읽은 칸은 ‘(빈 칸)’으로 표시","보여 줄 칸: ✓ 표시와 점선으로 켜짐·꺼짐 구분, ‘모두 켜기·모두 끄기’ 버튼, 합계·평균 줄은 학생에서 제외"]},
   {v:"5.3.1",date:"2026-10-18",items:["설정 → 학생 명단에서 학생을 한 명씩 추가할 때 이메일 주소 칸 추가"]},
   {v:"5.3.0",date:"2026-10-18",items:["출석 화면에 ‘관찰 기록’ 추가: 학생별 수업 태도·역량·특성을 체크 버튼으로 기록하고 짧은 메모 남기기","빠른 체크: 항목을 고르고 학생 이름을 누를 때마다 기록(여러 번 누르면 ×2, ×3), 바로 되돌리기","학생 기록 창: 날짜별 체크·메모, 자주 쓰는 메모 문구, 누적 항목 집계, 지난 기록 보기, 누적 기록 복사(세특 작성용)","관찰 항목 편집(분류·항목 추가·삭제, 좋음·보통·아쉬움 표시), 관찰 기록 엑셀로 받기(학생별 누적·날짜별 기록)"]},
   {v:"5.2.0",date:"2026-10-18",items:["서명 전표 출력 설정: 서명 여부를 표기할 학생 고르기(모두 표기·서명한 학생만 표기·학생별 선택), 표기하지 않은 학생은 서명 칸을 비움","서명하지 않은 학생에게 ‘개별 연락을 통해 성적을 확인함’ 문구를 한꺼번에 또는 학생별로 넣기, 문구 직접 고치기","엑셀 파일과 PDF 인쇄 모두 같은 설정을 쓰고, 설정은 평가마다 저장"]},
@@ -3036,23 +3040,47 @@ function b642buf(b){const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.l
 async function readGrid(f){
   const X=await loadXLSX();const buf=await f.arrayBuffer();let wb,isX=/\.(xlsx|xlsm)$/i.test(f.name);
   if(/\.(csv|txt)$/i.test(f.name)){let t=new TextDecoder("utf-8").decode(buf);if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(e){}}wb=X.read(t.replace(/^﻿/,""),{type:"string"})}
-  else wb=X.read(buf,{type:"array"});
+  else wb=X.read(buf,{type:"array",sheetStubs:true,cellFormula:true});
+  wb.SheetNames.forEach(n=>fillFormulas(X,wb.Sheets[n]));
   let best=null;wb.SheetNames.forEach(n=>{const ws=wb.Sheets[n];if(!ws||!ws["!ref"])return;const r=X.utils.decode_range(ws["!ref"]);const rows=X.utils.sheet_to_json(ws,{header:1,raw:false,defval:"",blankrows:true});
+    /* 병합된 칸은 같은 글자로 채워 둡니다 (두 줄 제목, 묶음 제목 처리) */
+    (ws["!merges"]||[]).forEach(m=>{const v=(rows[m.s.r-r.s.r]||[])[m.s.c-r.s.c];if(v==null||v==="")return;for(let y=m.s.r;y<=m.e.r;y++)for(let x=m.s.c;x<=m.e.c;x++){const ry=y-r.s.r,cx=x-r.s.c;if(!rows[ry])rows[ry]=[];if(rows[ry][cx]===""||rows[ry][cx]==null)rows[ry][cx]=v}});
     const score=rows.filter(x=>x.some(v=>String(v).trim())).length;if(!best||score>best.score)best={name:n,rows,r0:r.s.r,c0:r.s.c,score}});
   if(!best)throw new Error("파일에서 표를 찾지 못했습니다");
   return{rows:best.rows.map(r=>r.map(v=>String(v==null?"":v).trim())),sheet:best.name,r0:best.r0,c0:best.c0,isX,b64:isX&&buf.byteLength<1500000?buf2b64(buf):""};
+}
+/* 저장된 값이 없는 간단한 수식(SUM·AVERAGE·사칙연산)은 직접 계산합니다 */
+function fillFormulas(X,ws){
+  if(!ws||!ws["!ref"])return;const seen=new Set();
+  const val=ref=>{ref=ref.replace(/\$/g,"");const c=ws[ref];if(!c)return 0;if(c.f&&(c.t==="z"||c.v==null||c.v==="")&&!seen.has(ref)){seen.add(ref);calc(ref,c)}const n=parseFloat(c.v);return isNaN(n)?0:n};
+  const rng=a=>{const r=X.utils.decode_range(a.replace(/\$/g,""));const o=[];for(let y=r.s.r;y<=r.e.r;y++)for(let x=r.s.c;x<=r.e.c;x++){const k=X.utils.encode_cell({r:y,c:x});if(ws[k]&&(ws[k].f||(ws[k].t!=="z"&&ws[k].v!==""&&ws[k].v!=null)))o.push(val(k))}return o};
+  const calc=(ref,c)=>{try{let e=String(c.f).replace(/^=/,"").toUpperCase();
+      e=e.replace(/(SUM|AVERAGE|MAX|MIN|COUNT)\(([^()]*)\)/g,(m,fn,args)=>{const v=args.split(",").flatMap(a=>/:/.test(a)?rng(a):[/^\$?[A-Z]+\$?\d+$/.test(a.trim())?val(a.trim()):parseFloat(a)||0]);
+        const r=fn==="SUM"?v.reduce((x,y)=>x+y,0):fn==="AVERAGE"?(v.length?v.reduce((x,y)=>x+y,0)/v.length:0):fn==="MAX"?Math.max(...v):fn==="MIN"?Math.min(...v):v.length;return String(r)});
+      e=e.replace(/\$?[A-Z]{1,3}\$?\d+/g,m=>String(val(m)));
+      if(!/^[\d.+\-*/()\s]+$/.test(e))return;const r=Function("return("+e+")")();if(isFinite(r)){c.v=Math.round(r*100)/100;c.t="n";c.w=String(c.v)}}catch(err){}};
+  Object.keys(ws).forEach(k=>{if(k[0]==="!")return;const c=ws[k];if(c&&c.f&&(c.t==="z"||c.v==null||c.v==="")&&!seen.has(k)){seen.add(k);calc(k,c)}});
 }
 const HID=/^(학번|번호)$|학번/,HNAME=/이름|성명/,HMAIL=/이메일|e-?mail|메일/i,HSKIP=/^(반|번|번호|연번|순번|비고|서명|학생\s*서명|확인|서명\s*일시)$/;
 function detectSheet(g){
   let h=-1;for(let i=0;i<Math.min(g.rows.length,15);i++){const r=g.rows[i];if(r.some(c=>/학번|번호/.test(c))&&r.some(c=>HNAME.test(c))){h=i;break}}
   if(h<0)for(let i=0;i<Math.min(g.rows.length,15);i++){const r=g.rows[i];if(r.some(c=>HNAME.test(c))){h=i;break}}
   if(h<0)throw new Error("제목 줄(학번·이름)을 찾지 못했습니다. 첫 줄에 ‘학번, 이름, 항목…’이 오도록 해 주세요.");
-  const hd=g.rows[h];
+  let hd=g.rows[h].slice();
   const idc=hd.findIndex(c=>/학번/.test(c))>=0?hd.findIndex(c=>/학번/.test(c)):hd.findIndex(c=>HID.test(c));
   const nmc=hd.findIndex(c=>HNAME.test(c)),emc=hd.findIndex(c=>HMAIL.test(c));
-  const data=[];for(let i=h+1;i<g.rows.length;i++){const r=g.rows[i];const id=idc>=0?r[idc]:"",nm=nmc>=0?r[nmc]:"";if(!id&&!nm)continue;if(/예시/.test(r.join(" ")))continue;data.push({i,r})}
-  const cols=[];hd.forEach((c,j)=>{if(!c||j===idc||j===nmc||j===emc||HSKIP.test(c.replace(/\s/g,"")))return;const filled=data.filter(d=>String(d.r[j]||"").trim()).length;cols.push({j,label:c,on:filled>0})});
-  return{h,idc,nmc,emc,data,cols};
+  /* 두 줄 제목: 바로 아래 줄이 학생 줄이 아니고 항목 이름이 있으면 합칩니다 (예: ‘수행평가 영역’ 아래 ‘실험(40)’) */
+  let h2=h;const nx=g.rows[h+1]||[];
+  const isSub=nx.length&&(idc<0||!nx[idc]||nx[idc]===hd[idc])&&(nmc<0||!nx[nmc]||nx[nmc]===hd[nmc])&&nx.some((c,j)=>c&&j!==idc&&j!==nmc&&c!==hd[j]&&!/^[\d.\s]+$/.test(c));
+  if(isSub){const top=hd.slice();hd=hd.map((t,j)=>{const b=nx[j]||"";if(!b||b===t)return t;const grp=t&&(top[j-1]===t||top[j+1]===t);return t&&!grp&&!/^[\d.\s]+$/.test(t)?t+" "+b:b});h2=h+1}
+  const data=[];for(let i=h2+1;i<g.rows.length;i++){const r=g.rows[i];const id=idc>=0?r[idc]:"",nm=nmc>=0?r[nmc]:"";if(!id&&!nm)continue;if((idc>=0&&id===hd[idc])||(nmc>=0&&nm===g.rows[h][nmc]))continue;if(/예시/.test(r.join(" ")))continue;if(/^(합계|평균|계|총계)$/.test(String(nm).replace(/\s/g,"")))continue;data.push({i,r})}
+  const width=Math.max(hd.length,...data.map(d=>d.r.length));
+  const cols=[];for(let j=0;j<width;j++){if(j===idc||j===nmc||j===emc)continue;let c=hd[j]||"";if(c&&HSKIP.test(c.replace(/\s/g,"")))continue;
+    const filled=data.filter(d=>String(d.r[j]||"").trim()).length;if(!c&&!filled)continue;
+    cols.push({j,label:c||("열 "+(j<26?String.fromCharCode(65+j+((g.c0)||0)):j+1)),on:filled>0,filled})}
+  /* 값이 하나도 안 읽히면(수식 결과가 저장되지 않은 파일 등) 제목이 있는 칸은 모두 켜 둡니다 */
+  if(cols.length&&!cols.some(c=>c.on))cols.forEach(c=>{if(hd[c.j])c.on=true});
+  return{h:h2,idc,nmc,emc,data,cols};
 }
 function evalTemplate(){
   loadXLSX().then(X=>{
@@ -3084,14 +3112,19 @@ async function evalUpload(f){
     <label class="lb" for="evTitle">평가 이름<input class="fld" id="evTitle" autocomplete="off"></label>
     <div class="range"><label class="lb" for="evCls">학급<select class="fld" id="evCls">${S.list.map(c=>`<option value="${esc(c.id)}">${esc(clsName(c.data))}</option>`).join("")}</select></label>
     <label class="lb" for="evDue">서명 마감일<input class="fld" type="date" id="evDue"></label></div>
-    <div class="shlb">학생에게 보여 줄 칸</div><div class="presets" id="evCols">${v.cols.map((c,k)=>`<button class="chip" type="button" data-k="${k}" aria-pressed="${c.on}">${esc(c.label)}</button>`).join("")}</div>
+    <div class="shlb">학생에게 보여 줄 칸 <small>눌러서 켜고 끕니다</small></div>
+    ${v.cols.length?`<div class="presets" id="evCols">${v.cols.map((c,k)=>`<button class="chip evc" type="button" data-k="${k}" aria-pressed="${c.on}">${esc(c.label)}${c.filled?"":" (빈 칸)"}</button>`).join("")}</div>
+    <div class="presets"><button class="chip ghost2" type="button" id="evColAll">모두 켜기</button><button class="chip ghost2" type="button" id="evColNone">모두 끄기</button></div>
+    ${v.cols.some(c=>!c.filled)?`<p class="warn">‘(빈 칸)’은 파일에서 값을 읽지 못한 칸입니다. 수식으로 계산한 칸이면 엑셀에서 파일을 한 번 열어 저장한 뒤 다시 올리세요.</p>`:""}`:`<p class="warn">학번·이름 말고 점수 칸을 찾지 못했습니다. 제목 줄에 항목 이름(예: 실험, 보고서, 총점)이 있는지 확인하세요.</p>`}
     <label class="lb" for="evReply">서명을 회신 받을 내 이메일<input class="fld" id="evReply" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="teacher@example.com"></label>
     <label class="lb" for="evNote">학생에게 전할 말 (선택)<textarea class="fld" id="evNote" rows="2" placeholder="예: 점수에 이의가 있으면 서명하지 말고 금요일까지 찾아오세요."></textarea></label>
     <div id="evPrev"></div><p class="warn" id="evErr" hidden></p>
     <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="evOk">평가 만들기</button></div>`;
   $("sheet").hidden=false;$("evTitle").value=v.title;$("evCls").value=v.cls;$("evDue").value=v.due;$("evReply").value=v.reply;
   let rows=paint();$("evCls").onchange=()=>{rows=paint()};
-  $("evCols").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const c=v.cols[+b.dataset.k];c.on=!c.on;b.setAttribute("aria-pressed",c.on);rows=paint()});
+  const paintCols=()=>{const box=$("evCols");if(box)box.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",v.cols[+b.dataset.k].on))};
+  if($("evCols")){$("evCols").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const c=v.cols[+b.dataset.k];c.on=!c.on;paintCols();rows=paint()});
+    $("evColAll").onclick=()=>{v.cols.forEach(c=>c.on=true);paintCols();rows=paint()};$("evColNone").onclick=()=>{v.cols.forEach(c=>c.on=false);paintCols();rows=paint()}}
   $("skNo").onclick=()=>{$("sheet").hidden=true};
   $("evOk").onclick=()=>{
     const err=m=>{$("evErr").textContent=m;$("evErr").hidden=false};
