@@ -420,6 +420,44 @@ html[data-tt="wide"] table.ttg{min-width:560px}
 }
 html[data-lay="one"] .wrap{max-width:720px}
 .uirow{display:flex;flex-direction:column;gap:6px;margin-top:6px}.uirow .shlb{margin:0}
+.ttupbar{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}.ttupbar .note{margin:0}
+.ttupwrap{overflow-x:auto;margin:8px -4px}
+.ttup{border-collapse:collapse;width:100%;min-width:340px;table-layout:fixed}
+.ttup th{font-size:.78rem;color:var(--muted);padding:3px 2px;font-weight:700}.ttup th small{display:block;font-weight:400}
+.ttup thead th:first-child,.ttup tbody th{width:22px}
+.ttup td{padding:2px}
+.ttin{width:100%;box-sizing:border-box;font:inherit;font-size:.76rem;line-height:1.25;padding:4px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);resize:vertical;min-height:2.9em}
+.ttin:focus{outline:2px solid var(--accent);outline-offset:0}
+.ttupimg img{max-width:100%;border-radius:10px;border:1px solid var(--line);margin-top:6px}
+.ocrprog{margin:12px 0}
+.recbox{border-radius:12px;padding:10px 12px;margin:10px 0;font-size:.88rem;background:var(--accent-soft);border-left:4px solid var(--accent)}
+.recbox.tmp{background:color-mix(in srgb,#c98a12 16%,var(--paper));border-left-color:#c98a12}.recbox.none{background:var(--bg);border-left-color:var(--track)}
+.ttdclist{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.ttdc{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.ttdc.done{opacity:.7}.ttdc-t{flex:1 1 180px;font-size:.88rem;line-height:1.45}
+.ttdc .tag{display:inline-block;font-size:.7rem;padding:1px 7px;border-radius:99px;background:var(--accent-soft);color:var(--accent);vertical-align:1px}
+.ttdc .tag.add{background:var(--present-soft);color:var(--present)}.ttdc .tag.del{background:var(--absent-soft);color:var(--absent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.segb{border:0;background:var(--paper);color:var(--ink);font:inherit;font-size:.8rem;padding:7px 11px;min-height:36px;cursor:pointer}
+.segb+.segb{border-left:1px solid var(--line)}
+.segb[aria-pressed="true"]{background:var(--accent);color:var(--paper);font-weight:700}
+.ttfirst{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.ttopt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer}
+.ttopt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.ttopt input{margin-top:4px}.ttopt small{color:var(--muted)}
+.ttrange{margin:6px 0 4px;display:flex;flex-direction:column;gap:6px}
+.perwrap{display:flex;flex-direction:column;gap:14px;margin-top:12px}
+.perwrap .shlb{margin:0 0 8px}
+.perwrap #perList{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.perwrap #perList .chip{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-radius:14px;padding:9px 12px;min-height:0;text-align:left;line-height:1.3}
+.perwrap #perList .chip small{opacity:.8;white-space:normal}.perwrap #perList .chip b{white-space:nowrap}
+.perwrap+.note{margin-top:12px}
+.pernew{width:100%;border-style:dashed;background:transparent;color:var(--accent);border-color:var(--accent);font-weight:700}
+.pernew:hover{background:var(--accent-soft)}
+.evlhd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}.evlhd .shlb{margin:0}
+.evedbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;border-radius:12px;background:var(--absent-soft)}.evedbar .note{margin:0;flex:1 1 auto}
+.prow.edrow{cursor:default}.prow.edrow.on{background:var(--absent-soft)}
+.edchk{display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer}.edchk input{width:20px;height:20px;flex:none;accent-color:var(--absent)}
 .devinfo{font-size:.84rem;background:var(--bg);border-radius:10px;padding:8px 12px}
 .setcls{padding:12px 14px}.setcls .lb small{color:var(--muted);font-weight:400}
 #setClsWarn{background:#fff4d6;color:#7a5600;border-radius:10px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -435,7 +473,7 @@ html[data-lay="one"] .wrap{max-width:720px}
 .evs em{font-style:normal;font-weight:700;color:var(--accent)}.evs em.nw{color:var(--muted)}.evs em.stl{color:var(--absent)}
 .evrow.ok .who{color:var(--present)}
 .evb{flex-wrap:wrap}.evb .btn{flex:1 1 auto}
-.topbtns{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:25;display:flex;gap:6px;align-items:center}
+.topbtns{position:absolute;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:25;display:flex;gap:6px;align-items:center}
 .helpbtn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--paper);color:var(--accent);border-radius:999px;padding:4px 10px;font:inherit;font-size:.74rem;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .wrap>header.top{margin-top:24px}
 .helpov{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column}
@@ -533,6 +571,26 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
   .trow .del{grid-row:1/4;grid-column:2}
 }
 @media (prefers-reduced-motion:reduce){.knob,.knob::after{transition:none}}
+
+/* 간격 정리 (5.9.0): 접는 카드 안 요소들이 붙지 않도록, 기기별 줄 간격 */
+details.card{display:block}
+details.card>summary+*{margin-top:12px}
+details.card>*:not(summary)+*{margin-top:10px}
+details.card>.note+.note{margin-top:6px}
+.card{gap:12px}
+.row2{gap:10px}
+.presets{gap:8px}
+.range{gap:10px}
+.sheet>div{gap:14px}
+label.lb{gap:6px}
+.hd+.note,.hd+p{margin-top:-2px}
+div:not(.card)>.shlb+.presets{margin-top:6px}
+@media (max-width:519px){.evdt{grid-template-columns:1fr 1fr!important}.evdt>label:first-child{grid-column:1/-1}}
+.view-sub,#s-eval,#s-att,#m-att,#m-obs{display:flex;flex-direction:column;gap:14px}
+.view-sub[hidden],#s-eval[hidden],#s-att[hidden],#m-att[hidden],#m-obs[hidden]{display:none}
+@media (max-width:379px){.card{gap:10px;padding:12px}details.card>*:not(summary)+*{margin-top:9px}.row2{gap:8px}}
+@media (min-width:760px){.card{gap:14px;padding:16px}details.card>*:not(summary)+*{margin-top:12px}details.card>summary+*{margin-top:14px}.row2{gap:12px}}
+@media (max-height:520px) and (orientation:landscape){.card{gap:10px}details.card>*:not(summary)+*{margin-top:8px}}
 </style>
 </head>
 <body>
@@ -545,7 +603,7 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
   </section>
   <section class="card noses" id="ttEmpty" hidden>
     <p class="note">아직 만든 시간표가 없습니다. 학년도와 학기를 정하고 시간표를 만들어 보세요.</p>
-    <button class="btn pri" type="button" onclick="document.getElementById('ttNew').click()">＋ 시간표 만들기</button>
+    <div class="row2"><button class="btn pri" type="button" onclick="document.getElementById('ttNew').click()">＋ 시간표 만들기</button><button class="btn" type="button" id="ttUpBtn2">시간표 올리기 (컴시간 파일 · 캡처)</button></div>
   </section>
   <div class="weekbar" id="ttWeekBar">
     <button class="btn ic" type="button" id="ttPrev" aria-label="지난주">‹</button>
@@ -559,6 +617,8 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
   <div class="card" id="ttTools">
     <div class="hd"><p class="note" id="ttHint" style="margin:0"></p><button class="chip" type="button" id="ttEditBtn" aria-pressed="false">칸 편집</button></div>
     <p class="note" style="margin:0">수업 칸을 누르면 출석 체크와 수업 메모장(진도·메모·과제·면담)이 열립니다. 칸 위 숫자는 출석 인원, ‘메모’는 기록이 있다는 뜻입니다. 점심·방과 후 칸과 요일을 누르면 그날 일정을 넣고, 교시를 누르면 수업 시간을 바꿀 수 있습니다.</p>
+    <div class="ttupbar"><button class="btn" type="button" id="ttUpBtn"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>시간표 올리기 (컴시간 파일 · 캡처)</button><span class="note">주간 시간표 캡처 사진이나 엑셀 파일을 올리면 지금 시간표와 비교해 고정·임시로 반영합니다. 컴퓨터에서는 캡처 후 Ctrl+V로 붙여 넣어도 됩니다.</span></div>
+    <input type="file" id="ttUpIn" accept="image/*,.xlsx,.xls,.xlsm,.csv,.htm,.html" hidden>
   </div>
   <section class="card" id="agCard">
     <div class="hd"><h2>일정 · 알림</h2><button class="btn pri" type="button" id="agAdd">＋ 일정 추가</button></div>
@@ -702,6 +762,8 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
       <div class="presets" id="evStF"><button class="chip" type="button" data-f="open">진행 중</button><button class="chip" type="button" data-f="done">보관함</button><button class="chip" type="button" data-f="all">전체</button></div>
       <input class="fld" id="evQ" type="search" placeholder="평가 이름으로 찾기" aria-label="평가 찾기" autocomplete="off">
       <div class="row2"><button class="btn" type="button" id="evSum">서명 현황 모아 보기 (서명한 학생 · 안 한 학생)</button></div>
+      <div class="evlhd"><span class="shlb" id="evCnt">평가 목록</span><button class="chip" type="button" id="evEdit" aria-pressed="false">목록 편집 · 삭제</button></div>
+      <div class="evedbar" id="evEdBar" hidden><button class="chip" type="button" id="evSelAll">모두 선택</button><span class="note" id="evSelN">0개 선택</span><button class="btn bad sm" type="button" id="evDelSel" disabled>선택한 평가 삭제</button></div>
       <div id="evList"></div>
     </section>
     <div id="evDetail" hidden></div>
@@ -773,12 +835,17 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 <!-- 설정 -->
 <main class="wrap view" id="v-set" hidden>
   <header class="top"><div><h1>설정</h1><div class="sub">구글 연동·명단·연락처·공유</div></div></header>
+  <details class="card" id="d-me" open><summary>사용 교사 <span class="sub" id="meTag"></span></summary>
+    <label class="lb" for="meName">선생님 이름 (출력물에 ‘교사 이름’으로 표시)<input class="fld" id="meName" maxlength="20" placeholder="예: 홍길동" autocomplete="name"></label>
+    <p class="devinfo" id="meEx"></p>
+    <p class="note">앱에서 내려받는 엑셀·CSV 파일과 PDF 인쇄, 통계 메일의 문서 제목 아래 오른쪽에 <b>내려받은 일시</b>와 <b>출력한 사용자</b>가 들어갑니다. 구글로 연동하면 다른 기기에도 같이 적용됩니다.</p>
+  </details>
   <details class="card" id="d-per" open><summary>적용 기간 (학년도 · 학기) <span class="sub" id="perTag"></span></summary>
     <p class="note">학급, 학생 명단·연락처, 수업 교사, 교직원 연락처, 평가는 학년도·학기별로 따로 관리됩니다. 아래에서 고른 기간의 자료가 출석·연락·평가·설정 화면에 보입니다.</p>
     <div class="range"><label class="lb" for="perY">학년도<select class="fld" id="perY"></select></label><label class="lb" for="perT">학기<select class="fld" id="perT"><option>1학기</option><option>2학기</option></select></label></div>
     <p class="devinfo" id="perSum"></p>
-    <div class="shlb">등록된 기간</div><div class="presets" id="perList"></div>
-    <div class="row2"><button class="btn pri" type="button" id="perNew">＋ 새 학기 · 학년도 시작하기</button></div>
+    <div class="perwrap"><div><div class="shlb">등록된 기간</div><div class="presets" id="perList"></div></div>
+    <button class="btn pernew" type="button" id="perNew">＋ 새 학기 · 학년도 시작하기</button></div>
     <p class="note">새 학기를 시작하면 지금 기간의 학급·명단·연락처를 복사해 새 기간을 만들 수 있습니다. 출석 기록·관찰 기록은 복사하지 않으며, 지난 기간의 자료는 그대로 남아 언제든 다시 볼 수 있습니다.</p>
   </details>
   <details class="card" id="d-sync" open><summary>구글 로그인 · 기기 연동 <span class="sub" id="gsTag"></span></summary>
@@ -918,8 +985,11 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.7.0", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.10.0", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.10.0",date:"2026-10-18",items:["설정 → ‘사용 교사’: 선생님 이름 입력 (처음 파일을 내려받을 때 이름이 없으면 물어봄, 구글 연동 시 다른 기기에도 적용)", "앱에서 내려받는 모든 출력물(엑셀·CSV 입력 양식, 수행평가 전표 양식, 서명 넣은 전표, 서명 현황, 관찰 기록, 출석 통계·기록, PDF 인쇄, 통계 메일)의 문서 제목 아래 오른쪽에 ‘내려받은 일시 · 출력한 사용자 교사 이름’ 자동 표시", "학교 전표 양식에 서명을 넣어 받을 때 표 제목 줄 위에 표시 줄을 넣고 병합 칸·합계 수식 위치를 함께 맞춤, 인쇄할 때 한 페이지 너비에 맞춤", "엑셀 출력물을 문서 제목·제목 줄 색·테두리·제목 줄 고정이 들어간 깔끔한 표로 정리, 받은 양식을 채워 다시 올려도 위쪽 제목 줄은 자동으로 건너뜀"]},
+  {v:"5.9.0",date:"2026-10-18",items:["화면 전체 간격 정리: 접는 카드(설정·시간표 등) 안의 버튼·입력 칸·목록이 서로 붙거나 겹쳐 보이던 문제 해결, 카드·버튼 줄·선택 칩 사이 간격을 기기별로 조정 (작은 휴대폰은 촘촘하게, 태블릿·컴퓨터는 넉넉하게, 가로 화면은 낮게)", "오른쪽 위 ‘? 도움말’ 버튼이 화면을 내릴 때 내용 위에 겹치지 않도록 맨 위에만 표시", "일정 추가에서 작은 화면이면 날짜 칸을 한 줄 전체로, 시작·끝 시간을 아래 줄로", "수행평가 목록 삭제: ‘목록 편집 · 삭제’로 평가마다 삭제하거나 여러 개를 골라(모두 선택) 한 번에 삭제, 지운 뒤에도 ‘불러오기 전으로 되돌리기’로 복구 가능"]},
+  {v:"5.8.0",date:"2026-10-18",items:["시간표 올리기: 컴시간 알리미 등 주간 시간표 화면을 캡처한 사진이나 엑셀·CSV·HTML 시간표 파일을 올리면 요일·교시별 과목·학급·강의실을 자동으로 읽어 칸을 채움 (사진 글자 읽기는 휴대폰 안에서 처리, 외부로 보내지 않음)", "읽은 결과를 표에서 확인·수정한 뒤 반영 (학급 이름 1-1, 1학년 1반 등은 등록된 학급과 자동 연결)", "처음 등록하는 시간표면 ‘고정(매주 반복)’과 ‘임시(정한 기간만)’ 중 선택", "이미 시간표가 있으면 올린 내용과 비교해 같은 칸·바뀐 수업·새 수업·빠진 수업을 보여주고, 바뀐 정도와 사진 속 날짜를 분석해 고정·임시를 권장. 칸마다 고정·임시·그대로 두기를 고를 수 있고 임시는 기간(이번 주·다음 주·사진의 주) 지정", "이미 임시 변동으로 넣은 주를 다시 올리면 ‘이미 반영’으로 알려 중복 방지, 컴퓨터에서는 캡처 후 Ctrl+V로 붙여 넣기, 화면에 사진·파일을 끌어다 놓기도 가능", "설정 → 적용 기간: 등록된 기간을 카드 모양으로 정리하고 ‘새 학기 · 학년도 시작하기’ 버튼과 간격을 넓혀 겹치지 않게"]},
   {v:"5.7.0",date:"2026-10-18",items:["적용 기간(학년도·학기): 설정 → ‘적용 기간’에서 학년도·학기를 고르면 학급 정보, 학생 명단·연락처, 수업 교사, 교직원 연락처, 평가가 그 기간 것만 보이고 저장됨 (다른 기간 자료는 그대로 보관)", "새 학기 추가: 아직 자료가 없는 기간을 고르면 지난 기간의 학급·명단·연락처·교사·교직원 중 고른 것만 복사해 시작하거나 빈 학급으로 시작 (출석·관찰 기록은 복사하지 않음)", "설정 → ‘학급 정보 · 문자 문구’, ‘학생 명단 · 연락처’: 출석 화면에서 고른 학급이 기본이고, 위의 ‘설정할 학급’에서 다른 학급을 골라 출석 화면 학급을 바꾸지 않고 고칠 수 있음", "평가 관리의 학년도·학기 기본값을 지금 적용 기간으로, 학급 목록·공유·통계·시간표의 학급 선택도 지금 기간 기준", "도움말에서 관리자 안내 항목을 빼고 일반 사용자에게 필요한 내용만 보이게"]},
   {v:"5.6.0",date:"2026-10-18",items:["기기 맞춤 레이아웃: 작은 휴대폰·휴대폰·가로 화면·태블릿·컴퓨터에 맞춰 칸 크기와 배치를 자동으로 조정 (작은 휴대폰에서도 시간표 월~금이 한 화면에, 글자·버튼이 잘리지 않게)","넓은 화면(컴퓨터)에서는 메뉴가 왼쪽으로, 설정·출석·관찰 기록은 두 줄로 넓게, 창은 가운데에","가로로 눕힌 휴대폰에서는 아래 메뉴를 낮게 해 내용이 더 보이게","설정 → ‘화면 · 글자 크기 (기기 맞춤)’: 글자 크기(작게~아주 크게), 화면 배치(자동·한 줄·넓게 두 줄), 메뉴 위치, 시간표(한 화면에 맞추기·크게 보고 옆으로 밀기), 기기마다 따로 저장","아이폰에서 입력 칸을 누를 때 화면이 확대되어 배치가 흐트러지던 문제 방지"]},
   {v:"5.5.0",date:"2026-10-18",items:["앱 안에 도움말 추가: 처음 시작하기, 휴대폰·컴퓨터 함께 쓰기, 자료 올리기·내려받기, 화면별 기능과 사용 절차, 관리자 안내, 자주 묻는 질문","모든 화면 오른쪽 위 ‘? 도움말’: 지금 보고 있는 화면의 설명으로 바로 이동, 도움말 찾기·인쇄","새 버전으로 바뀌면 ‘바뀐 점 보기’ 알림, 도움말의 ‘버전별 바뀐 점’은 앱의 버전 기록에서 자동으로 채워지고 지난번 이후 바뀐 부분에 ‘새로 바뀜’ 표시","설정 → 앱 정보에 ‘도움말 전체 보기’·‘바뀐 점 보기’"]},
@@ -1365,7 +1435,7 @@ const HEAD_RE=/^(이름|성명|교사명|부서|소속|과목|담당|역할|직�
 function parseContacts(text,kind){
   const rows=[],skipped=[];
   String(text||"").replace(/^﻿/,"").split(/\r?\n/).forEach((raw,i)=>{
-    const line0=raw.trim();if(!line0||/예시/.test(line0)||isHeadLine(line0))return;
+    const line0=raw.trim();if(!line0||/예시/.test(line0)||isHeadLine(line0)||isMetaLine(line0))return;
     let ph=null;
     const line=fixPhones(line0).replace(PHONE_RE,m=>{ph=m.replace(/^\+82[-\s]?/,"0").replace(/[\s.)]/g,"-").replace(/-+/g,"-");return "\t"});
     if(ph){const d=ph.replace(/\D/g,"");if(/^01\d{9}$/.test(d))ph=`${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}`;else if(/^01\d{8}$/.test(d))ph=`${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}`}
@@ -1392,7 +1462,7 @@ function loadXLSX(){
   if(window.XLSX)return Promise.resolve(window.XLSX);
   return new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="vendor/xlsx.full.min.js";sc.onload=()=>window.XLSX?res(window.XLSX):rej(new Error("엑셀 기능을 불러오지 못했습니다"));sc.onerror=()=>rej(new Error("엑셀 기능을 불러오지 못했습니다. 인터넷에 연결한 뒤 다시 하거나, 엑셀에서 CSV로 저장해 올려 주세요."));document.head.appendChild(sc)});
 }
-const HEAD_WORDS=new Set(["이름","성명","교사명","학생명","부서","소속","과목","담당","역할","직위","직책","전화","전화번호","휴대폰","휴대전화","연락처","번호","연번","비고","학번","학부모","보호자","학생"]);
+const HEAD_WORDS=new Set(["이메일","메일","email","Email","이름","성명","교사명","학생명","부서","소속","과목","담당","역할","직위","직책","전화","전화번호","휴대폰","휴대전화","연락처","번호","연번","비고","학번","학부모","보호자","학생"]);
 function isHeadCell(c){const parts=String(c).replace(/\s/g,"").split(/[·\/,()]/).filter(Boolean);return parts.length>0&&parts.every(x=>HEAD_WORDS.has(x))}
 function isHeadLine(line){const cs=line.split(/[\t,;]+|\s{2,}/).map(x=>x.trim()).filter(Boolean);return cs.length>0&&cs.every(isHeadCell)}
 /* 엑셀에서 앞자리 0이 빠진 휴대폰 번호(1012345678)를 되살립니다 */
@@ -1407,33 +1477,76 @@ async function readTableFile(f){
   if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(_){}}
   return t.replace(/^﻿/,"");
 }
+/* ---------- 출력물 표시: 내려받은 일시 · 출력한 사용자 ---------- */
+const ME_KEY="att-app-me",XL_MIME="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const META_RE=/내려받은 일시|출력한 사용자/;
+function meName(){try{return(localStorage.getItem(ME_KEY)||"").trim()}catch(e){return""}}
+function outBy(){const n=meName();return n?`교사 ${n}`:"교사 (이름 미입력)"}
+function outStamp(t){return `내려받은 일시 ${fmtDTfull(t||Date.now())} · 출력한 사용자 ${outBy()}`}
+function needMe(){if(meName())return;let v=null;try{v=prompt("출력물에 표시할 선생님 이름을 넣어 주세요.\n(설정 → ‘사용 교사’에서 언제든 바꿀 수 있습니다)",(typeof G!=="undefined"&&G&&G.name)||"")}catch(e){}
+  if(v&&v.trim()){try{localStorage.setItem(ME_KEY,v.trim().slice(0,20))}catch(e){}save();renderMe()}}
+function isMetaLine(l){return META_RE.test(l)||l.includes(APP_NAME+" ·")}
+/* CSV 위쪽: 1줄 문서 제목, 2줄 오른쪽 끝 칸에 내려받은 일시 · 출력한 사용자 */
+function csvHead(title,w){const n=Math.max(1,w||1);return[csvRow([title]),csvRow([...Array(n-1).fill(""),outStamp()]),""]}
+/* 엑셀 만들기: 시트마다 맨 위 문서 제목, 그 아래 오른쪽에 내려받은 일시 · 출력한 사용자, 그다음 표 */
+async function xlOut(fname,sheets,msg){
+  needMe();
+  const EX=await loadExcelJS();const wb=new EX.Workbook();wb.creator=outBy();wb.created=new Date();
+  const thin={style:"thin",color:{argb:"FFB5BDB7"}};
+  sheets.forEach(sh=>{
+    const ws=wb.addWorksheet(String(sh.name||"Sheet").replace(/[\\/?*[\]:]/g," ").slice(0,30));
+    const W=Math.max(2,sh.wcols||0,...sh.rows.map(r=>r.length));
+    ws.pageSetup={paperSize:9,orientation:W>7?"landscape":"portrait",fitToPage:true,fitToWidth:1,fitToHeight:0,margins:{left:.4,right:.4,top:.5,bottom:.5,header:.3,footer:.3}};
+    ws.addRow([sh.title]);ws.mergeCells(1,1,1,W);const t=ws.getCell(1,1);t.font={bold:true,size:14};t.alignment={vertical:"middle",horizontal:"left"};ws.getRow(1).height=26;
+    ws.addRow([outStamp()]);ws.mergeCells(2,1,2,W);const m=ws.getCell(2,1);m.font={size:9,color:{argb:"FF55605A"}};m.alignment={vertical:"middle",horizontal:"right"};ws.getRow(2).height=17;
+    ws.addRow([]);const off=3;
+    sh.rows.forEach(r=>ws.addRow(r.map(v=>v==null?"":v)));
+    (sh.widths||[]).forEach((w,i)=>{ws.getColumn(i+1).width=w});
+    if(sh.head!==false&&sh.rows.length){const hr=ws.getRow(off+1);hr.font={bold:true};
+      for(let c=1;c<=sh.rows[0].length;c++){const x=hr.getCell(c);x.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE9EFEA"}};x.alignment={vertical:"middle",horizontal:"center",wrapText:true}}
+      const last=off+sh.rows.length+(sh.blank||0),hw=sh.rows[0].length;
+      for(let r=off+1;r<=last;r++){const row=ws.getRow(r);for(let c=1;c<=hw;c++){const x=row.getCell(c);x.border={top:thin,left:thin,bottom:thin,right:thin};if(r>off+1&&!x.alignment)x.alignment={vertical:"top",wrapText:!!(sh.wrap&&sh.wrap.includes(c-1))}}}
+      (sh.text||[]).forEach(ci=>{for(let r=off+2;r<=last;r++){const x=ws.getRow(r).getCell(ci+1);x.numFmt="@";if(x.value!=null&&x.value!=="")x.value=String(x.value)}});
+      ws.views=[{state:"frozen",ySplit:off+1}]}
+    if(sh.formulas)sh.formulas(off).forEach(f=>{ws.getRow(f.r).getCell(f.c).value={formula:f.f}});
+  });
+  const buf=await wb.xlsx.writeBuffer();
+  return shareOrSave(new File([buf],fname,{type:XL_MIME}),msg);
+}
+/* 원래 엑셀 파일(학교 양식)에 줄을 끼워 넣기: 병합 칸·수식·줄 높이를 함께 내립니다 */
+function xlInsertRows(ws,at,n){
+  const merges=(ws.model&&ws.model.merges||[]).slice();merges.forEach(m=>{try{ws.unMergeCells(m)}catch(e){}});
+  const shiftRef=f=>String(f).replace(/(^|[^A-Za-z0-9_!$.])(\$?)([A-Z]{1,3})(\$?)(\d+)(?![\d(A-Za-z_])/g,(x,pre,d1,col,d2,row)=>pre+d1+col+d2+(+row>=at?+row+n:+row));
+  const hs=[];for(let r=ws.rowCount;r>=at;r--)hs[r]=ws.getRow(r).height;
+  ws.spliceRows(at,0,...Array.from({length:n},()=>[]));
+  for(let r=ws.rowCount;r>=at+n;r--){if(hs[r-n]!=null)ws.getRow(r).height=hs[r-n]}
+  for(let r=at;r<at+n;r++)ws.getRow(r).height=undefined;
+  ws.eachRow({includeEmpty:false},row=>row.eachCell({includeEmpty:false},c=>{const v=c.value;if(v&&typeof v==="object"){
+    if(v.formula)c.value={...v,formula:shiftRef(v.formula)};else if(v.sharedFormula)c.value={...v,sharedFormula:shiftRef(v.sharedFormula)}}}));
+  merges.forEach(m=>{const k=m.replace(/\d+/g,x=>+x>=at?+x+n:+x);try{ws.mergeCells(k)}catch(e){}});
+}
 async function shareOrSave(f,msg){
   if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:f.name});return}catch(e){if(e&&e.name==="AbortError")return}}
   const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
   toast(msg||f.name+"을 저장했습니다");
 }
 async function downloadTemplate(kind,fmt){
-  const T=BULK[kind].tpl,base=`${APP_NAME.replace(/\s+/g,"")}_${T.sheet}_양식`;
-  if(fmt==="csv"){
-    const rows=[T.header,...T.examples].map(r=>r.map(csvCell).join(","));
+  const T=BULK[kind].tpl,base=`${APP_NAME.replace(/\s+/g,"")}_${T.sheet}_양식`,title=`${APP_NAME} · ${T.sheet} 입력 양식`;
+  if(fmt==="csv"){needMe();
+    const rows=[...csvHead(title,T.header.length),...[T.header,...T.examples].map(r=>r.map(csvCell).join(","))];
     return shareOrSave(new File(["﻿"+rows.join("\r\n")],base+".csv",{type:"text/csv"}),"CSV 양식을 저장했습니다");
   }
-  let X;try{X=await loadXLSX()}catch(e){toast(e.message);return downloadTemplate(kind,"csv")}
-  const ws=X.utils.aoa_to_sheet([T.header,...T.examples]);
-  ws["!cols"]=T.header.map(h=>({wch:/전화/.test(h)?16:/학번/.test(h)?10:14}));
-  const pc=T.header.findIndex(h=>/전화/.test(h));
-  for(let r=0;r<=T.examples.length+300;r++){const ref=X.utils.encode_cell({r,c:pc});if(!ws[ref])ws[ref]={t:"s",v:""};ws[ref].z="@"}
-  ws["!ref"]=X.utils.encode_range({s:{r:0,c:0},e:{r:T.examples.length+300,c:T.header.length-1}});
-  const guide=X.utils.aoa_to_sheet([["입력 안내"],...T.guide.map(g=>[g]),[""],[`${APP_NAME} 설정 → 일괄 입력 · 파일 업로드에서 이 파일을 고르면 됩니다.`]]);guide["!cols"]=[{wch:80}];
-  const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,T.sheet);X.utils.book_append_sheet(wb,guide,"안내");
-  const out=X.write(wb,{type:"array",bookType:"xlsx"});
-  shareOrSave(new File([out],base+".xlsx",{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"엑셀 양식을 저장했습니다");
+  const pc=T.header.findIndex(h=>/전화/.test(h)),ic=T.header.findIndex(h=>/학번/.test(h));
+  try{await xlOut(base+".xlsx",[
+    {name:T.sheet,title,rows:[T.header,...T.examples],blank:60,widths:T.header.map(h=>/전화/.test(h)?16:/학번/.test(h)?10:/이메일/.test(h)?24:14),text:[pc,ic].filter(x=>x>=0)},
+    {name:"안내",title:`${T.sheet} 입력 안내`,head:false,rows:[...T.guide.map(g=>[g]),[""],[`${APP_NAME} 설정 → 일괄 입력 · 파일 업로드에서 이 파일을 고르면 됩니다. 위쪽 제목·내려받은 일시 줄은 그대로 두어도 됩니다.`]],widths:[90]}],"엑셀 양식을 저장했습니다")}
+  catch(e){toast(e.message||"엑셀 파일을 만들지 못했습니다");return downloadTemplate(kind,"csv")}
 }
 const GUIDE_COMMON=["첫 줄(제목 줄)은 지우지 마세요. 둘째 줄부터 한 줄에 한 명씩 입력합니다.","‘예시’라고 적힌 줄은 불러올 때 건너뜁니다. 지우거나 그대로 두어도 됩니다.","전화번호는 010-1234-5678처럼 입력하세요. 앞자리 0이 빠져도 자동으로 고칩니다.","엑셀(.xlsx) 그대로 올려도 되고, CSV로 저장해 올려도 됩니다."];
 function parseStudents(text){
   const rows=[],skipped=[];
   String(text||"").replace(/^﻿/,"").split(/\r?\n/).forEach(raw=>{
-    const line0=raw.trim();if(!line0||/예시/.test(line0)||isHeadLine(line0))return;
+    const line0=raw.trim();if(!line0||/예시/.test(line0)||isHeadLine(line0)||isMetaLine(line0))return;
     let line=line0,em="";line=line.replace(EMAIL_RE,m=>{em=m;return "\t"});line=fixPhones(line);let ph=null;
     line=line.replace(/01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}/,m=>{const d=m.replace(/\D/g,"");ph=d.length===11?`${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}`:`${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}`;return "\t"});
     const cells=line.split(/[\t,;]+|\s+/).map(c=>c.trim().replace(/^"|"$/g,"")).filter(Boolean);
@@ -1653,7 +1766,7 @@ function editClass(id){
   setTimeout(()=>$("ekName").focus(),50);
 }
 
-function renderSet(){
+function renderSet(){try{renderMe()}catch(e){}
   renderPeriod();renderSetCls();
   if(document.activeElement!==$("clsIn"))$("clsIn").value=D.cls;
   if(document.activeElement!==$("msgIn"))$("msgIn").value=D.msg;
@@ -1675,12 +1788,15 @@ $("setCls").onchange=e=>{const c=S.list.find(x=>x.id===e.target.value);if(!c)ret
 function periodsAll(){const m=new Map();const add=(y,t)=>{if(y&&t)m.set(y+"|"+t,{year:+y,term:t})};S.list.forEach(c=>add(c.data.year,c.data.term));(S.staff||[]).forEach(x=>add(x.year,x.term));(S.evals||[]).forEach(e=>{const t=evYT(e);add(t.year,t.term)});const p=period();add(p.year,p.term);
   return [...m.values()].sort((a,b)=>b.year-a.year||b.term.localeCompare(a.term))}
 function perCounts(p){const cl=S.list.filter(c=>inPer(c.data,p));return{cls:cl.length,stu:cl.reduce((a,c)=>a+c.data.roster.length,0),staff:(S.staff||[]).filter(x=>inPer(x,p)).length,ev:(S.evals||[]).filter(e=>{const t=evYT(e);return t.year===p.year&&t.term===p.term}).length}}
+function renderMe(){if(!$("meName"))return;const n=meName();if(document.activeElement!==$("meName"))$("meName").value=n;$("meTag").textContent=n?`교사 ${n}`:"이름 미입력";
+  $("meEx").innerHTML=`출력물 표시 예: <b>${esc(outStamp())}</b>`}
+$("meName").oninput=e=>{try{localStorage.setItem(ME_KEY,e.target.value.trim().slice(0,20))}catch(_){}renderMe();clearTimeout(renderMe.t);renderMe.t=setTimeout(save,600)};
 function renderPeriod(){
   if(!$("perY"))return;const p=period(),c=perCounts(p),yrs=new Set(periodsAll().map(x=>x.year));const y0=curTerm().year;[y0-1,y0,y0+1].forEach(y=>yrs.add(y));
   $("perY").innerHTML=[...yrs].sort((a,b)=>b-a).map(y=>`<option value="${y}"${y===p.year?" selected":""}>${y}학년도</option>`).join("");$("perT").value=p.term;
   $("perTag").textContent=perLabel(p);
   $("perSum").innerHTML=`지금 기간 <b>${esc(perLabel(p))}</b> · 학급 ${c.cls}개 · 학생 ${c.stu}명 · 교직원 ${c.staff}명 · 평가 ${c.ev}개`;
-  $("perList").innerHTML=periodsAll().map(x=>{const k=perCounts(x);return `<button class="chip" type="button" data-y="${x.year}" data-t="${esc(x.term)}" aria-pressed="${x.year===p.year&&x.term===p.term}">${esc(perLabel(x))} <small>학급 ${k.cls}</small></button>`}).join("");
+  $("perList").innerHTML=periodsAll().map(x=>{const k=perCounts(x);return `<button class="chip" type="button" data-y="${x.year}" data-t="${esc(x.term)}" aria-pressed="${x.year===p.year&&x.term===p.term}"><b>${esc(perLabel(x))}</b><small>학급 ${k.cls} · 학생 ${k.stu}명</small></button>`}).join("");
   $("perList").querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>setPeriod(+b.dataset.y,b.dataset.t));
 }
 function setPeriod(y,t,quiet){
@@ -2168,7 +2284,7 @@ $("mailTo").oninput=e=>{try{localStorage.setItem(KEY_MAIL,e.target.value.trim())
 function reportTitle(){const R0=lastStats||computeStats();return `[출석 통계] ${ST.scope==="all"?"모든 학급":R0.classes[0].name} ${rangeText()}`}
 function reportText(full){
   const R0=lastStats||computeStats(),multi=ST.scope==="all",L=[];
-  L.push(reportTitle(),"");
+  L.push(reportTitle(),`　　　　${outStamp()}`,"");
   L.push(`기간: ${rangeText()}${ST.from||ST.to?` (${ST.from||"처음"} ~ ${ST.to||"오늘"})`:""}`);
   L.push(`출석 체크: ${R0.checks}회 (${R0.dayList.length}일)`);
   L.push(`출석률: ${R0.slots?pct(R0.pres,R0.slots)+"%":"-"} · 출석 ${R0.pres} · 결석 ${R0.slots-R0.pres} (연인원)`);
@@ -2202,7 +2318,9 @@ function csvFiles(){
   });
   const tag=(ST.scope==="all"?"모든학급":R0.classes[0].name).replace(/[\\/:*?"<>|\s]+/g,"");
   const span=ST.from||ST.to?`_${(ST.from||"처음").replace(/-/g,"")}-${(ST.to||"오늘").replace(/-/g,"")}`:"_전체";
-  const BOM="﻿";
+  const BOM="﻿",sc=R0.classes.length===1?R0.classes[0].name:"모든 학급",per=ST.from||ST.to?` (${ST.from||"처음"} ~ ${ST.to||"오늘"})`:"";needMe();
+  a.unshift(...csvHead(`출석 통계 · ${sc}${per}`,8));
+  const wB=Math.max(5,...R0.classes.map(c=>c.sessions.length+5));b.unshift(...csvHead(`출석 기록 · ${sc}${per}`,wB));
   return[new File([BOM+a.join("\r\n")],`출석통계_${tag}${span}.csv`,{type:"text/csv"}),new File([BOM+b.join("\r\n")],`출석기록_${tag}${span}.csv`,{type:"text/csv"})];
 }
 function validMails(){
@@ -2605,6 +2723,265 @@ $("ttThisWeek").onclick=()=>{ttWeek=mondayOf(today());renderTT()};
 $("ttEditBtn").onclick=()=>{ttEdit=!ttEdit;renderTT()};
 twoStep($("ttDel"),"정말 삭제",()=>{const t=TT();if(!t)return;S.tt.list=S.tt.list.filter(x=>x!==t);S.tt.active=S.tt.list[0]?S.tt.list[0].id:"";save();toast(ttName(t)+" 시간표를 삭제했습니다");renderTT()});
 
+/* ---------- 시간표 올리기 (컴시간 파일 · 캡처) → 고정 / 임시 ---------- */
+const WDS="월화수목금";
+function ttClsKey(s){s=String(s||"");const m=s.match(/([1-6])\s*학년\s*(\d{1,2})\s*반/)||s.match(/(?:^|[^\d])([1-6])\s*[-–—]\s*(\d{1,2})(?!\d)/);return m?`${m[1]}-${+m[2]}`:""}
+function ttFindCls(key){if(!key)return null;return perList().find(c=>ttClsKey(c.data.cls)===key)||S.list.find(c=>ttClsKey(c.data.cls)===key)||null}
+const TT_ROOM=/^@.+|^.{1,8}(실험실|교실|실|관|강당|도서관|운동장)$/;
+function ttParseCell(raw){
+  let s=String(raw||"").replace(/[|_]/g," ").replace(/\s+/g," ").trim();if(!s)return null;
+  let key="",m;
+  if((m=s.match(/([1-6])\s*학년\s*(\d{1,2})\s*반/))){key=`${m[1]}-${+m[2]}`;s=s.replace(m[0]," ")}
+  else if((m=s.match(/(^|[^\d])([1-6])\s*[-–—~.,]\s*(\d{1,2})(?!\d)/))){key=`${m[2]}-${+m[3]}`;s=s.replace(m[0],m[1]+" ")}
+  else{for(const w of s.split(" "))if(/^[1-6]\d{1,2}$/.test(w)){const k=`${w[0]}-${+w.slice(1)}`;if(ttFindCls(k)){key=k;s=s.replace(w," ");break}}}
+  let room="";const rest=[];
+  s.split(" ").filter(Boolean).forEach(w=>{if(!room&&rest.length&&TT_ROOM.test(w))room=w.replace(/^@/,"");else rest.push(w)});
+  const subject=rest.join(" ").replace(/^[^\w가-힣ⅠⅡⅢ]+|[^\w가-힣ⅠⅡⅢ)]+$/g,"").trim();
+  const c=ttFindCls(key);
+  if(!subject&&!key)return null;
+  return{subject,clsId:c?c.id:"",clsName:c?c.data.cls:(key?`${key.split("-")[0]}학년 ${key.split("-")[1]}반`:""),room,key};
+}
+function ttCellTxt(c){return c?[c.subject,c.clsName,c.room].filter(Boolean).join(" · "):"(빈 칸)"}
+function ttSame(a,b){
+  if(!a&&!b)return true;if(!a||!b)return false;
+  const n=x=>String(x||"").replace(/\s/g,"");
+  if(a.subject&&b.subject&&n(a.subject)!==n(b.subject))return false;
+  const ka=a.clsId||ttClsKey(a.clsName)||n(a.clsName),kb=b.clsId||ttClsKey(b.clsName)||n(b.clsName);
+  const ca=cellClass(a),cb=cellClass(b);
+  if(ca&&cb)return ca.id===cb.id;
+  const ka2=ttClsKey(a.clsName),kb2=ttClsKey(b.clsName);
+  if(ka2&&kb2)return ka2===kb2;
+  return !ka||!kb||ka===kb;
+}
+/* 날짜 읽기: 2026-10-19, 10/19, 10월 19일, OCR의 (10119) */
+function ttGuessYear(m,d){const t=new Date(),y=t.getFullYear();let best=y,bd=1e12;[y-1,y,y+1].forEach(yy=>{const x=Math.abs(new Date(yy,m-1,d)-t);if(x<bd){bd=x;best=yy}});return best}
+function ttDatesFrom(header,all){
+  const ok=(y,m,d)=>m>=1&&m<=12&&d>=1&&d<=31;
+  const ymdOf=(y,m,d)=>`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+  for(const s of all){const m=String(s).match(/(20\d{2})\s*[.\-\/년]\s*(\d{1,2})\s*[.\-\/월]\s*(\d{1,2})/);if(m&&ok(+m[1],+m[2],+m[3])){const d0=ymdOf(+m[1],+m[2],+m[3]);if(wdOf(d0)<=4)return{from:mondayOf(d0),to:addDays(mondayOf(d0),4)}}}
+  for(const [d,s] of header){
+    const str=String(s||"");const cands=[];let m=str.match(/(\d{1,2})\s*[\/.월\-]\s*(\d{1,2})/);if(m)cands.push([+m[1],+m[2]]);
+    const dg=(str.match(/\d{3,5}/)||[""])[0];for(let i=1;i<dg.length-1;i++)if(dg[i]==="1"||dg[i]==="7")cands.push([+dg.slice(0,i),+dg.slice(i+1)]);
+    for(const [mm,dd] of cands){if(!ok(2000,mm,dd))continue;const x=ymdOf(ttGuessYear(mm,dd),mm,dd);if(wdOf(x)===d)return{from:addDays(x,-d),to:addDays(x,4-d)}}
+  }
+  return null;
+}
+/* 표(행·열 글자) → 칸 */
+function ttDayOf(s){const m=String(s||"").replace(/\s/g,"").match(/^([월화수목금])(요일)?([\(\[]?[\d\/.\-월일]*[\)\]]?)?$/);return m?WDS.indexOf(m[1]):-1}
+function ttFromRows(rows){
+  let hr=-1,cols=null;
+  for(let i=0;i<Math.min(rows.length,40)&&hr<0;i++){const c={};(rows[i]||[]).forEach((v,j)=>{const d=ttDayOf(v);if(d>=0&&c[d]==null)c[d]=j});if(Object.keys(c).length>=3){hr=i;cols=c}}
+  if(hr<0)return null;
+  const first=Math.min(...Object.values(cols)),cells={},times={};let p=0;
+  for(let i=hr+1;i<rows.length;i++){
+    const r=rows[i]||[];const lab=r.slice(0,first).map(x=>String(x||"").trim()).filter(Boolean).join(" ");
+    const m=lab.match(/^(\d{1,2})\s*(교시)?(?![\d:])/);
+    if(m){p=+m[1]}else if(/점심|중식|조회|종례|방과/.test(lab))continue;else if(/\d{1,2}:\d{2}/.test(lab)&&!lab.match(/^\d{1,2}\s*교시/)){p=p+1}else if(lab)continue;else if(!p)p=1;
+    if(p<1||p>PERIODS)continue;
+    const tm=lab.match(/(\d{1,2}):(\d{2})/);if(tm&&!times[p])times[p]=String(tm[1]).padStart(2,"0")+":"+tm[2];
+    Object.entries(cols).forEach(([d,j])=>{const v=String(r[j]==null?"":r[j]).trim();if(v){const k=d+"-"+p;cells[k]=(cells[k]?cells[k]+" ":"")+v.replace(/\s+/g," ")}});
+  }
+  const header=Object.entries(cols).map(([d,j])=>[+d,rows[hr][j]]);
+  const above=rows.slice(0,hr+1).flat().map(x=>String(x||""));
+  return{cells,dates:ttDatesFrom(header,above),times};
+}
+async function ttReadFile(f){
+  if(/\.(html?|xls)$/i.test(f.name)){const txt=await f.text();if(/<table/i.test(txt)){const r=ttFromHtml(txt);if(r)return r}}
+  const X=await loadXLSX();const buf=await f.arrayBuffer();let wb;
+  if(/\.(csv|txt)$/i.test(f.name)){let t=new TextDecoder("utf-8").decode(buf);if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(e){}}wb=X.read(t.replace(/^﻿/,""),{type:"string"})}
+  else wb=X.read(buf,{type:"array"});
+  let best=null;
+  wb.SheetNames.forEach(n=>{const ws=wb.Sheets[n];const rows=X.utils.sheet_to_json(ws,{header:1,defval:"",raw:false,blankrows:true});
+    (ws["!merges"]||[]).forEach(m=>{const v=(rows[m.s.r]||[])[m.s.c];for(let r=m.s.r;r<=m.e.r;r++)for(let c=m.s.c;c<=m.e.c;c++){if(r===m.s.r&&c===m.s.c)continue;rows[r]=rows[r]||[];if(m.s.r===r||c<3)rows[r][c]=rows[r][c]||v}});
+    const g=ttFromRows(rows);if(g&&(!best||Object.keys(g.cells).length>Object.keys(best.cells).length))best=g});
+  return best;
+}
+function ttFromHtml(txt){
+  const doc=new DOMParser().parseFromString(txt,"text/html");let best=null;
+  doc.querySelectorAll("table").forEach(tb=>{const grid=[];
+    [...tb.rows].forEach((tr,ri)=>{grid[ri]=grid[ri]||[];let ci=0;[...tr.cells].forEach(td=>{while(grid[ri][ci]!=null)ci++;const v=(td.innerText||td.textContent||"").replace(/\s+/g," ").trim();const rs=+td.rowSpan||1,cs=+td.colSpan||1;
+      for(let a=0;a<rs;a++)for(let b=0;b<cs;b++){grid[ri+a]=grid[ri+a]||[];grid[ri+a][ci+b]=a===0||ci===0?v:""}ci+=cs})});
+    const g=ttFromRows(grid);if(g&&(!best||Object.keys(g.cells).length>Object.keys(best.cells).length))best=g});
+  return best;
+}
+/* 사진(캡처) → 글자 읽기 → 칸 */
+function ttLoadOCR(){
+  if(window.Tesseract)return Promise.resolve(window.Tesseract);
+  return new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="vendor/ocr/tesseract.min.js";sc.onload=()=>window.Tesseract?res(window.Tesseract):rej(new Error("글자 읽기 기능을 불러오지 못했습니다"));sc.onerror=()=>rej(new Error("글자 읽기 기능을 불러오지 못했습니다. 처음 한 번은 인터넷에 연결되어 있어야 합니다."));document.head.appendChild(sc)});
+}
+function ttGridLines(ctx,W,H){
+  const px=ctx.getImageData(0,0,W,H).data,g=new Uint8Array(W*H);
+  for(let i=0,j=0;i<g.length;i++,j+=4)g[i]=(px[j]*3+px[j+1]*6+px[j+2])/10;
+  const k=Math.max(4,Math.round(Math.min(W,H)/300)),thr=14;
+  const hc=new Uint32Array(H),vc=new Uint32Array(W);
+  for(let y=k;y<H-k;y++){const o=y*W;for(let x=k;x<W-k;x++){const v=g[o+x];
+    if(v+thr<g[o-k*W+x]&&v+thr<g[o+k*W+x])hc[y]++;
+    if(v+thr<g[o+x-k]&&v+thr<g[o+x+k])vc[x]++}}
+  const pick=(cnt,len,minFrac)=>{const out=[];let run=null;for(let i=0;i<cnt.length;i++){if(cnt[i]>len*minFrac){if(run&&i-run.e<=2){run.e=i}else{if(run)out.push((run.s+run.e)/2);run={s:i,e:i}}}}if(run)out.push((run.s+run.e)/2);return out};
+  const merge=a=>a.filter((v,i)=>!i||v-a[i-1]>k*2);
+  return{h:merge(pick(hc,W,.45)),v:merge(pick(vc,H,.3))};
+}
+async function ttOCR(file,prog){
+  const bmp=await createImageBitmap(file);
+  let sc=bmp.width<1500?Math.min(3,1500/bmp.width):(bmp.width>2600?2600/bmp.width:1);
+  const W=Math.round(bmp.width*sc),H=Math.round(bmp.height*sc);
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const ctx=cv.getContext("2d",{willReadFrequently:true});
+  ctx.imageSmoothingQuality="high";ctx.drawImage(bmp,0,0,W,H);
+  const lines=ttGridLines(ctx,W,H);
+  const T=await ttLoadOCR();
+  const w=await T.createWorker("kor",1,{workerPath:"vendor/ocr/worker.min.js",corePath:"vendor/ocr/",langPath:"vendor/ocr",gzip:true,workerBlobURL:false,logger:m=>{if(prog&&m.status==="recognizing text")prog(Math.round(m.progress*100))}});
+  let words=[];
+  try{await w.setParameters({tessedit_pageseg_mode:"11"});
+    const r=await w.recognize(cv,{},{blocks:true});
+    (r.data.blocks||[]).forEach(b=>(b.paragraphs||[]).forEach(p=>(p.lines||[]).forEach(l=>(l.words||[]).forEach(x=>{const t=String(x.text||"").trim();if(t&&x.confidence>15)words.push({t,x0:x.bbox.x0,y0:x.bbox.y0,x1:x.bbox.x1,y1:x.bbox.y1,cx:(x.bbox.x0+x.bbox.x1)/2,cy:(x.bbox.y0+x.bbox.y1)/2,h:x.bbox.y1-x.bbox.y0})}))));
+  }finally{w.terminate()}
+  return ttFromWords(words,lines,W,H);
+}
+function ttJoin(ws){
+  if(!ws.length)return"";const hs=ws.map(w=>w.h).sort((a,b)=>a-b),mh=hs[hs.length>>1]||10;
+  const L=[];ws.slice().sort((a,b)=>a.cy-b.cy).forEach(w=>{const l=L.find(l=>Math.abs(l.cy-w.cy)<mh*.6);if(l){l.ws.push(w)}else L.push({cy:w.cy,ws:[w]})});
+  return L.map(l=>{const a=l.ws.sort((x,y)=>x.x0-y.x0);let s="";a.forEach((w,i)=>{const p=a[i-1];s+=p&&!(/[가-힣]$/.test(p.t)&&/^[가-힣]/.test(w.t)&&w.x0-p.x1<mh*.9)?" "+w.t:w.t});return s}).join(" ");
+}
+function ttFromWords(words,lines,W,H){
+  // 요일 머리글
+  const hd=words.filter(w=>ttDayOf(w.t)>=0||/^[월화수목금]\(/.test(w.t)||(/^[월화수목금]$/.test(w.t[0])&&w.t.length<=9&&/\d/.test(w.t)));
+  let band=null;
+  hd.forEach(a=>{const same=hd.filter(b=>Math.abs(b.cy-a.cy)<Math.max(a.h,b.h));const days=new Set(same.map(b=>WDS.indexOf(b.t[0])));if(days.size>=3&&(!band||days.size>band.n))band={n:days.size,cy:a.cy,ws:same}});
+  if(!band)return null;
+  const dayX={};band.ws.forEach(w=>{const d=WDS.indexOf(w.t[0]);if(d>=0&&dayX[d]==null)dayX[d]=w.x0+Math.max(w.h*.5,(w.t.length>1?w.h*.6:(w.x1-w.x0)/2))});
+  const ks=Object.keys(dayX).map(Number).sort();const step=(dayX[ks[ks.length-1]]-dayX[ks[0]])/Math.max(1,ks[ks.length-1]-ks[0]);
+  for(let d=0;d<5;d++)if(dayX[d]==null)dayX[d]=dayX[ks[0]]+(d-ks[0])*step;
+  const bandBottom=Math.max(...band.ws.map(w=>w.y1));
+  // 머리글 칸의 날짜 글자
+  const header=[];for(let d=0;d<5;d++){const near=words.filter(w=>Math.abs(w.cy-band.cy)<band.ws[0].h*1.8&&Math.abs(w.cx-dayX[d])<step*.5);header.push([d,near.map(w=>w.t).join("")])}
+  // 열 경계
+  let colB=null;
+  if(lines.v.length>=5){const v=lines.v;const cb={};for(let d=0;d<5;d++){const x=dayX[d];let i=v.findIndex(z=>z>x);if(i>0)cb[d]=[v[i-1],v[i]]}if(Object.keys(cb).length===5)colB=cb}
+  if(!colB){colB={};for(let d=0;d<5;d++)colB[d]=[dayX[d]-step/2,dayX[d]+step/2]}
+  const left=colB[0][0];
+  // 행 경계
+  let rowB=[];const times={};
+  const hl=lines.h.filter(y=>y>band.cy);
+  const labelWs=words.filter(w=>w.cx<left&&w.cy>bandBottom);
+  if(hl.length>=4){
+    for(let i=0;i<hl.length-1;i++){const a=hl[i],b=hl[i+1];if(b-a<step*.12)continue;const lab=ttJoin(labelWs.filter(w=>w.cy>a&&w.cy<b));rowB.push({a,b,lab})}
+  }else{
+    const cl=[];labelWs.slice().sort((a,b)=>a.cy-b.cy).forEach(w=>{const c=cl[cl.length-1];if(c&&w.cy-c.y1<w.h*1.2){c.ws.push(w);c.y1=w.y1}else cl.push({ws:[w],y0:w.y0,y1:w.y1})});
+    if(cl.length>=4){cl.forEach((c,i)=>{const mid=(c.y0+c.y1)/2,prev=cl[i-1],next=cl[i+1];const a=prev?((prev.y0+prev.y1)/2+mid)/2:Math.max(bandBottom,mid-(next?((next.y0+next.y1)/2-mid)/2:step));const b=next?(mid+(next.y0+next.y1)/2)/2:mid+(mid-a);rowB.push({a,b,lab:ttJoin(c.ws)})})}
+    else{const body=words.filter(w=>w.cy>bandBottom&&w.cx>left);const bot=body.length?Math.max(...body.map(w=>w.y1))+5:H;const hh=(bot-bandBottom)/PERIODS;for(let p=0;p<PERIODS;p++)rowB.push({a:bandBottom+p*hh,b:bandBottom+(p+1)*hh,lab:""})}
+  }
+  let p=0;const rows=[];
+  rowB.forEach(r=>{const m=r.lab.replace(/\s/g,"").match(/^\(?(\d)(?!\d|:)/);if(/점심|중식/.test(r.lab))return;
+    const hasBody=words.some(w=>w.cy>r.a&&w.cy<r.b&&w.cx>left);
+    if(m&&+m[1]>=1&&+m[1]<=PERIODS)p=+m[1];else if(!r.lab&&!hasBody&&!rows.length)return;else p=p+1;
+    if(p>PERIODS)return;rows.push({...r,p});const tm=r.lab.match(/(\d{1,2}):(\d{2})/);if(tm)times[p]=String(tm[1]).padStart(2,"0")+":"+tm[2]});
+  const cells={};
+  rows.forEach(r=>{for(let d=0;d<5;d++){const[x0,x1]=colB[d];const ws=words.filter(w=>w.cx>x0&&w.cx<x1&&w.cy>r.a&&w.cy<r.b);const t=ttJoin(ws);if(t)cells[d+"-"+r.p]=(cells[d+"-"+r.p]?cells[d+"-"+r.p]+" ":"")+t}});
+  const all=[ttJoin(words.filter(w=>w.cy<band.cy-band.ws[0].h))];
+  return{cells,dates:ttDatesFrom(header,all),times};
+}
+let TTU=null;
+async function ttUpload(f){
+  if(!f)return;
+  const isImg=/^image\//.test(f.type)||/\.(png|jpe?g|webp|gif|bmp|heic)$/i.test(f.name||"");
+  if(!isImg&&!/\.(xlsx|xlsm|xls|ods|csv|html?)$/i.test(f.name||""))return toast("시간표는 사진(캡처)이나 엑셀·CSV·HTML 파일로 올려 주세요");
+  $("sheetBox").innerHTML=`<h2>시간표 올리기</h2><p class="note">${esc(f.name||"붙여 넣은 사진")}</p><div class="ocrprog"><div class="pbar"><i id="ttUpBar" style="width:3%"></i></div><p class="note" id="ttUpMsg">${isImg?"사진에서 글자를 읽을 준비를 하고 있습니다… (처음 한 번은 몇 초 더 걸립니다)":"파일을 읽고 있습니다…"}</p></div><div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;let dead=false;$("skNo").onclick=()=>{dead=true;$("sheet").hidden=true};
+  try{
+    let r;
+    if(isImg){r=await ttOCR(f,n=>{if($("ttUpBar")){$("ttUpBar").style.width=Math.max(3,n)+"%";$("ttUpMsg").textContent=`사진에서 글자를 읽는 중… ${n}%`}})}
+    else r=await ttReadFile(f);
+    if(dead)return;
+    if(!r||!Object.keys(r.cells).length){
+      if(!r&&!isImg)return choose(`<h2>시간표를 찾지 못했습니다</h2><p class="note">파일에서 ‘월 화 수 목 금’ 머리글이 있는 표를 찾지 못했습니다. 컴시간 알리미의 주간 시간표 화면을 캡처해서 올리거나, 빈 표에 직접 넣을 수 있습니다.</p>`,[{label:"빈 표에 직접 넣기",pri:true,go:()=>ttReview({name:f.name,cells:{},dates:null,times:{}},null)}]);
+      r=r||{cells:{},dates:null,times:{}};toast(isImg?"요일 머리글을 찾지 못했습니다. 표에 직접 고쳐 넣어 주세요":"수업 칸을 찾지 못했습니다");
+    }
+    ttReview({name:f.name||"캡처",...r},isImg?URL.createObjectURL(f):null);
+  }catch(e){if(!dead){$("sheet").hidden=true;toast(e&&e.message?e.message:"시간표를 읽지 못했습니다")}}
+}
+function ttReview(up,img){
+  TTU=up;up._img=img;const k=(d,p)=>d+"-"+p;
+  const unk=new Set();Object.values(up.cells).forEach(v=>{const c=ttParseCell(v);if(c&&c.key&&!c.clsId)unk.add(c.key)});
+  $("sheetBox").innerHTML=`<h2>올린 시간표 확인</h2>
+    <p class="note">${img?"사진에서 읽은 글자로 칸을 채웠습니다. 사진과 비교해 틀린 칸을 고쳐 주세요.":"파일에서 읽은 내용입니다."} 한 칸에 <b>과목 학급 강의실</b> 순서로 씁니다 (예: 물리 1-1 과학실). 수업이 없으면 비워 두세요.</p>
+    ${img?`<details class="ttupimg"><summary>올린 사진 보기</summary><img src="${img}" alt="올린 시간표 사진"></details>`:""}
+    <div class="ttupwrap"><table class="ttup"><thead><tr><th></th>${DAYS.map((d,i)=>`<th>${d}${up.dates?`<small>${fmtDate(addDays(up.dates.from,i)).replace("월 ","/").replace("일","")}</small>`:""}</th>`).join("")}</tr></thead><tbody>
+    ${Array.from({length:PERIODS},(_,i)=>`<tr><th>${i+1}</th>${DAYS.map((_,d)=>`<td><textarea class="ttin" rows="2" data-k="${k(d,i+1)}" aria-label="${DAYS[d]} ${i+1}교시">${esc(up.cells[k(d,i+1)]||"")}</textarea></td>`).join("")}</tr>`).join("")}
+    </tbody></table></div>
+    <p class="devinfo" id="ttUpInfo"></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="ttUpNext">다음: 반영 방법 고르기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  const info=()=>{const cs=[...$("sheetBox").querySelectorAll(".ttin")].map(t=>ttParseCell(t.value)).filter(Boolean);const un=[...new Set(cs.filter(c=>c.key&&!c.clsId).map(c=>c.key))];const noK=cs.filter(c=>!c.key).length;
+    $("ttUpInfo").innerHTML=`수업 <b>${cs.length}</b>칸 · ${up.dates?`읽은 날짜 <b>${fmtDate(up.dates.from)} ~ ${fmtDate(up.dates.to)}</b>`:"날짜 정보 없음"}${un.length?`<br>등록되지 않은 학급: ${un.map(esc).join(", ")} (이름만 저장되고 출석과는 연결되지 않습니다)`:""}${noK?`<br>학급을 읽지 못한 칸 ${noK}개 (과목만 저장)`:""}`};
+  $("sheetBox").querySelectorAll(".ttin").forEach(t=>t.oninput=info);info();
+  $("ttUpNext").onclick=()=>{const cells={};up.cells={};$("sheetBox").querySelectorAll(".ttin").forEach(t=>{const v=t.value.trim();if(v)up.cells[t.dataset.k]=v;const c=ttParseCell(v);if(c)cells[t.dataset.k]=c});
+    if(!Object.keys(cells).length)return toast("수업이 들어간 칸이 없습니다");
+    ttDecide(cells,up)};
+}
+function ttTarget(){const p=period();return S.tt.list.find(t=>t.year===p.year&&t.term===p.term)||TT()}
+function ttDefRange(up){if(up.dates)return{...up.dates};const t=today();const mon=mondayOf(t);return(new Date().getDay()===0||new Date().getDay()===6)?{from:addDays(mon,7),to:addDays(mon,11)}:{from:mon,to:addDays(mon,4)}}
+function ttDecide(cells,up){
+  const t=ttTarget(),base=t?t.cells:{},first=!t||!Object.keys(base).length;
+  const rg=ttDefRange(up);
+  const keys=[...new Set(Object.keys(base).concat(Object.keys(cells)))].sort((a,b)=>{const[ad,ap]=a.split("-").map(Number),[bd,bp]=b.split("-").map(Number);return ad-bd||ap-bp});
+  const items=[];let same=0,already=0;
+  keys.forEach(k=>{const[d,p]=k.split("-").map(Number),o=base[k]||null,n=cells[k]||null;
+    if(ttSame(o,n)){same++;return}
+    const cur=t&&up.dates?cellAt(t,d,p,addDays(up.dates.from,d)):o;
+    const done=!!(t&&up.dates&&ttSame(cur,n));if(done)already++;
+    items.push({k,d,p,o,n,kind:!o?"add":!n?"del":"chg",done})});
+  const nBase=Object.keys(base).length,nNew=Object.keys(cells).length,real=items.filter(x=>!x.done).length;
+  const ratio=real/Math.max(1,nBase,nNew);
+  let rec,why;
+  if(first){rec="fix";why="처음 등록하는 시간표입니다. 매주 반복되는 기본 시간표라면 ‘고정’, 이번 주처럼 정한 기간에만 쓰는 시간표라면 ‘임시’를 고르세요."}
+  else if(!real){rec="none";why=already?`바뀐 칸 ${already}개는 이미 그 주의 수업 변동(임시)으로 반영되어 있습니다.`:"지금 시간표와 똑같습니다. 반영할 것이 없습니다."}
+  else if(ratio>=.5){rec="fix";why=`전체 수업의 ${Math.round(ratio*100)}%가 달라 시간표가 새로 바뀐 것으로 보입니다. ‘고정’으로 기본 시간표를 바꾸는 것을 권합니다.`}
+  else if(up.dates){rec="tmp";why=`${fmtDate(up.dates.from)} ~ ${fmtDate(up.dates.to)} 주의 시간표이고 ${real}칸만 달라, 그 주의 ‘임시’ 수업 변동으로 넣는 것을 권합니다. 앞으로 계속 바뀌는 수업은 ‘고정’으로 바꾸세요.`}
+  else{rec=real<=4?"tmp":"fix";why=`${real}칸이 다릅니다. ${rec==="tmp"?"일부만 달라 정한 기간의 ‘임시’ 변동을 권합니다. 앞으로 계속이면 ‘고정’으로 바꾸세요.":"여러 칸이 달라 ‘고정’을 권합니다. 이번 주에만 그렇다면 ‘임시’로 바꾸세요."}`}
+  items.forEach(x=>x.m=x.done?"skip":rec==="none"?"skip":rec);
+  const KN={add:"새 수업",del:"빠진 수업",chg:"바뀐 수업"};
+  const paint=()=>{
+    const nf=items.filter(x=>x.m==="fix").length,nt=items.filter(x=>x.m==="tmp").length;
+    $("ttDcList").innerHTML=items.map((x,i)=>`<div class="ttdc${x.done?" done":""}"><div class="ttdc-t"><b>${DAYS[x.d]} ${x.p}교시</b> <span class="tag ${x.kind}">${x.done?"이미 임시 반영":KN[x.kind]}</span><br><span class="sub">${esc(ttCellTxt(x.o))} → <b>${esc(ttCellTxt(x.n))}</b></span></div>
+      <div class="seg" role="group" aria-label="${DAYS[x.d]} ${x.p}교시 반영 방법">${[["fix","고정"],["tmp","임시"],["skip","두기"]].map(([v,l])=>`<button type="button" class="segb" data-i="${i}" data-m="${v}" aria-pressed="${x.m===v}">${l}</button>`).join("")}</div></div>`).join("")||`<p class="note">바뀐 칸이 없습니다.</p>`;
+    $("ttDcList").querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{items[+b.dataset.i].m=b.dataset.m;paint()});
+    $("ttDcRange").hidden=!nt;$("ttDcOk").textContent=nf||nt?`반영하기 (고정 ${nf} · 임시 ${nt})`:"반영할 칸 없음";$("ttDcOk").disabled=!(nf||nt);
+  };
+  const firstHtml=`<div class="ttfirst">${[["fix","고정 시간표로 등록","매주 반복되는 기본 시간표로 저장합니다. 학기 중 수업 변동은 따로 넣을 수 있습니다."],["tmp","임시 시간표로 등록","아래 기간에만 적용합니다(수업 변동으로 저장). 기간이 지나면 기본 시간표로 돌아갑니다."]].map(([v,l,d])=>`<label class="ttopt"><input type="radio" name="ttFirst" value="${v}"${v==="fix"?" checked":""}><span><b>${l}</b><br><small>${d}</small></span></label>`).join("")}</div>`;
+  $("sheetBox").innerHTML=`<h2>${first?"처음 등록하는 시간표":"올린 시간표 분석"}</h2>
+    <p class="note">${t?`대상: <b>${esc(ttName(t))}</b> 시간표`:`대상: <b>${esc(perLabel())}</b> 새 시간표`}${first?"":` · 같음 ${same}칸 · 다른 칸 ${items.length}개${already?` (이미 반영 ${already})`:""}`}</p>
+    <div class="recbox ${rec}"><b>${rec==="fix"?"고정 권장":rec==="tmp"?"임시 권장":"반영할 것 없음"}</b><br>${esc(why)}</div>
+    ${first?firstHtml:`<div class="presets"><button class="chip" type="button" data-all="fix">모두 고정</button><button class="chip" type="button" data-all="tmp">모두 임시</button><button class="chip" type="button" data-all="skip">모두 그대로 두기</button></div><div id="ttDcList" class="ttdclist"></div>`}
+    <div id="ttDcRange" class="ttrange"><div class="shlb">임시로 적용할 기간</div><div class="range"><label class="lb" for="ttDcF">부터<input class="fld" type="date" id="ttDcF" value="${rg.from}"></label><label class="lb" for="ttDcT">까지<input class="fld" type="date" id="ttDcT" value="${rg.to}"></label></div>
+      <div class="presets"><button class="chip" type="button" data-wk="0">이번 주</button><button class="chip" type="button" data-wk="1">다음 주</button>${up.dates?`<button class="chip" type="button" data-wk="up">사진·파일의 주 (${fmtDate(up.dates.from)}~)</button>`:""}</div></div>
+    <p class="note">고정: 기본 시간표의 칸을 바꿉니다(매주 반복). 임시: 정한 기간에만 바뀌고 ‘수업 변동’ 목록에 들어갑니다. 반영 전 상태는 설정 → 백업의 ‘불러오기 전으로 되돌리기’로 되돌릴 수 있습니다.</p>
+    <div class="row2"><button class="btn" type="button" id="ttDcBack">뒤로</button><button class="btn pri" type="button" id="ttDcOk">반영하기</button></div>`;
+  $("ttDcBack").onclick=()=>ttReview(TTU,TTU._img||null);
+  $("sheetBox").querySelectorAll("[data-wk]").forEach(b=>b.onclick=()=>{let f;if(b.dataset.wk==="up"){f=up.dates.from}else f=addDays(mondayOf(today()),7*+b.dataset.wk);$("ttDcF").value=f;$("ttDcT").value=addDays(f,4)});
+  if(first){const sync=()=>{const v=$("sheetBox").querySelector("[name=ttFirst]:checked").value;$("ttDcRange").hidden=v!=="tmp";$("ttDcOk").textContent=v==="tmp"?"임시 시간표로 반영":"고정 시간표로 반영"};$("sheetBox").querySelectorAll("[name=ttFirst]").forEach(r=>r.onchange=sync);sync()}
+  else{$("sheetBox").querySelectorAll("[data-all]").forEach(b=>b.onclick=()=>{items.forEach(x=>x.m=b.dataset.all);paint()});paint()}
+  $("ttDcOk").onclick=()=>{
+    const from=$("ttDcF").value,to=$("ttDcT").value;
+    const plan=first?Object.keys(cells).map(k=>{const[d,p]=k.split("-").map(Number);return{k,d,p,o:null,n:cells[k],m:$("sheetBox").querySelector("[name=ttFirst]:checked").value}}):items.filter(x=>x.m!=="skip");
+    if(plan.some(x=>x.m==="tmp")&&!(from&&to&&to>=from))return toast("임시로 적용할 기간을 바르게 넣어 주세요");
+    snapshot();
+    let tt=t;if(!tt){const p=period();tt=newTT({year:p.year,term:p.term});S.tt.list.push(tt)}S.tt.active=tt.id;
+    if(first&&up.times&&up.times[1]&&!Object.keys(tt.cells).length&&plan.some(x=>x.m==="fix"))tt.start=up.times[1];
+    let nf=0,nt=0;const now=Date.now();
+    plan.forEach((x,i)=>{
+      if(x.m==="fix"){if(x.n){const o=tt.cells[x.k];tt.cells[x.k]={subject:x.n.subject||(o&&o.subject)||"",clsId:x.n.clsId||(x.n.clsName?"":(o&&o.clsId)||""),clsName:x.n.clsName||(o&&o.clsName)||"",room:x.n.room||(o&&ttSame(o,x.n)?o.room:"")||""}}else delete tt.cells[x.k];nf++}
+      else if(x.m==="tmp"){const o=tt.cells[x.k]||null;
+        tt.chg=(tt.chg||[]).filter(c=>!(c.scope==="cell"&&c.d===x.d&&c.p===x.p&&c.from===from&&c.to===to&&/^올린 시간표/.test(c.reason)));
+        tt.chg.push({id:uid(),scope:"cell",d:x.d,p:x.p,from,to,type:x.n?(o?"change":"add"):"cancel",subject:x.n?x.n.subject:"",clsId:x.n?x.n.clsId:"",clsName:x.n?x.n.clsName:"",room:x.n?x.n.room:"",reason:"올린 시간표 (임시)",created:now+i});nt++}
+    });
+    save();$("sheet").hidden=true;if(nt)ttWeek=mondayOf(from);show("tt");renderTT();
+    toast(`${ttName(tt)} 시간표에 반영했습니다 · 고정 ${nf}칸 · 임시 ${nt}칸`);
+  };
+}
+$("ttUpBtn").onclick=$("ttUpBtn2").onclick=()=>$("ttUpIn").click();
+$("ttUpIn").onchange=e=>{const f=e.target.files[0];e.target.value="";if(f)ttUpload(f)};
+document.addEventListener("paste",e=>{if(!$("v-tt")||$("v-tt").hidden||!$("sheet").hidden)return;const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>/^image\//.test(i.type));if(!it)return;const f=it.getAsFile();if(f){e.preventDefault();ttUpload(new File([f],"붙여넣은 캡처.png",{type:f.type}))}});
+
 /* ---------- 수업 메모장 · 일정 · 알림 · 구글 캘린더 ---------- */
 const EV_CATS=["학생 면담","수업 준비","수업 진도","수행평가","교무 업무","부서 업무","학생 활동","개인 일정","기타"];
 const ALARMS=[[-1,"알림 없음"],[0,"정시"],[5,"5분 전"],[10,"10분 전"],[30,"30분 전"],[60,"1시간 전"],[1440,"하루 전"]];
@@ -2721,7 +3098,7 @@ function editEvent(e,pre){
   $("sheetBox").innerHTML=`<h2>${isNew?"일정 추가":"일정"}</h2>
     <div class="presets" id="evCats">${EV_CATS.map(c=>`<button class="chip" type="button" data-c="${c}">${c}</button>`).join("")}</div>
     <label class="lb" for="evTitle">제목<input class="fld" id="evTitle" placeholder="예: 김동환 진로 상담" autocomplete="off"></label>
-    <div class="ttset"><label class="lb" for="evDate">날짜<input class="fld" id="evDate" type="date"></label>
+    <div class="ttset evdt"><label class="lb" for="evDate">날짜<input class="fld" id="evDate" type="date"></label>
       <label class="lb" for="evStart">시작<input class="fld" id="evStart" type="time"></label>
       <label class="lb" for="evEnd">끝 (선택)<input class="fld" id="evEnd" type="time"></label></div>
     <div class="presets" id="evSlots"></div>
@@ -3249,18 +3626,15 @@ function obsEditTags(){
 function obsExport(){
   const rows=obsList().slice().sort((a,b)=>a.date.localeCompare(b.date)||a.sid.localeCompare(b.sid));
   if(!rows.length)return toast("이 학급에 관찰 기록이 없습니다");
-  loadXLSX().then(X=>{
-    const nm=id=>(D.roster.find(x=>x[0]===id)||[,""])[1];
+  {const nm=id=>(D.roster.find(x=>x[0]===id)||[,""])[1];
     const a=[["날짜","학번","이름","좋음","보통","아쉬움","메모"]];
     rows.forEach(r=>{const by=t=>Object.keys(r.tags).filter(k=>{const x=tagOf(k);return x&&tone(x.t)===t}).map(k=>tagOf(k).l+(r.tags[k]>1?"×"+r.tags[k]:"")).join(", ");a.push([r.date,r.sid,nm(r.sid),by("pos"),by("neu"),by("neg"),r.memo])});
-    const ws=X.utils.aoa_to_sheet(a);ws["!cols"]=[{wch:11},{wch:9},{wch:9},{wch:30},{wch:16},{wch:22},{wch:50}];
     const b=[["학번","이름","기록한 날","누적 항목","메모 모음"]];
     D.roster.forEach(([id,n])=>{const h=rows.filter(r=>r.sid===id);if(!h.length)return;const sum={};h.forEach(r=>Object.entries(r.tags).forEach(([k,c])=>{sum[k]=(sum[k]||0)+c}));
       b.push([id,n,h.length,Object.entries(sum).sort((x,y)=>y[1]-x[1]).map(([k,c])=>{const t=tagOf(k);return t?`${t.l} ${c}`:""}).filter(Boolean).join(", "),h.filter(r=>r.memo).map(r=>`(${r.date.slice(5)}) ${r.memo}`).join(" ")])});
-    const ws2=X.utils.aoa_to_sheet(b);ws2["!cols"]=[{wch:9},{wch:9},{wch:9},{wch:50},{wch:80}];
-    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws2,"학생별 누적");X.utils.book_append_sheet(wb,ws,"날짜별 기록");
-    shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],`${clsName().replace(/\s+/g,"")}_관찰기록_${today().replace(/-/g,"")}.xlsx`,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"관찰 기록 엑셀 파일을 저장했습니다");
-  }).catch(e=>toast(e.message));
+    xlOut(`${clsName().replace(/\s+/g,"")}_관찰기록_${today().replace(/-/g,"")}.xlsx`,[
+      {name:"학생별 누적",title:`학생 관찰 기록 · 학생별 누적 · ${clsName()}`,rows:b,widths:[10,10,10,50,80],text:[0],wrap:[3,4]},
+      {name:"날짜별 기록",title:`학생 관찰 기록 · 날짜별 · ${clsName()}`,rows:a,widths:[12,10,10,30,16,22,50],text:[1],wrap:[3,5,6]}],"관찰 기록 엑셀 파일을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))}
 }
 document.querySelectorAll("#amode .chip").forEach(b=>b.onclick=()=>setAmode(b.dataset.m));
 $("obsDate").onchange=e=>{if(!e.target.value){e.target.value=today();toast("날짜를 고르지 않아 오늘 날짜로 기록합니다")}selDate=e.target.value;selId=null;renderAll()};
@@ -3270,7 +3644,7 @@ renderObs();
 
 /* ---------- 수행평가 점수 확인 · 학생 자필 서명 ---------- */
 function evals(){if(!Array.isArray(S.evals))S.evals=[];return S.evals}
-var EVS={tab:"eval",cur:null,seq:{key:"",i:0},sending:false,cls:"",st:"open",q:"",yr:String(period().year),tm:period().term,sf:"all"};
+var EVS={tab:"eval",cur:null,seq:{key:"",i:0},sending:false,edit:false,sel:new Set(),cls:"",st:"open",q:"",yr:String(period().year),tm:period().term,sf:"all"};
 function loadExcelJS(){
   if(window.ExcelJS)return Promise.resolve(window.ExcelJS);
   return new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="vendor/exceljs.min.js";sc.onload=()=>window.ExcelJS?res(window.ExcelJS):rej(new Error("엑셀 기능을 불러오지 못했습니다"));sc.onerror=()=>rej(new Error("엑셀 기능을 불러오지 못했습니다. 인터넷에 연결한 뒤 다시 해 주세요."));document.head.appendChild(sc)});
@@ -3356,7 +3730,7 @@ function evalTemplateSheet(){
     const c=S.list.find(x=>x.id===$("tpC").value),its=parse(),em=$("tpE").checked;
     const head=["학번","이름",...(em?["이메일"]:[]),...its];const st=c?c.data.roster:[];
     $("tpPrev").innerHTML=`<p class="ttsum">${esc(clsName(c&&c.data))} 학생 ${st.length}명 · 칸 ${head.length}개</p><div class="tblw"><table class="tbl"><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${st.slice(0,4).map(([id,n])=>`<tr><td>${esc(id)}</td><td>${esc(n)}</td>${em?`<td>${esc((c.data.emails||{})[id]||"")}</td>`:""}${its.map(()=>"<td></td>").join("")}</tr>`).join("")}${st.length>4?`<tr><td colspan="${head.length}">… 외 ${st.length-4}명</td></tr>`:""}</tbody></table></div>`;
-    $("tpNote").textContent=st.length?"1행은 제목, 2행부터 학생이 미리 들어갑니다. 점수만 채워 ‘전표 올리기’로 올리면 됩니다.":"이 학급에는 등록된 학생이 없습니다. 설정에서 명단을 먼저 넣어 주세요.";
+    $("tpNote").textContent=st.length?"맨 위 문서 제목·내려받은 일시 아래에 표 제목 줄(학번·이름·항목)과 학생이 미리 들어갑니다. 점수만 채워 ‘전표 올리기’로 올리면 됩니다.":"이 학급에는 등록된 학생이 없습니다. 설정에서 명단을 먼저 넣어 주세요.";
   };
   $("tpMode").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{mode=b.dataset.m;paint()});
   $("tpPre").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{$("tpI").value=b.textContent;paint()});
@@ -3372,31 +3746,21 @@ function evalTemplateSheet(){
   paint();
 }
 function evalTemplateCls(c,its,withEm,sumF){
-  loadXLSX().then(X=>{
-    const d=c.data,pre=withEm?3:2,head=["학번","이름",...(withEm?["이메일"]:[]),...its];
-    const rows=d.roster.map(([id,n])=>[id,n,...(withEm?[(d.emails||{})[id]||""]:[]),...its.map(()=>"")]);
-    const ws=X.utils.aoa_to_sheet([head,...rows]);
-    /* 학번은 글자로 (앞 0 유지) */
-    rows.forEach((r,i)=>{const a=X.utils.encode_cell({r:i+1,c:0});if(ws[a])ws[a]={t:"s",v:String(r[0])}});
-    const ti=its.findIndex(x=>/총점|합계|총계/.test(x));
-    if(sumF&&ti>=0){const nums=its.map((x,j)=>j).filter(j=>j!==ti&&!/의견|비고|메모|피드백|등급|평균/.test(its[j]));
-      if(nums.length)rows.forEach((r,i)=>{const R=i+2,cells=nums.map(j=>X.utils.encode_col(pre+j)+R);ws[X.utils.encode_cell({r:i+1,c:pre+ti})]={t:"n",f:`SUM(${cells.join(",")})`}})}
-    ws["!cols"]=head.map((h,j)=>({wch:j===0?9:j===1?10:withEm&&j===2?24:/의견|비고/.test(h)?28:Math.max(8,h.length*1.8)}));
-    ws["!ref"]=X.utils.encode_range({s:{r:0,c:0},e:{r:rows.length,c:head.length-1}});
-    const g=X.utils.aoa_to_sheet([["수행평가 전표 안내 (이 시트는 읽지 않습니다)"],[`‘수행평가’ 시트에 ${clsName(d)} 학생 ${rows.length}명이 미리 들어 있습니다. 점수 칸만 채우세요.`],["1행(제목)은 지우거나 바꾸지 마세요. 칸을 더하려면 오른쪽에 제목을 쓰고 아래에 입력하면 됩니다."],["다 채우면 교사의 생활 → 평가·통계 → ‘전표 올리기’로 이 파일을 고르세요."]]);g["!cols"]=[{wch:90}];
-    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"수행평가");X.utils.book_append_sheet(wb,g,"안내");
-    const nm=`수행평가_전표_${clsName(d).replace(/\s+/g,"")}_${today().replace(/-/g,"")}.xlsx`;
-    shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],nm,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),`${clsName(d)} 학생 ${rows.length}명이 들어간 전표 양식을 저장했습니다`);
-  }).catch(e=>toast(e.message));
+  const d=c.data,pre=withEm?3:2,head=["학번","이름",...(withEm?["이메일"]:[]),...its];
+  const rows=d.roster.map(([id,n])=>[String(id),n,...(withEm?[(d.emails||{})[id]||""]:[]),...its.map(()=>"")]);
+  const ti=its.findIndex(x=>/총점|합계|총계/.test(x)),nums=its.map((x,j)=>j).filter(j=>j!==ti&&!/의견|비고|메모|피드백|등급|평균/.test(its[j]));
+  const colL=k=>{let s="";k++;while(k){const m=(k-1)%26;s=String.fromCharCode(65+m)+s;k=(k-m-1)/26}return s};
+  xlOut(`수행평가_전표_${clsName(d).replace(/\s+/g,"")}_${today().replace(/-/g,"")}.xlsx`,[
+    {name:"수행평가",title:`수행평가 전표 · ${clsName(d)}`,rows:[head,...rows],text:[0],widths:head.map((h,j)=>j===0?10:j===1?10:withEm&&j===2?24:/의견|비고/.test(h)?28:Math.max(9,h.length*1.9)),
+      formulas:off=>sumF&&ti>=0&&nums.length?rows.map((r,i)=>{const R=off+2+i;return{r:R,c:pre+ti+1,f:`SUM(${nums.map(j=>colL(pre+j)+R).join(",")})`}}):[]},
+    {name:"안내",title:"수행평가 전표 안내 (이 시트는 읽지 않습니다)",head:false,widths:[90],rows:[[`‘수행평가’ 시트에 ${clsName(d)} 학생 ${rows.length}명이 미리 들어 있습니다. 점수 칸만 채우세요.`],["표의 제목 줄(학번·이름…)은 지우거나 바꾸지 마세요. 칸을 더하려면 오른쪽에 제목을 쓰고 아래에 입력하면 됩니다. 맨 위 문서 제목과 ‘내려받은 일시’ 줄은 그대로 두어도 됩니다."],["다 채우면 교사의 생활 → 평가·통계 → ‘전표 올리기’로 이 파일을 고르세요."]]}],
+    `${clsName(d)} 학생 ${rows.length}명이 들어간 전표 양식을 저장했습니다`).catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"));
 }
 function evalTemplate(){
-  loadXLSX().then(X=>{
-    const ws=X.utils.aoa_to_sheet([["학번","이름","이메일","과제 수행(40)","발표(30)","보고서(30)","총점(100)","의견"],["10101","홍길동(예시)","hong@example.com","38","27","28","93","실험 설계가 꼼꼼함"],["10102","김영희(예시)","kim@example.com","35","30","25","90",""]]);
-    ws["!cols"]=[{wch:9},{wch:12},{wch:24},{wch:13},{wch:10},{wch:11},{wch:11},{wch:28}];
-    const g=X.utils.aoa_to_sheet([["수행평가 전표 안내 (이 시트는 읽지 않습니다)"],["‘수행평가’ 시트 1행에 학번, 이름(필수), 이메일(선택)과 평가 항목·총점·의견 칸을 둡니다. 칸 이름과 개수는 자유롭게 바꿔도 됩니다."],["둘째 줄부터 한 줄에 한 학생씩 입력합니다. ‘예시’가 들어간 줄은 건너뜁니다."],["이메일 칸이 비어 있으면 학급 명단에 등록된 학생 이메일을 씁니다."],["학교에서 쓰는 전표 양식을 그대로 올려도 됩니다(학번·이름 칸만 있으면 됨). 서명은 표 오른쪽 끝에 ‘학생 서명’ 칸으로 들어갑니다."]]);g["!cols"]=[{wch:90}];
-    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"수행평가");X.utils.book_append_sheet(wb,g,"안내");
-    shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],"수행평가_전표_양식.xlsx",{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"전표 양식을 저장했습니다");
-  }).catch(e=>toast(e.message));
+  xlOut("수행평가_전표_양식.xlsx",[
+    {name:"수행평가",title:"수행평가 전표",text:[0],widths:[10,12,24,13,10,11,11,28],rows:[["학번","이름","이메일","과제 수행(40)","발표(30)","보고서(30)","총점(100)","의견"],["10101","홍길동(예시)","hong@example.com",38,27,28,93,"실험 설계가 꼼꼼함"],["10102","김영희(예시)","kim@example.com",35,30,25,90,""]]},
+    {name:"안내",title:"수행평가 전표 안내 (이 시트는 읽지 않습니다)",head:false,widths:[90],rows:[["‘수행평가’ 시트의 표 제목 줄에 학번, 이름(필수), 이메일(선택)과 평가 항목·총점·의견 칸을 둡니다. 칸 이름과 개수는 자유롭게 바꿔도 됩니다."],["그다음 줄부터 한 줄에 한 학생씩 입력합니다. ‘예시’가 들어간 줄은 건너뜁니다. 맨 위 문서 제목과 ‘내려받은 일시’ 줄은 그대로 두어도 됩니다."],["이메일 칸이 비어 있으면 학급 명단에 등록된 학생 이메일을 씁니다."],["학교에서 쓰는 전표 양식을 그대로 올려도 됩니다(학번·이름 칸만 있으면 됨). 서명은 표 오른쪽 끝에 ‘학생 서명’ 칸으로 들어갑니다."]]}],
+    "전표 양식을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"));
 }
 /* 전표 올리기 → 미리보기 → 평가 만들기 */
 async function evalUpload(f){
@@ -3531,7 +3895,7 @@ function sigCanvas(sig,W,H){
 const sigCache={};
 function sigURL(st,W,H){const k=st.sid+"|"+st.sig.at+"|"+W;return sigCache[k]||(sigCache[k]=sigCanvas(st.sig,W||300,H||120).toDataURL("image/png"))}
 const fmtDT=t=>{const d=new Date(t);return isNaN(d)?"":`${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`};
-const fmtDTfull=t=>{const d=new Date(t);return isNaN(d)?"":`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`};
+function fmtDTfull(t){const d=new Date(t),z=n=>String(n).padStart(2,"0");return isNaN(d)?"":`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`}
 function stState(st){if(!st.sig)return st.sentAt?"sent":"new";return (st.sig.h?st.sig.h!==st.h:st.sig.stale)?"stale":"ok"}
 function termOf(ts){const d=new Date(ts||Date.now());const m=d.getMonth()+1;return{year:m<=2?d.getFullYear()-1:d.getFullYear(),term:m>=3&&m<=8?"1학기":"2학기"}}
 function evYT(ev){if(!ev.year||!ev.term){const t=termOf(ev.created);ev.year=ev.year||t.year;ev.term=ev.term||t.term}return{year:+ev.year,term:ev.term}}
@@ -3540,6 +3904,13 @@ function evFiltered(){const q=(EVS.q||"").trim().toLowerCase();return evals().fi
 function evTable(ev){return ev.manual?{head:["학번","이름",...ev.cols],rows:ev.stu.map(st=>[st.sid,st.name,...ev.cols.map((c,i)=>st.vals[i]||"")])}:ev.table}
 /* 화면: 평가 목록과 상세 */
 function setStab(t){EVS.tab=t;document.querySelectorAll("#stabs .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));$("s-eval").hidden=t!=="eval";$("s-att").hidden=t!=="att";$("stTitle").textContent=t==="eval"?"수행평가 서명":"출석 통계";if(t==="eval")renderEval();else renderStat()}
+function evDelete(idList){
+  const set=new Set(idList),gone=evals().filter(e=>set.has(e.id));if(!gone.length)return;
+  snapshot();S.evals=evals().filter(e=>!set.has(e.id));gone.forEach(e=>EVS.sel.delete(e.id));if(set.has(EVS.cur))EVS.cur=null;
+  if(!S.evals.length)EVS.edit=false;save();renderEval();
+  const sg=gone.reduce((a,e)=>a+e.stu.filter(x=>stState(x)==="ok").length,0);
+  toast(`평가 ${gone.length}개를 삭제했습니다${sg?` (학생 서명 ${sg}건 포함)`:""}. 설정 → 백업의 ‘불러오기 전으로 되돌리기’로 되돌릴 수 있습니다`);
+}
 function renderEval(){
   if(!EVS)return;$("stSub").textContent=evals().length?`평가 ${evals().length}개`:"";
   const L=$("evList"),B=$("evDetail");if(!L)return;const list=evals();
@@ -3554,6 +3925,13 @@ function renderEval(){
     const yrs=[...new Set(list.map(e=>evYT(e).year).concat([curTerm().year,period().year]).map(Number))].sort((a,b)=>b-a);
     $("evYr").innerHTML=`<option value="">전체</option>`+yrs.map(y=>`<option value="${y}">${y}학년도</option>`).join("");$("evYr").value=EVS.yr||"";$("evTm").value=EVS.tm||"";
     const shown=evFiltered();
+    const ids=new Set(list.map(e=>e.id));[...EVS.sel].forEach(i=>{if(!ids.has(i))EVS.sel.delete(i)});
+    $("evCnt").textContent=`평가 목록 ${shown.length}개`;$("evEdit").setAttribute("aria-pressed",EVS.edit);$("evEdit").textContent=EVS.edit?"편집 마침":"목록 편집 · 삭제";$("evEdit").hidden=!list.length&&!EVS.edit;
+    $("evEdBar").hidden=!EVS.edit;const nSel=shown.filter(e=>EVS.sel.has(e.id)).length;$("evSelN").textContent=`${nSel}개 선택`;$("evDelSel").disabled=!nSel;$("evDelSel").textContent=nSel?`선택한 평가 ${nSel}개 삭제`:"선택한 평가 삭제";$("evSelAll").textContent=nSel&&nSel===shown.length?"선택 해제":"모두 선택";
+    if(EVS.edit){L.innerHTML=shown.length?shown.map(e=>{const n=e.stu.filter(x=>stState(x)==="ok").length,N=e.stu.length;return `<div class="prow edrow${EVS.sel.has(e.id)?" on":""}"><label class="edchk"><input type="checkbox" data-sel="${esc(e.id)}"${EVS.sel.has(e.id)?" checked":""}><span class="pn">${esc(e.title)}<small>${esc(evYT(e).year+"학년도 "+evYT(e).term)} · ${esc(e.clsName||"학급 없음")} · 학생 ${N}명 · 서명 ${n}명</small></span></label><button class="btn bad sm" type="button" data-del="${esc(e.id)}">삭제</button></div>`}).join(""):`<div class="empty">조건에 맞는 평가가 없습니다.</div>`;
+      L.querySelectorAll("[data-sel]").forEach(c=>c.onchange=()=>{c.checked?EVS.sel.add(c.dataset.sel):EVS.sel.delete(c.dataset.sel);renderEval()});
+      L.querySelectorAll("[data-del]").forEach(b=>twoStep(b,"정말 삭제",()=>evDelete([b.dataset.del])));
+      return}
     L.innerHTML=shown.length?shown.map(e=>{const n=e.stu.filter(x=>stState(x)==="ok").length,N=e.stu.length;return `<button class="prow" type="button" data-ev="${esc(e.id)}"><span class="pn">${esc(e.title)}${e.done?'<em class="arc">보관</em>':""}${n===N?'<em class="okb">서명 완료</em>':""}<small>${esc(evYT(e).year+"학년도 "+evYT(e).term)} · ${esc(e.clsName||"학급 없음")} · 학생 ${N}명 · 마감 ${e.due?esc(fmtDate(e.due)):"없음"}${n<N?` · 미서명 ${N-n}명`:""}</small><span class="pbar"><i style="width:${N?Math.round(n/N*100):0}%"></i></span></span><span class="pe">${n}/${N}</span></button>`}).join(""):`<div class="empty">${list.length?(EVS.st==="done"?"보관한 평가가 없습니다.<br>평가를 마치면 평가 화면의 ‘평가 마치고 보관’을 누르세요.":"조건에 맞는 평가가 없습니다."):"아직 평가가 없습니다.<br>‘전표 올리기’로 점수 파일을 올리거나 ‘직접 만들기’로 점수를 입력하면 학생에게 점수와 서명 요청을 보낼 수 있습니다."}</div>`;
     L.querySelectorAll("[data-ev]").forEach(b=>b.onclick=()=>{EVS.cur=b.dataset.ev;renderEval();window.scrollTo(0,0)});
     return;
@@ -3618,7 +3996,10 @@ document.querySelectorAll("#stabs .chip").forEach(b=>b.onclick=()=>setStab(b.dat
 $("evTpl").onclick=evalTemplateSheet;
 $("evNew").onclick=()=>evalManual();
 $("evQ").oninput=e=>{EVS.q=e.target.value;renderEval()};
-$("evYr").onchange=e=>{EVS.yr=e.target.value;renderEval()};$("evTm").onchange=e=>{EVS.tm=e.target.value;renderEval()};
+$("evYr").onchange=e=>{EVS.yr=e.target.value;renderEval()};
+$("evEdit").onclick=()=>{EVS.edit=!EVS.edit;if(!EVS.edit)EVS.sel.clear();renderEval()};
+$("evSelAll").onclick=()=>{const sh=evFiltered();const all=sh.length&&sh.every(e=>EVS.sel.has(e.id));sh.forEach(e=>all?EVS.sel.delete(e.id):EVS.sel.add(e.id));renderEval()};
+twoStep($("evDelSel"),"정말 삭제할까요? 한 번 더",()=>{const ids=evFiltered().filter(e=>EVS.sel.has(e.id)).map(e=>e.id);evDelete(ids)});$("evTm").onchange=e=>{EVS.tm=e.target.value;renderEval()};
 $("evSum").onclick=()=>sigSummary();
 $("evFile").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)evalUpload(f)};
 setStab(EVS.tab);
@@ -3719,12 +4100,10 @@ function sigSummary(){
     <p class="note">평가를 누르면 그 평가로 가서 서명 안 한 학생에게 다시 보낼 수 있습니다.</p>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
   $("sheetBox").querySelectorAll("[data-ev]").forEach(b=>b.onclick=()=>{$("sheet").hidden=true;EVS.cur=b.dataset.ev;EVS.sf="no";renderEval();window.scrollTo(0,0)});
-  $("smX").onclick=()=>loadXLSX().then(X=>{
+  $("smX").onclick=()=>{
     const a=[["학년도","학기","학급","평가","학번","이름","서명 여부","서명 일시"]];
     list.forEach(e=>{const t=evYT(e);e.stu.forEach(st=>{const s=stState(st);a.push([t.year,t.term,e.clsName,e.title,st.sid,st.name,s==="ok"?"서명함":s==="stale"?"재서명 필요":"서명 안 함",s==="ok"?fmtDTfull(st.sig.at):""])})});
-    const ws=X.utils.aoa_to_sheet(a);ws["!cols"]=[{wch:8},{wch:6},{wch:10},{wch:26},{wch:9},{wch:9},{wch:11},{wch:17}];
-    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"서명 현황");
-    shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],`서명현황_${today().replace(/-/g,"")}.xlsx`,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"서명 현황을 저장했습니다")}).catch(e=>toast(e.message));
+    xlOut(`서명현황_${today().replace(/-/g,"")}.xlsx`,[{name:"서명 현황",title:`수행평가 서명 현황 · ${scope}`,rows:a,text:[4],widths:[9,7,11,28,10,10,12,18]}],"서명 현황을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))};
 }
 
 /* 출력 설정: 표기할 학생 고르기, 미서명 학생에게 ‘개별 확인’ 문구 넣기 */
@@ -3766,7 +4145,7 @@ function exportOpts(ev,kind){
 /* 서명 넣은 엑셀 만들기 */
 async function exportSignedXlsx(ev){
   let EX;try{EX=await loadExcelJS()}catch(e){return toast(e.message)}
-  toast("엑셀 파일을 만드는 중…");
+  needMe();toast("엑셀 파일을 만드는 중…");
   const wb=new EX.Workbook();let ws=null,hdr,rowOf;
   if(ev.file&&ev.file.b64){try{await wb.xlsx.load(b642buf(ev.file.b64));ws=wb.getWorksheet(ev.file.sheet)||wb.worksheets[0]}catch(e){ws=null}}
   if(ws){hdr=ev.file.hdr;rowOf=st=>st.row;
@@ -3776,6 +4155,23 @@ async function exportSignedXlsx(ev){
     ws.columns.forEach(c=>{c.width=12})}
   let last=0;ws.getRow(hdr).eachCell({includeEmpty:false},(c,n)=>{last=Math.max(last,n)});last=Math.max(last,(evTable(ev).head||[]).length+((ev.file&&ev.file.c0)||0));
   const sc=last+1,tc=last+2,hs=ws.getRow(hdr).getCell(last).style;
+  /* 문서 제목 아래 오른쪽: 내려받은 일시 · 출력한 사용자 (이미 있으면 새로 고침, 없으면 줄을 끼워 넣음) */
+  {const stampCell=c=>{c.value=outStamp();c.font={size:9,color:{argb:"FF55605A"}};c.alignment={vertical:"middle",horizontal:"right"}};
+    /* 표 제목 줄의 맨 윗줄 (두 줄 제목이면 위쪽 줄) */
+    let hTop=hdr;(ws.model&&ws.model.merges||[]).forEach(m=>{const nums=(m.match(/\d+/g)||[]).map(Number);if(nums.length===2&&nums[0]<hdr&&nums[1]>=hdr)hTop=Math.min(hTop,nums[0])});
+    let srow=0,scell=null;for(let r=1;r<hTop&&!scell;r++)ws.getRow(r).eachCell({includeEmpty:false},c=>{if(!scell&&META_RE.test(String(c.value&&c.value.richText?c.value.richText.map(x=>x.text).join(""):c.value||"")))scell=c});
+    if(scell)stampCell(scell);
+    else{
+      const empty=r=>{let e=true;ws.getRow(r).eachCell({includeEmpty:false},c=>{if(c.value!=null&&c.value!=="")e=false});return e&&!(ws.model.merges||[]).some(m=>{const n=(m.match(/\d+/g)||[]).map(Number);return n[0]<=r&&n[1]>=r})};
+      let add=0;
+      if(hTop>2&&empty(hTop-1))srow=hTop-1;
+      else if(hTop>1){xlInsertRows(ws,hTop,1);srow=hTop;add=1}
+      else{xlInsertRows(ws,1,2);const t=ws.getCell(1,1);t.value=ev.title;t.font={bold:true,size:14};try{ws.mergeCells(1,1,1,tc)}catch(e){}ws.getRow(1).height=26;srow=2;add=2}
+      if(add){hdr+=add;const ro=rowOf;rowOf=st=>{const r=ro(st);return r?r+add:r}}
+      try{ws.mergeCells(srow,1,srow,tc)}catch(e){}
+      stampCell(ws.getCell(srow,1));ws.getRow(srow).height=17;
+    }}
+  try{ws.pageSetup=Object.assign({},ws.pageSetup||{},{fitToPage:true,fitToWidth:1,fitToHeight:0})}catch(e){}
   [[sc,"학생 서명"],[tc,"서명 일시"]].forEach(([c,t])=>{const cell=ws.getRow(hdr).getCell(c);cell.value=t;try{cell.style=JSON.parse(JSON.stringify(hs||{}))}catch(e){}cell.font={...(cell.font||{}),bold:true};cell.alignment={vertical:"middle",horizontal:"center"}});
   ws.getColumn(sc).width=18;ws.getColumn(tc).width=17;
   const thin={style:"thin",color:{argb:"FF999999"}};
@@ -3798,13 +4194,13 @@ async function exportSignedXlsx(ev){
 }
 /* PDF로 인쇄 (원래 표 + 서명) */
 function printSigned(ev){
-  const tb=evTable(ev),head=tb.head,rows=tb.rows;
+  needMe();const tb=evTable(ev),head=tb.head,rows=tb.rows;
   const sOf=r=>ev.stu.find(st=>r.includes(st.sid)&&(!st.name||r.includes(st.name)));
   const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc(ev.title)} 학생 서명</title><style>
     @page{size:A4 ${head.length>7?"landscape":"portrait"};margin:12mm}body{font-family:"NanumGothic","Malgun Gothic",sans-serif;font-size:11px;color:#111}
-    h1{font-size:17px;margin:0 0 4px}p{margin:0 0 10px;color:#444}table{border-collapse:collapse;width:100%}th,td{border:1px solid #888;padding:4px 6px;text-align:center}th{background:#eef1ee}
+    h1{font-size:17px;margin:0 0 2px}.stamp{text-align:right;font-size:9.5px;color:#555;margin:0 0 6px}p{margin:0 0 10px;color:#444}table{border-collapse:collapse;width:100%}th,td{border:1px solid #888;padding:4px 6px;text-align:center}th{background:#eef1ee}
     td img{height:34px;display:block;margin:0 auto}.ns{color:#c0392b}.cf{font-size:9px;line-height:1.3}tr{page-break-inside:avoid}</style></head><body>
-    <h1>${esc(ev.title)}</h1><p>${esc(ev.clsName)} · 출력 ${esc(fmtDTfull(Date.now()))} · 서명 ${ev.stu.filter(x=>stState(x)==="ok").length}/${ev.stu.length}명 · ${esc(APP_NAME)}</p>
+    <h1>${esc(ev.title)}</h1><div class="stamp">${esc(outStamp())}</div><p>${esc(ev.clsName)} · 서명 ${ev.stu.filter(x=>stState(x)==="ok").length}/${ev.stu.length}명 · ${esc(APP_NAME)}</p>
     <table><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join("")}<th>학생 서명</th><th>서명 일시</th></tr></thead><tbody>
     ${rows.map(r=>{const st=sOf(r),md=st?outMode(ev,st):"blank";return `<tr>${head.map((h,j)=>`<td>${esc(r[j]||"")}</td>`).join("")}<td>${md==="sig"?`<img alt="" src="${sigURL(st,300,120)}">`:md==="conf"?`<span class="cf">${esc(evOut(ev).text)}</span>`:md==="blank"?"":`<span class="ns">${md==="stale"?"재서명 필요":"미서명"}</span>`}</td><td>${md==="sig"?esc(fmtDTfull(st.sig.at)):""}</td></tr>`}).join("")}
     </tbody></table><script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>`;
@@ -3815,7 +4211,7 @@ function printSigned(ev){
 /* ---------- 구글 로그인 · 컴퓨터와 휴대폰 연동 (내 구글 드라이브의 앱 전용 숨김 폴더) ---------- */
 const GKEY="att-app-gsync",GBASE="att-app-gbase",GFILE="teachers-life-sync.json";
 const GSCOPE="https://www.googleapis.com/auth/drive.appdata openid email profile";
-const SYNC_EXTRA=["att-app-mail","att-app-msgs"];
+const SYNC_EXTRA=["att-app-mail","att-app-msgs","att-app-me"];
 var G={};try{G=JSON.parse(localStorage.getItem(GKEY)||"{}")||{}}catch(e){G={}}
 const gSave=()=>{try{localStorage.setItem(GKEY,JSON.stringify(G))}catch(e){}};
 var GS={busy:false,timer:0,applying:false,tc:null,msg:"",err:"",pend:false};
@@ -4064,10 +4460,12 @@ async function dropFile(f){
       if(p&&p.kind==="share")return shareSheet(p);if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
     catch(err){toast(err&&err.message?err.message:"파일을 읽지 못했습니다")}return;
   }
-  if(!/\.(xlsx|xlsm|xls|ods|csv)$/i.test(f.name))return toast("엑셀(.xlsx)·CSV·백업(.json) 파일만 올릴 수 있습니다");
+  if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|bmp)$/i.test(f.name)){show("tt");return ttUpload(f)}
+  if(/\.html?$/i.test(f.name)){show("tt");return ttUpload(f)}
+  if(!/\.(xlsx|xlsm|xls|ods|csv)$/i.test(f.name))return toast("엑셀(.xlsx)·CSV·백업(.json)·시간표 사진 파일만 올릴 수 있습니다");
   const go=kind=>{show("set");openBulk(kind);setTimeout(()=>{const inp=$("bkFile");if(!inp)return;try{const dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;inp.dispatchEvent(new Event("change",{bubbles:true}))}catch(e){toast("‘파일 올리기’를 눌러 다시 골라 주세요")}},60)};
-  choose(`<h2>파일 올리기</h2><p class="note"><b>${esc(f.name)}</b><br>어떤 명단인가요?</p>`,[
-    {label:`학생 명단 · 전화번호 (${clsName()})`,pri:true,go:()=>go("stu")},{label:`수업 교사 (${clsName()})`,go:()=>go("tc")},{label:"교직원 연락처",go:()=>go("staff")}]);
+  choose(`<h2>파일 올리기</h2><p class="note"><b>${esc(f.name)}</b><br>어떤 파일인가요?</p>`,[
+    {label:`학생 명단 · 전화번호 (${clsName()})`,pri:true,go:()=>go("stu")},{label:`수업 교사 (${clsName()})`,go:()=>go("tc")},{label:"교직원 연락처",go:()=>go("staff")},{label:"시간표 (컴시간 등 주간 시간표)",go:()=>{show("tt");ttUpload(f)}}]);
 }
 
 function handleHash(){
