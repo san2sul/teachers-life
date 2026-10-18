@@ -323,7 +323,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .who small{display:block;font-weight:400;font-size:.8rem;color:var(--muted);font-family:var(--f-num)}
 .tblw{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:40vh}
 .tbl{border-collapse:collapse;width:100%;font-size:.8rem}.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap}.tbl th{background:var(--bg);position:sticky;top:0}
-.bar{display:block;height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--present)}.bar.big{height:10px}
+.pbar{display:block;height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:6px}.pbar i{display:block;height:100%;background:var(--present)}.pbar.big{height:10px}
 .okb{font-style:normal;font-size:.7rem;color:var(--paper);background:var(--present);border-radius:99px;padding:1px 7px;margin-left:6px}
 .btn.sm{min-height:34px;padding:0 10px;font-size:.8rem}
 .obscard .hd{margin-bottom:4px}
@@ -356,6 +356,19 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .chip.evc[aria-pressed="false"]{background:var(--paper);color:var(--ink);border-style:dashed}.chip.evc[aria-pressed="true"]::before{content:"✓ "}
 .chip.ghost2{min-height:30px;font-size:.78rem;color:var(--muted)}
 .shlb small{font-weight:400}
+.chip.evc{}
+.arc{font-style:normal;font-size:.7rem;color:var(--paper);background:var(--muted);border-radius:99px;padding:1px 7px;margin-left:6px}
+.scw{max-height:55vh}.sct td{padding:4px}.sct td:first-child{white-space:nowrap;font-size:.8rem}.sci{min-width:64px;padding:6px 8px;min-height:36px;font-size:.9rem}
+.vsw{max-height:60vh}.vst td img{width:84px;height:34px;display:block;background:#fff;border:1px solid var(--line);border-radius:4px}.vst tr.vno em{font-style:normal;color:var(--absent);font-weight:700}
+.sumev{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:8px}.sno{color:var(--absent);font-size:.8rem}.syes{color:var(--present);font-size:.8rem}
+.lockbar{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);border-radius:10px;padding:8px 10px;font-size:.84rem}
+#sesCard.locked .lockbar{background:#fff4d6;color:#7a5600}
+@media (prefers-color-scheme:dark){#sesCard.locked .lockbar{background:#3a3220;color:#f2d38a}}
+.list.locked .st{opacity:.75;cursor:not-allowed}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.lockbar.shake{animation:shk .35s}@keyframes shk{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.obdate{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap}.obdate .lb{flex:1 1 140px}.obsum{font-size:.82rem;color:var(--muted);padding-bottom:10px}.obsum b{color:var(--accent)}
+.ocnt{color:var(--accent)!important;font-weight:700!important}
 .eorow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.eorow:first-child{border-top:0}.eorow.dim{opacity:.55}
 .eorow small{color:var(--muted);font-weight:400}.eost img{width:90px;height:36px;border:1px solid var(--line);border-radius:6px;background:#fff;display:block}.eost em{font-style:normal;font-size:.78rem;color:var(--muted)}
 .chip.ghost{color:var(--absent);border-color:var(--absent)}
@@ -524,7 +537,9 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
   </div>
   <div class="ctabs" id="amode"><button class="chip" type="button" data-m="att" aria-pressed="true">출석 체크</button><button class="chip" type="button" data-m="obs">관찰 기록</button></div>
   <div id="m-obs" hidden>
-    <div class="card obscard"><div class="hd"><h2>빠른 체크</h2><button class="btn sm" type="button" id="obsEdit">항목 편집</button></div>
+    <div class="card obscard"><div class="obdate"><label class="lb" for="obsDate">기록 날짜<input class="fld" type="date" id="obsDate"></label><button class="btn sm" type="button" id="obsToday">오늘</button><span class="obsum" id="obsSum"></span></div>
+      <p class="note" style="margin:0">날짜를 고르지 않으면 오늘 날짜로 기록됩니다.</p>
+      <div class="hd"><h2>빠른 체크</h2><button class="btn sm" type="button" id="obsEdit">항목 편집</button></div>
       <div id="obsBar"></div><p class="note" id="obsHint"></p><p class="note">항목 줄은 옆으로 밀어 더 볼 수 있습니다.</p></div>
     <div class="list" id="obsList"></div>
     <div class="row2"><button class="btn" type="button" id="obsXl">관찰 기록 엑셀로 받기</button></div>
@@ -538,6 +553,7 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
       <label class="lb" for="sLabel">이름 (선택)<input class="fld" id="sLabel" placeholder="예: 출발 전, 점심 후" autocomplete="off"></label>
     </div>
     <div class="bar"><div class="stats"><span class="p" id="sp"></span><span class="a" id="sa"></span></div></div>
+    <div class="lockbar" id="lockBar"><span id="lockTxt"></span><button class="btn sm" id="lockBtn" type="button"></button></div>
     <div class="row2"><button class="btn" id="allIn" type="button">전원 출석</button><button class="btn bad" id="allOut" type="button">전원 결석</button></div>
     <div class="row2"><button class="btn bad" id="sDel" type="button">이 출석 체크 삭제</button></div>
   </div>
@@ -613,6 +629,12 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
     <section class="card" id="evListBox"><div class="hd"><h2>수행평가 점수 확인 · 서명</h2></div>
       <p class="note">점수 전표(엑셀·CSV)를 올리면 학생마다 자기 점수와 서명 링크를 이메일로 보냅니다. 학생은 휴대폰에서 점수를 확인하고 손가락으로 서명해 보내고, 모두 서명하면 서명이 들어간 전표를 파일로 받습니다.</p>
       <div class="row2"><label class="btn pri filebtn" for="evFile"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>전표 올리기 (엑셀·CSV)<input type="file" id="evFile" accept=".xlsx,.xls,.xlsm,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"></label><button class="btn" type="button" id="evTpl">전표 양식 받기</button></div>
+      <div class="row2"><button class="btn" type="button" id="evNew">＋ 직접 만들기 (점수 입력)</button></div>
+      <div class="range"><label class="lb" for="evYr">학년도<select class="fld" id="evYr"></select></label><label class="lb" for="evTm">학기<select class="fld" id="evTm"><option value="">전체</option><option>1학기</option><option>2학기</option></select></label></div>
+      <div class="shlb">학급</div><div class="presets" id="evClsF"></div>
+      <div class="presets" id="evStF"><button class="chip" type="button" data-f="open">진행 중</button><button class="chip" type="button" data-f="done">보관함</button><button class="chip" type="button" data-f="all">전체</button></div>
+      <input class="fld" id="evQ" type="search" placeholder="평가 이름으로 찾기" aria-label="평가 찾기" autocomplete="off">
+      <div class="row2"><button class="btn" type="button" id="evSum">서명 현황 모아 보기 (서명한 학생 · 안 한 학생)</button></div>
       <div id="evList"></div>
     </section>
     <div id="evDetail" hidden></div>
@@ -807,8 +829,10 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.3.3", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.4.1", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.4.1",date:"2026-10-18",items:["전표 양식 받기: 등록된 학급 명단(학번·이름·이메일)이 미리 들어간 양식 받기","평가 항목을 직접 입력해 그 항목으로 양식 만들기(자주 쓰는 항목 고르기, 총점 칸 합계 수식), 기본 예시 양식도 그대로"]},
+  {v:"5.4.0",date:"2026-10-18",items:["출석 체크 잠금·잠금 해제: 잠그면 학생 줄을 눌러도 출석·결석이 바뀌지 않고 전원 출석·결석·삭제·시간 수정도 막힘, 잠긴 체크에 🔒 표시","평가·통계: 학년도·학기·학급·진행 중/보관함으로 평가 골라 보기, 평가 이름 찾기","평가 직접 만들기(학급 명단으로 만들고 앱에서 점수 입력, 총점 자동 계산), 점수 고치기, 평가 정보 수정","평가 마치고 보관함에 저장, 보관한 평가와 전표를 언제든 다시 열어 보기(전표 보기: 서명 그림·서명 일시 포함, 서명한 학생/안 한 학생 골라 보기)","서명 현황 모아 보기: 고른 학년도·학기·학급의 평가별 서명한 학생·안 한 학생, 학생별 미서명 평가, 엑셀로 받기","평가 화면에서 서명 안 한 학생·서명한 학생만 골라 보기","관찰 기록: 기록 날짜를 직접 고르기(고르지 않으면 오늘), 이 날 기록 횟수와 누적 횟수, 학생별 누적 횟수·기록한 날 수 표시","출석 화면의 출석·결석 인원 막대가 가려지던 문제 고침"]},
   {v:"5.3.3",date:"2026-10-18",items:["수행평가 전표 올리기 고침: 양식 파일의 ‘안내’ 시트를 전표로 잘못 읽어 ‘점수 칸을 찾지 못했습니다’가 나오던 문제","여러 시트가 있으면 1행 제목(학번·이름·항목)과 2행부터 학생 줄이 있는 시트를 골라 읽기","제목 줄은 ‘학번’, ‘이름’이 서로 다른 칸에 있는 줄만 인정"]},
   {v:"5.3.2",date:"2026-10-18",items:["수행평가 전표 올리기 고침: 두 줄 제목·병합된 칸(예: ‘수행평가 영역’ 아래 ‘실험(40)’)이 있는 학교 전표에서도 항목을 찾아 ‘학생에게 보여 줄 칸’이 켜지도록","값이 저장되지 않은 수식 칸(SUM·AVERAGE·사칙연산)은 앱에서 계산해 읽기, 그래도 못 읽은 칸은 ‘(빈 칸)’으로 표시","보여 줄 칸: ✓ 표시와 점선으로 켜짐·꺼짐 구분, ‘모두 켜기·모두 끄기’ 버튼, 합계·평균 줄은 학생에서 제외"]},
   {v:"5.3.1",date:"2026-10-18",items:["설정 → 학생 명단에서 학생을 한 명씩 추가할 때 이메일 주소 칸 추가"]},
@@ -869,7 +893,7 @@ function normalize(d){
   f.teachers=(d.teachers||[]).filter(t=>t&&t.name).map(t=>({id:String(t.id||uid()),name:String(t.name),role:String(t.role||""),phone:String(t.phone||"")}));
   f.msg=typeof d.msg==="string"&&d.msg&&d.msg!==OLD_MSG?d.msg:DEFAULT_MSG;
   if(Array.isArray(d.sessions)){
-    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.src?{src:String(s.src)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
+    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
   }else if(Array.isArray(d.rounds)){
     /* 예전 1~6차 기록을 날짜별 출석 체크로 옮깁니다 */
     const used=d.rounds.filter(r=>r&&(r.date||Object.values(r.p||{}).some(Boolean)));
@@ -951,7 +975,7 @@ function renderTabs(){
   list.forEach(s=>{
     const n=D.roster.filter(([id])=>s.p[id]).length;
     const b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",s.id===selId);
-    b.innerHTML=`<b>${esc(s.time||"시간 없음")}</b><small>${esc(s.label||"출석 체크")}</small><small>${n}/${D.roster.length}</small>`;
+    b.innerHTML=`<b>${s.lock?"🔒 ":""}${esc(s.time||"시간 없음")}</b><small>${esc(s.label||"출석 체크")}</small><small>${n}/${D.roster.length}</small>`;
     b.onclick=()=>{selId=s.id;renderAll()};
     t.appendChild(b);
   });
@@ -978,6 +1002,10 @@ function renderAtt(){
   const L=$("list");L.innerHTML="";
   if(!D.roster.length){$("noSes").hidden=true;L.innerHTML=`<div class="empty">학생 명단이 비어 있습니다.<br>설정 → ‘학생 명단’에서 추가하거나 ‘명단 가져오기’를 쓰세요.</div>`;return}
   if(!s){$("noSesTxt").textContent=`${fmtDateW(selDate)}에는 출석 체크가 없습니다.`;return}
+  const lk=!!s.lock;$("sesCard").classList.toggle("locked",lk);$("list").classList.toggle("locked",lk);
+  $("lockTxt").innerHTML=lk?`🔒 <b>잠김</b> · ${s.lockAt?esc(fmtDT(s.lockAt))+" 잠금 · ":""}출석·결석이 바뀌지 않습니다`:"🔓 체크를 마치면 잠가 두세요. 실수로 바뀌지 않습니다";
+  $("lockBtn").textContent=lk?"잠금 해제":"잠그기";$("lockBtn").classList.toggle("pri",!lk);
+  ["sTime","sLabel","allIn","allOut","sDel"].forEach(k=>$(k).disabled=lk);
   if(document.activeElement!==$("sTime"))$("sTime").value=s.time;
   if(document.activeElement!==$("sLabel"))$("sLabel").value=s.label;
   const ab=absent().length;
@@ -991,7 +1019,7 @@ function renderAtt(){
     row.setAttribute("aria-label",`${name} ${sesName(s)} ${on?"출석":"결석"}`);
     row.innerHTML=`<span class="no">${i+1}</span><span class="nm">${esc(name)}<small>${esc(id)}${!on&&isDone(s,id)?' <b class="dtag">연락 완료</b>':""}</small><span class="dots">${dots}<span class="n">${selDate===today()?"오늘":"이날"} ${n}/${list.length}</span></span></span>
       <span class="sw"><span class="knob"></span><span class="lab">${on?"출석":"결석"}</span></span>`;
-    const tg=()=>{if(s.p[id])delete s.p[id];else s.p[id]=true;save();renderAtt();renderNav()};
+    const tg=()=>{if(s.lock){lockNudge();return}if(s.p[id])delete s.p[id];else s.p[id]=true;save();renderAtt();renderNav()};
     row.onclick=tg;row.onkeydown=e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();tg()}};
     L.appendChild(row);
   });
@@ -1004,9 +1032,13 @@ $("dToday").onclick=()=>setDate(today());
 $("startSes").onclick=addSession;
 $("sTime").onchange=e=>{const s=R();if(!s)return;s.time=e.target.value;save();renderAll()};
 $("sLabel").oninput=e=>{const s=R();if(!s)return;s.label=e.target.value.trim();save();renderTabs()};
-$("allIn").onclick=()=>{const s=R();if(!s)return;D.roster.forEach(([id])=>s.p[id]=true);save();renderAll()};
-$("allOut").onclick=()=>{const s=R();if(!s)return;s.p={};save();renderAll()};
-twoStep($("sDel"),"정말 삭제",()=>{const s=R();if(!s)return;D.sessions=D.sessions.filter(x=>x!==s);selId=null;save();toast(sesName(s)+" 출석 체크를 삭제했습니다");renderAll()});
+function lockNudge(){toast("잠긴 출석 체크입니다. 바꾸려면 위의 ‘잠금 해제’를 누르세요");const b=$("lockBar");b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake")}
+$("lockBtn").onclick=()=>{const s=R();if(!s)return;
+  if(s.lock)ask(`<h2>잠금 해제</h2><p class="note">${esc(sesName(s))} 출석 체크의 잠금을 풉니다. 학생 줄을 누르면 다시 출석·결석이 바뀝니다.</p>`,"잠금 해제",()=>{delete s.lock;delete s.lockAt;save();renderAll();toast("잠금을 풀었습니다")});
+  else{s.lock=true;s.lockAt=Date.now();save();renderAll();toast("출석 체크를 잠갔습니다")}};
+$("allIn").onclick=()=>{const s=R();if(!s||s.lock)return;D.roster.forEach(([id])=>s.p[id]=true);save();renderAll()};
+$("allOut").onclick=()=>{const s=R();if(!s||s.lock)return;s.p={};save();renderAll()};
+twoStep($("sDel"),"정말 삭제",()=>{const s=R();if(!s||s.lock)return;D.sessions=D.sessions.filter(x=>x!==s);selId=null;save();toast(sesName(s)+" 출석 체크를 삭제했습니다");renderAll()});
 
 /* ---------- 연락 ---------- */
 var seq={key:"",i:0};
@@ -2922,7 +2954,11 @@ function renderObs(){
   $("m-att").hidden=isObs;$("m-obs").hidden=!isObs;
   $("cls").textContent=(D.cls?D.cls+" ":"")+(isObs?"관찰 기록":"출석부");
   if(!isObs)return;
+  if(document.activeElement!==$("obsDate"))$("obsDate").value=selDate;$("obsToday").hidden=selDate===today();
   const recs=obsList().filter(r=>r.date===selDate);
+  const cnt=r=>Object.values(r.tags).reduce((a,n)=>a+n,0)+(r.memo?1:0);
+  const allR=obsList(),totAll=allR.reduce((a,r)=>a+cnt(r),0),totDay=recs.reduce((a,r)=>a+cnt(r),0);
+  $("obsSum").innerHTML=`이 날 <b>${totDay}</b>회 · 누적 <b>${totAll}</b>회`;
   $("dayHead").textContent=`${fmtDateW(selDate)}${selDate===today()?" · 오늘":""} · 관찰 기록 ${recs.length}명`;
   /* 빠른 체크 막대 */
   const arm=OBS.arm&&tagOf(OBS.arm)?OBS.arm:null;OBS.arm=arm;
@@ -2933,8 +2969,8 @@ function renderObs(){
   const L=$("obsList");
   if(!D.roster.length){L.innerHTML=`<div class="empty">학생 명단이 비어 있습니다.</div>`;return}
   const all=obsList();
-  L.innerHTML=D.roster.map(([id,name],i)=>{const r=recs.find(x=>x.sid===id),n=all.filter(x=>x.sid===id).length;
-    return `<div class="orow${r?" has":""}"><button class="obtn" type="button" data-s="${esc(id)}"><span class="no">${i+1}</span><span class="onm">${esc(name)}<small>${esc(id)}${n?` · 기록 ${n}일`:""}</small></span><span class="opills">${tagPills(r,4)}${r&&r.memo?`<span class="opill memo">메모</span>`:""}</span></button><button class="btn sm oedit" type="button" data-e="${esc(id)}" aria-label="${esc(name)} 기록 열기">기록</button></div>`}).join("");
+  L.innerHTML=D.roster.map(([id,name],i)=>{const r=recs.find(x=>x.sid===id),mine=all.filter(x=>x.sid===id),n=mine.length,tc=mine.reduce((a,x)=>a+cnt(x),0);
+    return `<div class="orow${r?" has":""}"><button class="obtn" type="button" data-s="${esc(id)}"><span class="no">${i+1}</span><span class="onm">${esc(name)}<small>${esc(id)}</small>${n?`<small class="ocnt">누적 ${tc}회 · ${n}일</small>`:""}</span><span class="opills">${tagPills(r,4)}${r&&r.memo?`<span class="opill memo">메모</span>`:""}</span></button><button class="btn sm oedit" type="button" data-e="${esc(id)}" aria-label="${esc(name)} 기록 열기">기록</button></div>`}).join("");
   L.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const id=b.dataset.s;if(OBS.arm)quickTag(id,OBS.arm);else obsSheet(id)});
   L.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>obsSheet(b.dataset.e));
 }
@@ -2956,8 +2992,9 @@ function obsSheet(sid,date){
   const r0=obsRec(sid,date),tags={...(r0?r0.tags:{})};
   const hist=obsList().filter(x=>x.sid===sid).sort((a,b)=>b.date.localeCompare(a.date));
   const sum={};hist.forEach(h=>Object.entries(h.tags).forEach(([k,n])=>{sum[k]=(sum[k]||0)+n}));
-  $("sheetBox").innerHTML=`<h2>${esc(st[1])} <span class="sub">${esc(sid)} · ${esc(clsName())}</span></h2>
-    <div class="range"><label class="lb" for="obDate">날짜<input class="fld" type="date" id="obDate"></label></div>
+  const totc=hist.reduce((a,h)=>a+Object.values(h.tags).reduce((x,y)=>x+y,0)+(h.memo?1:0),0);
+  $("sheetBox").innerHTML=`<h2>${esc(st[1])} <span class="sub">${esc(sid)} · ${esc(clsName())}${hist.length?` · 누적 ${totc}회 · ${hist.length}일`:""}</span></h2>
+    <div class="range"><label class="lb" for="obDate">기록 날짜 (비우면 오늘)<input class="fld" type="date" id="obDate"></label></div>
     <div id="obTags"></div>
     <label class="lb" for="obMemo">메모<textarea class="fld" id="obMemo" rows="3" placeholder="예: 실험 설계에서 변인 통제를 스스로 제안함"></textarea></label>
     <div class="presets" id="obQuick">${["발표 내용이 논리적임","모둠 활동을 이끎","질문이 깊이 있음","실험을 꼼꼼히 기록함","개별 지도 필요"].map(x=>`<button class="chip" type="button">${esc(x)}</button>`).join("")}</div>
@@ -2970,9 +3007,9 @@ function obsSheet(sid,date){
     $("obTags").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(tags[k])delete tags[k];else tags[k]=1;paint()})};
   paint();
   $("obQuick").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const m=$("obMemo");m.value=(m.value.trim()?m.value.trim()+" ":"")+b.textContent;m.focus()});
-  $("obDate").onchange=()=>{const d=$("obDate").value;if(d&&d!==date)obsSheet(sid,d)};
+  $("obDate").onchange=()=>{const d=$("obDate").value;if(d&&d!==date){const keep={memo:$("obMemo").value};obsSheet(sid,d);if(!obsRec(sid,d)&&keep.memo)$("obMemo").value=keep.memo}};
   $("skNo").onclick=()=>{$("sheet").hidden=true};
-  $("obOk").onclick=()=>{const d=$("obDate").value||date;let r=obsRec(sid,d,true);r.tags=tags;r.memo=$("obMemo").value.trim();cleanRec(r);save();$("sheet").hidden=true;renderObs();toast(`${st[1]} 학생 기록을 저장했습니다`)};
+  $("obOk").onclick=()=>{const d=$("obDate").value||today();let r=obsRec(sid,d,true);r.tags=tags;r.memo=$("obMemo").value.trim();cleanRec(r);save();$("sheet").hidden=true;renderObs();toast(`${st[1]} 학생 기록을 저장했습니다`)};
   if(r0)twoStep($("obDel"),"정말 삭제",()=>{D.obs=obsList().filter(x=>x!==r0);save();$("sheet").hidden=true;renderObs();toast("기록을 삭제했습니다")});
   $("sheetBox").querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>obsSheet(sid,b.dataset.d));
   const cp=$("obCopy");if(cp)cp.onclick=()=>copy(obsText(sid),"누적 기록을 복사했습니다");
@@ -3022,12 +3059,14 @@ function obsExport(){
   }).catch(e=>toast(e.message));
 }
 document.querySelectorAll("#amode .chip").forEach(b=>b.onclick=()=>setAmode(b.dataset.m));
+$("obsDate").onchange=e=>{if(!e.target.value){e.target.value=today();toast("날짜를 고르지 않아 오늘 날짜로 기록합니다")}selDate=e.target.value;selId=null;renderAll()};
+$("obsToday").onclick=()=>{selDate=today();selId=null;renderAll()};
 $("obsEdit").onclick=obsEditTags;$("obsXl").onclick=obsExport;
 renderObs();
 
 /* ---------- 수행평가 점수 확인 · 학생 자필 서명 ---------- */
 function evals(){if(!Array.isArray(S.evals))S.evals=[];return S.evals}
-var EVS={tab:"eval",cur:null,seq:{key:"",i:0},sending:false};
+var EVS={tab:"eval",cur:null,seq:{key:"",i:0},sending:false,cls:"",st:"open",q:"",yr:"",tm:"",sf:"all"};
 function loadExcelJS(){
   if(window.ExcelJS)return Promise.resolve(window.ExcelJS);
   return new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="vendor/exceljs.min.js";sc.onload=()=>window.ExcelJS?res(window.ExcelJS):rej(new Error("엑셀 기능을 불러오지 못했습니다"));sc.onerror=()=>rej(new Error("엑셀 기능을 불러오지 못했습니다. 인터넷에 연결한 뒤 다시 해 주세요."));document.head.appendChild(sc)});
@@ -3087,6 +3126,65 @@ function detectSheet(g){
   if(cols.length&&!cols.some(c=>c.on))cols.forEach(c=>{if(hd[c.j])c.on=true});
   return{h:h2,idc,nmc,emc,data,cols};
 }
+/* 전표 양식 만들기: 기본 양식 / 등록된 학급 명단으로 / 평가 항목 직접 입력 */
+const TPL_ITEMS_KEY="att-app-tplitems";
+function evalTemplateSheet(){
+  let items="과제 수행(40), 발표(30), 보고서(30), 총점(100), 의견";try{items=localStorage.getItem(TPL_ITEMS_KEY)||items}catch(e){}
+  const c0=S.list.find(c=>c.id===(EVS.cls||S.active))||S.list[0];
+  $("sheetBox").innerHTML=`<h2>전표 양식 받기</h2>
+    <div class="presets" id="tpMode"><button class="chip" type="button" data-m="cls" aria-pressed="true">학급 명단으로 만들기</button><button class="chip" type="button" data-m="basic" aria-pressed="false">기본 양식 (예시)</button></div>
+    <div id="tpCls">
+      <label class="lb" for="tpC">학급 (등록된 학생 정보를 넣습니다)<select class="fld" id="tpC">${S.list.map(c=>`<option value="${esc(c.id)}"${c===c0?" selected":""}>${esc(clsName(c.data))} (${c.data.roster.length}명)</option>`).join("")}</select></label>
+      <label class="lb" for="tpI">평가 항목 (쉼표로 나눔, 순서대로 칸이 됩니다)<input class="fld" id="tpI" autocomplete="off"></label>
+      <div class="presets" id="tpPre">${["과제 수행(40), 발표(30), 보고서(30), 총점(100), 의견","실험 설계, 실험 수행, 결과 분석, 총점, 의견","1차, 2차, 3차, 평균","점수, 등급, 의견"].map(x=>`<button class="chip ghost2" type="button">${esc(x)}</button>`).join("")}</div>
+      <label class="chk" for="tpE"><input type="checkbox" id="tpE" checked> 학생 이메일 칸 넣기 (등록된 이메일 채움)</label>
+      <label class="chk" for="tpS"><input type="checkbox" id="tpS" checked> ‘총점·합계’ 칸에 다른 점수 칸의 합 수식 넣기</label>
+      <div id="tpPrev"></div>
+    </div>
+    <p class="note" id="tpNote"></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="tpOk">${ICON.file}엑셀 양식 받기</button></div>`;
+  $("sheet").hidden=false;$("tpI").value=items;
+  let mode="cls";
+  const parse=()=>$("tpI").value.split(/[,，\n]/).map(x=>x.trim()).filter(Boolean);
+  const paint=()=>{
+    $("tpMode").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===mode));$("tpCls").hidden=mode!=="cls";
+    if(mode==="basic"){$("tpNote").textContent="학번·이름·이메일과 예시 항목(과제 수행, 발표, 보고서, 총점, 의견)이 든 기본 양식입니다. ‘예시’ 줄은 지우거나 그대로 두어도 올릴 때 건너뜁니다.";return}
+    const c=S.list.find(x=>x.id===$("tpC").value),its=parse(),em=$("tpE").checked;
+    const head=["학번","이름",...(em?["이메일"]:[]),...its];const st=c?c.data.roster:[];
+    $("tpPrev").innerHTML=`<p class="ttsum">${esc(clsName(c&&c.data))} 학생 ${st.length}명 · 칸 ${head.length}개</p><div class="tblw"><table class="tbl"><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${st.slice(0,4).map(([id,n])=>`<tr><td>${esc(id)}</td><td>${esc(n)}</td>${em?`<td>${esc((c.data.emails||{})[id]||"")}</td>`:""}${its.map(()=>"<td></td>").join("")}</tr>`).join("")}${st.length>4?`<tr><td colspan="${head.length}">… 외 ${st.length-4}명</td></tr>`:""}</tbody></table></div>`;
+    $("tpNote").textContent=st.length?"1행은 제목, 2행부터 학생이 미리 들어갑니다. 점수만 채워 ‘전표 올리기’로 올리면 됩니다.":"이 학급에는 등록된 학생이 없습니다. 설정에서 명단을 먼저 넣어 주세요.";
+  };
+  $("tpMode").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{mode=b.dataset.m;paint()});
+  $("tpPre").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{$("tpI").value=b.textContent;paint()});
+  ["tpC","tpE","tpS"].forEach(k=>$(k).onchange=paint);$("tpI").oninput=paint;
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("tpOk").onclick=()=>{
+    if(mode==="basic"){$("sheet").hidden=true;return evalTemplate()}
+    const c=S.list.find(x=>x.id===$("tpC").value),its=parse();
+    if(!its.length)return toast("평가 항목을 하나 이상 넣어 주세요");if(!c||!c.data.roster.length)return toast("학생이 있는 학급을 고르세요");
+    try{localStorage.setItem(TPL_ITEMS_KEY,its.join(", "))}catch(e){}
+    evalTemplateCls(c,its,$("tpE").checked,$("tpS").checked);$("sheet").hidden=true;
+  };
+  paint();
+}
+function evalTemplateCls(c,its,withEm,sumF){
+  loadXLSX().then(X=>{
+    const d=c.data,pre=withEm?3:2,head=["학번","이름",...(withEm?["이메일"]:[]),...its];
+    const rows=d.roster.map(([id,n])=>[id,n,...(withEm?[(d.emails||{})[id]||""]:[]),...its.map(()=>"")]);
+    const ws=X.utils.aoa_to_sheet([head,...rows]);
+    /* 학번은 글자로 (앞 0 유지) */
+    rows.forEach((r,i)=>{const a=X.utils.encode_cell({r:i+1,c:0});if(ws[a])ws[a]={t:"s",v:String(r[0])}});
+    const ti=its.findIndex(x=>/총점|합계|총계/.test(x));
+    if(sumF&&ti>=0){const nums=its.map((x,j)=>j).filter(j=>j!==ti&&!/의견|비고|메모|피드백|등급|평균/.test(its[j]));
+      if(nums.length)rows.forEach((r,i)=>{const R=i+2,cells=nums.map(j=>X.utils.encode_col(pre+j)+R);ws[X.utils.encode_cell({r:i+1,c:pre+ti})]={t:"n",f:`SUM(${cells.join(",")})`}})}
+    ws["!cols"]=head.map((h,j)=>({wch:j===0?9:j===1?10:withEm&&j===2?24:/의견|비고/.test(h)?28:Math.max(8,h.length*1.8)}));
+    ws["!ref"]=X.utils.encode_range({s:{r:0,c:0},e:{r:rows.length,c:head.length-1}});
+    const g=X.utils.aoa_to_sheet([["수행평가 전표 안내 (이 시트는 읽지 않습니다)"],[`‘수행평가’ 시트에 ${clsName(d)} 학생 ${rows.length}명이 미리 들어 있습니다. 점수 칸만 채우세요.`],["1행(제목)은 지우거나 바꾸지 마세요. 칸을 더하려면 오른쪽에 제목을 쓰고 아래에 입력하면 됩니다."],["다 채우면 교사의 생활 → 평가·통계 → ‘전표 올리기’로 이 파일을 고르세요."]]);g["!cols"]=[{wch:90}];
+    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"수행평가");X.utils.book_append_sheet(wb,g,"안내");
+    const nm=`수행평가_전표_${clsName(d).replace(/\s+/g,"")}_${today().replace(/-/g,"")}.xlsx`;
+    shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],nm,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),`${clsName(d)} 학생 ${rows.length}명이 들어간 전표 양식을 저장했습니다`);
+  }).catch(e=>toast(e.message));
+}
 function evalTemplate(){
   loadXLSX().then(X=>{
     const ws=X.utils.aoa_to_sheet([["학번","이름","이메일","과제 수행(40)","발표(30)","보고서(30)","총점(100)","의견"],["10101","홍길동(예시)","hong@example.com","38","27","28","93","실험 설계가 꼼꼼함"],["10102","김영희(예시)","kim@example.com","35","30","25","90",""]]);
@@ -3101,6 +3199,7 @@ async function evalUpload(f){
   let g,dt;try{g=await readGrid(f);dt=g.dt}catch(e){return toast(e.message||"파일을 읽지 못했습니다")}
   const ids=dt.data.map(d=>dt.idc>=0?d.r[dt.idc]:"");
   let best=S.list.find(c=>c.id===S.active),bs=-1;S.list.forEach(c=>{const n=ids.filter(x=>x&&c.data.roster.some(r=>r[0]===x)).length;if(n>bs){bs=n;best=c}});
+  if(EVS.cls&&S.list.some(c=>c.id===EVS.cls))best=S.list.find(c=>c.id===EVS.cls);
   const v={title:f.name.replace(/\.[^.]+$/,""),cls:best?best.id:"",due:addDays(today(),3),reply:(G&&G.email)||localStorage.getItem("att-app-reply")||"",note:"",cols:dt.cols};
   const paint=()=>{
     const c=S.list.find(x=>x.id===$("evCls").value),dd=c?c.data:null;
@@ -3115,6 +3214,7 @@ async function evalUpload(f){
   };
   $("sheetBox").innerHTML=`<h2>수행평가 전표 올리기</h2><p class="note">${esc(f.name)} · ‘${esc(g.sheet)}’ 시트 ${dt.h+1}번째 줄을 제목 줄로 읽었습니다.</p>
     <label class="lb" for="evTitle">평가 이름<input class="fld" id="evTitle" autocomplete="off"></label>
+    ${ytFields(curTerm().year,curTerm().term)}
     <div class="range"><label class="lb" for="evCls">학급<select class="fld" id="evCls">${S.list.map(c=>`<option value="${esc(c.id)}">${esc(clsName(c.data))}</option>`).join("")}</select></label>
     <label class="lb" for="evDue">서명 마감일<input class="fld" type="date" id="evDue"></label></div>
     <div class="shlb">학생에게 보여 줄 칸 <small>눌러서 켜고 끕니다</small></div>
@@ -3138,7 +3238,7 @@ async function evalUpload(f){
     if(!isEmail(reply))return err("서명을 회신 받을 이메일을 넣어 주세요.");if(!rows.length)return err("학생 줄이 없습니다.");
     try{localStorage.setItem("att-app-reply",reply)}catch(e){}
     const c=S.list.find(x=>x.id===$("evCls").value);
-    const ev={id:uid(),title,clsId:c?c.id:"",clsName:c?clsName(c.data):"",created:Date.now(),due:$("evDue").value,reply,note:$("evNote").value.trim(),
+    const ev={id:uid(),title,year:+$("evY").value,term:$("evT").value,clsId:c?c.id:"",clsName:c?clsName(c.data):"",created:Date.now(),due:$("evDue").value,reply,note:$("evNote").value.trim(),
       cols:on.map(x=>x.label),colIdx:on.map(x=>x.j),
       file:{name:f.name,sheet:g.sheet,b64:g.b64,hdr:g.r0+dt.h+1,c0:g.c0},
       table:{head:g.rows[dt.h],rows:dt.data.map(d=>d.r)},
@@ -3201,8 +3301,8 @@ function importSig(p,quiet){
   const ev=evals().find(e=>e.id===p.e);if(!ev)throw new Error("이 기기에 없는 평가의 서명입니다. 평가를 만든 기기(또는 같은 구글 계정)에서 여세요.");
   const st=ev.stu.find(x=>x.sid===p.s&&x.tok===p.t);if(!st)throw new Error("확인 코드가 맞지 않는 서명입니다");
   if(st.sig&&st.sig.at===p.at){if(!quiet)toast(`${st.name} 학생 서명은 이미 받았습니다`);return{ev,st,dup:true}}
-  st.sig={at:p.at,pts:p.p,w:p.w||600,hh:p.hh||240,rcv:Date.now(),stale:p.h!==st.h};save();
-  if(!quiet){const n=ev.stu.filter(x=>x.sig&&!x.sig.stale).length;toast(`${st.name} 학생 서명을 받았습니다 (${n}/${ev.stu.length})${st.sig.stale?" · 보낸 뒤 점수가 바뀌어 다시 받아야 합니다":""}`)}
+  st.sig={at:p.at,pts:p.p,w:p.w||600,hh:p.hh||240,rcv:Date.now(),h:p.h,stale:p.h!==st.h};save();
+  if(!quiet){const n=ev.stu.filter(x=>stState(x)==="ok").length;toast(`${st.name} 학생 서명을 받았습니다 (${n}/${ev.stu.length})${st.sig.stale?" · 보낸 뒤 점수가 바뀌어 다시 받아야 합니다":""}`)}
   return{ev,st};
 }
 async function importSigText(text){
@@ -3228,7 +3328,12 @@ const sigCache={};
 function sigURL(st,W,H){const k=st.sid+"|"+st.sig.at+"|"+W;return sigCache[k]||(sigCache[k]=sigCanvas(st.sig,W||300,H||120).toDataURL("image/png"))}
 const fmtDT=t=>{const d=new Date(t);return isNaN(d)?"":`${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`};
 const fmtDTfull=t=>{const d=new Date(t);return isNaN(d)?"":`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`};
-function stState(st){return st.sig?(st.sig.stale?"stale":"ok"):st.sentAt?"sent":"new"}
+function stState(st){if(!st.sig)return st.sentAt?"sent":"new";return (st.sig.h?st.sig.h!==st.h:st.sig.stale)?"stale":"ok"}
+function termOf(ts){const d=new Date(ts||Date.now());const m=d.getMonth()+1;return{year:m<=2?d.getFullYear()-1:d.getFullYear(),term:m>=3&&m<=8?"1학기":"2학기"}}
+function evYT(ev){if(!ev.year||!ev.term){const t=termOf(ev.created);ev.year=ev.year||t.year;ev.term=ev.term||t.term}return{year:+ev.year,term:ev.term}}
+function evFiltered(){const q=(EVS.q||"").trim().toLowerCase();return evals().filter(e=>{const t=evYT(e);return(!EVS.cls||e.clsId===EVS.cls)&&(!EVS.yr||t.year===+EVS.yr)&&(!EVS.tm||t.term===EVS.tm)&&(EVS.st==="all"||(EVS.st==="done"?!!e.done:!e.done))&&(!q||(e.title+" "+e.clsName).toLowerCase().includes(q))})}
+/* 전표 표: 직접 만든 평가는 학생 점수로 표를 만듭니다 */
+function evTable(ev){return ev.manual?{head:["학번","이름",...ev.cols],rows:ev.stu.map(st=>[st.sid,st.name,...ev.cols.map((c,i)=>st.vals[i]||"")])}:ev.table}
 /* 화면: 평가 목록과 상세 */
 function setStab(t){EVS.tab=t;document.querySelectorAll("#stabs .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));$("s-eval").hidden=t!=="eval";$("s-att").hidden=t!=="att";$("stTitle").textContent=t==="eval"?"수행평가 서명":"출석 통계";if(t==="eval")renderEval();else renderStat()}
 function renderEval(){
@@ -3237,7 +3342,15 @@ function renderEval(){
   const ev=list.find(e=>e.id===EVS.cur);
   $("evListBox").hidden=!!ev;B.hidden=!ev;
   if(!ev){
-    L.innerHTML=list.length?list.map(e=>{const n=e.stu.filter(x=>x.sig&&!x.sig.stale).length,N=e.stu.length;return `<button class="prow" type="button" data-ev="${esc(e.id)}"><span class="pn">${esc(e.title)}${n===N?'<em class="okb">서명 완료</em>':""}<small>${esc(e.clsName||"학급 없음")} · 학생 ${N}명 · 마감 ${e.due?esc(fmtDate(e.due)):"없음"}</small><span class="bar"><i style="width:${N?Math.round(n/N*100):0}%"></i></span></span><span class="pe">${n}/${N}</span></button>`}).join(""):`<div class="empty">아직 수행평가가 없습니다.<br>‘전표 올리기’로 점수 파일을 올리면 학생에게 점수와 서명 요청을 보낼 수 있습니다.</div>`;
+    if(EVS.cls&&!S.list.some(c=>c.id===EVS.cls))EVS.cls="";
+    $("evClsF").innerHTML=`<button class="chip" type="button" data-c="" aria-pressed="${!EVS.cls}">모든 학급 <small>${list.length}</small></button>`+S.list.map(c=>`<button class="chip" type="button" data-c="${esc(c.id)}" aria-pressed="${EVS.cls===c.id}">${esc(clsName(c.data))} <small>${list.filter(e=>e.clsId===c.id).length}</small></button>`).join("");
+    $("evClsF").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{EVS.cls=b.dataset.c;renderEval()});
+    $("evStF").querySelectorAll("[data-f]").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.f===EVS.st);b.onclick=()=>{EVS.st=b.dataset.f;renderEval()}});
+    if(document.activeElement!==$("evQ"))$("evQ").value=EVS.q||"";
+    const yrs=[...new Set(list.map(e=>evYT(e).year).concat([curTerm().year]))].sort((a,b)=>b-a);
+    $("evYr").innerHTML=`<option value="">전체</option>`+yrs.map(y=>`<option value="${y}">${y}학년도</option>`).join("");$("evYr").value=EVS.yr||"";$("evTm").value=EVS.tm||"";
+    const shown=evFiltered();
+    L.innerHTML=shown.length?shown.map(e=>{const n=e.stu.filter(x=>stState(x)==="ok").length,N=e.stu.length;return `<button class="prow" type="button" data-ev="${esc(e.id)}"><span class="pn">${esc(e.title)}${e.done?'<em class="arc">보관</em>':""}${n===N?'<em class="okb">서명 완료</em>':""}<small>${esc(evYT(e).year+"학년도 "+evYT(e).term)} · ${esc(e.clsName||"학급 없음")} · 학생 ${N}명 · 마감 ${e.due?esc(fmtDate(e.due)):"없음"}${n<N?` · 미서명 ${N-n}명`:""}</small><span class="pbar"><i style="width:${N?Math.round(n/N*100):0}%"></i></span></span><span class="pe">${n}/${N}</span></button>`}).join(""):`<div class="empty">${list.length?(EVS.st==="done"?"보관한 평가가 없습니다.<br>평가를 마치면 평가 화면의 ‘평가 마치고 보관’을 누르세요.":"조건에 맞는 평가가 없습니다."):"아직 평가가 없습니다.<br>‘전표 올리기’로 점수 파일을 올리거나 ‘직접 만들기’로 점수를 입력하면 학생에게 점수와 서명 요청을 보낼 수 있습니다."}</div>`;
     L.querySelectorAll("[data-ev]").forEach(b=>b.onclick=()=>{EVS.cur=b.dataset.ev;renderEval();window.scrollTo(0,0)});
     return;
   }
@@ -3246,9 +3359,12 @@ function renderEval(){
   const k=need.map(x=>x.sid).join(",");if(EVS.seq.key!==ev.id+k)EVS.seq={key:ev.id+k,i:0};const nx=need[EVS.seq.i];
   const done=n===N;
   B.innerHTML=`<section class="card"><div class="hd"><button class="btn sm" type="button" id="evBack">‹ 목록</button><span class="badge${done?" dn":""}">${done?"모두 서명 완료":`서명 ${n}/${N}`}</span></div>
-      <h2 style="margin:4px 0 0">${esc(ev.title)}</h2><p class="note">${esc(ev.clsName||"학급 없음")} · 보여 줄 칸: ${esc(ev.cols.join(", "))}<br>마감 ${ev.due?esc(fmtDateW(ev.due)):"없음"} · 회신 ${esc(ev.reply)} · 보냄 ${sent}/${N}</p>
-      <div class="bar big"><i style="width:${N?Math.round(n/N*100):0}%"></i></div>
+      <h2 style="margin:4px 0 0">${esc(ev.title)}</h2><p class="note">${esc(evYT(ev).year+"학년도 "+evYT(ev).term)} · ${esc(ev.clsName||"학급 없음")} · 보여 줄 칸: ${esc(ev.cols.join(", "))}<br>마감 ${ev.due?esc(fmtDateW(ev.due)):"없음"} · 회신 ${esc(ev.reply)} · 보냄 ${sent}/${N}</p>
+      <div class="pbar big"><i style="width:${N?Math.round(n/N*100):0}%"></i></div>
       ${done?`<p class="ttsum">모든 학생이 서명했습니다. 아래에서 서명이 들어간 전표를 받으세요.</p>`:""}
+      ${ev.done?`<p class="note">보관함에 있는 평가입니다 (${esc(fmtDTfull(ev.done))} 보관).</p>`:""}
+      <div class="row2"><button class="btn" type="button" id="evView">${ICON.file}전표 보기</button><button class="btn" type="button" id="evEdit">점수 고치기</button></div>
+      <div class="row2"><button class="btn${done&&!ev.done?" pri":""}" type="button" id="evArc">${ev.done?"보관 풀고 다시 진행":"평가 마치고 보관"}</button><button class="btn" type="button" id="evInfo">평가 정보 수정</button></div>
     </section>
     <section class="card"><h2>1. 학생에게 보내기</h2>
       <div class="row2"><button class="btn pri${need.length?"":" off"}" type="button" id="evGm">${ICON.mail}${need.length?`Gmail로 ${unsent.length?`안 보낸 ${unsent.length}명에게`:`서명 안 한 ${need.length}명에게 다시`} 보내기`:"모두 서명해 보낼 학생이 없습니다"}</button></div>
@@ -3260,7 +3376,10 @@ function renderEval(){
       <textarea class="fld" id="evPaste" rows="2" placeholder="받은 서명 링크(…#r=…)를 붙여 넣기"></textarea>
       <div class="row2"><button class="btn" type="button" id="evPasteOk">붙여 넣은 서명 넣기</button></div>
     </section>
-    <section class="card"><div class="hd"><h2>학생별 현황</h2><span class="sub">완료 ${n} · 대기 ${N-n}</span></div><div id="evStu"></div></section>
+    <section class="card"><div class="hd"><h2>학생별 서명 현황</h2><span class="sub">서명 ${n} · 미서명 ${N-n}</span></div>
+      <div class="presets" id="evSf"><button class="chip" type="button" data-f="all">전체 ${N}</button><button class="chip" type="button" data-f="no">서명 안 함 ${N-n}</button><button class="chip" type="button" data-f="ok">서명함 ${n}</button></div>
+      ${N-n?`<p class="note"><b>서명 안 한 학생:</b> ${esc(ev.stu.filter(x=>stState(x)!=="ok").map(x=>x.name).join(", "))}</p>`:""}
+      <div id="evStu"></div></section>
     <section class="card"><h2>3. 서명 넣은 전표 받기</h2>
       ${done?"":`<p class="warn">아직 ${N-n}명이 서명하지 않았습니다.</p>`}
       <div class="row2"><button class="btn${done?" pri":""}" type="button" id="evXl">${ICON.file}엑셀 파일 (서명 그림 포함)</button><button class="btn" type="button" id="evPdf">PDF로 인쇄</button></div>
@@ -3268,10 +3387,14 @@ function renderEval(){
       <div class="row2"><button class="btn bad" type="button" id="evDel">이 평가 삭제</button></div>
     </section>`;
   const SL=$("evStu");
-  SL.innerHTML=ev.stu.map((st,i)=>{const s=stState(st);return `<div class="evrow ${s}"><div class="evh"><span class="who">${esc(st.name)}<small>${esc(st.sid)} · ${st.email?esc(st.email):'<i class="nop">이메일 없음</i>'}</small><small class="vals">${ev.cols.map((c,j)=>`${esc(c)} <b>${esc(st.vals[j]||"-")}</b>`).join(" · ")}</small></span>
+  $("evSf").querySelectorAll("[data-f]").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.f===EVS.sf);b.onclick=()=>{EVS.sf=b.dataset.f;renderEval()}});
+  const ord=ev.stu.map((st,i)=>[st,i]).filter(([st])=>EVS.sf==="all"||(EVS.sf==="ok")===(stState(st)==="ok"));
+  SL.innerHTML=(ord.length?"":`<div class="empty">${EVS.sf==="ok"?"아직 서명한 학생이 없습니다.":"모든 학생이 서명했습니다."}</div>`)+ord.map(([st,i])=>{const s=stState(st);return `<div class="evrow ${s}"><div class="evh"><span class="who">${esc(st.name)}<small>${esc(st.sid)} · ${st.email?esc(st.email):'<i class="nop">이메일 없음</i>'}</small><small class="vals">${ev.cols.map((c,j)=>`${esc(c)} <b>${esc(st.vals[j]||"-")}</b>`).join(" · ")}</small></span>
       <span class="evs">${s==="ok"?`<img alt="${esc(st.name)} 서명" src="${sigURL(st,240,96)}"><small>${esc(fmtDT(st.sig.at))} 서명</small>`:s==="stale"?`<em class="stl">점수 바뀜 · 다시 받기</em>`:s==="sent"?`<em>보냄 ${esc(fmtDT(st.sentAt))}</em>`:`<em class="nw">안 보냄</em>`}</span></div>
       <div class="row2 evb"><button class="btn sm" type="button" data-a="mail" data-i="${i}">${ICON.mail}메일</button><button class="btn sm" type="button" data-a="sms" data-i="${i}">${ICON.sms}문자</button><button class="btn sm" type="button" data-a="copy" data-i="${i}">링크 복사</button>${s==="ok"||s==="stale"?`<button class="btn sm" type="button" data-a="unsig" data-i="${i}">서명 지우기</button>`:""}</div></div>`}).join("");
   $("evBack").onclick=()=>{EVS.cur=null;renderEval()};
+  $("evView").onclick=()=>viewSheet(ev);$("evEdit").onclick=()=>editScores(ev);$("evInfo").onclick=()=>evalInfo(ev);
+  $("evArc").onclick=()=>{if(ev.done){delete ev.done;save();renderEval();toast("다시 진행 중으로 옮겼습니다")}else{ev.done=Date.now();save();EVS.cur=null;EVS.st="done";renderEval();toast(`‘${ev.title}’을(를) 보관함에 저장했습니다. 언제든 다시 열어 볼 수 있습니다`)}};
   $("evGm").onclick=()=>{const list=unsent.length?unsent:need;if(!list.length)return toast(withEm.length?"보낼 학생이 없습니다. 모두 서명했습니다":"이메일이 있는 학생이 없습니다");
     ask(`<h2>Gmail로 보내기</h2><p class="note">${list.length}명에게 각자 자기 점수와 서명 링크를 담은 메일을 <b>${esc(G.email||"내 Gmail")}</b> 계정으로 보냅니다.</p><p class="note">${esc(list.map(x=>x.name).join(", "))}</p>`,"보내기",()=>gmailReady(()=>gmailSendAll(ev,list)))};
   $("evSeq").onclick=async()=>{if(!need.length)return toast(withEm.length?"모두 서명했습니다":"이메일이 있는 학생이 없습니다");if(!nx){EVS.seq.i=0;return renderEval()}
@@ -3288,9 +3411,118 @@ function renderEval(){
       go(smsHref([digits(ph)],`[${ev.title}] ${st.name} 학생 점수 확인 및 서명: ${link}`))}});
 }
 document.querySelectorAll("#stabs .chip").forEach(b=>b.onclick=()=>setStab(b.dataset.t));
-$("evTpl").onclick=evalTemplate;
+$("evTpl").onclick=evalTemplateSheet;
+$("evNew").onclick=()=>evalManual();
+$("evQ").oninput=e=>{EVS.q=e.target.value;renderEval()};
+$("evYr").onchange=e=>{EVS.yr=e.target.value;renderEval()};$("evTm").onchange=e=>{EVS.tm=e.target.value;renderEval()};
+$("evSum").onclick=()=>sigSummary();
 $("evFile").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)evalUpload(f)};
 setStab(EVS.tab);
+
+/* 학년도·학기 고르기 칸 */
+function ytFields(y,t){const yrs=[];const c=curTerm().year;for(let k=c+1;k>=c-4;k--)yrs.push(k);
+  return `<div class="range"><label class="lb" for="evY">학년도<select class="fld" id="evY">${yrs.map(k=>`<option value="${k}"${+y===k?" selected":""}>${k}학년도</option>`).join("")}</select></label><label class="lb" for="evT">학기<select class="fld" id="evT"><option${t==="1학기"?" selected":""}>1학기</option><option${t==="2학기"?" selected":""}>2학기</option></select></label></div>`}
+/* 직접 만들기: 학급 명단으로 평가를 만들고 앱에서 점수 입력 */
+function evalManual(){
+  const t=curTerm(),c0=S.list.find(c=>c.id===(EVS.cls||S.active))||S.list[0];
+  $("sheetBox").innerHTML=`<h2>평가 직접 만들기</h2><p class="note">학급 명단으로 평가를 만들고 이 앱에서 점수를 입력합니다.</p>
+    <label class="lb" for="mnT">평가 이름<input class="fld" id="mnT" placeholder="예: 1차 수행평가 - 실험 보고서" autocomplete="off"></label>
+    ${ytFields(t.year,t.term)}
+    <label class="lb" for="mnC">학급<select class="fld" id="mnC">${S.list.map(c=>`<option value="${esc(c.id)}"${c===c0?" selected":""}>${esc(clsName(c.data))} (${c.data.roster.length}명)</option>`).join("")}</select></label>
+    <label class="lb" for="mnI">평가 항목 (쉼표로 나눔)<input class="fld" id="mnI" value="과제 수행(40), 발표(30), 보고서(30), 총점(100), 의견" autocomplete="off"></label>
+    <div class="range"><label class="lb" for="mnD">서명 마감일<input class="fld" type="date" id="mnD"></label></div>
+    <label class="lb" for="mnR">서명을 회신 받을 내 이메일<input class="fld" id="mnR" type="email" inputmode="email" spellcheck="false" placeholder="teacher@example.com"></label>
+    <p class="warn" id="mnE" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="mnOk">만들고 점수 입력</button></div>`;
+  $("sheet").hidden=false;$("mnD").value=addDays(today(),3);$("mnR").value=(G&&G.email)||localStorage.getItem("att-app-reply")||"";
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("mnOk").onclick=()=>{const err=m=>{$("mnE").textContent=m;$("mnE").hidden=false};
+    const title=$("mnT").value.trim(),cols=$("mnI").value.split(/[,，]/).map(x=>x.trim()).filter(Boolean),reply=$("mnR").value.trim(),c=S.list.find(x=>x.id===$("mnC").value);
+    if(!title)return err("평가 이름을 넣어 주세요.");if(!cols.length)return err("평가 항목을 하나 이상 넣어 주세요.");if(!c||!c.data.roster.length)return err("학생이 있는 학급을 고르세요.");if(!isEmail(reply))return err("회신 받을 이메일을 넣어 주세요.");
+    try{localStorage.setItem("att-app-reply",reply)}catch(e){}
+    const d=c.data,ev={id:uid(),manual:true,title,year:+$("evY").value,term:$("evT").value,clsId:c.id,clsName:clsName(d),created:Date.now(),due:$("mnD").value,reply,note:"",cols,colIdx:[],file:{name:"(앱에서 입력)",b64:""},table:null,
+      stu:d.roster.map(([id,name])=>{const vals=cols.map(()=>"");return{sid:id,name,email:(d.emails||{})[id]||"",row:0,vals,tok:rndTok(),h:fnv(JSON.stringify(vals)),sentAt:0,sig:null}})};
+    evals().unshift(ev);EVS.cur=ev.id;save();$("sheet").hidden=true;renderEval();editScores(ev);
+  };
+}
+/* 점수 고치기 · 입력 */
+function editScores(ev){
+  const vals=ev.stu.map(st=>st.vals.slice()),ti=ev.cols.findIndex(c=>/총점|합계|총계/.test(c));
+  $("sheetBox").innerHTML=`<h2>점수 ${ev.manual?"입력":"고치기"} <span class="sub">${esc(ev.title)}</span></h2>
+    <p class="note">칸을 눌러 고칩니다. 이미 서명한 학생의 점수를 바꾸면 ‘점수 바뀜’으로 표시되어 다시 서명을 받아야 합니다.</p>
+    <div class="tblw scw"><table class="tbl sct"><thead><tr><th>이름</th>${ev.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>
+    ${ev.stu.map((st,i)=>`<tr><td><b>${esc(st.name)}</b><br><small>${esc(st.sid)}</small></td>${ev.cols.map((c,j)=>`<td><input class="fld sci" data-i="${i}" data-j="${j}" value="${esc(vals[i][j]||"")}" ${/의견|비고|메모|피드백/.test(c)?"":'inputmode="decimal"'} aria-label="${esc(st.name)} ${esc(c)}"></td>`).join("")}</tr>`).join("")}
+    </tbody></table></div>
+    ${ti>=0?`<div class="row2"><button class="btn" type="button" id="scSum">‘${esc(ev.cols[ti])}’ 자동 계산 (다른 숫자 칸의 합)</button></div>`:""}
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="scOk">저장</button></div>`;
+  $("sheet").hidden=false;
+  $("sheetBox").querySelectorAll(".sci").forEach(x=>x.oninput=()=>{vals[+x.dataset.i][+x.dataset.j]=x.value.trim()});
+  const sb=$("scSum");if(sb)sb.onclick=()=>{vals.forEach((v,i)=>{let sum=0,any=false;ev.cols.forEach((c,j)=>{if(j===ti||/의견|비고|메모/.test(c))return;const n=parseFloat(v[j]);if(!isNaN(n)){sum+=n;any=true}});if(any){v[ti]=String(Math.round(sum*100)/100);const inp=$("sheetBox").querySelector(`.sci[data-i="${i}"][data-j="${ti}"]`);if(inp)inp.value=v[ti]}})};
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("scOk").onclick=()=>{let ch=0;
+    ev.stu.forEach((st,i)=>{vals[i].forEach((v,j)=>{if((st.vals[j]||"")!==v){st.vals[j]=v;if(!st.ed)st.ed={};st.ed[j]=1;ch++;
+        if(!ev.manual&&ev.table){const r=ev.table.rows.find(r=>r.includes(st.sid));const cj=(ev.colIdx||[])[j];if(r&&cj!=null)r[cj]=v}}});
+      st.h=fnv(JSON.stringify(st.vals))});
+    save();$("sheet").hidden=true;renderEval();toast(ch?`점수 ${ch}칸을 고쳤습니다`:"바뀐 점수가 없습니다")};
+}
+/* 전표 보기 (앱 안에서 표로) */
+function viewSheet(ev){
+  const tb=evTable(ev),sOf=r=>ev.stu.find(st=>r.includes(st.sid)&&(!st.name||r.includes(st.name)));
+  const n=ev.stu.filter(x=>stState(x)==="ok").length;
+  $("sheetBox").innerHTML=`<h2>${esc(ev.title)}</h2><p class="note">${esc(evYT(ev).year+"학년도 "+evYT(ev).term)} · ${esc(ev.clsName)} · 서명 ${n}/${ev.stu.length}명 · ${esc(ev.file&&ev.file.name||"")}</p>
+    <div class="presets" id="vsF"><button class="chip" type="button" data-f="all" aria-pressed="true">전체</button><button class="chip" type="button" data-f="no">서명 안 한 학생</button><button class="chip" type="button" data-f="ok">서명한 학생</button></div>
+    <div class="tblw vsw"><table class="tbl vst"><thead><tr>${tb.head.map(h=>`<th>${esc(h)}</th>`).join("")}<th>학생 서명</th><th>서명 일시</th></tr></thead><tbody id="vsB"></tbody></table></div>
+    <div class="row2"><button class="btn" type="button" id="vsX">${ICON.file}엑셀로 받기</button><button class="btn" type="button" id="vsP">PDF로 인쇄</button></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;
+  const paint=f=>{$("vsB").innerHTML=tb.rows.map(r=>{const st=sOf(r),s=st?stState(st):"x";if(f==="ok"&&s!=="ok")return"";if(f==="no"&&s==="ok")return"";
+    return `<tr class="${s==="ok"?"vok":"vno"}">${tb.head.map((h,j)=>`<td>${esc(r[j]||"")}</td>`).join("")}<td>${s==="ok"?`<img alt="" src="${sigURL(st,240,96)}">`:`<em>${s==="stale"?"재서명 필요":st?"미서명":""}</em>`}</td><td>${s==="ok"?esc(fmtDTfull(st.sig.at)):""}</td></tr>`}).join("")};
+  paint("all");
+  $("vsF").querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{$("vsF").querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));paint(b.dataset.f)});
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("vsX").onclick=()=>exportOpts(ev,"xlsx");$("vsP").onclick=()=>exportOpts(ev,"pdf");
+}
+/* 평가 정보 수정 */
+function evalInfo(ev){
+  const t=evYT(ev);
+  $("sheetBox").innerHTML=`<h2>평가 정보 수정</h2>
+    <label class="lb" for="eiT">평가 이름<input class="fld" id="eiT" autocomplete="off"></label>${ytFields(t.year,t.term)}
+    <div class="range"><label class="lb" for="eiD">서명 마감일<input class="fld" type="date" id="eiD"></label></div>
+    <label class="lb" for="eiR">회신 받을 이메일<input class="fld" id="eiR" type="email" spellcheck="false"></label>
+    <label class="lb" for="eiN">학생에게 전할 말<textarea class="fld" id="eiN" rows="2"></textarea></label>
+    <p class="note">학급: ${esc(ev.clsName)} (학급은 바꿀 수 없습니다. 다른 학급은 새 평가로 만드세요)</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="eiOk">저장</button></div>`;
+  $("sheet").hidden=false;$("eiT").value=ev.title;$("eiD").value=ev.due||"";$("eiR").value=ev.reply||"";$("eiN").value=ev.note||"";
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("eiOk").onclick=()=>{const r=$("eiR").value.trim();if(!$("eiT").value.trim())return toast("평가 이름을 넣어 주세요");if(!isEmail(r))return toast("이메일을 확인하세요");
+    Object.assign(ev,{title:$("eiT").value.trim(),year:+$("evY").value,term:$("evT").value,due:$("eiD").value,reply:r,note:$("eiN").value.trim()});save();$("sheet").hidden=true;renderEval();toast("평가 정보를 고쳤습니다")};
+}
+/* 서명 현황 모아 보기: 고른 학년도·학기·학급의 평가별 서명한 학생 / 안 한 학생 */
+function sigSummary(){
+  const list=evFiltered();
+  const scope=[EVS.yr?EVS.yr+"학년도":"모든 학년도",EVS.tm||"모든 학기",EVS.cls?clsName((S.list.find(c=>c.id===EVS.cls)||{}).data):"모든 학급",{open:"진행 중",done:"보관함",all:"전체"}[EVS.st]].join(" · ");
+  const miss={};list.forEach(e=>e.stu.forEach(st=>{if(stState(st)!=="ok"){const k=e.clsName+"|"+st.sid;(miss[k]=miss[k]||{name:st.name,cls:e.clsName,sid:st.sid,evs:[]}).evs.push(e.title)}}));
+  const mlist=Object.values(miss).sort((a,b)=>b.evs.length-a.evs.length||a.sid.localeCompare(b.sid));
+  const tot=list.reduce((a,e)=>a+e.stu.length,0),ok=list.reduce((a,e)=>a+e.stu.filter(x=>stState(x)==="ok").length,0);
+  $("sheetBox").innerHTML=`<h2>서명 현황</h2><p class="note">${esc(scope)} · 평가 ${list.length}개 · 서명 ${ok}/${tot}</p>
+    ${list.length?list.map(e=>{const yes=e.stu.filter(x=>stState(x)==="ok"),no=e.stu.filter(x=>stState(x)!=="ok");
+      return `<div class="sumev"><button class="ohrow" type="button" data-ev="${esc(e.id)}"><b>${esc(e.title)}</b><small>${esc(evYT(e).year+"학년도 "+evYT(e).term)} · ${esc(e.clsName)} · 서명 ${yes.length}/${e.stu.length}</small>
+        <span class="pbar"><i style="width:${e.stu.length?Math.round(yes.length/e.stu.length*100):0}%"></i></span>
+        ${no.length?`<span class="sno">서명 안 함 ${no.length}명: ${esc(no.map(x=>x.name).join(", "))}</span>`:`<span class="syes">모두 서명</span>`}
+        ${yes.length?`<span class="syes">서명함 ${yes.length}명: ${esc(yes.map(x=>x.name).join(", "))}</span>`:""}</button></div>`}).join(""):`<div class="empty">조건에 맞는 평가가 없습니다.</div>`}
+    ${mlist.length?`<h3 class="sh3">학생별 미서명 (${mlist.length}명)</h3><div class="tblw"><table class="tbl"><thead><tr><th>학급</th><th>학번</th><th>이름</th><th>서명 안 한 평가</th></tr></thead><tbody>${mlist.map(m=>`<tr><td>${esc(m.cls)}</td><td>${esc(m.sid)}</td><td>${esc(m.name)}</td><td>${esc(m.evs.join(", "))}</td></tr>`).join("")}</tbody></table></div>`:""}
+    <div class="row2"><button class="btn" type="button" id="smX">엑셀로 받기</button><button class="btn" type="button" id="skNo">닫기</button></div>
+    <p class="note">평가를 누르면 그 평가로 가서 서명 안 한 학생에게 다시 보낼 수 있습니다.</p>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("sheetBox").querySelectorAll("[data-ev]").forEach(b=>b.onclick=()=>{$("sheet").hidden=true;EVS.cur=b.dataset.ev;EVS.sf="no";renderEval();window.scrollTo(0,0)});
+  $("smX").onclick=()=>loadXLSX().then(X=>{
+    const a=[["학년도","학기","학급","평가","학번","이름","서명 여부","서명 일시"]];
+    list.forEach(e=>{const t=evYT(e);e.stu.forEach(st=>{const s=stState(st);a.push([t.year,t.term,e.clsName,e.title,st.sid,st.name,s==="ok"?"서명함":s==="stale"?"재서명 필요":"서명 안 함",s==="ok"?fmtDTfull(st.sig.at):""])})});
+    const ws=X.utils.aoa_to_sheet(a);ws["!cols"]=[{wch:8},{wch:6},{wch:10},{wch:26},{wch:9},{wch:9},{wch:11},{wch:17}];
+    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"서명 현황");
+    shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],`서명현황_${today().replace(/-/g,"")}.xlsx`,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"서명 현황을 저장했습니다")}).catch(e=>toast(e.message));
+}
+
 /* 출력 설정: 표기할 학생 고르기, 미서명 학생에게 ‘개별 확인’ 문구 넣기 */
 const CONF_TEXT="개별 연락을 통해 성적을 확인함";
 function evOut(ev){if(!ev.out)ev.out={mark:{},conf:{},text:CONF_TEXT};if(!ev.out.mark)ev.out.mark={};if(!ev.out.conf)ev.out.conf={};if(!ev.out.text)ev.out.text=CONF_TEXT;return ev.out}
@@ -3333,11 +3565,12 @@ async function exportSignedXlsx(ev){
   toast("엑셀 파일을 만드는 중…");
   const wb=new EX.Workbook();let ws=null,hdr,rowOf;
   if(ev.file&&ev.file.b64){try{await wb.xlsx.load(b642buf(ev.file.b64));ws=wb.getWorksheet(ev.file.sheet)||wb.worksheets[0]}catch(e){ws=null}}
-  if(ws){hdr=ev.file.hdr;rowOf=st=>st.row}
-  else{ws=wb.addWorksheet((ev.title||"수행평가").replace(/[\\/?*[\]:]/g," ").slice(0,30));ws.addRow(ev.table.head);ev.table.rows.forEach(r=>ws.addRow(r));ws.getRow(1).font={bold:true};hdr=1;
-    const order=ev.stu.map(st=>ev.table.rows.findIndex(r=>r.includes(st.sid)&&(r.includes(st.name)||!st.name)));rowOf=st=>2+order[ev.stu.indexOf(st)];
+  if(ws){hdr=ev.file.hdr;rowOf=st=>st.row;
+    ev.stu.forEach(st=>Object.keys(st.ed||{}).forEach(i=>{const j=(ev.colIdx||[])[+i];if(j==null||!st.row)return;const v=st.vals[+i],n=Number(v);ws.getRow(st.row).getCell(j+1+((ev.file&&ev.file.c0)||0)).value=v!==""&&!isNaN(n)?n:v}))}
+  else{const tb=evTable(ev);ws=wb.addWorksheet((ev.title||"수행평가").replace(/[\\/?*[\]:]/g," ").slice(0,30));ws.addRow(tb.head);tb.rows.forEach(r=>ws.addRow(r));ws.getRow(1).font={bold:true};hdr=1;
+    const order=ev.stu.map(st=>tb.rows.findIndex(r=>r.includes(st.sid)&&(r.includes(st.name)||!st.name)));rowOf=st=>2+order[ev.stu.indexOf(st)];
     ws.columns.forEach(c=>{c.width=12})}
-  let last=0;ws.getRow(hdr).eachCell({includeEmpty:false},(c,n)=>{last=Math.max(last,n)});last=Math.max(last,(ev.table.head||[]).length+((ev.file&&ev.file.c0)||0));
+  let last=0;ws.getRow(hdr).eachCell({includeEmpty:false},(c,n)=>{last=Math.max(last,n)});last=Math.max(last,(evTable(ev).head||[]).length+((ev.file&&ev.file.c0)||0));
   const sc=last+1,tc=last+2,hs=ws.getRow(hdr).getCell(last).style;
   [[sc,"학생 서명"],[tc,"서명 일시"]].forEach(([c,t])=>{const cell=ws.getRow(hdr).getCell(c);cell.value=t;try{cell.style=JSON.parse(JSON.stringify(hs||{}))}catch(e){}cell.font={...(cell.font||{}),bold:true};cell.alignment={vertical:"middle",horizontal:"center"}});
   ws.getColumn(sc).width=18;ws.getColumn(tc).width=17;
@@ -3361,7 +3594,7 @@ async function exportSignedXlsx(ev){
 }
 /* PDF로 인쇄 (원래 표 + 서명) */
 function printSigned(ev){
-  const head=ev.table.head,rows=ev.table.rows;
+  const tb=evTable(ev),head=tb.head,rows=tb.rows;
   const sOf=r=>ev.stu.find(st=>r.includes(st.sid)&&(!st.name||r.includes(st.name)));
   const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>${esc(ev.title)} 학생 서명</title><style>
     @page{size:A4 ${head.length>7?"landscape":"portrait"};margin:12mm}body{font-family:"NanumGothic","Malgun Gothic",sans-serif;font-size:11px;color:#111}
