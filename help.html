@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>도움말 · 교사의 생활</title>
+<style>
+@font-face{font-family:"NanumGothic";src:url("NanumGothic-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"NanumGothic";src:url("NanumGothic-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+:root{--bg:#f3f5f2;--paper:#fff;--ink:#1d2621;--muted:#6a756e;--line:#dde3de;--accent:#24476b;--soft:#e3ebf3;--ok:#1f7a4d;--bad:#c0392b;--new:#d9480f}
+@media (prefers-color-scheme:dark){:root{--bg:#141917;--paper:#1c2320;--ink:#e7ece8;--muted:#97a39b;--line:#2d3833;--accent:#8fb4dc;--soft:#1f2c3a;--ok:#5fc08e;--bad:#ef7b6e;--new:#ff9f68}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"NanumGothic",system-ui,sans-serif;line-height:1.7;font-size:15.5px;-webkit-text-size-adjust:100%}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:8px;align-items:center}
+.top input{flex:1;min-width:0;font:inherit;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:9px 12px}
+.top button{font:inherit;font-weight:700;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:8px 12px;cursor:pointer;white-space:nowrap}
+main{max-width:760px;margin:0 auto;padding:16px 16px 60px;display:flex;flex-direction:column;gap:14px}
+.hero{background:var(--accent);color:#fff;border-radius:16px;padding:18px}
+.hero h1{margin:0;font-size:1.35rem}.hero p{margin:6px 0 0;opacity:.9;font-size:.92rem}
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+nav.toc b{display:block;margin-bottom:6px}
+nav.toc ol{margin:0;padding-left:1.4em;columns:2;column-gap:20px;font-size:.92rem}
+@media (max-width:520px){nav.toc ol{columns:1}}
+nav.toc a{color:var(--accent);text-decoration:none}
+section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:6px 18px 14px}
+section h2{font-size:1.12rem;margin:14px 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+section h3{font-size:.98rem;margin:16px 0 4px;color:var(--accent)}
+p{margin:6px 0}ol,ul{margin:6px 0;padding-left:1.35em}li{margin:3px 0}
+.path{display:inline-block;background:var(--soft);color:var(--accent);border-radius:6px;padding:0 6px;font-weight:700;font-size:.9em}
+.tip,.warn{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem}
+.tip{background:var(--soft)}.warn{background:#fdecea;color:#8a2a1e}
+@media (prefers-color-scheme:dark){.warn{background:#3a2422;color:#f3b8ae}}
+.new{font-size:.68rem;font-weight:700;color:#fff;background:var(--new);border-radius:99px;padding:1px 8px;letter-spacing:.02em}
+.ver{font-size:.72rem;font-weight:400;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:6px 0}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--bg)}
+.hide{display:none!important}
+mark{background:#ffe08a;color:inherit;border-radius:3px}
+.chg{border-top:1px solid var(--line);padding:8px 0}.chg:first-of-type{border-top:0}.chg b{color:var(--accent)}
+.empty{text-align:center;color:var(--muted);padding:20px}
+.foot{text-align:center;color:var(--muted);font-size:.8rem}
+@media print{.top,nav.toc{display:none}section{break-inside:avoid-page;border:0}}
+</style>
+</head>
+<body>
+<div class="top"><input type="search" id="q" placeholder="도움말 찾기 (예: 서명, 잠금, 동기화)" aria-label="도움말 찾기"><button type="button" id="prt">인쇄</button><button type="button" id="cls" hidden>닫기</button></div>
+<main>
+  <div class="hero"><h1>교사의 생활 도움말</h1><p id="heroV">출석·시간표·연락·일정·수행평가 서명·관찰 기록을 한 앱에서. 처음 쓰는 분은 1번부터 차례로 읽어 보세요.</p></div>
+  <nav class="toc" id="toc"><b>목차</b><ol id="tocL"></ol></nav>
+  <div class="empty hide" id="none">찾는 내용이 없습니다. 다른 낱말로 찾아보세요.</div>
+
+<section id="start" data-since="1.0"><h2>1. 처음 시작하기</h2>
+<h3>앱 열기와 설치</h3>
+<ol>
+<li>안내받은 앱 주소(예: https://○○○.github.io/teachers-life/)를 엽니다. <b>아이폰은 Safari</b>, <b>안드로이드는 Chrome</b>으로 여세요.</li>
+<li>홈 화면에 추가하면 앱처럼 쓸 수 있습니다.
+<ul><li>아이폰: 아래 <b>공유 버튼(□↑)</b> → <b>홈 화면에 추가</b></li>
+<li>안드로이드: 오른쪽 위 <b>⋮</b> → <b>앱 설치</b> 또는 <b>홈 화면에 추가</b></li>
+<li>컴퓨터 크롬: 주소창 오른쪽의 <b>설치 아이콘</b>(모니터 모양) → 설치</li></ul></li>
+<li>한 번 연 뒤에는 인터넷이 없어도 열립니다. (문자·전화·메일·동기화는 인터넷이 필요합니다)</li>
+</ol>
+<h3>화면 구성</h3>
+<table><tr><th>아래 메뉴</th><th>하는 일</th></tr>
+<tr><td>시간표</td><td>학기별 시간표, 수업 칸을 누르면 출석 체크·수업 메모, 일정·알림</td></tr>
+<tr><td>출석</td><td>날짜·시간별 출석 체크, 잠금, 학생 관찰 기록</td></tr>
+<tr><td>연락</td><td>결석 학생, 골라서 연락(문자·전화·이메일), 교사·교직원 연락</td></tr>
+<tr><td>할 일</td><td>일정과 과제·면담을 날짜별로 모아 보기, 알림 확인</td></tr>
+<tr><td>평가·통계</td><td>수행평가 점수 보내기와 학생 자필 서명, 출석 통계</td></tr>
+<tr><td>설정</td><td>구글 로그인·기기 연동, 학급·명단·연락처, 공유, 백업, 앱 정보</td></tr></table>
+<div class="tip">어느 화면에서든 오른쪽 위 <span class="path">? 도움말</span>을 누르면 그 화면의 설명으로 바로 옵니다.</div>
+<h3>자료는 어디에 저장되나요?</h3>
+<p>입력한 모든 자료는 <b>쓰고 있는 휴대폰(또는 컴퓨터)의 브라우저 안</b>에 저장됩니다. 앱을 만든 사람의 서버로는 아무것도 가지 않습니다. 구글 로그인을 켜면 같은 자료가 <b>내 구글 드라이브의 앱 전용 숨김 폴더</b>에도 저장되어 다른 기기와 맞춰집니다.</p>
+<div class="warn">브라우저의 ‘인터넷 사용 기록·사이트 데이터 삭제’를 하면 기기 안의 자료가 지워질 수 있습니다. 구글 연동을 켜 두거나 가끔 <span class="path">설정 → 백업 · 초기화 → 백업 파일 저장</span>을 해 두세요.</div>
+</section>
+
+<section id="sync" data-since="5.0"><h2>2. 휴대폰과 컴퓨터(크롬)에서 함께 쓰기</h2>
+<p>같은 구글 계정으로 로그인하면 휴대폰 앱과 컴퓨터 크롬에서 <b>같은 자료</b>로 일합니다. 예를 들어 컴퓨터에서 엑셀로 명단을 올리면 휴대폰에도 들어오고, 휴대폰에서 한 출석 체크는 컴퓨터에서도 보입니다.</p>
+<h3>처음 연결하기</h3>
+<ol>
+<li>컴퓨터 크롬에서 앱 주소를 열고 <span class="path">설정 → 구글 로그인 · 기기 연동 → Google 계정으로 로그인</span></li>
+<li>구글 창에서 계정을 고르고, 권한 화면의 <b>‘Google Drive에서 자체 구성 데이터 확인·생성·삭제’</b>에 체크 → 계속</li>
+<li>휴대폰 앱에서도 <b>같은 계정</b>으로 똑같이 로그인합니다.</li>
+<li>두 기기 모두 자료가 있으면 ‘처음 연동하기’ 창이 뜹니다. 보통은 <b>두 자료 합치기</b>를 고르세요.</li>
+</ol>
+<h3>평소 쓰는 법</h3>
+<ul>
+<li>내용을 바꾸면 몇 초 뒤 자동으로 올라가고, 다른 기기는 앱을 열거나 다시 볼 때 받아옵니다.</li>
+<li>화면 오른쪽 위 표시: <b>동기화됨</b> / <b>올릴 내용 있음</b> / <b>연동하려면 누르기</b></li>
+<li>구글 보안 정책상 로그인은 약 1시간 유지됩니다. ‘연동하려면 누르기’가 보이면 한 번 누르면 됩니다.</li>
+<li>바로 맞추려면 <span class="path">설정 → 지금 동기화</span></li>
+<li>두 기기에서 같은 내용을 동시에 고치면 지금 쓰는 기기 쪽을 우선하고 나머지는 합칩니다. 잘못되면 <span class="path">설정 → 백업 · 초기화 → 불러오기 전으로 되돌리기</span></li>
+<li>보고 있는 학급·화면, 할 일 보기 설정은 기기마다 따로입니다.</li>
+</ul>
+<h3>계정 추가·전환</h3>
+<p><span class="path">설정 → ＋ 다른 구글 계정 추가 · 전환</span>. 계정마다 자료가 따로 보관되어, 개인 계정과 학교 계정의 자료가 섞이지 않습니다. 원래 계정으로 돌아가려면 ‘○○(으)로 전환’을 누르세요.</p>
+<div class="tip">아이폰 홈 화면 앱에서 로그인 창이 닫히지 않으면 Safari에서 앱 주소로 열어 로그인하세요. 학교 구글 계정은 관리자가 막아 두었을 수 있으니 개인 계정을 권합니다.</div>
+</section>
+
+<section id="files" data-since="4.2"><h2>3. 자료 올리기 · 내려받기</h2>
+<h3>올리기 (가져오기)</h3>
+<table><tr><th>무엇을</th><th>어디서</th></tr>
+<tr><td>학생 명단·전화번호·이메일</td><td><span class="path">설정 → 학생 명단 · 연락처 → 일괄 입력 · 파일 올리기</span> (엑셀·CSV 파일 또는 붙여넣기)</td></tr>
+<tr><td>수업 교사 / 교직원 연락처</td><td>각 칸의 <span class="path">일괄 입력 · 파일 올리기</span></td></tr>
+<tr><td>수행평가 점수 전표</td><td><span class="path">평가·통계 → 전표 올리기</span></td></tr>
+<tr><td>백업 파일·공유 파일(.json)</td><td><span class="path">설정 → 백업 · 초기화 → 백업 파일 불러오기</span></td></tr>
+<tr><td>컴퓨터에서 아무 파일이나</td><td>앱 화면 위로 <b>파일을 끌어다 놓기</b> → 학생·수업 교사·교직원 중 고르면 미리보기</td></tr></table>
+<div class="tip">올리기 전에 항상 미리보기가 나옵니다. ‘추가하기’는 지금 목록에 더하고, ‘목록 바꾸기’는 지금 목록을 지우고 바꿉니다. 제목 줄·‘예시’ 줄은 자동으로 건너뛰고, 엑셀에서 빠진 휴대폰 번호 앞자리 0도 되살립니다.</div>
+<h3>양식 내려받기</h3>
+<ul><li>명단 양식: <span class="path">설정 → 명단 가져오기 · 입력 양식</span> 또는 일괄 입력 창의 <b>양식 받기(엑셀·CSV)</b></li>
+<li>수행평가 전표 양식: <span class="path">평가·통계 → 전표 양식 받기</span> (학급 명단이 미리 들어간 양식 가능)</li></ul>
+<h3>내려받기 (내보내기)</h3>
+<table><tr><th>파일</th><th>어디서</th></tr>
+<tr><td>전체 백업(.json)</td><td><span class="path">설정 → 백업 · 초기화 → 백업 파일 저장</span></td></tr>
+<tr><td>출석 통계(엑셀·메일)</td><td><span class="path">평가·통계 → 출석 통계</span></td></tr>
+<tr><td>서명 들어간 수행평가 전표(엑셀·PDF)</td><td>평가 화면의 <b>엑셀 파일 / PDF로 인쇄</b></td></tr>
+<tr><td>서명 현황(엑셀)</td><td><span class="path">평가·통계 → 서명 현황 모아 보기 → 엑셀로 받기</span></td></tr>
+<tr><td>관찰 기록(엑셀)</td><td><span class="path">출석 → 관찰 기록 → 관찰 기록 엑셀로 받기</span></td></tr>
+<tr><td>일정(캘린더 파일)</td><td><span class="path">시간표 → 일정·알림 → 앞으로의 일정 캘린더 파일로 보내기</span></td></tr></table>
+<p>휴대폰에서는 공유 창이 열리면 카카오톡·메일·드라이브 등을 고르면 되고, 컴퓨터에서는 다운로드 폴더에 저장됩니다.</p>
+</section>
+
+<section id="set" data-since="1.0"><h2>4. 학급 · 명단 · 연락처 (설정)</h2>
+<h3>학급 만들기·바꾸기</h3>
+<ol><li><span class="path">출석</span> 화면 맨 위 학급 이름을 누르면 학급 목록이 열립니다.</li>
+<li>새 학급 이름을 넣고 <b>추가</b>. 학급을 누르면 그 학급으로 바뀝니다. ‘수정’에서 이름 바꾸기·복사·삭제</li></ol>
+<h3>학생 추가·수정</h3>
+<ul><li><span class="path">설정 → 학생 명단 · 연락처</span>: 학번·이름·전화번호·<b>이메일</b>을 넣고 ‘학생 추가’</li>
+<li>목록의 학생을 누르면 고치기, 다른 학급으로 옮기기, 삭제. 학번을 바꾸면 출석·관찰 기록도 함께 옮겨집니다.</li>
+<li>많으면 ‘일괄 입력 · 파일 올리기’로 한 번에 넣으세요.</li></ul>
+<h3>수업 교사 · 교직원</h3>
+<p>수업 교사는 학급마다, 교직원은 모든 학급이 같이 씁니다. 이름을 누르면 수정·삭제할 수 있습니다.</p>
+<h3>앱 배포 · 명단 공유</h3>
+<ul><li><b>앱 보내기 / QR 코드</b>: 다른 선생님에게 앱 주소와 설치 안내만 보냅니다(명단 없음).</li>
+<li><b>명단 골라 공유</b>: 학급·학생 명단·학생 연락처·수업 교사·교직원을 골라 링크·파일·QR로 보냅니다. 받는 분은 링크를 열면 로그인 없이 들어갑니다.</li></ul>
+<div class="warn">연락처를 넣은 링크는 받은 사람 누구나 번호를 볼 수 있습니다. 같은 학교 선생님에게만 보내세요. 관찰 기록과 수행평가는 공유 링크에 들어가지 않습니다.</div>
+</section>
+
+<section id="att" data-since="5.4"><h2>5. 출석 체크</h2>
+<ol><li><span class="path">출석</span>에서 날짜를 고르고 <b>＋ 출석 체크 시작</b>(또는 ＋ 체크 추가). 지금 시간으로 체크가 생기며 하루 몇 번이든 됩니다.</li>
+<li>학생 줄을 누르면 <b>출석 ↔ 결석</b>이 바뀝니다. ‘전원 출석’·‘전원 결석’도 있습니다.</li>
+<li>체크마다 시간과 이름(예: 출발 전)을 바꿀 수 있습니다.</li>
+<li>시간표의 수업 칸을 누르면 그 수업의 출석 체크가 바로 열립니다.</li></ol>
+<h3>잠금 · 잠금 해제 <span class="ver">(5.4)</span></h3>
+<ul><li>체크를 마치면 <b>잠그기</b>를 누르세요. 잠긴 체크는 학생 줄을 눌러도 바뀌지 않고, 전원 출석·결석·삭제·시간 수정도 막힙니다. 위 시간 버튼에 🔒이 붙습니다.</li>
+<li>고쳐야 하면 <b>잠금 해제</b> → 한 번 더 확인.</li></ul>
+</section>
+
+<section id="obs" data-since="5.4"><h2>6. 학생 관찰 기록</h2>
+<ol><li><span class="path">출석 → 관찰 기록</span>으로 바꿉니다.</li>
+<li><b>기록 날짜</b>를 고릅니다. 고르지 않으면 오늘 날짜로 기록됩니다. 옆에 그날 기록 횟수와 누적 횟수가 보입니다.</li>
+<li><b>빠른 체크</b>: 위 항목(예: 질문함)을 누른 뒤 학생 이름을 누를 때마다 기록됩니다(×2, ×3…). 잘못 눌렀으면 아래 ‘되돌리기’. 항목을 다시 누르면 선택이 풀립니다.</li>
+<li><b>학생 기록 창</b>: 학생 줄의 ‘기록’(또는 항목 선택 없이 이름)을 누르면 태도·역량·특성 체크와 메모를 적습니다. 아래에 누적 집계와 지난 기록이 보입니다.</li>
+<li>‘누적 기록 복사’로 세부능력 및 특기사항 작성에 붙여 넣고, ‘관찰 기록 엑셀로 받기’로 학생별 누적·날짜별 기록을 받습니다.</li>
+<li>‘항목 편집’에서 우리 과목에 맞게 항목을 더하거나 지웁니다. ●을 누르면 좋음(초록)·보통·아쉬움(빨강)이 바뀝니다.</li></ol>
+<p>학생 이름 아래의 <b>누적 n회 · n일</b>은 그 학생의 전체 체크 횟수(메모 포함)와 기록한 날 수입니다.</p>
+</section>
+
+<section id="call" data-since="4.9"><h2>7. 연락하기</h2>
+<h3>결석 학생</h3>
+<ul><li>지금 보고 있는 출석 체크의 결석 학생에게 전화·문자·메일을 보냅니다. ‘한 명씩 보내기’는 이름이 들어간 문구로 한 명씩 문자창을 엽니다.</li>
+<li>연락을 마친 학생은 <b>✓ 연락 완료</b>. 출결은 결석 그대로 두고 연락 알림(아래 연락 버튼의 숫자)에서만 빠집니다.</li></ul>
+<h3>학생 골라 연락</h3>
+<ul><li>학급(여러 학급·모든 학급)을 고르고 학생을 체크한 뒤 문자·전화·<b>이메일</b>. 여러 명에게 메일을 보내면 숨은참조로 들어가 서로 주소가 보이지 않습니다.</li>
+<li>문구에 {이름}을 쓰면 한 명씩 보낼 때 학생 이름으로 바뀝니다.</li></ul>
+<h3>교사 · 교직원</h3><p>수업 교사에게 출석 현황을 문자로 보내거나, 교직원을 골라 연락합니다.</p>
+<div class="tip">앱은 휴대폰의 문자·전화·메일 앱을 열어 줄 뿐이며, 보내기는 직접 누릅니다. 문자는 휴대폰 번호로 나가므로 개인 번호를 감추려면 학교 업무폰이나 학교 문자 시스템을 쓰세요(‘번호 모두 복사’·‘문구 복사’ 활용).</div>
+</section>
+
+<section id="tt" data-since="4.5"><h2>8. 시간표</h2>
+<ol><li><span class="path">시간표 → ＋ 새로</span>: 학년도·학기를 정해 시간표를 만듭니다.</li>
+<li><b>시간 설정</b>: 1교시 시작, 수업 시간, 쉬는 시간, 점심시간을 넣으면 1~7교시가 자동 계산됩니다.</li>
+<li><b>칸 편집</b>: 칸을 눌러 과목·학급·강의실을 넣습니다. ‘다른 요일 같은 교시에도’로 한 번에 채울 수 있습니다.</li>
+<li>편집을 마치고 칸을 누르면 그 날 그 교시의 출석 체크와 <b>수업 메모장</b>(진도·메모·과제·면담)이 열립니다.</li></ol>
+<h3>시간 바꾸기와 수업 변동</h3>
+<ul><li>왼쪽 교시를 누르면 그 교시의 시작·길이를, 위 요일을 누르면 그 날만(단축수업 등) 시간을 바꿉니다.</li>
+<li>칸 → ‘수업 변동’: 수업 변경·휴강·보강을 ‘이번 한 번만’ 또는 ‘기간 정하기’로. 요일 → ‘이 날 수업 변동’은 시험·행사 날 전체 휴강.</li>
+<li>시간표 아래 ‘수업 변동 (학사일정)’에서 모아 보고 취소합니다.</li></ul>
+</section>
+
+<section id="ev" data-since="4.9"><h2>9. 일정 · 알림 · 구글 캘린더</h2>
+<ul><li><span class="path">시간표 → 일정 · 알림 → ＋ 일정 추가</span>: 날짜·시간·분류·학급·메모·알림을 넣습니다.</li>
+<li>‘시간표에서 고르기’ 버튼: <b>1교시 이전</b>, 쉬는 시간, 점심시간, 방과 후, 그날의 <b>공강</b>(초록)을 눌러 시간을 채웁니다.</li>
+<li>알림은 <b>앱이 열려 있을 때</b> 울립니다. 처음에 ‘알림 허용’을 눌러 주세요.</li>
+<li>앱을 닫아도 알림을 받으려면 일정의 <b>구글 캘린더에 추가</b> 또는 ‘앞으로의 일정 캘린더 파일로 보내기’를 쓰세요.</li></ul>
+</section>
+
+<section id="todo" data-since="4.4"><h2>10. 할 일</h2>
+<ul><li>일정과 수업 메모의 과제·면담이 지난 미완료 / 오늘 / 내일 / 이번 주 / 다음으로 나뉘어 보입니다.</li>
+<li>왼쪽 네모 = 완료, 내용 = 수정, 종 = 알림 시간. 기간·분류·중요한 것만으로 골라 봅니다.</li>
+<li>‘문자로 보내기’·‘이메일로 보내기’로 목록을 보내고, ‘알림 확인’에서 알림이 켜져 있는지 시험합니다.</li></ul>
+</section>
+
+<section id="eval" data-since="5.4"><h2>11. 수행평가 점수 보내기와 학생 자필 서명</h2>
+<h3>① 전표 준비</h3>
+<ul><li><span class="path">평가·통계 → 수행평가 서명 → 전표 양식 받기</span>
+<ul><li><b>학급 명단으로 만들기</b>: 학급을 고르고 평가 항목을 쉼표로 입력하면 학번·이름·이메일과 항목 칸이 들어간 엑셀 양식이 내려옵니다. 총점 칸에 합 수식을 넣을 수 있습니다.</li>
+<li><b>기본 양식</b>: 예시가 든 양식</li></ul></li>
+<li>전표 규칙: <b>1행은 제목</b>(학번, 이름, 이메일, 항목…, 총점, 의견), <b>2행부터 학생 한 줄씩</b>. 학교 전표(두 줄 제목, 병합 칸, 합계 수식)도 그대로 읽습니다.</li></ul>
+<h3>② 평가 만들기</h3>
+<ul><li><b>전표 올리기</b>: 파일을 고르면 미리보기가 나옵니다. 평가 이름, 학년도·학기, 학급, 서명 마감일, <b>학생에게 보여 줄 칸</b>(✓ 켜짐 / 점선 꺼짐), 회신 받을 내 이메일을 확인하고 ‘평가 만들기’</li>
+<li><b>＋ 직접 만들기</b>: 학급 명단으로 평가를 만들고 앱에서 점수를 입력합니다(총점 자동 계산).</li>
+<li>위쪽 <b>학년도·학기·학급</b>을 먼저 고르면 그 학급이 기본으로 잡힙니다.</li></ul>
+<h3>③ 학생에게 보내기</h3>
+<ul><li><b>Gmail로 보내기</b>: 학생마다 자기 점수만 담긴 메일이 한 번에 나갑니다(처음에 ‘Gmail로 보내기’ 권한 허용).</li>
+<li><b>메일 앱으로 한 명씩</b>: 누를 때마다 다음 학생 메일 창이 열립니다(권한 필요 없음).</li>
+<li>이메일이 없는 학생은 학생 줄의 <b>문자</b>·<b>링크 복사</b>.</li></ul>
+<h3>④ 학생이 하는 일</h3>
+<ol><li>메일·문자의 ‘점수 확인하고 서명하기’ 링크를 엽니다.</li>
+<li>점수를 확인하고 ‘이의가 없습니다’ 체크 → 손가락으로 서명 → <b>서명 완료</b></li>
+<li><b>선생님께 이메일 보내기</b> → 메일 앱에서 <b>보내기</b>까지 눌러야 전달됩니다.</li></ol>
+<div class="warn">학생들에게 마지막 ‘메일 앱에서 보내기’ 단계를 꼭 안내하세요. 이 단계를 하지 않으면 서명이 선생님께 오지 않습니다.</div>
+<h3>⑤ 서명 받기와 관리</h3>
+<ul><li>선생님 메일로 온 ‘서명 링크’를 누르면 앱이 열리며 서명이 자동으로 들어갑니다. 여러 통은 메일 내용을 복사해 ‘서명 받기’ 칸에 붙여 넣으세요.</li>
+<li>평가 화면에서 <b>전체 / 서명 안 함 / 서명함</b>으로 골라 보고, 서명 안 한 학생에게 다시 보냅니다.</li>
+<li>보낸 뒤 점수를 고치면 ‘점수 바뀜’이 되어 다시 서명을 받아야 합니다.</li></ul>
+<h3>⑥ 서명 넣은 전표 받기</h3>
+<ol><li><b>엑셀 파일</b> 또는 <b>PDF로 인쇄</b>를 누르면 출력 설정이 열립니다.</li>
+<li>서명 여부를 표기할 학생을 고르고(모두 / 서명한 학생만 / 학생별), 서명하지 않은 학생에게 <b>‘개별 연락을 통해 성적을 확인함’</b> 문구를 넣을 수 있습니다(문구 수정 가능).</li>
+<li>엑셀은 올린 전표의 서식 그대로 오른쪽 끝에 ‘학생 서명’(서명 그림)·‘서명 일시’ 칸이 붙습니다.</li></ol>
+<h3>⑦ 보관함과 서명 현황 <span class="ver">(5.4)</span></h3>
+<ul><li>평가가 끝나면 <b>평가 마치고 보관</b>. 위쪽 ‘보관함’에서 언제든 다시 열어 <b>전표 보기</b>로 확인하고 다시 내려받습니다.</li>
+<li><b>서명 현황 모아 보기</b>: 고른 학년도·학기·학급의 평가별 서명한 학생 / 안 한 학생, 학생별 미서명 평가를 보고 엑셀로 받습니다.</li></ul>
+</section>
+
+<section id="stat" data-since="2.0"><h2>12. 출석 통계</h2>
+<ul><li><span class="path">평가·통계 → 출석 통계</span>: 기간(오늘·이번 주·이번 달·최근 30일·전체 또는 날짜 직접)과 학급을 고르면 학급별·일자별·학생별 통계가 나옵니다.</li>
+<li>‘이메일 보내기’는 통계가 채워진 메일 앱을 열고, ‘엑셀 파일로 보내기’는 파일을 첨부해 보냅니다.</li></ul>
+</section>
+
+<section id="backup" data-since="4.1"><h2>13. 백업 · 되돌리기 · 초기화</h2>
+<ul><li><span class="path">설정 → 백업 · 초기화 → 백업 파일 저장</span>: 모든 자료를 파일 하나로 저장합니다. 메일·드라이브에 보관하세요.</li>
+<li>‘백업 파일 불러오기’: 예전 버전 백업도 그대로 불러옵니다. ‘지금 데이터와 합치기’ 또는 ‘완전히 바꾸기’.</li>
+<li>불러오기·동기화 합치기를 잘못했으면 <b>불러오기 전으로 되돌리기</b>.</li>
+<li>새 주소로 옮길 때: 예전 주소에서 백업 파일 저장 → 새 주소에서 불러오기 (또는 두 곳 모두 같은 구글 계정으로 로그인)</li></ul>
+</section>
+
+<section id="ui" data-since="5.6"><h2>14. 화면 · 글자 크기 (기기 맞춤)</h2>
+<p>앱은 쓰는 기기의 화면 크기를 보고 칸 크기와 배치를 <b>자동으로</b> 맞춥니다.</p>
+<table><tr><th>기기</th><th>자동 배치</th></tr>
+<tr><td>작은 휴대폰 (폭 380 미만)</td><td>글자·여백을 조금 줄이고 시간표 월~금을 한 화면에 맞춤</td></tr>
+<tr><td>휴대폰 (세로)</td><td>한 줄 배치, 아래 메뉴</td></tr>
+<tr><td>휴대폰 (가로로 눕힘)</td><td>아래 메뉴를 낮게 해서 내용이 더 보이게</td></tr>
+<tr><td>태블릿</td><td>가운데 넓게, 입력 창은 화면 가운데에</td></tr>
+<tr><td>컴퓨터 (넓은 창)</td><td>메뉴가 왼쪽으로, 설정·출석·관찰 기록은 두 줄로</td></tr></table>
+<h3>직접 바꾸기</h3>
+<ol><li><span class="path">설정 → 화면 · 글자 크기 (기기 맞춤)</span>을 엽니다. 맨 위에 지금 기기 종류와 화면 크기가 보입니다.</li>
+<li><b>글자 크기</b>: 자동 / 작게 / 보통 / 크게 / 아주 크게</li>
+<li><b>화면 배치</b>: 자동 / 한 줄(휴대폰처럼) / 넓게 두 줄(태블릿·컴퓨터)</li>
+<li><b>메뉴 위치</b>: 자동(넓으면 왼쪽) / 항상 아래</li>
+<li><b>시간표</b>: 한 화면에 맞추기 / 크게 보고 옆으로 밀기(칸이 작게 느껴질 때)</li>
+<li>되돌리려면 <b>모두 자동으로</b>.</li></ol>
+<div class="tip">이 설정은 기기마다 따로 저장됩니다. 휴대폰은 크게, 컴퓨터는 넓게처럼 기기에 맞게 정하세요. 구글 연동으로 다른 기기에 옮겨지지 않습니다.</div>
+</section>
+
+<section id="admin" data-since="5.0"><h2>15. 앱을 올린 선생님(관리자)을 위한 안내</h2>
+<h3>GitHub에 올리기·업데이트</h3>
+<ol><li>새 버전 zip의 압축을 풀고, <b>config.js</b>에 구글 클라이언트 ID를 넣습니다.</li>
+<li>GitHub 저장소 → <b>Add file → Upload files</b> → teachers-life 폴더 <b>안의 내용물을 모두</b> 끌어다 놓기 → <b>Commit changes</b></li>
+<li>1~10분 뒤 반영됩니다. 휴대폰은 앱을 완전히 닫았다 다시 열면(한두 번) 새 버전으로 바뀝니다. <span class="path">설정 맨 아래</span>에서 버전을 확인하세요.</li></ol>
+<h3>구글 로그인 설정 (처음 한 번)</h3>
+<ol><li>console.cloud.google.com → 새 프로젝트 → <b>Google Drive API</b> 사용 (Gmail로 보내기를 쓰면 <b>Gmail API</b>도 사용)</li>
+<li>Google 인증 플랫폼 → 시작하기: 앱 이름 ‘교사의 생활’, 대상 ‘외부’</li>
+<li>데이터 액세스: drive.appdata, openid, email, profile</li>
+<li>대상: 테스트 사용자에 쓰는 선생님 계정 추가 (또는 브랜딩에 홈페이지·개인정보처리방침 주소를 넣고 앱 게시)</li>
+<li>클라이언트 → 웹 애플리케이션 → 승인된 JavaScript 원본에 <b>https://사용자이름.github.io</b> (끝 / 와 저장소 이름 없이), 리디렉션 URI는 비워 둠</li>
+<li>클라이언트 ID를 config.js에 넣고 다시 올리기</li></ol>
+<div class="tip">개인정보처리방침 주소: 앱주소/privacy.html. 앱을 ‘프로덕션’으로 게시하면 Gmail 보내기 권한에서 ‘확인되지 않은 앱’ 경고가 나올 수 있습니다(‘고급’ → ‘이동’). 경고 없이 쓰려면 테스트 상태 + 테스트 사용자.</div>
+</section>
+
+<section id="faq" data-since="1.0"><h2>16. 자주 묻는 질문 · 문제 해결</h2>
+<h3>새 버전이 안 보여요</h3><p>앱을 완전히 닫았다가 다시 여세요(한두 번). 그래도 그대로면 몇 분 뒤 다시 해 보세요. 설정 맨 아래에서 버전을 확인합니다.</p>
+<h3>‘액세스 차단됨: … Google 인증 절차를 완료하지 않았습니다’</h3><p>그 계정이 구글 콘솔의 테스트 사용자에 없습니다. 관리자에게 계정 추가를 요청하세요.</p>
+<h3>‘오류 400: origin_mismatch’</h3><p>구글 콘솔의 ‘승인된 JavaScript 원본’이 앱 주소와 다릅니다(https, 끝 / 없이).</p>
+<h3>전표에서 점수 칸을 못 찾아요</h3><p>1행에 학번·이름·항목을 칸마다 하나씩, 2행부터 학생을 입력하세요. ‘(빈 칸)’으로 나오는 칸은 엑셀에서 파일을 열어 저장한 뒤 다시 올리세요.</p>
+<h3>학생 서명이 안 들어와요</h3><p>학생이 ‘선생님께 이메일 보내기’ 뒤 메일 앱에서 ‘보내기’까지 눌렀는지 확인하세요. 받은 메일의 링크를 이 앱이 있는 기기(또는 같은 구글 계정으로 연동된 기기)에서 눌러야 합니다.</p>
+<h3>문자가 자동으로 안 가요</h3><p>웹앱은 문자를 대신 보낼 수 없습니다. 내용이 채워진 문자창이 열리면 보내기를 직접 누르세요.</p>
+<h3>글자가 너무 작거나 칸이 잘려 보여요</h3><p><span class="path">설정 → 화면 · 글자 크기</span>에서 글자 크기를 바꾸거나, 시간표를 ‘크게 보고 옆으로 밀기’로 바꾸세요.</p>
+<h3>알림이 안 울려요</h3><p>알림은 앱이 열려 있을 때만 울립니다. 확실히 받으려면 구글 캘린더에 추가하세요. <span class="path">할 일 → 알림 확인</span>에서 시험할 수 있습니다.</p>
+</section>
+
+<section id="changes" data-since="1.0"><h2>17. 버전별 바뀐 점</h2>
+<p class="ver" id="chgNote">앱 안에서 도움말을 열면 최신 변경 내용이 자동으로 나옵니다.</p>
+<div id="chgL"></div>
+</section>
+<p class="foot">교사의 생활 · 만든 사람 물리공작소</p>
+</main>
+<script>
+(function(){"use strict";
+var $=function(i){return document.getElementById(i)};
+var host=null;try{if(window.parent&&window.parent!==window&&window.parent.TL_HELP)host=window.parent.TL_HELP}catch(e){}
+var vn=function(v){return String(v||"0").split(".").map(function(n){return parseInt(n,10)||0}).reduce(function(a,n,i){return a+n*Math.pow(1000,2-i)},0)};
+var seen="";try{seen=(host&&host.seen)||localStorage.getItem("att-app-helpseen")||""}catch(e){}
+/* 목차 */
+var secs=[].slice.call(document.querySelectorAll("main section"));
+$("tocL").innerHTML=secs.map(function(s){var h=s.querySelector("h2");return '<li><a href="#'+s.id+'">'+h.textContent.replace(/^\d+\.\s*/,"")+'</a></li>'}).join("");
+/* 새로 바뀐 부분 표시: 마지막으로 본 버전 이후에 바뀐 절 */
+if(seen)secs.forEach(function(s){if(vn(s.dataset.since)>vn(seen)){var h=s.querySelector("h2");h.insertAdjacentHTML("beforeend",' <span class="new">새로 바뀜</span>')}});
+/* 버전 기록 (앱에서 받아 옴) */
+if(host&&host.versions){
+  $("heroV").textContent=host.name+" 버전 "+host.version+" 도움말 · 출석·시간표·연락·일정·수행평가 서명·관찰 기록을 한 앱에서";
+  $("chgNote").textContent="지금 쓰는 버전: "+host.version+(seen&&vn(host.version)>vn(seen)?" · 지난번에 본 "+seen+" 이후 바뀐 내용에 ‘새로’ 표시":"");
+  $("chgL").innerHTML=host.versions.map(function(v){var nw=seen&&vn(v.v)>vn(seen);return '<div class="chg"><b>v'+v.v+'</b> <span class="ver">'+v.date+'</span>'+(nw?' <span class="new">새로</span>':'')+'<ul>'+v.items.map(function(i){return "<li>"+String(i).replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})+"</li>"}).join("")+'</ul></div>'}).join("");
+}
+/* 찾기 */
+var orig=new Map();secs.forEach(function(s){orig.set(s,s.innerHTML)});
+var tmr;$("q").oninput=function(){clearTimeout(tmr);tmr=setTimeout(find,150)};
+function find(){var q=$("q").value.trim();var any=false;
+  secs.forEach(function(s){s.innerHTML=orig.get(s);if(!q){s.classList.remove("hide");return}
+    var hit=s.textContent.toLowerCase().indexOf(q.toLowerCase())>=0;s.classList.toggle("hide",!hit);if(hit){any=true;mark(s,q)}});
+  $("toc").classList.toggle("hide",!!q);$("none").classList.toggle("hide",!q||any);
+  if(q&&any)window.scrollTo({top:0,behavior:"instant"});
+}
+function mark(root,q){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),ns=[],n;while(n=w.nextNode())ns.push(n);var lq=q.toLowerCase();
+  ns.forEach(function(t){var i=t.nodeValue.toLowerCase().indexOf(lq);if(i<0)return;var m=document.createElement("mark");var r=t.splitText(i);r.splitText(q.length);m.textContent=r.nodeValue;r.parentNode.replaceChild(m,r)})}
+$("prt").onclick=function(){window.print()};
+if(location.hash){var t=document.querySelector(location.hash);if(t)setTimeout(function(){t.scrollIntoView()},50)}
+})();
+</script>
+</body>
+</html>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])})}catch(e){}</script>
 <title>교사의 생활</title>
 <meta name="author" content="물리공작소">
 <meta name="theme-color" content="#24476b">
@@ -47,7 +48,7 @@ h2{font-size:1.05rem;margin:0}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .note{font-size:.8rem;color:var(--muted);margin:0}
 .warn{font-size:.8rem;color:var(--absent);margin:0}
-.btn{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:0 14px;min-height:44px;font-weight:600;font-size:.92rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn{appearance:none;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:0 14px;min-height:44px;font-weight:600;font-size:.92rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:var(--ink);white-space:nowrap;max-width:100%}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--paper)}
 .btn.ok{background:var(--present);border-color:var(--present);color:var(--paper)}
 .btn.bad{color:var(--absent)}
@@ -57,7 +58,7 @@ h2{font-size:1.05rem;margin:0}
 .btn:focus-visible,.tab:focus-visible,.fld:focus-visible,.navb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .row2{display:flex;gap:8px;flex-wrap:wrap}
 .row2>.btn{flex:1}
-.fld{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;width:100%;min-width:0;font-size:16px}
+.fld{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;width:100%;min-width:0;font-size:max(16px,1rem)}
 textarea.fld{resize:vertical;min-height:5em}
 label.lb{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:var(--muted);min-width:0}
 /* day bar + session tabs */
@@ -369,6 +370,57 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .lockbar.shake{animation:shk .35s}@keyframes shk{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 .obdate{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap}.obdate .lb{flex:1 1 140px}.obsum{font-size:.82rem;color:var(--muted);padding-bottom:10px}.obsum b{color:var(--accent)}
 .ocnt{color:var(--accent)!important;font-weight:700!important}
+
+/* ---------- 기기 맞춤 레이아웃 ---------- */
+html{font-size:100%}html[data-fs="s"]{font-size:93.75%}html[data-fs="l"]{font-size:112.5%}html[data-fs="xl"]{font-size:125%}
+body{font-size:1rem;overflow-x:hidden}
+img,video,canvas{max-width:100%}
+.btn{white-space:normal;line-height:1.25;text-align:center;overflow-wrap:anywhere}
+.chip{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.navb{white-space:nowrap;letter-spacing:-.02em}
+html:not([data-tt="wide"]) table.ttg{min-width:0}
+html[data-tt="wide"] table.ttg{min-width:560px}
+.sheet>div{max-height:88vh;max-height:88dvh}
+@media (max-width:379px){
+  html:not([data-fs]){font-size:93.75%}
+  .wrap{padding-inline:12px}.ttwrap{margin-inline:-12px;padding-inline:3px}
+  .navb{font-size:.6rem}.navb svg{width:22px;height:22px}
+  .ttg th.tcol{width:2.45rem}.ttg tbody th.tcol b{font-size:.7rem}.ttg tbody th.tcol small{font-size:.54rem}
+  table.ttg{border-spacing:2px}.tc{padding:11px 1px 4px;min-height:58px}.tc b{font-size:.68rem}.tc span{font-size:.56rem}
+  .row2{flex-wrap:wrap}.row2>.btn,.row2>label.btn{flex:1 1 130px}
+  .topbtns{right:6px}.helpbtn,.gspill{padding:3px 8px;font-size:.7rem}
+}
+@media (min-width:380px) and (max-width:759px){.row2{flex-wrap:wrap}.row2>.btn,.row2>label.btn{flex:1 1 140px}}
+/* 가로로 눕힌 휴대폰 (높이가 낮음) */
+@media (max-height:520px) and (orientation:landscape){
+  :root{--nav-h:50px}.navb{flex-direction:row;gap:6px;font-size:.72rem}.navb svg{width:20px;height:20px}.navb .cnt{top:4px}
+  .wrap>header.top{margin-top:6px}.wrap>header.top .sub{display:none}.topbtns{top:4px}
+  .sheet>div{max-height:94dvh;padding-top:12px}
+}
+/* 태블릿 이상: 가운데 창 */
+@media (min-width:760px){.sheet{align-items:center;padding:20px}.sheet>div{border-radius:18px;max-width:640px;max-height:86dvh}}
+/* 넓은 화면: 메뉴는 왼쪽, 내용은 넓게 */
+@media (min-width:1100px){
+  html:not([data-nav="bottom"]) body{padding-left:104px;padding-bottom:0}
+  html:not([data-nav="bottom"]) nav.bottom{top:0;right:auto;width:104px;grid-template-columns:1fr;grid-auto-rows:76px;align-content:start;padding:60px 0 0;border-top:0;border-right:1px solid var(--line)}
+  html:not([data-nav="bottom"]) .navb{height:76px}
+  html:not([data-nav="bottom"]) .toast,html:not([data-nav="bottom"]) .utoast,html:not([data-nav="bottom"]) .newbar{bottom:24px;margin-left:52px}
+  html:not([data-lay="one"]) .wrap{max-width:1180px}
+}
+/* 두 줄 배치 (넓은 화면 자동, 또는 직접 고름) */
+@media (min-width:1100px){
+  html:not([data-lay="one"]) #v-set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  html:not([data-lay="one"]) #v-set>header,html:not([data-lay="one"]) #v-set>p,html:not([data-lay="one"]) #v-set>#d-ui{grid-column:1/-1}
+  html:not([data-lay="one"]) #obsList,html:not([data-lay="one"]) #m-att>.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+}
+@media (min-width:760px){
+  html[data-lay="two"] .wrap{max-width:1180px}
+  html[data-lay="two"] #v-set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  html[data-lay="two"] #v-set>header,html[data-lay="two"] #v-set>p,html[data-lay="two"] #v-set>#d-ui{grid-column:1/-1}
+}
+html[data-lay="one"] .wrap{max-width:720px}
+.uirow{display:flex;flex-direction:column;gap:6px;margin-top:6px}.uirow .shlb{margin:0}
+.devinfo{font-size:.84rem;background:var(--bg);border-radius:10px;padding:8px 12px}
 .eorow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.eorow:first-child{border-top:0}.eorow.dim{opacity:.55}
 .eorow small{color:var(--muted);font-weight:400}.eost img{width:90px;height:36px;border:1px solid var(--line);border-radius:6px;background:#fff;display:block}.eost em{font-style:normal;font-size:.78rem;color:var(--muted)}
 .chip.ghost{color:var(--absent);border-color:var(--absent)}
@@ -379,7 +431,18 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .evs em{font-style:normal;font-weight:700;color:var(--accent)}.evs em.nw{color:var(--muted)}.evs em.stl{color:var(--absent)}
 .evrow.ok .who{color:var(--present)}
 .evb{flex-wrap:wrap}.evb .btn{flex:1 1 auto}
-.gspill{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:25;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:4px 10px;font:inherit;font-size:.74rem;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.topbtns{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:25;display:flex;gap:6px;align-items:center}
+.helpbtn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--paper);color:var(--accent);border-radius:999px;padding:4px 10px;font:inherit;font-size:.74rem;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.wrap>header.top{margin-top:24px}
+.helpov{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column}
+.helpov[hidden]{display:none}
+.helpov .hb{display:flex;align-items:center;justify-content:space-between;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;border-bottom:1px solid var(--line);background:var(--paper)}
+.helpov iframe{flex:1;border:0;width:100%;background:var(--bg)}
+.newbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:32;background:var(--accent);color:#fff;border-radius:14px;padding:10px 10px 10px 14px;display:flex;gap:10px;align-items:center;font-size:.86rem;max-width:calc(100vw - 24px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.newbar span{flex:1 1 auto;min-width:0;line-height:1.4}.newbar{width:min(94vw,440px)}
+.newbar button{appearance:none;border:0;border-radius:9px;padding:7px 10px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.newbar .go{background:#fff;color:var(--accent)}.newbar .x{background:transparent;color:#fff;opacity:.8}
+.gspill{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:4px 10px;font:inherit;font-size:.74rem;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .gspill svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
 .gspill[data-s="ok"]{color:var(--present)}.gspill[data-s="sync"],.gspill[data-s="dirty"]{color:var(--accent)}.gspill[data-s="login"],.gspill[data-s="err"]{color:var(--absent);border-color:var(--absent)}
 .gbtn{background:#fff;color:#1f1f1f;border:1px solid #747775;font-weight:600}
@@ -804,14 +867,26 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
     <div class="row2"><button class="btn" id="undoBtn" type="button" hidden>불러오기 전으로 되돌리기</button></div>
     <div class="row2"><button class="btn bad" id="resetAtt" type="button">출석 기록 지우기</button><button class="btn bad" id="resetAll" type="button">모든 학급 지우기</button></div>
   </details>
+  <details class="card" id="d-ui"><summary>화면 · 글자 크기 (기기 맞춤)</summary>
+    <p class="devinfo" id="uiDev"></p>
+    <p class="note">기본은 ‘자동’입니다. 쓰는 기기의 화면 크기에 맞춰 칸 크기와 배치가 바뀝니다. 이 설정은 기기마다 따로 저장됩니다.</p>
+    <div class="uirow"><div class="shlb">글자 크기</div><div class="presets" data-ui="fs"><button class="chip" type="button" data-v="">자동</button><button class="chip" type="button" data-v="s">작게</button><button class="chip" type="button" data-v="m">보통</button><button class="chip" type="button" data-v="l">크게</button><button class="chip" type="button" data-v="xl">아주 크게</button></div></div>
+    <div class="uirow"><div class="shlb">화면 배치</div><div class="presets" data-ui="lay"><button class="chip" type="button" data-v="">자동</button><button class="chip" type="button" data-v="one">한 줄 (휴대폰처럼)</button><button class="chip" type="button" data-v="two">넓게 두 줄</button></div></div>
+    <div class="uirow"><div class="shlb">아래 메뉴 위치 (넓은 화면)</div><div class="presets" data-ui="nav"><button class="chip" type="button" data-v="">자동 (넓으면 왼쪽)</button><button class="chip" type="button" data-v="bottom">항상 아래</button></div></div>
+    <div class="uirow"><div class="shlb">시간표</div><div class="presets" data-ui="tt"><button class="chip" type="button" data-v="">한 화면에 맞추기</button><button class="chip" type="button" data-v="wide">크게 보고 옆으로 밀기</button></div></div>
+    <div class="row2"><button class="btn" type="button" id="uiReset">모두 자동으로</button></div>
+  </details>
   <details class="card" id="d-ver"><summary>앱 정보 · 버전 기록 <span class="sub" id="verTag"></span></summary>
     <p class="note" id="verMaker"></p>
+    <div class="row2"><button class="btn pri" type="button" id="helpAll">도움말 전체 보기</button><button class="btn" type="button" id="helpNew">바뀐 점 보기</button></div>
     <p class="note"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
     <div class="abslist" id="verList"></div>
   </details>
   <p class="note" style="text-align:center" id="verFoot"></p>
 </main>
 
+<div class="topbtns" id="topBtns"><button class="helpbtn" type="button" id="helpBtn" aria-label="이 화면 도움말">? 도움말</button></div>
+<div class="helpov" id="helpOv" hidden role="dialog" aria-label="도움말"><div class="hb"><b>도움말</b><button class="btn sm" type="button" id="helpX">닫기</button></div><iframe id="helpFr" title="도움말"></iframe></div>
 <nav class="bottom" aria-label="화면">
   <button class="navb" type="button" data-v="tt"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M9 4v17M15 4v17M3 15h18"/></svg>시간표</button>
   <button class="navb" type="button" data-v="att" aria-current="page"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>출석</button>
@@ -829,8 +904,10 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.4.1", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.6.0", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.6.0",date:"2026-10-18",items:["기기 맞춤 레이아웃: 작은 휴대폰·휴대폰·가로 화면·태블릿·컴퓨터에 맞춰 칸 크기와 배치를 자동으로 조정 (작은 휴대폰에서도 시간표 월~금이 한 화면에, 글자·버튼이 잘리지 않게)","넓은 화면(컴퓨터)에서는 메뉴가 왼쪽으로, 설정·출석·관찰 기록은 두 줄로 넓게, 창은 가운데에","가로로 눕힌 휴대폰에서는 아래 메뉴를 낮게 해 내용이 더 보이게","설정 → ‘화면 · 글자 크기 (기기 맞춤)’: 글자 크기(작게~아주 크게), 화면 배치(자동·한 줄·넓게 두 줄), 메뉴 위치, 시간표(한 화면에 맞추기·크게 보고 옆으로 밀기), 기기마다 따로 저장","아이폰에서 입력 칸을 누를 때 화면이 확대되어 배치가 흐트러지던 문제 방지"]},
+  {v:"5.5.0",date:"2026-10-18",items:["앱 안에 도움말 추가: 처음 시작하기, 휴대폰·컴퓨터 함께 쓰기, 자료 올리기·내려받기, 화면별 기능과 사용 절차, 관리자 안내, 자주 묻는 질문","모든 화면 오른쪽 위 ‘? 도움말’: 지금 보고 있는 화면의 설명으로 바로 이동, 도움말 찾기·인쇄","새 버전으로 바뀌면 ‘바뀐 점 보기’ 알림, 도움말의 ‘버전별 바뀐 점’은 앱의 버전 기록에서 자동으로 채워지고 지난번 이후 바뀐 부분에 ‘새로 바뀜’ 표시","설정 → 앱 정보에 ‘도움말 전체 보기’·‘바뀐 점 보기’"]},
   {v:"5.4.1",date:"2026-10-18",items:["전표 양식 받기: 등록된 학급 명단(학번·이름·이메일)이 미리 들어간 양식 받기","평가 항목을 직접 입력해 그 항목으로 양식 만들기(자주 쓰는 항목 고르기, 총점 칸 합계 수식), 기본 예시 양식도 그대로"]},
   {v:"5.4.0",date:"2026-10-18",items:["출석 체크 잠금·잠금 해제: 잠그면 학생 줄을 눌러도 출석·결석이 바뀌지 않고 전원 출석·결석·삭제·시간 수정도 막힘, 잠긴 체크에 🔒 표시","평가·통계: 학년도·학기·학급·진행 중/보관함으로 평가 골라 보기, 평가 이름 찾기","평가 직접 만들기(학급 명단으로 만들고 앱에서 점수 입력, 총점 자동 계산), 점수 고치기, 평가 정보 수정","평가 마치고 보관함에 저장, 보관한 평가와 전표를 언제든 다시 열어 보기(전표 보기: 서명 그림·서명 일시 포함, 서명한 학생/안 한 학생 골라 보기)","서명 현황 모아 보기: 고른 학년도·학기·학급의 평가별 서명한 학생·안 한 학생, 학생별 미서명 평가, 엑셀로 받기","평가 화면에서 서명 안 한 학생·서명한 학생만 골라 보기","관찰 기록: 기록 날짜를 직접 고르기(고르지 않으면 오늘), 이 날 기록 횟수와 누적 횟수, 학생별 누적 횟수·기록한 날 수 표시","출석 화면의 출석·결석 인원 막대가 가려지던 문제 고침"]},
   {v:"5.3.3",date:"2026-10-18",items:["수행평가 전표 올리기 고침: 양식 파일의 ‘안내’ 시트를 전표로 잘못 읽어 ‘점수 칸을 찾지 못했습니다’가 나오던 문제","여러 시트가 있으면 1행 제목(학번·이름·항목)과 2행부터 학생 줄이 있는 시트를 골라 읽기","제목 줄은 ‘학번’, ‘이름’이 서로 다른 칸에 있는 줄만 인정"]},
@@ -1553,7 +1630,7 @@ function editClass(id){
 function renderSet(){
   if(document.activeElement!==$("clsIn"))$("clsIn").value=D.cls;
   if(document.activeElement!==$("msgIn"))$("msgIn").value=D.msg;
-  renderStu();renderTcEdit();renderStaffEdit();renderVer();renderUndo();renderShare();renderSync();
+  renderStu();renderTcEdit();renderStaffEdit();renderVer();renderUndo();renderShare();renderSync();if(typeof renderUI==="function")try{renderUI()}catch(e){}
 }
 function renderVer(){
   $("verTag").textContent="v"+APP_VERSION;
@@ -2929,6 +3006,36 @@ function show(v){
 }
 document.querySelectorAll(".navb").forEach(b=>b.onclick=()=>show(b.dataset.v));
 
+/* ---------- 화면 · 글자 크기 (기기 맞춤) ---------- */
+const UI_KEY="att-app-ui";
+function uiPrefs(){try{return JSON.parse(localStorage.getItem(UI_KEY)||"{}")||{}}catch(e){return{}}}
+function applyUI(u){const h=document.documentElement;["fs","lay","nav","tt"].forEach(k=>{if(u[k]&&!(k==="fs"&&u[k]==="m"&&false))h.setAttribute("data-"+k,u[k]);else h.removeAttribute("data-"+k)});if(u.fs==="m")h.setAttribute("data-fs","m")}
+function devText(){const w=innerWidth,h=innerHeight,touch=matchMedia("(pointer:coarse)").matches;
+  const kind=w<380?"작은 휴대폰":w<760?(h<w?"휴대폰 (가로)":"휴대폰"):w<1100?(touch?"태블릿":"좁은 컴퓨터 창"):(touch?"큰 태블릿":"컴퓨터");
+  const lay=w>=1100?"메뉴 왼쪽 · 넓은 화면":w>=760?"가운데 넓게":"한 줄";
+  return `이 기기: <b>${kind}</b> · 화면 ${w}×${h} · 지금 배치: ${lay}`}
+function renderUI(){const u=uiPrefs();if(!$("uiDev"))return;$("uiDev").innerHTML=devText();
+  document.querySelectorAll("[data-ui]").forEach(g=>g.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",(u[g.dataset.ui]||"")===b.dataset.v)))}
+document.querySelectorAll("[data-ui]").forEach(g=>g.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const u=uiPrefs();if(b.dataset.v)u[g.dataset.ui]=b.dataset.v;else delete u[g.dataset.ui];try{localStorage.setItem(UI_KEY,JSON.stringify(u))}catch(e){}applyUI(u);renderUI();if(view==="tt")renderTT()}));
+$("uiReset").onclick=()=>{try{localStorage.removeItem(UI_KEY)}catch(e){}applyUI({});renderUI();toast("화면 설정을 모두 자동으로 되돌렸습니다")};
+{let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{if(view==="set")renderUI()},200)})}
+renderUI();
+/* ---------- 도움말 (화면별 바로가기 · 바뀐 점 알림) ---------- */
+const HELP_SEEN="att-app-helpseen",LAST_VER="att-app-lastver";
+window.TL_HELP={name:APP_NAME,version:APP_VERSION,versions:VERSIONS,seen:(()=>{try{return localStorage.getItem(HELP_SEEN)||""}catch(e){return""}})(),close:()=>closeHelp()};
+function helpSection(){return view==="tt"?"tt":view==="att"?(typeof OBS!=="undefined"&&OBS&&OBS.mode==="obs"?"obs":"att"):view==="call"?"call":view==="todo"?"todo":view==="stat"?(typeof EVS!=="undefined"&&EVS&&EVS.tab==="att"?"stat":"eval"):view==="set"?(document.getElementById("d-ui")&&document.getElementById("d-ui").open?"ui":"set"):"start"}
+function openHelp(sec){
+  const nb=$("newBar");if(nb)nb.remove();
+  $("helpFr").src="help.html?v="+encodeURIComponent(APP_VERSION)+"#"+(sec||helpSection());$("helpOv").hidden=false;
+}
+function closeHelp(){$("helpOv").hidden=true;$("helpFr").src="about:blank";try{localStorage.setItem(HELP_SEEN,APP_VERSION)}catch(e){}window.TL_HELP.seen=APP_VERSION}
+$("helpBtn").onclick=()=>openHelp();$("helpAll").onclick=()=>openHelp("start");$("helpNew").onclick=()=>openHelp("changes");$("helpX").onclick=closeHelp;
+/* 새 버전으로 바뀌면 한 번 알려 줍니다 */
+{let last="";try{last=localStorage.getItem(LAST_VER)||""}catch(e){}
+  if(last&&last!==APP_VERSION){const nw=VERSIONS.filter(v=>verNum(v.v)>verNum(last));
+    if(nw.length){const b=document.createElement("div");b.className="newbar";b.id="newBar";b.innerHTML=`<span>버전 ${esc(APP_VERSION)}으로 바뀌었습니다 · 새 기능 ${nw.reduce((a,v)=>a+v.items.length,0)}가지</span><button class="go" type="button">바뀐 점 보기</button><button class="x" type="button" aria-label="닫기">✕</button>`;
+      document.body.appendChild(b);b.querySelector(".go").onclick=()=>openHelp("changes");b.querySelector(".x").onclick=()=>b.remove();setTimeout(()=>{if(b.isConnected)b.remove()},15000)}}
+  try{localStorage.setItem(LAST_VER,APP_VERSION)}catch(e){}}
 /* ---------- 시작 ---------- */
 {let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
 setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
@@ -3765,7 +3872,7 @@ function fmtAgo(t){if(!t)return"아직 없음";const m=Math.round((Date.now()-t)
 function renderSyncPill(state){
   if(!GS)return;
   let p=$("gsPill");if(!G.on||!gClientId()){if(p)p.hidden=true;return}
-  if(!p){p=document.createElement("button");p.id="gsPill";p.type="button";p.className="gspill";document.body.appendChild(p);
+  if(!p){p=document.createElement("button");p.id="gsPill";p.type="button";p.className="gspill";$("topBtns").appendChild(p);
     p.onclick=()=>{if(!gTokenOk())gLogin();else gSync("now")}}
   p.hidden=false;
   const st=state||(GS.busy?"sync":!gTokenOk()?"login":GS.err?"err":gDirty()?"dirty":"ok");
