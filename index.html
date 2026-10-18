@@ -807,8 +807,9 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.3.2", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.3.3", APP_DATE="2026-10-18", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.3.3",date:"2026-10-18",items:["수행평가 전표 올리기 고침: 양식 파일의 ‘안내’ 시트를 전표로 잘못 읽어 ‘점수 칸을 찾지 못했습니다’가 나오던 문제","여러 시트가 있으면 1행 제목(학번·이름·항목)과 2행부터 학생 줄이 있는 시트를 골라 읽기","제목 줄은 ‘학번’, ‘이름’이 서로 다른 칸에 있는 줄만 인정"]},
   {v:"5.3.2",date:"2026-10-18",items:["수행평가 전표 올리기 고침: 두 줄 제목·병합된 칸(예: ‘수행평가 영역’ 아래 ‘실험(40)’)이 있는 학교 전표에서도 항목을 찾아 ‘학생에게 보여 줄 칸’이 켜지도록","값이 저장되지 않은 수식 칸(SUM·AVERAGE·사칙연산)은 앱에서 계산해 읽기, 그래도 못 읽은 칸은 ‘(빈 칸)’으로 표시","보여 줄 칸: ✓ 표시와 점선으로 켜짐·꺼짐 구분, ‘모두 켜기·모두 끄기’ 버튼, 합계·평균 줄은 학생에서 제외"]},
   {v:"5.3.1",date:"2026-10-18",items:["설정 → 학생 명단에서 학생을 한 명씩 추가할 때 이메일 주소 칸 추가"]},
   {v:"5.3.0",date:"2026-10-18",items:["출석 화면에 ‘관찰 기록’ 추가: 학생별 수업 태도·역량·특성을 체크 버튼으로 기록하고 짧은 메모 남기기","빠른 체크: 항목을 고르고 학생 이름을 누를 때마다 기록(여러 번 누르면 ×2, ×3), 바로 되돌리기","학생 기록 창: 날짜별 체크·메모, 자주 쓰는 메모 문구, 누적 항목 집계, 지난 기록 보기, 누적 기록 복사(세특 작성용)","관찰 항목 편집(분류·항목 추가·삭제, 좋음·보통·아쉬움 표시), 관찰 기록 엑셀로 받기(학생별 누적·날짜별 기록)"]},
@@ -3042,12 +3043,14 @@ async function readGrid(f){
   if(/\.(csv|txt)$/i.test(f.name)){let t=new TextDecoder("utf-8").decode(buf);if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(e){}}wb=X.read(t.replace(/^﻿/,""),{type:"string"})}
   else wb=X.read(buf,{type:"array",sheetStubs:true,cellFormula:true});
   wb.SheetNames.forEach(n=>fillFormulas(X,wb.Sheets[n]));
-  let best=null;wb.SheetNames.forEach(n=>{const ws=wb.Sheets[n];if(!ws||!ws["!ref"])return;const r=X.utils.decode_range(ws["!ref"]);const rows=X.utils.sheet_to_json(ws,{header:1,raw:false,defval:"",blankrows:true});
+  let best=null;const sheets=[];wb.SheetNames.forEach(n=>{const ws=wb.Sheets[n];if(!ws||!ws["!ref"])return;const r=X.utils.decode_range(ws["!ref"]);const rows=X.utils.sheet_to_json(ws,{header:1,raw:false,defval:"",blankrows:true});
     /* 병합된 칸은 같은 글자로 채워 둡니다 (두 줄 제목, 묶음 제목 처리) */
     (ws["!merges"]||[]).forEach(m=>{const v=(rows[m.s.r-r.s.r]||[])[m.s.c-r.s.c];if(v==null||v==="")return;for(let y=m.s.r;y<=m.e.r;y++)for(let x=m.s.c;x<=m.e.c;x++){const ry=y-r.s.r,cx=x-r.s.c;if(!rows[ry])rows[ry]=[];if(rows[ry][cx]===""||rows[ry][cx]==null)rows[ry][cx]=v}});
-    const score=rows.filter(x=>x.some(v=>String(v).trim())).length;if(!best||score>best.score)best={name:n,rows,r0:r.s.r,c0:r.s.c,score}});
-  if(!best)throw new Error("파일에서 표를 찾지 못했습니다");
-  return{rows:best.rows.map(r=>r.map(v=>String(v==null?"":v).trim())),sheet:best.name,r0:best.r0,c0:best.c0,isX,b64:isX&&buf.byteLength<1500000?buf2b64(buf):""};
+    sheets.push({sheet:n,rows:rows.map(x=>x.map(v=>String(v==null?"":v).trim())),r0:r.s.r,c0:r.s.c})});
+  /* 시트마다 전표를 찾아 보고, 학생 줄과 점수 칸이 가장 많은 시트를 고릅니다 (‘안내’ 시트 등은 건너뜀) */
+  sheets.forEach(sh=>{try{const dt=detectSheet(sh);const sc=dt.data.length*10+dt.cols.length*3+(dt.cols.some(c=>c.on)?50:0)-(/안내|설명|guide|readme/i.test(sh.sheet)?1000:0);if(!best||sc>best.sc)best={...sh,dt,sc}}catch(e){}});
+  if(!best)throw new Error("전표를 찾지 못했습니다. 첫 줄에 ‘학번’, ‘이름’과 점수 항목(예: 과제 수행, 발표, 총점)을 칸마다 따로 쓰고, 둘째 줄부터 학생을 입력해 주세요.");
+  return{rows:best.rows,sheet:best.sheet,r0:best.r0,c0:best.c0,dt:best.dt,isX,b64:isX&&buf.byteLength<1500000?buf2b64(buf):""};
 }
 /* 저장된 값이 없는 간단한 수식(SUM·AVERAGE·사칙연산)은 직접 계산합니다 */
 function fillFormulas(X,ws){
@@ -3063,12 +3066,14 @@ function fillFormulas(X,ws){
 }
 const HID=/^(학번|번호)$|학번/,HNAME=/이름|성명/,HMAIL=/이메일|e-?mail|메일/i,HSKIP=/^(반|번|번호|연번|순번|비고|서명|학생\s*서명|확인|서명\s*일시)$/;
 function detectSheet(g){
-  let h=-1;for(let i=0;i<Math.min(g.rows.length,15);i++){const r=g.rows[i];if(r.some(c=>/학번|번호/.test(c))&&r.some(c=>HNAME.test(c))){h=i;break}}
-  if(h<0)for(let i=0;i<Math.min(g.rows.length,15);i++){const r=g.rows[i];if(r.some(c=>HNAME.test(c))){h=i;break}}
+  const lab=c=>String(c).replace(/\s/g,"").length<=12;
+  let h=-1;for(let i=0;i<Math.min(g.rows.length,15);i++){const r=g.rows[i];const a=r.findIndex(c=>lab(c)&&/학번|번호/.test(c)),b=r.findIndex(c=>lab(c)&&HNAME.test(c));if(a>=0&&b>=0&&a!==b){h=i;break}}
+  if(h<0)for(let i=0;i<Math.min(g.rows.length,15);i++){const r=g.rows[i];if(r.some(c=>lab(c)&&HNAME.test(c))&&r.filter(c=>String(c).trim()).length>=2){h=i;break}}
   if(h<0)throw new Error("제목 줄(학번·이름)을 찾지 못했습니다. 첫 줄에 ‘학번, 이름, 항목…’이 오도록 해 주세요.");
   let hd=g.rows[h].slice();
-  const idc=hd.findIndex(c=>/학번/.test(c))>=0?hd.findIndex(c=>/학번/.test(c)):hd.findIndex(c=>HID.test(c));
-  const nmc=hd.findIndex(c=>HNAME.test(c)),emc=hd.findIndex(c=>HMAIL.test(c));
+  const L=c=>String(c).replace(/\s/g,"").length<=12;
+  const idc=hd.findIndex(c=>L(c)&&/학번/.test(c))>=0?hd.findIndex(c=>L(c)&&/학번/.test(c)):hd.findIndex(c=>L(c)&&HID.test(c));
+  const nmc=hd.findIndex(c=>L(c)&&HNAME.test(c)),emc=hd.findIndex(c=>L(c)&&HMAIL.test(c));
   /* 두 줄 제목: 바로 아래 줄이 학생 줄이 아니고 항목 이름이 있으면 합칩니다 (예: ‘수행평가 영역’ 아래 ‘실험(40)’) */
   let h2=h;const nx=g.rows[h+1]||[];
   const isSub=nx.length&&(idc<0||!nx[idc]||nx[idc]===hd[idc])&&(nmc<0||!nx[nmc]||nx[nmc]===hd[nmc])&&nx.some((c,j)=>c&&j!==idc&&j!==nmc&&c!==hd[j]&&!/^[\d.\s]+$/.test(c));
@@ -3086,14 +3091,14 @@ function evalTemplate(){
   loadXLSX().then(X=>{
     const ws=X.utils.aoa_to_sheet([["학번","이름","이메일","과제 수행(40)","발표(30)","보고서(30)","총점(100)","의견"],["10101","홍길동(예시)","hong@example.com","38","27","28","93","실험 설계가 꼼꼼함"],["10102","김영희(예시)","kim@example.com","35","30","25","90",""]]);
     ws["!cols"]=[{wch:9},{wch:12},{wch:24},{wch:13},{wch:10},{wch:11},{wch:11},{wch:28}];
-    const g=X.utils.aoa_to_sheet([["수행평가 전표 안내"],["첫 줄에 학번, 이름(필수), 이메일(선택)과 평가 항목·총점·의견 칸을 둡니다. 칸 이름과 개수는 자유롭게 바꿔도 됩니다."],["둘째 줄부터 한 줄에 한 학생씩 입력합니다. ‘예시’가 들어간 줄은 건너뜁니다."],["이메일 칸이 비어 있으면 학급 명단에 등록된 학생 이메일을 씁니다."],["학교에서 쓰는 전표 양식을 그대로 올려도 됩니다(학번·이름 칸만 있으면 됨). 서명은 표 오른쪽 끝에 ‘학생 서명’ 칸으로 들어갑니다."]]);g["!cols"]=[{wch:90}];
+    const g=X.utils.aoa_to_sheet([["수행평가 전표 안내 (이 시트는 읽지 않습니다)"],["‘수행평가’ 시트 1행에 학번, 이름(필수), 이메일(선택)과 평가 항목·총점·의견 칸을 둡니다. 칸 이름과 개수는 자유롭게 바꿔도 됩니다."],["둘째 줄부터 한 줄에 한 학생씩 입력합니다. ‘예시’가 들어간 줄은 건너뜁니다."],["이메일 칸이 비어 있으면 학급 명단에 등록된 학생 이메일을 씁니다."],["학교에서 쓰는 전표 양식을 그대로 올려도 됩니다(학번·이름 칸만 있으면 됨). 서명은 표 오른쪽 끝에 ‘학생 서명’ 칸으로 들어갑니다."]]);g["!cols"]=[{wch:90}];
     const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"수행평가");X.utils.book_append_sheet(wb,g,"안내");
     shareOrSave(new File([X.write(wb,{type:"array",bookType:"xlsx"})],"수행평가_전표_양식.xlsx",{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}),"전표 양식을 저장했습니다");
   }).catch(e=>toast(e.message));
 }
 /* 전표 올리기 → 미리보기 → 평가 만들기 */
 async function evalUpload(f){
-  let g,dt;try{g=await readGrid(f);dt=detectSheet(g)}catch(e){return toast(e.message||"파일을 읽지 못했습니다")}
+  let g,dt;try{g=await readGrid(f);dt=g.dt}catch(e){return toast(e.message||"파일을 읽지 못했습니다")}
   const ids=dt.data.map(d=>dt.idc>=0?d.r[dt.idc]:"");
   let best=S.list.find(c=>c.id===S.active),bs=-1;S.list.forEach(c=>{const n=ids.filter(x=>x&&c.data.roster.some(r=>r[0]===x)).length;if(n>bs){bs=n;best=c}});
   const v={title:f.name.replace(/\.[^.]+$/,""),cls:best?best.id:"",due:addDays(today(),3),reply:(G&&G.email)||localStorage.getItem("att-app-reply")||"",note:"",cols:dt.cols};
