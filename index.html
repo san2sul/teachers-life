@@ -458,6 +458,7 @@ html[data-lay="one"] .wrap{max-width:720px}
 .evedbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 12px;border-radius:12px;background:var(--absent-soft)}.evedbar .note{margin:0;flex:1 1 auto}
 .prow.edrow{cursor:default}.prow.edrow.on{background:var(--absent-soft)}
 .edchk{display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer}.edchk input{width:20px;height:20px;flex:none;accent-color:var(--absent)}
+.gsfix{border-top:1px dashed var(--line);padding-top:8px}.gsfix>summary{cursor:pointer;font-size:.85rem;color:var(--accent);font-weight:700}.gsfix>*+*{margin-top:8px}
 .devinfo{font-size:.84rem;background:var(--bg);border-radius:10px;padding:8px 12px}
 .setcls{padding:12px 14px}.setcls .lb small{color:var(--muted);font-weight:400}
 #setClsWarn{background:#fff4d6;color:#7a5600;border-radius:10px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -985,8 +986,9 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.10.1", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.10.2", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.10.2",date:"2026-10-19",items:["구글 로그인 고침: 로그인이 만료된 뒤 다시 로그인 창이 열리지 않던 문제 (구글 로그인 준비를 미리 해 두어 버튼을 누르는 즉시 로그인 창이 열림, 브라우저 팝업 차단에 걸리지 않게)", "로그인이 만료되면 설정과 화면 위에 ‘다시 로그인’ 버튼을 분명하게 표시", "학교 인터넷 등에서 구글 로그인 서버가 막히면 원인과 해결 방법을 안내", "‘로그인이 계속 안 될 때 → 로그인 상태 초기화’: 꼬인 로그인 상태만 지우고 다시 로그인 (자료는 그대로)"]},
   {v:"5.10.1",date:"2026-10-19",items:["학교처럼 앱 주소가 막히거나 인터넷이 느린 곳에서도, 한 번 열어 둔 기기에서는 4초 안에 저장된 앱으로 바로 열림 (차단 안내 화면을 앱 대신 저장하지 않도록 보호)", "도움말 ‘자주 묻는 질문’에 학교에서 앱이 열리지 않을 때 확인 방법과 해결 방법 추가"]},
   {v:"5.10.0",date:"2026-10-18",items:["설정 → ‘사용 교사’: 선생님 이름 입력 (처음 파일을 내려받을 때 이름이 없으면 물어봄, 구글 연동 시 다른 기기에도 적용)", "앱에서 내려받는 모든 출력물(엑셀·CSV 입력 양식, 수행평가 전표 양식, 서명 넣은 전표, 서명 현황, 관찰 기록, 출석 통계·기록, PDF 인쇄, 통계 메일)의 문서 제목 아래 오른쪽에 ‘내려받은 일시 · 출력한 사용자 교사 이름’ 자동 표시", "학교 전표 양식에 서명을 넣어 받을 때 표 제목 줄 위에 표시 줄을 넣고 병합 칸·합계 수식 위치를 함께 맞춤, 인쇄할 때 한 페이지 너비에 맞춤", "엑셀 출력물을 문서 제목·제목 줄 색·테두리·제목 줄 고정이 들어간 깔끔한 표로 정리, 받은 양식을 채워 다시 올려도 위쪽 제목 줄은 자동으로 건너뜀"]},
   {v:"5.9.0",date:"2026-10-18",items:["화면 전체 간격 정리: 접는 카드(설정·시간표 등) 안의 버튼·입력 칸·목록이 서로 붙거나 겹쳐 보이던 문제 해결, 카드·버튼 줄·선택 칩 사이 간격을 기기별로 조정 (작은 휴대폰은 촘촘하게, 태블릿·컴퓨터는 넉넉하게, 가로 화면은 낮게)", "오른쪽 위 ‘? 도움말’ 버튼이 화면을 내릴 때 내용 위에 겹치지 않도록 맨 위에만 표시", "일정 추가에서 작은 화면이면 날짜 칸을 한 줄 전체로, 시작·끝 시간을 아래 줄로", "수행평가 목록 삭제: ‘목록 편집 · 삭제’로 평가마다 삭제하거나 여러 개를 골라(모두 선택) 한 번에 삭제, 지운 뒤에도 ‘불러오기 전으로 되돌리기’로 복구 가능"]},
@@ -3841,14 +3843,15 @@ function rawMail(to,subj,text,html){
 function gmailReady(cb){
   if(!gClientId())return toast("Gmail로 보내려면 먼저 설정에서 구글 로그인을 설정하세요. ‘메일 앱으로 한 명씩’은 바로 쓸 수 있습니다");
   if(G.gmail&&gTokenOk())return cb();
-  loadGIS().then(()=>{
+  if(!gisReady()){gPreload();return toast("구글 로그인을 준비하는 중입니다. 잠시 뒤 한 번 더 눌러 주세요")}
+  Promise.resolve().then(()=>{
     const tc=google.accounts.oauth2.initTokenClient({client_id:gClientId(),scope:GSCOPE+" "+GMAIL_SCOPE,include_granted_scopes:true,
       callback:async r=>{if(!r||r.error)return toast("Gmail 권한을 받지 못했습니다");
         if(!google.accounts.oauth2.hasGrantedAllScopes(r,GMAIL_SCOPE))return toast("‘Gmail로 이메일 보내기’ 권한을 허용해야 보낼 수 있습니다");
         G.token=r.access_token;G.exp=Date.now()+(+r.expires_in||3600)*1000;G.gmail=true;
         if(!G.email){try{const u=await (await fetch("https://www.googleapis.com/oauth2/v3/userinfo",{headers:{Authorization:"Bearer "+G.token}})).json();G.email=u.email||"";G.name=u.name||"";G.pic=u.picture||"";if(G.auto==null)G.auto=true;G.on=true}catch(e){}}
         gSave();renderSync();cb()},
-      error_callback:()=>toast("로그인 창을 열지 못했습니다. 팝업 차단을 풀어 주세요")});
+      error_callback:e=>toast(e&&e.type==="popup_closed"?"로그인 창이 닫혔습니다. 다시 눌러 주세요":"로그인 창을 열지 못했습니다. 주소창의 ‘팝업 차단’ 표시를 눌러 이 사이트의 팝업을 허용해 주세요")});
     tc.requestAccessToken({prompt:"",login_hint:G.email||undefined});
   }).catch(e=>toast(e.message));
 }
@@ -4215,7 +4218,7 @@ const GSCOPE="https://www.googleapis.com/auth/drive.appdata openid email profile
 const SYNC_EXTRA=["att-app-mail","att-app-msgs","att-app-me"];
 var G={};try{G=JSON.parse(localStorage.getItem(GKEY)||"{}")||{}}catch(e){G={}}
 const gSave=()=>{try{localStorage.setItem(GKEY,JSON.stringify(G))}catch(e){}};
-var GS={busy:false,timer:0,applying:false,tc:null,msg:"",err:"",pend:false};
+var GS={busy:false,timer:0,applying:false,tc:null,msg:"",err:"",gisErr:"",pend:false};
 function gClientId(){const c=(window.TL_CONFIG&&window.TL_CONFIG.googleClientId)||"";return String(G.clientId||c||"").trim()}
 function gTokenOk(){return !!(G.token&&G.exp&&Date.now()<G.exp-60000)}
 function gDevice(){const u=navigator.userAgent;const os=/iPhone|iPad/.test(u)?"아이폰":/Android/.test(u)?"안드로이드":/Windows/.test(u)?"Windows":/Mac/.test(u)?"Mac":"컴퓨터";const br=/Edg\//.test(u)?"Edge":/Chrome\//.test(u)?"Chrome":/Safari\//.test(u)?"Safari":"브라우저";return os+" "+br}
@@ -4224,10 +4227,14 @@ function loadGIS(){
   return new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="https://accounts.google.com/gsi/client";sc.async=true;sc.onload=()=>res();sc.onerror=()=>rej(new Error("구글 로그인을 불러오지 못했습니다. 인터넷 연결을 확인하세요."));document.head.appendChild(sc)});
 }
 /* 로그인 창을 엽니다 (버튼을 눌렀을 때만 호출) */
-async function gLogin(after,opt){opt=opt||{};
+function gisReady(){return !!(window.google&&google.accounts&&google.accounts.oauth2)}
+/* 로그인 창은 버튼을 누른 그 순간에 열어야 브라우저가 막지 않습니다. 구글 로그인 스크립트는 미리 불러 둡니다 */
+function gPreload(){if(gClientId()&&appOnline()&&!gisReady())loadGIS().then(()=>{GS.gisErr="";renderSync()}).catch(e=>{GS.gisErr="구글 로그인 서버(accounts.google.com)에 연결하지 못했습니다. 학교 인터넷에서 막혔을 수 있습니다. 휴대폰 데이터(LTE·5G)나 다른 인터넷으로 다시 해 보세요.";renderSync()})}
+function gLogin(after,opt){opt=opt||{};
   const cid=gClientId();if(!cid)return toast("먼저 구글 클라이언트 ID를 넣어 주세요");
   if(!appOnline())return toast("구글 로그인은 인터넷(https) 주소로 연 앱에서만 됩니다");
-  try{await loadGIS()}catch(e){return toast(e.message)}
+  if(!gisReady()){toast("구글 로그인을 준비하는 중입니다. 잠시 뒤 한 번 더 눌러 주세요");loadGIS().then(()=>{GS.gisErr="";renderSync();toast("준비됐습니다. 로그인 버튼을 다시 눌러 주세요")}).catch(e=>{GS.gisErr="구글 로그인 서버(accounts.google.com)에 연결하지 못했습니다. 학교 인터넷에서 막혔을 수 있습니다. 휴대폰 데이터(LTE·5G)나 다른 인터넷으로 다시 해 보세요.";GS.err=GS.gisErr;renderSync();toast(GS.gisErr)});return}
+  GS.err="";
   GS.tc=google.accounts.oauth2.initTokenClient({client_id:cid,scope:GSCOPE,
     callback:async r=>{
       if(!r||r.error){GS.err=r&&r.error==="access_denied"?"로그인을 취소했습니다":"로그인하지 못했습니다";renderSync();return toast(GS.err)}
@@ -4240,7 +4247,7 @@ async function gLogin(after,opt){opt=opt||{};
       if(G.auto==null)G.auto=true;G.on=true;gSave();renderSync();
       if(after)after();else gSync("login");
     },
-    error_callback:e=>{GS.err=e&&e.type==="popup_closed"?"로그인 창이 닫혔습니다":"로그인 창을 열지 못했습니다. 팝업 차단을 풀거나, 아이폰 홈 화면 앱이면 Safari에서 앱 주소로 열어 로그인하세요.";renderSync();toast(GS.err)}});
+    error_callback:e=>{GS.err=e&&e.type==="popup_closed"?"로그인 창이 닫혔습니다. 다시 로그인하려면 ‘다시 로그인’을 누르세요.":"로그인 창을 열지 못했습니다. 브라우저 주소창 오른쪽의 ‘팝업 차단’ 표시를 눌러 이 사이트의 팝업을 허용한 뒤 다시 누르세요. 아이폰 홈 화면 앱이면 Safari에서 앱 주소로 열어 로그인하세요.";renderSync();toast(GS.err)}});
   GS.tc.requestAccessToken({prompt:opt.prompt!=null?opt.prompt:(G.email?"":"consent"),login_hint:opt.hint!==undefined?(opt.hint||undefined):(G.email||undefined)});
 }
 /* 계정 전환: 계정마다 이 기기의 자료를 따로 보관합니다 */
@@ -4371,7 +4378,7 @@ function renderSyncPill(state){
   p.hidden=false;
   const st=state||(GS.busy?"sync":!gTokenOk()?"login":GS.err?"err":gDirty()?"dirty":"ok");
   p.dataset.s=st;
-  p.innerHTML=`<svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z"/></svg>${{sync:"동기화 중",login:"연동하려면 누르기",err:"동기화 오류",dirty:"올릴 내용 있음",ok:"동기화됨"}[st]}`;
+  p.innerHTML=`<svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z"/></svg>${{sync:"동기화 중",login:"다시 로그인",err:"동기화 오류",dirty:"올릴 내용 있음",ok:"동기화됨"}[st]}`;
   p.setAttribute("aria-label","구글 동기화: "+p.textContent);
 }
 function renderSync(){
@@ -4386,15 +4393,16 @@ function renderSync(){
       <label class="lb" for="gsCid">구글 클라이언트 ID<input class="fld" id="gsCid" placeholder="123456-abc….apps.googleusercontent.com" autocomplete="off" spellcheck="false"></label>
       <div class="row2"><button class="btn pri" type="button" id="gsCidOk">저장</button><button class="btn" type="button" id="gsHelp">클라이언트 ID 만드는 방법</button></div>
       <p class="note">앱 폴더의 config.js에 넣어 올리면 모든 기기에 자동으로 적용됩니다. 이 칸에 넣으면 이 기기에만 적용됩니다.</p>`;
-    $("gsCidOk").onclick=()=>{const v=$("gsCid").value.trim();if(!/\.apps\.googleusercontent\.com$/.test(v))return toast("‘….apps.googleusercontent.com’으로 끝나는 클라이언트 ID를 넣어 주세요");G.clientId=v;gSave();renderSync();toast("저장했습니다. 이제 구글로 로그인하세요")};
+    $("gsCidOk").onclick=()=>{const v=$("gsCid").value.trim();if(!/\.apps\.googleusercontent\.com$/.test(v))return toast("‘….apps.googleusercontent.com’으로 끝나는 클라이언트 ID를 넣어 주세요");G.clientId=v;gSave();renderSync();gPreload();toast("저장했습니다. 이제 구글로 로그인하세요")};
     $("gsHelp").onclick=gHelp;return;
   }
   if(!G.on||!G.email){
     B.innerHTML=how+`<div class="row2"><button class="btn gbtn" type="button" id="gsLogin"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.2 3.6l6.9-6.9C35.9 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l8 6.2C12.6 13.6 17.9 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 6.9-10.3 6.9-17.7z"/><path fill="#FBBC05" d="M10.7 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-8-6.2A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l8.1-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.7-6c-2.2 1.5-5 2.3-8.2 2.3-6.1 0-11.3-4.1-13.2-9.7l-8.1 6.2C6.6 42.6 14.6 48 24 48z"/></svg>Google 계정으로 로그인</button></div>
-      ${GS.err?`<p class="warn">${esc(GS.err)}</p>`:""}
+      ${GS.err||GS.gisErr?`<p class="warn">${esc(GS.err||GS.gisErr)}</p>`:""}
+      ${GS.err||GS.gisErr?`<div class="row2"><button class="btn" type="button" id="gsReset2">로그인 상태 초기화 후 다시 시도</button></div>`:""}
       <p class="note">처음 로그인할 때 구글이 ‘앱 데이터 저장’ 권한을 묻습니다. 허용해야 동기화됩니다. 휴대폰과 컴퓨터에서 <b>같은 구글 계정</b>으로 로그인하세요.</p>
       ${fromCfg?"":`<div class="row2"><button class="btn" type="button" id="gsCidEdit">클라이언트 ID 바꾸기</button><button class="btn" type="button" id="gsCidSend">다른 기기에 설정 보내기</button></div>`}`;
-    $("gsLogin").onclick=()=>gLogin();
+    $("gsLogin").onclick=()=>gLogin();if($("gsReset2"))$("gsReset2").onclick=gResetLogin;
     if(!fromCfg){$("gsCidEdit").onclick=()=>{delete G.clientId;gSave();renderSync()};$("gsCidSend").onclick=()=>gSendCfg()}
     return;
   }
@@ -4403,22 +4411,31 @@ function renderSync(){
     <div class="accts">${(G.accts||[]).filter(a=>a.email!==G.email).map(a=>`<button class="btn sm" type="button" data-acct="${esc(a.email)}">${esc(a.email)}(으)로 전환</button>`).join("")}<button class="btn sm" type="button" id="gsAdd">＋ 다른 구글 계정 추가 · 전환</button></div>
     <p class="note">계정마다 자료가 따로 저장됩니다. 계정을 바꾸면 그 계정의 자료로 화면이 바뀌고, 원래 계정으로 돌아오면 원래 자료가 그대로 있습니다.</p>
     <div class="conv"><span>마지막 동기화: <b>${esc(fmtAgo(G.syncedAt))}</b>${G.dev?` · 이 기기(${esc(gDevice())})`:""}</span>
-      <span>${GS.busy?"동기화 중…":!ok?"로그인이 만료되었습니다. ‘지금 동기화’를 누르면 다시 연결됩니다.":gDirty()?"이 기기에서 바꾼 내용을 곧 올립니다.":"이 기기와 드라이브가 같습니다."}</span>
+      <span>${GS.busy?"동기화 중…":!ok?"로그인이 만료되었습니다. 아래 ‘다시 로그인’을 누르면 다시 연결됩니다.":gDirty()?"이 기기에서 바꾼 내용을 곧 올립니다.":"이 기기와 드라이브가 같습니다."}</span>
       ${GS.msg?`<span>${esc(GS.msg)}</span>`:""}</div>
     ${GS.err?`<p class="warn">${esc(GS.err)}</p>`:""}
-    <div class="row2"><button class="btn pri" type="button" id="gsNow">지금 동기화</button></div>
+    ${GS.gisErr&&!ok?`<p class="warn">${esc(GS.gisErr)}</p>`:""}
+    <div class="row2">${ok?`<button class="btn pri" type="button" id="gsNow">지금 동기화</button>`:`<button class="btn pri" type="button" id="gsNow">다시 로그인 (로그인 만료)</button>`}</div>
     <label class="chk" for="gsAuto"><input type="checkbox" id="gsAuto"${G.auto!==false?" checked":""}> 바뀔 때마다 자동으로 동기화</label>
-    <p class="note">앱을 열 때, 다시 볼 때, 내용을 바꿀 때 자동으로 맞춥니다. 구글 보안 정책상 로그인은 약 1시간 유지되며, 지나면 화면 위 ‘연동하려면 누르기’를 한 번 누르면 됩니다. 두 기기에서 같은 내용을 동시에 고치면 지금 기기 쪽을 우선합니다.</p>
+    <p class="note">앱을 열 때, 다시 볼 때, 내용을 바꿀 때 자동으로 맞춥니다. 구글 보안 정책상 로그인은 약 1시간 유지되며, 지나면 화면 위 ‘다시 로그인’을 한 번 누르면 됩니다. 두 기기에서 같은 내용을 동시에 고치면 지금 기기 쪽을 우선합니다.</p>
     <div class="row2"><button class="btn" type="button" id="gsOut">로그아웃</button><button class="btn bad" type="button" id="gsWipe">드라이브 자료 지우기</button></div>
-    <p class="note">로그아웃해도 이 기기의 자료는 그대로 남습니다.</p>`;
+    <p class="note">로그아웃해도 이 기기의 자료는 그대로 남습니다.</p>
+    <details class="gsfix"><summary>로그인이 계속 안 될 때</summary>
+      <p class="note">① 팝업 차단을 풀고 다시 로그인 ② 학교 인터넷이면 휴대폰 데이터로 시도 ③ 아래 ‘로그인 상태 초기화’ 후 다시 로그인 (이 기기 자료와 드라이브 자료는 지워지지 않습니다)</p>
+      <div class="row2"><button class="btn" type="button" id="gsReset">로그인 상태 초기화</button></div></details>`;
   $("gsNow").onclick=()=>{if(!gTokenOk())gLogin();else gSync("now")};
   $("gsAdd").onclick=()=>gLogin(null,{prompt:"select_account",hint:""});
   B.querySelectorAll("[data-acct]").forEach(b=>b.onclick=()=>gLogin(null,{prompt:"",hint:b.dataset.acct}));
   $("gsAuto").onchange=e=>{G.auto=e.target.checked;gSave();if(G.auto)gSync("now")};
+  $("gsReset").onclick=gResetLogin;
   $("gsOut").onclick=()=>{try{if(G.token&&window.google)google.accounts.oauth2.revoke(G.token,()=>{})}catch(e){}
     G={clientId:G.clientId,auto:G.auto,accts:G.accts};try{localStorage.removeItem(GBASE)}catch(e){}gSave();GS.msg="";GS.err="";renderSync();toast("로그아웃했습니다. 이 기기 자료는 그대로입니다")};
   twoStep($("gsWipe"),"정말 지우기",async()=>{try{const f=await gFind();if(f)await gApi(`${DRV}/${f.id}`,{method:"DELETE"});delete G.fileId;delete G.ver;delete G.hash;try{localStorage.removeItem(GBASE)}catch(e){}G.auto=false;gSave();renderSync();toast("드라이브의 동기화 자료를 지웠습니다. 자동 동기화를 껐습니다")}catch(e){toast(e.auth?"먼저 ‘지금 동기화’로 다시 로그인하세요":e.message)}});
 }
+/* 꼬인 로그인 상태만 지웁니다 (자료는 그대로) */
+function gResetLogin(){try{if(G.token&&gisReady())google.accounts.oauth2.revoke(G.token,()=>{})}catch(e){}
+  const keep={clientId:G.clientId,auto:G.auto,accts:G.accts,email:G.email,name:G.name,pic:G.pic,on:G.on,fileId:G.fileId,ver:G.ver,hash:G.hash,syncedAt:G.syncedAt,dev:G.dev};
+  G={};Object.entries(keep).forEach(([k,v])=>{if(v!==undefined)G[k]=v});GS.tc=null;GS.err="";GS.gisErr="";GS.busy=false;gSave();renderSync();gPreload();toast("로그인 상태를 초기화했습니다. ‘다시 로그인’을 눌러 주세요")}
 function gSendCfg(){
   const url=appUrl()+"#g="+encodeURIComponent(gClientId());
   copy(url,"설정 링크를 복사했습니다. 휴대폰에서 이 링크를 열면 구글 로그인 설정이 들어갑니다");
@@ -4443,9 +4460,9 @@ function gHelp(){
 function gHash2(){const m=location.hash.match(/^#g=([^&]+)/);if(!m)return false;const v=decodeURIComponent(m[1]);history.replaceState(null,"",appUrl());
   if(/\.apps\.googleusercontent\.com$/.test(v)){G.clientId=v;gSave();show("set");renderSync();toast("구글 로그인 설정을 넣었습니다. ‘Google 계정으로 로그인’을 누르세요")}return true}
 gHash2();window.addEventListener("hashchange",gHash2);
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&G.on&&G.auto!==false)gSync("show")});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){gPreload();if(G.on&&G.auto!==false)gSync("show")}});
 setInterval(()=>{if(document.visibilityState==="visible"&&G.on&&G.auto!==false&&gTokenOk())gSync("tick")},60000);
-renderSync();if(G.on&&G.auto!==false)setTimeout(()=>gSync("open"),800);
+renderSync();gPreload();if(G.on&&G.auto!==false)setTimeout(()=>gSync("open"),800);
 
 /* ---------- 컴퓨터에서 파일 끌어다 놓기 (엑셀·CSV·백업 파일) ---------- */
 {let depth=0;const ov=document.createElement("div");ov.className="dropov";ov.hidden=true;ov.innerHTML="<div><b>여기에 파일을 놓으세요</b><span>엑셀·CSV 명단, 백업·공유 파일(.json)</span></div>";document.body.appendChild(ov);
