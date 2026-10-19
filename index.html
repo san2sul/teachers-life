@@ -460,6 +460,29 @@ html[data-lay="one"] .wrap{max-width:720px}
 .edchk{display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer}.edchk input{width:20px;height:20px;flex:none;accent-color:var(--absent)}
 .gsfix{border-top:1px dashed var(--line);padding-top:8px}.gsfix>summary{cursor:pointer;font-size:.85rem;color:var(--accent);font-weight:700}.gsfix>*+*{margin-top:8px}
 .errbar{position:fixed;left:12px;right:12px;bottom:calc(var(--nav-h) + 12px + env(safe-area-inset-bottom,0px));z-index:40;background:#fff4e5;color:#5a3a00;border:1px solid #e3b55c;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;box-shadow:0 6px 20px rgba(0,0,0,.15);font-size:.86rem;max-width:640px;margin:0 auto}.errbar small{word-break:break-all;opacity:.85}.errbar .row2{gap:6px}
+.ttg tr.prer th,.ttg tr.prer td{background:transparent}
+.lc.pre{border-style:solid;border-color:color-mix(in srgb,var(--accent) 30%,var(--line));background:color-mix(in srgb,var(--accent-soft) 60%,var(--paper))}
+.lc.pre .pcl{font-weight:700;color:var(--accent);font-size:.72rem}
+.tbtn.pre{background:var(--accent-soft)}.tbtn.pre b{font-size:.66rem;letter-spacing:-.02em;word-break:keep-all;line-height:1.15}
+.ttg tr.preadd td{padding:4px 0 6px;text-align:left}
+.sesslots{gap:6px}.sesslots .slh{width:100%;font-size:.76rem;color:var(--muted)}.sesslots .chip small{opacity:.75}
+.lockedbar{background:#fff4d6;color:#7a5600;margin:0}
+.obscard.locked .lockbar{background:#fff4d6;color:#7a5600}
+.obscard.locked #obsBar .chip,.obscard.locked ~ .list .obtn{opacity:.55}
+.medsec{display:flex;flex-direction:column;gap:8px;border:1px dashed var(--line);border-radius:12px;padding:10px}
+.medsec .shlb small{font-weight:400}
+.medbtns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:520px){.medbtns{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.medgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px}
+.medth{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:10px;background:var(--bg) center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:var(--ink);font:inherit;padding:4px}
+.medth .mi{font-size:1.4rem}.medth small{font-size:.66rem;color:var(--muted)}
+.medth.hasimg .mi{display:none}.medth.hasimg small{position:absolute;bottom:3px;left:3px;right:3px;background:rgba(0,0,0,.55);color:#fff;border-radius:6px;padding:1px 3px}
+.opill.med{background:var(--accent-soft);color:var(--accent)}
+.medov{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+.medbox2{background:var(--paper);color:var(--ink);border-radius:16px;padding:16px;width:100%;max-width:560px;max-height:90dvh;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.medbox2 h3{margin:0;font-size:1rem}
+.medimg{width:100%;max-height:60dvh;object-fit:contain;border-radius:10px;background:#000}
+.rectime{font-size:2.2rem;font-weight:700;text-align:center;margin:6px 0;font-variant-numeric:tabular-nums}
 .devinfo{font-size:.84rem;background:var(--bg);border-radius:10px;padding:8px 12px}
 .setcls{padding:12px 14px}.setcls .lb small{color:var(--muted);font-weight:400}
 #setClsWarn{background:#fff4d6;color:#7a5600;border-radius:10px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -593,6 +616,14 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
 @media (max-width:379px){.card{gap:10px;padding:12px}details.card>*:not(summary)+*{margin-top:9px}.row2{gap:8px}}
 @media (min-width:760px){.card{gap:14px;padding:16px}details.card>*:not(summary)+*{margin-top:12px}details.card>summary+*{margin-top:14px}.row2{gap:12px}}
 @media (max-height:520px) and (orientation:landscape){.card{gap:10px}details.card>*:not(summary)+*{margin-top:8px}}
+
+/* 아이폰·아이패드(사파리·크롬): 날짜·시간 칸이 제 크기를 고집해 옆 칸과 겹치지 않도록 */
+input.fld[type=date],input.fld[type=time],input.fld[type=datetime-local],input.fld[type=month]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;width:100%;display:block;min-height:2.75em;line-height:1.3}
+input.fld[type=date]::-webkit-date-and-time-value,input.fld[type=time]::-webkit-date-and-time-value{text-align:left;margin:0}
+label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
+.sesrow{grid-template-columns:minmax(7.5rem,42%) minmax(0,1fr);gap:10px}
+@media (max-width:379px){.sesrow{grid-template-columns:1fr}}
+.lockbar{flex-wrap:wrap}.lockbar>span{flex:1 1 12rem;min-width:0}.lockbar>.btn{flex:none;white-space:nowrap;margin-left:auto}
 </style>
 </head>
 <body>
@@ -648,6 +679,10 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
     <p class="note">시작 시간과 수업·쉬는·점심시간을 넣으면 1~7교시 시간이 자동으로 바뀝니다. 점심시간은 4교시 다음입니다.</p>
     <p class="note"><b>수업 시간 조정</b>: 시간표 왼쪽의 교시를 누르면 그 교시만 시작 시간과 길이를 바꿀 수 있고, 위쪽 요일을 누르면 그날만 단축수업 등으로 시간을 바꿀 수 있습니다.</p>
     <div id="ttAdjList"></div>
+    <h3 class="sh3">1교시 이전 시간 (아침활동 · 조례 등)</h3>
+    <div id="ttPreList"></div>
+    <div class="row2"><button class="btn" type="button" id="ttPreAdd">＋ 시간 추가</button></div>
+    <p class="note">추가한 시간은 시간표 맨 위 줄에 나오고, 출석 체크·일정 추가의 ‘시간표에서 고르기’에도 나옵니다. 시간을 바꾸면 연결된 오늘 이후의 출석 체크(잠기지 않은 것)와 일정도 함께 옮겨집니다. 출석 체크할 학급(예: 담임 학급)을 정해 두면 칸을 눌러 바로 출석 체크를 시작합니다.</p>
     <div class="row2"><button class="btn bad" type="button" id="ttDel">이 시간표 삭제</button></div>
   </details>
 </main>
@@ -667,6 +702,7 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
   <div class="ctabs" id="amode"><button class="chip" type="button" data-m="att" aria-pressed="true">출석 체크</button><button class="chip" type="button" data-m="obs">관찰 기록</button></div>
   <div id="m-obs" hidden>
     <div class="card obscard"><div class="obdate"><label class="lb" for="obsDate">기록 날짜<input class="fld" type="date" id="obsDate"></label><button class="btn sm" type="button" id="obsToday">오늘</button><span class="obsum" id="obsSum"></span></div>
+      <div class="lockbar" id="obsLockBar"><span id="obsLockTxt"></span><button class="btn sm" type="button" id="obsLockBtn"></button></div>
       <p class="note" style="margin:0">날짜를 고르지 않으면 오늘 날짜로 기록됩니다.</p>
       <div class="hd"><h2>빠른 체크</h2><button class="btn sm" type="button" id="obsEdit">항목 편집</button></div>
       <div id="obsBar"></div><p class="note" id="obsHint"></p><p class="note">항목 줄은 옆으로 밀어 더 볼 수 있습니다.</p></div>
@@ -679,8 +715,9 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
   <div class="card" id="sesCard">
     <div class="sesrow">
       <label class="lb" for="sTime">시간<input class="fld" type="time" id="sTime"></label>
-      <label class="lb" for="sLabel">이름 (선택)<input class="fld" id="sLabel" placeholder="예: 출발 전, 점심 후" autocomplete="off"></label>
+      <label class="lb" for="sLabel">교과·수업 이름 (선택)<input class="fld" id="sLabel" placeholder="예: 4교시 물리, 조회" autocomplete="off"></label>
     </div>
+    <div class="presets sesslots" id="sesSlots" hidden></div>
     <div class="bar"><div class="stats"><span class="p" id="sp"></span><span class="a" id="sa"></span></div></div>
     <div class="lockbar" id="lockBar"><span id="lockTxt"></span><button class="btn sm" id="lockBtn" type="button"></button></div>
     <div class="row2"><button class="btn" id="allIn" type="button">전원 출석</button><button class="btn bad" id="allOut" type="button">전원 결석</button></div>
@@ -987,8 +1024,11 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.10.3", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.12.0", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.12.0",date:"2026-10-19",items:["관찰 기록에 사진 · 동영상 · 녹음 추가: 학생 기록 창에서 📷 사진 찍기·🎥 동영상 찍기(휴대폰 카메라 앱), 🎙 녹음(앱 안에서 바로), 🖼 앨범·파일에서 붙이기", "붙인 파일 보기·재생, 저장·보내기, 삭제 / 학생 줄에 📷·🎥·🎙 개수 표시 / 관찰 기록 엑셀에 개수 표시", "파일은 찍은 기기에만 저장 (구글 연동·백업으로 옮겨지지 않음, 목록만 연동), 사진은 긴 변 1920px로 줄여 저장 공간 절약", "잠긴 날짜에는 사진·녹음을 붙이거나 지울 수 없음, 이 날 기록을 삭제하면 붙인 파일도 함께 삭제"]},
+  {v:"5.11.0",date:"2026-10-19",items:["시간표에 ‘1교시 이전 시간’ 추가: 아침활동·조례·아침 자습 등 필요한 시간을 이름·시작·길이로 넣고 고치거나 삭제 (시간표 맨 위 줄에 표시, 출석 체크할 학급 지정 가능)", "1교시 이전 시간 칸을 눌러 바로 출석 체크 시작·일정 추가, 출석 체크와 일정의 ‘시간표에서 고르기’에도 표시", "시간 연동: 시간표에서 고른 출석 체크·일정은 그 시간과 연결되어, 아침활동·조례 시간이나 1교시 시작·수업 시간을 바꾸면 오늘 이후의 연결된 출석 체크(잠기지 않은 것)와 일정 시간이 함께 바뀜", "관찰 기록 잠금·해제: 날짜별로 잠그면 그 날 기록이 바뀌지 않음 (보기·복사·엑셀은 그대로, 구글 연동으로 다른 기기에도 적용)", "구글 연동 시 학생 이메일과 관찰 기록 잠금도 두 기기의 변경을 바르게 합치도록 보완"]},
+  {v:"5.10.4",date:"2026-10-19",items:["출석 체크 칸 고침: 아이폰·아이패드에서 날짜 칸과 ‘시간’ 칸이 옆 칸·버튼과 겹치던 문제 (작은 휴대폰에서는 시간과 이름 칸을 위아래로)", "출석 체크의 ‘이름 (선택)’을 ‘교과·수업 이름 (선택)’으로 바꾸고 예시를 ‘4교시 물리’로", "잠금 안내 줄의 ‘잠금 해제’ 버튼 글자가 두 줄로 갈라지지 않게"]},
   {v:"5.10.3",date:"2026-10-19",items:["중요 오류 고침: 오늘 출석 체크를 ‘잠금’한 상태로 앱을 열면 시작 과정이 멈춰, 설정의 구글 로그인·적용 기간·사용 교사·공유 칸이 비어 보이고 로그인도 되지 않던 문제", "화면 일부에서 오류가 나도 나머지 화면은 정상으로 보이도록 나눠서 그리고, 오류가 나면 아래쪽에 ‘오류 내용 복사 · 앱 새로 받기’ 안내 표시", "‘앱 새로 받기’: 저장된 앱 파일만 지우고 최신 앱을 다시 받음 (입력한 자료는 그대로)"]},
   {v:"5.10.2",date:"2026-10-19",items:["구글 로그인 고침: 로그인이 만료된 뒤 다시 로그인 창이 열리지 않던 문제 (구글 로그인 준비를 미리 해 두어 버튼을 누르는 즉시 로그인 창이 열림, 브라우저 팝업 차단에 걸리지 않게)", "로그인이 만료되면 설정과 화면 위에 ‘다시 로그인’ 버튼을 분명하게 표시", "학교 인터넷 등에서 구글 로그인 서버가 막히면 원인과 해결 방법을 안내", "‘로그인이 계속 안 될 때 → 로그인 상태 초기화’: 꼬인 로그인 상태만 지우고 다시 로그인 (자료는 그대로)"]},
   {v:"5.10.1",date:"2026-10-19",items:["학교처럼 앱 주소가 막히거나 인터넷이 느린 곳에서도, 한 번 열어 둔 기기에서는 4초 안에 저장된 앱으로 바로 열림 (차단 안내 화면을 앱 대신 저장하지 않도록 보호)", "도움말 ‘자주 묻는 질문’에 학교에서 앱이 열리지 않을 때 확인 방법과 해결 방법 추가"]},
@@ -1050,18 +1090,20 @@ function load(){
 }
 function cleanDone(o){if(!o||typeof o!=="object")return null;const r={};for(const k in o)if(o[k])r[k]=+o[k]||Date.now();return Object.keys(r).length?r:null}
 function cleanP(p){const o={};if(p&&typeof p==="object")for(const k in p)if(p[k])o[k]=true;return o}
+
 function normalize(d){
   const f=fresh();
   f.cls=typeof d.cls==="string"?d.cls:"";
   if(+d.year)f.year=+d.year;if(d.term==="1학기"||d.term==="2학기")f.term=d.term;
   f.roster=(d.roster||[]).filter(x=>Array.isArray(x)&&x[0]&&x[1]).map(x=>[String(x[0]),String(x[1])]);
   f.phones=d.phones&&typeof d.phones==="object"?{...d.phones}:{};
-  f.obs=Array.isArray(d.obs)?d.obs.filter(r=>r&&r.sid&&/^\d{4}-\d{2}-\d{2}$/.test(r.date||"")).map(r=>({id:String(r.id||uid()),sid:String(r.sid),date:r.date,tags:r.tags&&typeof r.tags==="object"?{...r.tags}:{},memo:String(r.memo||""),at:+r.at||0})):[];
+  f.obs=Array.isArray(d.obs)?d.obs.filter(r=>r&&r.sid&&/^\d{4}-\d{2}-\d{2}$/.test(r.date||"")).map(r=>({id:String(r.id||uid()),sid:String(r.sid),date:r.date,tags:r.tags&&typeof r.tags==="object"?{...r.tags}:{},memo:String(r.memo||""),at:+r.at||0,...(Array.isArray(r.media)&&r.media.length?{media:r.media.filter(m=>m&&m.id&&["photo","video","audio"].includes(m.t)).map(m=>({id:String(m.id),t:m.t,mime:String(m.mime||""),size:+m.size||0,at:+m.at||0,...(m.dev?{dev:String(m.dev)}:{}),...(m.dur?{dur:+m.dur}:{})}))}:{})})):[];
+  {const ol={};if(d.obsLock&&typeof d.obsLock==="object")Object.entries(d.obsLock).forEach(([k,v])=>{if(/^\d{4}-\d{2}-\d{2}$/.test(k)&&+v)ol[k]=+v});if(Object.keys(ol).length)f.obsLock=ol}
   f.emails={};if(d.emails&&typeof d.emails==="object")for(const k in d.emails){const v=String(d.emails[k]||"").trim();if(isEmail(v))f.emails[k]=v}
   f.teachers=(d.teachers||[]).filter(t=>t&&t.name).map(t=>({id:String(t.id||uid()),name:String(t.name),role:String(t.role||""),phone:String(t.phone||"")}));
   f.msg=typeof d.msg==="string"&&d.msg&&d.msg!==OLD_MSG?d.msg:DEFAULT_MSG;
   if(Array.isArray(d.sessions)){
-    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
+    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
   }else if(Array.isArray(d.rounds)){
     /* 예전 1~6차 기록을 날짜별 출석 체크로 옮깁니다 */
     const used=d.rounds.filter(r=>r&&(r.date||Object.values(r.p||{}).some(Boolean)));
@@ -1186,6 +1228,7 @@ function renderAtt(){
   ["sTime","sLabel","allIn","allOut","sDel"].forEach(k=>$(k).disabled=lk);
   if(document.activeElement!==$("sTime"))$("sTime").value=s.time;
   if(document.activeElement!==$("sLabel"))$("sLabel").value=s.label;
+  try{renderSesSlots(s)}catch(e){}
   const ab=absent().length;
   $("sp").textContent="출석 "+(D.roster.length-ab);$("sa").textContent="결석 "+ab;
   const MAXD=10;
@@ -1208,7 +1251,17 @@ $("dPrev").onclick=()=>setDate(addDays(selDate||today(),-1));
 $("dNext").onclick=()=>setDate(addDays(selDate||today(),1));
 $("dToday").onclick=()=>setDate(today());
 $("startSes").onclick=addSession;
-$("sTime").onchange=e=>{const s=R();if(!s)return;s.time=e.target.value;save();renderAll()};
+$("sTime").onchange=e=>{const s=R();if(!s)return;if(s.lock){lockNudge();e.target.value=s.time;return}s.time=e.target.value;delete s.slot;if(s.src)s.manual=true;save();renderAll()};
+/* 출석 체크 시간을 시간표 시간(아침활동·조례·교시)에서 고르기: 시간표 시간이 바뀌면 같이 움직입니다 */
+function renderSesSlots(s){
+  const box=$("sesSlots");if(!box)return;const t=TT();
+  if(!s||!t||wdOf(s.date)>4){box.innerHTML="";box.hidden=true;return}
+  const opts=ttPre(t).map(r=>({k:r.key,label:r.label,start:r.start})).concat(ttRows(t,s.date).filter(r=>!r.lunch).map(r=>({k:"p"+r.p,label:r.label,start:r.start})));
+  const cur=s.slot||(()=>{if(s.manual||!s.src)return"";let m=s.src.match(/:x:(.+)$/);if(m)return"x"+m[1];m=s.src.match(/:(\d):(\d)$/);return m?"p"+m[2]:""})();
+  box.hidden=false;
+  box.innerHTML=`<span class="slh">시간표에서 고르기${cur?" · 연결됨":""}</span>`+opts.map(o=>`<button class="chip" type="button" data-k="${esc(o.k)}" aria-pressed="${o.k===cur}"${s.lock?" disabled":""}>${esc(o.label)} <small>${o.start}</small></button>`).join("");
+  box.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{if(s.lock)return lockNudge();const o=opts.find(x=>x.k===b.dataset.k);s.time=o.start;s.slot=o.k;delete s.manual;if(!s.label||opts.some(x=>s.label===x.label||s.label.startsWith(x.label+" ")))s.label=o.label;save();renderAll()});
+}
 $("sLabel").oninput=e=>{const s=R();if(!s)return;s.label=e.target.value.trim();save();renderTabs()};
 function lockNudge(){toast("잠긴 출석 체크입니다. 바꾸려면 위의 ‘잠금 해제’를 누르세요");const b=$("lockBar");b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake")}
 $("lockBtn").onclick=()=>{const s=R();if(!s)return;
@@ -2360,14 +2413,15 @@ const ttDeb={};
 const toMin=t=>{const[h,m]=String(t||"0:0").split(":").map(Number);return (h||0)*60+(m||0)};
 const toHM=m=>`${pad(Math.floor(m/60)%24)}:${pad(m%60)}`;
 function curTerm(){const d=new Date();const m=d.getMonth()+1;return{year:m<=2?d.getFullYear()-1:d.getFullYear(),term:m>=3&&m<=8?"1학기":"2학기"}}
-function newTT(o){const t=curTerm();return Object.assign({id:uid(),year:t.year,term:t.term,start:"09:00",classMin:45,breakMin:10,lunchMin:60,cells:{},adj:{},days:{},chg:[]},o||{})}
+function newTT(o){const t=curTerm();return Object.assign({id:uid(),year:t.year,term:t.term,start:"09:00",classMin:45,breakMin:10,lunchMin:60,cells:{},adj:{},days:{},chg:[],pre:[]},o||{})}
 function normTT(x){const t=newTT();if(!x||typeof x!=="object")return t;
   const n=(v,d,lo,hi)=>{v=parseInt(v,10);return isNaN(v)?d:Math.min(hi,Math.max(lo,v))};
   const cells={};Object.entries(x.cells||{}).forEach(([k,c])=>{if(/^[0-4]-[1-7]$/.test(k)&&c&&typeof c==="object")cells[k]={subject:String(c.subject||""),clsId:String(c.clsId||""),clsName:String(c.clsName||""),room:String(c.room||"")}});
   const hm=v=>/^\d{2}:\d{2}$/.test(v||"")?v:"";
   const adj={};Object.entries(x.adj||{}).forEach(([k,a])=>{if(/^(p[1-7]|lunch)$/.test(k)&&a){const o={};if(hm(a.start))o.start=a.start;const l=parseInt(a.len,10);if(!isNaN(l)&&l>=0&&l<=180)o.len=l;if(Object.keys(o).length)adj[k]=o}});
   const days={};Object.entries(x.days||{}).forEach(([d,o])=>{if(/^\d{4}-\d{2}-\d{2}$/.test(d)&&o)days[d]={start:hm(o.start)||"09:00",classMin:n(o.classMin,45,10,180),breakMin:n(o.breakMin,10,0,60),lunchMin:n(o.lunchMin,60,0,180),note:String(o.note||"")}});
-  return{id:String(x.id||uid()),year:n(x.year,t.year,2000,2100),term:String(x.term||t.term),start:hm(x.start)||"09:00",classMin:n(x.classMin,45,10,180),breakMin:n(x.breakMin,10,0,60),lunchMin:n(x.lunchMin,60,0,180),cells,adj,days,chg:normChg(x.chg)};
+  return{id:String(x.id||uid()),year:n(x.year,t.year,2000,2100),term:String(x.term||t.term),start:hm(x.start)||"09:00",classMin:n(x.classMin,45,10,180),breakMin:n(x.breakMin,10,0,60),lunchMin:n(x.lunchMin,60,0,180),cells,adj,days,chg:normChg(x.chg),
+    pre:(Array.isArray(x.pre)?x.pre:[]).filter(o=>o&&hm(o.start)).map(o=>({id:String(o.id||uid()),name:String(o.name||"").trim().slice(0,20)||"1교시 이전",start:o.start,len:n(o.len,20,5,180),clsId:String(o.clsId||"")})).sort((a,b)=>a.start.localeCompare(b.start))};
 }
 function ttName(t){return `${t.year}학년도 ${t.term}`}
 function ttBase(t,date,skip){
@@ -2386,6 +2440,29 @@ function ttRows(t,date,skip){
   }
   return rows;
 }
+/* 1교시 이전 시간 (아침활동·조례 등): 시간표마다 따로, 요일 공통 */
+function ttPre(t){return((t&&t.pre)||[]).map(o=>({key:"x"+o.id,id:o.id,label:o.name,start:o.start,end:toHM(toMin(o.start)+o.len),len:o.len,clsId:o.clsId||"",pre:true}))}
+const preSrc=(t,id)=>`${t.id}:x:${id}`;
+/* 시간표의 시간 이름(key) → 그 날의 시작·끝 */
+function slotTime(t,date,k){
+  if(!t||!k||!date||wdOf(date)>4)return null;let m;
+  if(k[0]==="x"){const r=ttPre(t).find(x=>x.key===k);return r?{start:r.start,end:r.end,label:r.label}:null}
+  const rows=ttRows(t,date);
+  if(k==="lunch"){const r=rows.find(x=>x.lunch);return r?{start:r.start,end:r.end,label:"점심시간"}:null}
+  if(k==="after"){const l=rows[rows.length-1];return{start:l.end,end:toHM(toMin(l.end)+60),label:"방과 후"}}
+  if(k==="pre"){const f=toMin(rows[0].start);return f>=70?{start:toHM(f-60),end:toHM(f-10),label:"1교시 이전"}:null}
+  if((m=k.match(/^[fp](\d)(?:-(\d))?$/))){const a=rows.find(x=>x.p===+m[1]),b=rows.find(x=>x.p===+(m[2]||m[1]));return a&&b?{start:a.start,end:b.end,label:m[2]?`${m[1]}~${m[2]}교시`:`${m[1]}교시`}:null}
+  if((m=k.match(/^b(\d)$/))){const i=rows.findIndex(x=>x.p===+m[1]),r=rows[i],nx=rows[i+1];return r&&nx?{start:r.end,end:nx.start,label:`${m[1]}교시 후`}:null}
+  return null;
+}
+/* 시간표 시간이 바뀌면, 그 시간과 연결된 오늘 이후의 출석 체크(잠기지 않은 것)와 일정도 같이 옮깁니다 */
+function ttSyncLinked(t){
+  if(!t)return 0;const td=today();let ns=0,ne=0;
+  const keyOf=s=>{if(s.slot)return s.slot;if(s.manual||!s.src)return"";let m=s.src.match(/^(.+):x:(.+)$/);if(m&&m[1]===t.id)return"x"+m[2];m=s.src.match(/^(.+):(\d):(\d)$/);return m&&m[1]===t.id?"p"+m[3]:""};
+  S.list.forEach(c=>(c.data.sessions||[]).forEach(s=>{if(s.lock||s.date<td)return;const k=keyOf(s);if(!k)return;const st=slotTime(t,s.date,k);if(st&&s.time!==st.start){s.time=st.start;ns++}}));
+  (S.events||[]).forEach(e=>{if(!e.slot||e.done||e.date<td)return;const st=slotTime(t,e.date,e.slot);if(!st)return;if(e.start!==st.start||(e.end&&e.end!==st.end)){e.start=st.start;if(e.end||st.end)e.end=st.end;e.notified=false;ne++}});
+  return ns+ne;
+}
 function initTT(){
   if(!S.tt||typeof S.tt!=="object")S.tt={list:[],active:""};
   S.tt.list=(Array.isArray(S.tt.list)?S.tt.list:[]).map(normTT);
@@ -2399,6 +2476,7 @@ function cellClass(c){if(!c)return null;return S.list.find(x=>x.id===c.clsId)||(
 function cellSession(t,d,p,date){const c=cellAt(t,d,p,date),cl=cellClass(c);if(!cl)return null;const src=`${t.id}:${d}:${p}`;return{cl,s:cl.data.sessions.find(x=>x.date===date&&x.src===src)||null}}
 function renderTT(){
   const t=TT();
+  if(t){try{const n=ttSyncLinked(t);if(n){save();toast(`시간표 시간에 맞춰 출석 체크·일정 ${n}개의 시간을 옮겼습니다`)}}catch(e){}try{renderPreList(t)}catch(e){}}
   const sel=$("ttSel");
   sel.innerHTML=S.tt.list.slice().sort((a,b)=>b.year-a.year||b.term.localeCompare(a.term,"ko")).map(x=>`<option value="${esc(x.id)}">${esc(ttName(x))}</option>`).join("")+`<option value="__new">＋ 새 시간표 만들기</option>`;
   sel.value=t?t.id:"__new";
@@ -2423,6 +2501,14 @@ function renderTT(){
   const ti=days.indexOf(td);
   const liveKey=ti>=0?(dayRows[ti].find(r=>nowM>=toMin(r.start)&&nowM<toMin(r.end))||{}).key:null;
   let h=`<table class="ttg${ttEdit?" editing":""}"><thead><tr><th class="tcol"></th>${days.map((d,i)=>`<th class="${d===td?"today":""}"><button class="dbtn${special[i]?" sp":""}" type="button" data-date="${d}" aria-label="${fmtDateW(d)} 시간 바꾸기">${DAYS[i]}<small>${fmtShort(d)}</small>${special[i]?`<em>${esc(t.days[d].note||"시간 변경")}</em>`:""}${dayChg(t,d)?`<em class="dc">${esc(dayChg(t,d).reason||"수업 변동")}</em>`:""}${S.events.some(e=>e.date===d&&e.important)?'<i class="imp-dot" title="중요 일정"></i>':""}</button></th>`).join("")}</tr></thead><tbody>`;
+  if(ttEdit)h+=`<tr class="preadd"><td colspan="6"><button class="btn sm" type="button" id="preAdd">＋ 1교시 이전 시간 추가 (아침활동 · 조례 등)</button></td></tr>`;
+  ttPre(t).forEach(r=>{
+    const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null,src=preSrc(t,r.id);
+    h+=`<tr class="prer"><th class="tcol"><button class="tbtn pre" type="button" data-pre="${esc(r.id)}" aria-label="${esc(r.label)} 시간 고치기"><b>${esc(r.label)}</b><small>${r.start}<br>${r.end}</small></button></th>`+days.map((d,i)=>{
+      const ses=cl?cl.data.sessions.find(x=>x.date===d&&x.src===src):null,n=S.events.filter(e=>e.date===d&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).length;
+      const ck=ses?`<i class="ck${cl.data.roster.filter(([id])=>ses.p[id]).length<cl.data.roster.length?" ab":""}">${cl.data.roster.filter(([id])=>ses.p[id]).length}/${cl.data.roster.length}</i>`:"";
+      return `<td><button class="lc pre${d===td?" today":""}" type="button" data-date="${d}" data-pre="${esc(r.id)}" aria-label="${fmtDateW(d)} ${esc(r.label)}">${cl?`<span class="pcl">${esc(clsName(cl.data))}</span>`:`<span>${r.len}분</span>`}${ck}${n?`<i class="evn">일정 ${n}</i>`:""}</button></td>`}).join("")+"</tr>";
+  });
   rows.forEach((r,ri)=>{
     const tbtn=`<button class="tbtn${r.adj?" adj":""}" type="button" data-k="${r.key}" aria-label="${r.label} 시간 조정"><b>${r.lunch?"점심":r.label}</b><small>${r.start}<br>${r.end}</small></button>`;
     if(r.lunch){
@@ -2449,8 +2535,9 @@ function renderTT(){
   h+=`<tr class="after"><th class="tcol"><span class="aft"><b>방과 후</b><small>${rows[rows.length-1].end}~</small></span></th>`+days.map((d,i)=>{const lastEnd=dayRows[i][dayRows[i].length-1].end;const n=S.events.filter(e=>e.date===d&&e.start>=lastEnd).length;return `<td><button class="lc" type="button" data-date="${d}" data-slot="after" aria-label="${fmtDateW(d)} 방과 후 일정">${n?`<i class="evn">일정 ${n}</i>`:'<span class="plus">＋</span>'}</button></td>`}).join("")+"</tr>";
   h+="</tbody></table>";
   $("ttGrid").innerHTML=h;
-  $("ttGrid").querySelectorAll(".lc").forEach(b=>b.onclick=()=>dayMenu(b.dataset.date,b.dataset.slot));
-  $("ttGrid").querySelectorAll(".tbtn").forEach(b=>b.onclick=()=>adjPeriod(t,b.dataset.k));
+  $("ttGrid").querySelectorAll(".lc").forEach(b=>b.onclick=()=>b.dataset.pre?preMenu(t,b.dataset.pre,b.dataset.date):dayMenu(b.dataset.date,b.dataset.slot));
+  $("ttGrid").querySelectorAll(".tbtn").forEach(b=>b.onclick=()=>b.dataset.pre?preEdit(t,b.dataset.pre):adjPeriod(t,b.dataset.k));
+  if($("preAdd"))$("preAdd").onclick=()=>preEdit(t,null);
   $("ttGrid").querySelectorAll(".dbtn").forEach(b=>b.onclick=()=>dayMenu(b.dataset.date));
   renderAgenda();renderNotifyState();
   $("ttGrid").querySelectorAll(".tc").forEach(b=>b.onclick=()=>{const d=+b.dataset.d,p=+b.dataset.p,date=addDays(ttWeek,d);if(ttEdit)return editCell(t,d,p);
@@ -2459,6 +2546,66 @@ function renderTT(){
     if(isEmptyCell(c))return emptyMenu(t,d,p,date);
     cellMenu(t,d,p,date)});
   renderChgList(t);
+}
+function renderPreList(t){
+  const L=$("ttPreList");if(!L)return;const pr=ttPre(t);
+  L.innerHTML=pr.length?`<div class="abslist">${pr.map(r=>{const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null;return `<div><span><b>${esc(r.label)}</b> ${r.start}~${r.end}${cl?` · ${esc(clsName(cl.data))}`:""}</span><button class="btn sm" type="button" data-pe="${esc(r.id)}">고치기</button></div>`}).join("")}</div>`:`<p class="note">아직 없습니다. 예: 아침활동 08:20~08:40, 조례 08:40~08:50</p>`;
+  L.querySelectorAll("[data-pe]").forEach(b=>b.onclick=()=>preEdit(t,b.dataset.pe));
+  if($("ttPreAdd"))$("ttPreAdd").onclick=()=>preEdit(t,null);
+}
+function preEdit(t,id){
+  if(!Array.isArray(t.pre))t.pre=[];
+  const o=id?t.pre.find(x=>x.id===id):null;if(id&&!o)return;
+  const first=ttRows(t)[0].start,used=t.pre.slice().sort((a,b)=>a.start.localeCompare(b.start));
+  const sug=o?null:(used.length?{start:toHM(toMin(used[used.length-1].start)+used[used.length-1].len),len:10}:{start:toHM(Math.max(0,toMin(first)-40)),len:20});
+  const v=o?{...o}:{id:uid(),name:"",start:sug.start,len:Math.max(5,Math.min(sug.len,toMin(first)-toMin(sug.start)))||10,clsId:""};
+  $("sheetBox").innerHTML=`<h2>${o?"1교시 이전 시간 고치기":"1교시 이전 시간 추가"}</h2>
+    <div class="presets" id="peName">${["아침활동","조례","아침 자습","독서 시간","0교시","등교 지도"].map(x=>`<button class="chip" type="button">${x}</button>`).join("")}</div>
+    <label class="lb" for="peN">이름<input class="fld" id="peN" maxlength="20" placeholder="예: 아침활동, 조례" autocomplete="off"></label>
+    <div class="range"><label class="lb" for="peS">시작<input class="fld" id="peS" type="time"></label><label class="lb" for="peL">길이(분)<input class="fld" id="peL" type="number" inputmode="numeric" min="5" max="180"></label></div>
+    <label class="lb" for="peC">출석 체크할 학급 (선택, 예: 담임 학급)<select class="fld" id="peC"><option value="">정하지 않음 (칸을 누를 때 고름)</option>${perList().map(c=>`<option value="${esc(c.id)}">${esc(clsName(c.data))}</option>`).join("")}</select></label>
+    <p class="note" id="peInfo"></p>
+    <div class="row2">${o?`<button class="btn bad" type="button" id="peDel">삭제</button>`:""}<button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="peOk">저장</button></div>`;
+  $("sheet").hidden=false;$("peN").value=v.name;$("peS").value=v.start;$("peL").value=v.len;$("peC").value=v.clsId;
+  const info=()=>{const s0=$("peS").value,l=parseInt($("peL").value,10);if(!/^\d{2}:\d{2}$/.test(s0)||!(l>0)){$("peInfo").textContent="";return}const e=toHM(toMin(s0)+l);
+    const clash=t.pre.filter(x=>x.id!==v.id).find(x=>toMin(s0)<toMin(x.start)+x.len&&toMin(x.start)<toMin(e));
+    $("peInfo").innerHTML=`${s0}~${e}${toMin(e)>toMin(first)?` <span class="warn">1교시(${first})와 겹칩니다</span>`:""}${clash?` <span class="warn">‘${esc(clash.name)}’ 시간과 겹칩니다</span>`:""}`};
+  ["peS","peL"].forEach(k=>$(k).oninput=info);info();
+  $("peName").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{$("peN").value=b.textContent});
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("peOk").onclick=()=>{const name=$("peN").value.trim(),st=$("peS").value,len=parseInt($("peL").value,10);
+    if(!name)return toast("이름을 넣어 주세요 (예: 아침활동)");if(!/^\d{2}:\d{2}$/.test(st))return toast("시작 시간을 넣어 주세요");if(!(len>=5&&len<=180))return toast("길이는 5~180분으로 넣어 주세요");
+    const x={id:v.id,name:name.slice(0,20),start:st,len,clsId:$("peC").value};
+    const i=t.pre.findIndex(y=>y.id===v.id);if(i>=0)t.pre[i]=x;else t.pre.push(x);t.pre.sort((a,b)=>a.start.localeCompare(b.start));
+    const n=ttSyncLinked(t);save();$("sheet").hidden=true;renderTT();toast(`‘${x.name}’ ${st}~${toHM(toMin(st)+len)}을 저장했습니다${n?` · 연결된 출석 체크·일정 ${n}개도 옮겼습니다`:""}`)};
+  if(o)twoStep($("peDel"),"정말 삭제",()=>{t.pre=t.pre.filter(x=>x.id!==o.id);
+    /* 연결을 끊고 시간은 그대로 둡니다 */
+    S.list.forEach(c=>(c.data.sessions||[]).forEach(s=>{if(s.slot==="x"+o.id)delete s.slot}));(S.events||[]).forEach(e=>{if(e.slot==="x"+o.id)delete e.slot});
+    save();$("sheet").hidden=true;renderTT();toast(`‘${o.name}’ 시간을 지웠습니다. 이미 만든 출석 체크와 일정은 그대로 남습니다`)});
+}
+function preMenu(t,id,date){
+  const r=ttPre(t).find(x=>x.id===id);if(!r)return;
+  const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null,src=preSrc(t,id),ses=cl?cl.data.sessions.find(x=>x.date===date&&x.src===src):null;
+  const evs=S.events.filter(e=>e.date===date&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).sort(evSort);
+  const PL=perList();
+  $("sheetBox").innerHTML=`<h2>${esc(r.label)} <span class="sub">${fmtDateW(date)} ${r.start}~${r.end}</span></h2>
+    <div class="evlist">${evs.length?evs.map(e=>evItemHTML(e,false)).join(""):`<div class="empty">이 시간에 등록된 일정이 없습니다.</div>`}</div>
+    ${PL.length?`<label class="lb" for="pmC">출석 체크할 학급<select class="fld" id="pmC">${PL.map(c=>`<option value="${esc(c.id)}"${(cl?cl.id:S.active)===c.id?" selected":""}>${esc(clsName(c.data))} (${c.data.roster.length}명)</option>`).join("")}</select></label>`:""}
+    <div class="row2" style="flex-direction:column">${PL.length?`<button class="btn pri" type="button" id="pmAtt">${ses?"출석 체크 이어서 하기":"이 시간 출석 체크 시작"}</button>`:""}
+      <button class="btn" type="button" id="pmEv">＋ 이 시간에 일정 추가</button>
+      <button class="btn" type="button" id="pmEdit">시간 · 이름 고치기</button><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};wireEvList($("sheetBox"));
+  $("pmEv").onclick=()=>editEvent(null,{date,start:r.start,end:r.end,slot:r.key,cat:"학생 면담"});
+  $("pmEdit").onclick=()=>preEdit(t,id);
+  if($("pmAtt"))$("pmAtt").onclick=()=>{const c=S.list.find(x=>x.id===$("pmC").value);if(!c)return;$("sheet").hidden=true;startPreAttendance(t,r,date,c)};
+}
+function startPreAttendance(t,r,date,cl){
+  if(!cl.data.roster.length)toast(clsName(cl.data)+" 학생 명단이 비어 있습니다. 설정에서 넣어 주세요");
+  const src=preSrc(t,r.id);S.active=cl.id;D=cl.data;
+  let s=D.sessions.find(x=>x.date===date&&x.src===src);
+  if(!s){s={id:uid(),date,time:r.start,label:r.label,p:{},src,slot:r.key};D.sessions.push(s);toast(`${clsName()} ${r.label} 출석 체크를 시작합니다`)}
+  if(OBS)OBS.mode="att";try{localStorage.setItem("att-app-amode","att")}catch(e){}
+  selDate=date;selId=s.id;save();show("att");
 }
 function emptyMenu(t,d,p,date){
   const r=ttRows(t,date).find(x=>x.p===p);
@@ -2707,7 +2854,7 @@ function newTTSheet(){
     const year=parseInt($("ntYear").value,10)||t.year,term=$("ntTerm").value;
     if(S.tt.list.some(x=>x.year===year&&x.term===term))return toast(`${year}학년도 ${term} 시간표가 이미 있습니다`);
     const copy=cur&&$("ntCopy")&&$("ntCopy").checked;
-    const n=newTT(copy?{start:cur.start,classMin:cur.classMin,breakMin:cur.breakMin,lunchMin:cur.lunchMin,cells:JSON.parse(JSON.stringify(cur.cells)),adj:JSON.parse(JSON.stringify(cur.adj||{}))}:{});
+    const n=newTT(copy?{start:cur.start,classMin:cur.classMin,breakMin:cur.breakMin,lunchMin:cur.lunchMin,cells:JSON.parse(JSON.stringify(cur.cells)),adj:JSON.parse(JSON.stringify(cur.adj||{})),pre:JSON.parse(JSON.stringify(cur.pre||[])).map(o=>({...o,id:uid()}))}:{});
     n.year=year;n.term=term;S.tt.list.push(n);S.tt.active=n.id;ttEdit=!copy;save();$("sheet").hidden=true;renderTT();
     toast(`${ttName(n)} 시간표를 만들었습니다`);
   };
@@ -2992,7 +3139,7 @@ const ALARMS=[[-1,"알림 없음"],[0,"정시"],[5,"5분 전"],[10,"10분 전"],
 function initEv(){
   if(!S.notes||typeof S.notes!=="object")S.notes={};
   if(!Array.isArray(S.events))S.events=[];
-  S.events=S.events.filter(e=>e&&/^\d{4}-\d{2}-\d{2}$/.test(e.date||"")).map(e=>({id:String(e.id||uid()),date:e.date,start:/^\d{2}:\d{2}$/.test(e.start||"")?e.start:"09:00",end:/^\d{2}:\d{2}$/.test(e.end||"")?e.end:"",cat:EV_CATS.includes(e.cat)?e.cat:"기타",title:String(e.title||""),memo:String(e.memo||""),clsId:String(e.clsId||""),alarm:Number.isFinite(+e.alarm)?+e.alarm:-1,important:!!e.important,done:!!e.done,notified:!!e.notified,...(e.snooze?{snooze:+e.snooze}:{})}));
+  S.events=S.events.filter(e=>e&&/^\d{4}-\d{2}-\d{2}$/.test(e.date||"")).map(e=>({id:String(e.id||uid()),date:e.date,start:/^\d{2}:\d{2}$/.test(e.start||"")?e.start:"09:00",end:/^\d{2}:\d{2}$/.test(e.end||"")?e.end:"",cat:EV_CATS.includes(e.cat)?e.cat:"기타",title:String(e.title||""),memo:String(e.memo||""),clsId:String(e.clsId||""),alarm:Number.isFinite(+e.alarm)?+e.alarm:-1,important:!!e.important,done:!!e.done,notified:!!e.notified,...(e.snooze?{snooze:+e.snooze}:{}),...(e.slot?{slot:String(e.slot)}:{})}));
 }
 initEv();
 const evTime=e=>{const[y,m,d]=e.date.split("-").map(Number);const[h,mi]=e.start.split(":").map(Number);return new Date(y,m-1,d,h,mi).getTime()};
@@ -3001,7 +3148,7 @@ const alarmLabel=a=>(ALARMS.find(x=>x[0]===a)||[0,a+"분 전"])[1];
 function slotOf(date,hm){
   const t=TT();if(!t||!hm||wdOf(date)>4)return"";
   const rows=ttRows(t,date),m=toMin(hm);
-  if(m<toMin(rows[0].start))return"1교시 이전";
+  if(m<toMin(rows[0].start)){const pr=ttPre(t).find(r=>m>=toMin(r.start)&&m<toMin(r.end));return pr?pr.label:"1교시 이전"}
   for(let i=0;i<rows.length;i++){const r=rows[i],nx=rows[i+1];
     if(m>=toMin(r.start)&&m<toMin(r.end))return r.lunch?"점심시간":(isFree(t,date,r.p)?r.label+" 공강":r.label+" 수업 중");
     if(nx&&m>=toMin(r.end)&&m<toMin(nx.start))return `${r.lunch?"점심":r.label} 후 쉬는 시간`;}
@@ -3027,7 +3174,7 @@ function slotOptions(date){
     if(r.lunch)o.push({k:"lunch",label:"점심시간",start:r.start,end:r.end});
     else if(nx&&!nx.lunch&&toMin(nx.start)>toMin(r.end))o.push({k:"b"+r.p,label:`${r.p}교시 후`,start:r.end,end:nx.start});});
   /* 1교시 이전: 1교시 시작 1시간 전부터 10분 전까지 (예: 1교시 09:00 → 08:00~08:50) */
-  {const f=toMin(rows[0].start);if(f>=70)o.push({k:"pre",label:"1교시 이전",start:toHM(f-60),end:toHM(f-10)})}
+  {const pr=ttPre(t);if(pr.length)pr.forEach(r=>o.push({k:r.key,label:r.label,start:r.start,end:r.end,pre:true}));else{const f=toMin(rows[0].start);if(f>=70)o.push({k:"pre",label:"1교시 이전",start:toHM(f-60),end:toHM(f-10)})}}
   const last=rows[rows.length-1];o.push({k:"after",label:"방과 후",start:last.end,end:toHM(toMin(last.end)+60)});
   return o.sort((a,b)=>a.start.localeCompare(b.start)||(a.end.localeCompare(b.end)));
 }
@@ -3094,7 +3241,7 @@ function dayMenu(date,slot){
     <div class="row2" style="flex-direction:column">${t?`<button class="btn" type="button" id="dmChg">${dayChg(t,date)?"이 날 수업 변동 고치기 ("+esc(dayChg(t,date).reason||"수업 변동")+")":"이 날 수업 변동 (시험·행사·휴업일)"}</button><button class="btn" type="button" id="dmTime">이 날 수업 시간 바꾸기</button>`:""}<button class="btn" type="button" id="skNo">닫기</button></div>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
   wireEvList($("sheetBox"));
-  $("sheetBox").querySelectorAll("[data-sl]").forEach(b=>b.onclick=()=>{const o=opts.find(x=>x.k===b.dataset.sl);editEvent(null,{date,start:o?o.start:nowHM(),end:o?o.end:"",cat:o&&o.k==="after"?"교무 업무":"학생 면담"})});
+  $("sheetBox").querySelectorAll("[data-sl]").forEach(b=>b.onclick=()=>{const o=opts.find(x=>x.k===b.dataset.sl);editEvent(null,{date,start:o?o.start:nowHM(),end:o?o.end:"",cat:o&&o.k==="after"?"교무 업무":"학생 면담",...(o?{slot:o.k}:{})})});
   if(t){$("dmTime").onclick=()=>adjDay(t,date);$("dmChg").onclick=()=>{const dc=dayChg(t,date);changeSheet(t,dc?{id:dc.id}:{scope:"day",date})}}
 }
 function editEvent(e,pre){
@@ -3116,19 +3263,20 @@ function editEvent(e,pre){
     <div class="row2">${isNew?"":`<button class="btn bad" type="button" id="evDel">삭제</button>`}<button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="evOk">저장</button></div>`;
   $("sheet").hidden=false;
   $("evTitle").value=v.title;$("evDate").value=v.date;$("evStart").value=v.start;$("evEnd").value=v.end;$("evCls").value=v.clsId;$("evMemo").value=v.memo;$("evAlarm").value=String(v.alarm);$("evImp").checked=v.important;
-  let cat=v.cat;
+  let cat=v.cat,slotK=v.slot||"";
   const paintCats=()=>$("evCats").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===cat));
   $("evCats").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{cat=b.dataset.c;paintCats()});paintCats();
   const paintSlots=()=>{const d=$("evDate").value;const opts=d?slotOptions(d):[];
     $("evSlots").innerHTML=opts.length?`<span class="slh">시간표에서 고르기 <i>공강</i>은 수업이 없는 시간</span>`+opts.map(o=>`<button class="chip${o.free?" free":""}" type="button" data-s="${o.k}">${o.label} <small>${o.start}~${o.end}</small></button>`).join(""):(d&&wdOf(d)>4?`<span class="slh">주말에는 시간표가 없습니다</span>`:"");
-    $("evSlots").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const o=opts.find(x=>x.k===b.dataset.s);$("evStart").value=o.start;$("evEnd").value=o.end;paintSlot()});
+    $("evSlots").querySelectorAll(".chip").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.s===slotK);b.onclick=()=>{const o=opts.find(x=>x.k===b.dataset.s);$("evStart").value=o.start;$("evEnd").value=o.end;slotK=o.k;paintSlots()}});
     paintSlot()};
-  const paintSlot=()=>{const d=$("evDate").value,st=$("evStart").value;const sl=d&&st?slotOf(d,st):"";$("evSlot").textContent=sl?`시간표 기준: ${sl}`:"";
+  const paintSlot=()=>{const d=$("evDate").value,st=$("evStart").value;const sl=d&&st?slotOf(d,st):"";const lk=slotK&&d?slotTime(TT(),d,slotK):null;$("evSlot").textContent=(sl?`시간표 기준: ${sl}`:"")+(lk?` · 시간표 ‘${lk.label}’과 연결됨 (시간표 시간이 바뀌면 같이 움직입니다)`:"");
     const a=+$("evAlarm").value;let note="";
     if(a>=0&&d&&st){const at=new Date(evTime({date:d,start:st})-a*60000);note=`알림: ${at.getMonth()+1}월 ${at.getDate()}일 ${pad(at.getHours())}:${pad(at.getMinutes())}. 앱이 열려 있을 때 알려 주고, 앱을 닫아 두어도 받으려면 ‘구글 캘린더에 추가’를 쓰세요.`}
     $("evAlarmNote").textContent=note};
-  $("evDate").oninput=paintSlots;$("evStart").oninput=paintSlot;$("evAlarm").onchange=paintSlot;paintSlots();
-  const read=()=>({...v,title:$("evTitle").value.trim(),date:$("evDate").value,start:$("evStart").value,end:$("evEnd").value,cat,clsId:$("evCls").value,memo:$("evMemo").value.trim(),alarm:+$("evAlarm").value,important:$("evImp").checked});
+  $("evDate").oninput=()=>{const d=$("evDate").value;if(slotK){const st=d?slotTime(TT(),d,slotK):null;if(st){$("evStart").value=st.start;$("evEnd").value=st.end}else slotK=""}paintSlots()};
+  $("evStart").oninput=()=>{slotK="";paintSlots()};$("evEnd").oninput=()=>{if(slotK){slotK="";paintSlots()}};$("evAlarm").onchange=paintSlot;paintSlots();
+  const read=()=>({...v,slot:slotK||undefined,title:$("evTitle").value.trim(),date:$("evDate").value,start:$("evStart").value,end:$("evEnd").value,cat,clsId:$("evCls").value,memo:$("evMemo").value.trim(),alarm:+$("evAlarm").value,important:$("evImp").checked});
   $("skNo").onclick=()=>{$("sheet").hidden=true;renderAll()};
   $("evGcal").onclick=()=>{const x=read();if(!x.date||!x.start)return toast("날짜와 시작 시간을 넣어 주세요");openGcal(x)};
   if(!isNew)twoStep($("evDel"),"정말 삭제",()=>{S.events=S.events.filter(x=>x.id!==v.id);save();$("sheet").hidden=true;toast("일정을 삭제했습니다");renderAll()});
@@ -3543,7 +3691,7 @@ function obsTags(){if(!S.obsTags||!Array.isArray(S.obsTags.groups))S.obsTags={gr
 function tagOf(k){for(const g of obsTags())for(const it of g.items)if(it.k===k)return it;return null}
 function obsList(d){d=d||D;if(!Array.isArray(d.obs))d.obs=[];return d.obs}
 function obsRec(sid,date,make){let r=obsList().find(x=>x.sid===sid&&x.date===date);if(!r&&make){r={id:uid(),sid,date,tags:{},memo:"",at:Date.now()};obsList().push(r)}return r}
-function cleanRec(r){Object.keys(r.tags).forEach(k=>{if(!(r.tags[k]>0))delete r.tags[k]});if(!Object.keys(r.tags).length&&!r.memo.trim()){D.obs=obsList().filter(x=>x!==r);return null}r.at=Date.now();return r}
+function cleanRec(r){Object.keys(r.tags).forEach(k=>{if(!(r.tags[k]>0))delete r.tags[k]});if(!Object.keys(r.tags).length&&!r.memo.trim()&&!recMedia(r).length){D.obs=obsList().filter(x=>x!==r);return null}r.at=Date.now();return r}
 const tone=t=>t>0?"pos":t<0?"neg":"neu";
 function tagPills(r,max){if(!r)return"";const ks=Object.keys(r.tags);const out=ks.slice(0,max||99).map(k=>{const t=tagOf(k);return t?`<span class="opill ${tone(t.t)}">${esc(t.l)}${r.tags[k]>1?" ×"+r.tags[k]:""}</span>`:""}).join("");return out+(max&&ks.length>max?`<span class="opill neu">+${ks.length-max}</span>`:"")}
 function setAmode(m){OBS.mode=m;try{localStorage.setItem("att-app-amode",m)}catch(e){}renderAll()}
@@ -3560,21 +3708,29 @@ function renderObs(){
   const allR=obsList(),totAll=allR.reduce((a,r)=>a+cnt(r),0),totDay=recs.reduce((a,r)=>a+cnt(r),0);
   $("obsSum").innerHTML=`이 날 <b>${totDay}</b>회 · 누적 <b>${totAll}</b>회`;
   $("dayHead").textContent=`${fmtDateW(selDate)}${selDate===today()?" · 오늘":""} · 관찰 기록 ${recs.length}명`;
+  const olk=obsLocked(selDate);if(olk)OBS.arm=null;
+  document.querySelector(".obscard").classList.toggle("locked",olk);
+  $("obsLockTxt").innerHTML=olk?`🔒 <b>잠김</b> · ${esc(fmtDT(D.obsLock[selDate]))} 잠금 · 이 날 기록이 바뀌지 않습니다`:"🔓 이 날 기록을 마치면 잠가 두세요. 실수로 바뀌지 않습니다";
+  $("obsLockBtn").textContent=olk?"잠금 해제":"잠그기";$("obsLockBtn").classList.toggle("pri",!olk);
   /* 빠른 체크 막대 */
   const arm=OBS.arm&&tagOf(OBS.arm)?OBS.arm:null;OBS.arm=arm;
   $("obsBar").innerHTML=obsTags().map((g,gi)=>`<div class="obg"><span class="obgn">${esc(g.g)}</span>${g.items.map(it=>`<button class="chip otag ${tone(it.t)}" type="button" data-k="${esc(it.k)}" aria-pressed="${arm===it.k}">${esc(it.l)}</button>`).join("")}</div>`).join("");
   $("obsHint").innerHTML=arm?`<b>‘${esc(tagOf(arm).l)}’</b> 선택됨 · 학생 이름을 누를 때마다 기록됩니다. 다시 누르면 선택이 풀립니다.`:"항목을 먼저 누르고 학생을 누르면 빠르게 체크됩니다. 학생 이름만 누르면 그 학생의 기록 창이 열립니다.";
-  $("obsBar").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{OBS.arm=OBS.arm===b.dataset.k?null:b.dataset.k;renderObs()});
+  $("obsBar").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{if(obsLocked(selDate))return obsNudge();OBS.arm=OBS.arm===b.dataset.k?null:b.dataset.k;renderObs()});
   /* 학생 목록 */
   const L=$("obsList");
   if(!D.roster.length){L.innerHTML=`<div class="empty">학생 명단이 비어 있습니다.</div>`;return}
   const all=obsList();
   L.innerHTML=D.roster.map(([id,name],i)=>{const r=recs.find(x=>x.sid===id),mine=all.filter(x=>x.sid===id),n=mine.length,tc=mine.reduce((a,x)=>a+cnt(x),0);
-    return `<div class="orow${r?" has":""}"><button class="obtn" type="button" data-s="${esc(id)}"><span class="no">${i+1}</span><span class="onm">${esc(name)}<small>${esc(id)}</small>${n?`<small class="ocnt">누적 ${tc}회 · ${n}일</small>`:""}</span><span class="opills">${tagPills(r,4)}${r&&r.memo?`<span class="opill memo">메모</span>`:""}</span></button><button class="btn sm oedit" type="button" data-e="${esc(id)}" aria-label="${esc(name)} 기록 열기">기록</button></div>`}).join("");
+    return `<div class="orow${r?" has":""}"><button class="obtn" type="button" data-s="${esc(id)}"><span class="no">${i+1}</span><span class="onm">${esc(name)}<small>${esc(id)}</small>${n?`<small class="ocnt">누적 ${tc}회 · ${n}일</small>`:""}</span><span class="opills">${tagPills(r,4)}${r&&r.memo?`<span class="opill memo">메모</span>`:""}${mediaPills(r)}</span></button><button class="btn sm oedit" type="button" data-e="${esc(id)}" aria-label="${esc(name)} 기록 열기">기록</button></div>`}).join("");
   L.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const id=b.dataset.s;if(OBS.arm)quickTag(id,OBS.arm);else obsSheet(id)});
   L.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>obsSheet(b.dataset.e));
 }
+/* 관찰 기록 잠금: 날짜별로 잠그면 그 날 기록이 바뀌지 않습니다 (보기·복사·엑셀은 그대로) */
+function obsLocked(date){return !!(D&&D.obsLock&&D.obsLock[date])}
+function obsNudge(){toast("잠긴 날짜의 관찰 기록입니다. 고치려면 위쪽 ‘잠금 해제’를 누르세요")}
 function quickTag(sid,k){
+  if(obsLocked(selDate))return obsNudge();
   const r=obsRec(sid,selDate,true);r.tags[k]=(r.tags[k]||0)+1;r.at=Date.now();save();renderObs();
   const st=D.roster.find(x=>x[0]===sid),t=tagOf(k);
   toastUndo(`${st?st[1]:sid}: ${t.l}${r.tags[k]>1?" ×"+r.tags[k]:""}`,()=>{const x=obsRec(sid,selDate);if(x){x.tags[k]--;cleanRec(x)}save();renderObs()});
@@ -3597,22 +3753,131 @@ function obsSheet(sid,date){
     <div class="range"><label class="lb" for="obDate">기록 날짜 (비우면 오늘)<input class="fld" type="date" id="obDate"></label></div>
     <div id="obTags"></div>
     <label class="lb" for="obMemo">메모<textarea class="fld" id="obMemo" rows="3" placeholder="예: 실험 설계에서 변인 통제를 스스로 제안함"></textarea></label>
+    <div class="medsec"><div class="shlb">사진 · 동영상 · 녹음 <small>찍은 파일은 이 기기에만 저장됩니다</small></div>
+      <div class="medbtns" id="obMedBtns"><button class="btn sm" type="button" data-cap="photo">📷 사진 찍기</button><button class="btn sm" type="button" data-cap="video">🎥 동영상 찍기</button><button class="btn sm" type="button" data-cap="audio">🎙 녹음</button><button class="btn sm" type="button" data-cap="pick">🖼 앨범·파일</button></div>
+      <div class="medgrid" id="obMed"></div></div>
     <div class="presets" id="obQuick">${["발표 내용이 논리적임","모둠 활동을 이끎","질문이 깊이 있음","실험을 꼼꼼히 기록함","개별 지도 필요"].map(x=>`<button class="chip" type="button">${esc(x)}</button>`).join("")}</div>
-    <div class="row2">${r0?`<button class="btn bad" type="button" id="obDel">이 날 기록 삭제</button>`:""}<button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="obOk">저장</button></div>
+    <div class="row2">${r0?`<button class="btn bad" type="button" id="obDel">이 날 기록 삭제${recMedia(r0).length?" (사진·녹음 포함)":""}</button>`:""}<button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="obOk">저장</button></div>
     ${hist.length?`<h3 class="sh3">누적 ${hist.length}일</h3><div class="opills wrap">${Object.entries(sum).sort((a,b)=>b[1]-a[1]).map(([k,n])=>{const t=tagOf(k);return t?`<span class="opill ${tone(t.t)}">${esc(t.l)} ${n}</span>`:""}).join("")}</div>
-      <div class="ohist">${hist.map(h=>`<button class="ohrow" type="button" data-d="${esc(h.date)}"><b>${esc(fmtDateW(h.date))}</b><span class="opills">${tagPills(h)}</span>${h.memo?`<small>${esc(h.memo)}</small>`:""}</button>`).join("")}</div>
+      <div class="ohist">${hist.map(h=>`<button class="ohrow" type="button" data-d="${esc(h.date)}"><b>${esc(fmtDateW(h.date))}</b><span class="opills">${tagPills(h)}${mediaPills(h)}</span>${h.memo?`<small>${esc(h.memo)}</small>`:""}</button>`).join("")}</div>
       <div class="row2"><button class="btn" type="button" id="obCopy">누적 기록 복사 (세특 작성용)</button></div>`:""}`;
   $("sheet").hidden=false;$("obDate").value=date;$("obMemo").value=r0?r0.memo:"";
+  try{paintMedia(sid,date);wireMediaButtons(sid,()=>$("obDate")&&$("obDate").value||today())}catch(e){reportErr("관찰 사진·녹음",e)}
+  const lk=obsLocked(date);
+  if(lk){$("obMemo").readOnly=true;$("obQuick").hidden=true;$("obOk").hidden=true;if($("obDel"))$("obDel").hidden=true;$("obTags").insertAdjacentHTML("beforebegin",`<p class="lockbar lockedbar">🔒 ${esc(fmtDateW(date))} 기록은 잠겨 있어 볼 수만 있습니다. 관찰 기록 화면의 ‘잠금 해제’로 풀 수 있습니다.</p>`)}
   const paint=()=>{$("obTags").innerHTML=obsTags().map(g=>`<div class="obg"><span class="obgn">${esc(g.g)}</span>${g.items.map(it=>`<button class="chip otag ${tone(it.t)}" type="button" data-k="${esc(it.k)}" aria-pressed="${!!tags[it.k]}">${esc(it.l)}${tags[it.k]>1?" ×"+tags[it.k]:""}</button>`).join("")}</div>`).join("");
-    $("obTags").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(tags[k])delete tags[k];else tags[k]=1;paint()})};
+    $("obTags").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{if(obsLocked(date))return obsNudge();const k=b.dataset.k;if(tags[k])delete tags[k];else tags[k]=1;paint()})};
   paint();
   $("obQuick").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const m=$("obMemo");m.value=(m.value.trim()?m.value.trim()+" ":"")+b.textContent;m.focus()});
   $("obDate").onchange=()=>{const d=$("obDate").value;if(d&&d!==date){const keep={memo:$("obMemo").value};obsSheet(sid,d);if(!obsRec(sid,d)&&keep.memo)$("obMemo").value=keep.memo}};
   $("skNo").onclick=()=>{$("sheet").hidden=true};
-  $("obOk").onclick=()=>{const d=$("obDate").value||today();let r=obsRec(sid,d,true);r.tags=tags;r.memo=$("obMemo").value.trim();cleanRec(r);save();$("sheet").hidden=true;renderObs();toast(`${st[1]} 학생 기록을 저장했습니다`)};
-  if(r0)twoStep($("obDel"),"정말 삭제",()=>{D.obs=obsList().filter(x=>x!==r0);save();$("sheet").hidden=true;renderObs();toast("기록을 삭제했습니다")});
+  $("obOk").onclick=()=>{const d=$("obDate").value||today();if(obsLocked(d))return obsNudge();let r=obsRec(sid,d,true);r.tags=tags;r.memo=$("obMemo").value.trim();cleanRec(r);save();$("sheet").hidden=true;renderObs();toast(`${st[1]} 학생 기록을 저장했습니다`)};
+  if(r0)twoStep($("obDel"),"정말 삭제",()=>{if(obsLocked(date))return obsNudge();recMedia(r0).forEach(m=>mDel(m.id).catch(()=>{}));D.obs=obsList().filter(x=>x!==r0);save();$("sheet").hidden=true;renderObs();toast("기록을 삭제했습니다")});
   $("sheetBox").querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>obsSheet(sid,b.dataset.d));
   const cp=$("obCopy");if(cp)cp.onclick=()=>copy(obsText(sid),"누적 기록을 복사했습니다");
+}
+/* ---------- 관찰 기록 사진 · 동영상 · 녹음 (파일은 이 기기 IndexedDB에만, 기록에는 목록만) ---------- */
+const MEDIA_T={photo:{ic:"📷",l:"사진",ext:"jpg"},video:{ic:"🎥",l:"동영상",ext:"mp4"},audio:{ic:"🎙",l:"녹음",ext:"m4a"}};
+var MDBP=null;
+function mdb(){if(MDBP)return MDBP;MDBP=new Promise((res,rej)=>{try{if(!window.indexedDB)return rej(new Error("이 브라우저는 사진·녹음 저장을 지원하지 않습니다"));const q=indexedDB.open("teachers-life-media",1);q.onupgradeneeded=()=>{try{q.result.createObjectStore("m")}catch(e){}};q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error||new Error("저장 공간을 열지 못했습니다"));q.onblocked=()=>rej(new Error("저장 공간이 다른 창에서 사용 중입니다. 다른 창을 닫고 다시 해 주세요"))}catch(e){rej(e)}});MDBP.catch(()=>{MDBP=null});return MDBP}
+function mTx(mode,fn){return mdb().then(db=>new Promise((res,rej)=>{const tx=db.transaction("m",mode),st=tx.objectStore("m");let out;const r=fn(st);if(r)r.onsuccess=()=>{out=r.result};tx.oncomplete=()=>res(out);tx.onerror=()=>rej(tx.error||new Error("저장하지 못했습니다"));tx.onabort=()=>rej(tx.error||new Error("저장 공간이 부족합니다"))}))}
+const mPut=(k,b)=>mTx("readwrite",st=>st.put(b,k));
+const mGet=k=>mTx("readonly",st=>st.get(k));
+const mDel=k=>mTx("readwrite",st=>{st.delete(k);st.delete(k+":t")});
+function recMedia(r){return r&&Array.isArray(r.media)?r.media:[]}
+function mediaPills(r){const m=recMedia(r);if(!m.length)return"";const c={};m.forEach(x=>{c[x.t]=(c[x.t]||0)+1});return Object.entries(c).map(([t,n])=>`<span class="opill med">${(MEDIA_T[t]||{}).ic||"📎"}${n}</span>`).join("")}
+function fmtSize(b){return b>=1048576?(b/1048576).toFixed(1)+"MB":Math.max(1,Math.round(b/1024))+"KB"}
+function fmtDur(s){s=Math.round(s||0);return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`}
+/* 사진은 긴 변 1920px로 줄여 저장 공간을 아낍니다 (원본은 휴대폰 앨범에 남음) */
+async function shrinkPhoto(file){
+  try{const bmp=await createImageBitmap(file);const sc=Math.min(1,1920/Math.max(bmp.width,bmp.height));const w=Math.round(bmp.width*sc),h=Math.round(bmp.height*sc);
+    const cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(bmp,0,0,w,h);
+    const big=await new Promise(r=>cv.toBlob(r,"image/jpeg",.85));
+    const ts=Math.min(1,240/Math.max(w,h)),tc=document.createElement("canvas");tc.width=Math.round(w*ts);tc.height=Math.round(h*ts);tc.getContext("2d").drawImage(cv,0,0,tc.width,tc.height);
+    const th=await new Promise(r=>tc.toBlob(r,"image/jpeg",.7));
+    return{blob:big&&big.size<file.size?big:file,thumb:th}}catch(e){return{blob:file,thumb:null}}
+}
+async function addMedia(sid,date,t,file,dur){
+  if(obsLocked(date)){obsNudge();return null}
+  if(!file||!file.size)return null;
+  if(file.size>200*1048576&&!confirm(`파일이 큽니다 (${fmtSize(file.size)}). 휴대폰 저장 공간을 많이 씁니다. 그래도 저장할까요?`))return null;
+  let blob=file,thumb=null;if(t==="photo"){const x=await shrinkPhoto(file);blob=x.blob;thumb=x.thumb}
+  const id="m"+uid();
+  try{await mPut(id,blob);if(thumb)await mPut(id+":t",thumb)}
+  catch(e){toast((e&&e.name==="QuotaExceededError")?"휴대폰 저장 공간이 부족해 저장하지 못했습니다":(e&&e.message)||"저장하지 못했습니다");return null}
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+  const r=obsRec(sid,date,true);if(!Array.isArray(r.media))r.media=[];
+  const m={id,t,mime:blob.type||file.type||"",size:blob.size,at:Date.now(),dev:gDevice(),...(dur?{dur:Math.round(dur)}:{})};
+  r.media.push(m);r.at=Date.now();save();
+  toast(`${(MEDIA_T[t]||{}).l||"파일"}을 저장했습니다 (${fmtSize(blob.size)}, 이 기기에만)`);
+  return m;
+}
+/* 사진기·동영상 앱 열기 (capture), 앨범·파일 고르기 */
+function pickMedia(kind,onFile){
+  const inp=document.createElement("input");inp.type="file";inp.style.display="none";
+  inp.accept=kind==="photo"?"image/*":kind==="video"?"video/*":kind==="audio"?"audio/*":"image/*,video/*,audio/*";
+  if(kind!=="pick")inp.setAttribute("capture",kind==="photo"?"environment":kind==="video"?"environment":"user");
+  if(kind==="pick")inp.multiple=true;
+  inp.onchange=()=>{const fs=[...(inp.files||[])];inp.remove();fs.forEach(f=>onFile(f,/^video\//.test(f.type)?"video":/^audio\//.test(f.type)?"audio":"photo"))};
+  document.body.appendChild(inp);inp.click();
+}
+/* 앱 안에서 녹음 (마이크) */
+function recordAudio(onDone){
+  if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder)){toast("이 브라우저는 앱 안 녹음을 지원하지 않아 녹음 앱을 엽니다");return pickMedia("audio",(f)=>onDone(f,0))}
+  const ov=document.createElement("div");ov.className="medov";ov.setAttribute("role","dialog");ov.setAttribute("aria-label","녹음");
+  ov.innerHTML=`<div class="medbox2"><h3>🎙 녹음</h3><p class="rectime" id="recT">0:00</p><p class="note" id="recN">‘녹음 시작’을 누르면 마이크 권한을 묻습니다. 최대 15분.</p>
+    <div class="row2"><button class="btn" type="button" id="recX">취소</button><button class="btn pri" type="button" id="recGo">녹음 시작</button></div></div>`;
+  document.body.appendChild(ov);
+  let rec=null,stream=null,chunks=[],t0=0,tm=null,cancel=false;
+  const stopAll=()=>{clearInterval(tm);try{stream&&stream.getTracks().forEach(x=>x.stop())}catch(e){}};
+  const close=()=>{stopAll();ov.remove()};
+  ov.querySelector("#recX").onclick=()=>{cancel=true;try{rec&&rec.state!=="inactive"&&rec.stop()}catch(e){}close()};
+  ov.querySelector("#recGo").onclick=async()=>{
+    const b=ov.querySelector("#recGo");
+    if(rec&&rec.state==="recording"){b.disabled=true;rec.stop();return}
+    try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){toast(e&&e.name==="NotAllowedError"?"마이크 권한이 꺼져 있습니다. 주소창의 권한 설정에서 마이크를 허용해 주세요":"마이크를 쓸 수 없습니다");close();return}
+    const mt=["audio/webm;codecs=opus","audio/mp4","audio/webm","audio/ogg"].find(x=>{try{return MediaRecorder.isTypeSupported(x)}catch(e){return false}});
+    try{rec=new MediaRecorder(stream,mt?{mimeType:mt}:undefined)}catch(e){toast("녹음을 시작하지 못했습니다");close();return}
+    chunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+    rec.onstop=()=>{const dur=(Date.now()-t0)/1000;stopAll();if(cancel)return;const type=(rec.mimeType||mt||"audio/webm").split(";")[0];const ext=/mp4/.test(type)?"m4a":/ogg/.test(type)?"ogg":"webm";
+      const f=new File(chunks,`녹음.${ext}`,{type});ov.remove();onDone(f,dur)};
+    rec.start(1000);t0=Date.now();b.textContent="멈추고 저장";b.classList.add("bad");ov.querySelector("#recN").textContent="녹음 중입니다. 다른 화면으로 가면 녹음이 멈출 수 있습니다.";
+    tm=setInterval(()=>{const s=(Date.now()-t0)/1000;ov.querySelector("#recT").textContent=fmtDur(s);if(s>=900&&rec.state==="recording")rec.stop()},500);
+  };
+}
+/* 보기 · 저장 · 삭제 */
+async function viewMedia(sid,date,id,after){
+  const r=obsRec(sid,date),m=recMedia(r).find(x=>x.id===id);if(!m)return;
+  const st=D.roster.find(x=>x[0]===sid),nm=st?st[1]:sid,T=MEDIA_T[m.t]||{l:"파일",ic:"📎",ext:"bin"};
+  let blob=null;try{blob=await mGet(id)}catch(e){}
+  const url=blob?URL.createObjectURL(blob):"";
+  const ov=document.createElement("div");ov.className="medov";ov.setAttribute("role","dialog");ov.setAttribute("aria-label",T.l+" 보기");
+  const body=!blob?`<p class="warn">이 기기에는 파일이 없습니다${m.dev?` (${esc(m.dev)}에서 찍음)`:""}. 사진·동영상·녹음 파일은 찍은 기기에만 저장되고 구글 연동으로 옮겨지지 않습니다.</p>`:
+    m.t==="photo"?`<img class="medimg" src="${url}" alt="${esc(nm)} 관찰 사진">`:m.t==="video"?`<video class="medimg" src="${url}" controls playsinline></video>`:`<audio src="${url}" controls style="width:100%"></audio>`;
+  ov.innerHTML=`<div class="medbox2"><h3>${T.ic} ${esc(nm)} · ${esc(fmtDateW(date))}</h3>${body}
+    <p class="note">${esc(fmtDT(m.at))} · ${fmtSize(m.size||0)}${m.dur?` · ${fmtDur(m.dur)}`:""}</p>
+    <div class="row2">${blob?`<button class="btn" type="button" id="mvSave">저장 · 보내기</button>`:""}${obsLocked(date)?"":`<button class="btn bad" type="button" id="mvDel">삭제</button>`}<button class="btn pri" type="button" id="mvX">닫기</button></div></div>`;
+  document.body.appendChild(ov);
+  const close=()=>{ov.remove();if(url)URL.revokeObjectURL(url)};
+  ov.querySelector("#mvX").onclick=close;ov.onclick=e=>{if(e.target===ov)close()};
+  if(blob)ov.querySelector("#mvSave").onclick=()=>{const ext=/png/.test(blob.type)?"png":/jpeg|jpg/.test(blob.type)?"jpg":/webm/.test(blob.type)?"webm":/ogg/.test(blob.type)?"ogg":/quicktime/.test(blob.type)?"mov":/mp4/.test(blob.type)?(m.t==="audio"?"m4a":"mp4"):T.ext;
+    shareOrSave(new File([blob],`${clsName().replace(/\s+/g,"")}_${nm}_${date.replace(/-/g,"")}_${T.l}_${String(new Date(m.at).getHours()).padStart(2,"0")}${String(new Date(m.at).getMinutes()).padStart(2,"0")}.${ext}`,{type:blob.type}),T.l+" 파일을 저장했습니다")};
+  const del=ov.querySelector("#mvDel");if(del)twoStep(del,"정말 삭제",async()=>{if(obsLocked(date))return obsNudge();const rr=obsRec(sid,date);if(rr){rr.media=recMedia(rr).filter(x=>x.id!==id);if(!rr.media.length)delete rr.media;cleanRec(rr)}try{await mDel(id)}catch(e){}save();close();toast(T.l+"을 삭제했습니다");after&&after()});
+}
+function paintMedia(sid,date){
+  const box=$("obMed");if(!box)return;const r=obsRec(sid,date),list=recMedia(r);
+  const lk=obsLocked(date);if($("obMedBtns"))$("obMedBtns").querySelectorAll("button").forEach(b=>b.disabled=lk);
+  box.innerHTML=list.length?list.map(m=>`<button class="medth ${m.t}" type="button" data-m="${esc(m.id)}" aria-label="${esc((MEDIA_T[m.t]||{}).l||"파일")} 보기"><span class="mi">${(MEDIA_T[m.t]||{}).ic||"📎"}</span><small>${esc(fmtDT(m.at).split(" ")[1]||"")}${m.dur?` · ${fmtDur(m.dur)}`:""}</small></button>`).join(""):`<p class="note">아직 없습니다.</p>`;
+  list.filter(m=>m.t==="photo").forEach(m=>{mGet(m.id+":t").then(b=>{if(!b)return;const el=box.querySelector(`[data-m="${m.id}"]`);if(el){const u=URL.createObjectURL(b);el.style.backgroundImage=`url(${u})`;el.classList.add("hasimg")}}).catch(()=>{})});
+  box.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>viewMedia(sid,date,b.dataset.m,()=>{paintMedia(sid,date);renderObs()}));
+}
+function wireMediaButtons(sid,getDate){
+  const B=$("obMedBtns");if(!B)return;
+  const got=(f,t,dur)=>{const d=getDate();addMedia(sid,d,t,f,dur).then(m=>{if(m){paintMedia(sid,d);renderObs()}})};
+  B.querySelectorAll("[data-cap]").forEach(b=>b.onclick=()=>{const d=getDate();if(obsLocked(d))return obsNudge();const k=b.dataset.cap;
+    if(k==="audio")return recordAudio((f,dur)=>got(f,"audio",dur));
+    if(k==="audioapp")return pickMedia("audio",(f)=>got(f,"audio",0));
+    pickMedia(k,(f,t)=>got(f,k==="pick"?t:k,0))});
 }
 function obsText(sid){
   const st=D.roster.find(x=>x[0]===sid),hist=obsList().filter(x=>x.sid===sid).sort((a,b)=>a.date.localeCompare(b.date));
@@ -3646,16 +3911,21 @@ function obsExport(){
   const rows=obsList().slice().sort((a,b)=>a.date.localeCompare(b.date)||a.sid.localeCompare(b.sid));
   if(!rows.length)return toast("이 학급에 관찰 기록이 없습니다");
   {const nm=id=>(D.roster.find(x=>x[0]===id)||[,""])[1];
-    const a=[["날짜","학번","이름","좋음","보통","아쉬움","메모"]];
-    rows.forEach(r=>{const by=t=>Object.keys(r.tags).filter(k=>{const x=tagOf(k);return x&&tone(x.t)===t}).map(k=>tagOf(k).l+(r.tags[k]>1?"×"+r.tags[k]:"")).join(", ");a.push([r.date,r.sid,nm(r.sid),by("pos"),by("neu"),by("neg"),r.memo])});
+    const a=[["날짜","학번","이름","좋음","보통","아쉬움","메모","사진·동영상·녹음"]];
+    const mc=r=>{const c={};recMedia(r).forEach(x=>{c[x.t]=(c[x.t]||0)+1});return Object.entries(c).map(([t,n])=>`${(MEDIA_T[t]||{}).l||t} ${n}`).join(", ")};
+    rows.forEach(r=>{const by=t=>Object.keys(r.tags).filter(k=>{const x=tagOf(k);return x&&tone(x.t)===t}).map(k=>tagOf(k).l+(r.tags[k]>1?"×"+r.tags[k]:"")).join(", ");a.push([r.date,r.sid,nm(r.sid),by("pos"),by("neu"),by("neg"),r.memo,mc(r)])});
     const b=[["학번","이름","기록한 날","누적 항목","메모 모음"]];
     D.roster.forEach(([id,n])=>{const h=rows.filter(r=>r.sid===id);if(!h.length)return;const sum={};h.forEach(r=>Object.entries(r.tags).forEach(([k,c])=>{sum[k]=(sum[k]||0)+c}));
       b.push([id,n,h.length,Object.entries(sum).sort((x,y)=>y[1]-x[1]).map(([k,c])=>{const t=tagOf(k);return t?`${t.l} ${c}`:""}).filter(Boolean).join(", "),h.filter(r=>r.memo).map(r=>`(${r.date.slice(5)}) ${r.memo}`).join(" ")])});
     xlOut(`${clsName().replace(/\s+/g,"")}_관찰기록_${today().replace(/-/g,"")}.xlsx`,[
       {name:"학생별 누적",title:`학생 관찰 기록 · 학생별 누적 · ${clsName()}`,rows:b,widths:[10,10,10,50,80],text:[0],wrap:[3,4]},
-      {name:"날짜별 기록",title:`학생 관찰 기록 · 날짜별 · ${clsName()}`,rows:a,widths:[12,10,10,30,16,22,50],text:[1],wrap:[3,5,6]}],"관찰 기록 엑셀 파일을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))}
+      {name:"날짜별 기록",title:`학생 관찰 기록 · 날짜별 · ${clsName()}`,rows:a,widths:[12,10,10,30,16,22,50,18],text:[1],wrap:[3,5,6]}],"관찰 기록 엑셀 파일을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))}
 }
 document.querySelectorAll("#amode .chip").forEach(b=>b.onclick=()=>setAmode(b.dataset.m));
+$("obsLockBtn").onclick=()=>{if(!D.obsLock||typeof D.obsLock!=="object")D.obsLock={};
+  if(D.obsLock[selDate]){delete D.obsLock[selDate];if(!Object.keys(D.obsLock).length)delete D.obsLock;toast(`${fmtDate(selDate)} 관찰 기록 잠금을 풀었습니다`)}
+  else{D.obsLock[selDate]=Date.now();OBS.arm=null;toast(`${fmtDate(selDate)} 관찰 기록을 잠갔습니다`)}
+  save();renderObs()};
 $("obsDate").onchange=e=>{if(!e.target.value){e.target.value=today();toast("날짜를 고르지 않아 오늘 날짜로 기록합니다")}selDate=e.target.value;selId=null;renderAll()};
 $("obsToday").onclick=()=>{selDate=today();selId=null;renderAll()};
 $("obsEdit").onclick=obsEditTags;$("obsXl").onclick=obsExport;
@@ -4319,7 +4589,7 @@ function mergeList(b,l,r,key,deep){
 }
 function mergeMap(b,l,r){b=b||{};l=l||{};r=r||{};const o={};new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{
   if(k in l&&k in r)o[k]=pick3(b[k],l[k],r[k]);else if(k in l){if(!(k in b)||J(l[k])!==J(b[k]))o[k]=l[k]}else if(!(k in b)||J(r[k])!==J(b[k]))o[k]=r[k]});return o}
-function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","teachers","msg"].forEach(f=>o[f]=pick3(b[f],l[f],r[f]));o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id");o.obs=mergeList(b.obs,l.obs,r.obs,"id");return o}
+function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emails","teachers","msg","obsLock"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id");o.obs=mergeList(b.obs,l.obs,r.obs,"id");return o}
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active},notes:mergeMap(b.notes,l.notes,r.notes),
