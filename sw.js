@@ -1,5 +1,5 @@
-// 교사의 생활 (버전 5.10.0): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
-const CACHE = "attendance-app-5.10.0";
+// 교사의 생활 (버전 5.10.1): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
+const CACHE = "attendance-app-5.10.1";
 const FILES = ["./", "index.html", "config.js", "privacy.html", "sign.html", "help.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "NanumGothic-Regular.woff2", "NanumGothic-Bold.woff2", "vendor/qrcode.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
@@ -8,12 +8,19 @@ self.addEventListener("activate", e => {
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
   // 새 버전이 있으면 받아 두고, 없거나 오프라인이면 저장된 파일을 씁니다.
-  e.respondWith(
-    fetch(e.request).then(res => {
-      if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
-      return res;
-    }).catch(() => caches.match(e.request, { ignoreSearch: true }).then(r => r || caches.match("index.html")))
-  );
+  // 학교 등에서 주소가 막히거나 응답이 늦으면(4초) 저장된 앱으로 바로 엽니다. 차단 안내 화면은 저장하지 않습니다.
+  e.respondWith((async () => {
+    const cached = () => caches.match(e.request, { ignoreSearch: true }).then(r => r || (e.request.mode === "navigate" ? caches.match("index.html") : undefined));
+    const net = fetch(e.request).then(async res => {
+      const good = res.ok && !res.redirected && res.type === "basic";
+      if (good) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); return res; }
+      const c = await cached(); return c || res;
+    });
+    const have = await cached();
+    if (!have) return net.catch(() => cached().then(r => r || Response.error()));
+    const slow = new Promise(r => setTimeout(() => r(have), 4000));
+    return Promise.race([net.catch(() => have), slow]);
+  })());
 });
 // 알림을 누르면 앱을 엽니다.
 self.addEventListener("notificationclick", e => {
