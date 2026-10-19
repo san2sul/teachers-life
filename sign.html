@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>수행평가 점수 확인 · 서명</title>
+<title>학생 확인 · 서명</title>
 <style>
 @font-face{font-family:"NanumGothic";src:url("NanumGothic-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"NanumGothic";src:url("NanumGothic-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
@@ -41,12 +41,12 @@ tr:last-child td{border-bottom:0}
 </head>
 <body>
 <main>
-  <section class="card" id="head"><h1 id="title">수행평가 점수 확인</h1><div class="sub" id="who"></div></section>
+  <section class="card" id="head"><h1 id="title">확인 · 서명</h1><div class="sub" id="who"></div></section>
   <section class="card" id="err" hidden><h2>링크를 열 수 없습니다</h2><p class="note" id="errMsg"></p></section>
-  <section class="card" id="scoreBox" hidden><h2>내 점수</h2><table id="scores"></table><div class="msg" id="tnote" hidden></div><p class="note" id="due"></p></section>
+  <section class="card" id="scoreBox" hidden><h2 id="boxT">내 점수</h2><table id="scores"></table><div class="msg" id="tnote" hidden></div><p class="note" id="due"></p></section>
   <section class="card" id="signBox" hidden>
-    <label class="agree" for="ok"><input type="checkbox" id="ok"> 위 점수를 확인했고, 이의가 없습니다.</label>
-    <p class="note">점수가 이상하면 서명하지 말고 선생님께 먼저 말씀드리세요.</p>
+    <label class="agree" for="ok"><input type="checkbox" id="ok"> <span id="agT">위 점수를 확인했고, 이의가 없습니다.</span></label>
+    <p class="note" id="tipT">점수가 이상하면 서명하지 말고 선생님께 먼저 말씀드리세요.</p>
     <h2 style="margin-top:14px">자필 서명</h2>
     <div class="pad off" id="pad"><canvas id="cv"></canvas><div class="hint" id="hint">위 확인란을 체크한 뒤 여기에 손가락으로 서명하세요</div></div>
     <div class="row"><button class="btn" type="button" id="clear">지우기</button><button class="btn pri" type="button" id="send" disabled>서명 완료</button></div>
@@ -82,9 +82,13 @@ var m=location.hash.match(/^#s=(.+)$/);
 if(!m){fail("선생님께 받은 메일이나 문자의 링크를 눌러 다시 열어 주세요.");return}
 decode(decodeURIComponent(m[1])).then(function(p){
   if(!p||p.k!=="ev")throw new Error("서명 링크가 올바르지 않습니다.");P=p;
-  document.title=(p.ti||"수행평가")+" · 점수 확인";
-  $("title").textContent=p.ti||"수행평가 점수 확인";
+  var sc=!p.kd||p.kd==="score";
+  document.title=(p.ti||"수행평가")+(sc?" · 점수 확인":" · 확인 서명");
+  $("title").textContent=p.ti||(sc?"수행평가 점수 확인":"확인 · 서명");
+  if(p.bx)$("boxT").textContent=p.bx;if(p.ag)$("agT").textContent=p.ag;if(p.tip)$("tipT").textContent=p.tip;
+  if(!sc&&p.kl){var kk=document.createElement("div");kk.className="sub";kk.textContent=p.kl;$("title").insertAdjacentElement("afterend",kk)}
   $("who").textContent=[p.c,p.n?p.n+" 학생":"",p.s?"("+p.s+")":""].filter(Boolean).join(" ");
+  $("scores").hidden=!(p.cols&&p.cols.length);
   $("scores").innerHTML=(p.cols||[]).map(function(c,i){return "<tr><td>"+esc(c)+"</td><td>"+esc((p.vals||[])[i]||"-")+"</td></tr>"}).join("");
   if(p.note){$("tnote").hidden=false;$("tnote").textContent="선생님: "+p.note}
   if(p.due){var d=new Date(p.due+"T00:00");$("due").textContent="서명 마감: "+(d.getMonth()+1)+"월 "+d.getDate()+"일"}
@@ -125,7 +129,7 @@ function finish(){
 function showSend(){
   $("signBox").hidden=true;$("sendBox").hidden=false;
   var subj="[서명] "+(P.ti||"수행평가")+" "+(P.n||"")+" 학생";
-  var body=(P.n||"")+" 학생이 "+(P.ti||"수행평가")+" 점수를 확인하고 서명했습니다.\n\n아래 링크를 누르면 선생님 앱에 서명이 들어갑니다.\n"+replyUrl+"\n";
+  var body=(P.n||"")+" 학생이 "+(P.ti||"수행평가")+(P.kd&&P.kd!=="score"?" 내용을 확인하고":" 점수를 확인하고")+" 서명했습니다.\n\n아래 링크를 누르면 선생님 앱에 서명이 들어갑니다.\n"+replyUrl+"\n";
   $("mail").href="mailto:"+encodeURIComponent(P.to||"")+"?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(body);
   $("share").hidden=!navigator.share;
   $("share").onclick=function(){navigator.share({title:subj,text:body}).catch(function(){})};
