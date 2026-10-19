@@ -459,6 +459,7 @@ html[data-lay="one"] .wrap{max-width:720px}
 .prow.edrow{cursor:default}.prow.edrow.on{background:var(--absent-soft)}
 .edchk{display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer}.edchk input{width:20px;height:20px;flex:none;accent-color:var(--absent)}
 .gsfix{border-top:1px dashed var(--line);padding-top:8px}.gsfix>summary{cursor:pointer;font-size:.85rem;color:var(--accent);font-weight:700}.gsfix>*+*{margin-top:8px}
+.errbar{position:fixed;left:12px;right:12px;bottom:calc(var(--nav-h) + 12px + env(safe-area-inset-bottom,0px));z-index:40;background:#fff4e5;color:#5a3a00;border:1px solid #e3b55c;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;box-shadow:0 6px 20px rgba(0,0,0,.15);font-size:.86rem;max-width:640px;margin:0 auto}.errbar small{word-break:break-all;opacity:.85}.errbar .row2{gap:6px}
 .devinfo{font-size:.84rem;background:var(--bg);border-radius:10px;padding:8px 12px}
 .setcls{padding:12px 14px}.setcls .lb small{color:var(--muted);font-weight:400}
 #setClsWarn{background:#fff4d6;color:#7a5600;border-radius:10px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -986,8 +987,9 @@ div:not(.card)>.shlb+.presets{margin-top:6px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.10.2", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.10.3", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.10.3",date:"2026-10-19",items:["중요 오류 고침: 오늘 출석 체크를 ‘잠금’한 상태로 앱을 열면 시작 과정이 멈춰, 설정의 구글 로그인·적용 기간·사용 교사·공유 칸이 비어 보이고 로그인도 되지 않던 문제", "화면 일부에서 오류가 나도 나머지 화면은 정상으로 보이도록 나눠서 그리고, 오류가 나면 아래쪽에 ‘오류 내용 복사 · 앱 새로 받기’ 안내 표시", "‘앱 새로 받기’: 저장된 앱 파일만 지우고 최신 앱을 다시 받음 (입력한 자료는 그대로)"]},
   {v:"5.10.2",date:"2026-10-19",items:["구글 로그인 고침: 로그인이 만료된 뒤 다시 로그인 창이 열리지 않던 문제 (구글 로그인 준비를 미리 해 두어 버튼을 누르는 즉시 로그인 창이 열림, 브라우저 팝업 차단에 걸리지 않게)", "로그인이 만료되면 설정과 화면 위에 ‘다시 로그인’ 버튼을 분명하게 표시", "학교 인터넷 등에서 구글 로그인 서버가 막히면 원인과 해결 방법을 안내", "‘로그인이 계속 안 될 때 → 로그인 상태 초기화’: 꼬인 로그인 상태만 지우고 다시 로그인 (자료는 그대로)"]},
   {v:"5.10.1",date:"2026-10-19",items:["학교처럼 앱 주소가 막히거나 인터넷이 느린 곳에서도, 한 번 열어 둔 기기에서는 4초 안에 저장된 앱으로 바로 열림 (차단 안내 화면을 앱 대신 저장하지 않도록 보호)", "도움말 ‘자주 묻는 질문’에 학교에서 앱이 열리지 않을 때 확인 방법과 해결 방법 추가"]},
   {v:"5.10.0",date:"2026-10-18",items:["설정 → ‘사용 교사’: 선생님 이름 입력 (처음 파일을 내려받을 때 이름이 없으면 물어봄, 구글 연동 시 다른 기기에도 적용)", "앱에서 내려받는 모든 출력물(엑셀·CSV 입력 양식, 수행평가 전표 양식, 서명 넣은 전표, 서명 현황, 관찰 기록, 출석 통계·기록, PDF 인쇄, 통계 메일)의 문서 제목 아래 오른쪽에 ‘내려받은 일시 · 출력한 사용자 교사 이름’ 자동 표시", "학교 전표 양식에 서명을 넣어 받을 때 표 제목 줄 위에 표시 줄을 넣고 병합 칸·합계 수식 위치를 함께 맞춤, 인쇄할 때 한 페이지 너비에 맞춤", "엑셀 출력물을 문서 제목·제목 줄 색·테두리·제목 줄 고정이 들어간 깔끔한 표로 정리, 받은 양식을 채워 다시 올려도 위쪽 제목 줄은 자동으로 건너뜀"]},
@@ -1769,11 +1771,10 @@ function editClass(id){
   setTimeout(()=>$("ekName").focus(),50);
 }
 
-function renderSet(){try{renderMe()}catch(e){}
-  renderPeriod();renderSetCls();
-  if(document.activeElement!==$("clsIn"))$("clsIn").value=D.cls;
-  if(document.activeElement!==$("msgIn"))$("msgIn").value=D.msg;
-  renderStu();renderTcEdit();renderStaffEdit();renderVer();renderUndo();renderShare();renderSync();if(typeof renderUI==="function")try{renderUI()}catch(e){}
+function renderSet(){safe("사용 교사",renderMe);safe("구글 로그인",renderSync);
+  safe("적용 기간",renderPeriod);safe("설정할 학급",renderSetCls);
+  safe("학급 정보",()=>{if(document.activeElement!==$("clsIn"))$("clsIn").value=D.cls;if(document.activeElement!==$("msgIn"))$("msgIn").value=D.msg});
+  safe("학생 명단",renderStu);safe("수업 교사",renderTcEdit);safe("교직원",renderStaffEdit);safe("버전 정보",renderVer);safe("되돌리기",renderUndo);safe("앱 배포 · 공유",renderShare);if(typeof renderUI==="function")safe("화면 설정",renderUI);
 }
 /* 설정할 학급: 기본은 출석 화면 학급, 다른 학급도 골라 고칠 수 있음 */
 function renderSetCls(){
@@ -3473,7 +3474,23 @@ function renderTdBadge(){const t=today();const n=todoItems().filter(x=>!x.done&&
 /* ---------- 화면 전환 ---------- */
 function renderNav(){const n=pending().length;const c=$("navCnt");c.textContent=n;c.hidden=!n||!D.roster.length}
 function renderStatView(){if(EVS&&EVS.tab==="att")renderStat();else if(EVS)renderEval()}
-function renderAll(){renderAtt();renderObs();renderNav();renderTdBadge();if(view==="tt")renderTT();if(view==="todo")renderTodo();if(view==="call")renderCall();if(view==="stat")renderStatView();if(view==="set")renderSet()}
+/* 한 부분에서 오류가 나도 나머지 화면은 그리도록 나눠서 그립니다. 오류는 화면 아래에 알려 줍니다 */
+var RERR=[];
+function safe(name,fn){try{fn()}catch(e){reportErr(name,e)}}
+function reportErr(where,e){const msg=`${where}: ${(e&&(e.message||e.name))||String(e)}`;try{console.error(where,e)}catch(_){}if(RERR.includes(msg))return;RERR.push(msg);if(RERR.length>8)RERR.shift();try{showErrBar()}catch(_){}}
+function errInfo(){const st=(e=>e&&e.stack?String(e.stack).split("\n").slice(0,3).join(" | "):"");return `${APP_NAME} v${APP_VERSION}\n${navigator.userAgent}\n화면: ${typeof view!=="undefined"?view:"?"}\n${RERR.join("\n")}`}
+function showErrBar(){let b=document.getElementById("errBar");if(!b){b=document.createElement("div");b.id="errBar";b.className="errbar";b.setAttribute("role","alert");document.body.appendChild(b)}
+  b.innerHTML=`<b>화면 일부를 그리지 못했습니다</b><small>${esc(RERR.slice(-2).join(" / "))}</small><div class="row2"><button class="btn sm" type="button" id="errCopy">오류 내용 복사</button><button class="btn sm" type="button" id="errFix">앱 새로 받기</button><button class="btn sm" type="button" id="errX">닫기</button></div>`;
+  b.hidden=false;
+  document.getElementById("errCopy").onclick=()=>{const t=errInfo();try{navigator.clipboard.writeText(t).then(()=>toast("오류 내용을 복사했습니다. 만든 사람에게 보내 주세요"),()=>prompt("아래 내용을 복사해 보내 주세요",t))}catch(_){prompt("아래 내용을 복사해 보내 주세요",t)}};
+  document.getElementById("errFix").onclick=refreshApp;
+  document.getElementById("errX").onclick=()=>{b.hidden=true}}
+/* 저장된 앱 파일만 지우고 새로 받습니다 (입력한 자료는 그대로) */
+async function refreshApp(){try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}}catch(e){}
+  location.replace(location.pathname+"?r="+Date.now())}
+window.addEventListener("error",e=>{if(e&&e.message&&!/Script error/i.test(e.message))reportErr("오류",{message:e.message+(e.lineno?` (줄 ${e.lineno})`:"")})});
+window.addEventListener("unhandledrejection",e=>{const r=e&&e.reason;if(r&&r.auth)return;if(r&&r.name==="AbortError")return;reportErr("처리 중 오류",r||{message:"알 수 없음"})});
+function renderAll(){safe("출석",renderAtt);safe("관찰 기록",renderObs);safe("메뉴",renderNav);safe("할 일 표시",renderTdBadge);if(view==="tt")safe("시간표",renderTT);if(view==="todo")safe("할 일",renderTodo);if(view==="call")safe("연락",renderCall);if(view==="stat")safe("평가·통계",renderStatView);if(view==="set")renderSet()}
 function show(v){
   if(v!=="set"){const a=S.list.find(c=>c.id===S.active);if(a&&D!==a.data){D=a.data;selId=null}}
   view=v;
@@ -3514,8 +3531,7 @@ $("helpBtn").onclick=()=>openHelp();$("helpAll").onclick=()=>openHelp("start");$
       document.body.appendChild(b);b.querySelector(".go").onclick=()=>openHelp("changes");b.querySelector(".x").onclick=()=>b.remove();setTimeout(()=>{if(b.isConnected)b.remove()},15000)}}
   try{localStorage.setItem(LAST_VER,APP_VERSION)}catch(e){}}
 /* ---------- 시작 ---------- */
-{let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
-setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
+/* (첫 화면 그리기는 모든 기능을 준비한 뒤, 맨 아래에서 합니다) */
 /* ---------- 학생 관찰 기록 (수업 태도·역량·특성 체크 + 짧은 메모) ---------- */
 const OBS_DEF=[
   {g:"수업 태도",items:[["a1","적극 참여",1],["a2","질문함",1],["a3","발표함",1],["a4","협력·배려",1],["a5","과제 성실",1],["a6","집중 부족",-1],["a7","과제 미제출",-1],["a8","졸음",-1],["a9","휴대폰 사용",-1],["a10","지각·이탈",-1]]},
@@ -3898,7 +3914,7 @@ function sigCanvas(sig,W,H){
 }
 const sigCache={};
 function sigURL(st,W,H){const k=st.sid+"|"+st.sig.at+"|"+W;return sigCache[k]||(sigCache[k]=sigCanvas(st.sig,W||300,H||120).toDataURL("image/png"))}
-const fmtDT=t=>{const d=new Date(t);return isNaN(d)?"":`${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`};
+function fmtDT(t){const d=new Date(t),z=n=>String(n).padStart(2,"0");return isNaN(d)?"":`${d.getMonth()+1}/${d.getDate()} ${z(d.getHours())}:${z(d.getMinutes())}`}
 function fmtDTfull(t){const d=new Date(t),z=n=>String(n).padStart(2,"0");return isNaN(d)?"":`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`}
 function stState(st){if(!st.sig)return st.sentAt?"sent":"new";return (st.sig.h?st.sig.h!==st.h:st.sig.stale)?"stale":"ok"}
 function termOf(ts){const d=new Date(ts||Date.now());const m=d.getMonth()+1;return{year:m<=2?d.getFullYear()-1:d.getFullYear(),term:m>=3&&m<=8?"1학기":"2학기"}}
@@ -4462,7 +4478,7 @@ function gHash2(){const m=location.hash.match(/^#g=([^&]+)/);if(!m)return false;
 gHash2();window.addEventListener("hashchange",gHash2);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){gPreload();if(G.on&&G.auto!==false)gSync("show")}});
 setInterval(()=>{if(document.visibilityState==="visible"&&G.on&&G.auto!==false&&gTokenOk())gSync("tick")},60000);
-renderSync();gPreload();if(G.on&&G.auto!==false)setTimeout(()=>gSync("open"),800);
+safe("구글 로그인",renderSync);try{gPreload()}catch(e){reportErr("구글 로그인 준비",e)}if(G.on&&G.auto!==false)setTimeout(()=>gSync("open"),800);
 
 /* ---------- 컴퓨터에서 파일 끌어다 놓기 (엑셀·CSV·백업 파일) ---------- */
 {let depth=0;const ov=document.createElement("div");ov.className="dropov";ov.hidden=true;ov.innerHTML="<div><b>여기에 파일을 놓으세요</b><span>엑셀·CSV 명단, 백업·공유 파일(.json)</span></div>";document.body.appendChild(ov);
@@ -4494,6 +4510,9 @@ function handleHash(){
     receive(p,()=>toast("명단을 불러왔습니다. 홈 화면에 추가하면 앱처럼 쓸 수 있습니다"));
   }).catch(e=>toast(e.message||"링크를 읽지 못했습니다"));
 }
+/* ---------- 시작: 첫 화면 ---------- */
+{let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
+setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
 handleHash();
 window.addEventListener("hashchange",handleHash);
 if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
