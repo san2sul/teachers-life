@@ -999,6 +999,8 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
   <details class="card" id="d-ver"><summary>앱 정보 · 버전 기록 <span class="sub" id="verTag"></span></summary>
     <p class="note" id="verMaker"></p>
     <div class="row2"><button class="btn pri" type="button" id="helpAll">도움말 전체 보기</button><button class="btn" type="button" id="helpNew">바뀐 점 보기</button></div>
+    <div class="row2"><button class="btn" type="button" id="updChk">새 버전 확인 · 업데이트</button></div>
+    <p class="note" id="updMsg">새 버전을 올리면 앱을 열 때 자동으로 확인해 ‘지금 업데이트’ 안내가 나옵니다. 업데이트해도 입력한 자료는 그대로입니다.</p>
     <p class="note"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
     <div class="abslist" id="verList"></div>
   </details>
@@ -1024,8 +1026,9 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.12.0", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.12.1", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.12.1",date:"2026-10-19",items:["새 버전 자동 확인: 앱을 열거나 다시 볼 때 서버에 새 버전이 있으면 ‘새 버전이 나왔습니다 · 지금 업데이트’ 안내 (누르면 저장된 앱 파일만 새로 받고, 입력한 자료는 그대로)", "설정 → 앱 정보에 ‘새 버전 확인 · 업데이트’ 버튼", "새 버전을 올렸는데 휴대폰에 예전 화면이 남던 문제 고침 (앱 화면 파일은 열 때마다 서버에 새 버전을 확인)"]},
   {v:"5.12.0",date:"2026-10-19",items:["관찰 기록에 사진 · 동영상 · 녹음 추가: 학생 기록 창에서 📷 사진 찍기·🎥 동영상 찍기(휴대폰 카메라 앱), 🎙 녹음(앱 안에서 바로), 🖼 앨범·파일에서 붙이기", "붙인 파일 보기·재생, 저장·보내기, 삭제 / 학생 줄에 📷·🎥·🎙 개수 표시 / 관찰 기록 엑셀에 개수 표시", "파일은 찍은 기기에만 저장 (구글 연동·백업으로 옮겨지지 않음, 목록만 연동), 사진은 긴 변 1920px로 줄여 저장 공간 절약", "잠긴 날짜에는 사진·녹음을 붙이거나 지울 수 없음, 이 날 기록을 삭제하면 붙인 파일도 함께 삭제"]},
   {v:"5.11.0",date:"2026-10-19",items:["시간표에 ‘1교시 이전 시간’ 추가: 아침활동·조례·아침 자습 등 필요한 시간을 이름·시작·길이로 넣고 고치거나 삭제 (시간표 맨 위 줄에 표시, 출석 체크할 학급 지정 가능)", "1교시 이전 시간 칸을 눌러 바로 출석 체크 시작·일정 추가, 출석 체크와 일정의 ‘시간표에서 고르기’에도 표시", "시간 연동: 시간표에서 고른 출석 체크·일정은 그 시간과 연결되어, 아침활동·조례 시간이나 1교시 시작·수업 시간을 바꾸면 오늘 이후의 연결된 출석 체크(잠기지 않은 것)와 일정 시간이 함께 바뀜", "관찰 기록 잠금·해제: 날짜별로 잠그면 그 날 기록이 바뀌지 않음 (보기·복사·엑셀은 그대로, 구글 연동으로 다른 기기에도 적용)", "구글 연동 시 학생 이메일과 관찰 기록 잠금도 두 기기의 변경을 바르게 합치도록 보완"]},
   {v:"5.10.4",date:"2026-10-19",items:["출석 체크 칸 고침: 아이폰·아이패드에서 날짜 칸과 ‘시간’ 칸이 옆 칸·버튼과 겹치던 문제 (작은 휴대폰에서는 시간과 이름 칸을 위아래로)", "출석 체크의 ‘이름 (선택)’을 ‘교과·수업 이름 (선택)’으로 바꾸고 예시를 ‘4교시 물리’로", "잠금 안내 줄의 ‘잠금 해제’ 버튼 글자가 두 줄로 갈라지지 않게"]},
@@ -3636,6 +3639,22 @@ function showErrBar(){let b=document.getElementById("errBar");if(!b){b=document.
 /* 저장된 앱 파일만 지우고 새로 받습니다 (입력한 자료는 그대로) */
 async function refreshApp(){try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}}catch(e){}
   location.replace(location.pathname+"?r="+Date.now())}
+/* 새 버전 확인: 서버의 manifest 버전과 비교해, 새 버전이면 안내 → 저장된 앱 파일만 지우고 새로 받기 */
+var UPD={at:0,shown:""};
+function checkUpdate(manual){
+  if(!/^https?:$/.test(location.protocol))return;
+  if(!manual&&Date.now()-UPD.at<20*60000)return;UPD.at=Date.now();
+  fetch("manifest.webmanifest?u="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(m=>{
+    const v=m&&m.version;if(!v){if(manual)toast("새 버전을 확인하지 못했습니다");return}
+    if(verNum(v)>verNum(APP_VERSION)){showUpdBar(v);if($("updMsg"))$("updMsg").textContent=`새 버전 ${v}이 있습니다. ‘새 버전 확인 · 업데이트’를 누르면 바로 바뀝니다.`;if(manual)refreshApp()}
+    else if(manual){toast(`지금 최신 버전(${APP_VERSION})입니다`);if($("updMsg"))$("updMsg").textContent=`최신 버전 ${APP_VERSION}을 쓰고 있습니다 (확인: ${fmtDT(Date.now())})`}
+  }).catch(()=>{if(manual)toast("인터넷에 연결되어 있지 않아 확인하지 못했습니다")});
+}
+function showUpdBar(v){if(UPD.shown===v)return;UPD.shown=v;
+  const b=document.createElement("div");b.className="newbar";b.setAttribute("role","status");
+  b.innerHTML=`<span><b>새 버전 ${esc(v)}</b>이 나왔습니다. 입력한 자료는 그대로입니다.</span><button class="go" type="button">지금 업데이트</button><button class="x" type="button" aria-label="닫기">×</button>`;
+  document.body.appendChild(b);b.querySelector(".go").onclick=()=>{b.remove();toast("새 버전을 받는 중입니다…");refreshApp()};b.querySelector(".x").onclick=()=>b.remove();
+}
 window.addEventListener("error",e=>{if(e&&e.message&&!/Script error/i.test(e.message))reportErr("오류",{message:e.message+(e.lineno?` (줄 ${e.lineno})`:"")})});
 window.addEventListener("unhandledrejection",e=>{const r=e&&e.reason;if(r&&r.auth)return;if(r&&r.name==="AbortError")return;reportErr("처리 중 오류",r||{message:"알 수 없음"})});
 function renderAll(){safe("출석",renderAtt);safe("관찰 기록",renderObs);safe("메뉴",renderNav);safe("할 일 표시",renderTdBadge);if(view==="tt")safe("시간표",renderTT);if(view==="todo")safe("할 일",renderTodo);if(view==="call")safe("연락",renderCall);if(view==="stat")safe("평가·통계",renderStatView);if(view==="set")renderSet()}
@@ -4781,6 +4800,9 @@ function handleHash(){
   }).catch(e=>toast(e.message||"링크를 읽지 못했습니다"));
 }
 /* ---------- 시작: 첫 화면 ---------- */
+$("updChk").onclick=()=>{toast("새 버전을 확인하는 중입니다…");checkUpdate(true)};
+setTimeout(()=>{try{checkUpdate(false)}catch(e){}},2500);
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")try{checkUpdate(false)}catch(e){}});
 {let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
 setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
 handleHash();
