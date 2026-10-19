@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])})}catch(e){}</script>
+<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt","tip"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])})}catch(e){}</script>
 <title>교사의 생활</title>
 <meta name="author" content="물리공작소">
 <meta name="theme-color" content="#24476b">
@@ -640,6 +640,70 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
 @media print{body.printing>*:not(#printOv){display:none!important}body.printing{background:#fff!important;padding:0!important}
   #printOv{position:static;inset:auto;overflow:visible;padding:0;background:#fff}#printOv .ptool,#printOv .ptip{display:none!important}
   #printOv .ppage{box-shadow:none;border-radius:0;padding:0;max-width:none}#printOv .ptw{overflow:visible}}
+/* ── 5.15 디자인 정리: 테두리 대신 여백·면, 정해진 간격·모서리·색 ── */
+:root{--tint:#eef1ee;--tint2:#e6eae6;--sh:0 1px 2px rgba(22,34,28,.06),0 2px 8px rgba(22,34,28,.04);--r-card:16px;--r-btn:12px;--r-cell:10px;--bg:#f2f4f1;--line:#e3e8e3}
+@media (prefers-color-scheme: dark){:root{--bg:#141917;--tint:#242d29;--tint2:#2b3530;--sh:none;--line:#2a3430}}
+h1{font-size:1.5rem;letter-spacing:-.02em;line-height:1.3}
+header.top .sub{margin-top:2px}
+.card,.list{border-color:transparent;border-radius:var(--r-card);box-shadow:var(--sh)}
+.card{padding:16px}
+@media (prefers-color-scheme: dark){.card,.list{border-color:transparent}}
+/* 버튼: 주인공(남색)만 진하게, 나머지는 옅은 면 */
+.btn{border-radius:var(--r-btn);border-color:transparent;background:var(--paper);box-shadow:var(--sh)}
+.card .btn,.sheet .btn,.list .btn{background:var(--tint);box-shadow:none}
+.btn.pri,.card .btn.pri,.sheet .btn.pri{background:var(--accent);color:var(--paper);box-shadow:none}
+.btn.ok,.card .btn.ok,.sheet .btn.ok{background:var(--present);color:var(--paper);box-shadow:none}
+.btn.sure,.card .btn.sure,.sheet .btn.sure{background:var(--absent);color:var(--paper);box-shadow:none}
+.btn.bad{color:var(--absent)}
+.btn:active{transform:translateY(1px)}
+.fld{border-color:transparent;background:var(--tint);border-radius:var(--r-btn)}
+.fld:focus{border-color:var(--accent);background:var(--paper);outline:0}
+/* 칩: 안 고른 것은 옅은 면, 고른 것만 남색 */
+.chip{border-color:transparent;background:var(--paper);box-shadow:var(--sh)}
+.card .chip,.sheet .chip{background:var(--tint);box-shadow:none}
+.chip[aria-pressed="true"],.card .chip[aria-pressed="true"],.sheet .chip[aria-pressed="true"]{background:var(--accent);color:var(--paper)}
+.chip.free{background:var(--present-soft);color:var(--present)}
+.chip.free[aria-pressed="true"]{background:var(--present);color:var(--paper)}
+/* 출석 체크 시간 탭 */
+.tab{border-color:transparent;box-shadow:var(--sh);border-radius:14px}
+.tab.add{border:1.5px dashed var(--track);box-shadow:none;background:transparent}
+/* 시간표: 빈 칸은 점선 대신 옅은 면 */
+.ttg tbody th.tcol{border-color:transparent;background:transparent}
+.tc{border-color:transparent;border-radius:var(--r-cell);box-shadow:var(--sh)}
+.tc.empty{border:0;background:rgba(90,110,100,.045);box-shadow:none;color:transparent}
+.tc.empty:hover,.editing .tc.empty{color:var(--muted)}
+@media (prefers-color-scheme: dark){.tc.empty{background:rgba(255,255,255,.035)}.tc:not(.empty):not(.cancel):not(.now){background:var(--tint2)}}
+.editing .tc{border-color:var(--accent)}
+.ttg tr.lunch td{border:0;background:transparent}
+.lc{border:0;background:rgba(90,110,100,.07)}
+/* 아래 메뉴: 고른 화면에 옅은 알약 */
+nav.bottom{border-top-color:var(--line);background:color-mix(in srgb,var(--paper) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.navb{isolation:isolate}
+.navb[aria-current="page"]::before{content:"";position:absolute;z-index:-1;top:calc(50% - 25px);left:50%;transform:translateX(-50%);width:56px;height:30px;border-radius:15px;background:var(--accent-soft)}
+/* 접어 둔 설명 (ⓘ 사용 방법) */
+.tipbox{display:flex;flex-direction:column;gap:6px}
+.tipbox>.tipq{appearance:none;border:0;background:none;padding:2px 0;font:inherit;font-size:.8rem;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:5px;align-self:flex-start;min-height:32px}
+.tipbox>.tipq::after{content:"›";transition:transform .15s}
+.tipbox.on>.tipq::after,html[data-tip="open"] .tipbox>.tipq::after{transform:rotate(90deg)}
+.tipbox>.tipq i{font-style:normal;display:inline-flex;width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;align-items:center;justify-content:center;font-size:.62rem;font-weight:700}
+.tipbox>.tipc{display:none;flex-direction:column;gap:6px;background:var(--tint);border-radius:var(--r-btn);padding:10px 12px}
+.tipbox.on>.tipc,html[data-tip="open"] .tipbox>.tipc{display:flex}
+.tipbox .note{color:var(--ink);opacity:.8}
+details.card>.tipbox{margin-top:10px}
+/* 설정: 묶음별 목록 */
+.sgrp{display:flex;flex-direction:column;gap:8px}
+.sgt{font-size:.78rem;font-weight:700;color:var(--muted);margin:6px 4px 0;letter-spacing:.02em}
+.sgl{background:var(--paper);border-radius:var(--r-card);box-shadow:var(--sh);overflow:hidden}
+.sgl>.card{box-shadow:none;border-radius:0;margin:0;background:transparent}
+.sgl>.card+.card{border-top:1px solid var(--line)}
+.sgl>.card{padding:14px 16px}
+details.card>summary{justify-content:flex-start;gap:8px}
+details.card>summary>.sub:first-of-type{margin-left:auto}
+details.card>summary::after,details.card[open]>summary::after{content:"›";font-size:1.2rem;line-height:1;margin-left:auto;transition:transform .15s;color:var(--muted)}
+details.card>summary:has(.sub)::after{margin-left:0}
+details.card[open]>summary::after{transform:rotate(90deg)}
+.sgl>details.card[open]{background:color-mix(in srgb,var(--tint) 35%,var(--paper))}
+.sgl>.setcls{background:var(--accent-soft)}
 </style>
 </head>
 <body>
@@ -890,49 +954,24 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
 <!-- 설정 -->
 <main class="wrap view" id="v-set" hidden>
   <header class="top"><div><h1>설정</h1><div class="sub">구글 연동·명단·연락처·공유</div></div></header>
-  <details class="card" id="d-me" open><summary>사용 교사 <span class="sub" id="meTag"></span></summary>
+  <section class="sgrp"><h2 class="sgt">나와 계정</h2><div class="sgl">
+  <details class="card" id="d-me"><summary>사용 교사 <span class="sub" id="meTag"></span></summary>
     <label class="lb" for="meName">선생님 이름 (출력물에 ‘교사 이름’으로 표시)<input class="fld" id="meName" maxlength="20" placeholder="예: 홍길동" autocomplete="name"></label>
     <p class="devinfo" id="meEx"></p>
     <p class="note">앱에서 내려받는 엑셀·CSV 파일과 PDF 인쇄, 통계 메일의 문서 제목 아래 오른쪽에 <b>내려받은 일시</b>와 <b>출력한 사용자</b>가 들어갑니다. 구글로 연동하면 다른 기기에도 같이 적용됩니다.</p>
   </details>
-  <details class="card" id="d-per" open><summary>적용 기간 (학년도 · 학기) <span class="sub" id="perTag"></span></summary>
+  <details class="card" id="d-sync"><summary>구글 로그인 · 기기 연동 <span class="sub" id="gsTag"></span></summary>
+    <div id="gsBody"></div>
+  </details>
+  </div></section>
+  <section class="sgrp"><h2 class="sgt">학기 · 학급 · 명단</h2><div class="sgl">
+  <details class="card" id="d-per"><summary>적용 기간 (학년도 · 학기) <span class="sub" id="perTag"></span></summary>
     <p class="note">학급, 학생 명단·연락처, 수업 교사, 교직원 연락처, 평가는 학년도·학기별로 따로 관리됩니다. 아래에서 고른 기간의 자료가 출석·연락·평가·설정 화면에 보입니다.</p>
     <div class="range"><label class="lb" for="perY">학년도<select class="fld" id="perY"></select></label><label class="lb" for="perT">학기<select class="fld" id="perT"><option>1학기</option><option>2학기</option></select></label></div>
     <p class="devinfo" id="perSum"></p>
     <div class="perwrap"><div><div class="shlb">등록된 기간</div><div class="presets" id="perList"></div></div>
     <button class="btn pernew" type="button" id="perNew">＋ 새 학기 · 학년도 시작하기</button></div>
     <p class="note">새 학기를 시작하면 지금 기간의 학급·명단·연락처를 복사해 새 기간을 만들 수 있습니다. 출석 기록·관찰 기록은 복사하지 않으며, 지난 기간의 자료는 그대로 남아 언제든 다시 볼 수 있습니다.</p>
-  </details>
-  <details class="card" id="d-sync" open><summary>구글 로그인 · 기기 연동 <span class="sub" id="gsTag"></span></summary>
-    <div id="gsBody"></div>
-  </details>
-  <details class="card" id="d-share" open><summary>앱 배포 · 명단 공유</summary>
-    <h3 class="sh3">앱 배포</h3>
-    <p class="note">다른 선생님에게 앱만 보냅니다. 명단과 연락처는 들어가지 않습니다. 받은 선생님은 주소를 열고 홈 화면에 추가하면 바로 씁니다.</p>
-    <div class="out" id="appUrlOut"></div>
-    <p class="warn" id="appUrlWarn" hidden></p>
-    <div class="row2"><button class="btn pri" id="appSend" type="button">앱 보내기</button><button class="btn" id="appCopy" type="button">주소·설치 안내 복사</button><button class="btn" id="appQr" type="button" aria-expanded="false">QR 코드</button></div>
-    <div id="appQrBox" class="qrbox" hidden></div>
-    <h3 class="sh3">명단 · 연락처 골라 공유</h3>
-    <p class="note">보낼 학급과 내용을 고르면 링크나 파일이 만들어집니다. 받는 선생님이 링크를 열면 로그인 없이 고른 내용만 들어갑니다. 내용은 링크 안에 들어 있어 서버에는 저장되지 않습니다.</p>
-    <div class="shlb">학급 <small id="shClsCnt"></small></div>
-    <div class="presets" id="shCls"></div>
-    <div class="shlb">학생</div>
-    <label class="chk" for="shStu"><input type="checkbox" id="shStu" checked> 학생 명단 (학번·이름)</label>
-    <label class="chk ind" for="shPh"><input type="checkbox" id="shPh"> 학생 연락처 (전화·이메일)</label>
-    <label class="chk" for="shTc"><input type="checkbox" id="shTc" checked> 수업 교사 (이름·과목·연락처)</label>
-    <div class="shlb">교직원</div>
-    <label class="chk" for="shStaff"><input type="checkbox" id="shStaff"> 교직원 명단 (이름·부서·직위)</label>
-    <div id="shStaffBox" class="shsub" hidden>
-      <button class="btn" id="shStaffPick" type="button">교직원 고르기</button>
-      <label class="chk" for="shStPh"><input type="checkbox" id="shStPh"> 교직원 연락처</label>
-    </div>
-    <p class="ttsum" id="shSum" aria-live="polite"></p>
-    <p class="warn">연락처를 넣으면 링크나 파일을 받은 사람은 누구나 번호를 볼 수 있습니다. 같은 학교 선생님에게만 보내세요.</p>
-    <div class="row2"><button class="btn pri" id="mkLink" type="button">공유 링크 만들기</button><button class="btn" id="mkFile" type="button">파일로 보내기</button></div>
-    <div id="linkOut" hidden class="out"></div>
-    <div class="row2" id="linkBtns" hidden><button class="btn" id="shareLink" type="button">보내기</button><button class="btn" id="copyLink" type="button">복사</button><button class="btn" id="linkQrBtn" type="button">QR 코드</button></div>
-    <div id="linkQr" class="qrbox" hidden></div>
   </details>
   <div class="card setcls" id="setClsBar"><label class="lb" for="setCls">설정할 학급 <small id="setClsNote"></small><select class="fld" id="setCls"></select></label>
     <p class="note" id="setClsWarn" hidden></p></div>
@@ -983,6 +1022,8 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
     <div class="plist" id="staffEdit"></div>
     <p class="note" style="margin:0">이름을 누르면 이름·부서·직위·전화번호를 고치거나 삭제할 수 있습니다.</p>
   </details>
+  </div></section>
+  <section class="sgrp"><h2 class="sgt">가져오기 · 공유</h2><div class="sgl">
   <details class="card" id="d-imp"><summary>명단 가져오기 · 입력 양식</summary>
     <p class="note">엑셀이나 한글 표에서 ‘학번, 이름, 전화번호’ 칸을 복사해 붙여 넣거나, 받은 가져오기 코드를 붙여 넣으세요.</p>
     <textarea class="fld" id="impIn" rows="5" placeholder="10102	권선우	010-1234-5678&#10;또는 가져오기 코드"></textarea>
@@ -995,6 +1036,36 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
       <span>교직원</span><button class="btn" type="button" data-tpl="staff" data-f="xlsx">엑셀</button><button class="btn" type="button" data-tpl="staff" data-f="csv">CSV</button>
     </div>
   </details>
+  <details class="card" id="d-share"><summary>앱 배포 · 명단 공유</summary>
+    <h3 class="sh3">앱 배포</h3>
+    <p class="note">다른 선생님에게 앱만 보냅니다. 명단과 연락처는 들어가지 않습니다. 받은 선생님은 주소를 열고 홈 화면에 추가하면 바로 씁니다.</p>
+    <div class="out" id="appUrlOut"></div>
+    <p class="warn" id="appUrlWarn" hidden></p>
+    <div class="row2"><button class="btn pri" id="appSend" type="button">앱 보내기</button><button class="btn" id="appCopy" type="button">주소·설치 안내 복사</button><button class="btn" id="appQr" type="button" aria-expanded="false">QR 코드</button></div>
+    <div id="appQrBox" class="qrbox" hidden></div>
+    <h3 class="sh3">명단 · 연락처 골라 공유</h3>
+    <p class="note">보낼 학급과 내용을 고르면 링크나 파일이 만들어집니다. 받는 선생님이 링크를 열면 로그인 없이 고른 내용만 들어갑니다. 내용은 링크 안에 들어 있어 서버에는 저장되지 않습니다.</p>
+    <div class="shlb">학급 <small id="shClsCnt"></small></div>
+    <div class="presets" id="shCls"></div>
+    <div class="shlb">학생</div>
+    <label class="chk" for="shStu"><input type="checkbox" id="shStu" checked> 학생 명단 (학번·이름)</label>
+    <label class="chk ind" for="shPh"><input type="checkbox" id="shPh"> 학생 연락처 (전화·이메일)</label>
+    <label class="chk" for="shTc"><input type="checkbox" id="shTc" checked> 수업 교사 (이름·과목·연락처)</label>
+    <div class="shlb">교직원</div>
+    <label class="chk" for="shStaff"><input type="checkbox" id="shStaff"> 교직원 명단 (이름·부서·직위)</label>
+    <div id="shStaffBox" class="shsub" hidden>
+      <button class="btn" id="shStaffPick" type="button">교직원 고르기</button>
+      <label class="chk" for="shStPh"><input type="checkbox" id="shStPh"> 교직원 연락처</label>
+    </div>
+    <p class="ttsum" id="shSum" aria-live="polite"></p>
+    <p class="warn">연락처를 넣으면 링크나 파일을 받은 사람은 누구나 번호를 볼 수 있습니다. 같은 학교 선생님에게만 보내세요.</p>
+    <div class="row2"><button class="btn pri" id="mkLink" type="button">공유 링크 만들기</button><button class="btn" id="mkFile" type="button">파일로 보내기</button></div>
+    <div id="linkOut" hidden class="out"></div>
+    <div class="row2" id="linkBtns" hidden><button class="btn" id="shareLink" type="button">보내기</button><button class="btn" id="copyLink" type="button">복사</button><button class="btn" id="linkQrBtn" type="button">QR 코드</button></div>
+    <div id="linkQr" class="qrbox" hidden></div>
+  </details>
+  </div></section>
+  <section class="sgrp"><h2 class="sgt">보관 · 화면 · 정보</h2><div class="sgl">
   <details class="card" id="d-bk"><summary>백업 · 저장 공간 <span class="sub" id="bkTag"></span></summary>
     <div id="stoMeter"></div>
     <p class="note">백업에는 모든 학급의 명단, 연락처, 출석 기록, 교직원 연락처, 시간표, 수업 메모, 일정이 들어 있습니다.</p>
@@ -1010,6 +1081,7 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
     <div class="uirow"><div class="shlb">글자 크기</div><div class="presets" data-ui="fs"><button class="chip" type="button" data-v="">자동</button><button class="chip" type="button" data-v="s">작게</button><button class="chip" type="button" data-v="m">보통</button><button class="chip" type="button" data-v="l">크게</button><button class="chip" type="button" data-v="xl">아주 크게</button></div></div>
     <div class="uirow"><div class="shlb">화면 배치</div><div class="presets" data-ui="lay"><button class="chip" type="button" data-v="">자동</button><button class="chip" type="button" data-v="one">한 줄 (휴대폰처럼)</button><button class="chip" type="button" data-v="two">넓게 두 줄</button></div></div>
     <div class="uirow"><div class="shlb">아래 메뉴 위치 (넓은 화면)</div><div class="presets" data-ui="nav"><button class="chip" type="button" data-v="">자동 (넓으면 왼쪽)</button><button class="chip" type="button" data-v="bottom">항상 아래</button></div></div>
+    <div class="uirow"><div class="shlb">사용 방법 설명</div><div class="presets" data-ui="tip"><button class="chip" type="button" data-v="">접어 두기 (ⓘ 눌러 보기)</button><button class="chip" type="button" data-v="open">항상 펼쳐 두기</button></div></div>
     <div class="uirow"><div class="shlb">시간표</div><div class="presets" data-ui="tt"><button class="chip" type="button" data-v="">한 화면에 맞추기</button><button class="chip" type="button" data-v="wide">크게 보고 옆으로 밀기</button></div></div>
     <div class="row2"><button class="btn" type="button" id="uiReset">모두 자동으로</button></div>
   </details>
@@ -1021,6 +1093,7 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
     <p class="note"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
     <div class="abslist" id="verList"></div>
   </details>
+  </div></section>
   <p class="note" style="text-align:center" id="verFoot"></p>
 </main>
 
@@ -1043,8 +1116,9 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.14.1", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.15.0", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.15.0",date:"2026-10-19",items:["화면 디자인 정리: 카드 테두리를 없애고 여백과 옅은 그림자로 구역을 나눔, 모서리·간격·글자 크기를 정해진 규칙으로 통일", "버튼·입력 칸·칩: 진한 남색은 주요 버튼과 고른 항목에만 쓰고, 나머지는 옅은 면으로 바꿔 화면이 차분해짐", "시간표: 빈 칸의 점선을 없애고 옅은 면으로, 수업 칸만 또렷하게 보이도록", "긴 설명 글은 각 카드 아래 ‘ⓘ 사용 방법’으로 접어 둠 (설정 → 화면 · 글자 크기 → ‘사용 방법 설명: 항상 펼쳐 두기’로 바꿀 수 있음)", "설정 화면을 ‘나와 계정 · 학기·학급·명단 · 가져오기·공유 · 보관·화면·정보’ 네 묶음의 목록으로 정리하고, 처음에는 모두 접어 둠 (이름을 아직 넣지 않았으면 ‘사용 교사’만 펼침)", "아래 메뉴에서 지금 화면을 옅은 알약 모양으로 표시, 접는 항목의 표시를 ＋/－ 대신 › 로 통일, 어두운 화면에서도 같은 규칙 적용"]},
   {v:"5.14.1",date:"2026-10-19",items:["엑셀 출력물의 문서 제목이 표 폭보다 길면 자동으로 두 줄 이상으로 줄바꿈하고 줄 높이를 맞춤 (‘내려받은 일시 · 출력한 사용자’ 줄도 같은 방식)", "용지 방향 자동: 표 전체 폭에 따라 세로·가로를 골라 엑셀·PDF로 출력 (항상 한 페이지 너비에 맞춤)", "서명 넣은 전표의 출력 설정에서 용지 방향 ‘자동 · 세로 · 가로’ 선택 (평가마다 기억)"]},
   {v:"5.14.0",date:"2026-10-19",items:["‘수행평가 서명’을 ‘학생 서명’으로 넓힘: 수행평가 점수 확인뿐 아니라 활동 참여 확인, 안내문·가정통신문 확인, 동의서·서약서, 직접 입력한 종류로 학생 자필 서명을 받을 수 있음", "만들기·전표 올리기·정보 수정에서 ‘무엇에 대한 서명인가요?’ 종류 선택, 학생이 체크할 확인 문장 고치기 (종류마다 알맞은 기본 문장)", "점수 칸 없이 명단만으로도 서명 받기 가능, 안내·동의 내용을 학생 화면에 표시", "학생 서명 화면·메일·문자 문구가 종류에 맞게 바뀜 (예: ‘위 내용을 읽고 이에 동의합니다’)", "전표 양식 받기에서 문서 제목 고르기 (수행평가 전표, 활동 참여 확인서, 안내문 수령 확인서, 동의서, 서약서 또는 직접 입력)"]},
   {v:"5.13.1",date:"2026-10-19",items:["서명 넣은 전표 ‘PDF로 인쇄’를 새 창 대신 앱 안의 인쇄 화면으로: ‘닫고 돌아가기’ 버튼이나 휴대폰 ‘뒤로’로 바로 원래 평가 화면으로 돌아옴", "인쇄 화면에서 ‘인쇄 · PDF로 저장’을 다시 누를 수 있고, PDF 저장 방법 안내 표시"]},
@@ -3774,7 +3848,7 @@ document.querySelectorAll(".navb").forEach(b=>b.onclick=()=>show(b.dataset.v));
 /* ---------- 화면 · 글자 크기 (기기 맞춤) ---------- */
 const UI_KEY="att-app-ui";
 function uiPrefs(){try{return JSON.parse(localStorage.getItem(UI_KEY)||"{}")||{}}catch(e){return{}}}
-function applyUI(u){const h=document.documentElement;["fs","lay","nav","tt"].forEach(k=>{if(u[k]&&!(k==="fs"&&u[k]==="m"&&false))h.setAttribute("data-"+k,u[k]);else h.removeAttribute("data-"+k)});if(u.fs==="m")h.setAttribute("data-fs","m")}
+function applyUI(u){const h=document.documentElement;["fs","lay","nav","tt","tip"].forEach(k=>{if(u[k]&&!(k==="fs"&&u[k]==="m"&&false))h.setAttribute("data-"+k,u[k]);else h.removeAttribute("data-"+k)});if(u.fs==="m")h.setAttribute("data-fs","m")}
 function devText(){const w=innerWidth,h=innerHeight,touch=matchMedia("(pointer:coarse)").matches;
   const kind=w<380?"작은 휴대폰":w<760?(h<w?"휴대폰 (가로)":"휴대폰"):w<1100?(touch?"태블릿":"좁은 컴퓨터 창"):(touch?"큰 태블릿":"컴퓨터");
   const lay=w>=1100?"메뉴 왼쪽 · 넓은 화면":w>=760?"가운데 넓게":"한 줄";
@@ -4923,7 +4997,7 @@ function gHelp(){
 }
 /* 다른 기기에 클라이언트 ID 설정 보내기 (#g=) */
 function gHash2(){const m=location.hash.match(/^#g=([^&]+)/);if(!m)return false;const v=decodeURIComponent(m[1]);history.replaceState(null,"",appUrl());
-  if(/\.apps\.googleusercontent\.com$/.test(v)){G.clientId=v;gSave();show("set");renderSync();toast("구글 로그인 설정을 넣었습니다. ‘Google 계정으로 로그인’을 누르세요")}return true}
+  if(/\.apps\.googleusercontent\.com$/.test(v)){G.clientId=v;gSave();show("set");renderSync();{const d=$("d-sync");if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:"start",behavior:"smooth"}),60)}}toast("구글 로그인 설정을 넣었습니다. ‘Google 계정으로 로그인’을 누르세요")}return true}
 gHash2();window.addEventListener("hashchange",gHash2);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){gPreload();if(G.on&&G.auto!==false)gSync("show")}});
 setInterval(()=>{if(document.visibilityState==="visible"&&G.on&&G.auto!==false&&gTokenOk())gSync("tick")},60000);
@@ -4964,6 +5038,19 @@ try{storageStartup()}catch(e){reportErr("저장 공간 준비",e)}
 $("updChk").onclick=()=>{toast("새 버전을 확인하는 중입니다…");checkUpdate(true)};
 setTimeout(()=>{try{checkUpdate(false)}catch(e){}},2500);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")try{checkUpdate(false)}catch(e){}});
+/* 5.15: 긴 설명 글은 ‘사용 방법’으로 접어 둠 (설정 → 화면에서 펼쳐 두기 가능) */
+function foldTips(){try{
+  document.querySelectorAll("main.view").forEach(mv=>{
+    const ns=[...mv.querySelectorAll("p.note")].filter(n=>!n.id&&!n.querySelector("[id]")&&!n.closest(".tipbox,#verList,[data-keep],.hd")&&!n.style.textAlign&&n.textContent.trim().length>=40);
+    const g=new Map();ns.forEach(n=>{const c=n.parentElement;if(!g.has(c))g.set(c,[]);g.get(c).push(n)});
+    g.forEach((arr,c)=>{const box=document.createElement("div");box.className="tipbox";
+      box.innerHTML='<button type="button" class="tipq" aria-expanded="false"><i>i</i>사용 방법</button><div class="tipc"></div>';
+      if(c.classList.contains("card"))c.appendChild(box);else arr[0].before(box);
+      arr.forEach(n=>box.lastChild.appendChild(n));
+      box.firstChild.onclick=()=>{const on=box.classList.toggle("on");box.firstChild.setAttribute("aria-expanded",String(on))}})})
+}catch(e){reportErr&&reportErr("foldTips",e)}}
+safe("foldTips",foldTips);
+try{if(!meName()){const d=$("d-me");if(d)d.open=true}}catch(e){}
 {let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
 setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
 handleHash();
