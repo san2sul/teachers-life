@@ -705,7 +705,8 @@ details.card[open]>summary::after{transform:rotate(90deg)}
 .sgl>details.card[open]{background:color-mix(in srgb,var(--tint) 35%,var(--paper))}
 .sgl>.setcls{background:var(--accent-soft)}
 /* 5.16 처음 설정 안내 */
-body:has(#sheet:not([hidden]) .wizw) #helpBtn{display:none}
+/* 창(시트)이 열려 있으면 위쪽 도움말·동기화 표시를 숨겨 창 버튼을 가리지 않게 */
+body.shopen #topBtns,body:has(#sheet:not([hidden])) #topBtns{display:none}
 .setrow{appearance:none;border:0;width:100%;text-align:left;font:inherit;font-weight:700;color:var(--ink);cursor:pointer;flex-direction:row;align-items:center;gap:8px;min-height:60px}
 .setrow .sub{margin-left:auto;font-weight:400}
 .setrow::after{content:"›";font-size:1.2rem;line-height:1;color:var(--muted)}
@@ -764,6 +765,14 @@ textarea.fld.stsbox{min-height:12em;line-height:1.6}
 .shschool{display:flex;flex-direction:column;gap:10px;background:var(--accent-soft);border-radius:var(--r-btn);padding:12px 14px}
 .shschool b{display:block;color:var(--accent)}.shschool small{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
 .shschool .btn{background:var(--paper);align-self:flex-start}
+/* 5.19 학사일정 올리기 */
+.aclist{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;margin-inline:-4px;padding-inline:4px}
+.acrow{display:grid;grid-template-columns:4.6rem minmax(0,1fr) 6.4rem;gap:6px;align-items:center;background:var(--tint);border-radius:12px;padding:8px}
+.acrow .fld{background:var(--paper);padding:7px 9px;font-size:max(16px,.9rem)}
+.acrow .acd{display:flex;flex-direction:column;line-height:1.2}.acrow .acd b{font-size:.88rem}.acrow .acd small{font-size:.7rem;color:var(--muted);font-weight:400}
+.acrow.k-cancel{box-shadow:inset 3px 0 0 var(--absent)}.acrow.k-short{box-shadow:inset 3px 0 0 #c98a12}.acrow.k-event{box-shadow:inset 3px 0 0 var(--accent)}.acrow.k-skip{opacity:.5}
+@media (max-width:420px){.acrow{grid-template-columns:4.2rem minmax(0,1fr)}.acrow select{grid-column:2}}
+.acshort{display:grid;grid-template-columns:minmax(0,12rem) 1fr;gap:10px;align-items:end}
 </style>
 </head>
 <body>
@@ -797,12 +806,14 @@ textarea.fld.stsbox{min-height:12em;line-height:1.6}
     <div class="hd"><h2>일정 · 알림</h2><button class="btn pri" type="button" id="agAdd">＋ 일정 추가</button></div>
     <div class="presets" id="agRange"><button class="chip" type="button" data-r="week">이번 주</button><button class="chip" type="button" data-r="month">앞으로 30일</button></div>
     <div class="evlist" id="agList"></div>
+    <div class="row2"><button class="btn" type="button" id="acUp2"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>학사일정 파일 올리기</button></div>
     <div class="row2"><button class="btn" type="button" id="agIcs"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>앞으로의 일정 캘린더 파일로 보내기</button></div>
     <div class="hd"><p class="note" id="ntState" style="margin:0"></p><button class="btn" type="button" id="ntBtn" hidden>알림 허용</button></div>
     <p class="note" style="margin:0">학생 면담, 수업 준비, 교무·부서 업무, 학생 활동, 개인 일정, 수업 진도, 수행평가를 날짜·시간과 함께 기록하고 알림을 받을 수 있습니다. 시간표의 점심·방과 후 칸이나 요일을 눌러도 넣을 수 있습니다.</p>
     <p class="note" style="margin:0">앱 알림은 앱이 열려 있을 때 울립니다. 앱을 닫아 두어도 확실히 받으려면 일정마다 ‘구글 캘린더에 추가’를 누르거나, 캘린더 파일을 휴대폰 캘린더에 넣으세요.</p>
   </section>
   <details class="card" id="ttChg"><summary>수업 변동 (학사일정) <span class="sub" id="ttChgCnt"></span></summary>
+    <div class="row2"><button class="btn" type="button" id="acUp"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>학사일정 파일 올리기 (엑셀·PDF·사진)</button></div>
     <p class="note">고정 시간표는 그대로 두고 특정 날짜나 기간에만 수업을 바꿉니다. 수업 칸을 눌러 ‘수업 변동’, 요일을 눌러 ‘이 날 수업 변동’을 고르세요. 빈 칸은 ‘이번만 수업 넣기’로 보강을 넣습니다.</p>
     <div class="plist" id="ttChgList"></div>
   </details>
@@ -1188,8 +1199,10 @@ textarea.fld.stsbox{min-height:12em;line-height:1.6}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.18.0", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.19.0", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.19.0",date:"2026-10-20",items:["학사일정 파일 올리기: 시간표 → 일정 · 알림(또는 수업 변동) → ‘학사일정 파일 올리기’에서 엑셀·CSV·PDF·사진(캡처) 파일을 올리거나 한글(hwp) 표를 복사해 붙여 넣으면 날짜와 행사를 읽어 옴", "여러 양식 지원: ‘월 | 일 | 요일 | 행사’ 표, ‘2026.10.28.(수) ~ 10.30.(금) 지필평가’ 같은 목록, 달력형(날짜 칸에 행사), 기간(~)·연도 없는 날짜(3~12월은 그 학년도, 1~2월은 다음 해)", "읽은 일정 확인 화면: 행사 이름으로 넣는 방법을 자동으로 고르고(시험·휴업·방학·행사 → 수업 없음, 단축·방학식·졸업식 → 단축수업, 그 밖 → 일정만), 이름·방법을 고친 뒤 넣기. 지난 날짜는 기본으로 빼고, 주말 휴일은 ‘넣지 않음’", "수업 없음은 그날(기간) 시간표 수업을 휴강으로, 단축수업은 그날 수업 시간을 줄인 시간표로, 일정만은 ‘오늘’·일정 목록에. 학기에 맞는 시간표에 넣고(없으면 지금 시간표의 시간으로 새로 만듦), 다시 올려도 겹치지 않음", "PDF 읽기 기능(pdf.js, 한글 글꼴 지도 포함)을 앱에 함께 넣음 (PDF를 처음 올릴 때만 불러옴)"]},
+  {v:"5.18.1",date:"2026-10-20",items:["창(처음 설정 안내, 입력 창 등)이 열려 있을 때 화면 위쪽의 ‘동기화됨’·‘도움말’ 표시가 창의 ‘나중에 하기’ 등 버튼을 가리던 문제 고침 (창이 열리면 숨기고, 닫으면 다시 보임)"]},
   {v:"5.18.0",date:"2026-10-20",items:["학교 묶음 나눠 주기: 설정 → 앱 배포 · 명단 공유 → ‘학교 묶음으로 고르기’로 모든 학급 명단·수업 교사·교직원 연락처와 학교 공통 자료를 한 링크(또는 파일)로 보냄", "학교 공통 자료 공유: 수업 시간(1교시 시작·수업·쉬는·점심시간·교시별 조정·아침활동·조례), 학사일정(단축수업·시험·행사 등 하루 전체 수업 변동·날짜별 시간 변경), 관찰 기록 항목", "받는 화면: 학급이 많으면 가르치는 학급만 고르기(모두·모두 해제·학년별), 수업 시간은 내 시간표의 시간만 바꾸고(없으면 새로 만듦) 학사일정은 같은 일정이면 새로 고침, 관찰 항목은 없는 것만 더함", "보낸 학기 기준으로 가져오고, 같은 학기의 같은 이름 학급만 새로 고침 (지난 학기 학급은 건드리지 않음)", "처음 쓰는 선생님이 학교 묶음을 받으면 가져온 뒤 바로 ‘처음 설정 안내’로 이어짐", "백업 알림은 출석·관찰·평가 기록이 생긴 뒤에만, 처음 설정 안내 중에는 띄우지 않음"]},
   {v:"5.17.0",date:"2026-10-20",items:["‘할 일’ 화면을 ‘오늘’로: 맨 위 ‘오늘 수업’에 시간표의 오늘 수업과 출석 체크 상태(출석·결석·연락 전), 지금·다음 수업 표시, 끝났는데 체크 안 한 수업 알림, 휴강·변동을 한눈에. 누르면 그 수업 출석 체크로 바로", "‘오늘’에 연락할 결석 학생(학급별)과 7일 안 서명 마감(미서명 학생 수)을 모아 보여 줌", "학생 한눈에 보기: 관찰 기록 → 학생 이름 → ‘한눈에 보기 · 세특 초안’에서 출석·결석한 날, 관찰 기록, 학생 서명 상태를 한 화면에", "세특 초안: 관찰 메모와 자주 체크한 항목으로 초안을 만들고, 글자 수와 나이스 byte(한글 3·영문 1·줄바꿈 2)를 500·700·1000자 기준으로 확인. 쓰는 대로 저장, 구글 연동", "관찰 기록 화면에 ‘세특 초안’ 카드: 빈 초안 모두 만들기, 학급 전체 초안 엑셀로 받기(글자 수·byte·넘은 byte 표시)", "출석 통계에 ‘월별 출결표 (엑셀)’: 학생 × 출석 체크한 날 표, 결석 일수·결석 횟수, 날짜별 결석 학생 수 (학급마다 시트 하나)"]},
   {v:"5.16.0",date:"2026-10-20",items:["처음 설정 안내: 처음 앱을 열면 ‘선생님 이름 → 학년도·학기 → 학급과 학생 명단 → 시간표’를 한 화면씩 안내 (3분)", "명단은 붙여 넣거나 엑셀·CSV 파일로 가져오고, 학번 없이 ‘1 김가람’처럼 번호·이름만 적어도 학급 이름(예: 1학년 3반)으로 학번(10301)을 만들어 줌", "시간표는 컴시간 캡처 사진·파일 올리기 또는 직접 만들기로 바로 이어짐", "다른 기기에서 쓰던 자료가 있으면 첫 화면에서 ‘구글 계정에서’ 또는 ‘백업 파일에서’ 불러오기", "설정 → 나와 계정 → ‘처음 설정 안내’에서 언제든 다시 열 수 있음"]},
@@ -5316,6 +5329,188 @@ function monthAttXlsx(cls,ym){
   xlOut(`출결표_${y}${String(m).padStart(2,"0")}${cls.length===1?"_"+String(clsName(cls[0].data)).replace(/\s/g,""):""}.xlsx`,sheets,`${y}년 ${m}월 출결표를 받았습니다`);
 }
 $("stsAll").onclick=stsFillAll;$("stsXl").onclick=stsXlsx;$("monXl").onclick=monthAttSheet;
+try{const sh=$("sheet"),sync=()=>document.body.classList.toggle("shopen",!sh.hidden);new MutationObserver(sync).observe(sh,{attributes:true,attributeFilter:["hidden"]});sync()}catch(e){}
+/* ===== 5.19 학사일정 파일 올리기: 엑셀·CSV·PDF·사진(캡처)·붙여 넣은 글에서 날짜와 행사를 읽어 시간표 수업 변동·단축수업·일정으로 ===== */
+const AC={items:[],src:"",base:0};
+function acHash(s){let h=5381;for(const ch of String(s))h=((h<<5)+h+ch.charCodeAt(0))|0;return(h>>>0).toString(36)}
+function acYmd(y,m,d){if(!(m>=1&&m<=12&&d>=1&&d<=31))return null;const dt=new Date(y,m-1,d);return dt.getMonth()===m-1?ymd(dt):null}
+const acY=(m,base)=>m>=3?base:base+1;
+const AC_SKIPHD=/^(요일|주|주차|비고|구분|순|번호|연번|no\.?)$/i;
+const AC_DATE=/(?:(\d{4})\s*(?:년|[.\-/])\s*)?(\d{1,2})\s*(?:월|[.\-/])\s*(\d{1,2})(?!\d)\s*일?\.?(?:\s*[(（]\s*[월화수목금토일]\s*[)）])?/g;
+const AC_BAD=/^\s*(?:교시|학년|반|차시|차|학기|층|명|시간|분|시|번|호|개|%|퍼센트|점)(?![가-힣])/;
+/* 한 줄 글에서 날짜(·기간) 토큰 찾기 */
+function acTokens(text,base,ctxM){
+  const out=[];AC_DATE.lastIndex=0;let m;
+  while((m=AC_DATE.exec(text))){
+    const pre=text[m.index-1]||"";if(/[\d.]/.test(pre))continue;
+    const after=text.slice(m.index+m[0].length);if(AC_BAD.test(after))continue;
+    const M=+m[2],Dd=+m[3];const y=m[1]?+m[1]:acY(M,base);const from=acYmd(y,M,Dd);if(!from)continue;
+    let to=from,end=m.index+m[0].length;
+    const r=after.match(/^\s*[~∼～\-–—]\s*/);
+    if(r){const rest=after.slice(r[0].length);AC_DATE.lastIndex=0;const m2=/^(?:(\d{4})\s*(?:년|[.\-/])\s*)?(\d{1,2})\s*(?:월|[.\-/])\s*(\d{1,2})(?!\d)\s*일?\.?(?:\s*[(（]\s*[월화수목금토일]\s*[)）])?/.exec(rest);
+      if(m2){const M2=+m2[2],y2=m2[1]?+m2[1]:acY(M2,base);const t2=acYmd(y2,M2,+m2[3]);if(t2&&t2>=from){to=t2;end+=r[0].length+m2[0].length}}
+      else{const m3=/^(\d{1,2})\s*일?\.?(?:\s*[(（]\s*[월화수목금토일]\s*[)）])?/.exec(rest);if(m3){let d2=+m3[1],M2=M,y2=y;if(d2<Dd){M2=M%12+1;if(M2===1)y2++}const t2=acYmd(y2,M2,d2);if(t2&&t2>=from){to=t2;end+=r[0].length+m3[0].length}}}}
+    out.push({i:m.index,e:end,from,to});AC_DATE.lastIndex=end;
+  }
+  return out;
+}
+function acClean(t){return String(t||"").replace(/[(（]\s*[월화수목금토일]\s*[)）]/g," ").replace(/^[\s|·,]*[월화수목금토일](?:\s*[~∼,\-]\s*[월화수목금토일])*(?:요일)?(?=\s|$)/,"").replace(/^[\s\-–—~:|·,.;/)]+|[\s\-–—~:|·,;/(]+$/g,"").replace(/\s+/g," ").trim().slice(0,40)}
+function acOk(t){return t.length>=2&&/[가-힣A-Za-z]/.test(t)&&!/^[월화수목금토일](요일)?$/.test(t)&&!/^(\d+\s*)?월$/.test(t)&&!/^(일정|행사|내용|학사\s*일정|비고|날짜|요일)$/.test(t)}
+/* 표·줄 → 항목 */
+function acParse(rows,base){
+  const items=[];let curM=0,curY=0;
+  const add=(from,to,title)=>{title=acClean(title);if(!from||!acOk(title))return;items.push({from,to:to||from,title})};
+  /* 머리글(월 | 일 | 요일 | 행사) 찾기 */
+  let H=null;
+  for(let i=0;i<rows.length&&i<15;i++){const r=rows[i].map(c=>String(c||"").trim());const mi=r.findIndex(c=>/^월$/.test(c)),di=r.findIndex(c=>/^(일|날짜|일자)$/.test(c));
+    const wdh=r.filter(c=>/^[월화수목금토일](요일)?$/.test(c)).length;
+    if(di>=0&&wdh<4&&(mi>=0||r.some(c=>/행사|내용|일정|학사|비고/.test(c)))){H={row:i,mi,di,ev:r.map((c,k)=>k).filter(k=>k!==mi&&k!==di&&!AC_SKIPHD.test(r[k]))};break}}
+  rows.forEach((r0,ri)=>{
+    const r=r0.map(c=>String(c==null?"":c).replace(/\r/g,"").trim());if(!r.some(Boolean))return;
+    /* 월 표시 칸 (예: 10월, 2026.10) */
+    r.forEach(c=>{let m=c.match(/^(?:(\d{4})\s*(?:년|\.)\s*)?(\d{1,2})\s*월$/)||c.match(/^(\d{4})\s*[.\-/]\s*(\d{1,2})$/);if(m&&+m[2]>=1&&+m[2]<=12){curM=+m[2];curY=m[1]?+m[1]:0}});
+    if(H&&ri>H.row){
+      if(H.mi>=0){const mm=String(r[H.mi]||"").match(/^(\d{1,2})\s*월?$/);if(mm)curM=+mm[1]}
+      const dc=String(r[H.di]||"");const title=H.ev.map(k=>r[k]).filter(c=>c&&!/^[월화수목금토일]$/.test(c)).join(" · ");
+      const tk=acTokens(dc,base);if(tk.length){add(tk[0].from,tk[0].to,title);return}
+      const dm=dc.match(/^(\d{1,2})\s*일?(?:\s*[~∼\-]\s*(\d{1,2})\s*일?)?/);
+      if(dm&&curM){const y=curY||acY(curM,base);const f=acYmd(y,curM,+dm[1]);const t=dm[2]?acYmd(y,curM,+dm[2]):f;add(f,t&&t>=f?t:f,title)}
+      return;
+    }
+    const text=r.filter(Boolean).join("  ");
+    const tk=acTokens(text,base);
+    if(tk.length){tk.forEach((k,i)=>{let t=text.slice(k.e,i+1<tk.length?tk[i+1].i:text.length);if(!acOk(acClean(t))&&i===0)t=text.slice(0,k.i);add(k.from,k.to,t)});return}
+    if(!curM)return;
+    /* 달력형: '28 중간고사', '28(수) 체육대회' 칸 */
+    r.forEach((c,k)=>{if(/^(?:\d{4}\s*(?:년|\.)\s*)?\d{1,2}\s*월$/.test(c))return;const m=c.match(/^(\d{1,2})(?!\d)\s*일?\s*(?:[(（]\s*[월화수목금토일]\s*[)）])?\s*([\s\S]*)$/);if(!m)return;const d=+m[1];if(d<1||d>31)return;
+      let t=m[2];if(!acOk(acClean(t))){const nx=r[k+1]||"";t=nx&&!/^\d/.test(nx)&&!/^[월화수목금토일](요일)?$/.test(nx)?nx:""}
+      if(!acOk(acClean(t)))return;add(acYmd(curY||acY(curM,base),curM,d),null,t.replace(/\n+/g," · "))});
+  });
+  /* 같은 날 같은 행사 합치기, 날짜순 */
+  const seen=new Set(),out=[];items.sort((a,b)=>a.from.localeCompare(b.from)).forEach(x=>{const k=x.from+"|"+x.title;if(seen.has(k))return;seen.add(k);
+    /* 이어지는 날짜의 같은 행사는 기간 하나로 (주말 건너뜀 포함) */
+    const pv=out.slice().reverse().find(o=>o.title===x.title);
+    if(pv){let d=addDays(pv.to,1);while(d<x.from&&wdOf(d)>4)d=addDays(d,1);if(d===x.from){if(x.to>pv.to)pv.to=x.to;return}}
+    out.push(x)});
+  return out;
+}
+function acKind(t){
+  if(/수행\s*평가|평가\s*계획|협의회|연수|회의|상담\s*주간/.test(t))return"event";
+  if(/단축|방학식|종업식|졸업식|입학식|개학식|시업식|수료식/.test(t))return"short";
+  if(/방학|휴업|재량|개교\s*기념|공휴일|대체|휴일|설날|설\s*연휴|추석|연휴|성탄|기독탄신|어린이날|현충일|광복절|개천절|한글날|삼일절|3\.?1절|신정|부처님|석가|선거|지필|고사|시험|체육\s*대회|축제|수학\s*여행|수련\s*활동|현장\s*체험|체험\s*학습|소풍/.test(t))return"cancel";
+  return"event";
+}
+const acWeekend=d=>wdOf(d)>4;
+function acTermOf(date){const[y,m]=date.split("-").map(Number);return{year:m>=3?y:y-1,term:m>=3&&m<=8?"1학기":"2학기"}}
+/* 파일 → 표(줄) */
+async function acRead(f,prog){
+  const n=(f.name||"").toLowerCase();
+  if(/\.(hwp|hwpx)$/.test(n))throw new Error("한글(hwp) 파일은 바로 읽지 못합니다. 한글에서 ‘PDF로 저장’하거나, 표를 복사해 아래 칸에 붙여 넣어 주세요");
+  if(/\.(xlsx|xlsm|xls|ods)$/.test(n)){const X=await loadXLSX();const wb=X.read(await f.arrayBuffer(),{type:"array",cellDates:true});
+    const rows=[];wb.SheetNames.forEach(sn=>{X.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,dateNF:"yyyy-mm-dd",blankrows:false}).forEach(r=>rows.push(r.map(c=>c==null?"":String(c))))});return rows}
+  if(/\.pdf$/.test(n)||f.type==="application/pdf")return acReadPDF(f,prog);
+  if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|gif|bmp|heic)$/.test(n))return acReadImage(f,prog);
+  const buf=await f.arrayBuffer();let t=new TextDecoder("utf-8").decode(buf);if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(_){}}
+  return acTextRows(t);
+}
+function acTextRows(t){return String(t||"").replace(/^﻿/,"").split(/\r?\n/).map(l=>l.includes("\t")?l.split("\t"):l.includes(",")&&!/\d,\d/.test(l)?l.split(","):l.split(/\s{2,}/))}
+function loadPDFJS(){
+  if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+  return new Promise((res,rej)=>{const s=document.createElement("script");s.src="vendor/pdf/pdf.min.js";s.onload=()=>{const L=window.pdfjsLib||window["pdfjs-dist/build/pdf"];if(!L)return rej(new Error("PDF 기능을 불러오지 못했습니다"));L.GlobalWorkerOptions.workerSrc="vendor/pdf/pdf.worker.min.js";window.pdfjsLib=L;res(L)};s.onerror=()=>rej(new Error("PDF 기능을 불러오지 못했습니다. 인터넷에 연결한 뒤 다시 해 주세요"));document.head.appendChild(s)});
+}
+async function acReadPDF(f,prog){
+  const L=await loadPDFJS();const doc=await L.getDocument({data:new Uint8Array(await f.arrayBuffer()),cMapUrl:"vendor/pdf/cmaps/",cMapPacked:true,isEvalSupported:false}).promise;
+  const rows=[];
+  for(let pg=1;pg<=Math.min(doc.numPages,30);pg++){
+    const page=await doc.getPage(pg);const tc=await page.getTextContent();if(prog)prog(Math.round(pg/doc.numPages*100));
+    const its=tc.items.filter(x=>x.str).map(x=>({s:x.str,x:x.transform[4],y:x.transform[5],w:x.width||0,h:Math.abs(x.transform[3])||10}));
+    its.sort((a,b)=>b.y-a.y||a.x-b.x);
+    const lines=[];its.forEach(it=>{const l=lines.find(L=>Math.abs(L.y-it.y)<=Math.max(2,it.h*.45));if(l)l.a.push(it);else lines.push({y:it.y,a:[it]})});
+    lines.sort((a,b)=>b.y-a.y).forEach(l=>{l.a.sort((p,q)=>p.x-q.x);const cells=[];let cur=null;
+      l.a.forEach(it=>{if(cur&&it.x-(cur.x1)<=it.h*1.2){cur.s+=(it.x-cur.x1>it.h*.2&&!/\s$/.test(cur.s)&&!/^\s/.test(it.s)?" ":"")+it.s;cur.x1=Math.max(cur.x1,it.x+it.w)}else if(it.s.trim()){cur={s:it.s,x1:it.x+it.w};cells.push(cur)}});
+      const cs=cells.map(c=>c.s.replace(/\s+/g," ").trim()).filter(Boolean);if(cs.length)rows.push(cs)});
+  }
+  if(!rows.length)throw new Error("PDF에서 글자를 찾지 못했습니다. 스캔한 PDF라면 화면을 캡처해 사진으로 올려 주세요");
+  return rows;
+}
+async function acReadImage(f,prog){
+  const T=await ttLoadOCR();
+  const w=await T.createWorker("kor",1,{workerPath:"vendor/ocr/worker.min.js",corePath:"vendor/ocr/",langPath:"vendor/ocr",gzip:true,workerBlobURL:false,logger:m=>{if(prog&&m.status==="recognizing text")prog(Math.round(m.progress*100))}});
+  try{await w.setParameters({tessedit_pageseg_mode:"4",preserve_interword_spaces:"1"});
+    const bmp=await createImageBitmap(f);const sc=bmp.width<1400?Math.min(3,1400/bmp.width):1;const cv=document.createElement("canvas");cv.width=Math.round(bmp.width*sc);cv.height=Math.round(bmp.height*sc);cv.getContext("2d").drawImage(bmp,0,0,cv.width,cv.height);
+    const r=await w.recognize(cv);return acTextRows(String(r.data.text||"").replace(/\s*[|｜ㅣ]\s*/g,"   "))}
+  finally{w.terminate()}
+}
+/* 올리기 창 */
+function acOpen(){
+  const p=period();
+  $("sheetBox").innerHTML=`<h2>학사일정 파일 올리기</h2>
+    <p class="note">학교 학사일정을 <b>엑셀·CSV·PDF·사진(캡처)</b>으로 올리면 날짜와 행사를 읽어 옵니다. 읽은 내용을 확인한 뒤 시간표의 수업 변동(수업 없음·단축수업)과 일정으로 넣습니다.</p>
+    <div class="row2"><label class="btn pri filebtn" for="acIn"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>파일 고르기<input type="file" id="acIn" accept=".xlsx,.xls,.xlsm,.ods,.csv,.txt,.pdf,application/pdf,image/*,.hwp,.hwpx"></label></div>
+    <label class="lb" for="acTxt">또는 학사일정 글을 붙여 넣기 <small>(한글 파일의 표를 복사해 붙여 넣어도 됩니다)</small><textarea class="fld" id="acTxt" rows="5" placeholder="10.28.(수) ~ 10.30.(금) 2학기 2차 지필평가&#10;11월 13일 개교기념일&#10;12.24 단축수업"></textarea></label>
+    <label class="lb" for="acBase">학년도 <small>(연도가 없는 날짜는 3~12월은 이 해, 1~2월은 다음 해로 봅니다)</small><select class="fld" id="acBase">${[p.year-1,p.year,p.year+1].map(y=>`<option value="${y}"${y===p.year?" selected":""}>${y}학년도</option>`).join("")}</select></label>
+    <p class="wizmsg" id="acMsg"></p><div class="ocrprog" id="acProg" hidden><div class="pbar"><i id="acBar" style="width:3%"></i></div></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn" type="button" id="acRead">붙여 넣은 글 읽기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  const go=async(get,name)=>{const base=+$("acBase").value;$("acMsg").textContent=name+" 읽는 중…";$("acProg").hidden=false;
+    try{const rows=await get(n=>{if($("acBar"))$("acBar").style.width=Math.max(3,n)+"%"});const items=acParse(rows,base);
+      if(!items.length){$("acProg").hidden=true;$("acMsg").innerHTML=`<span class="skip">날짜와 행사를 찾지 못했습니다. ‘10.28 중간고사’처럼 한 줄에 날짜와 행사가 함께 있는 형식이면 잘 읽습니다. 표를 복사해 위 칸에 붙여 넣어 보세요.</span>`;return}
+      AC.items=items.map(x=>{const k=acKind(x.title);return{...x,kind:k!=="event"&&x.from===x.to&&acWeekend(x.from)?"skip":k}});AC.src=name;AC.base=base;acReview()}
+    catch(e){$("acProg").hidden=true;$("acMsg").innerHTML=`<span class="skip">${esc(e&&e.message||"읽지 못했습니다")}</span>`}};
+  $("acIn").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(f)go(pr=>acRead(f,pr),f.name)};
+  $("acRead").onclick=()=>{const t=$("acTxt").value;if(!t.trim())return toast("학사일정 글을 붙여 넣어 주세요");go(async()=>acTextRows(t),"붙여 넣은 글")};
+}
+const AC_KIND=[["cancel","수업 없음"],["short","단축수업"],["event","일정만"],["skip","넣지 않음"]];
+function acReview(){
+  const td=today();let past=false;
+  const t0=perTT()||TT();const short0=Math.max(20,((t0&&t0.classMin)||45)-5);
+  const paint=()=>{
+    const vis=AC.items.map((x,i)=>({x,i})).filter(o=>past||o.x.to>=td);
+    const cnt=k=>vis.filter(o=>o.x.kind===k).length;
+    $("acList").innerHTML=vis.length?vis.map(({x,i})=>`<div class="acrow k-${x.kind}"><div class="acd"><b>${esc(fmtDate(x.from))}<small>(${dow(x.from)})</small></b>${x.to!==x.from?`<small>~ ${esc(fmtDate(x.to))}(${dow(x.to)})</small>`:""}</div>
+      <input class="fld" data-t="${i}" value="${esc(x.title)}" aria-label="행사 이름"><select class="fld" data-k="${i}" aria-label="넣는 방법">${AC_KIND.map(([k,l])=>`<option value="${k}"${x.kind===k?" selected":""}>${l}</option>`).join("")}</select></div>`).join(""):`<p class="note">${AC.items.length?"앞으로의 일정이 없습니다. ‘지난 날짜도 보기’를 켜 보세요.":"읽은 일정이 없습니다."}</p>`;
+    $("acList").querySelectorAll("[data-t]").forEach(el=>el.oninput=()=>{AC.items[+el.dataset.t].title=el.value});
+    $("acList").querySelectorAll("[data-k]").forEach(el=>el.onchange=()=>{AC.items[+el.dataset.k].kind=el.value;paint()});
+    $("acSum").textContent=`수업 없음 ${cnt("cancel")} · 단축수업 ${cnt("short")} · 일정만 ${cnt("event")}${cnt("skip")?` · 넣지 않음 ${cnt("skip")}`:""}`;
+    const n=vis.filter(o=>o.x.kind!=="skip").length;$("acOk").textContent=n?`${n}개 넣기`:"넣을 것 없음";$("acOk").classList.toggle("off",!n);
+  };
+  const np=AC.items.filter(x=>x.to<td).length;
+  $("sheetBox").innerHTML=`<h2>읽은 학사일정 확인 <span class="sub">${esc(AC.src)} · ${AC.items.length}개</span></h2>
+    <p class="note">행사 이름을 보고 넣는 방법을 골랐습니다. 틀린 것은 고쳐 주세요. <b>수업 없음</b>(시험·휴업·방학·행사)은 그날 시간표 수업이 휴강으로, <b>단축수업</b>은 그날 수업 시간이 줄어든 시간표로, <b>일정만</b>은 ‘오늘’·일정 목록에만 들어갑니다.</p>
+    ${np?`<label class="chk" for="acPast"><input type="checkbox" id="acPast"> 지난 날짜도 보기 (${np}개)</label>`:""}
+    <div class="acshort"><label class="lb" for="acMin">단축수업 수업 시간 (분)<input class="fld" id="acMin" type="number" inputmode="numeric" min="10" max="90" value="${short0}"></label><p class="note">시작 시각·쉬는 시간은 시간표 설정을 따릅니다.</p></div>
+    <div class="aclist" id="acList"></div>
+    <p class="ttsum" id="acSum"></p>
+    <div class="row2"><button class="btn" type="button" id="acBack">다시 올리기</button><button class="btn pri" type="button" id="acOk">넣기</button></div>
+    <p class="note">같은 날 같은 이름의 일정은 다시 넣어도 겹치지 않고 새로 고칩니다. 넣기 전 상태는 설정 → 백업의 ‘불러오기 전으로 되돌리기’로 되돌릴 수 있습니다.</p>`;
+  $("sheet").hidden=false;$("sheetBox").scrollTop=0;
+  if($("acPast"))$("acPast").onchange=e=>{past=e.target.checked;paint()};
+  $("acBack").onclick=acOpen;
+  $("acOk").onclick=()=>{const list=AC.items.filter(x=>(past||x.to>=td)&&x.kind!=="skip"&&acClean(x.title));if(!list.length)return toast("넣을 일정을 골라 주세요");
+    const r=acApply(list,Math.max(10,Math.min(90,+$("acMin").value||short0)));$("sheet").hidden=true;
+    renderAll();if(view==="tt")renderTT();
+    toast(`학사일정을 넣었습니다: ${[r.c?`수업 없음 ${r.c}`:"",r.s?`단축수업 ${r.s}일`:"",r.e?`일정 ${r.e}`:"",r.made?`시간표 ${r.made}개 새로 만듦`:"",r.no?`시간표가 없는 지난 학기 ${r.no}개 뺌`:""].filter(Boolean).join(" · ")}`)};
+  paint();
+}
+function acApply(list,min){
+  snapshot();const res={c:0,s:0,e:0,made:0,no:0};const td=today(),tpl=perTT()||TT();
+  const ttFor=date=>{const P=acTermOf(date);let t=S.tt.list.find(x=>x.year===P.year&&x.term===P.term);
+    if(!t){const cur=period();const future=P.year>cur.year||(P.year===cur.year&&(P.term===cur.term||P.term==="2학기"&&cur.term==="1학기"));if(!future&&date<td)return null;
+      t=newTT();t.year=P.year;t.term=P.term;if(tpl)Object.assign(t,{start:tpl.start,classMin:tpl.classMin,breakMin:tpl.breakMin,lunchMin:tpl.lunchMin,adj:JSON.parse(JSON.stringify(tpl.adj||{})),pre:JSON.parse(JSON.stringify(tpl.pre||[])).map(o=>({...o,id:uid(),clsId:""}))});
+      S.tt.list.push(t);if(!S.tt.active)S.tt.active=t.id;res.made++}
+    return t};
+  list.forEach(x=>{const title=acClean(x.title);
+    if(x.kind==="cancel"){const t=ttFor(x.from);if(!t){res.no++;return}const id="ac"+acHash(x.from+"|"+title);
+      const c={id,scope:"day",d:0,p:1,from:x.from,to:x.to,type:"cancel",subject:"",clsId:"",clsName:"",room:"",reason:title,created:Date.now()};
+      const i=t.chg.findIndex(z=>z.id===id);if(i>=0)t.chg[i]=c;else t.chg.push(c);res.c++}
+    else if(x.kind==="short"){for(let d=x.from;d<=x.to;d=addDays(d,1)){if(acWeekend(d))continue;const t=ttFor(d);if(!t){res.no++;continue}t.days[d]={start:t.start,classMin:min,breakMin:t.breakMin,lunchMin:t.lunchMin,note:title};res.s++}}
+    else if(x.kind==="event"){const id="ac"+acHash(x.from+"|"+title);const e={id,date:x.from,start:"08:30",end:"",cat:"교무 업무",title:title+(x.to!==x.from?` (~${fmtDate(x.to)})`:""),memo:"학사일정 파일에서 가져옴",clsId:"",alarm:-1,important:false,done:false};
+      const i=S.events.findIndex(z=>z.id===id);if(i>=0)S.events[i]={...S.events[i],...e,done:S.events[i].done};else S.events.push(e);res.e++}
+  });
+  S.tt.list.forEach(t=>{t.chg=normChg(t.chg)});
+  save();return res;
+}
+$("acUp").onclick=$("acUp2").onclick=acOpen;
 /* 5.16: 처음 설정 안내 (이름 → 학기 → 학급·명단 → 시간표) */
 const WIZ_KEY="att-app-setup";
 const WZ={step:0,rows:[],skipped:[]};
