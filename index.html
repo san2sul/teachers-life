@@ -483,6 +483,9 @@ html[data-lay="one"] .wrap{max-width:720px}
 .medbox2 h3{margin:0;font-size:1rem}
 .medimg{width:100%;max-height:60dvh;object-fit:contain;border-radius:10px;background:#000}
 .rectime{font-size:2.2rem;font-weight:700;text-align:center;margin:6px 0;font-variant-numeric:tabular-nums}
+.sto{display:flex;flex-direction:column;gap:6px}.stoh{display:flex;justify-content:space-between;gap:8px;font-size:.88rem;flex-wrap:wrap}.stoh span{color:var(--muted)}
+.sto.warn .pbar i{background:#c98a12}.sto.bad .pbar i{background:var(--absent)}
+#evDetail{display:flex;flex-direction:column;gap:14px}#evDetail[hidden]{display:none}
 .devinfo{font-size:.84rem;background:var(--bg);border-radius:10px;padding:8px 12px}
 .setcls{padding:12px 14px}.setcls .lb small{color:var(--muted);font-weight:400}
 #setClsWarn{background:#fff4d6;color:#7a5600;border-radius:10px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -979,7 +982,8 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
       <span>교직원</span><button class="btn" type="button" data-tpl="staff" data-f="xlsx">엑셀</button><button class="btn" type="button" data-tpl="staff" data-f="csv">CSV</button>
     </div>
   </details>
-  <details class="card"><summary>백업 · 초기화</summary>
+  <details class="card" id="d-bk"><summary>백업 · 저장 공간 <span class="sub" id="bkTag"></span></summary>
+    <div id="stoMeter"></div>
     <p class="note">백업에는 모든 학급의 명단, 연락처, 출석 기록, 교직원 연락처, 시간표, 수업 메모, 일정이 들어 있습니다.</p>
     <div class="row2"><button class="btn pri" id="backupFile" type="button">백업 파일 저장</button><button class="btn" id="backup" type="button">백업 코드 복사</button></div>
     <div class="row2"><label class="btn filebtn" for="restoreFile">백업 파일 불러오기<input type="file" id="restoreFile" accept=".json,.txt,application/json,text/plain"></label></div>
@@ -1026,8 +1030,9 @@ label.lb,.sesrow>*,.range>*,.daybar>*{min-width:0}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.12.1", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.13.0", APP_DATE="2026-10-19", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.13.0",date:"2026-10-19",items:["저장 공간 정리: 수행평가 원본 전표 파일, 동기화 기준본, 되돌리기 자료, 계정별 자료를 대용량 저장소로 옮겨 기본 저장 공간(약 5MB) 부족 문제 예방 (기존 자료는 앱을 열 때 자동으로 옮김)", "설정 → ‘백업 · 저장 공간’에 저장 공간 사용량 막대, 대용량 저장소 사용량, 자료 보호 상태, 마지막 백업 날짜 표시 · 70% 넘으면 경고, 85% 넘으면 앱을 열 때 안내", "자료 보호(영구 저장) 요청: 브라우저가 공간이 부족해도 앱 자료를 지우지 않도록 요청 · 아이폰은 홈 화면에 추가 안내", "구글 동기화 압축: 드라이브에 올리는 자료를 압축해 데이터 사용량과 시간을 크게 줄임", "백업 알림: 구글 연동을 쓰지 않고 7일 넘게 백업하지 않았으면 ‘지금 백업’ 안내 (하루 한 번)", "수행평가 상세 화면의 카드 사이 간격 고침"]},
   {v:"5.12.1",date:"2026-10-19",items:["새 버전 자동 확인: 앱을 열거나 다시 볼 때 서버에 새 버전이 있으면 ‘새 버전이 나왔습니다 · 지금 업데이트’ 안내 (누르면 저장된 앱 파일만 새로 받고, 입력한 자료는 그대로)", "설정 → 앱 정보에 ‘새 버전 확인 · 업데이트’ 버튼", "새 버전을 올렸는데 휴대폰에 예전 화면이 남던 문제 고침 (앱 화면 파일은 열 때마다 서버에 새 버전을 확인)"]},
   {v:"5.12.0",date:"2026-10-19",items:["관찰 기록에 사진 · 동영상 · 녹음 추가: 학생 기록 창에서 📷 사진 찍기·🎥 동영상 찍기(휴대폰 카메라 앱), 🎙 녹음(앱 안에서 바로), 🖼 앨범·파일에서 붙이기", "붙인 파일 보기·재생, 저장·보내기, 삭제 / 학생 줄에 📷·🎥·🎙 개수 표시 / 관찰 기록 엑셀에 개수 표시", "파일은 찍은 기기에만 저장 (구글 연동·백업으로 옮겨지지 않음, 목록만 연동), 사진은 긴 변 1920px로 줄여 저장 공간 절약", "잠긴 날짜에는 사진·녹음을 붙이거나 지울 수 없음, 이 날 기록을 삭제하면 붙인 파일도 함께 삭제"]},
   {v:"5.11.0",date:"2026-10-19",items:["시간표에 ‘1교시 이전 시간’ 추가: 아침활동·조례·아침 자습 등 필요한 시간을 이름·시작·길이로 넣고 고치거나 삭제 (시간표 맨 위 줄에 표시, 출석 체크할 학급 지정 가능)", "1교시 이전 시간 칸을 눌러 바로 출석 체크 시작·일정 추가, 출석 체크와 일정의 ‘시간표에서 고르기’에도 표시", "시간 연동: 시간표에서 고른 출석 체크·일정은 그 시간과 연결되어, 아침활동·조례 시간이나 1교시 시작·수업 시간을 바꾸면 오늘 이후의 연결된 출석 체크(잠기지 않은 것)와 일정 시간이 함께 바뀜", "관찰 기록 잠금·해제: 날짜별로 잠그면 그 날 기록이 바뀌지 않음 (보기·복사·엑셀은 그대로, 구글 연동으로 다른 기기에도 적용)", "구글 연동 시 학생 이메일과 관찰 기록 잠금도 두 기기의 변경을 바르게 합치도록 보완"]},
@@ -1128,7 +1133,36 @@ let D=S.list.find(c=>c.id===S.active).data;
 try{stampPeriods()}catch(e){}
 let selDate=today(), selId=null;
 let view="att";
-function save(){try{stampPeriods()}catch(e){}S.appVersion=APP_VERSION;try{localStorage.setItem(KEY2,JSON.stringify(S))}catch(e){toast("저장 공간이 부족해 저장하지 못했습니다")}gTouch()}
+/* ---------- 저장: 큰 파일(수행평가 원본 전표)은 대용량 저장소(IndexedDB)로, 나머지는 브라우저 저장소로 ---------- */
+var FILEOK={},FILES_READY=null,STO={warned:false};
+function stripJSON(obj){return JSON.stringify(obj,function(k,v){if(k==="b64"&&typeof v==="string"&&v.length>4096&&this&&this.fid&&FILEOK[this.fid]===v.length)return"";return v})}
+function stashFiles(){try{(S.evals||[]).forEach(ev=>{const f=ev&&ev.file;if(!f||typeof f.b64!=="string"||f.b64.length<=4096)return;if(!f.fid)f.fid=ev.id;const fid=f.fid,len=f.b64.length;if(FILEOK[fid]===len||FILEOK[fid]==="w")return;FILEOK[fid]="w";
+  mTx("readwrite",st=>st.put(f.b64,"f:"+fid)).then(()=>{FILEOK[fid]=len;clearTimeout(STO.t);STO.t=setTimeout(()=>saveLS(),300)}).catch(()=>{delete FILEOK[fid]})})}catch(e){}}
+function saveLS(){
+  const str=stripJSON(S);
+  try{localStorage.setItem(KEY2,str);return true}catch(e){
+    /* 공간이 모자라면 예전 방식으로 남아 있던 큰 항목을 대용량 저장소로 옮긴 뒤 다시 시도 */
+    try{["att-app-undo","att-app-gbase"].forEach(k=>localStorage.removeItem(k));Object.keys(localStorage).filter(k=>k.startsWith("att-app-prof:")).forEach(k=>localStorage.removeItem(k));localStorage.setItem(KEY2,str);return true}catch(e2){}
+    if(!STO.warned){STO.warned=true;setTimeout(()=>{STO.warned=false},60000);toast("저장 공간이 부족해 저장하지 못했습니다. 설정 → 백업 · 저장 공간에서 백업한 뒤 지난 평가를 정리해 주세요")}
+    return false}
+}
+function save(){try{stampPeriods()}catch(e){}S.appVersion=APP_VERSION;stashFiles();saveLS();gTouch()}
+/* 시작할 때: 대용량 저장소에 있는 원본 전표를 다시 붙입니다 */
+function hydrateFiles(){
+  const list=(S.evals||[]).filter(ev=>ev&&ev.file&&ev.file.fid&&!ev.file.b64);
+  if(!list.length)return Promise.resolve();
+  return Promise.all(list.map(ev=>mTx("readonly",st=>st.get("f:"+ev.file.fid)).then(v=>{if(typeof v==="string"&&v){ev.file.b64=v;FILEOK[ev.file.fid]=v.length}}).catch(()=>{}))).then(()=>{});
+}
+/* 작은 키-값 저장 (동기화 기준본, 되돌리기, 계정별 자료): 대용량 저장소, 안 되면 브라우저 저장소 */
+function kvSet(k,v){return mTx("readwrite",st=>st.put(v,"kv:"+k)).then(()=>{try{localStorage.removeItem(k)}catch(e){}}).catch(()=>{try{localStorage.setItem(k,v)}catch(e){}})}
+function kvGet(k){return mTx("readonly",st=>st.get("kv:"+k)).then(v=>v!=null?v:localStorage.getItem(k)).catch(()=>{try{return localStorage.getItem(k)}catch(e){return null}})}
+function kvDel(k){try{localStorage.removeItem(k)}catch(e){}return mTx("readwrite",st=>st.delete("kv:"+k)).catch(()=>{})}
+/* 예전 버전이 브라우저 저장소에 둔 큰 항목을 대용량 저장소로 옮깁니다 */
+function migrateLS(){
+  let keys=[];try{keys=Object.keys(localStorage).filter(k=>k==="att-app-gbase"||k==="att-app-undo"||k.startsWith("att-app-prof:"))}catch(e){}
+  return Promise.all(keys.map(k=>{const v=localStorage.getItem(k);if(v==null)return null;
+    if(k==="att-app-undo"){try{const u=JSON.parse(v);if(u&&u.at)localStorage.setItem("att-app-undo-at",u.at)}catch(e){}}
+    return mTx("readwrite",st=>st.put(v,"kv:"+k)).then(()=>localStorage.removeItem(k)).catch(()=>{})}))}
 /* ---------- 적용 기간 (학년도 · 학기) ---------- */
 function period(){if(!S.period||!S.period.year){const t=curTerm();S.period={year:t.year,term:t.term}}return S.period}
 function inPer(d,p){p=p||period();return (+d.year||p.year)===p.year&&(d.term||p.term)===p.term}
@@ -1830,7 +1864,7 @@ function editClass(id){
 function renderSet(){safe("사용 교사",renderMe);safe("구글 로그인",renderSync);
   safe("적용 기간",renderPeriod);safe("설정할 학급",renderSetCls);
   safe("학급 정보",()=>{if(document.activeElement!==$("clsIn"))$("clsIn").value=D.cls;if(document.activeElement!==$("msgIn"))$("msgIn").value=D.msg});
-  safe("학생 명단",renderStu);safe("수업 교사",renderTcEdit);safe("교직원",renderStaffEdit);safe("버전 정보",renderVer);safe("되돌리기",renderUndo);safe("앱 배포 · 공유",renderShare);if(typeof renderUI==="function")safe("화면 설정",renderUI);
+  safe("학생 명단",renderStu);safe("수업 교사",renderTcEdit);safe("교직원",renderStaffEdit);safe("버전 정보",renderVer);safe("되돌리기",renderUndo);safe("저장 공간",renderSto);safe("앱 배포 · 공유",renderShare);if(typeof renderUI==="function")safe("화면 설정",renderUI);
 }
 /* 설정할 학급: 기본은 출석 화면 학급, 다른 학급도 골라 고칠 수 있음 */
 function renderSetCls(){
@@ -2145,7 +2179,7 @@ function shareSheet(p,done){
     done&&done();
   };
 }
-$("backup").onclick=async()=>copy(await encode(backupObj()),`학급 ${S.list.length}개 백업 코드를 복사했습니다`);
+$("backup").onclick=async()=>{try{if(FILES_READY)await FILES_READY}catch(e){}if(await copy(await encode(backupObj()),`학급 ${S.list.length}개 백업 코드를 복사했습니다`))markBackup()};
 twoStep($("resetAtt"),"정말 지우기",()=>{D.sessions=[];selId=null;save();toast("출석 기록을 지웠습니다");renderAll()});
 twoStep($("resetAll"),"정말 모두 지우기",()=>{const c={id:uid(),data:fresh()};S={active:c.id,list:[c],staff:S.staff};D=c.data;selId=null;save();toast("모든 학급을 지웠습니다");renderAll()});
 twoStep($("clsDel"),"정말 삭제",()=>{
@@ -3388,7 +3422,7 @@ function readBackup(p){
     staff:(p.staff||[]).length,tt:p.tt&&Array.isArray(p.tt.list)?p.tt.list.length:0,notes:p.notes?Object.keys(p.notes).length:0,events:Array.isArray(p.events)?p.events.length:0};
   return{raw:p,classes,kind,from,conv,cnt,savedAt:p.savedAt||""};
 }
-function snapshot(){try{localStorage.setItem(UNDO_KEY,JSON.stringify({at:new Date().toISOString(),S}))}catch(e){}}
+function snapshot(){const at=new Date().toISOString();let str;try{str=JSON.stringify({at,S})}catch(e){return}try{localStorage.setItem("att-app-undo-at",at)}catch(e){}kvSet(UNDO_KEY,str)}
 function afterLoad(msg){initTT();initEv();if(!S.list.some(c=>c.id===S.active))S.active=S.list[0].id;D=S.list.find(c=>c.id===S.active).data;selId=null;save();renderAll();renderUndo();toast(msg)}
 function restoreReplace(b){
   snapshot();
@@ -3432,10 +3466,48 @@ function restoreSheet(b,done){
   $("rsMerge").onclick=()=>{$("sheet").hidden=true;restoreMerge(b);done&&done()};
   twoStep($("rsReplace"),"정말 바꾸기",()=>{$("sheet").hidden=true;restoreReplace(b);done&&done()});
 }
+/* ---------- 저장 공간 사용량 · 백업 날짜 ---------- */
+const LS_LIMIT=5*1024*1024,LAST_BK="att-app-lastbackup";
+function lsBytes(){let n=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);n+=(k.length+(localStorage.getItem(k)||"").length)*2}}catch(e){}return n}
+function lastBackup(){let t=0;try{t=+localStorage.getItem(LAST_BK)||0}catch(e){}return t}
+function markBackup(){try{localStorage.setItem(LAST_BK,String(Date.now()))}catch(e){}try{renderSto()}catch(e){}}
+function agoDays(t){if(!t)return"아직 없음";const d=Math.floor((Date.now()-t)/86400000);return d<1?"오늘":d+"일 전"}
+function isStandalone(){try{return !!(navigator.standalone||matchMedia("(display-mode: standalone)").matches)}catch(e){return false}}
+function renderSto(){
+  const box=$("stoMeter");if(!box)return;
+  const used=lsBytes(),pct=Math.min(100,Math.round(used/LS_LIMIT*100)),lb=lastBackup(),synced=G&&G.on&&G.syncedAt;
+  const lv=pct>=85?"bad":pct>=70?"warn":"ok";
+  box.innerHTML=`<div class="sto ${lv}"><div class="stoh"><b>기본 저장 공간</b><span>${fmtSize(used)} / 약 5MB · ${pct}%</span></div><span class="pbar big"><i style="width:${Math.max(2,pct)}%"></i></span>
+    ${lv!=="ok"?`<p class="warn">${pct>=85?"저장 공간이 거의 찼습니다.":"저장 공간을 많이 쓰고 있습니다."} 백업 파일을 저장한 뒤, 보관함의 지난 평가를 지우면 공간이 늘어납니다.</p>`:""}
+    <p class="note" id="stoBig">대용량 저장소(원본 전표·사진·녹음·되돌리기): 계산 중…</p>
+    <p class="note" id="stoPer"></p>
+    <p class="note">마지막 백업: <b>${esc(agoDays(lb))}</b>${synced?` · 구글 동기화: <b>${esc(fmtAgo(G.syncedAt))}</b>`:""}</p>
+    ${isIOS&&!isStandalone()?`<p class="warn">아이폰·아이패드에서는 사파리 <b>공유 → 홈 화면에 추가</b>로 설치해 쓰세요. 설치하지 않고 7일 넘게 열지 않으면 브라우저가 자료를 지울 수 있습니다.</p>`:""}</div>`;
+  $("bkTag").textContent=pct>=70?`저장 공간 ${pct}%`:(lb?`백업 ${agoDays(lb)}`:"");
+  try{if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(e=>{const el=$("stoBig");if(el&&e)el.innerHTML=`대용량 저장소(원본 전표·사진·녹음·되돌리기): <b>${fmtSize(e.usage||0)}</b> 사용${e.quota?` · 기기 여유 ${fmtSize(Math.max(0,e.quota-(e.usage||0)))}`:""}`}).catch(()=>{});else $("stoBig").hidden=true}catch(e){}
+  try{if(navigator.storage&&navigator.storage.persisted)navigator.storage.persisted().then(p=>{const el=$("stoPer");if(el)el.innerHTML=p?"자료 보호: <b>켜짐</b> (브라우저가 공간이 부족해도 이 앱 자료를 지우지 않음)":"자료 보호: 꺼짐 (홈 화면에 앱을 설치하면 켜질 수 있습니다)"}).catch(()=>{})}catch(e){}
+}
+/* 시작할 때: 큰 항목 옮기기, 원본 전표 다시 붙이기, 자료 보호 요청, 저장 공간·백업 안내 */
+function storageStartup(){
+  FILES_READY=migrateLS().then(hydrateFiles).catch(()=>{}).then(()=>{try{stashFiles();saveLS()}catch(e){}setTimeout(()=>{try{if(view==="set")renderSto()}catch(e){}},500)});
+  try{if(navigator.storage&&navigator.storage.persisted)navigator.storage.persisted().then(p=>{if(!p&&navigator.storage.persist)return navigator.storage.persist()}).catch(()=>{})}catch(e){}
+  setTimeout(()=>{try{
+    const pct=Math.round(lsBytes()/LS_LIMIT*100);
+    if(pct>=85)return storeBar(`저장 공간이 ${pct}% 찼습니다. 백업한 뒤 지난 평가를 정리해 주세요.`,"저장 공간 보기",()=>{show("set");const d=$("d-bk");if(d){d.open=true;d.scrollIntoView({block:"start"})}});
+    const lb=lastBackup(),synced=G&&G.on&&G.syncedAt&&Date.now()-G.syncedAt<7*86400000;
+    let shown="";try{shown=localStorage.getItem("att-app-bknag")||""}catch(e){}
+    const hasData=S.list.some(c=>c.data.roster.length);
+    if(hasData&&!synced&&(!lb||Date.now()-lb>7*86400000)&&shown!==today()){try{localStorage.setItem("att-app-bknag",today())}catch(e){}
+      storeBar(`마지막 백업: ${agoDays(lb)}. 자료를 잃지 않도록 백업 파일을 저장하거나 구글 연동을 켜 두세요.`,"지금 백업",saveBackupFile)}
+  }catch(e){}},4000);
+}
+function storeBar(msg,label,fn){const b=document.createElement("div");b.className="newbar";b.setAttribute("role","status");
+  b.innerHTML=`<span>${esc(msg)}</span><button class="go" type="button">${esc(label)}</button><button class="x" type="button" aria-label="닫기">×</button>`;
+  document.body.appendChild(b);b.querySelector(".go").onclick=()=>{b.remove();fn()};b.querySelector(".x").onclick=()=>b.remove();setTimeout(()=>{if(b.isConnected)b.remove()},20000)}
 function renderUndo(){
-  let u=null;try{u=JSON.parse(localStorage.getItem(UNDO_KEY)||"null")}catch(e){}
+  let at=null;try{at=localStorage.getItem("att-app-undo-at");if(!at){const u=JSON.parse(localStorage.getItem(UNDO_KEY)||"null");at=u&&u.at}}catch(e){}
   const btn=$("undoBtn");if(!btn)return;
-  btn.hidden=!(u&&u.S);
+  btn.hidden=!at;const u={at};
   if(u&&u.at){const d=new Date(u.at);btn.textContent=`불러오기 전으로 되돌리기 (${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())})`}
 }
 async function readAnyText(text){
@@ -3444,11 +3516,12 @@ async function readAnyText(text){
   return decode(text);
 }
 async function saveBackupFile(){
+  try{if(FILES_READY)await FILES_READY}catch(e){}
   const json=JSON.stringify(backupObj());
   const f=new File([json],`${APP_NAME.replace(/\s+/g,"")}_백업_${today().replace(/-/g,"")}.json`,{type:"application/json"});
-  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:APP_NAME+" 백업"});return}catch(e){if(e&&e.name==="AbortError")return}}
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:APP_NAME+" 백업"});markBackup();return}catch(e){if(e&&e.name==="AbortError")return}}
   const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
-  toast("백업 파일을 저장했습니다");
+  markBackup();toast("백업 파일을 저장했습니다");
 }
 $("backupFile").onclick=saveBackupFile;
 $("restoreFile").onchange=async e=>{
@@ -3459,11 +3532,11 @@ $("restoreFile").onchange=async e=>{
     restoreSheet(readBackup(p))}
   catch(err){toast(err&&err.message?err.message:"백업 파일을 읽지 못했습니다")}
 };
-$("undoBtn").onclick=()=>{
-  let u=null;try{u=JSON.parse(localStorage.getItem(UNDO_KEY)||"null")}catch(e){}
-  if(!u||!u.S)return toast("되돌릴 내용이 없습니다");
+$("undoBtn").onclick=async()=>{
+  let u=null;try{u=JSON.parse((await kvGet(UNDO_KEY))||"null")}catch(e){}
+  if(!u||!u.S){try{localStorage.removeItem("att-app-undo-at")}catch(e){}renderUndo();return toast("되돌릴 내용이 없습니다")}
   ask(`<h2>불러오기 전으로 되돌리기</h2><p class="note">${new Date(u.at).toLocaleString("ko-KR")} 불러오기 직전 상태로 돌아갑니다. 그 뒤에 입력한 내용은 없어집니다.</p>`,"되돌리기",()=>{
-    S=u.S;try{localStorage.removeItem(UNDO_KEY)}catch(e){}afterLoad("불러오기 전 상태로 되돌렸습니다")});
+    S=u.S;kvDel(UNDO_KEY);try{localStorage.removeItem("att-app-undo-at")}catch(e){}afterLoad("불러오기 전 상태로 되돌렸습니다")});
 };
 
 /* ---------- 할 일 목록 (일정 + 수업 메모의 과제·면담) ---------- */
@@ -3797,7 +3870,7 @@ function obsSheet(sid,date){
 }
 /* ---------- 관찰 기록 사진 · 동영상 · 녹음 (파일은 이 기기 IndexedDB에만, 기록에는 목록만) ---------- */
 const MEDIA_T={photo:{ic:"📷",l:"사진",ext:"jpg"},video:{ic:"🎥",l:"동영상",ext:"mp4"},audio:{ic:"🎙",l:"녹음",ext:"m4a"}};
-var MDBP=null;
+var MDBP=MDBP||null;
 function mdb(){if(MDBP)return MDBP;MDBP=new Promise((res,rej)=>{try{if(!window.indexedDB)return rej(new Error("이 브라우저는 사진·녹음 저장을 지원하지 않습니다"));const q=indexedDB.open("teachers-life-media",1);q.onupgradeneeded=()=>{try{q.result.createObjectStore("m")}catch(e){}};q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error||new Error("저장 공간을 열지 못했습니다"));q.onblocked=()=>rej(new Error("저장 공간이 다른 창에서 사용 중입니다. 다른 창을 닫고 다시 해 주세요"))}catch(e){rej(e)}});MDBP.catch(()=>{MDBP=null});return MDBP}
 function mTx(mode,fn){return mdb().then(db=>new Promise((res,rej)=>{const tx=db.transaction("m",mode),st=tx.objectStore("m");let out;const r=fn(st);if(r)r.onsuccess=()=>{out=r.result};tx.oncomplete=()=>res(out);tx.onerror=()=>rej(tx.error||new Error("저장하지 못했습니다"));tx.onabort=()=>rej(tx.error||new Error("저장 공간이 부족합니다"))}))}
 const mPut=(k,b)=>mTx("readwrite",st=>st.put(b,k));
@@ -4546,7 +4619,7 @@ function gLogin(after,opt){opt=opt||{};
       if(!google.accounts.oauth2.hasGrantedAllScopes(r,"https://www.googleapis.com/auth/drive.appdata")){GS.err="‘앱 데이터 저장’ 권한을 허용해야 동기화할 수 있습니다";renderSync();return toast(GS.err)}
       G.token=r.access_token;G.exp=Date.now()+(+r.expires_in||3600)*1000;GS.err="";
       try{const u=await (await fetch("https://www.googleapis.com/oauth2/v3/userinfo",{headers:{Authorization:"Bearer "+G.token}})).json();
-        if(G.email&&u.email&&G.email!==u.email)swapProfile(G.email,u.email);
+        if(G.email&&u.email&&G.email!==u.email)await swapProfile(G.email,u.email);
         G.email=u.email||"";G.name=u.name||"";G.pic=u.picture||"";
         if(!Array.isArray(G.accts))G.accts=[];const ex=G.accts.find(a=>a.email===G.email);if(ex)Object.assign(ex,{name:G.name,pic:G.pic});else if(G.email)G.accts.push({email:G.email,name:G.name,pic:G.pic})}catch(e){}
       if(G.auto==null)G.auto=true;G.on=true;gSave();renderSync();
@@ -4557,13 +4630,13 @@ function gLogin(after,opt){opt=opt||{};
 }
 /* 계정 전환: 계정마다 이 기기의 자료를 따로 보관합니다 */
 const PKEY=e=>"att-app-prof:"+e;
-function swapProfile(from,to){
-  try{localStorage.setItem(PKEY(from),JSON.stringify({S,base:localStorage.getItem(GBASE),meta:{fileId:G.fileId,ver:G.ver,hash:G.hash,syncedAt:G.syncedAt,dev:G.dev}}))}catch(e){toast("저장 공간이 부족해 이전 계정 자료를 보관하지 못했습니다")}
-  let pr=null;try{pr=JSON.parse(localStorage.getItem(PKEY(to))||"null")}catch(e){}
-  ["fileId","ver","hash","syncedAt","dev","gmail"].forEach(k=>delete G[k]);try{localStorage.removeItem(GBASE)}catch(e){}
+async function swapProfile(from,to){
+  try{await kvSet(PKEY(from),JSON.stringify({S,base:await kvGet(GBASE),meta:{fileId:G.fileId,ver:G.ver,hash:G.hash,syncedAt:G.syncedAt,dev:G.dev}}))}catch(e){toast("저장 공간이 부족해 이전 계정 자료를 보관하지 못했습니다")}
+  let pr=null;try{pr=JSON.parse((await kvGet(PKEY(to)))||"null")}catch(e){}
+  ["fileId","ver","hash","syncedAt","dev","gmail"].forEach(k=>delete G[k]);await kvDel(GBASE);
   GS.applying=true;
   try{
-    if(pr&&pr.S&&Array.isArray(pr.S.list)&&pr.S.list.length){S=pr.S;S.list=S.list.map(c=>({id:c.id,data:normalize(c.data)}));if(pr.base)try{localStorage.setItem(GBASE,pr.base)}catch(e){}Object.assign(G,pr.meta||{})}
+    if(pr&&pr.S&&Array.isArray(pr.S.list)&&pr.S.list.length){S=pr.S;S.list=S.list.map(c=>({id:c.id,data:normalize(c.data)}));if(pr.base)kvSet(GBASE,pr.base);Object.assign(G,pr.meta||{})}
     else{const c={id:uid(),data:fresh()};S={active:c.id,list:[c],staff:[],tt:{list:[],active:""},notes:{},events:[],evals:[]}}
     if(!S.list.some(c=>c.id===S.active))S.active=S.list[0].id;
     initTT();initEv();D=S.list.find(c=>c.id===S.active).data;selId=null;EVS.cur=null;save();renderAll();
@@ -4583,7 +4656,7 @@ async function gFind(){
   const l=await (await gApi(`${DRV}?spaces=appDataFolder&q=${encodeURIComponent(`name='${GFILE}' and trashed=false`)}&fields=files(id,version,modifiedTime)&orderBy=modifiedTime desc`)).json();
   return (l.files||[])[0]||null;
 }
-async function gDownload(id){return JSON.parse(await (await gApi(`${DRV}/${id}?alt=media`)).text())}
+async function gDownload(id){const t=(await (await gApi(`${DRV}/${id}?alt=media`)).text()).trim();return t.startsWith("{")?JSON.parse(t):decode(t)}
 async function gUpload(body,id){
   if(id)return (await gApi(`${UPL}/${id}?uploadType=media&fields=id,version,modifiedTime`,{method:"PATCH",headers:{"Content-Type":"application/json"},body})).json();
   const bd="tl"+Date.now();
@@ -4627,11 +4700,15 @@ function applyData(d){
     initTT();initEv();D=S.list.find(c=>c.id===S.active).data;selId=null;save();renderAll();
   }finally{GS.applying=false}
 }
-function gSetBase(str){try{localStorage.setItem(GBASE,str)}catch(e){}G.hash=gHash(str);G.syncedAt=Date.now();G.dev=gDevice()}
-async function gPush(str,id){const body=JSON.stringify({kind:"teachers-life-sync",v:1,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),device:gDevice(),data:JSON.parse(str)});const f=await gUpload(body,id);G.fileId=f.id;G.ver=String(f.version);gSetBase(str);gSave();return f}
+function gSetBase(str){kvSet(GBASE,str);G.hash=gHash(str);G.syncedAt=Date.now();G.dev=gDevice()}
+async function gPush(str,id){const obj={kind:"teachers-life-sync",v:1,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),device:gDevice(),data:JSON.parse(str)};
+  /* 압축해서 올립니다 (데이터 사용량 줄이기). 압축을 못 하는 브라우저는 그대로 */
+  let body;try{body=await encode(obj);if(!body.startsWith("z1."))body=JSON.stringify(obj)}catch(e){body=JSON.stringify(obj)}
+  const f=await gUpload(body,id);G.fileId=f.id;G.ver=String(f.version);gSetBase(str);gSave();return f}
 /* 동기화: 바뀐 쪽을 확인해 올리거나 받습니다 */
 async function gSync(why){
   if(!G.on||!gClientId())return;
+  try{if(FILES_READY)await FILES_READY}catch(e){}
   if(!gTokenOk()){GS.msg="";renderSyncPill();return}
   if(GS.busy){GS.pend=true;return}
   if(!$("sheet").hidden&&why!=="login"&&why!=="now"){clearTimeout(GS.timer);GS.timer=setTimeout(()=>gSync("later"),5000);return}
@@ -4645,7 +4722,7 @@ async function gSync(why){
     }else{
       const remote=await gDownload(f.id);const rd=remote&&remote.data;
       if(!rd||!Array.isArray(rd.classes))throw new Error("드라이브의 동기화 파일을 읽지 못했습니다");
-      let base=null;try{base=JSON.parse(localStorage.getItem(GBASE)||"null")}catch(e){}
+      let base=null;try{base=JSON.parse((await kvGet(GBASE))||"null")}catch(e){}
       if(!G.ver&&!base&&!pristine(local)){GS.busy=false;renderSyncPill();return firstLinkSheet(local,rd,f,remote)}
       if(!G.ver&&(!base||pristine(local))||lh===G.hash){applyData(rd);G.fileId=f.id;G.ver=String(f.version);gSetBase(JSON.stringify(syncData()));gSave();GS.msg=`${remote.device||"다른 기기"}에서 바꾼 내용을 받았습니다`;toast(GS.msg)}
       else{const m=mergeData(base,local,rd);snapshot();applyData(m);await gPush(JSON.stringify(syncData()),f.id);GS.msg="두 기기의 변경을 합쳤습니다";toast(GS.msg+" (되돌리기 가능)")}
@@ -4734,8 +4811,8 @@ function renderSync(){
   $("gsAuto").onchange=e=>{G.auto=e.target.checked;gSave();if(G.auto)gSync("now")};
   $("gsReset").onclick=gResetLogin;
   $("gsOut").onclick=()=>{try{if(G.token&&window.google)google.accounts.oauth2.revoke(G.token,()=>{})}catch(e){}
-    G={clientId:G.clientId,auto:G.auto,accts:G.accts};try{localStorage.removeItem(GBASE)}catch(e){}gSave();GS.msg="";GS.err="";renderSync();toast("로그아웃했습니다. 이 기기 자료는 그대로입니다")};
-  twoStep($("gsWipe"),"정말 지우기",async()=>{try{const f=await gFind();if(f)await gApi(`${DRV}/${f.id}`,{method:"DELETE"});delete G.fileId;delete G.ver;delete G.hash;try{localStorage.removeItem(GBASE)}catch(e){}G.auto=false;gSave();renderSync();toast("드라이브의 동기화 자료를 지웠습니다. 자동 동기화를 껐습니다")}catch(e){toast(e.auth?"먼저 ‘지금 동기화’로 다시 로그인하세요":e.message)}});
+    G={clientId:G.clientId,auto:G.auto,accts:G.accts};kvDel(GBASE);gSave();GS.msg="";GS.err="";renderSync();toast("로그아웃했습니다. 이 기기 자료는 그대로입니다")};
+  twoStep($("gsWipe"),"정말 지우기",async()=>{try{const f=await gFind();if(f)await gApi(`${DRV}/${f.id}`,{method:"DELETE"});delete G.fileId;delete G.ver;delete G.hash;kvDel(GBASE);G.auto=false;gSave();renderSync();toast("드라이브의 동기화 자료를 지웠습니다. 자동 동기화를 껐습니다")}catch(e){toast(e.auth?"먼저 ‘지금 동기화’로 다시 로그인하세요":e.message)}});
 }
 /* 꼬인 로그인 상태만 지웁니다 (자료는 그대로) */
 function gResetLogin(){try{if(G.token&&gisReady())google.accounts.oauth2.revoke(G.token,()=>{})}catch(e){}
@@ -4800,6 +4877,7 @@ function handleHash(){
   }).catch(e=>toast(e.message||"링크를 읽지 못했습니다"));
 }
 /* ---------- 시작: 첫 화면 ---------- */
+try{storageStartup()}catch(e){reportErr("저장 공간 준비",e)}
 $("updChk").onclick=()=>{toast("새 버전을 확인하는 중입니다…");checkUpdate(true)};
 setTimeout(()=>{try{checkUpdate(false)}catch(e){}},2500);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")try{checkUpdate(false)}catch(e){}});
