@@ -792,6 +792,9 @@ table.ttg.widecol th.tcol{width:3.9rem}
 #evSlots .chip,.sesslots .chip,#dmSlots .chip{white-space:normal;word-break:keep-all;height:auto;min-height:38px;line-height:1.25;padding-block:5px}
 /* 5.24 메일 본문 형식 */
 .mailfmt{display:flex;flex-direction:column;gap:6px}
+/* 5.24.1 휴강 · 결강 */
+.offbar{font-size:.84rem}.offbar.on{background:var(--absent-soft);color:var(--absent)}
+.tab.offtab{opacity:.6}.tab.offtab small:last-child{color:var(--absent)}
 </style>
 </head>
 <body>
@@ -893,6 +896,7 @@ table.ttg.widecol th.tcol{width:3.9rem}
     <div class="presets sesslots" id="sesSlots" hidden></div>
     <div class="bar"><div class="stats"><span class="p" id="sp"></span><span class="a" id="sa"></span></div></div>
     <div class="lockbar" id="lockBar"><span id="lockTxt"></span><button class="btn sm" id="lockBtn" type="button"></button></div>
+    <div class="lockbar offbar" id="offBar"></div>
     <div class="row2"><button class="btn" id="allIn" type="button">전원 출석</button><button class="btn bad" id="allOut" type="button">전원 결석</button></div>
     <div class="row2"><button class="btn bad" id="sDel" type="button">이 출석 체크 삭제</button></div>
   </div>
@@ -1219,8 +1223,9 @@ table.ttg.widecol th.tcol{width:3.9rem}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.24.0", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.24.1", APP_DATE="2026-10-21", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.24.1",date:"2026-10-21",items:["휴강 · 결강 오류 고침: 시간표에서 휴강·결강(수업 변동)이나 그날 전체 ‘수업 없음’(재량휴업·시험 등)으로 바꾼 수업의 출석 체크가 출석 통계에 결석으로 들어가던 문제. 이제 출석 통계·월별 출결표·학생 한눈에 보기·결석 연락·‘오늘’에서 빠짐", "출석 체크 화면에서 직접 ‘휴강 · 결강 처리’ (휴강 / 결강 / 학교 행사 / 시험): 체크한 내용은 남기고 통계에서만 뺌, ‘휴강 처리 풀기’로 되돌림. 휴강 처리된 체크는 탭에 ‘결강’ 등으로 표시", "출석 통계 첫 칸에 뺀 휴강 횟수 표시 (예: 휴강 2회 뺌)"]},
   {v:"5.24.0",date:"2026-10-20",items:["학생 서명 요청 메일 새 디자인: 반·종류·제목, 점수 표(항목 | 점수), 큰 ‘✍️ 점수 확인하고 서명하기’ 버튼, 서명 마감, 안내 문구를 카드 모양으로. 버튼을 누르면 서명 화면이 열리고 긴 링크는 보이지 않음 (Gmail로 보내기)", "메일 앱으로 보낼 때 ‘메일 앱 본문’ 고르기: ‘표 · 서명 버튼 (붙여 넣기)’를 고르면 같은 디자인의 본문을 복사해 두고 메일 앱을 열어, 본문을 길게 눌러 붙여 넣으면 표와 버튼이 들어감. ‘글자만’은 점수를 줄로 정리하고 링크를 맨 아래 한 곳에", "서명 링크를 짧게: 종류별 기본 문구와 앱 주소를 링크에서 빼 길이를 약 45% 줄임 (문자로 보낼 때도 짧아짐). 예전에 보낸 링크도 그대로 열림"]},
   {v:"5.23.2",date:"2026-10-20",items:["시간표 왼쪽 칸의 ‘1교시 이전’ 같은 시간 이름이 잘리지 않게: 낱말 단위로 줄바꿈하고, 그래도 넘치면 칸 안에서 글자 단위로 줄바꿈. 1교시 이전 시간이 있거나 이름이 길면 왼쪽 칸을 조금 넓힘", "‘오늘’ 화면의 시간 표시(1교시 이전 · 점심시간 등)와 일정 추가의 ‘시간표에서 고르기’ 버튼도 글자가 잘리지 않고 줄바꿈"]},
   {v:"5.23.1",date:"2026-10-20",items:["출석 체크 오류 고침: 구글 동기화를 쓰는 중 학생을 출석으로 눌러도 잠시 뒤 결석으로 되돌아가던 문제. 동기화가 드라이브 자료를 내려받는 동안 이 기기에서 바꾼 출석이 덮이던 것을, 받은 뒤 지금 상태와 다시 합치도록 바꿈", "같은 출석 체크를 휴대폰과 컴퓨터에서 동시에 고쳐도 학생별로 합침 (예전에는 한쪽 기기의 체크가 통째로 덮여 다른 학생의 출석이 결석으로 바뀔 수 있었음)"]},
@@ -1317,7 +1322,7 @@ function normalize(d){
   f.teachers=(d.teachers||[]).filter(t=>t&&t.name).map(t=>({id:String(t.id||uid()),name:String(t.name),role:String(t.role||""),phone:String(t.phone||"")}));
   f.msg=typeof d.msg==="string"&&d.msg&&d.msg!==OLD_MSG?d.msg:DEFAULT_MSG;
   if(Array.isArray(d.sessions)){
-    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
+    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
   }else if(Array.isArray(d.rounds)){
     /* 예전 1~6차 기록을 날짜별 출석 체크로 옮깁니다 */
     const used=d.rounds.filter(r=>r&&(r.date||Object.values(r.p||{}).some(Boolean)));
@@ -1385,10 +1390,23 @@ const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const digits=v=>String(v||"").replace(/[^0-9+]/g,"");
 const sortRoster=()=>D.roster.sort((a,b)=>a[0].localeCompare(b[0],"ko",{numeric:true}));
 const byTime=(a,b)=>(a.date+(a.time||"99:99")).localeCompare(b.date+(b.time||"99:99"));
+/* 휴강 · 결강: 시간표에서 그 수업(또는 그날 전체)을 수업 없음으로 바꿨거나, 출석 체크에서 직접 휴강 처리한 경우 → 출석 통계·결석 연락에서 뺍니다 */
+function sesOff(s){
+  if(!s)return"";if(s.off)return s.offWhy||"휴강";
+  try{
+    const m=String(s.src||"").match(/^([^:]+):(x:)?(.+?)(?::(\d))?$/);
+    if(m){const t=S.tt.list.find(x=>x.id===m[1]);if(t){
+      if(m[2]){const dc=dayChg(t,s.date);if(dc&&dc.type==="cancel")return dc.reason||"수업 없음"}
+      else{const d=+m[3],pp=+m[4];if(m[4]&&d>=0&&d<=4){const cg=chgAt(t,d,pp,s.date);if(cg&&cg.type==="cancel")return cg.reason||(cg.scope==="day"?"수업 없음":"휴강")}}}}
+    else if(!Object.keys(s.p||{}).length){const P=acTermOf(s.date),t=S.tt.list.find(x=>x.year===P.year&&x.term===P.term);const dc=t&&dayChg(t,s.date);if(dc&&dc.type==="cancel")return dc.reason||"수업 없음"}
+  }catch(e){}
+  return"";
+}
+const sesOn=s=>!sesOff(s);
 function daySes(d,date){return (d||D).sessions.filter(s=>s.date===(date||selDate)).sort(byTime)}
 function ensureSel(){const l=daySes();if(!l.some(s=>s.id===selId))selId=l.length?l[l.length-1].id:null}
 function R(){ensureSel();return D.sessions.find(s=>s.id===selId)||null}
-function absent(){const s=R();return s?D.roster.filter(([id])=>!s.p[id]):[]}
+function absent(){const s=R();return s&&sesOn(s)?D.roster.filter(([id])=>!s.p[id]):[]}
 /* 결석생 중 아직 연락하지 않은 학생 (출석 기록은 그대로 두고 연락 완료만 따로 표시) */
 function isDone(s,id){return !!(s&&s.done&&s.done[id])}
 function pending(){const s=R();return absent().filter(([id])=>!isDone(s,id))}
@@ -1438,7 +1456,8 @@ function renderTabs(){
   list.forEach(s=>{
     const n=D.roster.filter(([id])=>s.p[id]).length;
     const b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",s.id===selId);
-    b.innerHTML=`<b>${s.lock?"🔒 ":""}${esc(s.time||"시간 없음")}</b><small>${esc(s.label||"출석 체크")}</small><small>${n}/${D.roster.length}</small>`;
+    const off=sesOff(s);if(off)b.classList.add("offtab");
+    b.innerHTML=`<b>${s.lock?"🔒 ":""}${esc(s.time||"시간 없음")}</b><small>${esc(s.label||"출석 체크")}</small><small>${off?esc(off):`${n}/${D.roster.length}`}</small>`;
     b.onclick=()=>{selId=s.id;renderAll()};
     t.appendChild(b);
   });
@@ -1472,12 +1491,16 @@ function renderAtt(){
   if(document.activeElement!==$("sTime"))$("sTime").value=s.time;
   if(document.activeElement!==$("sLabel"))$("sLabel").value=s.label;
   try{renderSesSlots(s)}catch(e){}
-  const ab=absent().length;
-  $("sp").textContent="출석 "+(D.roster.length-ab);$("sa").textContent="결석 "+ab;
+  const ab=absent().length,off=sesOff(s);
+  $("sp").textContent="출석 "+(D.roster.length-(off?D.roster.length-D.roster.filter(([id])=>s.p[id]).length:ab));$("sa").textContent=off?"휴강":"결석 "+ab;
+  $("offBar").innerHTML=off?`<span>⛔ <b>${esc(off)}</b> · 이 출석 체크는 출석 통계와 결석 연락에서 빠집니다${s.off?"":" (시간표의 수업 변동)"}</span>${s.off?`<button class="btn sm" type="button" id="offUndo">휴강 처리 풀기</button>`:""}`:`<span>수업을 하지 않았으면 휴강 · 결강으로 처리해 통계에서 빼세요</span><button class="btn sm" type="button" id="offSet">휴강 · 결강 처리</button>`;
+  $("offBar").classList.toggle("on",!!off);
+  if($("offSet"))$("offSet").onclick=()=>{if(s.lock)return lockNudge();choose(`<h2>휴강 · 결강 처리</h2><p class="note">${esc(sesName(s))} 출석 체크를 출석 통계와 결석 연락에서 뺍니다. 체크한 내용은 지워지지 않습니다.</p>`,[["휴강","휴강"],["결강","결강 (교사 부재)"],["행사","학교 행사"],["시험","시험"]].map(([w,l],i)=>({label:l,pri:i===0,go:()=>{s.off=true;s.offWhy=w;save();renderAll();toast(`${w} 처리했습니다. 출석 통계에서 빠집니다`)}})))};
+  if($("offUndo"))$("offUndo").onclick=()=>{if(s.lock)return lockNudge();delete s.off;delete s.offWhy;save();renderAll();toast("휴강 처리를 풀었습니다")};
   const MAXD=10;
   D.roster.forEach(([id,name],i)=>{
     const on=!!s.p[id];
-    let dots="",n=0;list.forEach((x,k)=>{const p=!!x.p[id];if(p)n++;if(k<MAXD)dots+=`<i class="dot${p?" p":""}${x.id===s.id?" c":""}"></i>`});
+    let dots="",n=0;const lon=list.filter(sesOn);lon.forEach((x,k)=>{const p=!!x.p[id];if(p)n++;if(k<MAXD)dots+=`<i class="dot${p?" p":""}${x.id===s.id?" c":""}"></i>`});
     if(list.length>MAXD)dots+=`<span class="n">…</span>`;
     const row=document.createElement("div");row.className="st"+(on?" on":"");row.setAttribute("role","switch");row.setAttribute("aria-checked",on);row.tabIndex=0;
     row.setAttribute("aria-label",`${name} ${sesName(s)} ${on?"출석":"결석"}`);
@@ -2577,7 +2600,7 @@ function scopeClasses(){return ST.scope==="all"?perList():[S.list.find(c=>c.id==
 function computeStats(){
   const out={classes:[],students:[],days:new Map(),checks:0,slots:0,pres:0};
   scopeClasses().forEach(c=>{
-    const d=c.data,ses=d.sessions.filter(inRange).sort(byTime);
+    const d=c.data,ses=d.sessions.filter(x=>inRange(x)&&sesOn(x)).sort(byTime);out.off=(out.off||0)+d.sessions.filter(x=>inRange(x)&&!sesOn(x)).length;
     const cs={id:c.id,name:clsName(d),sessions:ses,n:ses.length,students:d.roster.length,slots:ses.length*d.roster.length,pres:0};
     d.roster.forEach(([id,name])=>{
       const st={cls:cs.name,clsId:c.id,id,name,n:ses.length,pres:0,abs:0,absList:[]};
@@ -2611,7 +2634,7 @@ function renderStat(){
   const multi=ST.scope==="all";
   $("stSub").textContent=`${multi?"모든 학급":clsName(scopeClasses()[0].data)} · ${rangeText()}`;
   const abs=R0.slots-R0.pres;
-  $("kpis").innerHTML=`<div class="kpi"><span>출석 체크</span><b>${R0.checks}회</b><span>${R0.dayList.length}일</span></div>
+  $("kpis").innerHTML=`<div class="kpi"><span>출석 체크</span><b>${R0.checks}회</b><span>${R0.dayList.length}일${R0.off?` · 휴강 ${R0.off}회 뺌`:""}</span></div>
     <div class="kpi"><span>출석률</span><b class="p">${R0.slots?pct(R0.pres,R0.slots)+"%":"–"}</b><span>출석 ${R0.pres}</span></div>
     <div class="kpi"><span>결석</span><b class="a">${abs}</b><span>연인원</span></div>`;
   const has=R0.checks>0;
@@ -5058,7 +5081,7 @@ function mergeSes(b,l,r){b=b||{};if(J(l)===J(r))return l;
   ["p","done"].forEach(k=>{const B=b[k]||{},L=l[k]||{},R=r[k]||{},m={};
     new Set([...Object.keys(B),...Object.keys(L),...Object.keys(R)]).forEach(id=>{const v=J(L[id])===J(B[id])?R[id]:L[id];if(v!==undefined&&v!==null&&v!==false)m[id]=v});
     if(k==="p"||Object.keys(m).length)out[k]=m;else delete out[k]});
-  ["date","time","label","lock","lockAt","slot","manual","src"].forEach(f=>{const v=J(l[f])===J(b[f])?r[f]:l[f];if(v===undefined)delete out[f];else out[f]=v});
+  ["date","time","label","lock","lockAt","slot","manual","src","off","offWhy"].forEach(f=>{const v=J(l[f])===J(b[f])?r[f]:l[f];if(v===undefined)delete out[f];else out[f]=v});
   return out}
 function mergeList(b,l,r,key,deep){
   const id=x=>String(x&&x[key]),B=new Map((b||[]).map(x=>[id(x),x])),L=new Map((l||[]).map(x=>[id(x),x])),R=new Map((r||[]).map(x=>[id(x),x]));
@@ -5369,13 +5392,14 @@ function renderToday(){
   const rows=L.map((x,i)=>{let st="",cls="";
     if(x.cancel){st=`<span class="tdst off">${esc(x.why)}</span>`;cls=" cancel"}
     else if(x.act){st=`<span class="tdst act">${esc(x.sub)}</span>`;cls=" actl"}
+    else if(x.s&&!sesOn(x.s)){st=`<span class="tdst off">${esc(sesOff(x.s))}</span>`;cls=" cancel"}
     else if(x.s){const ab=sesAbs(x.cl,x.s),pend=ab.filter(([id])=>!isDone(x.s,id)).length,N=x.cl.data.roster.length;
       st=`<span class="tdst ok">${x.s.lock?"🔒 ":""}출석 ${N-ab.length}/${N}</span>${ab.length?`<span class="tdst ab">결석 ${ab.length}${pend?` · 연락 전 ${pend}`:""}</span>`:""}`}
     else if(x.cl){st=x.end&&x.end<=now?`<span class="tdst miss">출석 체크 안 함</span>`:`<span class="tdst">체크 전</span>`}
     else st=`<span class="tdst">학급 연결 안 됨</span>`;
     return `<button class="tdl${i===nowIdx?" now":""}${i===nextIdx?" next":""}${cls}" type="button" data-i="${i}"${x.go?"":" disabled"}><span class="tdt">${esc(x.start||"")}${x.end?`<small>${esc(x.end)}</small>`:""}</span><span class="tdn"><b>${esc(x.title)}</b><small>${x.cl?esc(clsName(x.cl.data)):""}${x.room?" · "+esc(x.room):""}${x.chg?" · 변동":""}${i===nowIdx?' · <em>지금 수업</em>':i===nextIdx?' · <em>다음 수업</em>':""}</small></span><span class="tdss">${st}</span></button>`}).join("");
   /* 연락할 학생 (오늘, 학급별) */
-  const calls=[];perList().forEach(cl=>{let n=0,last=null;cl.data.sessions.filter(s=>s.date===date).forEach(s=>{const p=sesAbs(cl,s).filter(([id])=>!isDone(s,id)).length;if(p){n+=p;last=s}});if(n)calls.push({cl,n,s:last})});
+  const calls=[];perList().forEach(cl=>{let n=0,last=null;cl.data.sessions.filter(s=>s.date===date&&sesOn(s)).forEach(s=>{const p=sesAbs(cl,s).filter(([id])=>!isDone(s,id)).length;if(p){n+=p;last=s}});if(n)calls.push({cl,n,s:last})});
   /* 서명 마감 (7일 안 · 지난 것) */
   const lim=addDays(date,7),signs=(S.evals||[]).filter(e=>!e.done&&e.due&&e.due<=lim).map(e=>({e,left:e.stu.filter(x=>stState(x)!=="ok").length})).filter(x=>x.left).sort((a,b)=>a.e.due.localeCompare(b.e.due));
   const dd=d=>{const n=Math.round((new Date(d)-new Date(date))/864e5);return n<0?`${-n}일 지남`:n===0?"오늘 마감":`D-${n}`};
@@ -5406,7 +5430,7 @@ function stsDraft(sid){
 }
 function stuSheet(sid){
   const st=D.roster.find(x=>x[0]===sid);if(!st)return;
-  const ses=D.sessions.slice().sort(byTime),abs=ses.filter(s=>!s.p[sid]);
+  const ses=D.sessions.filter(sesOn).sort(byTime),abs=ses.filter(s=>!s.p[sid]);
   const absDays=[...new Set(abs.map(s=>s.date))];
   const hist=obsList().filter(x=>x.sid===sid).sort((a,b)=>b.date.localeCompare(a.date));
   const sum={};hist.forEach(h=>Object.entries(h.tags||{}).forEach(([k,n])=>{sum[k]=(sum[k]||0)+n}));
@@ -5468,7 +5492,7 @@ function monthAttSheet(){
 }
 function monthAttXlsx(cls,ym){
   const [y,m]=ym.split("-").map(Number),sheets=[];
-  cls.forEach(cl=>{const d=cl.data,ses=d.sessions.filter(s=>s.date.startsWith(ym));if(!ses.length||!d.roster.length)return;
+  cls.forEach(cl=>{const d=cl.data,ses=d.sessions.filter(s=>s.date.startsWith(ym)&&sesOn(s));if(!ses.length||!d.roster.length)return;
     const days=[...new Set(ses.map(s=>s.date))].sort(),by={};ses.forEach(s=>{(by[s.date]=by[s.date]||[]).push(s)});
     const head=["번호","학번","이름",...days.map(x=>`${+x.slice(8)}(${dow(x)})`),"결석 일수","결석 횟수","출석 체크"];
     const rows=[head];
