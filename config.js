@@ -5,5 +5,8 @@
 window.TL_CONFIG = {
   googleClientId: "1006591459754-qpgvthu6asm6bln7rpr2ltq8jkcup683.apps.googleusercontent.com",
   // 개인정보처리방침(privacy.html)에 보일 문의 이메일 (비워 둬도 됨)
-  contactEmail: "san2sul@gmail.com"
+  contactEmail: "san2sul@gmail.com",
+  // Gmail로 한꺼번에 보내기: 구글 앱 확인에서 Gmail 권한(gmail.send) 확인을 받은 뒤 true로 바꾸세요.
+  // false인 동안은 설정 → 구글 로그인 → 'Gmail로 한꺼번에 보내기'에서 기기별로만 켤 수 있습니다.
+  gmail: false
 };

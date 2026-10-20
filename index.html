@@ -774,6 +774,22 @@ textarea.fld.stsbox{min-height:12em;line-height:1.6}
 @media (max-width:420px){.acrow{grid-template-columns:4.2rem minmax(0,1fr)}.acrow select{grid-column:2}}
 .acmin{grid-column:2;font-size:.72rem;color:#9a6a08;margin-top:-4px}
 .acshort{display:grid;grid-template-columns:minmax(0,12rem) 1fr;gap:10px;align-items:end}
+/* 5.23 틈 시간 활동 */
+.lc .act{display:block;font-size:.66rem;font-weight:700;color:var(--accent);line-height:1.2;word-break:keep-all;overflow-wrap:anywhere}
+.lc .evt{display:block;font-style:normal;font-size:.58rem;color:#9a6a08;line-height:1.2;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ttg tr.prer.gen .lc{min-height:40px}
+.actsec{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.actrow{display:grid;grid-template-columns:minmax(0,1fr) 8.5rem;gap:8px}
+.tdst.act{color:var(--accent);background:var(--accent-soft)}
+.tdl.actl{background:color-mix(in srgb,var(--accent-soft) 45%,var(--tint))}
+/* 5.23.2 왼쪽 시간 칸 글자가 잘리지 않게: 낱말 단위로 줄바꿈, 그래도 넘치면 글자 단위로, 긴 이름이 있으면 칸을 조금 넓힘 */
+.ttg tbody th.tcol b,.ttg tbody th.tcol .aft b,.tbtn.pre b{word-break:keep-all;overflow-wrap:anywhere;line-height:1.15;max-width:100%;white-space:normal;text-align:center}
+.ttg tbody th.tcol .tbtn,.ttg tbody th.tcol .aft{padding-inline:2px;max-width:100%;overflow:hidden}
+.ttg tbody th.tcol small{white-space:nowrap}
+table.ttg.widecol th.tcol{width:3.9rem}
+@media (max-width:379px){table.ttg.widecol th.tcol{width:3.1rem}.ttg tbody th.tcol b,.tbtn.pre b{font-size:.64rem}}
+.tdst{white-space:normal;word-break:keep-all;text-align:right}
+#evSlots .chip,.sesslots .chip,#dmSlots .chip{white-space:normal;word-break:keep-all;height:auto;min-height:38px;line-height:1.25;padding-block:5px}
 </style>
 </head>
 <body>
@@ -1171,6 +1187,7 @@ textarea.fld.stsbox{min-height:12em;line-height:1.6}
   </details>
   <details class="card" id="d-ver"><summary>앱 정보 · 버전 기록 <span class="sub" id="verTag"></span></summary>
     <p class="note" id="verMaker"></p>
+    <p class="note"><a href="home.html" target="_blank" rel="noopener">앱 소개</a> · <a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a> · <a href="terms.html" target="_blank" rel="noopener">이용약관</a></p>
     <div class="row2"><button class="btn pri" type="button" id="helpAll">도움말 전체 보기</button><button class="btn" type="button" id="helpNew">바뀐 점 보기</button></div>
     <div class="row2"><button class="btn" type="button" id="updChk">새 버전 확인 · 업데이트</button></div>
     <p class="note" id="updMsg">새 버전을 올리면 앱을 열 때 자동으로 확인해 ‘지금 업데이트’ 안내가 나옵니다. 업데이트해도 입력한 자료는 그대로입니다.</p>
@@ -1200,8 +1217,12 @@ textarea.fld.stsbox{min-height:12em;line-height:1.6}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.21.0", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.23.2", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.23.2",date:"2026-10-20",items:["시간표 왼쪽 칸의 ‘1교시 이전’ 같은 시간 이름이 잘리지 않게: 낱말 단위로 줄바꿈하고, 그래도 넘치면 칸 안에서 글자 단위로 줄바꿈. 1교시 이전 시간이 있거나 이름이 길면 왼쪽 칸을 조금 넓힘", "‘오늘’ 화면의 시간 표시(1교시 이전 · 점심시간 등)와 일정 추가의 ‘시간표에서 고르기’ 버튼도 글자가 잘리지 않고 줄바꿈"]},
+  {v:"5.23.1",date:"2026-10-20",items:["출석 체크 오류 고침: 구글 동기화를 쓰는 중 학생을 출석으로 눌러도 잠시 뒤 결석으로 되돌아가던 문제. 동기화가 드라이브 자료를 내려받는 동안 이 기기에서 바꾼 출석이 덮이던 것을, 받은 뒤 지금 상태와 다시 합치도록 바꿈", "같은 출석 체크를 휴대폰과 컴퓨터에서 동시에 고쳐도 학생별로 합침 (예전에는 한쪽 기기의 체크가 통째로 덮여 다른 학생의 출석이 결석으로 바뀔 수 있었음)"]},
+  {v:"5.23.0",date:"2026-10-20",items:["시간표의 1교시 이전 · 점심시간 · 방과 후 칸에 ‘매주 고정 활동’ 넣기: 조례·종례·정문지도·급식지도·상담·학생 활동·부서업무·동아리·보충수업·회의 또는 직접 입력, 월~금 한 번에 넣기 가능", "1교시 이전 시간을 따로 만들지 않았어도 시간표 맨 위에 ‘1교시 전’ 줄이 생겨 활동을 넣을 수 있음 (아침활동·조례 등 1교시 이전 시간을 만든 경우 그 칸에 넣음)", "이 칸들에 활동 이름과 그 시간의 일정 제목이 바로 보임 (예: 점심 상담 / 학부모 통화). 칸을 누르면 그 날 일정 보기·추가와 고정 활동 고치기", "일정 연동: 일정 추가에서 1교시 이전·점심시간·방과 후 시간을 고르면 시간표 그 칸에 표시되고, ‘매주 같은 요일 고정 활동으로 시간표에 넣기’를 고르면 고정 활동으로 들어감", "‘오늘’ 화면과 날짜별 일정 창에 그 날의 고정 활동도 함께 표시. 수업이 없는 날(휴업·방학 등)에는 고정 활동을 숨김"]},
+  {v:"5.22.0",date:"2026-10-20",items:["구글 앱 확인(인증) 준비: 앱 소개 페이지(home.html, 한·영), 이용약관(terms.html) 추가, 개인정보처리방침에 구글 사용자 데이터 이용·제한적 사용(Limited Use) 영문 고지·개인정보 보호책임자 추가", "‘Gmail로 한꺼번에 보내기’는 구글의 Gmail 권한 확인을 받을 때까지 기본으로 숨김. config.js의 gmail을 true로 바꾸면 모두에게 열림. 그 전에는 설정 → 구글 로그인 → ‘Gmail로 한꺼번에 보내기’에서 기기별로 켜서 시험 가능", "구글 로그인 전 화면에 구글에서 받는 정보와 개인정보처리방침 링크를 표시, 로그인 후 화면에 권한 없애는 방법(타사 연결) 안내", "설정 → 앱 정보에 앱 소개 · 개인정보처리방침 · 이용약관 링크"]},
   {v:"5.21.0",date:"2026-10-20",items:["학사일정 양식 개선: ‘교시’, ‘바꿔 운영할 요일’, ‘매주 반복’, ‘학급(선택)’ 칸 추가. 구분에 ‘교시 행사’와 ‘요일 교체’ 추가", "요일 교체: 그날 정한 교시를 다른 요일 시간표대로 운영 (예: 금요일 2교시를 월요일 2교시 수업으로, 교시를 비우면 하루 전체). 선생님마다 자기 시간표의 그 요일 수업으로 알아서 바뀜", "교시 행사: 동아리·창체처럼 정한 교시에 하는 활동이 그 교시의 원래 수업 대신 시간표에 들어감. ‘매주’를 고르면 기간 안에서 시작일과 같은 요일마다, 학급을 고르면 그 학급 출석 체크와 연결", "수업 없음에 교시를 적으면 그 교시만 휴강 (예: 체육대회 오후 5-7교시), 일정만에 교시를 적으면 그 교시 시간으로 일정이 들어감", "시간표 칸 표시: 교시 행사는 ‘행사’, 요일 교체는 ‘교체’", "넣은 학사일정 원본을 기억해 양식을 다시 받으면 교시·요일·매주·학급까지 채워짐. 학교 묶음으로 나눠 주면 받는 선생님의 시간표로 다시 계산됨"]},
   {v:"5.20.0",date:"2026-10-20",items:["교사의 생활 학사일정 양식: 학사일정 파일 올리기 창에서 ‘양식 받기 (엑셀)’ → 시작일 · 종료일 · 행사 · 구분(목록에서 고르기: 수업 없음/단축수업/일정만/넣지 않음) · 단축 수업 시간(분) · 비고 칸을 채워 다시 올리면 양식의 구분 그대로 들어감", "앱에 이미 넣은 학사일정이 있으면 그 내용이 채워진 양식을 받아 고쳐 쓰고 다시 올릴 수 있음 (같은 날 같은 행사는 겹치지 않고 새로 고침)", "양식에 ‘안내’ 시트, 날짜 칸 날짜 형식, 구분 목록 · 분 범위 확인, 예시 줄(‘예시’가 적힌 줄은 읽지 않음)", "단축수업은 줄마다 다른 수업 시간(분)을 넣을 수 있음. 기존 학교 양식(엑셀·PDF·사진·붙여 넣기) 올리기는 그대로"]},
   {v:"5.19.0",date:"2026-10-20",items:["학사일정 파일 올리기: 시간표 → 일정 · 알림(또는 수업 변동) → ‘학사일정 파일 올리기’에서 엑셀·CSV·PDF·사진(캡처) 파일을 올리거나 한글(hwp) 표를 복사해 붙여 넣으면 날짜와 행사를 읽어 옴", "여러 양식 지원: ‘월 | 일 | 요일 | 행사’ 표, ‘2026.10.28.(수) ~ 10.30.(금) 지필평가’ 같은 목록, 달력형(날짜 칸에 행사), 기간(~)·연도 없는 날짜(3~12월은 그 학년도, 1~2월은 다음 해)", "읽은 일정 확인 화면: 행사 이름으로 넣는 방법을 자동으로 고르고(시험·휴업·방학·행사 → 수업 없음, 단축·방학식·졸업식 → 단축수업, 그 밖 → 일정만), 이름·방법을 고친 뒤 넣기. 지난 날짜는 기본으로 빼고, 주말 휴일은 ‘넣지 않음’", "수업 없음은 그날(기간) 시간표 수업을 휴강으로, 단축수업은 그날 수업 시간을 줄인 시간표로, 일정만은 ‘오늘’·일정 목록에. 학기에 맞는 시간표에 넣고(없으면 지금 시간표의 시간으로 새로 만듦), 다시 올려도 겹치지 않음", "PDF 읽기 기능(pdf.js, 한글 글꼴 지도 포함)을 앱에 함께 넣음 (PDF를 처음 올릴 때만 불러옴)"]},
@@ -2711,6 +2732,7 @@ function normTT(x){const t=newTT();if(!x||typeof x!=="object")return t;
   const adj={};Object.entries(x.adj||{}).forEach(([k,a])=>{if(/^(p[1-7]|lunch)$/.test(k)&&a){const o={};if(hm(a.start))o.start=a.start;const l=parseInt(a.len,10);if(!isNaN(l)&&l>=0&&l<=180)o.len=l;if(Object.keys(o).length)adj[k]=o}});
   const days={};Object.entries(x.days||{}).forEach(([d,o])=>{if(/^\d{4}-\d{2}-\d{2}$/.test(d)&&o)days[d]={start:hm(o.start)||"09:00",classMin:n(o.classMin,45,10,180),breakMin:n(o.breakMin,10,0,60),lunchMin:n(o.lunchMin,60,0,180),note:String(o.note||"")}});
   return{id:String(x.id||uid()),year:n(x.year,t.year,2000,2100),term:String(x.term||t.term),start:hm(x.start)||"09:00",classMin:n(x.classMin,45,10,180),breakMin:n(x.breakMin,10,0,60),lunchMin:n(x.lunchMin,60,0,180),cells,adj,days,chg:normChg(x.chg),
+    acts:(()=>{const o={};if(x.acts&&typeof x.acts==="object")Object.entries(x.acts).forEach(([k,v])=>{if(/^(x.+|pre|lunch|after)\|[0-4]$/.test(k)&&v&&v.n)o[k]={n:String(v.n).slice(0,20),c:String(v.c||"교무 업무").slice(0,12),...(v.cls?{cls:String(v.cls)}:{})}});return o})(),
     pre:(Array.isArray(x.pre)?x.pre:[]).filter(o=>o&&hm(o.start)).map(o=>({id:String(o.id||uid()),name:String(o.name||"").trim().slice(0,20)||"1교시 이전",start:o.start,len:n(o.len,20,5,180),clsId:String(o.clsId||"")})).sort((a,b)=>a.start.localeCompare(b.start))};
 }
 function ttName(t){return `${t.year}학년도 ${t.term}`}
@@ -2790,20 +2812,22 @@ function renderTT(){
   const anySpecial=special.some(Boolean);
   const ti=days.indexOf(td);
   const liveKey=ti>=0?(dayRows[ti].find(r=>nowM>=toMin(r.start)&&nowM<toMin(r.end))||{}).key:null;
-  let h=`<table class="ttg${ttEdit?" editing":""}"><thead><tr><th class="tcol"></th>${days.map((d,i)=>`<th class="${d===td?"today":""}"><button class="dbtn${special[i]?" sp":""}" type="button" data-date="${d}" aria-label="${fmtDateW(d)} 시간 바꾸기">${DAYS[i]}<small>${fmtShort(d)}</small>${special[i]?`<em>${esc(t.days[d].note||"시간 변경")}</em>`:""}${dayChg(t,d)?`<em class="dc">${esc(dayChg(t,d).reason||"수업 변동")}</em>`:""}${S.events.some(e=>e.date===d&&e.important)?'<i class="imp-dot" title="중요 일정"></i>':""}</button></th>`).join("")}</tr></thead><tbody>`;
+  const wideCol=ttPre(t).some(r=>r.label.replace(/\s/g,"").length>3)||!ttPre(t).length||Object.keys(t.acts||{}).some(k=>k.startsWith("pre|"));
+  let h=`<table class="ttg${ttEdit?" editing":""}${wideCol?" widecol":""}"><thead><tr><th class="tcol"></th>${days.map((d,i)=>`<th class="${d===td?"today":""}"><button class="dbtn${special[i]?" sp":""}" type="button" data-date="${d}" aria-label="${fmtDateW(d)} 시간 바꾸기">${DAYS[i]}<small>${fmtShort(d)}</small>${special[i]?`<em>${esc(t.days[d].note||"시간 변경")}</em>`:""}${dayChg(t,d)?`<em class="dc">${esc(dayChg(t,d).reason||"수업 변동")}</em>`:""}${S.events.some(e=>e.date===d&&e.important)?'<i class="imp-dot" title="중요 일정"></i>':""}</button></th>`).join("")}</tr></thead><tbody>`;
   if(ttEdit)h+=`<tr class="preadd"><td colspan="6"><button class="btn sm" type="button" id="preAdd">＋ 1교시 이전 시간 추가 (아침활동 · 조례 등)</button></td></tr>`;
+  if(!ttPre(t).length||Object.keys(t.acts||{}).some(k=>k.startsWith("pre|"))){const w0=slotTime(t,days[0],"pre");if(w0)h+=`<tr class="prer gen"><th class="tcol"><span class="aft"><b>1교시 전</b><small>~${dayRows[0][0].start}</small></span></th>`+days.map((d,i)=>`<td><button class="lc pre${d===td?" today":""}" type="button" data-date="${d}" data-slot="pre" aria-label="${fmtDateW(d)} 1교시 이전">${gapCellHTML(t,"pre",d,'<span class="plus">＋</span>')}</button></td>`).join("")+"</tr>"}
   ttPre(t).forEach(r=>{
     const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null,src=preSrc(t,r.id);
     h+=`<tr class="prer"><th class="tcol"><button class="tbtn pre" type="button" data-pre="${esc(r.id)}" aria-label="${esc(r.label)} 시간 고치기"><b>${esc(r.label)}</b><small>${r.start}<br>${r.end}</small></button></th>`+days.map((d,i)=>{
       const ses=cl?cl.data.sessions.find(x=>x.date===d&&x.src===src):null,n=S.events.filter(e=>e.date===d&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).length;
       const ck=ses?`<i class="ck${cl.data.roster.filter(([id])=>ses.p[id]).length<cl.data.roster.length?" ab":""}">${cl.data.roster.filter(([id])=>ses.p[id]).length}/${cl.data.roster.length}</i>`:"";
-      return `<td><button class="lc pre${d===td?" today":""}" type="button" data-date="${d}" data-pre="${esc(r.id)}" aria-label="${fmtDateW(d)} ${esc(r.label)}">${cl?`<span class="pcl">${esc(clsName(cl.data))}</span>`:`<span>${r.len}분</span>`}${ck}${n?`<i class="evn">일정 ${n}</i>`:""}</button></td>`}).join("")+"</tr>";
+      return `<td><button class="lc pre${d===td?" today":""}" type="button" data-date="${d}" data-pre="${esc(r.id)}" aria-label="${fmtDateW(d)} ${esc(r.label)}">${cl?`<span class="pcl">${esc(clsName(cl.data))}</span>`:""}${ck}${gapCellHTML(t,r.key,d,cl?"":`<span>${r.len}분</span>`)}</button></td>`}).join("")+"</tr>";
   });
   rows.forEach((r,ri)=>{
     const tbtn=`<button class="tbtn${r.adj?" adj":""}" type="button" data-k="${r.key}" aria-label="${r.label} 시간 조정"><b>${r.lunch?"점심":r.label}</b><small>${r.start}<br>${r.end}</small></button>`;
     if(r.lunch){
       h+=`<tr class="lunch${liveKey==="lunch"?" live":""}"><th class="tcol">${tbtn}</th>`;
-      h+=days.map((d,i)=>{const lr=dayRows[i][ri];const n=S.events.filter(e=>e.date===d&&e.start>=lr.start&&e.start<lr.end).length;return `<td><button class="lc${special[i]?" spc":""}" type="button" data-date="${d}" data-slot="lunch" aria-label="${fmtDateW(d)} 점심시간 일정">${special[i]?`<span>${lr.start}~</span>`:`<span>${lr.len}분</span>`}${n?`<i class="evn">일정 ${n}</i>`:""}</button></td>`}).join("");
+      h+=days.map((d,i)=>{const lr=dayRows[i][ri];const n=S.events.filter(e=>e.date===d&&e.start>=lr.start&&e.start<lr.end).length;return `<td><button class="lc${special[i]?" spc":""}" type="button" data-date="${d}" data-slot="lunch" aria-label="${fmtDateW(d)} 점심시간 일정">${gapCellHTML(t,"lunch",d,special[i]?`<span>${lr.start}~</span>`:`<span>${lr.len}분</span>`)}</button></td>`}).join("");
       h+="</tr>";return;
     }
     h+=`<tr${liveKey===r.key?' class="live"':""}><th class="tcol">${tbtn}</th>`;
@@ -2822,10 +2846,10 @@ function renderTT(){
     });
     h+="</tr>";
   });
-  h+=`<tr class="after"><th class="tcol"><span class="aft"><b>방과 후</b><small>${rows[rows.length-1].end}~</small></span></th>`+days.map((d,i)=>{const lastEnd=dayRows[i][dayRows[i].length-1].end;const n=S.events.filter(e=>e.date===d&&e.start>=lastEnd).length;return `<td><button class="lc" type="button" data-date="${d}" data-slot="after" aria-label="${fmtDateW(d)} 방과 후 일정">${n?`<i class="evn">일정 ${n}</i>`:'<span class="plus">＋</span>'}</button></td>`}).join("")+"</tr>";
+  h+=`<tr class="after"><th class="tcol"><span class="aft"><b>방과 후</b><small>${rows[rows.length-1].end}~</small></span></th>`+days.map((d,i)=>{const lastEnd=dayRows[i][dayRows[i].length-1].end;const n=S.events.filter(e=>e.date===d&&e.start>=lastEnd).length;return `<td><button class="lc" type="button" data-date="${d}" data-slot="after" aria-label="${fmtDateW(d)} 방과 후 일정">${gapCellHTML(t,"after",d,'<span class="plus">＋</span>')}</button></td>`}).join("")+"</tr>";
   h+="</tbody></table>";
   $("ttGrid").innerHTML=h;
-  $("ttGrid").querySelectorAll(".lc").forEach(b=>b.onclick=()=>b.dataset.pre?preMenu(t,b.dataset.pre,b.dataset.date):dayMenu(b.dataset.date,b.dataset.slot));
+  $("ttGrid").querySelectorAll(".lc").forEach(b=>b.onclick=()=>b.dataset.pre?preMenu(t,b.dataset.pre,b.dataset.date):["lunch","after","pre"].includes(b.dataset.slot)?gapMenu(t,b.dataset.slot,b.dataset.date):dayMenu(b.dataset.date,b.dataset.slot));
   $("ttGrid").querySelectorAll(".tbtn").forEach(b=>b.onclick=()=>b.dataset.pre?preEdit(t,b.dataset.pre):adjPeriod(t,b.dataset.k));
   if($("preAdd"))$("preAdd").onclick=()=>preEdit(t,null);
   $("ttGrid").querySelectorAll(".dbtn").forEach(b=>b.onclick=()=>dayMenu(b.dataset.date));
@@ -2883,8 +2907,10 @@ function preMenu(t,id,date){
     ${PL.length?`<label class="lb" for="pmC">출석 체크할 학급<select class="fld" id="pmC">${PL.map(c=>`<option value="${esc(c.id)}"${(cl?cl.id:S.active)===c.id?" selected":""}>${esc(clsName(c.data))} (${c.data.roster.length}명)</option>`).join("")}</select></label>`:""}
     <div class="row2" style="flex-direction:column">${PL.length?`<button class="btn pri" type="button" id="pmAtt">${ses?"출석 체크 이어서 하기":"이 시간 출석 체크 시작"}</button>`:""}
       <button class="btn" type="button" id="pmEv">＋ 이 시간에 일정 추가</button>
-      <button class="btn" type="button" id="pmEdit">시간 · 이름 고치기</button><button class="btn" type="button" id="skNo">닫기</button></div>`;
-  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};wireEvList($("sheetBox"));
+      <button class="btn" type="button" id="pmEdit">시간 · 이름 고치기</button></div>
+    ${actSectionHTML(t,r.key,date)}
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};wireEvList($("sheetBox"));wireActSection(t,r.key,date,()=>{$("sheet").hidden=true});
   $("pmEv").onclick=()=>editEvent(null,{date,start:r.start,end:r.end,slot:r.key,cat:"학생 면담"});
   $("pmEdit").onclick=()=>preEdit(t,id);
   if($("pmAtt"))$("pmAtt").onclick=()=>{const c=S.list.find(x=>x.id===$("pmC").value);if(!c)return;$("sheet").hidden=true;startPreAttendance(t,r,date,c)};
@@ -3526,6 +3552,7 @@ function dayMenu(date,slot){
   const t=TT(),list=S.events.filter(e=>e.date===date).sort(evSort),opts=slotOptions(date);
   const pre=slot?opts.find(o=>o.k===slot):null;
   $("sheetBox").innerHTML=`<h2>${fmtDateW(date)}${t&&t.days[date]?` <span class="evc imp">${esc(t.days[date].note||"시간 변경")}</span>`:""}</h2>
+    ${(()=>{const A=todayActs(date);return A.length?`<div class="opills wrap">${A.map(a=>`<span class="opill">${esc(a.sub)} · ${esc(a.title)}</span>`).join("")}</div>`:""})()}
     <div class="evlist">${list.length?list.map(e=>evItemHTML(e,false)).join(""):`<div class="empty">이 날 등록된 일정이 없습니다.</div>`}</div>
     <p class="note" style="margin:0">일정 추가 · 초록색은 그날 시간표에서 수업이 없는 공강 시간입니다</p>
     <div class="presets">${opts.map(o=>`<button class="chip${o.free?" free":""}" type="button" data-sl="${o.k}"${pre&&pre.k===o.k?' aria-pressed="true"':""}>${o.label} ${o.start}</button>`).join("")}<button class="chip" type="button" data-sl="">시간 직접</button></div>
@@ -3545,6 +3572,7 @@ function editEvent(e,pre){
       <label class="lb" for="evEnd">끝 (선택)<input class="fld" id="evEnd" type="time"></label></div>
     <div class="presets" id="evSlots"></div>
     <p class="note" id="evSlot" style="margin:0"></p>
+    <label class="chk" for="evWk" id="evWkL" hidden><input type="checkbox" id="evWk"> <span id="evWkT">매주 같은 요일 이 시간 고정 활동으로 시간표에 넣기</span></label>
     <label class="lb" for="evCls">학급 (선택)<select class="fld" id="evCls"><option value="">학급 없음</option>${perList().map(c=>`<option value="${esc(c.id)}">${esc(clsName(c.data))}</option>`).join("")}</select></label>
     <label class="lb" for="evMemo">메모<textarea class="fld" id="evMemo" rows="3"></textarea></label>
     <div class="range"><label class="lb" for="evAlarm">알림<select class="fld" id="evAlarm">${ALARMS.map(([m,l])=>`<option value="${m}">${l}</option>`).join("")}</select></label>
@@ -3564,7 +3592,8 @@ function editEvent(e,pre){
   const paintSlot=()=>{const d=$("evDate").value,st=$("evStart").value;const sl=d&&st?slotOf(d,st):"";const lk=slotK&&d?slotTime(TT(),d,slotK):null;$("evSlot").textContent=(sl?`시간표 기준: ${sl}`:"")+(lk?` · 시간표 ‘${lk.label}’과 연결됨 (시간표 시간이 바뀌면 같이 움직입니다)`:"");
     const a=+$("evAlarm").value;let note="";
     if(a>=0&&d&&st){const at=new Date(evTime({date:d,start:st})-a*60000);note=`알림: ${at.getMonth()+1}월 ${at.getDate()}일 ${pad(at.getHours())}:${pad(at.getMinutes())}. 앱이 열려 있을 때 알려 주고, 앱을 닫아 두어도 받으려면 ‘구글 캘린더에 추가’를 쓰세요.`}
-    $("evAlarmNote").textContent=note};
+    $("evAlarmNote").textContent=note;
+    {const t0=TT(),gk=d&&st?(slotK&&["pre","lunch","after"].includes(slotK)||String(slotK).startsWith("x")?slotK:gapKeyOf(t0,d,st)):"";const show=isNew&&!!gk;$("evWkL").hidden=!show;if(show){$("evWkT").textContent=`매주 ${DAYS[wdOf(d)]}요일 ${slotTime(t0,d,gk).label} 고정 활동으로 시간표에 넣기 (일정 대신)`;$("evWkL").dataset.k=gk}else $("evWk").checked=false}};
   $("evDate").oninput=()=>{const d=$("evDate").value;if(slotK){const st=d?slotTime(TT(),d,slotK):null;if(st){$("evStart").value=st.start;$("evEnd").value=st.end}else slotK=""}paintSlots()};
   $("evStart").oninput=()=>{slotK="";paintSlots()};$("evEnd").oninput=()=>{if(slotK){slotK="";paintSlots()}};$("evAlarm").onchange=paintSlot;paintSlots();
   const read=()=>({...v,slot:slotK||undefined,title:$("evTitle").value.trim(),date:$("evDate").value,start:$("evStart").value,end:$("evEnd").value,cat,clsId:$("evCls").value,memo:$("evMemo").value.trim(),alarm:+$("evAlarm").value,important:$("evImp").checked});
@@ -3575,6 +3604,7 @@ function editEvent(e,pre){
     const x=read();if(!x.date||!x.start)return toast("날짜와 시작 시간을 넣어 주세요");
     if(x.end&&x.end<=x.start)return toast("끝 시간이 시작 시간보다 늦어야 합니다");
     if(!x.title)x.title=x.cat;
+    if(isNew&&$("evWk").checked&&$("evWkL").dataset.k&&TT()){const t0=TT(),k=$("evWkL").dataset.k,dd=wdOf(x.date);actsOf(t0)[k+"|"+dd]={n:x.title.slice(0,20),c:x.cat};save();$("sheet").hidden=true;renderAll();if(view==="tt")renderTT();return toast(`시간표 매주 ${DAYS[dd]}요일 ${slotTime(t0,x.date,k).label}에 ‘${x.title.slice(0,20)}’을(를) 넣었습니다`)}
     const old=S.events.find(y=>y.id===x.id);
     if(!old||old.date!==x.date||old.start!==x.start||old.alarm!==x.alarm)x.notified=false;
     if(old)Object.assign(old,x);else S.events.push(x);
@@ -4495,7 +4525,10 @@ function mailHTML(ev,st,link){
   ${ev.due?`<p>서명 마감: ${esc(fmtDateW(ev.due))}</p>`:""}${ev.note?`<p>${esc(ev.note)}</p>`:""}<p style="color:#6a756e;font-size:13px">${esc(K.tip)}</p></div>`;
 }
 const mailSubjEv=(ev,st)=>`[${ev.title}] ${st.name} 학생 ${evKind(ev).k==="score"?"점수 확인 및 ":""}서명 요청`;
-/* Gmail로 한꺼번에 보내기 (gmail.send 권한, 처음 한 번 허용) */
+/* Gmail로 한꺼번에 보내기 (gmail.send 권한, 처음 한 번 허용)
+   구글 앱 확인(인증) 1단계는 Gmail 없이 받고, Gmail 권한 확인을 받은 뒤 config.js의 gmail을 true로 바꿉니다.
+   그 전에는 설정 → 구글 로그인에서 이 기기만 켜서 시험할 수 있습니다 (테스트 사용자 계정). */
+function gmailOn(){const c=window.TL_CONFIG||{};if(c.gmail===true)return true;try{return localStorage.getItem("att-app-gmail")==="1"}catch(e){return false}}
 const GMAIL_SCOPE="https://www.googleapis.com/auth/gmail.send";
 function utf8b64(s){return btoa(unescape(encodeURIComponent(s)))}
 function rawMail(to,subj,text,html){
@@ -4616,9 +4649,9 @@ function renderEval(){
       <div class="row2"><button class="btn${done&&!ev.done?" pri":""}" type="button" id="evArc">${ev.done?"보관 풀고 다시 진행":"평가 마치고 보관"}</button><button class="btn" type="button" id="evInfo">평가 정보 수정</button></div>
     </section>
     <section class="card"><h2>1. 학생에게 보내기</h2>
-      <div class="row2"><button class="btn pri${need.length?"":" off"}" type="button" id="evGm">${ICON.mail}${need.length?`Gmail로 ${unsent.length?`안 보낸 ${unsent.length}명에게`:`서명 안 한 ${need.length}명에게 다시`} 보내기`:"모두 서명해 보낼 학생이 없습니다"}</button></div>
+      <div class="row2"${gmailOn()?"":" hidden"}><button class="btn pri${need.length?"":" off"}" type="button" id="evGm">${ICON.mail}${need.length?`Gmail로 ${unsent.length?`안 보낸 ${unsent.length}명에게`:`서명 안 한 ${need.length}명에게 다시`} 보내기`:"모두 서명해 보낼 학생이 없습니다"}</button></div>
       <div class="row2"><button class="btn ok${nx?"":" off"}" type="button" id="evSeq">${ICON.mail}${nx?`메일 앱으로 한 명씩 ${EVS.seq.i+1}/${need.length} · ${esc(nx.name)}`:"메일 앱으로 한 명씩"}</button></div>
-      <p class="note">Gmail로 보내면 학생마다 자기 점수만 담긴 메일이 한 번에 나갑니다(처음에 ‘Gmail로 보내기’ 권한을 한 번 허용). 메일 앱으로 보내면 학생마다 메일 창이 열리고 보내기는 직접 누릅니다. 이메일이 없는 학생은 아래 목록의 문자 버튼으로 서명 링크를 보낼 수 있습니다.</p>
+      <p class="note">${gmailOn()?"Gmail로 보내면 학생마다 자기 점수만 담긴 메일이 한 번에 나갑니다(처음에 ‘Gmail로 보내기’ 권한을 한 번 허용). ":"‘Gmail로 한꺼번에 보내기’는 구글 확인 절차가 끝나면 열립니다. "}메일 앱으로 보내면 학생마다 메일 창이 열리고 보내기는 직접 누릅니다. 이메일이 없는 학생은 아래 목록의 문자 버튼으로 서명 링크를 보낼 수 있습니다.</p>
     </section>
     <section class="card"><h2>2. 서명 받기</h2>
       <p class="note">학생이 서명하면 선생님 메일(${esc(ev.reply)})로 ‘서명 링크’가 옵니다. <b>메일의 링크를 누르면</b> 이 앱이 열리며 서명이 자동으로 들어갑니다. 여러 개를 한 번에 넣으려면 메일 내용을 복사해 아래에 붙여 넣으세요.</p>
@@ -4982,6 +5015,14 @@ function pristine(d){return !(d.evals||[]).length&&d.classes.length<=1&&!d.class
 /* 3방향 합치기: 마지막 동기화(base) 이후 바뀐 쪽을 살리고, 둘 다 바뀌면 이 기기 쪽을 씁니다 */
 const J=x=>JSON.stringify(x===undefined?null:x);
 const pick3=(b,l,r)=>J(l)===J(b)?r:l;
+/* 출석 체크 하나를 두 기기에서 동시에 고쳐도 학생별로 합칩니다 (한쪽 기기의 체크가 통째로 덮이지 않게) */
+function mergeSes(b,l,r){b=b||{};if(J(l)===J(r))return l;
+  const out={...pick3(b,l,r)};
+  ["p","done"].forEach(k=>{const B=b[k]||{},L=l[k]||{},R=r[k]||{},m={};
+    new Set([...Object.keys(B),...Object.keys(L),...Object.keys(R)]).forEach(id=>{const v=J(L[id])===J(B[id])?R[id]:L[id];if(v!==undefined&&v!==null&&v!==false)m[id]=v});
+    if(k==="p"||Object.keys(m).length)out[k]=m;else delete out[k]});
+  ["date","time","label","lock","lockAt","slot","manual","src"].forEach(f=>{const v=J(l[f])===J(b[f])?r[f]:l[f];if(v===undefined)delete out[f];else out[f]=v});
+  return out}
 function mergeList(b,l,r,key,deep){
   const id=x=>String(x&&x[key]),B=new Map((b||[]).map(x=>[id(x),x])),L=new Map((l||[]).map(x=>[id(x),x])),R=new Map((r||[]).map(x=>[id(x),x]));
   const out=[];[...L.keys(),...[...R.keys()].filter(k=>!L.has(k))].forEach(k=>{const bi=B.get(k),li=L.get(k),ri=R.get(k);
@@ -4992,7 +5033,7 @@ function mergeList(b,l,r,key,deep){
 }
 function mergeMap(b,l,r){b=b||{};l=l||{};r=r||{};const o={};new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{
   if(k in l&&k in r)o[k]=pick3(b[k],l[k],r[k]);else if(k in l){if(!(k in b)||J(l[k])!==J(b[k]))o[k]=l[k]}else if(!(k in b)||J(r[k])!==J(b[k]))o[k]=r[k]});return o}
-function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emails","teachers","msg","obsLock"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id");o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
+function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emails","teachers","msg","obsLock"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
@@ -5026,7 +5067,7 @@ async function gSync(why){
   GS.busy=true;GS.err="";renderSyncPill("sync");
   try{
     const f=await gFind();
-    const local=syncData(),lstr=JSON.stringify(local),lh=gHash(lstr);
+    let local=syncData(),lstr=JSON.stringify(local),lh=gHash(lstr);
     if(!f){await gPush(lstr,null);GS.msg="드라이브에 처음 저장했습니다"}
     else if(G.ver&&String(f.version)===G.ver){
       if(lh!==G.hash){await gPush(lstr,f.id);GS.msg="이 기기 변경을 올렸습니다"}else{G.syncedAt=Date.now();gSave();GS.msg=""}
@@ -5034,6 +5075,8 @@ async function gSync(why){
       const remote=await gDownload(f.id);const rd=remote&&remote.data;
       if(!rd||!Array.isArray(rd.classes))throw new Error("드라이브의 동기화 파일을 읽지 못했습니다");
       let base=null;try{base=JSON.parse((await kvGet(GBASE))||"null")}catch(e){}
+      /* 내려받는 동안 이 기기에서 바꾼 것(예: 출석 체크)을 잃지 않도록 지금 상태로 다시 읽어 합칩니다 */
+      local=syncData();lstr=JSON.stringify(local);lh=gHash(lstr);
       if(!G.ver&&!base&&!pristine(local)){GS.busy=false;renderSyncPill();return firstLinkSheet(local,rd,f,remote)}
       if(!G.ver&&(!base||pristine(local))||lh===G.hash){applyData(rd);G.fileId=f.id;G.ver=String(f.version);gSetBase(JSON.stringify(syncData()));gSave();GS.msg=`${remote.device||"다른 기기"}에서 바꾼 내용을 받았습니다`;toast(GS.msg)}
       else{const m=mergeData(base,local,rd);snapshot();applyData(m);await gPush(JSON.stringify(syncData()),f.id);GS.msg="두 기기의 변경을 합쳤습니다";toast(GS.msg+" (되돌리기 가능)")}
@@ -5054,7 +5097,7 @@ function firstLinkSheet(local,rd,f,remote){
     <p class="note">어느 쪽이든 바꾸기 전 이 기기 상태는 설정 → 백업 · 초기화의 ‘불러오기 전으로 되돌리기’로 되돌릴 수 있습니다.</p>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
   const run=async fn=>{$("sheet").hidden=true;GS.busy=true;renderSyncPill("sync");try{await fn()}catch(e){GS.err=e.message;toast(e.message)}finally{GS.busy=false;renderSync()}};
-  $("flMerge").onclick=()=>run(async()=>{snapshot();applyData(mergeData(null,local,rd));await gPush(JSON.stringify(syncData()),f.id);toast("두 자료를 합쳤습니다")});
+  $("flMerge").onclick=()=>run(async()=>{snapshot();applyData(mergeData(null,syncData(),rd));await gPush(JSON.stringify(syncData()),f.id);toast("두 자료를 합쳤습니다")});
   $("flRemote").onclick=()=>run(async()=>{snapshot();applyData(rd);G.fileId=f.id;G.ver=String(f.version);gSetBase(JSON.stringify(syncData()));gSave();toast("드라이브 자료로 바꿨습니다")});
   twoStep($("flLocal"),"정말 덮어쓰기",()=>run(async()=>{await gPush(JSON.stringify(local),f.id);toast("이 기기 자료로 드라이브를 덮어썼습니다")}));
 }
@@ -5080,6 +5123,7 @@ function renderSync(){
   const B=$("gsBody");if(!B)return;const cid=gClientId(),fromCfg=!!(window.TL_CONFIG&&window.TL_CONFIG.googleClientId);
   $("gsTag").textContent=G.on&&G.email?"연결됨":"";
   const how=`<p class="note">구글 계정으로 로그인하면 <b>컴퓨터의 크롬과 휴대폰에서 같은 자료</b>로 일할 수 있습니다. 컴퓨터에서 엑셀로 명단을 올리면 휴대폰에도 들어오고, 휴대폰에서 한 출석 체크는 컴퓨터에도 보입니다.</p>
+    <p class="note gsdata"><b>구글에서 받는 정보</b>: 계정 이메일 주소·이름·프로필 사진(어느 계정으로 로그인했는지 보여 주는 데만 씀)과 구글 드라이브의 <b>이 앱 전용 폴더</b>(이 앱이 만든 동기화 파일만, 다른 드라이브 파일은 보지 못함). 광고·판매·다른 용도로 쓰지 않습니다. <a href="privacy.html#google" target="_blank" rel="noopener">개인정보처리방침</a></p>
     <p class="note">자료는 선생님 <b>구글 드라이브의 앱 전용 숨김 폴더</b>에 저장됩니다. 드라이브 화면이나 다른 앱, 다른 사람은 볼 수 없고 이 앱만 읽을 수 있습니다. 학생 연락처가 들어가므로 학교의 개인정보 지침도 확인하세요.</p>`;
   if(!cid){
     B.innerHTML=how+`<p class="warn">이 앱 주소에는 아직 구글 로그인 설정(클라이언트 ID)이 없습니다. 처음 한 번, 앱을 올린 선생님이 만들어 넣어야 합니다.</p>
@@ -5112,7 +5156,10 @@ function renderSync(){
     <label class="chk" for="gsAuto"><input type="checkbox" id="gsAuto"${G.auto!==false?" checked":""}> 바뀔 때마다 자동으로 동기화</label>
     <p class="note">앱을 열 때, 다시 볼 때, 내용을 바꿀 때 자동으로 맞춥니다. 구글 보안 정책상 로그인은 약 1시간 유지되며, 지나면 화면 위 ‘다시 로그인’을 한 번 누르면 됩니다. 두 기기에서 같은 내용을 동시에 고치면 지금 기기 쪽을 우선합니다.</p>
     <div class="row2"><button class="btn" type="button" id="gsOut">로그아웃</button><button class="btn bad" type="button" id="gsWipe">드라이브 자료 지우기</button></div>
-    <p class="note">로그아웃해도 이 기기의 자료는 그대로 남습니다.</p>
+    <p class="note">로그아웃해도 이 기기의 자료는 그대로 남습니다. ‘드라이브 자료 지우기’는 구글 드라이브의 앱 전용 폴더에 있는 동기화 파일을 지웁니다. 구글 계정의 <a href="https://myaccount.google.com/connections" target="_blank" rel="noopener">타사 연결</a>에서 이 앱의 권한을 언제든 없앨 수 있습니다.</p>
+    ${(window.TL_CONFIG||{}).gmail===true?"":`<details class="gsfix" id="gmTry"><summary>Gmail로 한꺼번에 보내기 (구글 확인 준비 중)</summary>
+      <p class="note">학생 서명 링크를 Gmail로 한 번에 보내는 기능은 구글의 추가 확인(Gmail 권한)을 받는 중입니다. 확인이 끝나기 전에는 이 기기에서만 켜서 쓸 수 있고, 구글이 ‘확인되지 않은 앱’ 경고를 띄우며, 앱을 올린 선생님이 테스트 사용자로 등록한 계정만 쓸 수 있습니다.</p>
+      <label class="chk" for="gmTryOn"><input type="checkbox" id="gmTryOn"${gmailOn()?" checked":""}> 이 기기에서 Gmail로 한꺼번에 보내기 켜기</label></details>`}
     <details class="gsfix"><summary>로그인이 계속 안 될 때</summary>
       <p class="note">① 팝업 차단을 풀고 다시 로그인 ② 학교 인터넷이면 휴대폰 데이터로 시도 ③ 아래 ‘로그인 상태 초기화’ 후 다시 로그인 (이 기기 자료와 드라이브 자료는 지워지지 않습니다)</p>
       <div class="row2"><button class="btn" type="button" id="gsReset">로그인 상태 초기화</button></div></details>`;
@@ -5121,6 +5168,7 @@ function renderSync(){
   B.querySelectorAll("[data-acct]").forEach(b=>b.onclick=()=>gLogin(null,{prompt:"",hint:b.dataset.acct}));
   $("gsAuto").onchange=e=>{G.auto=e.target.checked;gSave();if(G.auto)gSync("now")};
   $("gsReset").onclick=gResetLogin;
+  {const t=$("gmTryOn");if(t)t.onchange=()=>{try{t.checked?localStorage.setItem("att-app-gmail","1"):localStorage.removeItem("att-app-gmail")}catch(e){}toast(t.checked?"이 기기에서 Gmail로 한꺼번에 보내기를 켰습니다":"껐습니다")}}
   $("gsOut").onclick=()=>{try{if(G.token&&window.google)google.accounts.oauth2.revoke(G.token,()=>{})}catch(e){}
     G={clientId:G.clientId,auto:G.auto,accts:G.accts};kvDel(GBASE);gSave();GS.msg="";GS.err="";renderSync();toast("로그아웃했습니다. 이 기기 자료는 그대로입니다")};
   twoStep($("gsWipe"),"정말 지우기",async()=>{try{const f=await gFind();if(f)await gApi(`${DRV}/${f.id}`,{method:"DELETE"});delete G.fileId;delete G.ver;delete G.hash;kvDel(GBASE);G.auto=false;gSave();renderSync();toast("드라이브의 동기화 자료를 지웠습니다. 자동 동기화를 껐습니다")}catch(e){toast(e.auth?"먼저 ‘지금 동기화’로 다시 로그인하세요":e.message)}});
@@ -5194,6 +5242,65 @@ try{storageStartup()}catch(e){reportErr("저장 공간 준비",e)}
 $("updChk").onclick=()=>{toast("새 버전을 확인하는 중입니다…");checkUpdate(true)};
 setTimeout(()=>{try{checkUpdate(false)}catch(e){}},2500);
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")try{checkUpdate(false)}catch(e){}});
+/* ===== 5.23 1교시 이전 · 점심시간 · 방과 후 활동: 매주 고정 활동 + 그 시간의 일정을 시간표에 표시 ===== */
+const ACT_QUICK=[["조례","교무 업무"],["종례","교무 업무"],["정문지도","교무 업무"],["급식지도","교무 업무"],["상담","학생 면담"],["학생 활동","학생 활동"],["부서업무","부서 업무"],["동아리","학생 활동"],["보충수업","수업 준비"],["회의","교무 업무"]];
+function actsOf(t){if(!t.acts||typeof t.acts!=="object"||Array.isArray(t.acts))t.acts={};return t.acts}
+function noSchool(t,date){const dc=dayChg(t,date);return !!(dc&&dc.type==="cancel")}
+function actAt(t,key,date){if(!t||!date||wdOf(date)>4||noSchool(t,date))return null;return((t.acts||{})[key+"|"+wdOf(date)])||null}
+/* 그 시각이 시간표의 어느 틈(1교시 이전 · 점심 · 방과 후)인지 */
+function gapKeyOf(t,date,hm){
+  if(!t||!date||!hm||wdOf(date)>4)return"";
+  const pr=ttPre(t).find(r=>hm>=r.start&&hm<r.end);if(pr)return pr.key;
+  const rows=ttRows(t,date);if(hm<rows[0].start)return ttPre(t).length?"":"pre";
+  const l=rows.find(r=>r.lunch);if(l&&hm>=l.start&&hm<l.end)return"lunch";
+  if(hm>=rows[rows.length-1].end)return"after";return"";
+}
+function gapEvents(t,key,date){
+  const w=slotTime(t,date,key);if(!w)return[];
+  const rows=ttRows(t,date),first=rows[0].start,last=rows[rows.length-1].end;
+  return S.events.filter(e=>e.date===date&&(e.slot===key||(!e.slot||!slotTime(t,date,e.slot))&&(key==="pre"?e.start<first:key==="after"?e.start>=last:e.start>=w.start&&e.start<w.end))).sort(evSort);
+}
+function gapCellHTML(t,key,date,fallback){
+  const a=actAt(t,key,date),ev=gapEvents(t,key,date);
+  return `${a?`<b class="act">${esc(a.n)}</b>`:""}${ev.length?`<i class="evt">${esc(ev[0].title||ev[0].cat)}${ev.length>1?` 외 ${ev.length-1}`:""}</i>`:""}${!a&&!ev.length?fallback:""}`;
+}
+/* 고정 활동 고르기 (매주 같은 요일) */
+function actSectionHTML(t,key,date){
+  const d=wdOf(date),a=(t.acts||{})[key+"|"+d];
+  return `<div class="actsec"><div class="shlb">매주 ${DAYS[d]}요일 고정 활동 <small>${esc(ttName(t))} 시간표</small></div>
+    <div class="presets" id="actQ">${ACT_QUICK.map(([n])=>`<button class="chip" type="button" data-n="${esc(n)}" aria-pressed="${!!a&&a.n===n}">${esc(n)}</button>`).join("")}</div>
+    <div class="actrow"><input class="fld" id="actN" placeholder="직접 입력 (예: 3학년 진학 상담)" value="${esc(a&&!ACT_QUICK.some(([n])=>n===a.n)?a.n:"")}" maxlength="20" autocomplete="off"><select class="fld" id="actC" aria-label="분류">${EV_CATS.map(c=>`<option${(a?a.c:"교무 업무")===c?" selected":""}>${c}</option>`).join("")}</select></div>
+    <label class="chk" for="actAll"><input type="checkbox" id="actAll"> 월~금 모두 같은 활동으로</label>
+    <div class="row2"><button class="btn" type="button" id="actDel"${a?"":" hidden"}>고정 활동 지우기</button><button class="btn pri" type="button" id="actOk">고정 활동 저장</button></div></div>`;
+}
+function wireActSection(t,key,date,done){
+  const d=wdOf(date);let pick=((t.acts||{})[key+"|"+d]||{}).n||"";
+  $("actQ").querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{pick=b.dataset.n;$("actN").value="";const q=ACT_QUICK.find(([n])=>n===pick);if(q)$("actC").value=q[1];$("actQ").querySelectorAll("[data-n]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+  $("actN").oninput=()=>{if($("actN").value.trim()){pick="";$("actQ").querySelectorAll("[data-n]").forEach(x=>x.setAttribute("aria-pressed","false"))}};
+  $("actOk").onclick=()=>{const n=($("actN").value.trim()||pick).slice(0,20);if(!n)return toast("활동을 고르거나 적어 주세요");
+    const A=actsOf(t),ds=$("actAll").checked?[0,1,2,3,4]:[d];ds.forEach(x=>{A[key+"|"+x]={n,c:$("actC").value}});save();renderTT();renderAll();
+    toast(`${ds.length>1?"월~금":DAYS[d]+"요일"} ${slotTime(t,date,key).label}에 ‘${n}’을(를) 고정 활동으로 넣었습니다`);done&&done()};
+  $("actDel").onclick=()=>{const A=actsOf(t);if($("actAll").checked)[0,1,2,3,4].forEach(x=>delete A[key+"|"+x]);else delete A[key+"|"+d];save();renderTT();renderAll();toast("고정 활동을 지웠습니다");done&&done()};
+}
+function gapMenu(t,key,date){
+  const w=slotTime(t,date,key);if(!w)return;const ev=gapEvents(t,key,date),ns=noSchool(t,date);
+  $("sheetBox").innerHTML=`<h2>${esc(w.label)} <span class="sub">${fmtDateW(date)} ${w.start}~${key==="after"?"":w.end}</span></h2>
+    ${ns?`<p class="cginfo"><b>${esc(dayChg(t,date).reason||"수업 없는 날")}</b> · 이 날은 고정 활동을 표시하지 않습니다</p>`:""}
+    <div class="shlb">이 날 일정</div>
+    <div class="evlist">${ev.length?ev.map(e=>evItemHTML(e,false)).join(""):`<div class="empty">이 시간에 등록된 일정이 없습니다.</div>`}</div>
+    <div class="row2"><button class="btn" type="button" id="gmEv">＋ 이 날 이 시간에 일정 추가</button></div>
+    ${actSectionHTML(t,key,date)}
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};wireEvList($("sheetBox"));
+  $("gmEv").onclick=()=>editEvent(null,{date,start:w.start,end:key==="after"?"":w.end,slot:key,cat:key==="lunch"?"학생 면담":key==="after"?"교무 업무":"교무 업무"});
+  wireActSection(t,key,date,()=>{$("sheet").hidden=true});
+}
+/* 오늘의 고정 활동 (오늘 화면에 함께) */
+function todayActs(date){
+  const t=TT();if(!t||wdOf(date)>4)return[];
+  const keys=ttPre(t).map(r=>r.key);if(!keys.length||Object.keys(t.acts||{}).some(k=>k.startsWith("pre|")))keys.unshift("pre");keys.push("lunch","after");
+  return keys.map(k=>{const a=actAt(t,k,date),w=slotTime(t,date,k);return a&&w?{start:w.start,end:k==="after"?"":w.end,title:a.n,act:true,sub:w.label,go:()=>gapMenu(t,k,date)}:null}).filter(Boolean);
+}
 /* ===== 5.17 업무 효율화: 오늘 한눈에 · 학생 한눈에 보기와 세특 초안 · 월별 출결표 ===== */
 /* --- 오늘 한눈에 --- */
 function todayLessons(date){
@@ -5208,6 +5315,7 @@ function todayLessons(date){
       const cl=cellClass(c),info=cellSession(t,d,r.p,date);
       out.push({start:r.start,end:r.end,title:`${r.p}교시 ${c.subject||""}`.trim(),room:c.room||"",cl,s:info&&info.s,src:`${t.id}:${d}:${r.p}`,chg:!!cg,go:cl?()=>startCellAttendance(t,d,r.p,date):()=>cellMenu(t,d,r.p,date)})});
   }
+  try{todayActs(date).forEach(a=>out.push(a))}catch(e){}
   /* 시간표와 연결되지 않은 오늘 출석 체크 */
   const seen=new Set(out.filter(x=>x.s).map(x=>x.s.id));
   perList().forEach(cl=>cl.data.sessions.filter(s=>s.date===date&&!seen.has(s.id)).forEach(s=>{
@@ -5223,6 +5331,7 @@ function renderToday(){
   const nextIdx=nowIdx<0?L.findIndex(x=>!x.cancel&&x.start&&x.start>now):-1;
   const rows=L.map((x,i)=>{let st="",cls="";
     if(x.cancel){st=`<span class="tdst off">${esc(x.why)}</span>`;cls=" cancel"}
+    else if(x.act){st=`<span class="tdst act">${esc(x.sub)}</span>`;cls=" actl"}
     else if(x.s){const ab=sesAbs(x.cl,x.s),pend=ab.filter(([id])=>!isDone(x.s,id)).length,N=x.cl.data.roster.length;
       st=`<span class="tdst ok">${x.s.lock?"🔒 ":""}출석 ${N-ab.length}/${N}</span>${ab.length?`<span class="tdst ab">결석 ${ab.length}${pend?` · 연락 전 ${pend}`:""}</span>`:""}`}
     else if(x.cl){st=x.end&&x.end<=now?`<span class="tdst miss">출석 체크 안 함</span>`:`<span class="tdst">체크 전</span>`}

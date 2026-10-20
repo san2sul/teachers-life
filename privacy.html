@@ -12,7 +12,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"NanumGothic",system-ui,sans-serif;line-height:1.7;font-size:16px}
 main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
 article{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 20px 28px}
-h1{font-size:1.4rem;margin:0 0 4px}h2{font-size:1.05rem;margin:28px 0 8px;color:var(--accent)}
+h1{font-size:1.4rem;margin:0 0 4px}h2{font-size:1.05rem;margin:28px 0 8px;color:var(--accent)}h3{font-size:.98rem;margin:20px 0 6px}hr{border:0;border-top:1px solid var(--line);margin:32px 0 8px}
 p,li{margin:6px 0}ul{padding-left:1.2em}.sub{color:var(--muted);font-size:.88rem}
 a{color:var(--accent)}code{font-size:.85em;background:var(--bg);padding:1px 5px;border-radius:5px;word-break:break-all}
 </style>
@@ -20,7 +20,7 @@ a{color:var(--accent)}code{font-size:.85em;background:var(--bg);padding:1px 5px;
 <body>
 <main><article>
 <h1>개인정보처리방침</h1>
-<p class="sub">교사의 생활 · 만든 사람 물리공작소 · 시행일 2026년 10월 18일</p>
+<p class="sub">교사의 생활 · 만든 사람 물리공작소 · 시행일 2026년 10월 20일 · <a href="#en">English</a></p>
 
 <p>‘교사의 생활’(이하 ‘앱’)은 교사가 출석, 수업 시간표, 수업 메모, 일정, 학생·교직원 연락을 관리하도록 돕는 웹앱입니다. 앱은 별도의 서버를 운영하지 않으며, 만든 사람은 사용자의 자료를 수집하거나 보관하지 않습니다.</p>
 
@@ -39,16 +39,17 @@ a{color:var(--accent)}code{font-size:.85em;background:var(--bg);padding:1px 5px;
 <li>만든 사람이나 제3자의 서버로 정보가 전송되지 않습니다.</li>
 </ul>
 
-<h2>3. 구글 사용자 데이터의 이용</h2>
+<h2 id="google">3. 구글 사용자 데이터의 이용</h2>
 <ul>
 <li>앱이 요청하는 구글 권한: <code>drive.appdata</code>(앱 전용 폴더의 동기화 파일 저장·읽기·삭제), <code>openid</code>, <code>email</code>, <code>profile</code>(로그인한 계정 표시)</li>
-<li>수행평가 서명 기능에서 선생님이 ‘Gmail로 보내기’를 누른 경우에만 <code>gmail.send</code>(선생님 Gmail로 학생에게 점수·서명 요청 메일 보내기) 권한을 요청합니다. 앱은 메일을 읽거나 지우지 않고, 선생님이 누른 메일만 보냅니다.</li>
+<li>Gmail 기능이 켜진 경우, 학생 서명 기능에서 선생님이 ‘Gmail로 보내기’를 누른 경우에만 <code>gmail.send</code>(선생님 Gmail로 학생에게 점수·서명 요청 메일 보내기) 권한을 요청합니다. 앱은 메일을 읽거나 지우지 않고, 선생님이 누른 메일만 보냅니다.</li>
 <li>앱은 사용자의 다른 구글 드라이브 파일, 받은 메일, 연락처 등에 접근하지 않습니다.</li>
 <li>구글에서 받은 정보는 위 목적(기기 간 동기화와 로그인 계정 표시)으로만 사용하며, 광고에 쓰거나 다른 사람에게 판매·제공하지 않습니다. 앱의 구글 사용자 데이터 이용은 <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API 서비스 사용자 데이터 정책</a>(제한적 사용 요건 포함)을 따릅니다.</li>
 <li>로그인 상태(접근 토큰)는 사용자 기기에만 약 1시간 동안 보관되며, 로그아웃하면 지워집니다.</li>
+<li>구글에서 받은 정보를 사람이 읽지 않으며, 인공지능 모델 학습에 쓰지 않습니다.</li>
 </ul>
 
-<h2>4. 수행평가 서명</h2>
+<h2>4. 학생 서명</h2>
 <p>학생에게 보내는 서명 링크에는 그 학생 한 명의 이름과 점수만 들어 있습니다. 학생이 서명하면 서명 그림이 담긴 회신 링크가 학생의 메일을 통해 선생님에게만 전달되며, 만든 사람의 서버를 거치지 않습니다.</p>
 
 <h2>5. 정보의 제공</h2>
@@ -62,15 +63,43 @@ a{color:var(--accent)}code{font-size:.85em;background:var(--bg);padding:1px 5px;
 
 <h2>7. 이용자의 권리</h2>
 <p>사용자는 앱 안에서 언제든 자신의 정보를 확인·수정·삭제하고, 백업 파일로 내려받을 수 있습니다. 학생·교직원의 개인정보를 입력할 때에는 소속 학교의 개인정보 보호 지침을 따라 주세요.</p>
+<p>이 앱은 교사가 쓰는 도구입니다. 학생은 선생님이 보낸 서명 링크에서 자기 이름·점수를 확인하고 서명할 때만 앱의 서명 화면을 쓰며, 학생의 계정이나 기기 정보는 받지 않습니다. 만 14세 미만 학생의 정보를 다룰 때에는 학교의 지침에 따라 보호자 동의 등 필요한 절차를 거쳐 주세요.</p>
 
-<h2>8. 문의</h2>
-<p>이 앱에 관한 문의는 앱을 안내한 선생님 또는 만든 사람(물리공작소)에게 해 주세요.<span id="contact"></span></p>
+<h2>8. 개인정보 보호책임자 · 문의</h2>
+<p>개인정보 보호책임자: 물리공작소 (이메일 <a href="mailto:san2sul@gmail.com">san2sul@gmail.com</a>)</p>
+<p>이 앱에 관한 문의는 앱을 안내한 선생님 또는 위 이메일로 해 주세요.</p>
 
 <h2>9. 변경</h2>
 <p>이 방침이 바뀌면 이 페이지에 시행일과 함께 알립니다.</p>
-<p><a href="./">← 교사의 생활로 돌아가기</a></p>
+<hr id="en">
+<h2>Privacy Policy (English)</h2>
+<p class="sub">Teacher's Life (교사의 생활) · Developer: 물리공작소 (Mullikongjakso) · Effective October 20, 2026</p>
+<p>Teacher's Life is a web app that helps school teachers manage attendance, class timetables, lesson notes, schedules, student signatures and contacts. The app has no server of its own. The developer does not collect, receive or store any user data.</p>
+<h3>Data the app handles</h3>
+<ul><li>Data the teacher enters: class names, student IDs, names and phone numbers/emails, staff contacts, attendance, timetables, notes, schedules, assessment scores and student signatures.</li>
+<li>If the teacher signs in with Google: the Google account email address, name and profile picture.</li></ul>
+<h3>Where data is stored</h3>
+<ul><li>All data is stored only in the browser storage of the teacher's own device.</li>
+<li>Only when the teacher turns on Google sign-in, a single sync file is stored in the hidden <b>application data folder (appDataFolder)</b> of the teacher's own Google Drive, so that the same data can be used on the teacher's phone and computer. Photos, videos and recordings stay on the device and are never uploaded.</li>
+<li>No data is sent to the developer or any third-party server.</li></ul>
+<h3>How the app uses Google user data</h3>
+<ul><li><code>https://www.googleapis.com/auth/drive.appdata</code>: create, read, update and delete the app's own sync file in the user's Drive application data folder. The app cannot see any other Drive files.</li>
+<li><code>openid</code>, <code>email</code>, <code>profile</code>: show which Google account is signed in and keep each account's data separate on the device.</li>
+<li><code>https://www.googleapis.com/auth/gmail.send</code> (only if the Gmail feature is enabled, and only requested when the teacher presses “Send with Gmail”): send each student an email with that student's own score and signature link from the teacher's Gmail account. The app never reads, modifies or deletes any email.</li>
+<li>Google user data is used only to provide these user-facing features. It is not used for advertising, not sold, not used to train AI or machine-learning models, not read by humans, and not transferred to anyone.</li>
+<li><b>Teacher's Life's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</b></li>
+<li>The OAuth access token is kept only on the user's device for about one hour and is removed on sign-out.</li></ul>
+<h3>Sharing</h3>
+<p>The app does not share data with third parties. Data leaves the device only when the teacher chooses to share a link or file with a colleague, or sends an SMS/email to a student or parent using the device's own messaging or email app.</p>
+<h3>Retention and deletion</h3>
+<ul><li>Device data is kept until the teacher deletes it in the app (Settings → Backup) or clears the browser data.</li>
+<li>The Drive sync file can be deleted at any time in Settings → Google sign-in → “Delete Drive data”. Access can be revoked at any time at <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a>.</li></ul>
+<h3>Children</h3>
+<p>The app is a tool for teachers. Students only open a signature page from a link their teacher sends, to check their own name and score and sign. The app does not collect students' accounts or device information.</p>
+<h3>Contact</h3>
+<p>Privacy officer: 물리공작소 (Mullikongjakso) · <a href="mailto:san2sul@gmail.com">san2sul@gmail.com</a></p>
+<p><a href="home.html">교사의 생활 소개 (Home)</a> · <a href="terms.html">이용약관 (Terms)</a> · <a href="./">← 교사의 생활로 돌아가기</a></p>
 </article></main>
-<script src="config.js"></script>
-<script>try{var c=window.TL_CONFIG&&window.TL_CONFIG.contactEmail;if(c){var a=document.createElement("a");a.href="mailto:"+c;a.textContent=c;var s=document.getElementById("contact");s.append(" 이메일: ",a)}}catch(e){}</script>
+
 </body>
 </html>
