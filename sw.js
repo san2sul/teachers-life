@@ -1,5 +1,5 @@
-// 교사의 생활 (버전 5.24.1): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
-const CACHE = "attendance-app-5.24.1";
+// 교사의 생활 (버전 5.25.0): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
+const CACHE = "attendance-app-5.25.0";
 const FILES = ["./", "index.html", "config.js", "privacy.html", "sign.html", "help.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "NanumGothic-Regular.woff2", "NanumGothic-Bold.woff2", "vendor/qrcode.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
