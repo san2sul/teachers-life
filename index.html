@@ -790,6 +790,8 @@ table.ttg.widecol th.tcol{width:3.9rem}
 @media (max-width:379px){table.ttg.widecol th.tcol{width:3.1rem}.ttg tbody th.tcol b,.tbtn.pre b{font-size:.64rem}}
 .tdst{white-space:normal;word-break:keep-all;text-align:right}
 #evSlots .chip,.sesslots .chip,#dmSlots .chip{white-space:normal;word-break:keep-all;height:auto;min-height:38px;line-height:1.25;padding-block:5px}
+/* 5.24 메일 본문 형식 */
+.mailfmt{display:flex;flex-direction:column;gap:6px}
 </style>
 </head>
 <body>
@@ -1217,8 +1219,9 @@ table.ttg.widecol th.tcol{width:3.9rem}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.23.2", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.24.0", APP_DATE="2026-10-20", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.24.0",date:"2026-10-20",items:["학생 서명 요청 메일 새 디자인: 반·종류·제목, 점수 표(항목 | 점수), 큰 ‘✍️ 점수 확인하고 서명하기’ 버튼, 서명 마감, 안내 문구를 카드 모양으로. 버튼을 누르면 서명 화면이 열리고 긴 링크는 보이지 않음 (Gmail로 보내기)", "메일 앱으로 보낼 때 ‘메일 앱 본문’ 고르기: ‘표 · 서명 버튼 (붙여 넣기)’를 고르면 같은 디자인의 본문을 복사해 두고 메일 앱을 열어, 본문을 길게 눌러 붙여 넣으면 표와 버튼이 들어감. ‘글자만’은 점수를 줄로 정리하고 링크를 맨 아래 한 곳에", "서명 링크를 짧게: 종류별 기본 문구와 앱 주소를 링크에서 빼 길이를 약 45% 줄임 (문자로 보낼 때도 짧아짐). 예전에 보낸 링크도 그대로 열림"]},
   {v:"5.23.2",date:"2026-10-20",items:["시간표 왼쪽 칸의 ‘1교시 이전’ 같은 시간 이름이 잘리지 않게: 낱말 단위로 줄바꿈하고, 그래도 넘치면 칸 안에서 글자 단위로 줄바꿈. 1교시 이전 시간이 있거나 이름이 길면 왼쪽 칸을 조금 넓힘", "‘오늘’ 화면의 시간 표시(1교시 이전 · 점심시간 등)와 일정 추가의 ‘시간표에서 고르기’ 버튼도 글자가 잘리지 않고 줄바꿈"]},
   {v:"5.23.1",date:"2026-10-20",items:["출석 체크 오류 고침: 구글 동기화를 쓰는 중 학생을 출석으로 눌러도 잠시 뒤 결석으로 되돌아가던 문제. 동기화가 드라이브 자료를 내려받는 동안 이 기기에서 바꾼 출석이 덮이던 것을, 받은 뒤 지금 상태와 다시 합치도록 바꿈", "같은 출석 체크를 휴대폰과 컴퓨터에서 동시에 고쳐도 학생별로 합침 (예전에는 한쪽 기기의 체크가 통째로 덮여 다른 학생의 출석이 결석으로 바뀔 수 있었음)"]},
   {v:"5.23.0",date:"2026-10-20",items:["시간표의 1교시 이전 · 점심시간 · 방과 후 칸에 ‘매주 고정 활동’ 넣기: 조례·종례·정문지도·급식지도·상담·학생 활동·부서업무·동아리·보충수업·회의 또는 직접 입력, 월~금 한 번에 넣기 가능", "1교시 이전 시간을 따로 만들지 않았어도 시간표 맨 위에 ‘1교시 전’ 줄이 생겨 활동을 넣을 수 있음 (아침활동·조례 등 1교시 이전 시간을 만든 경우 그 칸에 넣음)", "이 칸들에 활동 이름과 그 시간의 일정 제목이 바로 보임 (예: 점심 상담 / 학부모 통화). 칸을 누르면 그 날 일정 보기·추가와 고정 활동 고치기", "일정 연동: 일정 추가에서 1교시 이전·점심시간·방과 후 시간을 고르면 시간표 그 칸에 표시되고, ‘매주 같은 요일 고정 활동으로 시간표에 넣기’를 고르면 고정 활동으로 들어감", "‘오늘’ 화면과 날짜별 일정 창에 그 날의 고정 활동도 함께 표시. 수업이 없는 날(휴업·방학 등)에는 고정 활동을 숨김"]},
@@ -4510,19 +4513,51 @@ function wireKind(ev,onKind){let k=(ev&&ev.kind)||"score";const def=()=>evKind({
 /* 학생에게 보내는 서명 링크 */
 async function signLink(ev,st){
   const K=evKind(ev);
-  const p={k:"ev",v:1,e:ev.id,s:st.sid,t:st.tok,h:st.h,n:st.name,c:ev.clsName,ti:ev.title,cols:ev.cols,vals:st.vals,due:ev.due,note:ev.note,to:ev.reply,ap:appUrl(),by:APP_NAME,kd:K.k,kl:K.l,bx:K.box,ag:K.agree,tip:K.tip,act:K.act};
+  /* 링크를 짧게: 종류별 기본 문구와 앱 주소는 서명 화면이 스스로 알기 때문에 바뀐 것만 넣습니다 */
+  const D0=SIGN_KINDS.find(x=>x.k===K.k)||SIGN_KINDS[0];
+  const p={k:"ev",v:2,e:ev.id,s:st.sid,t:st.tok,h:st.h,n:st.name,c:ev.clsName,ti:ev.title,cols:ev.cols,vals:st.vals,to:ev.reply,kd:K.k};
+  if(ev.due)p.due=ev.due;if(ev.note)p.note=ev.note;
+  if(K.l!==D0.l)p.kl=K.l;if(K.box!==D0.box)p.bx=K.box;if(K.agree!==D0.agree)p.ag=K.agree;if(K.tip!==D0.tip)p.tip=K.tip;
+  if(!/\/(index\.html)?$/.test(appUrl().split("?")[0]))p.ap=appUrl().split("?")[0];
   return appDir()+"sign.html#s="+await encode(p);
 }
+function mailBtnLabel(ev){const K=evKind(ev);return K.k==="score"?"점수 확인하고 서명하기":K.act+"하기"}
 function mailText(ev,st,link){
-  const K=evKind(ev),sc=K.k==="score";
-  return `${st.name} 학생, ${ev.clsName?ev.clsName+" ":""}‘${ev.title}’ ${sc?"점수를 알려 드립니다.":K.l+" 서명을 부탁합니다."}\n\n${ev.cols.length?ev.cols.map((c,i)=>`· ${c}: ${st.vals[i]||"-"}`).join("\n")+"\n\n":""}아래 링크를 열어 ${K.act}해 주세요.${ev.due?` (서명 마감: ${fmtDateW(ev.due)})`:""}\n${link}\n${ev.note?"\n"+ev.note+"\n":""}\n${K.tip}`;
+  const K=evKind(ev),sc=K.k==="score",line="────────────────";
+  return [`${st.name} 학생, 안녕하세요.`,`${ev.clsName?ev.clsName+" ":""}‘${ev.title}’ ${sc?"점수를 알려 드립니다.":K.l+" 서명을 부탁합니다."}`,"",
+    ...(ev.cols.length?[line,...ev.cols.map((c,i)=>`  ${c}  :  ${st.vals[i]||"-"}`),line,""]:[]),
+    ...(ev.note?[`선생님 말씀: ${ev.note}`,""]:[]),
+    `✍ ${mailBtnLabel(ev)}${ev.due?` (마감 ${fmtDateW(ev.due)})`:""}`,`아래 파란 링크를 누르세요.`,link,"",K.tip].join("\n");
 }
 function mailHTML(ev,st,link){
-  const K=evKind(ev),sc=K.k==="score";
-  return `<div style="font-family:sans-serif;font-size:15px;line-height:1.6;color:#1d2621"><p>${esc(st.name)} 학생, ${esc(ev.clsName)} ‘${esc(ev.title)}’ ${sc?"점수를 알려 드립니다.":esc(K.l)+" 서명을 부탁합니다."}</p>
-  <table style="border-collapse:collapse;margin:8px 0">${ev.cols.map((c,i)=>`<tr><td style="border:1px solid #ccd;padding:6px 10px;background:#f3f5f2">${esc(c)}</td><td style="border:1px solid #ccd;padding:6px 14px;font-weight:bold">${esc(st.vals[i]||"-")}</td></tr>`).join("")}</table>
-  <p><a href="${esc(link)}" style="display:inline-block;background:#24476b;color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:bold">${esc(K.act)}하기</a></p>
-  ${ev.due?`<p>서명 마감: ${esc(fmtDateW(ev.due))}</p>`:""}${ev.note?`<p>${esc(ev.note)}</p>`:""}<p style="color:#6a756e;font-size:13px">${esc(K.tip)}</p></div>`;
+  const K=evKind(ev),sc=K.k==="score",ink="#1d2621",mut="#6a756e",acc="#24476b",line="#dde3de";
+  const rows=ev.cols.map((c,i)=>{const last=i===ev.cols.length-1&&/총점|합계|계$/.test(c);return `<tr><td style="padding:10px 14px;border-top:1px solid ${line};color:${mut};font-size:14px">${esc(c)}</td><td style="padding:10px 14px;border-top:1px solid ${line};text-align:right;font-size:${last?17:15}px;font-weight:bold;color:${last?acc:ink}">${esc(st.vals[i]||"-")}</td></tr>`}).join("");
+  return `<div style="background:#f3f5f2;padding:20px 12px;font-family:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;color:${ink}">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:14px;border-collapse:separate">
+<tr><td style="padding:22px 22px 6px"><div style="font-size:13px;color:${mut}">${esc(ev.clsName||"")}${ev.clsName?" · ":""}${esc(K.l)}</div>
+<div style="font-size:20px;font-weight:bold;margin-top:4px">${esc(ev.title)}</div>
+<div style="font-size:15px;margin-top:10px">${esc(st.name)} 학생, ${sc?"점수를 알려 드립니다. 확인한 뒤 서명해 주세요.":"아래 내용을 확인하고 서명해 주세요."}</div></td></tr>
+${ev.cols.length?`<tr><td style="padding:12px 22px 4px"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid ${line};border-radius:10px;border-collapse:separate;overflow:hidden">
+<tr><th align="left" style="padding:9px 14px;background:#eef1ee;font-size:13px;color:${mut};font-weight:bold">항목</th><th align="right" style="padding:9px 14px;background:#eef1ee;font-size:13px;color:${mut};font-weight:bold">${sc?"점수":"내용"}</th></tr>${rows}</table></td></tr>`:""}
+${ev.note?`<tr><td style="padding:10px 22px 0;font-size:14px"><b>선생님 말씀</b> · ${esc(ev.note)}</td></tr>`:""}
+<tr><td align="center" style="padding:22px 22px 8px"><a href="${esc(link)}" style="display:inline-block;background:${acc};color:#ffffff;font-size:16px;font-weight:bold;text-decoration:none;padding:14px 26px;border-radius:12px">✍️ ${esc(mailBtnLabel(ev))}</a>
+${ev.due?`<div style="font-size:13px;color:${mut};margin-top:10px">서명 마감 ${esc(fmtDateW(ev.due))}</div>`:""}</td></tr>
+<tr><td style="padding:10px 22px 22px;font-size:12px;color:${mut};line-height:1.6">${esc(K.tip)}<br>버튼이 눌리지 않으면 이 메일에 답장해 선생님께 알려 주세요.</td></tr>
+</table><div style="text-align:center;font-size:11px;color:#9aa39d;margin-top:10px">${esc(APP_NAME)}에서 보낸 메일</div></div>`;
+}
+/* 메일 앱으로 보내기: ‘표·버튼’이면 서식 있는 본문을 복사해 두고 메일 앱을 엽니다(본문에 붙여 넣기) → 긴 링크가 보이지 않음 */
+const MAILFMT_KEY="att-app-mailfmt";
+function mailFmt(){try{return localStorage.getItem(MAILFMT_KEY)||"rich"}catch(e){return"rich"}}
+function richMailOK(){return !!(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write)}
+async function mailOne(ev,st){
+  const subj=mailSubjEv(ev,st);
+  if(mailFmt()==="rich"&&richMailOK()){
+    const lp=signLink(ev,st);
+    try{await navigator.clipboard.write([new ClipboardItem({"text/html":lp.then(l=>new Blob([mailHTML(ev,st,l)],{type:"text/html"})),"text/plain":lp.then(l=>new Blob([mailText(ev,st,l)],{type:"text/plain"}))})]);
+      go(mailHref([st.email],"",subj));setTimeout(()=>toast("메일 본문(표·서명 버튼)을 복사했습니다. 메일 앱 본문을 길게 눌러 ‘붙여넣기’ 하세요"),300);return}
+    catch(e){/* 복사가 안 되는 브라우저는 글자 본문으로 */}
+  }
+  const link=await signLink(ev,st);go(mailHref([st.email],mailText(ev,st,link),subj));
 }
 const mailSubjEv=(ev,st)=>`[${ev.title}] ${st.name} 학생 ${evKind(ev).k==="score"?"점수 확인 및 ":""}서명 요청`;
 /* Gmail로 한꺼번에 보내기 (gmail.send 권한, 처음 한 번 허용)
@@ -4650,8 +4685,9 @@ function renderEval(){
     </section>
     <section class="card"><h2>1. 학생에게 보내기</h2>
       <div class="row2"${gmailOn()?"":" hidden"}><button class="btn pri${need.length?"":" off"}" type="button" id="evGm">${ICON.mail}${need.length?`Gmail로 ${unsent.length?`안 보낸 ${unsent.length}명에게`:`서명 안 한 ${need.length}명에게 다시`} 보내기`:"모두 서명해 보낼 학생이 없습니다"}</button></div>
+      <div class="mailfmt"><span class="shlb">메일 앱 본문</span><div class="presets" id="evMf"><button class="chip" type="button" data-f="rich" aria-pressed="${mailFmt()==="rich"}">표 · 서명 버튼 (붙여 넣기)</button><button class="chip" type="button" data-f="text" aria-pressed="${mailFmt()!=="rich"}">글자만 (링크가 보임)</button></div></div>
       <div class="row2"><button class="btn ok${nx?"":" off"}" type="button" id="evSeq">${ICON.mail}${nx?`메일 앱으로 한 명씩 ${EVS.seq.i+1}/${need.length} · ${esc(nx.name)}`:"메일 앱으로 한 명씩"}</button></div>
-      <p class="note">${gmailOn()?"Gmail로 보내면 학생마다 자기 점수만 담긴 메일이 한 번에 나갑니다(처음에 ‘Gmail로 보내기’ 권한을 한 번 허용). ":"‘Gmail로 한꺼번에 보내기’는 구글 확인 절차가 끝나면 열립니다. "}메일 앱으로 보내면 학생마다 메일 창이 열리고 보내기는 직접 누릅니다. 이메일이 없는 학생은 아래 목록의 문자 버튼으로 서명 링크를 보낼 수 있습니다.</p>
+      <p class="note">${gmailOn()?"Gmail로 보내면 학생마다 자기 점수만 담긴 메일이 한 번에 나갑니다(처음에 ‘Gmail로 보내기’ 권한을 한 번 허용). ":"‘Gmail로 한꺼번에 보내기’는 구글 확인 절차가 끝나면 열립니다. "}Gmail로 보내면 점수 표와 ‘서명하기’ 버튼이 든 메일이 가고 긴 링크는 보이지 않습니다. 메일 앱으로 보내면 학생마다 메일 창이 열리고 보내기는 직접 누릅니다. 이메일이 없는 학생은 아래 목록의 문자 버튼으로 서명 링크를 보낼 수 있습니다.</p>
     </section>
     <section class="card"><h2>2. 서명 받기</h2>
       <p class="note">학생이 서명하면 선생님 메일(${esc(ev.reply)})로 ‘서명 링크’가 옵니다. <b>메일의 링크를 누르면</b> 이 앱이 열리며 서명이 자동으로 들어갑니다. 여러 개를 한 번에 넣으려면 메일 내용을 복사해 아래에 붙여 넣으세요.</p>
@@ -4680,15 +4716,16 @@ function renderEval(){
   $("evGm").onclick=()=>{const list=unsent.length?unsent:need;if(!list.length)return toast(withEm.length?"보낼 학생이 없습니다. 모두 서명했습니다":"이메일이 있는 학생이 없습니다");
     ask(`<h2>Gmail로 보내기</h2><p class="note">${list.length}명에게 각자 자기 점수와 서명 링크를 담은 메일을 <b>${esc(G.email||"내 Gmail")}</b> 계정으로 보냅니다.</p><p class="note">${esc(list.map(x=>x.name).join(", "))}</p>`,"보내기",()=>gmailReady(()=>gmailSendAll(ev,list)))};
   $("evSeq").onclick=async()=>{if(!need.length)return toast(withEm.length?"모두 서명했습니다":"이메일이 있는 학생이 없습니다");if(!nx){EVS.seq.i=0;return renderEval()}
-    const link=await signLink(ev,nx);nx.sentAt=Date.now();nx.via="mail";EVS.seq.i++;save();renderEval();go(mailHref([nx.email],mailText(ev,nx,link),mailSubjEv(ev,nx)))};
+    const who=nx;mailOne(ev,who);who.sentAt=Date.now();who.via="mail";EVS.seq.i++;save();renderEval()};
   $("evPasteOk").onclick=()=>importSigText($("evPaste").value);
+  $("evMf").querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{try{localStorage.setItem(MAILFMT_KEY,b.dataset.f)}catch(e){}renderEval();toast(b.dataset.f==="rich"?"메일 앱이 열리면 본문을 길게 눌러 ‘붙여넣기’ 하세요. 점수 표와 서명 버튼이 들어갑니다":"메일 본문에 점수와 서명 링크가 글자로 들어갑니다")});
   $("evXl").onclick=()=>exportOpts(ev,"xlsx");$("evPdf").onclick=()=>exportOpts(ev,"pdf");
   twoStep($("evDel"),"정말 삭제",()=>{S.evals=evals().filter(e=>e!==ev);EVS.cur=null;save();renderEval();toast("평가를 삭제했습니다")});
   SL.querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{const st=ev.stu[+b.dataset.i],a=b.dataset.a;
     if(a==="unsig")return ask(`<h2>서명 지우기</h2><p class="note">${esc(st.name)} 학생의 서명을 지우고 다시 받을 수 있게 합니다.</p>`,"지우기",()=>{st.sig=null;st.tok=rndTok();save();renderEval();toast("서명을 지웠습니다. 새 링크로 다시 보내세요")});
+    if(a==="mail"){if(!isEmail(st.email))return toast(st.name+" 학생 이메일이 없습니다. 문자나 링크 복사를 쓰세요");mailOne(ev,st);st.sentAt=Date.now();st.via="mail";save();renderEval();return}
     const link=await signLink(ev,st);
     if(a==="copy"){copy(link,st.name+" 학생 서명 링크를 복사했습니다");return}
-    if(a==="mail"){if(!isEmail(st.email))return toast(st.name+" 학생 이메일이 없습니다. 문자나 링크 복사를 쓰세요");st.sentAt=Date.now();st.via="mail";save();renderEval();go(mailHref([st.email],mailText(ev,st,link),mailSubjEv(ev,st)));return}
     if(a==="sms"){const c=S.list.find(x=>x.id===ev.clsId),ph=c&&c.data.phones[st.sid];if(!ph||digits(ph).length<8)return toast(st.name+" 학생 전화번호가 없습니다");st.sentAt=Date.now();st.via="sms";save();renderEval();
       go(smsHref([digits(ph)],`[${ev.title}] ${st.name} 학생 ${evKind(ev).k==="score"?"점수 확인 및 ":""}서명: ${link}`))}});
 }

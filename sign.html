@@ -85,6 +85,14 @@ decode(decodeURIComponent(m[1])).then(function(p){
   var sc=!p.kd||p.kd==="score";
   document.title=(p.ti||"수행평가")+(sc?" · 점수 확인":" · 확인 서명");
   $("title").textContent=p.ti||(sc?"수행평가 점수 확인":"확인 · 서명");
+  /* 종류별 기본 문구 (링크에는 바뀐 문구만 들어옴) */
+  var KD={score:{l:"수행평가 점수 확인",bx:"내 점수",ag:"위 점수를 확인했고, 이의가 없습니다.",tip:"점수에 이의가 있으면 서명하지 말고 선생님께 먼저 말씀해 주세요."},
+    act:{l:"활동 참여 확인",bx:"활동 내용",ag:"위 활동에 참여했음을 확인합니다.",tip:"내용이 사실과 다르면 서명하지 말고 선생님께 먼저 말씀해 주세요."},
+    notice:{l:"안내문 · 가정통신문 확인",bx:"안내 내용",ag:"위 안내 내용을 읽고 확인했습니다.",tip:"궁금한 점은 서명 전에 선생님께 물어보세요."},
+    agree:{l:"동의서 · 서약서",bx:"동의 내용",ag:"위 내용을 읽고 이에 동의합니다.",tip:"동의하지 않으면 서명하지 말고 선생님께 말씀해 주세요."},
+    custom:{l:"직접 입력",bx:"확인 내용",ag:"위 내용을 확인했습니다.",tip:"내용이 다르면 서명하지 말고 선생님께 먼저 말씀해 주세요."}};
+  var d0=KD[p.kd||"score"]||KD.score;p.kl=p.kl||d0.l;p.bx=p.bx||d0.bx;p.ag=p.ag||d0.ag;p.tip=p.tip||d0.tip;
+  if(!p.ap)p.ap=location.href.split("#")[0].split("?")[0].replace(/sign\.html$/,"");
   if(p.bx)$("boxT").textContent=p.bx;if(p.ag)$("agT").textContent=p.ag;if(p.tip)$("tipT").textContent=p.tip;
   if(!sc&&p.kl){var kk=document.createElement("div");kk.className="sub";kk.textContent=p.kl;$("title").insertAdjacentElement("afterend",kk)}
   $("who").textContent=[p.c,p.n?p.n+" 학생":"",p.s?"("+p.s+")":""].filter(Boolean).join(" ");
