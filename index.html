@@ -1247,8 +1247,9 @@ table.ttg.widecol th.tcol{width:3.9rem}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.25.0", APP_DATE="2026-10-21", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.25.1", APP_DATE="2026-10-21", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.25.1",date:"2026-10-21",items:["앱 음악 ‘아침 햇살’ · ‘저녁 노을’이 나오지 않던 문제 고침: 소리를 그때그때 합성하던 방식(휴대폰 무음 스위치에 막히던 방식) 대신 진짜 음원 파일(sounds/morning.mp3 · evening.mp3, 각 1분 17초가량)로 바꿈. 피아노 · 패드 · 벨로 새로 지은 곡","무음 모드에서도 미디어 소리로 재생, 한 번 들으면 인터넷 없이도 재생(아이폰 부분 재생 요청까지 처리)","sounds 폴더를 꼭 함께 올려 주세요"]},
   {v:"5.25.0",date:"2026-10-21",items:["응원 한마디: 평일 아침 앱을 처음 열면 ‘좋은 아침입니다, ○○ 선생님’과 그날의 응원 메시지(28가지가 날마다 바뀜), 오늘 수업·할 일 수를 띄움", "저녁 인사: 마지막 수업이 끝난 뒤(또는 정한 시각) 앱을 열면 ‘오늘 하루 어떠셨나요? 오늘도 애쓰셨습니다.’와 위로의 말, 오늘 한 일(출석 체크·관찰 기록·마친 할 일)을 띄움. 기분(좋았어요·괜찮았어요·힘들었어요·속상했어요)을 고르면 답을 건네고, ‘오늘의 한 줄’을 이 기기에만 남김", "하루를 여는 음악 · 닫는 음악: 앱이 직접 연주하는 짧은 곡 ‘아침 햇살’ · ‘저녁 노을’(직접 만든 곡), 내 음악 파일(이 기기에 저장), 음악 링크(유튜브 등) 중 선택. 인사 창에서 ▶를 누르면 재생, 창을 닫으면 멈춤", "설정 → 보관 · 화면 · 정보 → ‘응원 메시지 · 음악’: 아침·저녁 인사 켜기/끄기, 저녁 인사 시각(마지막 수업 끝나면 · 16:30 · 17:30 · 19:00), 주말에도, 음악 고르기, 지금 보기, 지난 ‘오늘의 한 줄’ 보기"]},
   {v:"5.24.1",date:"2026-10-21",items:["휴강 · 결강 오류 고침: 시간표에서 휴강·결강(수업 변동)이나 그날 전체 ‘수업 없음’(재량휴업·시험 등)으로 바꾼 수업의 출석 체크가 출석 통계에 결석으로 들어가던 문제. 이제 출석 통계·월별 출결표·학생 한눈에 보기·결석 연락·‘오늘’에서 빠짐", "출석 체크 화면에서 직접 ‘휴강 · 결강 처리’ (휴강 / 결강 / 학교 행사 / 시험): 체크한 내용은 남기고 통계에서만 뺌, ‘휴강 처리 풀기’로 되돌림. 휴강 처리된 체크는 탭에 ‘결강’ 등으로 표시", "출석 통계 첫 칸에 뺀 휴강 횟수 표시 (예: 휴강 2회 뺌)"]},
   {v:"5.24.0",date:"2026-10-20",items:["학생 서명 요청 메일 새 디자인: 반·종류·제목, 점수 표(항목 | 점수), 큰 ‘✍️ 점수 확인하고 서명하기’ 버튼, 서명 마감, 안내 문구를 카드 모양으로. 버튼을 누르면 서명 화면이 열리고 긴 링크는 보이지 않음 (Gmail로 보내기)", "메일 앱으로 보낼 때 ‘메일 앱 본문’ 고르기: ‘표 · 서명 버튼 (붙여 넣기)’를 고르면 같은 디자인의 본문을 복사해 두고 메일 앱을 열어, 본문을 길게 눌러 붙여 넣으면 표와 버튼이 들어감. ‘글자만’은 점수를 줄로 정리하고 링크를 맨 아래 한 곳에", "서명 링크를 짧게: 종류별 기본 문구와 앱 주소를 링크에서 빼 길이를 약 45% 줄임 (문자로 보낼 때도 짧아짐). 예전에 보낸 링크도 그대로 열림"]},
@@ -5861,11 +5862,11 @@ function dayIdx(n){const d=today().split("-").map(Number);return(d[0]*372+d[1]*3
 function cheerPmTime(){const p=cheerPref();if(p.pmAt!=="auto")return p.pmAt;const t=TT(),d=today();
   if(t&&wdOf(d)<=4){const rows=ttRows(t,d);const last=rows[rows.length-1].end;const A=(t.acts||{})["after|"+wdOf(d)];return A?toHM(Math.max(toMin(last)+60,toMin(last))):last}return"16:30"}
 /* --- 앱이 연주하는 짧은 곡 (직접 만든 곡이라 저작권 걱정 없음) --- */
-let CHEER_AC=null,CHEER_AUD=null;
-function cheerStop(){try{if(CHEER_AC){CHEER_AC.close();CHEER_AC=null}}catch(e){}try{if(CHEER_AUD){CHEER_AUD.pause();URL.revokeObjectURL(CHEER_AUD.src);CHEER_AUD=null}}catch(e){}document.querySelectorAll("[data-cplay]").forEach(b=>b.classList.remove("playing"))}
+let CHEER_AC=null,CHEER_AUD=null;const CHEER_SRC={am:"sounds/morning.mp3",pm:"sounds/evening.mp3"};
+function cheerStop(){try{if(CHEER_AC){CHEER_AC.close();CHEER_AC=null}}catch(e){}try{if(CHEER_AUD){const a=CHEER_AUD;CHEER_AUD=null;a.onerror=null;a.pause();if(/^blob:/.test(a.src))URL.revokeObjectURL(a.src)}}catch(e){}document.querySelectorAll("[data-cplay]").forEach(b=>b.classList.remove("playing"))}
 function playTune(kind){
   cheerStop();const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return toast("이 브라우저는 소리를 낼 수 없습니다");
-  const ac=new AC();CHEER_AC=ac;const t0=ac.currentTime+.1,master=ac.createGain();master.gain.value=.0001;master.connect(ac.destination);
+  const ac=new AC();CHEER_AC=ac;try{if(ac.state!=="running")ac.resume()}catch(e){}const t0=ac.currentTime+.1,master=ac.createGain();master.gain.value=.0001;master.connect(ac.destination);
   /* 잔향: 짧은 지연 되먹임 */
   const dl=ac.createDelay(1);dl.delayTime.value=kind==="am"?.28:.42;const fb=ac.createGain();fb.gain.value=.32;const wet=ac.createGain();wet.gain.value=.35;
   master.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(ac.destination);
@@ -5896,7 +5897,11 @@ async function cheerPlay(kind,btn){
   if(mode==="none")return toast("설정 → 응원 메시지 · 음악에서 음악을 고르세요");
   if(mode==="link"){const u=kind==="am"?P.amL:P.pmL;if(!/^https?:\/\//.test(u))return toast("설정에서 음악 링크를 넣어 주세요");window.open(u,"_blank","noopener");return}
   if(mode==="file"){try{const blob=await mGet("cheer:"+kind);if(!blob)return toast("설정에서 음악 파일을 골라 주세요");cheerStop();const a=new Audio(URL.createObjectURL(blob));CHEER_AUD=a;a.volume=.8;a.onended=()=>cheerStop();await a.play()}catch(e){return toast("음악을 재생하지 못했습니다")}}
-  else playTune(kind);
+  else{/* 5.25.1: 앱에 들어 있는 음원 파일(sounds/)을 재생합니다. 휴대폰 무음 스위치와 상관없이 미디어 소리로 나옵니다. 버튼을 누른 그 순간에 바로 재생해야 휴대폰이 막지 않습니다. */
+    cheerStop();const a=new Audio(CHEER_SRC[kind]);a.preload="auto";CHEER_AUD=a;a.volume=1;let fell=false;
+    const fallback=()=>{if(fell||CHEER_AUD!==a)return;fell=true;CHEER_AUD=null;playTune(kind);if(btn)btn.classList.add("playing")};
+    a.onended=()=>{if(CHEER_AUD===a)cheerStop()};a.onerror=fallback;
+    const pr=a.play();if(pr&&pr.catch)pr.catch(e=>{if(e&&e.name==="NotAllowedError"){cheerStop();toast("휴대폰이 소리 재생을 막았습니다. ▶ 버튼을 한 번 더 눌러 주세요")}else fallback()})}
   if(btn)btn.classList.add("playing");
 }
 function cheerMusicBtn(kind){const P=cheerPref(),m=kind==="am"?P.amM:P.pmM;if(m==="none")return"";const nm=m==="tune"?(kind==="am"?"아침 햇살":"저녁 노을"):m==="file"?"내 음악":"음악 링크";return `<button class="btn cplay" type="button" data-cplay="${kind}"><span class="pl">▶</span><span class="ps">■</span> ${kind==="am"?"하루를 여는 음악":"하루를 닫는 음악"} <small>${esc(nm)}</small></button>`}
@@ -5958,7 +5963,7 @@ function renderCheerSet(){
     <div class="uirow"><div class="shlb">주말에도</div><div class="presets">${opt("wk",false,"평일만")}${opt("wk",true,"주말에도")}</div></div>
     <h3 class="sh3">하루를 여는 음악</h3>${mus("am")}
     <h3 class="sh3">하루를 닫는 음악</h3>${mus("pm")}
-    <p class="note">‘아침 햇살’과 ‘저녁 노을’은 이 앱이 직접 연주하는 1분 남짓의 짧은 곡입니다. 내 음악 파일은 이 기기에만 저장됩니다. 음악은 인사 창에서 ▶를 눌러야 나옵니다(자동으로 소리가 나지 않음).</p>
+    <p class="note">‘아침 햇살’(밝은 피아노, 1분 18초)과 ‘저녁 노을’(잔잔한 피아노, 1분 17초)은 이 앱을 위해 새로 지은 곡이라 저작권 걱정이 없습니다. 휴대폰 무음 모드에서도 미디어 소리로 나오니 미디어 음량을 확인해 주세요. 한 번 들으면 인터넷이 없어도 다시 들을 수 있습니다. 내 음악 파일은 이 기기에만 저장됩니다. 음악은 인사 창에서 ▶를 눌러야 나옵니다(자동으로 소리가 나지 않음).</p>
     ${ks.length?`<details class="gsfix"><summary>지난 ‘오늘의 한 줄’ (${Object.keys(D0).length}일)</summary><div class="abslist">${ks.map(k=>{const r=D0[k],m=CHEER_MOOD.find(x=>x[0]===r.m);return `<div><span><b>${esc(fmtDate(k))}</b> ${m?m[1]+" "+esc(m[2]):""}<br><small>${esc(r.t||"")}</small></span></div>`}).join("")}</div></details>`:""}`;
   B.querySelectorAll("[data-ck]").forEach(b=>b.onclick=()=>{let v=b.dataset.cv;if(v==="true")v=true;else if(v==="false")v=false;cheerSet(b.dataset.ck,v);renderCheerSet()});
   ["am","pm"].forEach(kind=>{const f=$("cf_"+kind);if(f)f.onchange=async e=>{const x=e.target.files&&e.target.files[0];e.target.value="";if(!x)return;if(x.size>30*1048576)return toast("30MB 이하의 음악 파일을 골라 주세요");try{await mPut("cheer:"+kind,x);toast(`‘${x.name}’을(를) ${kind==="am"?"아침":"저녁"} 음악으로 저장했습니다`)}catch(err){toast("저장하지 못했습니다")}};
