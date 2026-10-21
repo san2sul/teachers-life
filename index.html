@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt","tip"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])})}catch(e){}</script>
+<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt","tip","font"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])})}catch(e){}</script>
 <title>교사의 생활</title>
 <meta name="author" content="물리공작소">
 <meta name="theme-color" content="#24476b">
@@ -19,6 +19,10 @@
 <style>
 @font-face{font-family:"NanumGothic";src:url("NanumGothic-Regular.woff2") format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
 @font-face{font-family:"NanumGothic";src:url("NanumGothic-Bold.woff2") format("woff2");font-weight:600 900;font-style:normal;font-display:swap}
+/* 5.29: 고를 수 있는 글꼴 Pretendard (SIL OFL, 원본 그대로). 고른 기기에서만 내려받습니다 */
+@font-face{font-family:"Pretendard";src:url("fonts/Pretendard-Regular.woff2") format("woff2");font-weight:100 500;font-style:normal;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("fonts/Pretendard-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("fonts/Pretendard-Bold.woff2") format("woff2");font-weight:700 900;font-style:normal;font-display:swap}
 /* Layout: a pocket register — three screens (출석 / 연락 / 설정) behind a bottom bar, round tabs pinned on top */
 :root{
   --r-s:8px; --r-m:12px; --r-l:18px;
@@ -114,7 +118,7 @@ label.lb{display:flex;flex-direction:column;gap:4px;font-size:.8125rem;color:var
 }
 /* timetable */
 .ttsel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
-.weekbar{display:grid;grid-template-columns:44px minmax(0,1fr) 44px auto;gap:8px;align-items:center}
+.weekbar{display:grid;grid-template-columns:44px minmax(0,1fr) 44px auto auto;gap:8px;align-items:center}
 .weekbar .ic{font-size:1.3rem;padding:0}
 .weekbar b{text-align:center;font-size:.98rem}
 .ttwrap{margin-inline:-16px;padding-inline:6px;overflow-x:auto}
@@ -922,6 +926,31 @@ label.chk input[type=checkbox]{width:22px;height:22px;flex:none}
 }
 /* 5.28: 굵기는 400 · 600 · 700 세 가지만 (굵은 글자 안의 <b>가 더 굵어지지 않게) */
 b,strong{font-weight:700}
+/* 5.29: 시간표 하루 보기 */
+.weekbar .ttmode{grid-column:5}.weekbar #ttThisWeek{grid-column:4}
+.ddays{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-bottom:10px}
+.dday{border:0;background:var(--paper);border-radius:var(--r-m);min-height:52px;font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--sh)}
+.dday small{font-size:.75rem;color:var(--muted)}.dday.today b,.dday.today small{color:var(--accent)}
+.dday.on{background:var(--accent);color:#fff}.dday.on small,.dday.on.today b,.dday.on.today small{color:#fff}
+@media (prefers-color-scheme:dark){.dday.on{color:#10161b}.dday.on small,.dday.on.today b,.dday.on.today small{color:#10161b}}
+.dnote{margin:0 0 8px;color:var(--absent);font-weight:600;font-size:.875rem}
+.dlist{display:flex;flex-direction:column;gap:6px}
+.drow{appearance:none;display:grid!important;grid-template-columns:5.9rem minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;min-height:62px!important;height:auto!important;padding:10px 12px!important;text-align:left;border:0;border-radius:var(--r-m)!important;background:var(--paper);box-shadow:var(--sh);font:inherit;color:var(--ink);cursor:pointer;position:relative}
+.drow .dtm{display:flex;flex-direction:column}.drow .dtm b{font-size:.9375rem!important}.drow .dtm small{font-size:.8125rem!important;color:var(--muted);font-family:var(--f-num);white-space:nowrap}
+.drow .dbody{display:flex;flex-direction:column;min-width:0;align-items:flex-start}.drow .dbody b{font-size:1.0625rem!important;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.drow .dbody small{font-size:.875rem!important;color:var(--muted)}
+.drow em{font-style:normal;font-size:.8125rem;font-weight:700;color:var(--muted);white-space:nowrap}.drow em.ok{color:var(--present)}.drow em.ab{color:var(--absent)}
+.drow.empty{background:var(--tint);box-shadow:none}.drow.dgap{background:var(--tint);box-shadow:none;min-height:52px!important}
+.drow.now,.drow.live{outline:2.5px solid var(--present);outline-offset:-2px;background:var(--present-soft)}
+.drow.cancel{background:var(--absent-soft);box-shadow:none}.drow.cancel b{color:var(--absent)}
+.dmuted{color:var(--muted);font-size:.875rem}
+.dtag{font-style:normal;font-size:.75rem;font-weight:700;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:1px 8px}
+.drow .dbody .evn,.drow .dbody span{font-size:.875rem}
+/* 5.29: 버튼 글자가 어색하게 끊기지 않게 (덩어리 단위로만 줄바꿈) */
+.nw{white-space:nowrap}
+.filebtn small.nw{font-weight:600;opacity:.85;font-size:.8125rem}
+/* 5.29: 글꼴 고르기 */
+html[data-font="pre"]{--f-body:"Pretendard","NanumGothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--f-num:"Pretendard","NanumGothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+html[data-font="pre"] body{letter-spacing:-.005em}
 </style>
 </head>
 <body>
@@ -942,6 +971,7 @@ b,strong{font-weight:700}
     <b id="ttWeekTxt"></b>
     <button class="btn ic" type="button" id="ttNext" aria-label="다음 주">›</button>
     <button class="btn" type="button" id="ttThisWeek">이번 주</button>
+    <span class="vseg ttmode" role="group" aria-label="시간표 보기"><button type="button" data-tm="week">주간</button><button type="button" data-tm="day">하루</button></span>
   </div>
   <div id="ttGridWrap">
     <div class="ttwrap" id="ttGrid"></div>
@@ -1104,7 +1134,7 @@ b,strong{font-weight:700}
   <div id="s-eval">
     <section class="card" id="evListBox"><div class="hd"><h2>학생 서명 받기 <span class="sub">수행평가 · 활동 확인 · 안내문 · 동의서</span></h2></div>
       <p class="note">수행평가 점수 확인뿐 아니라 활동 참여 확인, 안내문·가정통신문 확인, 동의서·서약서 등 학생 자필 서명이 필요한 일에 씁니다. 학생마다 서명 링크를 보내면 학생은 휴대폰에서 내용을 확인하고 손가락으로 서명해 보내고, 서명이 들어간 전표를 파일로 받습니다.</p>
-      <div class="row2"><label class="btn pri filebtn" for="evFile"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>전표 올리기 (엑셀·CSV)<input type="file" id="evFile" accept=".xlsx,.xls,.xlsm,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"></label><button class="btn" type="button" id="evTpl">전표 양식 받기</button></div>
+      <div class="row2"><label class="btn pri filebtn" for="evFile"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg><span class="nw">전표 올리기</span> <small class="nw">엑셀·CSV</small><input type="file" id="evFile" accept=".xlsx,.xls,.xlsm,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"></label><button class="btn" type="button" id="evTpl">전표 양식 받기</button></div>
       <div class="row2"><button class="btn" type="button" id="evNew">＋ 직접 만들기 (명단으로)</button></div>
       <div class="range"><label class="lb" for="evYr">학년도<select class="fld" id="evYr"></select></label><label class="lb" for="evTm">학기<select class="fld" id="evTm"><option value="">전체</option><option>1학기</option><option>2학기</option></select></label></div>
       <div class="shlb">학급</div><div class="presets" id="evClsF"></div>
@@ -1322,6 +1352,7 @@ b,strong{font-weight:700}
     <div class="uirow"><div class="shlb">글자 크기</div><div class="presets" data-ui="fs"><button class="chip" type="button" data-v="">자동</button><button class="chip" type="button" data-v="s">작게</button><button class="chip" type="button" data-v="m">보통</button><button class="chip" type="button" data-v="l">크게</button><button class="chip" type="button" data-v="xl">아주 크게</button></div></div>
     <div class="uirow"><div class="shlb">화면 배치</div><div class="presets" data-ui="lay"><button class="chip" type="button" data-v="">자동</button><button class="chip" type="button" data-v="one">한 줄 (휴대폰처럼)</button><button class="chip" type="button" data-v="two">넓게 두 줄</button></div></div>
     <div class="uirow"><div class="shlb">아래 메뉴 위치 (넓은 화면)</div><div class="presets" data-ui="nav"><button class="chip" type="button" data-v="">자동 (넓으면 왼쪽)</button><button class="chip" type="button" data-v="bottom">항상 아래</button></div></div>
+    <div class="uirow"><div class="shlb">글꼴</div><div class="presets" data-ui="font"><button class="chip" type="button" data-v="">나눔고딕 (기본)</button><button class="chip" type="button" data-v="pre">Pretendard</button></div><p class="note" data-keep>Pretendard는 고르면 이 기기에서 한 번 내려받습니다(약 2MB, 한 번 받으면 인터넷 없이도 씀).</p></div>
     <div class="uirow"><div class="shlb">사용 방법 설명</div><div class="presets" data-ui="tip"><button class="chip" type="button" data-v="">접어 두기 (ⓘ 눌러 보기)</button><button class="chip" type="button" data-v="open">항상 펼쳐 두기</button></div></div>
     <div class="uirow"><div class="shlb">시간표</div><div class="presets" data-ui="tt"><button class="chip" type="button" data-v="">한 화면에 맞추기</button><button class="chip" type="button" data-v="wide">크게 보고 옆으로 밀기</button></div></div>
     <div class="row2"><button class="btn" type="button" id="uiReset">모두 자동으로</button></div>
@@ -1358,8 +1389,9 @@ b,strong{font-weight:700}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.28.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.29.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.29.0",date:"2026-10-22",items:["출석 체크 자동 연결: 출석 탭 ‘＋ 체크 추가’로 수업 시간에 만든 체크가 시간표의 그 교시와 자동으로 이어짐. 예전에 따로 만든 체크(시간 또는 ‘N교시’ 이름이 맞는 것)도 하나로 보여 오늘 탭에 두 번 나오지 않고, 시간표 칸에 출석 수가 표시됨","시간표 하루 보기(주간 | 하루): 휴대폰에서도 큰 글자로 하루 수업·빈 시간·점심·방과 후를 한 줄씩. 지금 수업 초록, 출석 상태 표시, ‹ › 는 하루씩(주말 건너뜀), 기기마다 기억","불러오기 안전장치: 잘리거나 손상된 파일·모양이 틀린 백업·손상된 보관 파일을 미리 걸러 한국어로 안내, 학생이 없는 백업으로는 ‘완전히 바꾸기’를 막음, 학급 이름 40자·학생 이름 30자로 제한","글꼴 고르기(설정 → 화면 · 글자 크기): 나눔고딕(기본) 또는 Pretendard. Pretendard는 고른 기기에서만 한 번 내려받음","연락 화면 설명 글을 ‘사용 방법’으로 접고, ‘모두에게 문자 3명’ · ‘전표 올리기 엑셀·CSV’ 버튼 글자가 어색하게 끊기지 않게","자동 점검 묶음(teachers-life-tests): 41가지 시험을 저장소에서 한 번에 돌리는 run_all.py"]},
   {v:"5.28.0",date:"2026-10-22",items:["넓은 화면(컴퓨터·태블릿 가로 1100px 이상): 시간표 오른쪽에 ‘오늘’ 패널 — 오늘 수업과 출석 상태(지금 수업 초록 표시, 누르면 출석 체크), 연락할 결석 학생, 오늘 할 일(바로 체크), 지난 할 일 바로가기","넓은 화면 시간표는 칸 글자를 크게(과목 16px)","시간표에서 오늘 열을 옅은 파란 띠로, 지금 수업 칸과 교시 이름(● 2교시)을 초록으로 강조","디자인 규칙 정리: 모서리 둥글기 20가지 → 3단계(작게 8 · 보통 12 · 크게 18)+알약·원, 글자 굵기 3가지(400·600·700), 잠금·경고(노랑)와 일정(호박색)도 색 규칙으로 통일해 밝은·어두운 화면에서 같은 뜻","오른쪽 위 ‘도움말’ · 동기화 표시를 그림자 없는 조용한 글자 버튼으로"]},
   {v:"5.27.0",date:"2026-10-22",items:["학년도 마감 · 보관(설정 → 보관 · 화면 · 정보): 지난 학년도의 학급·명단·출석·관찰·세특 초안·평가(원본 전표 포함)·시간표·수업 메모·일정·학사일정을 한 번에 보관함으로 옮김. 올해와 지금 보는 기간은 보관하지 않음","보관함은 이 기기 대용량 저장소 + 구글 드라이브 앱 전용 공간(teachers-life-archive-연도.json)에 저장. 다른 기기에서도 보관함 목록이 보이고 드라이브에서 되살리기","되살리기: 같은 이름의 올해 학급과 섞이지 않고 그 학년도로 따로 들어감. 파일로 받기 · 보관 파일 불러오기 · 지우기 · 드라이브에서 찾기","백업 파일 저장에 보관함도 함께 들어가고, 백업을 불러오면 이 기기에 없는 보관 학년도도 되돌림","저장 공간 표시에 지난 학년도가 있으면 ‘학년도 마감 · 보관’ 바로가기. 1년 치 자료(9학급 261명·출석 709회) 기준 기본 저장 공간 사용이 약 0.7M자 → 2천 자, 동기화 파일은 약 1/7로 줄어듦"]},
   {v:"5.26.0",date:"2026-10-22",items:["출석 화면을 명단 먼저로: 수업 정보(시간·교과·교시)는 한 줄로 접히고 출석·결석 수가 그 줄에 보임. 학생 명단이 첫 화면에서 바로 시작","▦ 격자 보기(새 기본): 학생 이름 칸이 한 줄에 4개씩(넓은 화면 6~8개) 놓여 한 반이 한 화면에. 누르면 결석(빨강) ↔ 출석. ☰ 목록 보기로 바꿀 수 있고 기기마다 기억","잠그기 · 휴강 처리 · ‘이 출석 체크 삭제’는 명단 아래로 옮김 (‘전원 결석’ 옆에서 잘못 누르지 않도록)","오늘 탭: 지난 할 일은 ‘지난 할 일 N개’로 접어 두고 누르면 펼침, 묶음이 길면 8개까지만 먼저, 서명 마감은 급한 2건과 요약(건수·미서명 수)만","오늘 아래 메뉴 숫자는 오늘 할 일만 셈. 지난 할 일만 남으면 작은 점","보기 편하게: 작은 글자를 최소 12~13px로 키움, 회색·빨간 글자를 조금 진하게(글자 대비 기준 충족), 체크 칸·작은 버튼·설정 제목줄의 누르는 영역을 44px 가까이로 넓힘"]},
@@ -1451,9 +1483,9 @@ function cleanP(p){const o={};if(p&&typeof p==="object")for(const k in p)if(p[k]
 
 function normalize(d){
   const f=fresh();
-  f.cls=typeof d.cls==="string"?d.cls:"";
+  f.cls=typeof d.cls==="string"?d.cls.slice(0,40):"";
   if(+d.year)f.year=+d.year;if(d.term==="1학기"||d.term==="2학기")f.term=d.term;
-  f.roster=(d.roster||[]).filter(x=>Array.isArray(x)&&x[0]&&x[1]).map(x=>[String(x[0]),String(x[1])]);
+  f.roster=(Array.isArray(d.roster)?d.roster:[]).filter(x=>Array.isArray(x)&&x[0]&&x[1]).map(x=>[String(x[0]).slice(0,20),String(x[1]).slice(0,30)]);
   f.phones=d.phones&&typeof d.phones==="object"?{...d.phones}:{};
   f.obs=Array.isArray(d.obs)?d.obs.filter(r=>r&&r.sid&&/^\d{4}-\d{2}-\d{2}$/.test(r.date||"")).map(r=>({id:String(r.id||uid()),sid:String(r.sid),date:r.date,tags:r.tags&&typeof r.tags==="object"?{...r.tags}:{},memo:String(r.memo||""),at:+r.at||0,...(Array.isArray(r.media)&&r.media.length?{media:r.media.filter(m=>m&&m.id&&["photo","video","audio"].includes(m.t)).map(m=>({id:String(m.id),t:m.t,mime:String(m.mime||""),size:+m.size||0,at:+m.at||0,...(m.dev?{dev:String(m.dev)}:{}),...(m.dur?{dur:+m.dur}:{})}))}:{})})):[];
   {const ol={};if(d.obsLock&&typeof d.obsLock==="object")Object.entries(d.obsLock).forEach(([k,v])=>{if(/^\d{4}-\d{2}-\d{2}$/.test(k)&&+v)ol[k]=+v});if(Object.keys(ol).length)f.obsLock=ol}
@@ -1609,7 +1641,9 @@ function addSession(){
   if(!D.roster.length)return toast("먼저 설정에서 학생 명단을 넣어 주세요");
   if(!selDate)selDate=today();
   const s={id:uid(),date:selDate,time:selDate===today()?nowHM():"09:00",label:"",p:{}};
-  D.sessions.push(s);selId=s.id;save();renderAll();toast(`${fmtDate(s.date)} ${s.time} 출석 체크를 만들었습니다`);
+  {const cl=curClass(),hit=selDate===today()?ttSlotNow(cl,selDate,s.time):null;
+   if(hit){s.src=`${hit.t.id}:${hit.d}:${hit.p}`;s.time=hit.r.start;s.label=`${hit.p}교시${hit.c.subject?" "+hit.c.subject:""}`}}
+  D.sessions.push(s);selId=s.id;save();renderAll();toast(s.src?`시간표의 ${s.label} 수업으로 출석 체크를 시작합니다`:`${fmtDate(s.date)} ${s.time} 출석 체크를 만들었습니다`);
 }
 function renderAtt(){
   $("cls").textContent=(D.cls?D.cls+" ":"")+"출석부";
@@ -1710,10 +1744,11 @@ function renderCall(){
       <button class="btn ok${nx?"":" off"}" id="bNext" type="button">${ICON.sms}${nx?`한 명씩 보내기 ${seq.i+1}/${ready.length} · ${esc(nx[1])}`:(ready.length?"한 명씩 보내기 완료 · 처음부터":"한 명씩 보내기")}</button>
     </div>
     <div class="row2">
-      <button class="btn pri${ready.length>1?"":" off"}" id="bAll" type="button">${ICON.sms}모두에게 문자 (${ready.length}명)</button>
+      <button class="btn pri${ready.length>1?"":" off"}" id="bAll" type="button">${ICON.sms}<span class="nw">모두에게 문자</span> <span class="nw">${ready.length}명</span></button>
       <button class="btn${ready.length?"":" off"}" id="bCopy" type="button">번호 모두 복사</button>
     </div>
-    <p class="note">‘한 명씩 보내기’는 누를 때마다 다음 학생의 문자창이 이름이 들어간 문구로 열립니다. ‘모두에게 문자’는 같은 문구로 한 번에 보내며, 아이폰은 단체 대화방이 되어 받는 사람끼리 번호가 보일 수 있습니다.</p>`;
+    <div class="tipbox" id="callTip"><button type="button" class="tipq" aria-expanded="false"><i>i</i>사용 방법</button><div class="tipc"><p class="note">‘한 명씩 보내기’는 누를 때마다 다음 학생의 문자창이 이름이 들어간 문구로 열립니다. ‘모두에게 문자’는 같은 문구로 한 번에 보내며, 아이폰은 단체 대화방이 되어 받는 사람끼리 번호가 보일 수 있습니다.</p></div></div>`;
+  {const tb=$("callTip");if(tb){tb.firstChild.onclick=()=>{const on=tb.classList.toggle("on");tb.firstChild.setAttribute("aria-expanded",String(on))}}}
   $("bNext").onclick=()=>{
     if(!ready.length)return toast("결석 학생의 전화번호를 먼저 입력하세요");
     if(!nx){seq.i=0;renderCall();return}
@@ -1846,7 +1881,7 @@ function renderComposer(kind,all){
   const bn=c.querySelector("[data-a=next]"),ba=c.querySelector("[data-a=all]"),bc=c.querySelector("[data-a=copy]");
   bn.innerHTML=`${ICON.sms}${nx?`한 명씩 보내기 ${P.seq.i+1}/${ready.length} · ${esc(nx.name)}`:(ready.length?"한 명씩 보내기 완료 · 처음부터":"한 명씩 보내기")}`;
   bn.classList.toggle("off",!ready.length);ba.classList.toggle("off",ready.length<2);bc.classList.toggle("off",!ready.length);
-  ba.innerHTML=`${ICON.sms}모두에게 문자 (${ready.length}명)`;
+  ba.innerHTML=`${ICON.sms}<span class="nw">모두에게 문자</span> <span class="nw">${ready.length}명</span>`;
   bn.onclick=()=>{
     if(!ready.length)return toast(chosen.length?"고른 사람 중 번호가 있는 사람이 없습니다":"받을 사람을 먼저 고르세요");
     if(!nx){P.seq.i=0;renderComposer(kind,all);return}
@@ -2957,9 +2992,21 @@ function initTT(){
 initTT();
 const TT=()=>S.tt.list.find(t=>t.id===S.tt.active)||null;
 function mondayOf(d){const[y,m,dd]=d.split("-").map(Number);const x=new Date(y,m-1,dd);const w=(x.getDay()+6)%7;return ymd(new Date(y,m-1,dd-w))}
-let ttWeek=mondayOf(today()), ttEdit=false;
+let ttWeek=mondayOf(today()), ttEdit=false, ttDay=-1;
+/* 5.29: 시간표 보기 - 주간(5일) / 하루(큰 글자). 기기마다 기억 */
+const TTM_KEY="att-app-ttmode";
+function ttMode(){try{return localStorage.getItem(TTM_KEY)==="day"?"day":"week"}catch(e){return"week"}}
+function ttDayOn(){return ttMode()==="day"&&!ttEdit}
 function cellClass(c){if(!c)return null;return S.list.find(x=>x.id===c.clsId)||(c.clsName?S.list.find(x=>x.data.cls===c.clsName):null)||null}
-function cellSession(t,d,p,date){const c=cellAt(t,d,p,date),cl=cellClass(c);if(!cl)return null;const src=`${t.id}:${d}:${p}`;return{cl,s:cl.data.sessions.find(x=>x.date===date&&x.src===src)||null}}
+function cellSession(t,d,p,date){const c=cellAt(t,d,p,date),cl=cellClass(c);if(!cl)return null;const src=`${t.id}:${d}:${p}`;return{cl,s:cl.data.sessions.find(x=>x.date===date&&x.src===src)||looseSes(cl,t,p,date)}}
+/* 5.29: 시간표 칸을 거치지 않고 만든 출석 체크(출석 탭 ‘＋ 체크 추가’)도 같은 학급·날짜·교시 시간(시작 10분 전 ~ 끝)이면 그 수업으로 봅니다 */
+function looseSes(cl,t,p,date){const r=ttRows(t,date).find(x=>x.p===p);if(!r)return null;const a=toMin(r.start)-10,b=toMin(r.end);
+  return cl.data.sessions.find(x=>x.date===date&&!x.slot&&(!x.src||!/^[^:]+:\d:\d+$/.test(x.src))&&(x.time?toMin(x.time)>=a&&toMin(x.time)<b:new RegExp("^"+p+"교시(\\s|$)").test(x.label||"")))||null}
+/* 지금 시각에 이 학급 수업이 시간표에 있으면 그 칸 (출석 탭에서 체크를 새로 만들 때 자동으로 이어 붙이기) */
+function ttSlotNow(cl,date,time){const t=TT();if(!t||!cl)return null;const d=wdOf(date);if(d>4)return null;const m=toMin(time);
+  const r=ttRows(t,date).filter(x=>!x.lunch).find(x=>m>=toMin(x.start)-10&&m<toMin(x.end));if(!r)return null;
+  const c=cellAt(t,d,r.p,date);if(!c||cellClass(c)!==cl)return null;
+  if(cl.data.sessions.some(x=>x.date===date&&x.src===`${t.id}:${d}:${r.p}`))return null;return{t,d,p:r.p,r,c}}
 function renderTT(){
   const t=TT();
   if(t){try{const n=ttSyncLinked(t);if(n){save();toast(`시간표 시간에 맞춰 출석 체크·일정 ${n}개의 시간을 옮겼습니다`)}}catch(e){}try{renderPreList(t)}catch(e){}}
@@ -2977,8 +3024,11 @@ function renderTT(){
   renderAdjList(t);
   // 주
   const days=DAYS.map((_,i)=>addDays(ttWeek,i));
-  $("ttWeekTxt").textContent=`${fmtDate(days[0])} ~ ${days[0].slice(5,7)===days[4].slice(5,7)?(+days[4].slice(8))+"일":fmtDate(days[4])}`;
-  $("ttThisWeek").hidden=ttWeek===mondayOf(today());
+  if(ttDay<0)ttDay=Math.min(4,wdOf(today()));
+  $("ttWeekTxt").textContent=ttDayOn()?fmtDateW(days[ttDay]):`${fmtDate(days[0])} ~ ${days[0].slice(5,7)===days[4].slice(5,7)?(+days[4].slice(8))+"일":fmtDate(days[4])}`;
+  $("ttThisWeek").hidden=ttDayOn()?days[ttDay]===today():ttWeek===mondayOf(today());$("ttThisWeek").textContent=ttDayOn()?"오늘":"이번 주";
+  $("ttPrev").setAttribute("aria-label",ttDayOn()?"전날":"지난주");$("ttNext").setAttribute("aria-label",ttDayOn()?"다음 날":"다음 주");
+  document.querySelectorAll("[data-tm]").forEach(b=>{b.setAttribute("aria-pressed",b.dataset.tm===ttMode());b.disabled=ttEdit});
   $("ttEditBtn").setAttribute("aria-pressed",ttEdit);$("ttEditBtn").textContent=ttEdit?"편집 마침":"칸 편집";
   $("ttHint").textContent=ttEdit?"칸을 눌러 과목·학급·강의실을 넣으세요.":"칸을 누르면 그 학급의 출석 체크로 바로 갑니다.";
   const td=today(),nowM=toMin(nowHM());
@@ -3022,7 +3072,9 @@ function renderTT(){
   });
   h+=`<tr class="after"><th class="tcol"><span class="aft"><b>방과 후</b><small>${rows[rows.length-1].end}~</small></span></th>`+days.map((d,i)=>{const lastEnd=dayRows[i][dayRows[i].length-1].end;const n=S.events.filter(e=>e.date===d&&e.start>=lastEnd).length;return `<td><button class="lc" type="button" data-date="${d}" data-slot="after" aria-label="${fmtDateW(d)} 방과 후 일정">${gapCellHTML(t,"after",d,'<span class="plus">＋</span>')}</button></td>`}).join("")+"</tr>";
   h+="</tbody></table>";
+  if(ttDayOn())h=ttDayHTML(t,days,ttDay,td,nowM);
   $("ttGrid").innerHTML=h;try{renderTtSide()}catch(e){}
+  $("ttGrid").querySelectorAll("[data-dd]").forEach(b=>b.onclick=()=>{ttDay=+b.dataset.dd;renderTT()});
   $("ttGrid").querySelectorAll(".lc").forEach(b=>b.onclick=()=>b.dataset.pre?preMenu(t,b.dataset.pre,b.dataset.date):["lunch","after","pre"].includes(b.dataset.slot)?gapMenu(t,b.dataset.slot,b.dataset.date):dayMenu(b.dataset.date,b.dataset.slot));
   $("ttGrid").querySelectorAll(".tbtn").forEach(b=>b.onclick=()=>b.dataset.pre?preEdit(t,b.dataset.pre):adjPeriod(t,b.dataset.k));
   if($("preAdd"))$("preAdd").onclick=()=>preEdit(t,null);
@@ -3134,6 +3186,7 @@ function startCellAttendance(t,d,p,date){
   const r=ttRows(t,date).find(x=>x.p===p),src=`${t.id}:${d}:${p}`;
   S.active=cl.id;D=cl.data;
   let s=D.sessions.find(x=>x.date===date&&x.src===src);
+  if(!s){const lo=looseSes(cl,t,p,date);if(lo){s=lo;s.src=src;if(!s.label)s.label=`${p}교시${c.subject?" "+c.subject:""}`}}
   if(!s){s={id:uid(),date,time:r.start,label:`${p}교시${c.subject?" "+c.subject:""}`,p:{},src};D.sessions.push(s);toast(`${clsName()} ${p}교시 출석 체크를 시작합니다`)}
   selDate=date;selId=s.id;save();show("att");
 }
@@ -3359,9 +3412,12 @@ $("ttStart").oninput=e=>{const raw=e.target.value;clearTimeout(ttDeb.ttStart);tt
   $(id).oninput=e=>{const raw=e.target.value;clearTimeout(ttDeb[id]);ttDeb[id]=setTimeout(()=>{delete ttDeb[id];const v=parseInt(raw,10);if(!isNaN(v)&&v>=lo&&v<=hi)ttSet(k,v)},500)};
   $(id).onblur=e=>{const v=parseInt(e.target.value,10);if(isNaN(v)||v<lo||v>hi){toast(`${lo}~${hi}분 사이로 넣어 주세요`);e.target.value=TT()?TT()[k]:""}};
 });
-$("ttPrev").onclick=()=>{ttWeek=addDays(ttWeek,-7);renderTT()};
-$("ttNext").onclick=()=>{ttWeek=addDays(ttWeek,7);renderTT()};
-$("ttThisWeek").onclick=()=>{ttWeek=mondayOf(today());renderTT()};
+/* 5.29: 하루 보기에서는 ‹ › 가 하루씩 (주말은 건너뜀) */
+const ttDayStep=k=>{let i=ttDay+k;if(i<0){ttWeek=addDays(ttWeek,-7);i=4}else if(i>4){ttWeek=addDays(ttWeek,7);i=0}ttDay=i;renderTT()};
+$("ttPrev").onclick=()=>{if(ttDayOn())return ttDayStep(-1);ttWeek=addDays(ttWeek,-7);renderTT()};
+$("ttNext").onclick=()=>{if(ttDayOn())return ttDayStep(1);ttWeek=addDays(ttWeek,7);renderTT()};
+$("ttThisWeek").onclick=()=>{ttWeek=mondayOf(today());ttDay=Math.min(4,wdOf(today()));renderTT()};
+document.querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{try{localStorage.setItem(TTM_KEY,b.dataset.tm)}catch(e){}if(b.dataset.tm==="day"&&ttWeek===mondayOf(today()))ttDay=Math.min(4,wdOf(today()));renderTT()});
 $("ttEditBtn").onclick=()=>{ttEdit=!ttEdit;renderTT()};
 twoStep($("ttDel"),"정말 삭제",()=>{const t=TT();if(!t)return;S.tt.list=S.tt.list.filter(x=>x!==t);S.tt.active=S.tt.list[0]?S.tt.list[0].id:"";save();toast(ttName(t)+" 시간표를 삭제했습니다");renderTT()});
 
@@ -3862,6 +3918,11 @@ function readBackup(p){
   else if(Array.isArray(p.roster)){classes=[p];kind="single"}
   else if(Array.isArray(p.list)&&p.list.some(c=>c&&c.data)){classes=p.list.filter(c=>c&&c.data).map(c=>({...c.data,_id:c.id}));kind="full";p={...p,staff:p.staff,tt:p.tt,notes:p.notes,events:p.events}}
   else throw new Error("교사의 생활(출석부앱) 백업이 아닙니다.");
+  /* 5.29: 모양이 틀린 항목은 미리 걸러 냅니다 (합치는 도중 멈추지 않게) */
+  {const objs=a=>Array.isArray(a)?a.filter(x=>x&&typeof x==="object"&&!Array.isArray(x)):[];
+   p={...p,staff:objs(p.staff),tt:p.tt&&typeof p.tt==="object"&&Array.isArray(p.tt.list)?{...p.tt,list:objs(p.tt.list),acal:objs(p.tt.acal)}:null,
+     notes:p.notes&&typeof p.notes==="object"&&!Array.isArray(p.notes)?p.notes:null,events:objs(p.events),evals:objs(p.evals).filter(e=>Array.isArray(e.stu)),archives:objs(p.archives)};
+   classes=classes.filter(c=>c&&typeof c==="object")}
   const appName=String(p.app||"").replace(/\s+\d[\d.]*$/,"");
   const ver=p.appVersion||(String(p.app||"").match(/(\d+\.\d+\.\d+)/)||[])[1]||"";
   const rounds=classes.some(c=>Array.isArray(c.rounds)&&!Array.isArray(c.sessions));
@@ -3926,6 +3987,8 @@ function restoreSheet(b,done){
     <p class="note">‘합치기’는 같은 이름의 학급을 백업으로 고치고(출석 기록은 양쪽 모두 남김), 나머지는 추가합니다. ‘완전히 바꾸기’는 지금 데이터를 지우고 백업 그대로 되돌립니다. 어느 쪽이든 불러오기 전 상태로 한 번 되돌릴 수 있습니다.</p>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
   $("rsMerge").onclick=()=>{$("sheet").hidden=true;restoreMerge(b);done&&done()};
+  /* 5.29: 학생이 한 명도 없는 백업으로는 ‘완전히 바꾸기’를 막습니다 (지금 자료가 빈 자료로 덮이지 않게) */
+  if(!b.cnt.students){$("rsReplace").hidden=true;$("rsMerge").insertAdjacentHTML("beforebegin",`<p class="warn">이 백업에는 학생 명단이 없어 ‘완전히 바꾸기’를 할 수 없습니다. 들어 있는 것만 합칩니다.</p>`)}
   twoStep($("rsReplace"),"정말 바꾸기",()=>{$("sheet").hidden=true;restoreReplace(b);done&&done()});
 }
 /* ---------- 저장 공간 사용량 · 백업 날짜 ---------- */
@@ -3976,9 +4039,12 @@ function renderUndo(){
   btn.hidden=!at;const u={at};
   if(u&&u.at){const d=new Date(u.at);btn.textContent=`불러오기 전으로 되돌리기 (${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())})`}
 }
+/* 5.29: 파일 오류는 한국어로만 (영어 내부 오류 문장을 그대로 보이지 않게) */
+function fileErr(e){const m=e&&e.message||"";return /[가-힣]/.test(m)?m:"파일을 읽지 못했습니다. 교사의 생활 백업 · 보관 · 공유 파일인지 확인해 주세요"}
 async function readAnyText(text){
   text=String(text||"").replace(/^﻿/,"").trim();
-  if(text.startsWith("{"))return JSON.parse(text);
+  if(!text)throw new Error("빈 파일입니다. 받은 파일을 다시 확인해 주세요");
+  if(text.startsWith("{")){try{return JSON.parse(text)}catch(e){throw new Error("파일이 중간에 잘렸거나 손상되어 읽을 수 없습니다. 원래 파일을 다시 받아 열어 주세요")}}
   return decode(text);
 }
 async function saveBackupFile(){
@@ -3997,7 +4063,7 @@ $("restoreFile").onchange=async e=>{
     if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);
     if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));
     restoreSheet(readBackup(p))}
-  catch(err){toast(err&&err.message?err.message:"백업 파일을 읽지 못했습니다")}
+  catch(err){toast(fileErr(err))}
 };
 $("undoBtn").onclick=async()=>{
   let u=null;try{u=JSON.parse((await kvGet(UNDO_KEY))||"null")}catch(e){}
@@ -4220,7 +4286,7 @@ document.querySelectorAll(".navb").forEach(b=>b.onclick=()=>show(b.dataset.v));
 /* ---------- 화면 · 글자 크기 (기기 맞춤) ---------- */
 const UI_KEY="att-app-ui";
 function uiPrefs(){try{return JSON.parse(localStorage.getItem(UI_KEY)||"{}")||{}}catch(e){return{}}}
-function applyUI(u){const h=document.documentElement;["fs","lay","nav","tt","tip"].forEach(k=>{if(u[k]&&!(k==="fs"&&u[k]==="m"&&false))h.setAttribute("data-"+k,u[k]);else h.removeAttribute("data-"+k)});if(u.fs==="m")h.setAttribute("data-fs","m")}
+function applyUI(u){const h=document.documentElement;["fs","lay","nav","tt","tip","font"].forEach(k=>{if(u[k]&&!(k==="fs"&&u[k]==="m"&&false))h.setAttribute("data-"+k,u[k]);else h.removeAttribute("data-"+k)});if(u.fs==="m")h.setAttribute("data-fs","m")}
 function devText(){const w=innerWidth,h=innerHeight,touch=matchMedia("(pointer:coarse)").matches;
   const kind=w<380?"작은 휴대폰":w<760?(h<w?"휴대폰 (가로)":"휴대폰"):w<1100?(touch?"태블릿":"좁은 컴퓨터 창"):(touch?"큰 태블릿":"컴퓨터");
   const lay=w>=1100?"메뉴 왼쪽 · 넓은 화면":w>=760?"가운데 넓게":"한 줄";
@@ -5441,7 +5507,7 @@ async function dropFile(f){
   if(/\.(json|txt)$/i.test(f.name)){
     try{const p=await readAnyText(await f.text());if(p&&p.kind==="teachers-life-sync"&&p.data)return toast("동기화 파일은 ‘구글 로그인 · 기기 연동’으로 자동으로 맞춰집니다");
       if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
-    catch(err){toast(err&&err.message?err.message:"파일을 읽지 못했습니다")}return;
+    catch(err){toast(fileErr(err))}return;
   }
   if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|bmp)$/i.test(f.name)){show("tt");return ttUpload(f)}
   if(/\.html?$/i.test(f.name)){show("tt");return ttUpload(f)}
@@ -6112,6 +6178,29 @@ function renderCheerSet(){
 }
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")setTimeout(cheerCheck,800);else cheerStop()});
 setInterval(cheerCheck,5*60000);
+/* 5.29: 하루 보기 - 휴대폰에서도 큰 글자로 오늘 수업을 한눈에 (칸을 누르면 주간 보기와 똑같이 동작) */
+function ttDayHTML(t,days,di,td,nowM){
+  const date=days[di],d=di,rows=ttRows(t,date);
+  const chips=`<div class="ddays">${days.map((x,i)=>`<button type="button" class="dday${i===di?" on":""}${x===td?" today":""}" data-dd="${i}" aria-pressed="${i===di}"><b>${DAYS[i]}</b><small>${fmtShort(x)}</small></button>`).join("")}</div>`;
+  const spc=t.days&&t.days[date],dc=dayChg(t,date);
+  let h=chips+(spc||dc?`<p class="dnote">${spc?esc(spc.note||"시간 변경"):""}${spc&&dc?" · ":""}${dc?esc(dc.reason||"수업 변동"):""}</p>`:"")+`<div class="dlist">`;
+  try{const pre=slotTime(t,date,"pre");if(pre)h+=`<button class="lc drow dgap" type="button" data-date="${date}" data-slot="pre"><span class="dtm"><b>1교시 전</b><small>~${rows[0].start}</small></span><span class="dbody">${gapCellHTML(t,"pre",date,'<span class="dmuted">＋ 활동 · 일정 넣기</span>')}</span></button>`}catch(e){}
+  rows.forEach(r=>{
+    const live=date===td&&nowM>=toMin(r.start)&&nowM<toMin(r.end);
+    const tm=`<span class="dtm"><b>${r.lunch?"점심":r.label}</b><small>${r.start}~${r.end}</small></span>`;
+    if(r.lunch){h+=`<button class="lc drow dgap${live?" live":""}" type="button" data-date="${date}" data-slot="lunch">${tm}<span class="dbody">${gapCellHTML(t,"lunch",date,`<span class="dmuted">${r.len}분</span>`)}</span></button>`;return}
+    const c=cellAt(t,d,r.p,date),cg=chgAt(t,d,r.p,date);
+    if(cg&&cg.type==="cancel"&&!(cg.scope==="day"&&isEmptyCell(t.cells[d+"-"+r.p]))){const b0=t.cells[d+"-"+r.p];h+=`<button class="tc drow cancel" type="button" data-d="${d}" data-p="${r.p}">${tm}<span class="dbody"><b>${!isEmptyCell(b0)?`<s>${esc(b0.subject||"수업")}</s> `:""}휴강</b><small>${esc(cg.reason||"")}</small></span></button>`;return}
+    if(isEmptyCell(c)){h+=`<button class="tc drow empty${live?" now":""}" type="button" data-d="${d}" data-p="${r.p}">${tm}<span class="dbody"><span class="dmuted">빈 시간</span></span></button>`;return}
+    const cl=cellClass(c),info=cellSession(t,d,r.p,date);let st="";
+    if(info&&info.s){const n=info.cl.data.roster.length,ab=sesAbs(info.cl,info.s).length;st=sesOn(info.s)?`<em class="${ab?"ab":"ok"}">출석 ${n-ab}/${n}${ab?` · 결석 ${ab}`:""}</em>`:`<em class="ab">${esc(sesOff(info.s))}</em>`}
+    else if(cl)st=date<td||(date===td&&nowM>=toMin(r.end))?`<em class="ab">체크 안 함</em>`:`<em>체크 전</em>`;
+    const tags=[cg?(cg.act?"행사":cg.sw!=null?"교체":cg.type==="add"?"보강":"변경"):"",hasNote(t,d,r.p,date)?"메모":""].filter(Boolean).map(x=>`<i class="dtag">${x}</i>`).join("");
+    h+=`<button class="tc drow${live?" now":""}${cg?" chg":""}" type="button" data-d="${d}" data-p="${r.p}">${tm}<span class="dbody"><b>${esc(c.subject||"—")}${tags}</b><small>${esc(cl?clsName(cl.data):(c.clsName||""))}${c.room?" · "+esc(c.room):""}</small></span>${st}</button>`;
+  });
+  try{const last=rows[rows.length-1].end;h+=`<button class="lc drow dgap" type="button" data-date="${date}" data-slot="after"><span class="dtm"><b>방과 후</b><small>${last}~</small></span><span class="dbody">${gapCellHTML(t,"after",date,'<span class="dmuted">＋ 활동 · 일정 넣기</span>')}</span></button>`}catch(e){}
+  return h+`</div>`;
+}
 /* 5.28: 넓은 화면 시간표 오른쪽 '오늘' 패널 */
 function renderTtSide(){
   const box=$("ttSide");if(!box)return;
@@ -6222,8 +6311,9 @@ async function arcDownload(Y){
   const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast("보관 파일을 저장했습니다")}
 async function arcDrop(Y){await kvDel("arc:"+Y);if(gReady())try{await gArcDel(Y)}catch(e){}arcIdxDel(Y);renderArc();toast(`${Y}학년도 보관 자료를 지웠습니다`)}
 /* 받은 보관 파일(또는 백업 안의 보관 자료)을 보관함에 넣기 */
-async function arcStore(A){if(!A||A.kind!==ARC_KIND||!+A.year)return false;const str=JSON.stringify(A);await kvSet("arc:"+A.year,str);arcIdxPut({year:+A.year,at:A.savedAt||"",cnt:A.cnt||arcCnt({classes:A.classes||[],evs:A.evals,events:A.events,tts:(A.tt||{}).list}),size:str.length,drive:false});return true}
-function arcFileSheet(A){choose(`<h2>${+A.year}학년도 보관 파일</h2><p class="note">${esc(arcCntText(A.cnt||arcCnt({classes:A.classes||[],evs:A.evals,events:A.events,tts:(A.tt||{}).list})))}</p>`,
+async function arcStore(A){if(!arcValid(A))return false;const str=JSON.stringify(A);await kvSet("arc:"+A.year,str);arcIdxPut({year:+A.year,at:A.savedAt||"",cnt:A.cnt||arcCnt({classes:A.classes||[],evs:A.evals,events:A.events,tts:(A.tt||{}).list}),size:str.length,drive:false});return true}
+function arcValid(A){return !!(A&&A.kind===ARC_KIND&&/^\d{4}$/.test(String(A.year))&&+A.year>=2000&&+A.year<=2100&&Array.isArray(A.classes)&&A.classes.every(c=>c&&typeof c==="object"&&Array.isArray(c.roster)))}
+function arcFileSheet(A){if(!arcValid(A))return toast("보관 파일이 손상되어 열 수 없습니다. ‘파일로 받기’로 저장한 원래 파일을 열어 주세요");choose(`<h2>${+A.year}학년도 보관 파일</h2><p class="note">${esc(arcCntText(A.cnt||arcCnt({classes:A.classes||[],evs:A.evals,events:A.events,tts:(A.tt||{}).list})))}</p>`,
   [{label:"보관함에 넣기",pri:true,go:async()=>{await arcStore(A);renderArc();toast("보관함에 넣었습니다")}},{label:"지금 자료로 되살리기",go:async()=>{await arcStore(A);arcRestore(A.year)}}])}
 async function arcAllLocal(){const out=[];for(const e of arcIdx()){try{const s=await kvGet("arc:"+e.year);if(s)out.push(JSON.parse(s))}catch(x){}}return out}
 async function arcScanDrive(){if(!gReady())return toast("먼저 구글 로그인을 해 주세요");
@@ -6245,7 +6335,7 @@ function renderArc(){
   box.querySelectorAll("[data-arcdl]").forEach(b=>b.onclick=()=>arcDownload(+b.dataset.arcdl));
   box.querySelectorAll("[data-arcrm]").forEach(b=>twoStep(b,"정말 지우기",()=>arcDrop(+b.dataset.arcrm)));
   ix.forEach(e=>kvGet("arc:"+e.year).then(v=>{const el=box.querySelector(`[data-arcwhere="${+e.year}"]`);if(el)el.textContent=[v?"이 기기":"",e.drive?"구글 드라이브":""].filter(Boolean).join(" · ")||"파일로만"}).catch(()=>{}));
-  $("arcFile").onchange=async ev=>{const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(!f)return;try{const A=await readAnyText(await f.text());if(!A||A.kind!==ARC_KIND)return toast("교사의 생활 보관 파일이 아닙니다");arcFileSheet(A)}catch(e){toast("파일을 읽지 못했습니다")}};
+  $("arcFile").onchange=async ev=>{const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(!f)return;try{const A=await readAnyText(await f.text());if(!A||A.kind!==ARC_KIND)return toast("교사의 생활 보관 파일이 아닙니다");arcFileSheet(A)}catch(e){toast(e&&/[가-힣]/.test(e.message||"")?e.message:"파일을 읽지 못했습니다")}};
   if($("arcScan"))$("arcScan").onclick=arcScanDrive;
 }
 function openArc(){show("set");const d=$("d-arc");if(d){d.open=true;renderArc();setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),60)}}
