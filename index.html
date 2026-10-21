@@ -869,6 +869,11 @@ label.chk input[type=checkbox]{width:22px;height:22px;flex:none}
 .tipbox>.tipq{min-height:40px}
 .tdbell{position:relative}.tdbell::after{content:"";position:absolute;inset:-4px}
 .dbtn{min-height:44px}
+/* 5.27: 학년도 보관 */
+.arcrow{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.arcrow>div:first-child{display:flex;flex-direction:column;min-width:0;flex:1 1 12rem}.arcrow small{color:var(--muted);font-size:.8125rem}
+.arcbtns{display:flex;gap:6px;flex-wrap:wrap}
+#d-arc .shlb{margin-top:10px}
 </style>
 </head>
 <body>
@@ -1260,6 +1265,7 @@ label.chk input[type=checkbox]{width:22px;height:22px;flex:none}
     <div class="row2"><button class="btn" id="undoBtn" type="button" hidden>불러오기 전으로 되돌리기</button></div>
     <div class="row2"><button class="btn bad" id="resetAtt" type="button">출석 기록 지우기</button><button class="btn bad" id="resetAll" type="button">모든 학급 지우기</button></div>
   </details>
+  <details class="card" id="d-arc"><summary>학년도 마감 · 보관 <span class="sub" id="arcTag"></span></summary><div id="arcBody"></div></details>
   <details class="card" id="d-cheer"><summary>응원 메시지 · 음악 <span class="sub" id="cheerTag"></span></summary><div id="cheerBody"></div></details>
   <details class="card" id="d-ui"><summary>화면 · 글자 크기 (기기 맞춤)</summary>
     <p class="devinfo" id="uiDev"></p>
@@ -1303,8 +1309,9 @@ label.chk input[type=checkbox]{width:22px;height:22px;flex:none}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.26.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.27.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.27.0",date:"2026-10-22",items:["학년도 마감 · 보관(설정 → 보관 · 화면 · 정보): 지난 학년도의 학급·명단·출석·관찰·세특 초안·평가(원본 전표 포함)·시간표·수업 메모·일정·학사일정을 한 번에 보관함으로 옮김. 올해와 지금 보는 기간은 보관하지 않음","보관함은 이 기기 대용량 저장소 + 구글 드라이브 앱 전용 공간(teachers-life-archive-연도.json)에 저장. 다른 기기에서도 보관함 목록이 보이고 드라이브에서 되살리기","되살리기: 같은 이름의 올해 학급과 섞이지 않고 그 학년도로 따로 들어감. 파일로 받기 · 보관 파일 불러오기 · 지우기 · 드라이브에서 찾기","백업 파일 저장에 보관함도 함께 들어가고, 백업을 불러오면 이 기기에 없는 보관 학년도도 되돌림","저장 공간 표시에 지난 학년도가 있으면 ‘학년도 마감 · 보관’ 바로가기. 1년 치 자료(9학급 261명·출석 709회) 기준 기본 저장 공간 사용이 약 0.7M자 → 2천 자, 동기화 파일은 약 1/7로 줄어듦"]},
   {v:"5.26.0",date:"2026-10-22",items:["출석 화면을 명단 먼저로: 수업 정보(시간·교과·교시)는 한 줄로 접히고 출석·결석 수가 그 줄에 보임. 학생 명단이 첫 화면에서 바로 시작","▦ 격자 보기(새 기본): 학생 이름 칸이 한 줄에 4개씩(넓은 화면 6~8개) 놓여 한 반이 한 화면에. 누르면 결석(빨강) ↔ 출석. ☰ 목록 보기로 바꿀 수 있고 기기마다 기억","잠그기 · 휴강 처리 · ‘이 출석 체크 삭제’는 명단 아래로 옮김 (‘전원 결석’ 옆에서 잘못 누르지 않도록)","오늘 탭: 지난 할 일은 ‘지난 할 일 N개’로 접어 두고 누르면 펼침, 묶음이 길면 8개까지만 먼저, 서명 마감은 급한 2건과 요약(건수·미서명 수)만","오늘 아래 메뉴 숫자는 오늘 할 일만 셈. 지난 할 일만 남으면 작은 점","보기 편하게: 작은 글자를 최소 12~13px로 키움, 회색·빨간 글자를 조금 진하게(글자 대비 기준 충족), 체크 칸·작은 버튼·설정 제목줄의 누르는 영역을 44px 가까이로 넓힘"]},
   {v:"5.25.1",date:"2026-10-21",items:["앱 음악 ‘아침 햇살’ · ‘저녁 노을’이 나오지 않던 문제 고침: 소리를 그때그때 합성하던 방식(휴대폰 무음 스위치에 막히던 방식) 대신 진짜 음원 파일(sounds/morning.mp3 · evening.mp3, 각 1분 17초가량)로 바꿈. 피아노 · 패드 · 벨로 새로 지은 곡","무음 모드에서도 미디어 소리로 재생, 한 번 들으면 인터넷 없이도 재생(아이폰 부분 재생 요청까지 처리)","sounds 폴더를 꼭 함께 올려 주세요"]},
   {v:"5.25.0",date:"2026-10-21",items:["응원 한마디: 평일 아침 앱을 처음 열면 ‘좋은 아침입니다, ○○ 선생님’과 그날의 응원 메시지(28가지가 날마다 바뀜), 오늘 수업·할 일 수를 띄움", "저녁 인사: 마지막 수업이 끝난 뒤(또는 정한 시각) 앱을 열면 ‘오늘 하루 어떠셨나요? 오늘도 애쓰셨습니다.’와 위로의 말, 오늘 한 일(출석 체크·관찰 기록·마친 할 일)을 띄움. 기분(좋았어요·괜찮았어요·힘들었어요·속상했어요)을 고르면 답을 건네고, ‘오늘의 한 줄’을 이 기기에만 남김", "하루를 여는 음악 · 닫는 음악: 앱이 직접 연주하는 짧은 곡 ‘아침 햇살’ · ‘저녁 노을’(직접 만든 곡), 내 음악 파일(이 기기에 저장), 음악 링크(유튜브 등) 중 선택. 인사 창에서 ▶를 누르면 재생, 창을 닫으면 멈춤", "설정 → 보관 · 화면 · 정보 → ‘응원 메시지 · 음악’: 아침·저녁 인사 켜기/끄기, 저녁 인사 시각(마지막 수업 끝나면 · 16:30 · 17:30 · 19:00), 주말에도, 음악 고르기, 지금 보기, 지난 ‘오늘의 한 줄’ 보기"]},
@@ -3825,6 +3832,8 @@ function readBackup(p){
 }
 function snapshot(){const at=new Date().toISOString();let str;try{str=JSON.stringify({at,S})}catch(e){return}try{localStorage.setItem("att-app-undo-at",at)}catch(e){}kvSet(UNDO_KEY,str)}
 function afterLoad(msg){initTT();initEv();if(!S.list.some(c=>c.id===S.active))S.active=S.list[0].id;D=S.list.find(c=>c.id===S.active).data;selId=null;save();renderAll();renderUndo();toast(msg)}
+/* 백업 파일 안의 보관함도 함께 되돌립니다 (이 기기에 없는 학년도만) */
+function arcFromBackup(p){if(!p||!Array.isArray(p.archives))return;p.archives.forEach(A=>{if(A&&A.kind==="teachers-life-archive")kvGet("arc:"+A.year).then(v=>{if(!v)return arcStore(A).then(()=>{try{renderArc()}catch(e){}})}).catch(()=>{})})}
 function restoreReplace(b){
   snapshot();
   const p=b.raw,used=new Set();
@@ -3832,6 +3841,7 @@ function restoreReplace(b){
   if(!list.length)list.push({id:uid(),data:fresh()});
   S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined};
   mergeStaff(p.staff);
+  arcFromBackup(p);
   afterLoad("백업 내용으로 바꿨습니다");
 }
 function restoreMerge(b){
@@ -3849,6 +3859,7 @@ function restoreMerge(b){
   if(p.notes&&typeof p.notes==="object")Object.assign(S.notes,p.notes);
   if(Array.isArray(p.events))p.events.forEach(e=>{if(e&&!S.events.some(x=>x.id===e.id))S.events.push(e)});
   if(Array.isArray(p.evals))p.evals.forEach(e=>{if(e&&!evals().some(x=>x.id===e.id))evals().push(e)});
+  arcFromBackup(p);
   afterLoad("백업을 지금 데이터와 합쳤습니다");
 }
 function restoreSheet(b,done){
@@ -3880,10 +3891,12 @@ function renderSto(){
   const lv=pct>=85?"bad":pct>=70?"warn":"ok";
   box.innerHTML=`<div class="sto ${lv}"><div class="stoh"><b>기본 저장 공간</b><span>${fmtSize(used)} / 약 5MB · ${pct}%</span></div><span class="pbar big"><i style="width:${Math.max(2,pct)}%"></i></span>
     ${lv!=="ok"?`<p class="warn">${pct>=85?"저장 공간이 거의 찼습니다.":"저장 공간을 많이 쓰고 있습니다."} 백업 파일을 저장한 뒤, 보관함의 지난 평가를 지우면 공간이 늘어납니다.</p>`:""}
+    ${(()=>{try{const ys=arcYears();return ys.length?`<p class="note">지난 학년도(${ys.map(y=>y+"학년도").join(", ")}) 자료를 <b>보관</b>하면 기본 저장 공간과 동기화 양이 줄어듭니다. <button class="btn sm" type="button" id="stoArc">학년도 마감 · 보관</button></p>`:""}catch(e){return""}})()}
     <p class="note" id="stoBig">대용량 저장소(원본 전표·사진·녹음·되돌리기): 계산 중…</p>
     <p class="note" id="stoPer"></p>
     <p class="note">마지막 백업: <b>${esc(agoDays(lb))}</b>${synced?` · 구글 동기화: <b>${esc(fmtAgo(G.syncedAt))}</b>`:""}</p>
     ${isIOS&&!isStandalone()?`<p class="warn">아이폰·아이패드에서는 사파리 <b>공유 → 홈 화면에 추가</b>로 설치해 쓰세요. 설치하지 않고 7일 넘게 열지 않으면 브라우저가 자료를 지울 수 있습니다.</p>`:""}</div>`;
+  if($("stoArc"))$("stoArc").onclick=openArc;try{renderArc()}catch(e){}
   $("bkTag").textContent=pct>=70?`저장 공간 ${pct}%`:(lb?`백업 ${agoDays(lb)}`:"");
   try{if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(e=>{const el=$("stoBig");if(el&&e)el.innerHTML=`대용량 저장소(원본 전표·사진·녹음·되돌리기): <b>${fmtSize(e.usage||0)}</b> 사용${e.quota?` · 기기 여유 ${fmtSize(Math.max(0,e.quota-(e.usage||0)))}`:""}`}).catch(()=>{});else $("stoBig").hidden=true}catch(e){}
   try{if(navigator.storage&&navigator.storage.persisted)navigator.storage.persisted().then(p=>{const el=$("stoPer");if(el)el.innerHTML=p?"자료 보호: <b>켜짐</b> (브라우저가 공간이 부족해도 이 앱 자료를 지우지 않음)":"자료 보호: 꺼짐 (홈 화면에 앱을 설치하면 켜질 수 있습니다)"}).catch(()=>{})}catch(e){}
@@ -3920,7 +3933,8 @@ async function readAnyText(text){
 }
 async function saveBackupFile(){
   try{if(FILES_READY)await FILES_READY}catch(e){}
-  const json=JSON.stringify(backupObj());
+  const bo=backupObj();try{const a=await arcAllLocal();if(a.length)bo.archives=a}catch(e){}
+  const json=JSON.stringify(bo);
   const f=new File([json],`${APP_NAME.replace(/\s+/g,"")}_백업_${today().replace(/-/g,"")}.json`,{type:"application/json"});
   if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:APP_NAME+" 백업"});markBackup();return}catch(e){if(e&&e.name==="AbortError")return}}
   const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
@@ -3930,7 +3944,7 @@ $("backupFile").onclick=saveBackupFile;
 $("restoreFile").onchange=async e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;e.target.value="";
   try{const t=await f.text();const p=await readAnyText(t);
-    if(p&&p.kind==="share")return shareSheet(p);
+    if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);
     if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));
     restoreSheet(readBackup(p))}
   catch(err){toast(err&&err.message?err.message:"백업 파일을 읽지 못했습니다")}
@@ -5097,7 +5111,7 @@ function printSigned(ev){
 /* ---------- 구글 로그인 · 컴퓨터와 휴대폰 연동 (내 구글 드라이브의 앱 전용 숨김 폴더) ---------- */
 const GKEY="att-app-gsync",GBASE="att-app-gbase",GFILE="teachers-life-sync.json";
 const GSCOPE="https://www.googleapis.com/auth/drive.appdata openid email profile";
-const SYNC_EXTRA=["att-app-mail","att-app-msgs","att-app-me"];
+const SYNC_EXTRA=["att-app-mail","att-app-msgs","att-app-me","att-app-arcs"];
 var G={};try{G=JSON.parse(localStorage.getItem(GKEY)||"{}")||{}}catch(e){G={}}
 const gSave=()=>{try{localStorage.setItem(GKEY,JSON.stringify(G))}catch(e){}};
 var GS={busy:false,timer:0,applying:false,tc:null,msg:"",err:"",gisErr:"",pend:false};
@@ -5376,7 +5390,7 @@ safe("구글 로그인",renderSync);try{gPreload()}catch(e){reportErr("구글 �
 async function dropFile(f){
   if(/\.(json|txt)$/i.test(f.name)){
     try{const p=await readAnyText(await f.text());if(p&&p.kind==="teachers-life-sync"&&p.data)return toast("동기화 파일은 ‘구글 로그인 · 기기 연동’으로 자동으로 맞춰집니다");
-      if(p&&p.kind==="share")return shareSheet(p);if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
+      if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
     catch(err){toast(err&&err.message?err.message:"파일을 읽지 못했습니다")}return;
   }
   if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|bmp)$/i.test(f.name)){show("tt");return ttUpload(f)}
@@ -6048,6 +6062,114 @@ function renderCheerSet(){
 }
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")setTimeout(cheerCheck,800);else cheerStop()});
 setInterval(cheerCheck,5*60000);
+/* 5.27: 학년도 마감 · 보관 — 지난 학년도 자료를 보관함(이 기기 대용량 저장소 + 구글 드라이브)으로 옮겨
+   기본 저장 공간(약 5MB)과 동기화 양을 줄입니다. 보관한 자료는 언제든 되살릴 수 있습니다. */
+const ARC_IDX="att-app-arcs",ARC_KIND="teachers-life-archive";
+function arcIdx(){try{const a=JSON.parse(localStorage.getItem(ARC_IDX)||"[]");return Array.isArray(a)?a.filter(x=>x&&+x.year):[]}catch(e){return[]}}
+function arcIdxSet(a){try{localStorage.setItem(ARC_IDX,JSON.stringify(a.sort((x,y)=>y.year-x.year)))}catch(e){}gTouch()}
+function arcIdxPut(e){arcIdxSet(arcIdx().filter(x=>+x.year!==+e.year).concat([e]))}
+function arcIdxDel(Y){arcIdxSet(arcIdx().filter(x=>+x.year!==+Y))}
+/* 학년도: 3월 ~ 다음 해 2월 */
+function syOf(date){const m=/^(\d{4})-(\d{2})/.exec(date||"");if(!m)return 0;return +m[2]<=2?+m[1]-1:+m[1]}
+function arcPick(Y){Y=+Y;
+  const tts=((S.tt&&S.tt.list)||[]).filter(t=>+t.year===Y),ttIds=new Set(tts.map(t=>t.id));
+  return{classes:S.list.filter(c=>+c.data.year===Y),staff:(S.staff||[]).filter(x=>+x.year===Y),evs:(S.evals||[]).filter(e=>+(e.year||0)===Y),tts,
+    notes:Object.keys(S.notes||{}).filter(k=>{const q=k.split(":");return ttIds.has(q[0])||syOf(q[3])===Y}),
+    events:(S.events||[]).filter(e=>syOf(e.date)===Y),acal:((S.tt&&S.tt.acal)||[]).filter(r=>syOf(r.from)===Y)}}
+function arcCnt(c){return{classes:c.classes.length,students:c.classes.reduce((a,x)=>a+((x.data||x).roster||[]).length,0),checks:c.classes.reduce((a,x)=>a+((x.data||x).sessions||[]).length,0),obs:c.classes.reduce((a,x)=>a+((x.data||x).obs||[]).length,0),evals:(c.evs||c.evals||[]).length,events:(c.events||[]).length,tt:(c.tts||(c.tt&&c.tt.list)||[]).length}}
+function arcCntText(n){return[`학급 ${n.classes}개 · 학생 ${n.students}명`,n.checks?`출석 체크 ${n.checks}회`:"",n.obs?`관찰 기록 ${n.obs}건`:"",n.evals?`평가 ${n.evals}개`:"",n.tt?`시간표 ${n.tt}개`:"",n.events?`일정 ${n.events}개`:""].filter(Boolean).join(" · ")}
+function arcYears(){const cur=curTerm().year,pv=+period().year,ys=new Set();
+  S.list.forEach(c=>ys.add(+c.data.year));(S.staff||[]).forEach(x=>ys.add(+x.year));(S.evals||[]).forEach(e=>ys.add(+e.year));((S.tt||{}).list||[]).forEach(t=>ys.add(+t.year));(S.events||[]).forEach(e=>ys.add(syOf(e.date)));
+  return[...ys].filter(y=>y&&y<cur&&y!==pv).sort((a,b)=>b-a)}
+function arcBuild(Y,P){const n={};P.notes.forEach(k=>n[k]=S.notes[k]);
+  return JSON.parse(JSON.stringify({kind:ARC_KIND,v:1,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),device:gDevice(),year:+Y,cnt:arcCnt(P),
+    classes:P.classes.map(c=>({...c.data,_id:c.id})),staff:P.staff,tt:{list:P.tts,acal:P.acal},notes:n,events:P.events,evals:P.evs,obsTags:S.obsTags||null}))}
+/* 구글 드라이브: 보관 파일은 동기화 파일과 따로 (teachers-life-archive-2025.json) */
+const arcName=Y=>`teachers-life-archive-${+Y}.json`;
+async function gArcList(){const l=await (await gApi(`${DRV}?spaces=appDataFolder&q=${encodeURIComponent("name contains 'teachers-life-archive-' and trashed=false")}&fields=files(id,name,size,modifiedTime)`)).json();return l.files||[]}
+async function gArcFind(Y){return(await gArcList()).find(f=>f.name===arcName(Y))||null}
+async function gArcPush(Y,A){let body;try{body=await encode(A);if(!body.startsWith("z1."))body=JSON.stringify(A)}catch(e){body=JSON.stringify(A)}
+  const f=await gArcFind(Y);
+  if(f)return (await gApi(`${UPL}/${f.id}?uploadType=media&fields=id`,{method:"PATCH",headers:{"Content-Type":"application/json"},body})).json();
+  const bd="tla"+Date.now(),mp=`--${bd}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify({name:arcName(Y),parents:["appDataFolder"]})}\r\n--${bd}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${bd}--`;
+  return (await gApi(`${UPL}?uploadType=multipart&fields=id`,{method:"POST",headers:{"Content-Type":"multipart/related; boundary="+bd},body:mp})).json()}
+async function gArcDel(Y){const f=await gArcFind(Y);if(f)await gApi(`${DRV}/${f.id}`,{method:"DELETE"})}
+const gReady=()=>!!(G&&G.on&&gClientId()&&gTokenOk());
+/* 보관 파일 꺼내기: 이 기기 → 없으면 구글 드라이브 */
+async function arcGet(Y){let s=await kvGet("arc:"+Y);if(s){try{return JSON.parse(s)}catch(e){}}
+  if(gReady()){const f=await gArcFind(Y);if(f){const A=await gDownload(f.id);if(A&&A.kind===ARC_KIND){kvSet("arc:"+Y,JSON.stringify(A));return A}}}
+  return null}
+async function arcMake(Y){Y=+Y;
+  try{if(FILES_READY)await FILES_READY}catch(e){}
+  const P=arcPick(Y);if(!P.classes.length&&!P.evs.length&&!P.tts.length&&!P.events.length)return toast("보관할 자료가 없습니다");
+  const A=arcBuild(Y,P),str=JSON.stringify(A);
+  await kvSet("arc:"+Y,str);
+  if((await kvGet("arc:"+Y))!==str)return toast("보관 파일을 저장하지 못해 아무것도 옮기지 않았습니다. 기기 저장 공간을 확인해 주세요");
+  snapshot();
+  const cid=new Set(P.classes.map(c=>c.id)),del=(arr,pk)=>arr.filter(x=>!pk.includes(x));
+  S.list=S.list.filter(c=>!cid.has(c.id));S.staff=del(S.staff||[],P.staff);S.evals=del(S.evals||[],P.evs);S.events=del(S.events||[],P.events);
+  S.tt.list=del(S.tt.list,P.tts);S.tt.acal=del(S.tt.acal||[],P.acal);P.notes.forEach(k=>delete S.notes[k]);
+  P.evs.forEach(e=>{const f=e.file;if(f&&f.fid){delete FILEOK[f.fid];mTx("readwrite",st=>st.delete("f:"+f.fid)).catch(()=>{})}});
+  if(!S.list.length){const p=period();S.list.push({id:uid(),data:normalize({year:p.year,term:p.term})})}
+  if(!S.list.some(c=>c.id===S.active))S.active=(perList()[0]||S.list[0]).id;
+  {const p=period(),t=S.tt.list.find(x=>+x.year===+p.year&&x.term===p.term);if(!S.tt.list.some(x=>x.id===S.tt.active))S.tt.active=t?t.id:(S.tt.list[0]||{}).id||""}
+  initTT();initEv();D=S.list.find(c=>c.id===S.active).data;selId=null;
+  arcIdxPut({year:Y,at:A.savedAt,cnt:A.cnt,size:str.length,drive:false});
+  save();renderAll();
+  let drive="";
+  if(gReady()){try{await gArcPush(Y,A);const e=arcIdx().find(x=>+x.year===Y);if(e){e.drive=true;arcIdxPut(e)}drive=" · 구글 드라이브에도 올렸습니다"}catch(e){drive=" · 드라이브에 올리지 못했습니다(이 기기에는 보관됨)"}}
+  renderArc();
+  $("sheetBox").innerHTML=`<h2>${Y}학년도를 보관했습니다</h2><p class="note">${esc(arcCntText(A.cnt))}${esc(drive)}</p><p class="note">출석·통계·설정 화면에서 ${Y}학년도 자료가 빠졌습니다. 보관함에서 언제든 되살릴 수 있습니다. 보관 파일을 한 부 더 저장해 두면 휴대폰을 바꿔도 안심입니다.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="arcDl">보관 파일 받기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("arcDl").onclick=()=>{$("sheet").hidden=true;arcDownload(Y)};
+}
+/* 되살리기: 이미 있는 것(같은 id)은 건너뛰고 붙입니다. 같은 이름의 올해 학급과 섞이지 않습니다 */
+function arcApply(A){
+  snapshot();const has=new Set(S.list.map(c=>c.id));let n=0;
+  (A.classes||[]).filter(x=>x&&Array.isArray(x.roster)).forEach(x=>{const id=String(x._id||"");if(id&&has.has(id))return;S.list.push({id:id||uid(),data:normalize(x)});n++});
+  const add=(arr,items,key)=>{const ids=new Set(arr.map(x=>x&&x[key]));(items||[]).forEach(x=>{if(x&&!ids.has(x[key]))arr.push(x)})};
+  S.staff=S.staff||[];add(S.staff,A.staff,"id");S.evals=S.evals||[];add(S.evals,A.evals,"id");add(S.events,A.events,"id");
+  add(S.tt.list,((A.tt&&A.tt.list)||[]).map(normTT),"id");if(!Array.isArray(S.tt.acal))S.tt.acal=[];add(S.tt.acal,A.tt&&A.tt.acal,"g");
+  Object.entries(A.notes||{}).forEach(([k,v])=>{if(!(k in S.notes))S.notes[k]=v});
+  initTT();initEv();save();renderAll();return n}
+async function arcRestore(Y){
+  const A=await arcGet(Y).catch(()=>null);if(!A)return toast("보관 파일을 찾지 못했습니다. ‘보관 파일 불러오기’로 받아 둔 파일을 여세요");
+  arcApply(A);await kvDel("arc:"+Y);arcIdxDel(Y);renderArc();
+  toast(`${Y}학년도 자료를 되살렸습니다. 설정 → 적용 기간에서 ${Y}학년도를 고르면 볼 수 있습니다`)}
+async function arcDownload(Y){
+  const A=await arcGet(Y).catch(()=>null);if(!A)return toast("보관 파일을 찾지 못했습니다");
+  const f=new File([JSON.stringify(A)],`${APP_NAME.replace(/\s+/g,"")}_${Y}학년도_보관.json`,{type:"application/json"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:`${Y}학년도 보관 파일`});return}catch(e){if(e&&e.name==="AbortError")return}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast("보관 파일을 저장했습니다")}
+async function arcDrop(Y){await kvDel("arc:"+Y);if(gReady())try{await gArcDel(Y)}catch(e){}arcIdxDel(Y);renderArc();toast(`${Y}학년도 보관 자료를 지웠습니다`)}
+/* 받은 보관 파일(또는 백업 안의 보관 자료)을 보관함에 넣기 */
+async function arcStore(A){if(!A||A.kind!==ARC_KIND||!+A.year)return false;const str=JSON.stringify(A);await kvSet("arc:"+A.year,str);arcIdxPut({year:+A.year,at:A.savedAt||"",cnt:A.cnt||arcCnt({classes:A.classes||[],evs:A.evals,events:A.events,tts:(A.tt||{}).list}),size:str.length,drive:false});return true}
+function arcFileSheet(A){choose(`<h2>${+A.year}학년도 보관 파일</h2><p class="note">${esc(arcCntText(A.cnt||arcCnt({classes:A.classes||[],evs:A.evals,events:A.events,tts:(A.tt||{}).list})))}</p>`,
+  [{label:"보관함에 넣기",pri:true,go:async()=>{await arcStore(A);renderArc();toast("보관함에 넣었습니다")}},{label:"지금 자료로 되살리기",go:async()=>{await arcStore(A);arcRestore(A.year)}}])}
+async function arcAllLocal(){const out=[];for(const e of arcIdx()){try{const s=await kvGet("arc:"+e.year);if(s)out.push(JSON.parse(s))}catch(x){}}return out}
+async function arcScanDrive(){if(!gReady())return toast("먼저 구글 로그인을 해 주세요");
+  try{const fs=await gArcList();let n=0;fs.forEach(f=>{const m=/teachers-life-archive-(\d{4})\.json/.exec(f.name);if(m&&!arcIdx().some(x=>+x.year===+m[1])){arcIdxPut({year:+m[1],at:f.modifiedTime||"",cnt:null,size:+f.size||0,drive:true});n++}});renderArc();toast(n?`드라이브에서 보관 자료 ${n}개를 찾았습니다`:"드라이브에 새로 찾은 보관 자료가 없습니다")}catch(e){toast(e.message||"드라이브를 읽지 못했습니다")}}
+function renderArc(){
+  const box=$("arcBody");const tag=$("arcTag");const ys=arcYears(),ix=arcIdx();
+  if(tag)tag.textContent=ys.length?`보관할 학년도 ${ys.length}개`:ix.length?`보관함 ${ix.length}개`:"";
+  if(!box||!$("d-arc").open)return;
+  const cand=ys.map(Y=>{const P=arcPick(Y),sz=JSON.stringify(arcBuild(Y,P)).length*2;return`<div class="arcrow"><div><b>${Y}학년도</b><small>${esc(arcCntText(arcCnt(P)))} · 약 ${fmtSize(sz)}</small></div><button class="btn sm pri" type="button" data-arcmk="${Y}">보관하기</button></div>`}).join("");
+  box.innerHTML=`<p class="note">새 학년도가 시작되면 지난 학년도 자료(학급·명단·출석·관찰·평가·시간표·일정)를 <b>보관함</b>으로 옮기세요. 휴대폰 기본 저장 공간과 동기화 양이 줄고, 보관한 자료는 언제든 되살릴 수 있습니다.</p>
+    <div class="shlb">보관할 수 있는 학년도</div>${cand||`<p class="note">지난 학년도 자료가 없습니다. 올해(${curTerm().year}학년도)와 지금 보고 있는 기간(${esc(perLabel())})은 보관하지 않습니다.</p>`}
+    <div class="shlb">보관함</div>${ix.length?ix.map(e=>`<div class="arcrow"><div><b>${+e.year}학년도</b><small>${e.cnt?esc(arcCntText(e.cnt))+" · ":""}${e.at&&!isNaN(new Date(e.at))?esc(fmtDateW(ymd(new Date(e.at))))+" 보관 · ":""}<span data-arcwhere="${+e.year}">${e.drive?"구글 드라이브":""}</span></small></div>
+      <div class="arcbtns"><button class="btn sm" type="button" data-arcre="${+e.year}">되살리기</button><button class="btn sm" type="button" data-arcdl="${+e.year}">파일로 받기</button><button class="btn sm bad ghost" type="button" data-arcrm="${+e.year}">지우기</button></div></div>`).join(""):`<p class="note">보관한 학년도가 없습니다.</p>`}
+    <div class="row2"><label class="btn" for="arcFile">보관 파일 불러오기</label><input type="file" id="arcFile" accept=".json,application/json" hidden>${G&&G.on?`<button class="btn" type="button" id="arcScan">드라이브에서 찾기</button>`:""}</div>
+    <p class="note">사진·동영상·녹음은 이 기기에 그대로 남습니다. 구글 연동 중이면 보관 파일이 드라이브의 앱 전용 공간에도 올라가 다른 기기에서도 되살릴 수 있습니다. 백업 파일 저장에도 보관함이 함께 들어갑니다.</p>`;
+  box.querySelectorAll("[data-arcmk]").forEach(b=>b.onclick=()=>{const Y=+b.dataset.arcmk,P=arcPick(Y);
+    ask(`<h2>${Y}학년도 보관하기</h2><p class="note">${esc(arcCntText(arcCnt(P)))}</p><p class="note">이 자료를 보관함으로 옮깁니다. 출석·연락·통계·설정 화면에서 ${Y}학년도 자료가 빠지고, 보관함의 <b>되살리기</b>로 언제든 다시 꺼낼 수 있습니다.${gReady()?" 구글 드라이브에도 보관 파일을 올립니다.":""}</p>`,"보관하기",()=>arcMake(Y).catch(e=>toast(e.message||"보관하지 못했습니다")))});
+  box.querySelectorAll("[data-arcre]").forEach(b=>b.onclick=()=>{const Y=+b.dataset.arcre;ask(`<h2>${Y}학년도 되살리기</h2><p class="note">보관한 자료를 다시 앱에 넣습니다. 올해 자료와 섞이지 않고 ${Y}학년도로 따로 들어가며, 설정 → 적용 기간에서 ${Y}학년도를 고르면 볼 수 있습니다.</p>`,"되살리기",()=>arcRestore(Y))});
+  box.querySelectorAll("[data-arcdl]").forEach(b=>b.onclick=()=>arcDownload(+b.dataset.arcdl));
+  box.querySelectorAll("[data-arcrm]").forEach(b=>twoStep(b,"정말 지우기",()=>arcDrop(+b.dataset.arcrm)));
+  ix.forEach(e=>kvGet("arc:"+e.year).then(v=>{const el=box.querySelector(`[data-arcwhere="${+e.year}"]`);if(el)el.textContent=[v?"이 기기":"",e.drive?"구글 드라이브":""].filter(Boolean).join(" · ")||"파일로만"}).catch(()=>{}));
+  $("arcFile").onchange=async ev=>{const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(!f)return;try{const A=await readAnyText(await f.text());if(!A||A.kind!==ARC_KIND)return toast("교사의 생활 보관 파일이 아닙니다");arcFileSheet(A)}catch(e){toast("파일을 읽지 못했습니다")}};
+  if($("arcScan"))$("arcScan").onclick=arcScanDrive;
+}
+function openArc(){show("set");const d=$("d-arc");if(d){d.open=true;renderArc();setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),60)}}
 /* 5.16: 처음 설정 안내 (이름 → 학기 → 학급·명단 → 시간표) */
 const WIZ_KEY="att-app-setup";
 const WZ={step:0,rows:[],skipped:[]};
@@ -6203,6 +6325,7 @@ function foldTips(){try{
 safe("foldTips",foldTips);
 try{if(!meName()){const d=$("d-me");if(d)d.open=true}}catch(e){}
 try{if(!location.hash&&wizNeeded())setTimeout(()=>{if($("sheet").hidden)openWizard()},350)}catch(e){}
+try{$("d-arc").addEventListener("toggle",()=>{if($("d-arc").open)safe("학년도 보관",renderArc)});renderArc()}catch(e){}
 try{$("d-cheer").addEventListener("toggle",()=>{if($("d-cheer").open)safe("응원 설정",renderCheerSet)});const P=cheerPref();$("cheerTag").textContent=P.am||P.pm?"켜짐":"꺼짐"}catch(e){}
 setTimeout(()=>{try{cheerCheck()}catch(e){}},1500);
 {let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
