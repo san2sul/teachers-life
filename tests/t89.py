@@ -1,0 +1,10 @@
+src=open('audit2.py').read();exec(src.split("sizes=")[0])
+with sync_playwright() as p:
+  b=p.chromium.launch();c=b.new_context(viewport={"width":320,"height":640},device_scale_factor=2,service_workers="block");c.route("**/*",handler);T=c.new_page();T.on("pageerror",lambda e:errs.append(str(e)))
+  T.goto("https://tl.test/index.html");T.wait_for_timeout(900)
+  T.screenshot(path=SP+"/shot/w320_0.png")
+  T.click("#wzN");T.click("#wzN");T.click("#wzN");T.fill("#wzCls","3학년 2반");T.fill("#wzRos","김하나\n이두리");T.wait_for_timeout(100);print(T.inner_text("#wzMsg"));T.screenshot(path=SP+"/shot/w320_3.png")
+  T.click("#wzN");T.click("#wzMk");T.wait_for_timeout(300)
+  print("tt:",T.evaluate("(()=>{const s=JSON.parse(localStorage.getItem('att-app-v2'));return [s.tt.list.map(t=>t.year+t.term),s.list.map(c=>c.data.cls+':'+c.data.roster.map(r=>r[0]).join(','))]})()"),"tt view:",T.evaluate("!document.getElementById('v-tt').hidden"),"editing:",T.evaluate("!!document.querySelector('.editing')"))
+  b.close()
+print(errs)

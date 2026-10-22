@@ -1,0 +1,18 @@
+src=open('audit2.py').read();exec(src.split("sizes=")[0])
+def st(T):return json.loads(T.evaluate("localStorage.getItem('att-app-v2')"))
+S["evals"].append(ev(3,"보관된 평가",0));S["evals"][2]["done"]=True
+with sync_playwright() as p:
+  b=p.chromium.launch();c=ctx(b,390);T=c.new_page();T.on("pageerror",lambda e:errs.append(str(e)))
+  T.goto("https://tl.test/index.html");T.evaluate("s=>{localStorage.setItem('att-app-v2',s);localStorage.setItem('att-app-lastver','9.9.9')}",json.dumps(S));T.reload();T.wait_for_timeout(400)
+  T.click(".navb[data-v=stat]");T.click("#stabs .chip[data-t=eval]");T.wait_for_timeout(200)
+  print("cnt:",T.inner_text("#evCnt"),"|",T.inner_text("#evEdit"))
+  T.click("#evEdit");T.wait_for_timeout(100);print("bar:",T.inner_text("#evEdBar").replace("\n"," "),T.is_disabled("#evDelSel"))
+  T.check("[data-sel='ev1']");T.wait_for_timeout(100);print("sel:",T.inner_text("#evEdBar").replace("\n"," "))
+  T.locator("#evEdBar").scroll_into_view_if_needed();T.screenshot(path=SP+"/ed_1.png")
+  T.click("#evDelSel");print("confirm:",T.inner_text("#evDelSel"));T.click("#evDelSel");T.wait_for_timeout(200)
+  print("left:",[e['title'] for e in st(T)['evals']],"|",T.inner_text("#evCnt"))
+  T.click("#evStF [data-f=all]");T.wait_for_timeout(100);T.click("#evSelAll");print("selall:",T.inner_text("#evSelN"),T.inner_text("#evSelAll"))
+  T.click("[data-del='ev2']");T.click("[data-del='ev2']");T.wait_for_timeout(200);print("left2:",[e['title'] for e in st(T)['evals']],"edit still:",T.inner_text("#evEdit"))
+  print("toast:",T.inner_text("#toast") if T.query_selector("#toast") else "")
+  b.close()
+print(errs)

@@ -1,0 +1,88 @@
+# 교사의 생활 - 자동 점검 (업데이트 전에 한 번 돌려 보세요)
+#   준비(처음 한 번): pip install playwright pillow openpyxl  →  python -m playwright install chromium
+#   실행: 저장소 폴더에서  python tests/run_all.py          (몇 개만:  python tests/run_all.py t105 t112)
+# 인터넷(구글 등)에 실제로 접속하지 않습니다. 구글 로그인·드라이브는 가짜(흉내)로 시험합니다.
+import gzip, os, re, shutil, subprocess, sys, time, socket, http.server, threading, functools
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+APP = os.path.abspath(os.path.join(HERE, ".."))          # tests 폴더의 바로 위 = 앱 폴더 (index.html 이 있는 곳)
+WORK = os.path.join(HERE, "_work")                       # 시험 중 만들어지는 파일 (지워도 됨)
+ALL = ["t48", "t49", "t50", "t60", "t70", "t73", "t74", "t76", "t77", "t78", "t79", "t80", "t81", "t82", "t83", "t84",
+       "t85", "t86", "t87", "t88", "t89", "t90", "t91", "t92", "t93", "t94", "t95", "t96", "t97", "t98", "t100", "t101",
+       "t102", "t104", "t105", "t106", "t107", "t108", "t109", "t111", "t112", "t113"]
+NOTE = {"t48": "공유 코드 주고받기", "t49": "설치·서비스워커", "t50": "두 기기 동기화", "t60": "학생 서명 메일", "t70": "시간표 올리기",
+        "t73": "평가 삭제·되돌리기", "t74": "결석 연락", "t76": "로그인 만료", "t77": "설정 화면", "t78": "적용 기간",
+        "t79": "관찰 기록 잠금", "t80": "사진·녹음 기록", "t81": "새 버전 알림", "t82": "큰 자료·저장 공간", "t83": "서명 현황",
+        "t84": "뒤로 가기", "t85": "전표 올리기", "t86": "인쇄·PDF", "t87": "오류 표시줄", "t88": "처음 설정 안내",
+        "t89": "시간표 편집", "t90": "엑셀 내보내기", "t91": "관찰 항목 가져오기", "t92": "화면 겹침", "t93": "학사일정 파일",
+        "t94": "학사일정 양식", "t95": "학교 묶음 나눠 주기", "t96": "안내 페이지", "t97": "1교시 전·점심·방과 후 활동",
+        "t98": "출석 동시 체크", "t100": "메일 형식", "t101": "휴강·결강 통계", "t102": "응원 메시지·음악", "t104": "음악 오프라인",
+        "t105": "출석 격자·오늘 탭", "t106": "학년도 보관", "t107": "넓은 화면 패널", "t108": "악성 코드 차단",
+        "t109": "망가진 파일 불러오기", "t111": "출석 체크 자동 연결", "t112": "하루 보기·글꼴", "t113": "밀어서 삭제·숫자 칸"}
+
+def prepare():
+    if os.path.isdir(WORK):
+        shutil.rmtree(WORK)
+    os.makedirs(os.path.join(WORK, "shot"))
+    for f in os.listdir(HERE):
+        if f.endswith(".py") and f != "run_all.py":
+            s = open(os.path.join(HERE, f), encoding="utf-8").read()
+            s = s.replace("__TL_WORK__", WORK.replace("\\", "/")).replace("__TL_APP__", APP.replace("\\", "/"))
+            open(os.path.join(WORK, f), "w", encoding="utf-8").write(s)
+    fx = os.path.join(HERE, "fixtures")                 # 시험에 쓰는 예시 파일 (시간표 캡처 · 엑셀 전표 · 학사일정 PDF 등)
+    if os.path.isdir(fx):
+        shutil.copytree(fx, WORK, dirs_exist_ok=True)
+    for f in os.listdir(os.path.join(HERE, "data")):
+        if f.endswith(".gz"):
+            with gzip.open(os.path.join(HERE, "data", f), "rb") as g, open(os.path.join(WORK, f[:-3]), "wb") as o:
+                o.write(g.read())
+
+def serve():
+    """t48 · t49 · t104 는 진짜 서비스워커가 필요해서 이 컴퓨터 안에서만 앱을 엽니다 (localhost:8766)."""
+    try:
+        socket.create_connection(("127.0.0.1", 8766), timeout=0.5).close()
+        return None
+    except OSError:
+        pass
+    h = functools.partial(http.server.SimpleHTTPRequestHandler, directory=APP)
+    http.server.SimpleHTTPRequestHandler.log_message = lambda *a: None
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 8766), h)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv
+
+def judge(code, out):
+    """실패: 프로그램 오류로 멈춤 · 'FAIL' 줄 · 마지막 줄의 오류 목록이 비어 있지 않음"""
+    if code != 0 or "Traceback" in out:
+        return False
+    if re.search(r"^FAIL\b", out, re.M) or re.search(r"fails:? \[\s*'", out):
+        return False
+    lines = [l for l in out.strip().splitlines() if l.strip()]
+    last = lines[-1] if lines else ""
+    return not (re.search(r"errors?:\s*\[\s*'", last) or re.match(r"^\s*\['", last))
+
+def main():
+    names = [a for a in sys.argv[1:] if a in ALL] or ALL
+    if not os.path.exists(os.path.join(APP, "index.html")):
+        sys.exit("앱 폴더를 찾지 못했습니다. tests 폴더를 index.html 이 있는 폴더 안에 두세요.")
+    prepare()
+    srv = serve()
+    bad = []
+    t0 = time.time()
+    for n in names:
+        s = time.time()
+        p = subprocess.run([sys.executable, n + ".py"], cwd=WORK, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
+        out = p.stdout + p.stderr
+        ok = judge(p.returncode, out)
+        print(f"{'통과' if ok else '실패'}  {n:5} {NOTE.get(n, ''):18} {time.time() - s:5.1f}초")
+        if not ok:
+            bad.append(n)
+            open(os.path.join(WORK, n + ".log"), "w", encoding="utf-8").write(out)
+    print(f"\n{len(names) - len(bad)}/{len(names)} 통과 · {time.time() - t0:.0f}초")
+    if bad:
+        print("실패한 시험의 자세한 기록: tests/_work/<이름>.log  →", ", ".join(bad))
+    if srv:
+        srv.shutdown()
+    sys.exit(1 if bad else 0)
+
+if __name__ == "__main__":
+    main()

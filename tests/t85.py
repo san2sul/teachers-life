@@ -1,0 +1,33 @@
+import openpyxl,zipfile
+from urllib.parse import unquote
+src=open('t60.py').read();exec(src.split("with sync_playwright() as p:")[0])
+def st(T):return json.loads(T.evaluate("localStorage.getItem('att-app-v2')"))
+with sync_playwright() as p:
+  b=p.chromium.launch();c=ctx(b,390);T=c.new_page();E=[];T.on("pageerror",lambda e:E.append(str(e)))
+  T.goto("https://tl.test/index.html");T.evaluate("s=>{localStorage.clear();localStorage.setItem('att-app-v2',s);localStorage.setItem('att-app-lastver','9.9.9');localStorage.setItem('att-app-me','홍')}",json.dumps(S));T.reload();T.wait_for_timeout(500)
+  T.click(".navb[data-v=stat]");T.click("#stabs .chip[data-t=eval]");T.wait_for_timeout(200)
+  print("heads:",T.inner_text("#stTitle"),"|",T.inner_text("#evListBox h2"))
+  T.click("#evNew");T.wait_for_timeout(200);T.click("#kdChips [data-kd=agree]");print("agree default:",T.input_value("#kdAgree"),"| items:",repr(T.input_value("#mnI")))
+  T.fill("#mnT","실험실 안전 서약");T.fill("#mnN","실험실에서 보안경을 착용하고 안전 수칙을 지키겠습니다.");T.fill("#mnR","t@gmail.com");T.click("#mnOk");T.wait_for_timeout(300)
+  ev=st(T)['evals'][0];print("ev:",ev['kind'],ev.get('agree'),ev['cols'],ev['note'][:20])
+  print("detail:",T.inner_text("#evDetail")[:120].replace("\n"," | "))
+  T.click("#evStu [data-a=copy][data-i='0']");T.wait_for_timeout(200);link=T.evaluate("navigator.clipboard.readText()")
+  Sp=c.new_page();Sp.goto(link);Sp.wait_for_timeout(600);print("SIGN:",Sp.inner_text("main")[:260].replace("\n"," | "))
+  Sp.check("#ok");bx=Sp.locator("#cv").bounding_box();Sp.mouse.move(bx["x"]+30,bx["y"]+60);Sp.mouse.down()
+  for i in range(20):Sp.mouse.move(bx["x"]+30+i*9,bx["y"]+60+(i%5)*6)
+  Sp.mouse.up();Sp.click("#send");Sp.wait_for_timeout(400);href=unquote(Sp.get_attribute("#mail","href"));print("mail:",href[:140].replace("\n"," "))
+  import re;r=re.search(r'(https://tl\.test/(?:index\.html)?#r=[A-Za-z0-9_\-.]+)',href).group(1);T.goto(r);T.wait_for_timeout(800)
+  T.click("#evXl");T.wait_for_timeout(300)
+  with T.expect_download() as d:T.click("#eoOk")
+  pth=SP+"/kind_out.xlsx";d.value.save_as(pth);z=zipfile.ZipFile(pth);print("xlsx images:",len([n for n in z.namelist() if n.startswith('xl/media/')]))
+  ws=openpyxl.load_workbook(pth).worksheets[0]
+  for row in ws.iter_rows(min_row=1,max_row=5,values_only=True):print("  ",[x for x in row if x not in (None,"")])
+  # template with 동의서, no items
+  T.click("#evBack");T.click("#evTpl");T.wait_for_timeout(200);T.click("#tpTP .chip:has-text('동의서')");T.fill("#tpI","")
+  with T.expect_download() as d2:T.click("#tpOk")
+  p2=SP+"/tpl_agree.xlsx";d2.value.save_as(p2);print("tpl file:",d2.value.suggested_filename)
+  T.set_input_files("#evFile",p2);T.wait_for_timeout(1500);print("UPLOAD:",T.inner_text("#sheetBox")[:200].replace("\n"," | "))
+  T.click("#kdChips [data-kd=agree]");T.fill("#evReply","t@gmail.com");T.click("#evOk");T.wait_for_timeout(400)
+  ev=st(T)['evals'][0];print("uploaded ev:",ev['title'],ev['kind'],ev['cols'],len(ev['stu']))
+  b.close()
+print(E)

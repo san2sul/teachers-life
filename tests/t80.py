@@ -1,0 +1,35 @@
+import datetime
+src=open('t60.py').read();exec(src.split("with sync_playwright() as p:")[0])
+def st(T):return json.loads(T.evaluate("localStorage.getItem('att-app-v2')"))
+with sync_playwright() as p:
+  b=p.chromium.launch(args=["--use-fake-device-for-media-stream","--use-fake-ui-for-media-stream"]);c=ctx(b,390);c.grant_permissions(["microphone"],origin="https://tl.test")
+  T=c.new_page();E=[];T.on("pageerror",lambda e:E.append(str(e)))
+  T.goto("https://tl.test/index.html");T.evaluate("s=>{localStorage.clear();localStorage.setItem('att-app-v2',s);localStorage.setItem('att-app-view','att');localStorage.setItem('att-app-amode','obs');localStorage.setItem('att-app-lastver','9.9.9')}",json.dumps(S));T.reload();T.wait_for_timeout(500)
+  T.click("#obsList [data-e='10101']");T.wait_for_timeout(200)
+  with T.expect_file_chooser() as fc:T.click("#obMedBtns [data-cap=photo]")
+  ch=fc.value;print("capture attr:",T.evaluate("1"),ch.element.get_attribute("capture"),ch.element.get_attribute("accept"))
+  ch.set_files(SP+"/ttimg/photo.jpg");T.wait_for_timeout(1500)
+  print("grid:",T.inner_text("#obMed").replace("\n"," "),"| thumb:",T.evaluate("document.querySelector('#obMed .medth').classList.contains('hasimg')"))
+  # record audio 2s
+  T.click("#obMedBtns [data-cap=audio]");T.click("#recGo");T.wait_for_timeout(2200);T.click("#recGo");T.wait_for_timeout(1200)
+  print("grid2:",T.inner_text("#obMed").replace("\n"," "))
+  T.fill("#obMemo","실험 발표");T.click("#obOk");T.wait_for_timeout(300)
+  d=st(T)['list'][0]['data'];r=d['obs'][0];print("rec:",r['memo'],[(m['t'],m['mime'],m['size'],m.get('dur')) for m in r['media']])
+  print("row pills:",T.inner_text("#obsList .orow>>nth=0").replace("\n"," "))
+  # view & save & delete photo
+  T.click("#obsList [data-e='10101']");T.wait_for_timeout(300);T.click("#obMed .medth.photo");T.wait_for_timeout(500)
+  print("viewer img:",T.evaluate("!!document.querySelector('.medov img.medimg')"))
+  with T.expect_download() as dl:T.click("#mvSave")
+  print("saved:",dl.value.suggested_filename)
+  T.click("#mvDel");T.click("#mvDel");T.wait_for_timeout(400)
+  d=st(T)['list'][0]['data'];print("after del:",[m['t'] for m in d['obs'][0].get('media',[])])
+  print("idb keys:",T.evaluate("new Promise(r=>{const q=indexedDB.open('teachers-life-media');q.onsuccess=()=>{const t=q.result.transaction('m').objectStore('m').getAllKeys();t.onsuccess=()=>r(t.result.length)}})"))
+  T.click("#skNo")
+  # lock blocks capture
+  T.click("#obsLockBtn");T.click("#obsList [data-e='10101']");T.wait_for_timeout(200);print("btns disabled when locked:",T.evaluate("[...document.querySelectorAll('#obMedBtns button')].every(b=>b.disabled)"))
+  T.click("#skNo");T.click("#obsLockBtn")
+  # delete record removes blobs
+  T.click("#obsList [data-e='10101']");T.wait_for_timeout(200);T.click("#obDel");T.click("#obDel");T.wait_for_timeout(300)
+  print("idb after rec delete:",T.evaluate("new Promise(r=>{const q=indexedDB.open('teachers-life-media');q.onsuccess=()=>{const t=q.result.transaction('m').objectStore('m').getAllKeys();t.onsuccess=()=>r(t.result.length)}})"))
+  b.close()
+print(E)

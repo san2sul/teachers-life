@@ -1,0 +1,15 @@
+src=open('t50.py').read();exec(src.split("with sync_playwright() as p:")[0])
+with sync_playwright() as p:
+  b=p.chromium.launch()
+  B=dev(b,"Bphone",None)
+  B.evaluate("localStorage.setItem('att-app-setup','1')");B.reload();B.wait_for_timeout(400)
+  B.click(".navb[data-v=set]");B.evaluate("document.getElementById('d-sync').open=true")
+  print("logged-out notice:",B.inner_text(".gsdata")[:120])
+  B.click("#gsLogin");B.wait_for_timeout(1800)
+  print("gmTry present:",B.is_visible("#gmTry") or B.evaluate("!!document.getElementById('gmTry')"),"gmailOn:",B.evaluate("localStorage.getItem('att-app-gmail')"))
+  B.evaluate("document.getElementById('gmTry').open=true");B.check("#gmTryOn");print("after on:",B.evaluate("localStorage.getItem('att-app-gmail')"))
+  B.uncheck("#gmTryOn");print("after off:",B.evaluate("localStorage.getItem('att-app-gmail')"))
+  for pg in ["home.html","privacy.html","terms.html"]:
+    B.goto("https://tl.test/"+pg);print(pg,B.title(),len(B.inner_text("body")))
+  b.close()
+print(errs)

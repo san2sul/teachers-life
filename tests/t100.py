@@ -1,0 +1,23 @@
+src=open('audit2.py').read();exec(src.split("sizes=")[0])
+import sys
+with sync_playwright() as p:
+  b=p.chromium.launch();c=b.new_context(viewport={"width":390,"height":844},device_scale_factor=2,service_workers="block",permissions=["clipboard-read","clipboard-write"]);c.route("**/*",handler);T=c.new_page();T.on("pageerror",lambda e:errs.append(str(e)))
+  T.add_init_script("window.__nav=[];")
+  T.goto("https://tl.test/index.html");T.evaluate("s=>{localStorage.setItem('att-app-v2',s);localStorage.setItem('att-app-lastver','9.9.9');localStorage.setItem('att-app-me','김물리');localStorage.setItem('att-app-setup','1')}",json.dumps(S));T.reload();T.wait_for_timeout(500)
+  T.click(".navb[data-v=stat]");T.click("#stabs .chip[data-t=eval]");T.click("[data-ev=ev1]");T.wait_for_timeout(200)
+  T.click("#evStu [data-a=copy] >> nth=0");T.wait_for_timeout(300)
+  link=T.evaluate("navigator.clipboard.readText()");print("link len:",len(link),link[:80])
+  if len(sys.argv)>1:b.close();sys.exit()
+  print("fmt chips:",T.inner_text("#evMf"))
+  T.on("framenavigated",lambda f:None)
+  T.click("#evSeq");T.wait_for_timeout(800)
+  items=T.evaluate("(async()=>{const it=await navigator.clipboard.read();const o={};for(const i of it)for(const t of i.types){o[t]=(await (await i.getType(t)).text())}return o})()")
+  print("clip types:",list(items));html=items.get("text/html","")
+  print("html has button:", "점수 확인하고 서명하기" in html, "| shows raw link text:", ("#s=" in html.replace('href="','')) )
+  open(SP+"/mail_preview.html","w").write("<meta charset=utf-8>"+html)
+  print("TEXT:\n"+items.get("text/plain","")[:600])
+  P=c.new_page();P.set_viewport_size({"width":480,"height":800});P.goto("file://"+SP+"/mail_preview.html");P.screenshot(path=SP+"/shot/mail_preview.png",full_page=True)
+  # text mode
+  T.click("#evMf [data-f=text]");T.wait_for_timeout(200);print("mode:",T.evaluate("localStorage.getItem('att-app-mailfmt')"))
+  b.close()
+print(errs)
