@@ -27,6 +27,60 @@
       "purpose": "maskable"
     }
   ],
-  "version": "5.36.2",
-  "author": "물리공작소"
+  "version": "5.39.0",
+  "author": "물리공작소",
+  "shortcuts": [
+    {
+      "name": "오늘",
+      "short_name": "오늘",
+      "description": "오늘 수업 · 할 일 · 일정",
+      "url": "./?go=todo",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "할 일 추가",
+      "short_name": "할 일 추가",
+      "description": "새 할 일 바로 쓰기",
+      "url": "./?go=add",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "출석 체크",
+      "short_name": "출석",
+      "description": "출석 화면 열기",
+      "url": "./?go=att",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "시간표",
+      "short_name": "시간표",
+      "description": "수업 시간표 열기",
+      "url": "./?go=tt",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
 }
