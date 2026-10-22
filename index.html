@@ -965,6 +965,30 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 .kpil .td{background:var(--paper)}
 /* 5.30: 되돌리기 알림은 아래 알림 줄과 같은 너비로 (글자가 세 줄로 접히지 않게) */
 .utoast{width:min(94vw,440px);box-sizing:border-box}
+/* 5.31: 학교 관리 */
+.schcls{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}.schcls .chip small{color:var(--muted);margin-left:2px}
+.schstu,.schstf{margin-top:6px}
+.schlog{display:flex;flex-direction:column;gap:4px;font-size:.875rem}.schlog small{color:var(--muted);margin-right:4px}
+.schdiff{display:flex;flex-direction:column;gap:8px;max-height:52vh;overflow:auto}
+.schk{background:var(--tint);border-radius:var(--r-m);padding:6px 10px}.schk>small{display:block;padding:0 0 6px 30px}.hcard{border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;margin:8px 0;background:var(--paper)}.hch{font-size:.875rem;margin-bottom:4px}.hcm{white-space:pre-wrap;margin:6px 0;font-size:.9375rem}.cdr textarea{margin:2px 0 6px 30px;width:calc(100% - 30px)}.lgt{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px}.lgp>summary{min-height:44px;font-size:.875rem;color:var(--ink)}.rosd{display:flex;flex-direction:column;padding:0 0 4px 22px}.rosd .chk{min-height:36px;font-weight:400;font-size:.875rem}.rosd small{color:var(--muted)}.chk>span{flex:1;min-width:0}.schk>.chk b{margin-left:4px;color:var(--accent)}
+.schk details>summary{cursor:pointer;color:var(--muted);font-size:.8125rem;min-height:32px;display:flex;align-items:center}
+.schkl{display:flex;flex-direction:column;gap:0;padding:4px 0 4px 28px}.schkl .chk{min-height:36px;font-size:.875rem}
+#v-school header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+#schBack{white-space:nowrap;flex:none}
+.schcls .chip[aria-pressed="true"] small{color:inherit;opacity:.8}
+/* 5.31: 창(시트)이 열려 있는 동안 아래 알림 줄은 잠시 숨김 (창 내용을 가리지 않게) */
+body.shopen .newbar{visibility:hidden}
+/* 5.32: 학교 묶음 */
+.fpbig{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.6rem;font-weight:700;letter-spacing:.08em;text-align:center;margin:8px 0;color:var(--accent)}
+.fpbig.sm{display:inline;font-size:1.05rem;margin:0 0 0 6px;letter-spacing:.06em}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;font-weight:700}
+input.code{text-transform:uppercase;font-size:1.15rem}
+.pklist{max-height:34vh;overflow:auto}.pklist .chip small{color:inherit;opacity:.7}
+.codelist .prow{display:flex;align-items:center;gap:6px}.codelist .pn{flex:1;min-width:0}.codelist .code{margin-left:6px;color:var(--accent)}
+.asgrow .range{align-items:end}
+.tagx{font-style:normal;font-size:.75rem;font-weight:700;border-radius:999px;padding:1px 8px;margin-left:6px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.tagx.hr{background:var(--present-soft);color:var(--present)}
+.schdiff.nomax{max-height:none;overflow:visible}
 </style>
 </head>
 <body>
@@ -1229,6 +1253,10 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 </main>
 
 <!-- 설정 -->
+<main class="wrap view" id="v-school" hidden>
+  <header class="top"><div><h1>학교 관리</h1><div class="sub" id="schSub">담당자용 · 학교 원본 명단</div></div><button class="btn sm" type="button" id="schBack">‹ 설정</button></header>
+  <div id="schBody"></div>
+</main>
 <main class="wrap view" id="v-set" hidden>
   <header class="top"><div><h1>설정</h1><div class="sub">구글 연동·명단·연락처·공유</div></div></header>
   <section class="sgrp"><h2 class="sgt">나와 계정</h2><div class="sgl">
@@ -1302,6 +1330,8 @@ html[data-font="pre"] body{letter-spacing:-.005em}
   </details>
   </div></section>
   <section class="sgrp"><h2 class="sgt">가져오기 · 공유</h2><div class="sgl">
+  <details class="card" id="d-pack"><summary>학교에서 받기 <span class="sub" id="packTag"></span></summary><div id="packBody"></div></details>
+  <details class="card" id="d-school"><summary>학교 관리 (담당자용) <span class="sub" id="schTag"></span></summary><div id="schEntry"></div></details>
   <details class="card" id="d-imp"><summary>명단 가져오기 · 입력 양식</summary>
     <p class="note">엑셀이나 한글 표에서 ‘학번, 이름, 전화번호’ 칸을 복사해 붙여 넣거나, 받은 가져오기 코드를 붙여 넣으세요.</p>
     <textarea class="fld" id="impIn" rows="5" placeholder="10102	권선우	010-1234-5678&#10;또는 가져오기 코드"></textarea>
@@ -1403,8 +1433,16 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.30.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.36.2", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.36.2",date:"2026-10-22",items:["인계 카드 제출 현황: 담당자 ‘인계 카드’ 탭에서 배정된 담임(고르면 교과 담당도)마다 보냄 · 일부 · 아직 · 안 씀 표시","아직 안 보낸 선생님께 문자 한 번에, 쓰지 않기로 한 선생님은 ‘안 씀’으로 현황 · 문자에서 빼기"]},
+  {v:"5.36.1",date:"2026-10-22",items:["학생 인계 카드는 선택 사항: 담당자가 ‘우리 학교는 인계 카드를 씁니다’를 켠 학교에서만 선생님 앱에 ‘만들기’가 보임(기본은 꺼짐). 끄면 받아 둔 카드도 묶음에 넣지 않음","카드 쓰기에서 ‘인계 메모를 쓴 학생만 보내기’ 추가, 메모는 쓰고 싶은 학생에게만"]},
+  {v:"5.36.0",date:"2026-10-22",items:["학교 관리 5단계 — 학생 인계 카드: 학년말에 선생님이 학생마다 카드(출석 요약 · 관찰 경향 · 인계 메모, 고를 때만 최근 관찰 메모 · 세특 초안)를 만들어 담당자에게 보냄. 쓰던 메모는 기기에 기억","카드 파일은 담당자 열쇠로만 열림(다른 사람 · 다른 담당자는 못 엶). 담당자는 ‘인계 카드’ 탭에서 받아 학생 고유번호에 붙여 둠. 같은 파일을 다시 받으면 바꿔 넣음","새 학년도 학교 묶음에 실어 새 담임에게 그 반 학생 카드만 전달(교과 담당은 담당자가 고를 때만, 공용 코드 선택 방식에는 넣지 않음). 받은 카드는 학생 화면 ‘인계 카드’에 표시, 받은 정보 초기화 때 함께 지움","담당자 인계로 확인 코드를 바꿔도 이전에 만든 카드 파일을 그대로 열 수 있음"]},
+  {v:"5.35.0",date:"2026-10-22",items:["학교 관리 4단계 — 배포 기록: 새 ‘배포 기록’ 탭에 묶음마다 만든 때 · 배정 선생님 · 선택 방식 학급 · 명단 변경 · 학사일정을 남김. 기록 엑셀로 내보내기","받음 확인: 선생님 앱의 ‘받았다고 알리기’ 문장(확인 4자 포함)을 담당자가 붙여 넣으면 누가 받았는지 표시. 확인 4자는 묶음을 실제로 연 사람만 알 수 있어, 남의 문장을 이름만 바꿔 보내면 ‘확인 안 됨’. 안 받은 선생님께 문자 한 번에","담당자 인계: 원본 · 배정 · 서명 열쇠 · 배포 기록 · 지난 배포 명단을 인계 코드(12자)로 잠근 파일 하나로 넘김. 새 담당자는 확인 코드를 그대로 이어 쓰거나(선생님 앱 변화 없음), 새 확인 코드로 바꿈(이전 담당자 서명으로 이어 줘서 선생님 앱은 경고 대신 ‘담당자가 바뀌었습니다’ 안내). 인계 뒤 이전 기기 원본 지우기","고침: 학교 공용 코드가 앱을 다시 열면 사라져 묶음마다 새로 만들어지던 문제"]},
+  {v:"5.34.0",date:"2026-10-22",items:["학교 관리 3단계 — 명단 갱신 배포: 담당자 기기가 지난번 나눠 준 명단을 기억해 두고, 배포 카드에 그 뒤로 바뀐 것(전입 · 반 이동 · 전출 · 학번 · 이름)을 보여 줌. 새 묶음에는 학급별로 바뀐 까닭이 함께 들어감","선생님 앱: 이미 받은 학급이면 학생 고유번호로 맞춰 보고 바뀐 것만 하나씩 보여 줌(들어옴 · 빠짐 · 학번 · 이름 · 연락처 · 이메일). 체크를 빼면 그 변경은 적용하지 않고, 다음에 다시 보여 줌","빠진 학생은 명단에서만 빼고 출석 · 관찰 · 세특 기록은 남김. 학번이 바뀌면 출석 · 관찰 · 세특 · 연락처를 새 학번으로 옮김. 같은 학번이 이미 있으면 넣지 않고 알려 줌","받은 정보에 최근 명단 갱신 기록, 지난번보다 오래된 묶음이면 경고, 되돌리기로 갱신 전 상태로"]},
+  {v:"5.33.0",date:"2026-10-22",items:["학교 묶음 배포 두 가지: ① 배정 방식(담당자가 정한 담임 · 수업 학급을 개인 코드로) ② 선택 방식(선생님이 앱에서 먼저 정한 ‘내 학급’만 학교 공용 코드로 골라 받기). 두 방식을 한 파일에 함께 넣을 수 있음","선택 방식은 학급마다 따로 잠겨 있어 고른 학급만 열림. 공용 코드는 여럿이 알게 되므로 기본은 이름 · 학번 · 이메일 · 교과 담당만(연락처는 담당자가 고를 때만)","묶음에 학사일정(일정 · 할 일 · 시간표 휴업 · 단축 · 변동, 구글 캘린더로 보내기 가능)과 학급별 교과 수업 정보(과목 · 담당 선생님 → 수업 교사)를 함께 넣음","설정 → 학교에서 받기: ‘내 학급 정하기’(담임 · 과목별 수업 학급), 받은 정보 요약, 다시 받기(지난 묶음 다시 열기) · 되돌리기(받기 바로 전으로) · 초기화(받은 학급 · 연락처 · 학사일정 · 시간표 칸만 지우고 출석 · 관찰 기록은 남김)"]},
+  {v:"5.32.0",date:"2026-10-22",items:["학교 관리 2단계 — 담당 배정: ‘배정’ 탭에서 선생님마다 담임 학급과 과목별 수업 학급을 정함. 수업 배정표(성명 · 담임 · 과목 · 학급) 또는 교사별 시간표 엑셀(월 ~ 금 · 교시, 컴시간 등)을 올리면 자동으로 채우고, 시간표도 함께 배포. 교직원 명단의 ‘담임’ 칸도 읽음","학교 묶음 만들기: 파일 하나에 선생님마다 따로 잠긴 칸(개인 코드 8자로만 열림)을 만들고, 담당자 서명을 붙임. 담임은 학생 · 보호자 연락처까지, 교과 담당은 이름 · 학번 · 이메일만(선택으로 바꿀 수 있음), 교직원 연락망 함께","개인 코드 보내기: 선생님별 코드를 문자 · 복사 · 안내표 엑셀로. 담당자 확인 코드(예: 23XB-AYX9)를 학교에 한 번 공지","선생님 쪽 ‘학교에서 받기’(설정 → 가져오기 · 공유): 묶음 파일을 열고 처음엔 담당자 확인 코드를 대조, 내 이름 고르고 개인 코드 넣으면 담임 · 수업 학급(담임 표시) · 교직원 연락망 · 내 시간표(빈 칸만)가 자동으로 들어감. 이미 있는 학급은 새 학생만 더하고 출석 · 관찰 기록은 그대로, 되돌리기 가능","안전: 다른 선생님 칸은 내 코드로 열리지 않음, 만든 뒤 바뀐 파일은 열지 않음, 다른 담당자가 만든 묶음이면 경고. 앱 안의 이름을 ‘학교 관리 담당자’로"]},
+  {v:"5.31.0",date:"2026-10-22",items:["학교 관리 모드 1단계(관리자용 · 고른 기기에서만): 설정 → 가져오기 · 공유 → 학교 관리. 학교 전체 학급 · 학생 · 교직원 원본을 이 기기에 따로 보관(선생님 수업 자료 · 구글 동기화와 분리)","명단 파일 올리기: 나이스 학생 명부, 학교에서 만든 명단, 교직원 연락망 엑셀 · CSV를 제목 줄로 알아서 읽음(위쪽 제목 줄 · 여러 시트 · ‘성 명’처럼 띄어 쓴 제목도). 학번이 없으면 학년 · 반 · 번호로 만듦. 학생마다 바뀌지 않는 고유번호","다시 올리면 지금 원본과 비교: 전입 · 반 이동 · 번호(학번) 변경 · 이름 · 연락처 변경 · 전출(지우지 않고 표시) · 교직원 추가 · 변경을 항목별로 보여 주고, 골라서(한 명씩도) 적용. ‘갱신 전으로 되돌리기’, 최근 기록","학급별 · 학생 찾기 · 교직원 보기와 수정 · 추가, 밀어서 삭제(되돌리기), 원본 엑셀로 내보내기, 원본 백업 저장 · 불러오기, 양식 받기","창이 열려 있는 동안 아래 알림 줄(백업 · 새 버전 안내)을 잠시 숨김"]},
   {v:"5.30.0",date:"2026-10-22",items:["오늘 탭 숫자 칸(오늘 할 일 · 지난 미완료 · 남은 할 일)을 누르면 그 목록이 바로 열림: 네모를 눌러 완료, 줄을 눌러 고치기, ‘할 일 목록에서 보기’로 이동","왼쪽으로 밀어 삭제(앱 전체): 할 일, 일정(시간표 일정 목록 · 날짜 창), 수업 변동, 학생 명단, 수업 교사, 교직원 연락처, 평가 목록, 넓은 화면 오늘 패널의 할 일. 줄을 왼쪽으로 밀면 빨간 ‘삭제’ 단추, 누르면 삭제, 6초 동안 ‘되돌리기’. 원래의 수정 · 삭제 단추는 그대로","되돌리기 알림이 새 버전 · 백업 알림 줄에 가려지지 않게 그 위에 뜸"]},
   {v:"5.29.0",date:"2026-10-22",items:["출석 체크 자동 연결: 출석 탭 ‘＋ 체크 추가’로 수업 시간에 만든 체크가 시간표의 그 교시와 자동으로 이어짐. 예전에 따로 만든 체크(시간 또는 ‘N교시’ 이름이 맞는 것)도 하나로 보여 오늘 탭에 두 번 나오지 않고, 시간표 칸에 출석 수가 표시됨","시간표 하루 보기(주간 | 하루): 휴대폰에서도 큰 글자로 하루 수업·빈 시간·점심·방과 후를 한 줄씩. 지금 수업 초록, 출석 상태 표시, ‹ › 는 하루씩(주말 건너뜀), 기기마다 기억","불러오기 안전장치: 잘리거나 손상된 파일·모양이 틀린 백업·손상된 보관 파일을 미리 걸러 한국어로 안내, 학생이 없는 백업으로는 ‘완전히 바꾸기’를 막음, 학급 이름 40자·학생 이름 30자로 제한","글꼴 고르기(설정 → 화면 · 글자 크기): 나눔고딕(기본) 또는 Pretendard. Pretendard는 고른 기기에서만 한 번 내려받음","연락 화면 설명 글을 ‘사용 방법’으로 접고, ‘모두에게 문자 3명’ · ‘전표 올리기 엑셀·CSV’ 버튼 글자가 어색하게 끊기지 않게","자동 점검 묶음(teachers-life-tests): 41가지 시험을 저장소에서 한 번에 돌리는 run_all.py"]},
   {v:"5.28.0",date:"2026-10-22",items:["넓은 화면(컴퓨터·태블릿 가로 1100px 이상): 시간표 오른쪽에 ‘오늘’ 패널 — 오늘 수업과 출석 상태(지금 수업 초록 표시, 누르면 출석 체크), 연락할 결석 학생, 오늘 할 일(바로 체크), 지난 할 일 바로가기","넓은 화면 시간표는 칸 글자를 크게(과목 16px)","시간표에서 오늘 열을 옅은 파란 띠로, 지금 수업 칸과 교시 이름(● 2교시)을 초록으로 강조","디자인 규칙 정리: 모서리 둥글기 20가지 → 3단계(작게 8 · 보통 12 · 크게 18)+알약·원, 글자 굵기 3가지(400·600·700), 잠금·경고(노랑)와 일정(호박색)도 색 규칙으로 통일해 밝은·어두운 화면에서 같은 뜻","오른쪽 위 ‘도움말’ · 동기화 표시를 그림자 없는 조용한 글자 버튼으로"]},
@@ -1506,8 +1544,11 @@ function normalize(d){
   {const ol={};if(d.obsLock&&typeof d.obsLock==="object")Object.entries(d.obsLock).forEach(([k,v])=>{if(/^\d{4}-\d{2}-\d{2}$/.test(k)&&+v)ol[k]=+v});if(Object.keys(ol).length)f.obsLock=ol}
   if(d.sts&&typeof d.sts==="object"){const o={};for(const k in d.sts){const v=d.sts[k];if(v&&typeof v.t==="string"&&v.t.trim())o[k]={t:v.t.slice(0,6000),at:+v.at||0}}if(Object.keys(o).length)f.sts=o}
   f.emails={};if(d.emails&&typeof d.emails==="object")for(const k in d.emails){const v=String(d.emails[k]||"").trim();if(isEmail(v))f.emails[k]=v}
-  f.teachers=(d.teachers||[]).filter(t=>t&&t.name).map(t=>({id:String(t.id||uid()),name:String(t.name),role:String(t.role||""),phone:String(t.phone||"")}));
+  {const c=cardsNorm(d.cards);if(Object.keys(c).length)f.cards=c}
+  f.teachers=(d.teachers||[]).filter(t=>t&&t.name).map(t=>({id:String(t.id||uid()),name:String(t.name),role:String(t.role||""),phone:String(t.phone||""),...(t.src==="school"?{src:"school"}:{})}));
   f.msg=typeof d.msg==="string"&&d.msg&&d.msg!==OLD_MSG?d.msg:DEFAULT_MSG;
+  /* 5.32: 학교 묶음으로 받은 학급 표시 (담임 · 교과, 학교 원본의 학생 고유번호) */
+  if(d.sch&&typeof d.sch==="object"&&/^\d-\d{1,2}$/.test(d.sch.key||""))f.sch={key:d.sch.key,role:d.sch.role==="담임"?"담임":"교과",subj:Array.isArray(d.sch.subj)?d.sch.subj.map(x=>String(x).slice(0,20)).slice(0,10):[],school:String(d.sch.school||"").slice(0,40),uids:d.sch.uids&&typeof d.sch.uids==="object"?{...d.sch.uids}:{}};
   if(Array.isArray(d.sessions)){
     f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
   }else if(Array.isArray(d.rounds)){
@@ -3432,6 +3473,935 @@ $("ttStart").oninput=e=>{const raw=e.target.value;clearTimeout(ttDeb.ttStart);tt
   $(id).oninput=e=>{const raw=e.target.value;clearTimeout(ttDeb[id]);ttDeb[id]=setTimeout(()=>{delete ttDeb[id];const v=parseInt(raw,10);if(!isNaN(v)&&v>=lo&&v<=hi)ttSet(k,v)},500)};
   $(id).onblur=e=>{const v=parseInt(e.target.value,10);if(isNaN(v)||v<lo||v>hi){toast(`${lo}~${hi}분 사이로 넣어 주세요`);e.target.value=TT()?TT()[k]:""}};
 });
+/* ===== 5.31: 학교 관리 모드 (관리자용 · 고른 기기에서만) — 1단계: 학교 원본 명단 =====
+   - 학교 전체 학급 · 학생 · 교직원 원본을 이 기기의 대용량 저장소(IndexedDB)에 따로 둡니다. 선생님 본인의 수업 자료(S)와 섞이지 않고,
+     구글 동기화 파일에도 들어가지 않습니다(학교 전체 개인정보가 여러 곳으로 퍼지지 않게).
+   - 학생마다 바뀌지 않는 고유번호(uid)를 붙입니다. 다음 단계(교사별 배포 · 명단 갱신 · 인계)가 모두 이 번호로 학생을 알아봅니다. */
+const SCH_ON="att-app-school",SCH_KEY="school:master",SCH_PREV="school:prev";
+let SCH=null,SCHV={tab:"cls",open:"",q:"",qs:""};
+function schOn(){try{return localStorage.getItem("att-app-school")==="1"}catch(e){return false}}
+function schNorm(v){v=v&&typeof v==="object"?v:{};
+  const st=(Array.isArray(v.students)?v.students:[]).filter(x=>x&&x.uid&&x.name).map(x=>({uid:String(x.uid),grade:+x.grade||0,cls:+x.cls||0,no:+x.no||0,name:String(x.name).slice(0,30),sid:String(x.sid||"").slice(0,20),sex:String(x.sex||"").slice(0,2),phone:String(x.phone||""),pphone:String(x.pphone||""),email:String(x.email||""),st:["재학","전출","졸업"].includes(x.st)?x.st:"재학",up:+x.up||0}));
+  const ck=k=>/^\d-\d{1,2}$/.test(String(k||""))?String(k):"";
+  const sf=(Array.isArray(v.staff)?v.staff:[]).filter(x=>x&&x.uid&&x.name).map(x=>({uid:String(x.uid),name:String(x.name).slice(0,30),dept:String(x.dept||"").slice(0,30),role:String(x.role||"").slice(0,30),subject:String(x.subject||"").slice(0,30),phone:String(x.phone||""),email:String(x.email||""),up:+x.up||0,
+    hr:ck(x.hr),teach:(Array.isArray(x.teach)?x.teach:[]).filter(y=>y&&Array.isArray(y.cls)).map(y=>({subj:String(y.subj||"수업").slice(0,20),cls:y.cls.map(ck).filter(Boolean)})).filter(y=>y.cls.length),
+    ...(x.code&&/^[0-9A-Z]{4}-[0-9A-Z]{4}$/.test(x.code)?{code:x.code}:{}),...(x.tt&&typeof x.tt==="object"&&Object.keys(x.tt).length?{tt:x.tt}:{})}));
+  return{kind:"teachers-life-school",v:1,school:String(v.school||"").slice(0,40),year:+v.year||curTerm().year,term:v.term==="1학기"||v.term==="2학기"?v.term:curTerm().term,ver:+v.ver||0,opt:v.opt&&typeof v.opt==="object"?{...v.opt}:{},at:String(v.at||""),students:st,staff:sf,log:Array.isArray(v.log)?v.log.slice(-60):[],
+    ...(/^[0-9A-Z]{4}-[0-9A-Z]{4}$/.test(v.pickCode||"")?{pickCode:v.pickCode}:{}),packs:(Array.isArray(v.packs)?v.packs:[]).filter(x=>x&&+x.ver).slice(-30),
+    cards:(()=>{const r={},o=v.cards&&typeof v.cards==="object"?v.cards:{};for(const u in o){const l=(Array.isArray(o[u])?o[u]:[]).map(c=>c&&{...cardNorm(c),src:cs(c.src,20)}).filter(Boolean);if(l.length)r[u]=l}return r})(),
+    cardSrc:(Array.isArray(v.cardSrc)?v.cardSrc:[]).filter(x=>x&&x.id).map(x=>({id:cs(x.id,20),from:cs(x.from,30),cls:cs(x.cls,6),role:x.role==="담임"?"담임":"교과",year:+x.year||0,at:cs(x.at,30),got:cs(x.got,30),n:+x.n||0}))}}
+async function schLoad(){if(SCH)return SCH;let v=null;try{v=JSON.parse((await kvGet(SCH_KEY))||"null")}catch(e){}SCH=schNorm(v);return SCH}
+async function schSave(){SCH.at=new Date().toISOString();await kvSet(SCH_KEY,JSON.stringify(SCH))}
+const schUid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const schCK=s=>`${s.grade}-${s.cls}`;
+const schLive=()=>SCH.students.filter(s=>s.st==="재학");
+const schSort=(a,b)=>a.grade-b.grade||a.cls-b.cls||a.no-b.no||a.name.localeCompare(b.name,"ko");
+const schSid=(g,c,n)=>g&&c&&n?`${g}${String(c).padStart(2,"0")}${String(n).padStart(2,"0")}`:"";
+const schPh=v=>{v=String(v||"").trim();if(!v)return"";const d=digits(v);if(/^1[016789]\d{7,8}$/.test(d))return fmtPhone("0"+d);return fmtPhone(v)};
+
+/* --- 엑셀 · CSV 읽기: 나이스에서 받은 학생 명부, 학교에서 만든 명단, 교직원 연락망 모두 첫 줄(제목 줄)을 보고 칸을 찾습니다 --- */
+const SCH_H={
+  name:/^(성명|이름|학생명|학생이름|교사명|교원명|직원명|교직원명|성함)$/,
+  grade:/^학년$/,cls:/^(반|학급)$/,gc:/^(학년반|학년-반|학급명|학년·반)$/,no:/^(번호|번|출석번호|학생번호)$/,sid:/^학번$/,sex:/^(성별|남녀)$/,
+  pphone:/(보호자|학부모|부모|아버지|어머니|부\(|모\().*(전화|연락처|휴대|폰)|^(보호자|학부모)(연락처)?$/,
+  phone:/^(학생)?(휴대전화|휴대폰|핸드폰|연락처|전화번호|전화|휴대폰번호|휴대전화번호|핸드폰번호)$/,
+  email:/(이메일|e-?mail|메일)/i,dept:/^(부서|소속|업무부서|담당부서)$/,role:/^(직위|직급|직책|역할|직명|보직)$/,subject:/^(담당과목|과목|교과|담당교과|담당)$/,hr:/^(담임|담임학급|담임반)$/};
+function schHead(row){const m={};row.forEach((c,i)=>{const h=String(c||"").replace(/\s/g,"");if(!h)return;
+  for(const k of ["name","pphone","hr","grade","cls","gc","no","sid","sex","phone","email","dept","role","subject"])if(m[k]===undefined&&SCH_H[k].test(h)){m[k]=i;break}});return m}
+function schRows(rows,fname){
+  const out={students:[],staff:[],skip:0,sheet:fname};
+  let hi=-1,H=null;for(let i=0;i<Math.min(rows.length,20);i++){const m=schHead(rows[i]);if(m.name!==undefined&&Object.keys(m).length>=2){hi=i;H=m;break}}
+  if(hi<0)return out;
+  const isStu=H.grade!==undefined||H.cls!==undefined||H.gc!==undefined||H.sid!==undefined||(H.no!==undefined&&H.dept===undefined&&H.role===undefined);
+  const get=(r,k)=>H[k]===undefined?"":String(r[H[k]]==null?"":r[H[k]]).trim();
+  rows.slice(hi+1).forEach(r=>{const name=get(r,"name").replace(/\s+/g," ");
+    if(!name||/^예시|예시\)|^\(예시/.test(name)||/^(합계|계|소계)$/.test(name)){if(r.some(x=>String(x||"").trim()))out.skip++;return}
+    if(isStu){let g=parseInt(get(r,"grade"),10)||0,c=parseInt(get(r,"cls"),10)||0,n=parseInt(get(r,"no"),10)||0,sid=get(r,"sid").replace(/\D/g,"");
+      if((!g||!c)&&H.gc!==undefined){const m=/(\d)\D+(\d{1,2})/.exec(get(r,"gc"));if(m){g=+m[1];c=+m[2]}}
+      if((!g||!c||!n)&&/^\d{5}$/.test(sid)){g=g||+sid[0];c=c||+sid.slice(1,3);n=n||+sid.slice(3)}
+      if(!g||!c){out.skip++;return}
+      out.students.push({grade:g,cls:c,no:n,name:name.slice(0,30),sid:(sid||schSid(g,c,n)).slice(0,20),sex:get(r,"sex").replace(/자$/,"").slice(0,2),phone:schPh(get(r,"phone")),pphone:schPh(get(r,"pphone")),email:get(r,"email")})}
+    else out.staff.push({name:name.slice(0,30),dept:get(r,"dept").slice(0,30),role:get(r,"role").slice(0,30),subject:get(r,"subject").slice(0,30),phone:schPh(get(r,"phone")),email:get(r,"email"),hr:clsTokens(get(r,"hr"),true)[0]||""})});
+  return out}
+async function schReadFile(f){
+  const X=await loadXLSX();let wb;
+  if(/\.(xlsx|xlsm|xls|ods)$/i.test(f.name))wb=X.read(await f.arrayBuffer(),{type:"array"});
+  else{const buf=await f.arrayBuffer();let t=new TextDecoder("utf-8").decode(buf);if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(_){}}wb=X.read(t.replace(/^﻿/,""),{type:"string",raw:true})}
+  const res={students:[],staff:[],skip:0,sheets:[]};
+  wb.SheetNames.forEach(n=>{if(/안내|설명|help/i.test(n))return;const rows=X.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:false,defval:""});const o=schRows(rows,n);
+    if(o.students.length||o.staff.length){res.sheets.push(`${n}(${o.students.length?"학생 "+o.students.length:"교직원 "+o.staff.length})`);res.students.push(...o.students);res.staff.push(...o.staff);res.skip+=o.skip}});
+  /* 같은 파일 안에서 똑같은 줄(같은 학번 · 같은 이름)만 하나로. 학번이 같은데 이름이 다르면 둘 다 두고 알려 줍니다 */
+  const seen=new Set(),sids=new Map();res.dupSid=0;
+  res.students=res.students.filter(s=>{const k=s.sid+"|"+s.name;if(seen.has(k))return false;seen.add(k);if(sids.has(s.sid))res.dupSid++;else sids.set(s.sid,1);return true});
+  return res}
+
+/* --- 새로 올린 명단과 지금 원본 비교: 같은 학생은 고유번호를 그대로 지킵니다 --- */
+function schDiff(inc){
+  const cur=SCH.students,live=cur.filter(s=>s.st==="재학"),bySid=new Map(live.map(s=>[s.sid,s])),byName=new Map();
+  live.forEach(s=>{if(!byName.has(s.name))byName.set(s.name,[]);byName.get(s.name).push(s)});
+  const used=new Set(),D={add:[],move:[],sid:[],info:[],gone:[],staffAdd:[],staffInfo:[],same:0,twin:0};
+  /* 같은 학생 찾기 순서: ① 학번과 이름이 모두 같음 ② 이름이 같은 학생이 한 명 (반 이동 · 학번 변경)
+     ③ 학번 · 학년 · 반 · 번호가 같고, 원래 이름이 새 파일에 없음 (이름 고침). 반 이동으로 학번이 다른 학생과 겹쳐도 엉뚱한 학생을 바꾸지 않습니다 */
+  const incNames=new Set(inc.students.map(r=>r.name));
+  inc.students.forEach(r=>{const s0=bySid.get(r.sid);let m=s0&&s0.name===r.name&&!used.has(s0.uid)?s0:null;
+    if(!m){const c=(byName.get(r.name)||[]).filter(x=>!used.has(x.uid));if(c.length===1)m=c[0];else if(c.length>1){D.twin++;m=c.find(x=>schCK(x)===schCK(r)&&x.no===r.no)||c.find(x=>schCK(x)===schCK(r))||null}}
+    if(!m&&s0&&!used.has(s0.uid)&&!incNames.has(s0.name)&&s0.grade===r.grade&&s0.cls===r.cls&&s0.no===r.no)m=s0;
+    if(!m){const old=cur.find(x=>x.st!=="재학"&&x.sid===r.sid&&x.name===r.name);D.add.push({r,back:old?old.uid:""});return}
+    used.add(m.uid);
+    if(schCK(m)!==schCK(r))D.move.push({m,r});
+    else if(m.sid!==r.sid||m.no!==r.no)D.sid.push({m,r});
+    else{const f=["name","sex","phone","pphone","email"].filter(k=>r[k]&&r[k]!==m[k]);if(f.length)D.info.push({m,r,f});else D.same++}});
+  if(inc.students.length)live.forEach(s=>{if(!used.has(s.uid))D.gone.push({m:s})});
+  const sUsed=new Set();
+  inc.staff.forEach(r=>{const m=SCH.staff.find(x=>!sUsed.has(x.uid)&&x.name===r.name&&(!r.phone||!x.phone||digits(x.phone)===digits(r.phone)));
+    if(!m){D.staffAdd.push({r});return}sUsed.add(m.uid);const f=["dept","role","subject","phone","email","hr"].filter(k=>r[k]&&r[k]!==m[k]);if(f.length)D.staffInfo.push({m,r,f})});
+  return D}
+const SCH_KINDS=[["add","새로 들어온 학생 (전입 · 신입)"],["move","반이 바뀐 학생"],["sid","같은 반, 번호 · 학번이 바뀐 학생"],["info","이름 · 연락처 등이 바뀐 학생"],["gone","새 파일에 없는 학생 → 전출로 표시"],["staffAdd","새 교직원"],["staffInfo","정보가 바뀐 교직원"]];
+const schDesc=(k,x)=>k==="add"?`${x.r.grade}-${x.r.cls} ${x.r.no}번 ${x.r.name}`:k==="move"?`${x.m.name}: ${x.m.grade}-${x.m.cls} → ${x.r.grade}-${x.r.cls} ${x.r.no}번`:k==="sid"?`${x.m.name}: ${x.m.sid} → ${x.r.sid}`:k==="info"?`${x.m.name}: ${x.f.map(f=>({name:"이름",sex:"성별",phone:"연락처",pphone:"보호자 연락처",email:"이메일"})[f]).join(" · ")}`:k==="gone"?`${x.m.grade}-${x.m.cls} ${x.m.no}번 ${x.m.name}`:k==="staffAdd"?`${x.r.name}${x.r.dept?" · "+x.r.dept:""}`:`${x.m.name}: ${x.f.map(f=>({dept:"부서",role:"직위",subject:"과목",phone:"연락처",email:"이메일",hr:"담임"})[f]).join(" · ")}`;
+function schApply(D,pick,fname){
+  const now=Date.now(),cnt={};
+  SCH_KINDS.forEach(([k])=>{const on=pick[k];(D[k]||[]).forEach((x,i)=>{if(!on||(Array.isArray(on)&&!on.includes(i)))return;cnt[k]=(cnt[k]||0)+1;
+    if(k==="add"){const back=x.back&&SCH.students.find(s=>s.uid===x.back);if(back)Object.assign(back,x.r,{st:"재학",up:now});else SCH.students.push({uid:schUid("s"),...x.r,st:"재학",up:now})}
+    else if(k==="move"||k==="sid")Object.assign(x.m,{grade:x.r.grade,cls:x.r.cls,no:x.r.no,sid:x.r.sid,up:now},...["name","sex","phone","pphone","email"].filter(f=>x.r[f]).map(f=>({[f]:x.r[f]})));
+    else if(k==="info"||k==="staffInfo"){x.f.forEach(f=>x.m[f]=x.r[f]);x.m.up=now}
+    else if(k==="gone"){x.m.st="전출";x.m.up=now}
+    else if(k==="staffAdd")SCH.staff.push({uid:schUid("t"),...x.r,up:now})})});
+  SCH.students.sort(schSort);
+  SCH.log.push({at:new Date(now).toISOString(),what:"명단 올리기",file:String(fname||"").slice(0,60),cnt});SCH.log=SCH.log.slice(-60);
+  return cnt}
+const schCntText=c=>SCH_KINDS.filter(([k])=>c[k]).map(([k,l])=>`${l.split(" (")[0].replace(" → 전출로 표시","")} ${c[k]}`).join(" · ")||"바뀐 것 없음";
+
+/* --- 화면 --- */
+async function openSchool(){if(!schOn())return schEnableSheet();await schLoad();show("school");renderSchool();scrollTo(0,0)}
+function schEnableSheet(){
+  $("sheetBox").innerHTML=`<h2>학교 관리 모드 켜기 (담당자)</h2>
+    <p class="note">학교 전체 학급 · 학생 · 교직원 명단을 한곳에서 관리하는 <b>학교 관리 담당자용</b> 기능입니다. 보통 교무 · 정보 담당 선생님 한 분이 켭니다. 일반 수업 · 출석에는 필요 없습니다.</p>
+    <div class="conv"><b>개인정보 안내</b><span>· 학교 전체 학생 정보가 <b>이 기기에만</b> 저장됩니다(구글 동기화에 들어가지 않음).</span><span>· 담당자는 업무분장 등 학교의 정식 절차로 정합니다. 학교의 개인정보 처리 지침을 먼저 확인해 주세요.</span><span>· 기기를 잃어버릴 때를 대비해 ‘원본 백업 저장’ 파일을 안전한 곳에 보관하세요.</span></div>
+    <label class="chk"><input type="checkbox" id="schAgree"> 위 내용을 확인했습니다</label>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="schOnBtn" disabled>켜고 열기</button></div>
+    <p class="note">이전 담당자에게 <b>인계 파일</b>을 받았다면: <label class="btn sm" for="hoIn0">인계 파일로 시작<input type="file" id="hoIn0" accept=".json,application/json" hidden></label></p>`;
+  $("hoIn0").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;try{handoverOpen(await readAnyText(await f.text()))}catch(err){toast(fileErr(err))}};
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("schAgree").onchange=e=>{$("schOnBtn").disabled=!e.target.checked};
+  $("schOnBtn").onclick=async()=>{try{localStorage.setItem(SCH_ON,"1")}catch(e){}$("sheet").hidden=true;renderSchoolEntry();await openSchool();toast("학교 관리 모드를 켰습니다")};
+}
+function renderSchoolEntry(){const b=$("schEntry");if(!b)return;const on=schOn();
+  $("schTag").textContent=on?"켜짐":"";
+  b.innerHTML=on?`<p class="note">학교 전체 학급 · 학생 · 교직원 원본을 관리합니다. 원본은 이 기기에만 있습니다.</p><div class="row2"><button class="btn pri" type="button" id="schOpen">학교 관리 열기</button></div>`
+    :`<p class="note">학교 전체 학급 · 학생 · 교직원 명단을 한곳에서 관리하고(1단계), 선생님마다 담임 · 수업 학급을 배정해 학교 묶음 하나로 나눠 주는 <b>학교 관리 담당자용</b> 기능입니다. 일반 사용에는 필요 없습니다.</p><div class="row2"><button class="btn" type="button" id="schOpen">학교 관리 모드 켜기…</button></div>`;
+  $("schOpen").onclick=openSchool}
+function renderSchool(){
+  const box=$("schBody");if(!box||!SCH)return;
+  const live=schLive(),cls=[...new Set(live.map(schCK))],grades=[...new Set(live.map(s=>s.grade))].sort((a,b)=>a-b),out=SCH.students.length-live.length;
+  $("schSub").textContent=`${SCH.school?SCH.school+" · ":""}${SCH.year}학년도${SCH.at?" · "+fmtDTfull(new Date(SCH.at).getTime())+" 저장":""}`;
+  box.innerHTML=`
+  <section class="kpis"><div class="kpi"><span>학급</span><b>${cls.length}</b></div><div class="kpi"><span>학생 (재학)</span><b>${live.length}</b></div><div class="kpi"><span>교직원</span><b>${SCH.staff.length}</b></div></section>
+  <section class="card"><div class="hd"><h2>명단 올리기</h2></div>
+    <div class="range"><label class="lb" for="schName">학교 이름<input class="fld" id="schName" maxlength="40" placeholder="예: 물리고등학교" value="${esc(SCH.school)}"></label><label class="lb" for="schYear">학년도<input class="fld" id="schYear" type="number" min="2000" max="2100" value="${SCH.year}"></label></div>
+    <div class="row2"><label class="btn pri filebtn" for="schFile"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg><span class="nw">명단 파일 올리기</span><input type="file" id="schFile" accept=".xlsx,.xls,.csv,.ods,text/csv" hidden></label><button class="btn" type="button" id="schTpl">양식 받기</button></div>
+    <div class="tipbox"><button type="button" class="tipq" aria-expanded="false"><i>i</i>사용 방법</button><div class="tipc">
+      <p class="note">나이스에서 내려받은 <b>학생 명부</b> 엑셀(학년 · 반 · 번호 · 성명 칸), 학교에서 만든 명단, <b>교직원 연락망</b>(성명 · 부서 · 직위 · 휴대전화)을 그대로 올리면 됩니다. 첫 줄의 제목을 보고 칸을 알아서 찾고, 시트가 여러 개여도 모두 읽습니다. 학번 칸이 없으면 학년 · 반 · 번호로 만듭니다(예: 1학년 3반 7번 → 10307).</p>
+      <p class="note">이미 원본이 있으면 새 파일과 <b>비교</b>해 바뀐 것만 보여 줍니다. 골라서 적용할 수 있고, 적용 뒤에도 ‘갱신 전으로 되돌리기’가 됩니다. 새 파일에 없는 학생은 지우지 않고 <b>전출</b>로 표시합니다.</p></div></div>
+  </section>
+  <div class="ctabs" id="schTabs"><button class="chip" type="button" data-st="cls" aria-pressed="${SCHV.tab==="cls"}">학급별</button><button class="chip" type="button" data-st="stu" aria-pressed="${SCHV.tab==="stu"}">학생 찾기</button><button class="chip" type="button" data-st="staff" aria-pressed="${SCHV.tab==="staff"}">교직원</button><button class="chip" type="button" data-st="asg" aria-pressed="${SCHV.tab==="asg"}">배정</button><button class="chip" type="button" data-st="log" aria-pressed="${SCHV.tab==="log"}">배포 기록</button><button class="chip" type="button" data-st="card" aria-pressed="${SCHV.tab==="card"}">인계 카드</button></div>
+  <section class="card" id="schList"></section>
+  ${packCardHTML()}
+  <section class="card"><div class="hd"><h2>원본 관리</h2>${out?`<span class="sub">전출 · 졸업 ${out}명 보관 중</span>`:""}</div>
+    <div class="row2"><button class="btn" type="button" id="schXl">원본 엑셀로 내보내기</button><button class="btn" type="button" id="schBk">원본 백업 저장</button></div>
+    <div class="row2"><label class="btn" for="schBkIn">원본 백업 불러오기<input type="file" id="schBkIn" accept=".json,application/json" hidden></label><button class="btn" type="button" id="schUndo" ${SCH._prev?"":"hidden"}>갱신 전으로 되돌리기</button></div>
+    ${SCH.log.length?`<div class="shlb">최근 기록</div><div class="schlog">${SCH.log.slice(-5).reverse().map(l=>`<div><small>${esc(fmtDTfull(new Date(l.at).getTime()))}</small> ${esc(l.what)}${l.file?" · "+esc(l.file):""} · ${esc(schCntText(l.cnt||{}))}</div>`).join("")}</div>`:""}
+    <div class="shlb">담당자 인계</div><p class="note">담당자가 바뀔 때 원본 · 배정 · 서명 열쇠 · 배포 기록을 새 담당자 기기로 그대로 넘깁니다.</p>
+    <div class="row2"><button class="btn" type="button" id="hoMake">인계 파일 만들기</button><label class="btn" for="hoIn2">인계 파일 받기<input type="file" id="hoIn2" accept=".json,application/json" hidden></label></div>
+    <div class="row2 delrow"><button class="btn sm ghost" type="button" id="schOff">학교 관리 모드 끄기</button></div>
+  </section>`;
+  const tip=box.querySelector(".tipbox");tip.firstChild.onclick=()=>{const on=tip.classList.toggle("on");tip.firstChild.setAttribute("aria-expanded",String(on))};
+  $("schName").onchange=e=>{SCH.school=e.target.value.trim().slice(0,40);schSave();renderSchool()};
+  $("schYear").onchange=e=>{const y=+e.target.value;if(y>=2000&&y<=2100){SCH.year=y;schSave();renderSchool()}};
+  $("schFile").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;
+    try{toast("명단을 읽는 중입니다…");const inc=await schReadFile(f);
+      if(!inc.students.length&&!inc.staff.length)return toast("명단을 찾지 못했습니다. 첫 줄에 ‘성명(이름)’과 ‘학년 · 반’ 또는 ‘부서 · 직위’ 같은 제목이 있는지 확인해 주세요");
+      schCompareSheet(inc,f.name)}catch(err){toast(fileErr(err))}};
+  $("schTpl").onclick=schTemplate;$("schXl").onclick=schExport;$("schBk").onclick=schBackup;
+  $("hoMake").onclick=()=>handoverMake().catch(e=>toast("인계 파일을 만들지 못했습니다: "+(e.message||e)));
+  $("hoIn2").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;try{handoverOpen(await readAnyText(await f.text()))}catch(err){toast(fileErr(err))}};
+  $("schBkIn").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;try{schRestoreSheet(await readAnyText(await f.text()))}catch(err){toast(fileErr(err))}};
+  $("schUndo").onclick=()=>ask(`<h2>갱신 전으로 되돌리기</h2><p class="note">마지막 명단 올리기(또는 백업 불러오기) 바로 전 상태로 원본을 되돌립니다.</p>`,"되돌리기",async()=>{const p=SCH._prev;SCH=schNorm(JSON.parse(p));SCH.log.push({at:new Date().toISOString(),what:"갱신 전으로 되돌리기",cnt:{}});await schSave();await kvDel(SCH_PREV);renderSchool();toast("갱신 전으로 되돌렸습니다")});
+  twoStep($("schOff"),"정말 끄기 (원본은 남음)",()=>{try{localStorage.removeItem(SCH_ON)}catch(e){}renderSchoolEntry();show("set");toast("학교 관리 모드를 껐습니다. 원본은 이 기기에 남아 있어 다시 켜면 그대로 보입니다")});
+  box.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{SCHV.tab=b.dataset.st;renderSchool()});
+  try{wirePackCard()}catch(e){reportErr("학교 묶음",e)}
+  kvGet(SCH_PREV).then(v=>{SCH._prev=v||null;const u=$("schUndo");if(u)u.hidden=!v}).catch(()=>{});
+  renderSchList(grades);
+}
+function renderSchList(grades){
+  const L=$("schList");if(!L)return;const live=schLive();
+  const row=s=>`<button class="prow" type="button" data-su="${esc(s.uid)}"><span class="pn">${s.no?s.no+"번 ":""}${esc(s.name)}${s.st!=="재학"?`<em class="arc">${esc(s.st)}</em>`:""}<small>${s.grade}-${s.cls} · 학번 ${esc(s.sid)}${s.phone?` · <span class="nw">${esc(s.phone)}</span>`:""}${s.pphone?` · <span class="nw">보호자 ${esc(s.pphone)}</span>`:""}</small></span><span class="pe">수정</span></button>`;
+  if(SCHV.tab==="cls"){
+    if(!live.length){L.innerHTML=`<div class="empty">아직 학생 원본이 없습니다.<br>위의 ‘학생 · 교직원 명단 올리기’로 나이스 학생 명부나 학교 명단 엑셀을 올려 주세요.</div>`;return}
+    L.innerHTML=grades.map(g=>{const cs=[...new Set(live.filter(s=>s.grade===g).map(s=>s.cls))].sort((a,b)=>a-b);
+      return `<div class="shlb">${g}학년 <span class="shn">${cs.length}학급 · ${live.filter(s=>s.grade===g).length}명</span></div><div class="schcls">${cs.map(c=>{const k=g+"-"+c,n=live.filter(s=>s.grade===g&&s.cls===c).length;return `<button class="chip" type="button" data-ck="${k}" aria-pressed="${SCHV.open===k}">${c}반 <small>${n}</small></button>`}).join("")}</div>
+        ${cs.map(c=>g+"-"+c).includes(SCHV.open)?`<div class="list schstu">${live.filter(s=>schCK(s)===SCHV.open).sort(schSort).map(row).join("")}</div>`:""}`}).join("");
+    L.querySelectorAll("[data-ck]").forEach(b=>b.onclick=()=>{SCHV.open=SCHV.open===b.dataset.ck?"":b.dataset.ck;renderSchList(grades)});
+  }else if(SCHV.tab==="stu"){
+    const q=SCHV.qs.trim(),hits=q?SCH.students.filter(s=>(s.name+" "+s.sid+" "+s.phone+" "+s.pphone).includes(q)).sort(schSort):[];
+    L.innerHTML=`<label class="lb" for="schQ">이름 · 학번 · 전화번호로 찾기<input class="fld" id="schQ" autocomplete="off" value="${esc(q)}" placeholder="예: 김가람, 10307"></label>
+      ${q?(hits.length?`<div class="list schstu">${hits.slice(0,100).map(row).join("")}</div>${hits.length>100?`<p class="note">${hits.length}명 중 100명까지 보입니다. 더 자세히 찾아 주세요.</p>`:""}`:`<div class="empty">찾는 학생이 없습니다.</div>`):`<p class="note">전출 · 졸업으로 표시된 학생도 함께 찾습니다.</p>`}
+      <div class="row2"><button class="btn" type="button" id="schAddStu">＋ 학생 추가</button></div>`;
+    const qi=$("schQ");qi.oninput=e=>{SCHV.qs=e.target.value;clearTimeout(qi._t);qi._t=setTimeout(()=>{renderSchList(grades);const n=$("schQ");n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)};
+    $("schAddStu").onclick=()=>schEditStu(null);
+  }else if(SCHV.tab==="log"){renderLogTab(L);return
+  }else if(SCHV.tab==="card"){renderCardTab(L);return
+  }else if(SCHV.tab==="asg"){renderAsgTab(L);return
+  }else{
+    const q=SCHV.q.trim(),list=SCH.staff.filter(t=>!q||(t.name+t.dept+t.role+t.subject+t.phone).includes(q)).sort((a,b)=>(a.dept||"힣").localeCompare(b.dept||"힣","ko")||a.name.localeCompare(b.name,"ko"));
+    L.innerHTML=`<label class="lb" for="schQT">이름 · 부서 · 과목으로 찾기<input class="fld" id="schQT" autocomplete="off" value="${esc(q)}"></label>
+      ${list.length?`<div class="list schstf">${list.map(t=>`<button class="prow" type="button" data-tu="${esc(t.uid)}"><span class="pn">${esc(t.name)}${t.role?`<em>${esc(t.role)}</em>`:""}<small>${esc([t.dept,t.subject].filter(Boolean).join(" · ")||"부서 없음")} · ${t.phone?`<span class="nw">${esc(t.phone)}</span>`:'<i class="nop">번호 없음</i>'}</small></span><span class="pe">수정</span></button>`).join("")}</div>`:`<div class="empty">${SCH.staff.length?"찾는 교직원이 없습니다.":"아직 교직원 원본이 없습니다. 교직원 연락망 엑셀을 올리거나 직접 추가하세요."}</div>`}
+      <div class="row2"><button class="btn" type="button" id="schAddT">＋ 교직원 추가</button></div>`;
+    const qi=$("schQT");qi.oninput=e=>{SCHV.q=e.target.value;clearTimeout(qi._t);qi._t=setTimeout(()=>{renderSchList(grades);const n=$("schQT");n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)};
+    $("schAddT").onclick=()=>schEditStaff(null);
+  }
+  L.querySelectorAll("[data-su]").forEach(b=>{const s=SCH.students.find(x=>x.uid===b.dataset.su);if(!s)return;b.onclick=()=>schEditStu(s);
+    swipeDel(b,{del:()=>{b.remove();schRemove(`${s.name} 학생을`,SCH.students,s)}})});
+  L.querySelectorAll("[data-tu]").forEach(b=>{const t=SCH.staff.find(x=>x.uid===b.dataset.tu);if(!t)return;b.onclick=()=>schEditStaff(t);
+    swipeDel(b,{del:()=>{b.remove();schRemove(`${t.name} 교직원을`,SCH.staff,t)}})});
+}
+function schRemove(label,arr,item){const back=swOut(arr,item);schSave();renderSchool();
+  toastUndo(`${label} 원본에서 삭제했습니다`,async()=>{back();await schSave();renderSchool();toast("되돌렸습니다")},6000)}
+function schEditStu(s){
+  const isNew=!s;s=s||{uid:"",grade:1,cls:1,no:1,name:"",sid:"",sex:"",phone:"",pphone:"",email:"",st:"재학"};
+  $("sheetBox").innerHTML=`<h2>${isNew?"학생 추가":"학생 원본 수정"}</h2>
+    <div class="range"><label class="lb" for="ssG">학년<input class="fld" id="ssG" type="number" min="1" max="6" value="${s.grade}"></label><label class="lb" for="ssC">반<input class="fld" id="ssC" type="number" min="1" max="40" value="${s.cls}"></label><label class="lb" for="ssN">번호<input class="fld" id="ssN" type="number" min="0" max="99" value="${s.no}"></label></div>
+    <div class="range"><label class="lb" for="ssName">이름<input class="fld" id="ssName" maxlength="30" value="${esc(s.name)}"></label><label class="lb" for="ssSid">학번<input class="fld" id="ssSid" maxlength="20" inputmode="numeric" value="${esc(s.sid)}" placeholder="비우면 학년·반·번호로"></label></div>
+    <div class="range"><label class="lb" for="ssPh">학생 연락처<input class="fld" id="ssPh" inputmode="tel" value="${esc(s.phone)}"></label><label class="lb" for="ssPp">보호자 연락처<input class="fld" id="ssPp" inputmode="tel" value="${esc(s.pphone)}"></label></div>
+    <label class="lb" for="ssEm">이메일<input class="fld" id="ssEm" type="email" value="${esc(s.email)}"></label>
+    <div class="presets" id="ssSt">${["재학","전출","졸업"].map(x=>`<button class="chip" type="button" data-v="${x}" aria-pressed="${s.st===x}">${x}</button>`).join("")}</div>
+    ${isNew?"":`<p class="note">고유번호 ${esc(s.uid)} · 학번이나 반이 바뀌어도 이 번호로 같은 학생을 알아봅니다.</p>`}
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button>${isNew?"":`<button class="btn bad" type="button" id="ssDel">삭제</button>`}<button class="btn pri" type="button" id="ssOk">저장</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};let st=s.st;
+  $("ssSt").querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{st=b.dataset.v;$("ssSt").querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  $("ssOk").onclick=async()=>{const g=+$("ssG").value,c=+$("ssC").value,n=+$("ssN").value,name=$("ssName").value.trim();
+    if(!name||!g||!c)return toast("학년 · 반 · 이름을 넣어 주세요");
+    const o={grade:g,cls:c,no:n,name:name.slice(0,30),sid:($("ssSid").value.replace(/\D/g,"")||schSid(g,c,n)).slice(0,20),phone:schPh($("ssPh").value),pphone:schPh($("ssPp").value),email:$("ssEm").value.trim(),st,up:Date.now()};
+    if(SCH.students.some(x=>x!==s&&x.st==="재학"&&o.st==="재학"&&x.sid===o.sid))return toast(`학번 ${o.sid}인 재학생이 이미 있습니다`);
+    if(isNew)SCH.students.push({uid:schUid("s"),sex:"",...o});else Object.assign(s,o);
+    SCH.students.sort(schSort);await schSave();$("sheet").hidden=true;renderSchool();toast(isNew?"학생을 추가했습니다":"저장했습니다")};
+  if(!isNew)twoStep($("ssDel"),"정말 삭제",()=>{$("sheet").hidden=true;schRemove(`${s.name} 학생을`,SCH.students,s)});
+}
+function schEditStaff(t){
+  const isNew=!t;t=t||{uid:"",name:"",dept:"",role:"",subject:"",phone:"",email:""};
+  $("sheetBox").innerHTML=`<h2>${isNew?"교직원 추가":"교직원 원본 수정"}</h2>
+    <div class="range"><label class="lb" for="stName">이름<input class="fld" id="stName" maxlength="30" value="${esc(t.name)}"></label><label class="lb" for="stDept">부서<input class="fld" id="stDept" maxlength="30" value="${esc(t.dept)}"></label></div>
+    <div class="range"><label class="lb" for="stRole">직위 · 직책<input class="fld" id="stRole" maxlength="30" value="${esc(t.role)}"></label><label class="lb" for="stSub">담당 과목<input class="fld" id="stSub" maxlength="30" value="${esc(t.subject)}"></label></div>
+    <div class="range"><label class="lb" for="stPh">연락처<input class="fld" id="stPh" inputmode="tel" value="${esc(t.phone)}"></label><label class="lb" for="stEm">이메일<input class="fld" id="stEm" type="email" value="${esc(t.email)}"></label></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button>${isNew?"":`<button class="btn bad" type="button" id="stDel">삭제</button>`}<button class="btn pri" type="button" id="stOk">저장</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("stOk").onclick=async()=>{const name=$("stName").value.trim();if(!name)return toast("이름을 넣어 주세요");
+    const o={name:name.slice(0,30),dept:$("stDept").value.trim().slice(0,30),role:$("stRole").value.trim().slice(0,30),subject:$("stSub").value.trim().slice(0,30),phone:schPh($("stPh").value),email:$("stEm").value.trim(),up:Date.now()};
+    if(isNew)SCH.staff.push({uid:schUid("t"),...o});else Object.assign(t,o);await schSave();$("sheet").hidden=true;renderSchool();toast(isNew?"교직원을 추가했습니다":"저장했습니다")};
+  if(!isNew)twoStep($("stDel"),"정말 삭제",()=>{$("sheet").hidden=true;schRemove(`${t.name} 교직원을`,SCH.staff,t)});
+}
+/* 올린 파일 → 비교 화면 (처음이면 그대로 넣기) */
+function schCompareSheet(inc,fname){try{$("toast").hidden=true}catch(e){}
+  const first=!SCH.students.length&&!SCH.staff.length,D=schDiff(inc);
+  const kinds=SCH_KINDS.filter(([k])=>(D[k]||[]).length);
+  const pick={};kinds.forEach(([k])=>pick[k]=true);
+  $("sheetBox").innerHTML=`<h2>${first?"명단 불러오기":"새 명단과 비교"} <span class="sub">${esc(fname)}</span></h2>
+    <p class="note">읽은 시트: ${esc(inc.sheets.join(", "))}${inc.skip?` · 건너뛴 줄 ${inc.skip}`:""}</p>
+    ${first?`<div class="conv"><b>학생 ${inc.students.length}명 · 학급 ${new Set(inc.students.map(schCK)).size}개 · 교직원 ${inc.staff.length}명</b><span>처음 넣는 원본입니다. 학생마다 고유번호를 붙여 저장합니다.</span></div>`
+      :kinds.length?`<p class="note">바뀌지 않은 학생 ${D.same}명은 그대로 둡니다. 적용할 것만 고르세요. 항목을 눌러 펼치면 한 명씩 뺄 수도 있습니다.</p>
+      <div class="schdiff">${kinds.map(([k,l])=>`<div class="schk"><label class="chk"><input type="checkbox" data-k="${k}" checked> ${esc(l)} <b>${D[k].length}</b></label><details><summary>한 명씩 보기 · 빼기</summary>
+        <div class="schkl">${D[k].slice(0,300).map((x,i)=>`<label class="chk"><input type="checkbox" data-k="${k}" data-i="${i}" checked> ${esc(schDesc(k,x))}</label>`).join("")}${D[k].length>300?`<p class="note">300명까지 보입니다. 나머지도 함께 적용됩니다.</p>`:""}</div></details></div>`).join("")}</div>
+      ${D.twin?`<p class="warn">같은 이름의 학생이 ${D.twin}건 있어 반 · 학번으로 구분했습니다. 결과를 한 번 확인해 주세요.</p>`:""}${inc.dupSid?`<p class="warn">파일 안에 학번(학년 · 반 · 번호)이 겹치는 학생이 ${inc.dupSid}명 있습니다. 둘 다 넣었으니 나이스 명부를 한 번 확인해 주세요.</p>`:""}`
+      :`<div class="empty">지금 원본과 같습니다. 바뀐 것이 없습니다.</div>`}
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button>${first||kinds.length?`<button class="btn pri" type="button" id="schGo">${first?"불러오기":"고른 것 적용"}</button>`:""}</div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  const box=$("sheetBox");
+  box.querySelectorAll("input[data-k]:not([data-i])").forEach(c=>c.onchange=()=>box.querySelectorAll(`input[data-k="${c.dataset.k}"][data-i]`).forEach(x=>x.checked=c.checked));
+  box.querySelectorAll("input[data-i]").forEach(c=>c.onchange=()=>{const all=[...box.querySelectorAll(`input[data-k="${c.dataset.k}"][data-i]`)],on=all.filter(x=>x.checked).length;const h=box.querySelector(`input[data-k="${c.dataset.k}"]:not([data-i])`);h.checked=on>0;h.indeterminate=on>0&&on<all.length});
+  if(!$("schGo"))return;
+  $("schGo").onclick=async()=>{
+    const P={};if(first){P.add=true;P.staffAdd=true}
+    else kinds.forEach(([k])=>{const items=[...box.querySelectorAll(`input[data-k="${k}"][data-i]`)];if(!items.length)return;const on=items.filter(x=>x.checked).map(x=>+x.dataset.i);
+      if(on.length===items.length&&D[k].length<=300)P[k]=true;else if(on.length)P[k]=D[k].length>300&&on.length===items.length?true:on});
+    await kvSet(SCH_PREV,JSON.stringify(SCH));
+    const cnt=schApply(D,P,fname);if(first&&!SCH.year)SCH.year=curTerm().year;await schSave();
+    $("sheet").hidden=true;renderSchool();toast(`${first?"불러왔습니다":"적용했습니다"}: ${schCntText(cnt)}`)};
+}
+/* 양식 · 내보내기 · 백업 */
+const SCH_SH=["학년","반","번호","성명","학번","성별","학생 연락처","보호자 연락처","이메일","상태"],SCH_TH=["성명","부서","직위","담당 과목","휴대전화","이메일"];
+async function schTemplate(){try{await xlOut(`${APP_NAME.replace(/\s+/g,"")}_학교명단_양식.xlsx`,[
+  {name:"학생",title:`${APP_NAME} · 학교 학생 명단 양식`,rows:[SCH_SH,[1,1,1,"예시 김가람","10101","여","010-1234-5678","010-9876-5432","",""]],blank:40,widths:[6,6,6,12,10,6,16,16,24,8],text:[4,6,7]},
+  {name:"교직원",title:`${APP_NAME} · 교직원 연락망 양식`,rows:[SCH_TH,["예시 정교감","교무부","교감","","010-1111-2222",""]],blank:40,widths:[12,12,10,12,16,24],text:[4]},
+  {name:"안내",title:"학교 명단 양식 안내",head:false,rows:[["나이스에서 내려받은 학생 명부를 그대로 올려도 됩니다. 이 양식은 직접 만들 때 씁니다."],["첫 줄(제목 줄)은 지우지 마세요. 학번을 비우면 학년 · 반 · 번호로 만듭니다(1학년 3반 7번 → 10307)."],["‘예시’로 시작하는 이름은 불러올 때 건너뜁니다."],[`${APP_NAME} 설정 → 학교 관리 → ‘학생 · 교직원 명단 올리기’에서 이 파일을 고르면 됩니다.`]],widths:[100]}],"학교 명단 양식을 저장했습니다")}catch(e){toast(e.message||"양식을 만들지 못했습니다")}}
+async function schExport(){const S1=SCH.students.slice().sort(schSort);
+  try{await xlOut(`${APP_NAME.replace(/\s+/g,"")}_${SCH.school||"학교"}_${SCH.year}_원본명단.xlsx`,[
+    {name:"학생",title:`${SCH.school||"학교"} ${SCH.year}학년도 학생 명단 (${schLive().length}명)`,rows:[SCH_SH,...S1.map(s=>[s.grade,s.cls,s.no,s.name,s.sid,s.sex,s.phone,s.pphone,s.email,s.st])],widths:[6,6,6,12,10,6,16,16,24,8],text:[4,6,7]},
+    {name:"교직원",title:`${SCH.school||"학교"} 교직원 연락망 (${SCH.staff.length}명)`,rows:[SCH_TH,...SCH.staff.map(t=>[t.name,t.dept,t.role,t.subject,t.phone,t.email])],widths:[12,12,10,12,16,24],text:[4]}],"원본 명단을 엑셀로 저장했습니다")}catch(e){toast(e.message||"엑셀을 만들지 못했습니다")}}
+async function schBackup(){const o={...SCH};delete o._prev;
+  const f=new File([JSON.stringify(o)],`${APP_NAME.replace(/\s+/g,"")}_학교원본_${(SCH.school||"학교").replace(/\s+/g,"")}_${today().replace(/-/g,"")}.json`,{type:"application/json"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:"학교 원본 백업"});return}catch(e){if(e&&e.name==="AbortError")return}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+  SCH.log.push({at:new Date().toISOString(),what:"원본 백업 저장",cnt:{}});schSave();toast("학교 원본 백업을 저장했습니다. 안전한 곳에 보관하세요")}
+function schRestoreSheet(p){
+  if(!p||p.kind!=="teachers-life-school"||!Array.isArray(p.students))return toast("교사의 생활 학교 원본 백업 파일이 아닙니다");
+  const n=schNorm(p);
+  ask(`<h2>학교 원본 백업 불러오기</h2><p class="note">${esc(n.school||"학교")} ${n.year}학년도 · 학생 ${n.students.length}명 · 교직원 ${n.staff.length}명${p.at?` · ${esc(fmtDTfull(new Date(p.at).getTime()))} 저장`:""}</p><p class="note">지금 원본을 이 백업으로 바꿉니다. 바꾸기 전 상태는 ‘갱신 전으로 되돌리기’로 되돌릴 수 있습니다.</p>`,"불러오기",async()=>{
+    await kvSet(SCH_PREV,JSON.stringify(SCH));SCH=n;SCH.log.push({at:new Date().toISOString(),what:"원본 백업 불러오기",cnt:{}});await schSave();renderSchool();toast("학교 원본을 불러왔습니다")})}
+
+/* ===== 5.32: 학교 관리 2단계 — 담당 배정과 한 번에 배포 =====
+   - 담당자가 선생님마다 담임 학급 · 수업 학급(과목)을 배정하면, 학교 묶음 파일 하나에 선생님별로 '따로 잠긴 칸'을 만듭니다.
+   - 선생님은 자기 이름을 고르고 개인 코드(8자)를 넣으면 자기 칸만 열립니다(PBKDF2 + AES-GCM). 다른 반 명단은 볼 수 없습니다.
+   - 묶음 전체에 담당자 서명(ECDSA P-256)을 붙입니다. 받는 앱은 서명과 '담당자 확인 코드'로 학교 담당자가 만든 그대로인지 확인합니다. */
+const B64={enc:u=>{let s="";const b=new Uint8Array(u);for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s)},dec:s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+const CODE_AB="23456789ABCDEFGHJKMNPQRSTUVWXYZ";
+function newCode(){const r=crypto.getRandomValues(new Uint8Array(8));let s="";r.forEach(x=>s+=CODE_AB[x%CODE_AB.length]);return s.slice(0,4)+"-"+s.slice(4)}
+const codeNorm=c=>String(c||"").toUpperCase().replace(/[^0-9A-Z]/g,"").replace(/O/g,"0").replace(/I|L/g,"1");
+async function codeKey(code,salt){const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(codeNorm(code)),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:60000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function sealFor(code,obj){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},await codeKey(code,salt),new TextEncoder().encode(JSON.stringify(obj)));return{salt:B64.enc(salt),iv:B64.enc(iv),ct:B64.enc(ct)}}
+async function openWith(code,e){const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:B64.dec(e.iv)},await codeKey(code,B64.dec(e.salt)),B64.dec(e.ct));return JSON.parse(new TextDecoder().decode(pt))}
+/* 담당자 서명 열쇠: 이 기기에서 처음 만들 때 한 번 생기고, 원본 백업에 함께 들어가 담당자 인계 때 넘겨줍니다 */
+async function schKeys(){let k=null;try{k=JSON.parse((await kvGet("school:key"))||"null")}catch(e){}
+  if(!k||!k.pub||!k.priv){const kp=await crypto.subtle.generateKey({name:"ECDSA",namedCurve:"P-256"},true,["sign","verify"]);
+    k={pub:await crypto.subtle.exportKey("jwk",kp.publicKey),priv:await crypto.subtle.exportKey("jwk",kp.privateKey),at:new Date().toISOString()};await kvSet("school:key",JSON.stringify(k))}
+  return k}
+async function fpOf(pub){const h=new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(pub.x+"."+pub.y)));let s="";for(let i=0;i<8;i++)s+=CODE_AB[h[i]%CODE_AB.length];return s.slice(0,4)+"-"+s.slice(4)}
+const pubOnly=j=>({kty:j.kty,crv:j.crv,x:j.x,y:j.y});
+async function signBody(body,k){const key=await crypto.subtle.importKey("jwk",k.priv,{name:"ECDSA",namedCurve:"P-256"},false,["sign"]);
+  return B64.enc(await crypto.subtle.sign({name:"ECDSA",hash:"SHA-256"},key,new TextEncoder().encode(JSON.stringify(body))))}
+async function verifyPack(p){try{const{sig,...body}=p;if(!sig||!sig.pub||!sig.s)return false;
+  const key=await crypto.subtle.importKey("jwk",pubOnly(sig.pub),{name:"ECDSA",namedCurve:"P-256"},false,["verify"]);
+  return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},key,B64.dec(sig.s),new TextEncoder().encode(JSON.stringify(body)))}catch(e){return false}}
+
+/* --- 학급 표기 읽기: 1-3, 1학년 3반, 1학년 1,2반, (배정표 칸에서는) 103 --- */
+function clsTokens(t,allow3){const out=new Set();let s=String(t||"");
+  s=s.replace(/(\d)\s*학년\s*((?:\d{1,2}\s*[,·\s]\s*)*\d{1,2})\s*반/g,(m,g,l)=>{l.split(/[,·\s]+/).filter(Boolean).forEach(c=>out.add(`${+g}-${+c}`));return " "});
+  s=s.replace(/(\d)\s*[-–_\/]\s*(\d{1,2})(?!\d)/g,(m,g,c)=>{out.add(`${+g}-${+c}`);return " "});
+  if(allow3)s.replace(/(^|[^\d])([1-6])(0[1-9]|1\d|20)(?!\d)/g,(m,a,g,c)=>{out.add(`${+g}-${+c}`);return a});
+  return[...out]}
+const ckLabel=k=>{const[g,c]=String(k).split("-");return `${g}학년 ${c}반`};
+const ckSort=(a,b)=>{const[ga,ca]=a.split("-").map(Number),[gb,cb]=b.split("-").map(Number);return ga-gb||ca-cb};
+/* --- 수업 배정표 · 교사별 시간표 엑셀 읽기 --- */
+const ASG_H={name:/^(성명|이름|교사|교사명|교원명|담당교사|선생님|교사이름)$/,hr:/^(담임|담임학급|담임반)$/,subj:/^(과목|교과|담당과목|수업과목|과목명|교과목)$/,cls:/^(학급|반|수업학급|담당학급|수업반|대상학급|수업대상|학급\(반\))$/};
+const DAY_RE=/^(월|화|수|목|금)(요일)?$/;
+async function asgReadFile(f){
+  const X=await loadXLSX();let wb;
+  if(/\.(xlsx|xlsm|xls|ods)$/i.test(f.name))wb=X.read(await f.arrayBuffer(),{type:"array"});
+  else{const buf=await f.arrayBuffer();let t=new TextDecoder("utf-8").decode(buf);if(t.includes("�")){try{t=new TextDecoder("euc-kr").decode(buf)}catch(_){}}wb=X.read(t.replace(/^﻿/,""),{type:"string",raw:true})}
+  const names=SCH.staff.map(s=>s.name).sort((a,b)=>b.length-a.length);
+  const R=new Map(),get=n=>{if(!R.has(n))R.set(n,{hr:"",teach:new Map(),tt:{}});return R.get(n)},add=(o,subj,k)=>{subj=String(subj||"수업").trim().slice(0,20)||"수업";if(!o.teach.has(subj))o.teach.set(subj,new Set());o.teach.get(subj).add(k)};
+  let grids=0,rowsN=0;
+  wb.SheetNames.forEach(sn=>{if(/안내|설명|help/i.test(sn))return;const rows=X.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:""}).map(r=>r.map(x=>String(x==null?"":x).trim()));
+    /* ① 목록형: 성명 | 담임 | 과목 | 학급 */
+    let hi=-1,H=null;for(let i=0;i<Math.min(rows.length,20);i++){const m={};rows[i].forEach((c,j)=>{const h=c.replace(/\s/g,"");for(const k of["name","hr","subj","cls"])if(m[k]===undefined&&ASG_H[k].test(h)){m[k]=j;break}});if(m.name!==undefined&&(m.hr!==undefined||m.cls!==undefined)){hi=i;H=m;break}}
+    if(H){let last="";rows.slice(hi+1).forEach(r=>{const nm=(r[H.name]||"").replace(/\s+/g,"")?r[H.name].replace(/선생님$/,"").trim():last;if(!nm||/^예시/.test(nm))return;last=nm;const o=get(nm);rowsN++;
+        if(H.hr!==undefined){const k=clsTokens(r[H.hr],true)[0];if(k)o.hr=k}
+        if(H.cls!==undefined)clsTokens(r[H.cls],true).forEach(k=>add(o,H.subj!==undefined?r[H.subj]:"",k))});return}
+    /* ② 시간표형: 월 화 수 목 금 머리줄 + 교시 줄. 선생님 이름은 시트 이름이나 표 바로 위 줄에서 찾습니다 */
+    for(let i=0;i<rows.length;i++){const dc={};rows[i].forEach((c,j)=>{const m=DAY_RE.exec(c.replace(/\s/g,""));if(m)dc["월화수목금".indexOf(m[1])]=j});if(Object.keys(dc).length<4)continue;
+      let nm=names.find(n=>sn.replace(/\s/g,"").includes(n))||"";
+      for(let u=i-1;u>=Math.max(0,i-4)&&!nm;u--){const line=rows[u].join(" ");nm=names.find(n=>line.includes(n))||""}
+      if(!nm){const m=/([가-힣]{2,4})\s*(선생님|교사)/.exec(rows.slice(Math.max(0,i-4),i).map(r=>r.join(" ")).join(" ")+" "+sn);if(m)nm=m[1]}
+      if(!nm)continue;const o=get(nm);grids++;
+      for(let r=i+1;r<rows.length;r++){const row=rows[r];if(Object.values(dc).some(j=>DAY_RE.test((row[j]||"").replace(/\s/g,""))))break;
+        const pm=/(\d)\s*(교시)?/.exec(row.slice(0,Math.min(...Object.values(dc))).join(" "));if(!pm)continue;const p=+pm[1];if(p<1||p>7)continue;
+        Object.entries(dc).forEach(([d,j])=>{const cell=row[j]||"";if(!cell)return;let ks=clsTokens(cell,false);const m3=/^\s*([1-6])(0[1-9]|1\d|20)\s+(.+)$/.exec(cell.replace(/\n/g," "));if(!ks.length&&m3)ks=[`${+m3[1]}-${+m3[2]}`];if(!ks.length)return;
+          const subj=(m3?m3[3]:cell).replace(/\d\s*학년\s*\d{1,2}\s*반|\d\s*[-–_\/]\s*\d{1,2}/g," ").replace(/[()\[\]\n]/g," ").replace(/\s+/g," ").trim().split(" ")[0]||"수업";
+          ks.forEach(k=>add(o,subj,k));o.tt[`${d}-${p}`]={subj,cls:ks[0]}})}}});
+  const res=[...R.entries()].map(([name,o])=>({name,hr:o.hr,teach:[...o.teach.entries()].map(([subj,s])=>({subj,cls:[...s].sort(ckSort)})),tt:o.tt}));
+  return{list:res,grids,rows:rowsN}}
+function asgSheet(r,fname){
+  const known=r.list.filter(x=>SCH.staff.some(t=>t.name===x.name)),unknown=r.list.filter(x=>!SCH.staff.some(t=>t.name===x.name));
+  const hrN=r.list.filter(x=>x.hr).length,ttN=r.list.filter(x=>Object.keys(x.tt).length).length;
+  $("sheetBox").innerHTML=`<h2>수업 배정 불러오기 <span class="sub">${esc(fname)}</span></h2>
+    <div class="conv"><b>선생님 ${r.list.length}명 · 담임 ${hrN}명 · 시간표 ${ttN}명</b>${r.grids?`<span>교사별 시간표 ${r.grids}개를 읽었습니다(시간표도 배포됩니다).</span>`:""}<span>파일에 있는 선생님은 담임 · 수업 배정을 새 내용으로 바꿉니다. 다른 선생님 배정은 그대로 둡니다.</span></div>
+    <div class="schdiff">${known.slice(0,200).map(x=>`<div class="schk"><b>${esc(x.name)}</b> <small>${x.hr?"담임 "+esc(x.hr)+" · ":""}${esc(x.teach.map(t=>t.subj+" "+t.cls.join(",")).join(" / ")||"수업 없음")}</small></div>`).join("")}</div>
+    ${unknown.length?`<label class="chk"><input type="checkbox" id="asgAddNew" checked> 교직원 원본에 없는 ${unknown.length}명(${esc(unknown.slice(0,6).map(x=>x.name).join(", "))}${unknown.length>6?" …":""})도 교직원으로 추가</label>`:""}
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="asgGo">배정 적용</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("asgGo").onclick=async()=>{await kvSet(SCH_PREV,JSON.stringify(SCH));const addNew=$("asgAddNew")&&$("asgAddNew").checked;let n=0;
+    r.list.forEach(x=>{let t=SCH.staff.find(s=>s.name===x.name);if(!t){if(!addNew)return;t={uid:schUid("t"),name:x.name,dept:"",role:"교사",subject:"",phone:"",email:""};SCH.staff.push(t)}
+      if(x.hr)t.hr=x.hr;if(x.teach.length)t.teach=x.teach;if(Object.keys(x.tt).length)t.tt=x.tt;if(!t.subject&&x.teach[0])t.subject=x.teach[0].subj;t.up=Date.now();n++});
+    SCH.log.push({at:new Date().toISOString(),what:"수업 배정 올리기",file:String(fname).slice(0,60),cnt:{asg:n}});await schSave();$("sheet").hidden=true;SCHV.tab="asg";renderSchool();toast(`선생님 ${n}명의 배정을 적용했습니다`)};
+}
+/* --- 한 선생님 배정 고치기: 담임 학급 하나 + 과목별 수업 학급 --- */
+function asgEdit(t){
+  const keys=[...new Set(schLive().map(schCK))].sort(ckSort);
+  let hr=t.hr||"",teach=(t.teach||[]).map(x=>({subj:x.subj,cls:x.cls.slice()}));
+  const chips=(sel,attr)=>keys.map(k=>`<button class="chip" type="button" ${attr}="${k}" aria-pressed="${sel(k)}">${k}</button>`).join("");
+  const paint=()=>{$("sheetBox").innerHTML=`<h2>${esc(t.name)} 선생님 배정 <span class="sub">${esc([t.dept,t.role].filter(Boolean).join(" · "))}</span></h2>
+    <div class="shlb">담임 학급</div><div class="presets schcls"><button class="chip" type="button" data-hr="" aria-pressed="${!hr}">없음</button>${chips(k=>k===hr,"data-hr")}</div>
+    <div class="shlb">수업 (과목별 학급)</div>${teach.map((x,i)=>`<div class="schk asgrow"><div class="range"><label class="lb">과목<input class="fld" data-sj="${i}" maxlength="20" value="${esc(x.subj)}" placeholder="예: 물리학"></label><button class="btn sm bad ghost" type="button" data-rm="${i}">빼기</button></div><div class="presets schcls">${chips(k=>x.cls.includes(k),`data-ti="${i}" data-k`)}</div></div>`).join("")||`<p class="note">수업 배정이 없습니다.</p>`}
+    <div class="row2"><button class="btn" type="button" id="asgAdd">＋ 과목 추가</button></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="asgOk">저장</button></div>`;
+    const B=$("sheetBox");$("skNo").onclick=()=>{$("sheet").hidden=true};
+    B.querySelectorAll("[data-hr]").forEach(b=>b.onclick=()=>{hr=b.dataset.hr;paint()});
+    B.querySelectorAll("[data-sj]").forEach(i=>i.oninput=()=>{teach[+i.dataset.sj].subj=i.value});
+    B.querySelectorAll("[data-ti]").forEach(b=>b.onclick=()=>{const x=teach[+b.dataset.ti],k=b.dataset.k,j=x.cls.indexOf(k);if(j>=0)x.cls.splice(j,1);else x.cls.push(k);x.cls.sort(ckSort);b.setAttribute("aria-pressed",j<0)});
+    B.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{teach.splice(+b.dataset.rm,1);paint()});
+    $("asgAdd").onclick=()=>{teach.push({subj:t.subject||"",cls:[]});paint()};
+    $("asgOk").onclick=async()=>{t.hr=hr;t.teach=teach.map(x=>({subj:(x.subj||"수업").trim().slice(0,20),cls:x.cls})).filter(x=>x.cls.length);t.up=Date.now();await schSave();$("sheet").hidden=true;renderSchool();toast("배정을 저장했습니다")}};
+  $("sheet").hidden=false;paint();
+}
+const asgText=t=>[t.hr?`담임 ${t.hr}`:"",...(t.teach||[]).map(x=>`${x.subj} ${x.cls.join(",")}`)].filter(Boolean).join(" · ");
+const hasAsg=t=>!!(t.hr||(t.teach||[]).some(x=>x.cls.length));
+/* --- 학교 묶음 만들기 --- */
+function packFor(t){
+  const keys=new Map();if(t.hr)keys.set(t.hr,{role:"담임",subj:[]});
+  (t.teach||[]).forEach(x=>x.cls.forEach(k=>{if(!keys.has(k))keys.set(k,{role:"교과",subj:[]});keys.get(k).subj.push(x.subj)}));
+  const O=SCH.opt||{},live=schLive();
+  const classes=[...keys.entries()].sort((a,b)=>ckSort(a[0],b[0])).map(([k,v])=>{const full=v.role==="담임"?O.hrPhone!==false:!!O.subjPhone;
+    return{key:k,role:v.role,subj:[...new Set(v.subj)],teachers:clsTeachers(k).map(x=>O.staffDir===false?{name:x.name,subj:x.subj}:x),...distChg(k),students:live.filter(s=>schCK(s)===k).sort(schSort).map(s=>({...(cardsFor(s,v.role,t.name)?{cards:cardsFor(s,v.role,t.name)}:{}),uid:s.uid,no:s.no,name:s.name,sid:s.sid,...(s.email?{email:s.email}:{}),...(full&&s.phone?{phone:s.phone}:{}),...(full&&s.pphone?{pphone:s.pphone}:{})}))}});
+  return{teacher:{uid:t.uid,name:t.name},classes,staff:O.staffDir===false?[]:SCH.staff.map(s=>({name:s.name,dept:s.dept,role:s.role,phone:s.phone})),tt:t.tt||{},acal:O.acal===false?[]:schAcal()}}
+async function makePack(){
+  const O=SCH.opt=SCH.opt||{},mA=O.modeA!==false,mP=!!O.modeP;if(!mA&&!mP)return toast("배포 방식을 하나 이상 골라 주세요");
+  const T=mA?SCH.staff.filter(hasAsg):[],keys=mP?[...new Set(schLive().map(schCK))].sort(ckSort):[];
+  if(mA&&!T.length&&!mP)return toast("먼저 ‘배정’에서 선생님들의 담임 · 수업 학급을 정해 주세요");
+  if(mP&&!keys.length)return toast("학생 명단이 없습니다. 먼저 학생 명단을 올려 주세요");
+  const prog=$("packProg"),total=T.length+keys.length;let n=0;const step=()=>{n++;if(prog)prog.textContent=`잠그는 중 ${n}/${total}`};
+  try{const k=await schKeys();T.forEach(t=>{if(!t.code)t.code=newCode()});if(mP&&!SCH.pickCode)SCH.pickCode=newCode();DIST=distDiff(await distGet());
+    const entries=[],rec={ver:0,at:"",by:meName()||"",fp:await fpOf(k.pub),t:[],sum:DIST&&!DIST.first?DIST.sum:null,acal:O.acal===false?0:schAcal().length,got:{}};
+    for(const t of T){const rk=newCode();entries.push({t:t.uid,name:t.name,dept:t.dept||"",...(await sealFor(t.code,{...packFor(t),rk}))});rec.t.push({uid:t.uid,name:t.name,phone:t.phone||"",rc:await rcOf(rk)});step()}
+    let pick=null;if(mP){const full=!!O.pickPhone,live=schLive(),prk=newCode();rec.pick={n:keys.length,rc:await rcOf(prk)};
+      const common=await sealFor(SCH.pickCode,{rk:prk,staff:full&&O.staffDir!==false?SCH.staff.map(s=>({name:s.name,dept:s.dept,role:s.role,phone:s.phone})):[],acal:O.acal===false?[]:schAcal()});const classes=[];
+      for(const kk of keys){const cp=classPayload(kk,full);if(!full)cp.teachers=cp.teachers.map(x=>({name:x.name,subj:x.subj}));classes.push({key:kk,n:live.filter(s=>schCK(s)===kk).length,...(await sealFor(SCH.pickCode,cp))});step()}pick={common,classes}}
+    const encPub=(await schEnc()).pub;SCH.ver=(+SCH.ver||0)+1;
+    const body={enc:encPub,kind:"teachers-life-school-pack",v:1,school:SCH.school||"학교",year:SCH.year,term:SCH.term||curTerm().term,ver:SCH.ver,at:new Date().toISOString(),by:meName()||"",opt:{hrPhone:O.hrPhone!==false,subjPhone:!!O.subjPhone,pickPhone:!!O.pickPhone,cards:!!O.cardsUse},entries,...(pick?{pick}:{}),...(k.prev?{handover:k.prev}:{})};
+    const pack={...body,sig:{pub:pubOnly(k.pub),s:await signBody(body,k)}};
+    const what=[mA?`배정 ${T.length}명`:"",mP?`선택 ${keys.length}학급`:""].filter(Boolean).join(" · ");
+    SCH.log.push({at:body.at,what:"학교 묶음 만들기",file:`${what} · ${body.ver}번째`,cnt:DIST&&!DIST.first?DIST.sum:{}});rec.ver=body.ver;rec.at=body.at;SCH.packs=(SCH.packs||[]).concat([rec]).slice(-30);await schSave();await distSave(body.ver,body.at);DIST=null;if(prog)prog.textContent="";
+    const f=new File([JSON.stringify(pack)],`${APP_NAME.replace(/\s+/g,"")}_학교묶음_${(SCH.school||"학교").replace(/\s+/g,"")}_${today().replace(/-/g,"")}.json`,{type:"application/json"});
+    renderSchool();
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:"학교 묶음"});return}catch(e){if(e&&e.name==="AbortError")return}}
+    const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+    toast(`학교 묶음을 만들었습니다 (${what}). 학교 메신저에 올리고, ${mA?"개인 코드":""}${mA&&mP?" · ":""}${mP?"학교 공용 코드":""}를 알려 주세요`)}
+  catch(e){if(prog)prog.textContent="";toast("묶음을 만들지 못했습니다: "+(e.message||e))}}
+async function codesSheet(){
+  const T=SCH.staff.filter(hasAsg);T.forEach(t=>{if(!t.code)t.code=newCode()});await schSave();const fp=await fpOf((await schKeys()).pub);
+  const msg=t=>`[${SCH.school||"학교"} · 교사의 생활] ${t.name} 선생님 개인 코드: ${t.code}\n학교 관리 담당자가 올린 ‘학교 묶음’ 파일을 열 때 넣어 주세요. 담당자 확인 코드: ${fp}`;
+  $("sheetBox").innerHTML=`<h2>개인 코드 <span class="sub">${T.length}명</span></h2>
+    <p class="note">선생님마다 한 번만 보내면 됩니다. 묶음을 새로 만들어도 코드는 그대로입니다. 문자를 누르면 그 선생님 번호로 문자창이 열립니다.</p>
+    <div class="list codelist">${T.map((t,i)=>`<div class="prow"><span class="pn">${esc(t.name)} <b class="code">${esc(t.code)}</b><small>${esc(t.dept||"")}${t.phone?" · "+esc(t.phone):" · 번호 없음"}</small></span>${t.phone?`<button class="btn sm" type="button" data-sm="${i}">문자</button>`:""}<button class="btn sm" type="button" data-cp="${i}">복사</button></div>`).join("")}</div>
+    <div class="row2"><button class="btn" type="button" id="cdXl">코드 안내표 엑셀</button><button class="btn bad ghost" type="button" id="cdNew">코드 모두 새로 만들기</button></div>
+    <p class="note">코드 안내표는 선생님별로 잘라 나눠 줄 때 씁니다. 코드를 아는 사람은 그 선생님 칸을 열 수 있으니 안전하게 다뤄 주세요.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("sheetBox").querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>{const t=T[+b.dataset.sm];go(smsHref([digits(t.phone)],msg(t)))});
+  $("sheetBox").querySelectorAll("[data-cp]").forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(msg(T[+b.dataset.cp]));toast("복사했습니다")}catch(e){toast("복사하지 못했습니다")}});
+  $("cdXl").onclick=()=>xlOut(`${APP_NAME.replace(/\s+/g,"")}_개인코드_${(SCH.school||"학교").replace(/\s+/g,"")}.xlsx`,[{name:"개인 코드",title:`${SCH.school||"학교"} 교사의 생활 개인 코드 (담당자 확인 코드 ${fp})`,rows:[["성명","부서","개인 코드","배정"],...T.map(t=>[t.name,t.dept,t.code,asgText(t)])],widths:[12,12,14,50],text:[2]}],"코드 안내표를 저장했습니다").catch(e=>toast(e.message||"엑셀을 만들지 못했습니다"));
+  twoStep($("cdNew"),"정말 새로 (이전 코드는 못 씀)",async()=>{T.forEach(t=>t.code=newCode());await schSave();codesSheet();toast("코드를 모두 새로 만들었습니다. 묶음도 새로 만들어 올려 주세요")});
+}
+
+/* --- 선생님 쪽: 학교 묶음 받기 --- */
+function trustGet(){try{return JSON.parse(localStorage.getItem("att-app-schtrust")||"{}")||{}}catch(e){return{}}}
+function trustSet(o){try{localStorage.setItem("att-app-schtrust",JSON.stringify(o))}catch(e){}}
+function packRcpt(){try{return JSON.parse(localStorage.getItem("att-app-schpack")||"null")}catch(e){return null}}
+async function packOpen(p){
+  if(!p||p.kind!=="teachers-life-school-pack"||!p.sig||!((Array.isArray(p.entries)&&p.entries.length)||(p.pick&&Array.isArray(p.pick.classes)&&p.pick.classes.length&&p.pick.common)))return toast("학교 묶음 파일이 아닙니다");
+  if(!(window.crypto&&crypto.subtle))return toast("이 브라우저는 학교 묶음을 열 수 없습니다. 최신 크롬 · 사파리에서 열어 주세요");
+  if(!(await verifyPack(p))){$("sheetBox").innerHTML=`<h2>열 수 없는 묶음</h2><p class="warn">이 파일은 학교 관리 담당자가 만든 뒤 내용이 바뀌었거나 손상되었습니다. 안전을 위해 열지 않습니다.</p><p class="note">담당자에게 파일을 다시 받아 주세요.</p><div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;$("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};return}
+  const fp=await fpOf(p.sig.pub),T=trustGet(),sk=String(p.school||"학교"),prev=T[sk];
+  if(prev&&prev.fp===fp)return packChoose(p,fp);
+  const trust=()=>{const o=trustGet();o[sk]={fp,at:new Date().toISOString()};trustSet(o);packChoose(p,fp)};
+  if(!prev){$("sheetBox").innerHTML=`<h2>${esc(sk)} 학교 묶음</h2><p class="note">처음 받는 학교 묶음입니다. 아래 <b>담당자 확인 코드</b>가 학교에서 공지한 코드(교무회의 · 학교 공식 메신저)와 같은지 확인해 주세요.</p>
+      <p class="fpbig">${esc(fp)}</p><p class="note">${p.by?`만든 사람: ${esc(p.by)} · `:""}${esc(fmtDTfull(new Date(p.at).getTime()))} · ${esc(p.year+"학년도 "+(p.term||""))}</p>
+      <div class="row2"><button class="btn" type="button" id="skNo">다릅니다 (열지 않음)</button><button class="btn pri" type="button" id="pkOk">같습니다, 계속</button></div>`;
+    $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true;toast("열지 않았습니다. 담당자에게 확인해 주세요")};$("pkOk").onclick=trust;return}
+  if(await hoOk(p,prev.fp)){$("sheetBox").innerHTML=`<h2>학교 관리 담당자가 바뀌었습니다</h2><p class="note">이전 담당자(확인 코드 <span class="code">${esc(prev.fp)}</span>)가 새 담당자에게 넘겨준 것을 이전 담당자의 서명으로 확인했습니다.</p>
+      <p class="note">새 담당자 확인 코드</p><p class="fpbig">${esc(fp)}</p><p class="note">${p.by?`만든 사람: ${esc(p.by)} · `:""}다음부터는 이 코드로 확인합니다.</p>
+      <div class="row2"><button class="btn" type="button" id="skNo">열지 않기</button><button class="btn pri" type="button" id="pkOk">계속</button></div>`;
+    $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("pkOk").onclick=trust;return}
+  $("sheetBox").innerHTML=`<h2>담당자 확인 코드가 다릅니다</h2><p class="warn">지난번 ${esc(sk)} 묶음은 <b>${esc(prev.fp)}</b>, 이번 묶음은 <b>${esc(fp)}</b>입니다. 학교 관리 담당자가 바뀐 것이 아니라면 다른 사람이 만든 파일일 수 있습니다.</p>
+    <div class="row2"><button class="btn pri" type="button" id="skNo">열지 않기</button><button class="btn bad" type="button" id="pkOk">담당자가 바뀐 것을 확인했습니다</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};twoStep($("pkOk"),"정말 계속 (새 확인 코드로 바꿈)",trust);
+}
+function packPick(p,fp){
+  const R=packRcpt(),pre=R&&R.school===p.school?R.t:"";let sel=p.entries.find(e=>e.t===pre)?pre:"",q="";
+  const paint=()=>{const L=p.entries.filter(e=>!q||(e.name+e.dept).includes(q));
+    $("pkList").innerHTML=L.slice(0,80).map(e=>`<button class="chip" type="button" data-t="${esc(e.t)}" aria-pressed="${e.t===sel}">${esc(e.name)}${e.dept?` <small>${esc(e.dept)}</small>`:""}</button>`).join("")||`<p class="note">찾는 이름이 없습니다. 배정되지 않았다면 담당자에게 알려 주세요.</p>`;
+    $("pkList").querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{sel=b.dataset.t;paint();$("pkCode").focus()})};
+  $("sheetBox").innerHTML=`<h2>내 이름과 개인 코드</h2><p class="note">${esc(p.school)} · 선생님 ${p.entries.length}명 · 담당자 확인됨 <span class="code">${esc(fp)}</span></p>
+    <label class="lb" for="pkQ">이름 찾기<input class="fld" id="pkQ" autocomplete="off" placeholder="이름 · 부서"></label><div class="presets pklist" id="pkList"></div>
+    <label class="lb" for="pkCode">개인 코드 (8자)<input class="fld code" id="pkCode" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="11" placeholder="예: K7Q2-M9XD"></label>
+    <p class="note" id="pkMsg">담당자가 문자 등으로 보낸 개인 코드를 넣어 주세요. 내 칸만 열리고, 다른 선생님 칸은 열리지 않습니다.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="pkGo">열기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};paint();
+  $("pkQ").oninput=e=>{q=e.target.value.trim();paint()};
+  $("pkGo").onclick=async()=>{const e=p.entries.find(x=>x.t===sel);if(!e)return toast("먼저 이름을 골라 주세요");const c=$("pkCode").value;if(codeNorm(c).length!==8)return toast("개인 코드 8자를 넣어 주세요");
+    $("pkGo").disabled=true;$("pkMsg").textContent="여는 중…";
+    try{const data=await openWith(c,e);packPreview(p,e,data,fp,"assign")}catch(err){$("pkGo").disabled=false;$("pkMsg").innerHTML=`<span class="warn">코드가 맞지 않습니다. 이름과 개인 코드를 다시 확인해 주세요.</span>`}};
+}
+function packPeriod(p){return{year:+p.year||period().year,term:p.term==="1학기"||p.term==="2학기"?p.term:period().term}}
+function packFind(c,per){return S.list.find(x=>x.data.sch&&x.data.sch.key===c.key&&inPer(x.data,per))||S.list.find(x=>x.data.cls===ckLabel(c.key)&&inPer(x.data,per))}
+/* --- 담당자 화면: 배정 탭 · 배포 카드 --- */
+function renderAsgTab(L){
+  const T=SCH.staff.slice().sort((a,b)=>(hasAsg(b)-hasAsg(a))||(a.dept||"힣").localeCompare(b.dept||"힣","ko")||a.name.localeCompare(b.name,"ko"));
+  const keys=[...new Set(schLive().map(schCK))],hrSet=new Set(SCH.staff.map(t=>t.hr).filter(Boolean)),noHr=keys.filter(k=>!hrSet.has(k)).sort(ckSort);
+  L.innerHTML=`<div class="row2"><label class="btn pri filebtn" for="asgFile"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg><span class="nw">수업 배정표 올리기</span><input type="file" id="asgFile" accept=".xlsx,.xls,.csv,.ods,text/csv" hidden></label><button class="btn" type="button" id="asgTpl">배정표 양식</button></div>
+    <p class="note">배정된 선생님 ${SCH.staff.filter(hasAsg).length}명 · 담임 ${hrSet.size}/${keys.length}학급${noHr.length?` · 담임 없는 학급: ${esc(noHr.slice(0,12).join(", "))}${noHr.length>12?" …":""}`:""}</p>
+    <div class="tipbox"><button type="button" class="tipq" aria-expanded="false"><i>i</i>사용 방법</button><div class="tipc"><p class="note"><b>목록형</b>: 성명 · 담임 · 과목 · 수업 학급 칸이 있는 엑셀(한 선생님이 여러 줄이어도 됨). 학급은 1-3, 1학년 3반, 1학년 1,2반, 103처럼 써도 됩니다.</p><p class="note"><b>교사별 시간표</b>: 월 ~ 금 머리줄과 교시 줄이 있는 시간표 엑셀(컴시간 등에서 내려받은 파일). 시트 이름이나 표 위 줄의 선생님 이름으로 누구 시간표인지 찾고, 칸의 ‘1-3 물리’ 같은 글자로 학급 · 과목을 읽어 <b>시간표까지</b> 배포합니다.</p><p class="note">교직원 명단 엑셀에 ‘담임’ 칸이 있으면 명단을 올릴 때 담임도 함께 들어갑니다. 줄을 눌러 직접 고칠 수 있습니다.</p></div></div>
+    ${T.length?`<div class="list schstf">${T.map(t=>`<button class="prow" type="button" data-au="${esc(t.uid)}"><span class="pn">${esc(t.name)}${t.hr?`<i class="tagx hr">담임 ${esc(t.hr)}</i>`:""}${t.tt&&Object.keys(t.tt).length?'<i class="tagx">시간표</i>':""}<small>${esc(t.dept||"부서 없음")} · ${esc((t.teach||[]).map(x=>x.subj+" "+x.cls.join(",")).join(" / ")||(t.hr?"수업 배정 없음":"배정 없음"))}</small></span><span class="pe">배정</span></button>`).join("")}</div>`:`<div class="empty">먼저 교직원 명단을 올려 주세요.</div>`}`;
+  const tip=L.querySelector(".tipbox");tip.firstChild.onclick=()=>{const on=tip.classList.toggle("on");tip.firstChild.setAttribute("aria-expanded",String(on))};
+  L.querySelectorAll("[data-au]").forEach(b=>b.onclick=()=>{const t=SCH.staff.find(x=>x.uid===b.dataset.au);if(t)asgEdit(t)});
+  $("asgFile").onchange=async ev=>{const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(!f)return;try{const r=await asgReadFile(f);if(!r.list.length)return toast("배정을 찾지 못했습니다. ‘성명’과 ‘학급’(또는 월 ~ 금 시간표) 제목 줄이 있는지 확인해 주세요");asgSheet(r,f.name)}catch(err){toast(fileErr(err))}};
+  $("asgTpl").onclick=()=>xlOut(`${APP_NAME.replace(/\s+/g,"")}_수업배정표_양식.xlsx`,[{name:"수업 배정",title:`${APP_NAME} · 수업 배정표 양식`,rows:[["성명","담임","과목","수업 학급"],["예시 김물리","1-3","물리학","1-1, 1-2, 1-3"],["예시 김물리","","과학탐구실험","2-1"],["예시 이수학","","수학","1학년 1,2반"]],blank:60,widths:[14,8,16,30]},{name:"안내",title:"수업 배정표 안내",head:false,rows:[["한 선생님이 과목마다 한 줄씩 써도 되고, 성명 칸을 비우면 윗줄 선생님으로 봅니다."],["학급은 1-3, 1학년 3반, 1학년 1,2반, 103처럼 써도 됩니다."],["‘예시’로 시작하는 이름은 건너뜁니다."]],widths:[100]}],"배정표 양식을 저장했습니다").catch(e=>toast(e.message||"양식을 만들지 못했습니다"));
+}
+function packCardHTML(){const O=SCH.opt||{},n=SCH.staff.filter(hasAsg).length,last=[...SCH.log].reverse().find(l=>l.what==="학교 묶음 만들기");
+  return `<section class="card" id="packCard"><div class="hd"><h2>학교 묶음 배포</h2><span class="sub">배정된 선생님 ${n}명</span></div>
+    <div class="conv"><b>담당자 확인 코드 <span class="fpbig sm" id="fpBox">…</span></b><span>교무회의나 학교 공식 공지로 한 번 알려 주세요. 선생님 앱이 처음 묶음을 열 때 이 코드와 같은지 확인하고, 다음부터는 이 담당자가 만든 묶음만 ‘확인됨’으로 엽니다.</span></div>
+    <div class="range"><label class="lb" for="schTerm">학기<select class="fld" id="schTerm"><option${(SCH.term||curTerm().term)==="1학기"?" selected":""}>1학기</option><option${(SCH.term||curTerm().term)==="2학기"?" selected":""}>2학기</option></select></label></div>
+    <label class="chk"><input type="checkbox" id="opHr"${O.hrPhone!==false?" checked":""}> 담임에게 학생 · 보호자 연락처 포함</label>
+    <label class="chk"><input type="checkbox" id="opSj"${O.subjPhone?" checked":""}> 교과 담당에게도 연락처 포함 (기본: 이름 · 학번 · 이메일만)</label>
+    <label class="chk"><input type="checkbox" id="opSt"${O.staffDir!==false?" checked":""}> 교직원 연락망 함께 보내기</label>
+    <label class="chk"><input type="checkbox" id="opAc"${O.acal!==false?" checked":""}><span>학사일정 함께 보내기 (${schAcal().length}건)</span></label><p class="note">이 기기의 시간표 → 학사일정에 넣은 올해 학사일정을 보냅니다. 선생님 앱에서 일정 · 할 일 · 시간표 변동이 되고, 구글 캘린더로도 보낼 수 있습니다.</p>
+    <div class="shlb">배포 방식 <small class="note">둘 다 고르면 한 파일에 함께 들어갑니다</small></div>
+    <label class="chk"><input type="checkbox" id="opMA"${O.modeA!==false?" checked":""}><span>① 배정 방식: 담당자가 정한 담임 · 수업 학급을 개인 코드로 받기</span></label>
+    <label class="chk"><input type="checkbox" id="opMP"${O.modeP?" checked":""}><span>② 선택 방식: 선생님이 앱에서 정한 ‘내 학급’만 학교 공용 코드로 받기</span></label>
+    <div id="pickOpt"${O.modeP?"":" hidden"}><p class="note">학교 공용 코드: ${SCH.pickCode?`<b class="code" id="pickCode">${esc(SCH.pickCode)}</b>`:`<b id="pickCode">묶음을 만들 때 생깁니다</b>`}</p>
+      <div class="row2"><button class="btn sm" type="button" id="pickCp">공용 코드 안내 복사</button><button class="btn sm ghost" type="button" id="pickNew">코드 새로 만들기</button></div>
+      <label class="chk"><input type="checkbox" id="opPP"${O.pickPhone?" checked":""}><span>공용 코드 묶음에도 학생 · 보호자 · 교직원 연락처 넣기</span></label>
+      <p class="note warn">공용 코드는 여러 선생님이 함께 알게 되므로, 코드를 아는 사람은 어느 학급이든 열 수 있습니다. 그래서 기본은 이름 · 학번 · 이메일 · 교과 담당만 보냅니다. 연락처는 배정 방식(개인 코드)으로 보내는 것을 권합니다.</p></div>
+    <p class="note" id="distBox"></p>
+    <div class="row2"><button class="btn pri" type="button" id="packMake">학교 묶음 만들기</button><button class="btn" type="button" id="packCodes">개인 코드 보내기</button></div>
+    <p class="note" id="packProg">${last?`마지막 묶음: ${esc(fmtDTfull(new Date(last.at).getTime()))} · ${esc(last.file||"")}`:"묶음 파일 하나를 학교 메신저 · 공지에 올리면, 선생님마다 자기 이름과 개인 코드로 자기 칸만 엽니다."}</p></section>`}
+function wirePackCard(){if(!$("packCard"))return;
+  schKeys().then(k=>fpOf(k.pub)).then(fp=>{const b=$("fpBox");if(b)b.textContent=fp}).catch(()=>{const b=$("fpBox");if(b)b.textContent="(이 브라우저에서는 만들 수 없음)"});
+  const O=()=>SCH.opt=SCH.opt||{};
+  $("schTerm").onchange=e=>{SCH.term=e.target.value;schSave()};
+  $("opHr").onchange=e=>{O().hrPhone=e.target.checked;schSave()};$("opSj").onchange=e=>{O().subjPhone=e.target.checked;schSave()};$("opSt").onchange=e=>{O().staffDir=e.target.checked;schSave()};
+  $("opAc").onchange=e=>{O().acal=e.target.checked;schSave()};$("opMA").onchange=e=>{O().modeA=e.target.checked;schSave()};$("opMP").onchange=e=>{O().modeP=e.target.checked;$("pickOpt").hidden=!e.target.checked;schSave()};
+  $("opPP").onchange=e=>{O().pickPhone=e.target.checked;schSave()};
+  $("pickCp").onclick=async()=>{if(!SCH.pickCode){SCH.pickCode=newCode();await schSave();$("pickCode").textContent=SCH.pickCode;$("pickCode").className="code"}try{await navigator.clipboard.writeText(`[${SCH.school||"학교"} · 교사의 생활] 학교 공용 코드: ${SCH.pickCode}\n학교 묶음 파일을 열고 ‘학교 공용 코드로 내 학급 받기’에 넣어 주세요.`);toast("복사했습니다")}catch(e){toast("복사하지 못했습니다")}};
+  twoStep($("pickNew"),"정말 새로 (이전 코드는 못 씀)",async()=>{SCH.pickCode=newCode();await schSave();$("pickCode").textContent=SCH.pickCode;$("pickCode").className="code";toast("공용 코드를 새로 만들었습니다. 묶음도 새로 만들어 올려 주세요")});
+  distBox();$("packMake").onclick=makePack;$("packCodes").onclick=()=>{if(!SCH.staff.some(hasAsg))return toast("먼저 ‘배정’에서 선생님들의 학급을 정해 주세요");codesSheet()}}
+
+/* ===== 5.33: 배포 두 가지 + 받은 정보 관리 =====
+   ① 배정 방식: 담당자가 정한 담임 · 수업 학급을 개인 코드로 받기 (5.32)
+   ② 선택 방식: 선생님이 앱에서 먼저 정해 둔 '내 학급'만, 학교 공용 코드로 골라 받기. 학급마다 따로 잠겨 있어 고른 학급만 풀고 나머지는 열지 않음
+   묶음에는 학생 명단, 학급별 교과 수업(과목 · 담당 선생님), 학사일정(일정 · 할 일 · 시간표 변동 · 구글 캘린더로 이어짐), 교직원 연락망, 시간표가 들어갑니다.
+   받은 정보는 '받기 전으로 되돌리기', '받은 정보 초기화'(출석 · 관찰 기록은 절대 지우지 않음), '다시 받기'로 관리합니다. */
+const MYC_KEY="att-app-myclasses";
+function myClasses(){try{const o=JSON.parse(localStorage.getItem(MYC_KEY)||"null");if(o&&typeof o==="object")return{hr:/^\d-\d{1,2}$/.test(o.hr||"")?o.hr:"",teach:(Array.isArray(o.teach)?o.teach:[]).filter(x=>x&&Array.isArray(x.cls)).map(x=>({subj:String(x.subj||"수업").slice(0,20),cls:x.cls.filter(k=>/^\d-\d{1,2}$/.test(k))})).filter(x=>x.cls.length)}}catch(e){}return{hr:"",teach:[]}}
+function myClassesSet(o){try{localStorage.setItem(MYC_KEY,JSON.stringify(o))}catch(e){}try{gTouch()}catch(e){}}
+const myKeys=()=>{const m=myClasses();return[...new Set([m.hr,...m.teach.flatMap(x=>x.cls)].filter(Boolean))]};
+/* 담당자: 학급별 교과 수업 정보(과목 · 담당 선생님 · 연락처)와 학사일정 */
+function clsTeachers(k){const out=[];SCH.staff.forEach(t=>{if(t.hr===k)out.push({name:t.name,subj:"담임",phone:t.phone});(t.teach||[]).forEach(x=>{if(x.cls.includes(k))out.push({name:t.name,subj:x.subj,phone:t.phone})})});return out}
+function schAcal(){return((S.tt&&S.tt.acal)||[]).filter(r=>r&&r.from&&syOf(r.from)===+SCH.year).map(r=>({...r}))}
+function classPayload(k,full){const live=schLive();return{key:k,...distChg(k),students:live.filter(s=>schCK(s)===k).sort(schSort).map(s=>({uid:s.uid,no:s.no,name:s.name,sid:s.sid,...(s.email?{email:s.email}:{}),...(full&&s.phone?{phone:s.phone}:{}),...(full&&s.pphone?{pphone:s.pphone}:{})})),teachers:clsTeachers(k)}}
+
+/* --- 선생님: 받은 정보 기록 --- */
+function rcptGet(){try{return JSON.parse(localStorage.getItem("att-app-schpack")||"null")}catch(e){return null}}
+function rcptSet(o){try{localStorage.setItem("att-app-schpack",JSON.stringify(o))}catch(e){}}
+/* 받은 내용 넣기 (두 방식 공통) */
+async function packApply(p,data,fp,who,opt){
+  const per=packPeriod(p),before=JSON.stringify({at:new Date().toISOString(),S});
+  await kvSet("pack:before",before);await kvSet("pack:last",JSON.stringify(p));snapshot();
+  const prev=rcptGet()||{},R={school:p.school,ver:p.ver,at:p.at,t:who.t,name:who.name,fp,mode:who.mode,got:new Date().toISOString(),per,cls:[],staff:[],acal:[],tt:null};
+  if(data.rk)R.rc=await rcOf(data.rk);R.enc=p.enc||(prev.school===p.school?prev.enc:null)||null;R.cardsOn=!!(p.opt&&p.opt.cards);
+  if(prev.school===p.school){R.cls=prev.cls||[];R.staff=prev.staff||[];R.acal=prev.acal||[];R.tt=prev.tt||null}
+  const made=[];let addN=0,newCls=0,updN=0,skipN=0,cardN=0;
+  data.classes.forEach(c=>{const ph={},em={},uids={};c.students.forEach(s=>{const v=s.pphone||s.phone;if(v)ph[s.sid]=v;if(s.email)em[s.sid]=s.email;uids[s.sid]=s.uid});
+    const sch={key:c.key,role:c.role,subj:c.subj||[],school:String(p.school||""),uids};let cl=packFind(c,per);
+    const me=(data.teacher||{}).name||meName(),tch=(c.teachers||[]).filter(t=>t.name&&t.name!==me).map(t=>({id:uid(),name:t.name,role:t.subj||"",phone:t.phone||"",src:"school"}));
+    if(!cl){cl=addClass({cls:ckLabel(c.key),year:per.year,term:per.term,roster:c.students.map(s=>[s.sid,s.name]),phones:ph,emails:em,teachers:tch,sch},false);newCls++;addN+=c.students.length}
+    else{const d=cl.data,r=rosApply(d,c._sel||rosDiff(cl,c));addN+=r.add;updN+=r.n;skipN+=r.skip;
+      tch.forEach(t=>{if(!d.teachers.some(x=>x.name===t.name&&x.role===t.role))d.teachers.push(t)});d.sch={...d.sch,...sch,uids:d.sch.uids}}
+    {const d=cl.data,U=(d.sch&&d.sch.uids)||{};c.students.forEach(s=>{if(!s.cards)return;const sid=Object.keys(U).find(k=>U[k]===s.uid&&d.roster.some(r=>r[0]===k));const l=cardsNorm({x:s.cards}).x;if(sid&&l){d.cards=d.cards||{};d.cards[sid]=l;cardN++}})}
+    if(!R.cls.includes(cl.id))R.cls.push(cl.id);made.push({key:c.key,cl})});
+  /* 교직원 연락망: 이 묶음에서 새로 생긴 사람만 기록 (초기화 때 그 사람만 뺌) */
+  if(opt.staff)(data.staff||[]).forEach(r=>{if(!r||!r.name||digits(r.phone).length<8)return;const same=perStaff().find(x=>digits(x.phone)===digits(r.phone));
+    if(same){if(!same.dept&&r.dept)same.dept=r.dept;if(!same.role&&r.role)same.role=r.role;return}const n={id:uid(),name:String(r.name),dept:String(r.dept||""),role:String(r.role||""),phone:fmtPhone(r.phone),year:per.year,term:per.term,src:"school"};S.staff.push(n);R.staff.push(n.id)});
+  /* 시간표: 비어 있는 칸만 */
+  let ttF=0;if(opt.tt&&Object.keys(data.tt||{}).length){let t=S.tt.list.find(x=>+x.year===per.year&&x.term===per.term);if(!t){t=newTT({year:per.year,term:per.term});S.tt.list.push(t);if(!TT())S.tt.active=t.id}
+    const keys=(R.tt&&R.tt.id===t.id?R.tt.keys:[])||[];
+    Object.entries(data.tt).forEach(([k,v])=>{if(!/^[0-4]-[1-7]$/.test(k)||!isEmptyCell(t.cells[k]))return;const m=made.find(x=>x.key===v.cls)||(()=>{const c2=packFind({key:v.cls},per);return c2?{cl:c2}:null})();
+      t.cells[k]={subject:String(v.subj||"").slice(0,20),clsId:m?m.cl.id:"",clsName:m?"":ckLabel(v.cls),room:""};keys.push(k);ttF++});R.tt={id:t.id,keys:[...new Set(keys)]}}
+  /* 학사일정: 앱의 학사일정 넣기와 같은 길로 (일정 · 할 일 · 시간표 변동 · 구글 캘린더) */
+  let ac=null;if(opt.acal&&(data.acal||[]).length){try{ac=acApply(data.acal.map(r=>({...r,min:r.min||40})),40,true);
+    data.acal.forEach(r=>{const g="ac"+acHash(r.from+"|"+acClean(r.title));if(!R.acal.includes(g))R.acal.push(g)})}catch(e){reportErr("학사일정 넣기",e)}}
+  if(!perList().length)S.period={year:per.year,term:per.term};
+  const hr=made.find(x=>x.cl.data.sch&&x.cl.data.sch.role==="담임")||made[0];if(hr&&inPer(hr.cl.data)){S.active=hr.cl.id;D=hr.cl.data;selId=null}
+  R.upd=(prev.school===p.school&&prev.upd||[]).concat(updN?[{at:R.got,ver:p.ver,n:updN}]:[]).slice(-10);
+  rcptSet(R);try{localStorage.setItem("att-app-schlast",String(p.school||""))}catch(_){}save();$("sheet").hidden=true;renderAll();try{renderUndo()}catch(_){}try{renderPackEntry()}catch(_){}
+  toast(`넣었습니다: 학급 ${made.length}개(새로 ${newCls}) · 학생 ${addN}명${updN?` · 명단 갱신 ${updN}건`:""}${cardN?` · 인계 카드 ${cardN}명`:""}${skipN?` · 학번이 겹쳐 ${skipN}건 건너뜀`:""}${ttF?` · 시간표 ${ttF}칸`:""}${ac?` · 학사일정 ${data.acal.length}건`:""}`)}
+function packPreview(p,e,data,fp,mode){
+  const per=packPeriod(p),ttN=Object.keys(data.tt||{}).length,stN=(data.staff||[]).filter(s=>digits(s.phone).length>=8).length,acN=(data.acal||[]).length;
+  $("sheetBox").innerHTML=`<h2>${esc(data.teacher?data.teacher.name+" 선생님께 온 학급":"내 학급 받기")}</h2><p class="note">${esc(p.school)} · ${per.year}학년도 ${esc(per.term)} · 담당자 확인됨 · ${mode==="pick"?"선택 방식":"배정 방식"}</p>
+    ${(()=>{const R0=rcptGet();return R0&&R0.school===p.school&&+p.ver<+R0.ver?`<p class="warn">지난번에 받은 묶음(${esc(R0.ver)}번째)보다 오래된 묶음(${esc(p.ver)}번째)입니다. 최신 묶음인지 담당자에게 확인해 주세요.</p>`:""})()}
+    <div class="schdiff nomax">${data.classes.map((c,i)=>{const ex=packFind(c,per),ph=c.students.some(s=>s.phone||s.pphone),tn=(c.teachers||[]).filter(t=>t.subj!=="담임").length,its=ex?rosDiff(ex,c):[],vis=its.filter(x=>!x.auto);c._its=its;const okN=vis.filter(x=>!x.clash).length;
+      return `<div class="schk"><label class="chk"><input type="checkbox" data-c="${i}" checked><span><b>${esc(ckLabel(c.key))}</b> · ${c.role==="담임"?'<i class="tagx hr">담임</i>':esc((c.subj||[]).join(", ")||"수업")} · ${c.students.length}명${ph?" · 연락처 포함":""}${tn?` · 교과 선생님 ${tn}명`:""}${c.students.some(s=>s.cards)?` · 인계 카드 ${c.students.filter(s=>s.cards).length}명`:""}</span></label>${ex?`<small class="note">이미 있는 학급입니다. ${okN?`바뀐 것 ${okN}건을 골라 적용합니다.`:vis.length?"넣을 수 없는 변경만 있습니다.":"바뀐 학생이 없습니다."} 출석 · 관찰 기록은 그대로 둡니다.</small>${vis.length?`<div class="rosd">${vis.map(x=>`<label class="chk"><input type="checkbox" data-di="${i}:${its.indexOf(x)}"${x.clash?" disabled":" checked"}><span>${rosLabel(x)}</span></label>`).join("")}</div>`:""}`:""}</div>`}).join("")}
+      ${acN?`<div class="schk"><label class="chk"><input type="checkbox" id="pkAcal" checked><span>학사일정 ${acN}건 (일정 · 할 일 · 시간표 변동, 구글 캘린더로 보내기 가능)</span></label></div>`:""}
+      ${stN?`<div class="schk"><label class="chk"><input type="checkbox" id="pkStaff" checked><span>교직원 연락망 ${stN}명</span></label></div>`:""}
+      ${ttN?`<div class="schk"><label class="chk"><input type="checkbox" id="pkTT" checked><span>내 시간표 ${ttN}칸 (비어 있는 칸만 채움)</span></label></div>`:""}</div>
+    <p class="note">넣은 뒤에도 설정 → 학교에서 받기에서 <b>되돌리기</b> · <b>초기화</b> · <b>다시 받기</b>를 할 수 있습니다.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="pkApply">넣기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("pkApply").onclick=()=>{const pick=[...$("sheetBox").querySelectorAll("[data-c]")].filter(x=>x.checked).map(x=>data.classes[+x.dataset.c]);
+    const on=new Set([...$("sheetBox").querySelectorAll("[data-di]")].filter(x=>x.checked).map(x=>x.dataset.di));data.classes.forEach((c,i)=>{if(c._its)c._sel=c._its.filter((x,j)=>x.auto||(on.has(i+":"+j)&&!x.clash))});
+    $("pkApply").disabled=true;packApply(p,{...data,classes:pick},fp,{t:e?e.t:"pick",name:e?e.name:"",mode},{staff:$("pkStaff")&&$("pkStaff").checked,tt:$("pkTT")&&$("pkTT").checked,acal:$("pkAcal")&&$("pkAcal").checked}).catch(err=>{toast("넣지 못했습니다: "+(err.message||err));$("pkApply").disabled=false})}}
+/* 두 방식이 다 들어 있으면 고르기 */
+function packChoose(p,fp){
+  const hasA=Array.isArray(p.entries)&&p.entries.length,hasP=p.pick&&Array.isArray(p.pick.classes)&&p.pick.classes.length;
+  if(hasA&&!hasP)return packPick(p,fp);if(hasP&&!hasA)return packPickClasses(p,fp);
+  $("sheetBox").innerHTML=`<h2>${esc(p.school)} 학교 묶음</h2><p class="note">받는 방법을 고르세요.</p>
+    <div class="row2" style="flex-direction:column"><button class="btn pri" type="button" id="pmA">개인 코드로 받기<small style="display:block;font-weight:400">담당자가 배정한 내 담임 · 수업 학급</small></button>
+    <button class="btn" type="button" id="pmP">학교 공용 코드로 내 학급 받기<small style="display:block;font-weight:400">앱에서 정해 둔 ‘내 학급’만 골라 받기</small></button><button class="btn" type="button" id="skNo">취소</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("pmA").onclick=()=>packPick(p,fp);$("pmP").onclick=()=>packPickClasses(p,fp)}
+/* 선택 방식: 학교 공용 코드 → 내 학급(미리 정한 것)이 골라진 상태로 → 고른 학급만 풀기 */
+function packPickClasses(p,fp){
+  const P=p.pick,mine=myClasses(),keys=P.classes.map(c=>c.key),sel=new Set(myKeys().filter(k=>keys.includes(k)));let hr=keys.includes(mine.hr)?mine.hr:"";
+  const grades=[...new Set(keys.map(k=>k.split("-")[0]))];
+  const paint=()=>{$("pcList").innerHTML=grades.map(g=>`<div class="shlb">${g}학년</div><div class="presets schcls">${P.classes.filter(c=>c.key.split("-")[0]===g).map(c=>`<button class="chip" type="button" data-k="${c.key}" aria-pressed="${sel.has(c.key)}">${c.key.split("-")[1]}반${c.key===hr?" ★":""} <small>${c.n}</small></button>`).join("")}</div>`).join("");
+    $("pcList").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(sel.has(k)){sel.delete(k);if(hr===k)hr=""}else sel.add(k);paint()});
+    $("pcHr").innerHTML=`<option value="">담임 없음</option>`+[...sel].sort(ckSort).map(k=>`<option value="${k}"${k===hr?" selected":""}>${ckLabel(k)}</option>`).join("");$("pcN").textContent=`${sel.size}학급 고름`};
+  $("sheetBox").innerHTML=`<h2>내 학급 받기 <span class="sub">선택 방식</span></h2><p class="note">${esc(p.school)} · 담당자 확인됨 <span class="code">${esc(fp)}</span> · ${myKeys().length?"앱에서 정해 둔 ‘내 학급’이 골라져 있습니다.":"받을 학급을 고르세요."} 고른 학급만 열고, 나머지 학급은 열지 않습니다.</p>
+    <div id="pcList"></div>
+    <div class="range"><label class="lb" for="pcHr">담임 학급 (★)<select class="fld" id="pcHr"></select></label></div>
+    <label class="chk"><input type="checkbox" id="pcSave" checked> 이 선택을 ‘내 학급’으로 기억</label>
+    <label class="lb" for="pcCode">학교 공용 코드 (8자)<input class="fld code" id="pcCode" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="11" placeholder="예: K7Q2-M9XD"></label>
+    <p class="note" id="pcMsg"><span id="pcN"></span> · 담당자가 학교에 공지한 공용 코드를 넣어 주세요.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="pcGo">열기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};paint();$("pcHr").onchange=e=>{hr=e.target.value;paint()};
+  $("pcGo").onclick=async()=>{if(!sel.size)return toast("받을 학급을 하나 이상 골라 주세요");const code=$("pcCode").value;if(codeNorm(code).length!==8)return toast("학교 공용 코드 8자를 넣어 주세요");
+    $("pcGo").disabled=true;$("pcMsg").textContent="여는 중…";
+    try{const common=await openWith(code,P.common),classes=[];
+      for(const c of P.classes.filter(c=>sel.has(c.key))){const d=await openWith(code,c);const sj=[...new Set(mine.teach.filter(x=>x.cls.includes(c.key)).map(x=>x.subj))];
+        classes.push({key:c.key,role:c.key===hr?"담임":"교과",subj:c.key===hr?[]:(sj.length?sj:["수업"]),students:d.students,teachers:d.teachers})}
+      if($("pcSave").checked){const old=myClasses();myClassesSet({hr,teach:old.teach.length?old.teach.map(x=>({...x,cls:x.cls.filter(k=>sel.has(k))})).filter(x=>x.cls.length).concat([...sel].filter(k=>k!==hr&&!old.teach.some(x=>x.cls.includes(k))).length?[{subj:"수업",cls:[...sel].filter(k=>k!==hr&&!old.teach.some(x=>x.cls.includes(k)))}]:[]):[...sel].filter(k=>k!==hr).length?[{subj:"수업",cls:[...sel].filter(k=>k!==hr)}]:[]})}
+      packPreview(p,null,{classes,staff:common.staff||[],acal:common.acal||[],tt:{},rk:common.rk},fp,"pick")}
+    catch(err){$("pcGo").disabled=false;$("pcMsg").innerHTML=`<span class="warn">학교 공용 코드가 맞지 않습니다. 담당자의 공지를 다시 확인해 주세요.</span>`}}}
+/* --- 받은 정보 관리 --- */
+async function packUndo(){const raw=await kvGet("pack:before");if(!raw)return toast("되돌릴 기록이 없습니다");let o;try{o=JSON.parse(raw)}catch(e){return toast("되돌릴 기록을 읽지 못했습니다")}
+  const after=S.list.reduce((a,c)=>a+c.data.sessions.filter(s=>s.id&&!(o.S.list||[]).some(x=>(x.data.sessions||[]).some(y=>y.id===s.id))).length,0);
+  ask(`<h2>받기 전으로 되돌리기</h2><p class="note">${esc(fmtDTfull(new Date(o.at).getTime()))} 학교 묶음을 받기 바로 전 상태로 앱 전체를 되돌립니다.</p>${after?`<p class="warn">받은 뒤에 새로 한 출석 체크 ${after}회도 함께 사라집니다. 기록을 지키려면 ‘받은 정보 초기화’를 쓰세요.</p>`:""}`,"되돌리기",async()=>{
+    S=o.S;afterLoad("학교 묶음을 받기 전으로 되돌렸습니다");try{localStorage.removeItem("att-app-schpack")}catch(e){}await kvDel("pack:before");renderPackEntry()})}
+function packReset(){const R=rcptGet();if(!R)return toast("학교에서 받은 정보가 없습니다");
+  const cls=S.list.filter(c=>(R.cls||[]).includes(c.id)),rec=c=>c.data.sessions.length||(c.data.obs||[]).length||Object.keys(c.data.sts||{}).length||(S.evals||[]).some(e=>e.clsId===c.id);
+  const t=R.tt&&S.tt.list.find(x=>x.id===R.tt.id),ttN=t?(R.tt.keys||[]).filter(k=>t.cells[k]).length:0,stN=(R.staff||[]).filter(id=>S.staff.some(x=>x.id===id)).length,acN=(R.acal||[]).length;
+  $("sheetBox").innerHTML=`<h2>받은 정보 초기화</h2><p class="note">학교 묶음으로 받은 것만 지웁니다. <b>출석 · 관찰 기록 · 세특 · 평가는 절대 지우지 않습니다.</b> 지운 뒤 ‘다시 받기’로 새로 받을 수 있습니다.</p>
+    <div class="schdiff nomax">
+      ${cls.length?`<div class="schk"><label class="chk"><input type="checkbox" id="rsC" checked><span>받은 학급 ${cls.length}개</span></label><small class="note">기록이 없는 학급 ${cls.filter(c=>!rec(c)).length}개는 지우고, 기록이 있는 학급 ${cls.filter(rec).length}개(${esc(cls.filter(rec).map(c=>c.data.cls).join(", ")||"-")})는 기록과 함께 남기고 학교 연결만 풉니다.</small></div>`:""}
+      ${stN?`<div class="schk"><label class="chk"><input type="checkbox" id="rsS" checked><span>받은 교직원 연락처 ${stN}명</span></label></div>`:""}
+      ${acN?`<div class="schk"><label class="chk"><input type="checkbox" id="rsA" checked><span>받은 학사일정 ${acN}건 (일정 · 시간표 변동)</span></label></div>`:""}
+      ${ttN?`<div class="schk"><label class="chk"><input type="checkbox" id="rsT" checked><span>받은 시간표 칸 ${ttN}칸</span></label></div>`:""}</div>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn bad" type="button" id="rsGo">초기화</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  twoStep($("rsGo"),"정말 초기화",()=>{snapshot();const ck=id=>$(id)&&$(id).checked;
+    if(ck("rsC")){const gone=new Set();cls.forEach(c=>{if(rec(c)){delete c.data.sch;delete c.data.cards;c.data.teachers=c.data.teachers.filter(x=>x.src!=="school")}else gone.add(c.id)});S.list=S.list.filter(c=>!gone.has(c.id));
+      S.tt.list.forEach(tt=>Object.keys(tt.cells).forEach(k=>{if(gone.has(tt.cells[k].clsId))tt.cells[k].clsId=""}));
+      if(!S.list.length)S.list.push({id:uid(),data:normalize({year:period().year,term:period().term})});if(!S.list.some(c=>c.id===S.active))S.active=(perList()[0]||S.list[0]).id;R.cls=[]}
+    if(ck("rsS")){const ids=new Set(R.staff||[]);S.staff=S.staff.filter(x=>!ids.has(x.id));R.staff=[]}
+    if(ck("rsA")){const gs=new Set(R.acal||[]),rows=(S.tt.acal||[]).filter(r=>gs.has(r.g));S.events=S.events.filter(e=>!gs.has(e.id));
+      S.tt.list.forEach(tt=>{tt.chg=(tt.chg||[]).filter(c=>!gs.has(c.g));rows.forEach(r=>{for(let d=r.from;d<=r.to;d=addDays(d,1)){const x=tt.days&&tt.days[d];if(x&&x.note===acClean(r.title))delete tt.days[d]}})});
+      S.tt.acal=(S.tt.acal||[]).filter(r=>!gs.has(r.g));R.acal=[]}
+    if(ck("rsT")&&t){(R.tt.keys||[]).forEach(k=>delete t.cells[k]);R.tt=null}
+    D=S.list.find(c=>c.id===S.active).data;selId=null;
+    if(!R.cls.length&&!R.staff.length&&!R.acal.length&&!R.tt){try{localStorage.removeItem("att-app-schpack")}catch(e){}}else rcptSet(R);
+    save();$("sheet").hidden=true;renderAll();renderPackEntry();toast("받은 정보를 초기화했습니다. 기록은 그대로입니다")})}
+async function packRedo(){const raw=await kvGet("pack:last");if(!raw){$("packFile").click();return}try{packOpen(JSON.parse(raw))}catch(e){toast("지난 묶음을 읽지 못했습니다. 파일을 다시 열어 주세요")}}
+function myClassSheet(){const m=myClasses();let hr=m.hr,teach=m.teach.map(x=>({subj:x.subj,cls:x.cls.join(", ")}));
+  const paint=()=>{$("sheetBox").innerHTML=`<h2>내 학급 정하기</h2><p class="note">학교 묶음을 <b>선택 방식</b>으로 받을 때, 여기서 정한 학급이 미리 골라집니다. 학교 묶음이 오기 전에 정해 두세요.</p>
+    <label class="lb" for="mcHr">담임 학급<input class="fld" id="mcHr" placeholder="예: 1-3 (없으면 비움)" value="${esc(hr)}"></label>
+    <div class="shlb">수업 학급</div>${teach.map((x,i)=>`<div class="range"><label class="lb">과목<input class="fld" data-sj="${i}" maxlength="20" value="${esc(x.subj)}" placeholder="예: 물리학"></label><label class="lb">학급<input class="fld" data-cl="${i}" value="${esc(x.cls)}" placeholder="예: 1-1, 1-2, 2학년 3,4반"></label></div>`).join("")}
+    <div class="row2"><button class="btn" type="button" id="mcAdd">＋ 과목 추가</button></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="mcOk">저장</button></div>`;
+    $("skNo").onclick=()=>{$("sheet").hidden=true};
+    $("sheetBox").querySelectorAll("[data-sj]").forEach(i=>i.oninput=()=>{teach[+i.dataset.sj].subj=i.value});$("sheetBox").querySelectorAll("[data-cl]").forEach(i=>i.oninput=()=>{teach[+i.dataset.cl].cls=i.value});
+    $("mcHr").oninput=e=>{hr=e.target.value};$("mcAdd").onclick=()=>{teach.push({subj:"",cls:""});paint()};
+    $("mcOk").onclick=()=>{const h=clsTokens(hr,true)[0]||"";if(hr.trim()&&!h)return toast("담임 학급을 1-3처럼 써 주세요");
+      myClassesSet({hr:h,teach:teach.map(x=>({subj:(x.subj||"수업").trim().slice(0,20),cls:clsTokens(x.cls,true)})).filter(x=>x.cls.length)});$("sheet").hidden=true;renderPackEntry();toast("내 학급을 저장했습니다")}};
+  $("sheet").hidden=false;paint()}
+function renderPackEntry(){const b=$("packBody");if(!b)return;const R=rcptGet(),T=trustGet(),m=myClasses();
+  $("packTag").textContent=R?`${R.school} · ${fmtDate(String(R.got||R.at).slice(0,10))}`:"";
+  const cls=R?S.list.filter(c=>(R.cls||[]).includes(c.id)):[];
+  b.innerHTML=`<p class="note">학교 관리 담당자가 올린 <b>학교 묶음</b> 파일을 열면 내 학급의 학생 명단, 교과 수업 정보, 학사일정, 교직원 연락망이 자동으로 들어갑니다. <b>개인 코드</b>(배정 방식) 또는 <b>학교 공용 코드</b>(선택 방식)가 필요합니다.</p>
+    <div class="row2"><label class="btn pri" for="packFile">학교 묶음 파일 열기<input type="file" id="packFile" accept=".json,application/json" hidden></label></div>
+    ${R&&R.cardsOn&&S.list.some(c=>c.data.sch)?`<div class="shlb">학생 인계 카드 <small class="note">선택 사항</small></div><p class="note">원할 때만 씁니다. 학년말에 내년 선생님께 전할 카드(출석 요약 · 관찰 경향 · 인계 메모)를 만들어 담당자에게 보냅니다. 메모는 쓰고 싶은 학생에게만 써도 됩니다. <button class="btn sm" type="button" id="cdStart">만들기</button></p>`:""}
+    <div class="shlb">내 학급 (선택 방식용)</div><p class="note">${m.hr||m.teach.length?esc([m.hr?"담임 "+m.hr:"",...m.teach.map(x=>x.subj+" "+x.cls.join(","))].filter(Boolean).join(" · ")):"아직 정하지 않았습니다."} <button class="btn sm" type="button" id="myCls">정하기</button></p>
+    ${R?`<div class="shlb">받은 정보</div><p class="note">${esc(R.school)}${R.name?" · "+esc(R.name)+" 선생님":""} · ${R.mode==="pick"?"선택 방식":"배정 방식"} · ${esc(fmtDTfull(new Date(R.got||R.at).getTime()))}<br>${esc([`학급 ${cls.length}개${cls.length?` (${cls.map(c=>c.data.cls+(c.data.sch&&c.data.sch.role==="담임"?"·담임":"")).join(", ")})`:""}`,(R.staff||[]).length?`교직원 ${R.staff.length}명`:"",(R.acal||[]).length?`학사일정 ${R.acal.length}건`:"",R.tt&&(R.tt.keys||[]).length?`시간표 ${R.tt.keys.length}칸`:""].filter(Boolean).join(" · "))}${(R.upd||[]).length?`<br>최근 명단 갱신: ${esc(R.upd.slice(-3).reverse().map(u=>fmtDate(String(u.at).slice(0,10))+" "+u.n+"건").join(", "))}`:""}</p>
+      ${R.rc?`<div class="row2"><button class="btn pri" type="button" id="pkTell">받았다고 알리기</button></div>`:""}
+      <div class="row2"><button class="btn" type="button" id="pkRedo">다시 받기</button><button class="btn" type="button" id="pkUndo">되돌리기</button><button class="btn bad ghost" type="button" id="pkReset">초기화</button></div>
+      <p class="note">되돌리기: 받기 바로 전 상태로 앱 전체를 돌립니다. 초기화: 받은 학급 · 연락처 · 학사일정 · 시간표 칸만 지우고 출석 · 관찰 기록은 남깁니다.</p>`:(()=>{try{return localStorage.getItem("att-app-schlast")}catch(e){return null}})()?`<div class="row2"><button class="btn" type="button" id="pkRedo">지난 학교 묶음 다시 받기</button></div>`:""}
+    ${Object.keys(T).length?`<p class="note">기억한 담당자 확인 코드: ${Object.entries(T).map(([k,v])=>`${esc(k)} <span class="code">${esc(v.fp)}</span>`).join(", ")} <button class="btn sm ghost" type="button" id="trustClr">지우기</button></p>`:""}`;
+  $("packFile").onchange=async ev=>{const f=ev.target.files&&ev.target.files[0];ev.target.value="";if(!f)return;try{packOpen(await readAnyText(await f.text()))}catch(err){toast(fileErr(err))}};
+  $("myCls").onclick=myClassSheet;if($("cdStart"))$("cdStart").onclick=cardStart;if($("pkTell"))$("pkTell").onclick=rcptNotify;
+  if($("pkRedo"))$("pkRedo").onclick=packRedo;if($("pkUndo")){$("pkUndo").onclick=packUndo;$("pkReset").onclick=packReset}
+  if($("trustClr"))twoStep($("trustClr"),"정말 지우기",()=>{trustSet({});renderPackEntry();toast("기억한 확인 코드를 지웠습니다. 다음 묶음에서 다시 확인합니다")})}
+
+/* ===== 5.34: 학교 관리 3단계 · 명단 갱신 배포 =====
+   담당자: 묶음을 만들 때마다 '그때 나눠 준 명단'(학생 고유번호 → 학급 · 학번 · 이름)을 이 기기에 기억해 두고,
+           다음 묶음에는 지난 배포 이후 바뀐 것(전입 · 반 이동 · 전출 · 학번 · 이름)을 학급별로 함께 넣습니다.
+   선생님: 이미 받은 학급이면 학생 고유번호로 하나씩 맞춰 보고 바뀐 것만 보여 줍니다. 골라서 적용하고, 되돌릴 수 있습니다.
+           빠진 학생은 명단에서만 빼고 출석 · 관찰 · 세특 기록은 남깁니다. 학번이 바뀌면 기록도 새 학번으로 옮깁니다. */
+let DIST=null;
+async function distGet(){try{return JSON.parse((await kvGet("school:dist"))||"null")}catch(e){return null}}
+function distNow(){const m={};schLive().forEach(s=>{m[s.uid]=[schCK(s),s.sid,s.name]});return m}
+function distDiff(prev){const cur=distNow(),byKey={},sum={in:0,mv:0,out:0,sid:0,name:0},C=k=>byKey[k]=byKey[k]||{left:[],came:{}};
+  if(!prev||!prev.m)return{byKey,sum,first:true};const P=prev.m;
+  for(const u in cur){const c=cur[u],p=P[u];if(!p){sum.in++;C(c[0]).came[u]="전입";continue}
+    if(p[0]!==c[0]){sum.mv++;C(c[0]).came[u]=p[0];C(p[0]).left.push({uid:u,why:"반 이동",to:c[0]})}else if(p[1]!==c[1])sum.sid++;if(p[2]!==c[2])sum.name++}
+  for(const u in P)if(!cur[u]){const s=SCH.students.find(x=>x.uid===u);sum.out++;C(P[u][0]).left.push({uid:u,why:s&&s.st&&s.st!=="재학"?s.st:"명단에서 빠짐"})}
+  return{byKey,sum,since:prev.ver,at:prev.at}}
+const distChg=k=>DIST&&!DIST.first&&DIST.byKey[k]?{chg:{...DIST.byKey[k],since:DIST.since}}:{};
+async function distBox(){const b=$("distBox");if(!b)return;const prev=await distGet();if(!prev){b.innerHTML="처음 만드는 묶음입니다. 다음부터는 지난 배포 이후 바뀐 명단만 선생님 앱에서 골라 적용할 수 있습니다.";return}
+  const d=distDiff(prev),s=d.sum,parts=[s.in?`전입 ${s.in}`:"",s.mv?`반 이동 ${s.mv}`:"",s.out?`전출 · 빠짐 ${s.out}`:"",s.sid?`학번 변경 ${s.sid}`:"",s.name?`이름 변경 ${s.name}`:""].filter(Boolean);
+  b.innerHTML=`<b>명단 갱신</b> · 지난 배포(${esc(fmtDTfull(new Date(prev.at).getTime()))}) 이후 ${parts.length?esc(parts.join(" · "))+"명":"바뀐 학생 없음"}. ${parts.length?"새 묶음을 만들어 올리면 선생님 앱에서 바뀐 것만 골라 적용합니다.":""}`}
+async function distSave(ver,at){await kvSet("school:dist",JSON.stringify({ver,at,m:distNow()}))}
+
+/* --- 선생님: 학생 고유번호로 맞춰 보기 --- */
+function rosDiff(cl,c){const d=cl.data,U=(d.sch&&d.sch.uids)||{},u2s={},items=[],chg=c.chg||{left:[],came:{}},inR=sid=>d.roster.find(r=>r[0]===sid);
+  for(const sid in U)if(inR(sid))u2s[U[sid]]=sid;const got=new Set();
+  c.students.forEach(s=>{let sid=u2s[s.uid];
+    if(!sid){const r2=inR(s.sid);if(r2&&!(U[s.sid]&&U[s.sid]!==s.uid)){sid=s.sid;items.push({k:"link",auto:true,uid:s.uid,sid})}}
+    if(!sid){items.push({k:"in",uid:s.uid,s,from:chg.came[s.uid]||""});return}
+    got.add(sid);const r=inR(sid);
+    if(s.sid!==sid)items.push({k:"sid",uid:s.uid,old:sid,neu:s.sid,name:s.name});
+    if(r[1]!==s.name)items.push({k:"name",uid:s.uid,sid,old:r[1],neu:s.name});
+    const ph=s.pphone||s.phone;if(ph&&digits(ph)!==digits(d.phones[sid]||""))items.push({k:"ph",uid:s.uid,sid,name:s.name,old:d.phones[sid]||"",neu:ph});
+    if(s.email&&s.email!==(d.emails||{})[sid])items.push({k:"em",uid:s.uid,sid,name:s.name,old:(d.emails||{})[sid]||"",neu:s.email})});
+  for(const sid in U){const u=U[sid];if(!inR(sid)||got.has(sid)||c.students.some(s=>s.uid===u))continue;const l=(chg.left||[]).find(x=>x.uid===u)||{};items.push({k:"out",uid:u,sid,name:inR(sid)[1],why:l.why||"명단에서 빠짐",to:l.to||""})}
+  const free=new Set([...items.filter(x=>x.k==="out").map(x=>x.sid),...items.filter(x=>x.k==="sid").map(x=>x.old)]),taken=new Set(items.filter(x=>x.k==="sid").map(x=>x.neu));
+  items.forEach(x=>{if(x.k==="in"&&((inR(x.s.sid)&&!free.has(x.s.sid))||taken.has(x.s.sid)))x.clash=true});
+  return items}
+function rosLabel(x){const n=`${x.name||(x.s&&x.s.name)||""}`;switch(x.k){
+  case"in":return`<b>들어옴</b> ${esc(x.s.name)} (${esc(x.s.sid)})${x.from==="전입"?" · 전입":x.from?` · ${esc(ckLabel(x.from))}에서 반 이동`:""}${x.clash?` <small class="warn">같은 학번이 이미 있어 넣을 수 없습니다. 담당자에게 확인해 주세요</small>`:""}`;
+  case"out":return`<b>빠짐</b> ${esc(n)} (${esc(x.sid)}) · ${esc(x.why)}${x.to?` → ${esc(ckLabel(x.to))}`:""} <small>(기록은 남음)</small>`;
+  case"sid":return`<b>학번</b> ${esc(n)} ${esc(x.old)} → ${esc(x.neu)} <small>(기록도 옮김)</small>`;
+  case"name":return`<b>이름</b> ${esc(x.old)} → ${esc(x.neu)} (${esc(x.sid)})`;
+  case"ph":return`<b>연락처</b> ${esc(n)} ${x.old?"바뀜":"새로"}`;
+  case"em":return`<b>이메일</b> ${esc(n)} ${x.old?"바뀜":"새로"}`}return""}
+function mvSid(d,a,b){if(a===b)return;const r=d.roster.find(x=>x[0]===a);if(r)r[0]=b;
+  d.sessions.forEach(s=>{if(s.p&&a in s.p){s.p[b]=s.p[a];delete s.p[a]}if(s.done&&typeof s.done==="object"&&a in s.done){s.done[b]=s.done[a];delete s.done[a]}});
+  (d.obs||[]).forEach(o=>{if(o.sid===a)o.sid=b});["phones","emails","sts","cards"].forEach(k=>{if(d[k]&&a in d[k]){d[k][b]=d[k][a];delete d[k][a]}});
+  const U=d.sch&&d.sch.uids;if(U&&a in U){U[b]=U[a];delete U[a]}}
+/* 고른 것만 적용 (빠짐 → 학번 → 이름 · 연락처 → 들어옴 순서). 돌려주는 값: 더한 학생 수 */
+function rosApply(d,items){d.sch=d.sch||{};d.sch.uids=d.sch.uids||{};const U=d.sch.uids;let add=0,skip=0;const by=k=>items.filter(x=>x.k===k);
+  by("out").forEach(x=>{d.roster=d.roster.filter(r=>r[0]!==x.sid);delete U[x.sid];delete d.phones[x.sid];if(d.emails)delete d.emails[x.sid]});
+  by("link").forEach(x=>{U[x.sid]=x.uid});
+  const sids=by("sid");sids.forEach(x=>mvSid(d,x.old,"~"+x.uid));sids.forEach(x=>{if(d.roster.some(r=>r[0]===x.neu)){mvSid(d,"~"+x.uid,x.old);skip++}else mvSid(d,"~"+x.uid,x.neu)});
+  const cur=x=>Object.keys(U).find(k=>U[k]===x.uid)||x.sid;
+  by("name").forEach(x=>{const r=d.roster.find(r=>r[0]===cur(x));if(r)r[1]=String(x.neu).slice(0,30)});
+  by("ph").forEach(x=>{d.phones[cur(x)]=x.neu});by("em").forEach(x=>{d.emails=d.emails||{};d.emails[cur(x)]=x.neu});
+  by("in").forEach(x=>{const s=x.s;if(d.roster.some(r=>r[0]===s.sid)){skip++;return}d.roster.push([s.sid,s.name]);U[s.sid]=s.uid;const ph=s.pphone||s.phone;if(ph)d.phones[s.sid]=ph;if(s.email){d.emails=d.emails||{};d.emails[s.sid]=s.email}add++});
+  d.roster.sort((a,b)=>a[0].localeCompare(b[0],"ko",{numeric:true}));return{add,skip,n:items.filter(x=>!x.auto).length}}
+
+/* ===== 5.35: 학교 관리 4단계 · 배포 기록과 담당자 인계 =====
+   배포 기록: 묶음마다 언제 · 누구에게 · 무엇을(배정 · 선택 · 명단 변경 · 학사일정) 보냈는지 남기고,
+             선생님이 보낸 '받음 알림'(확인 4자 포함)을 붙여 넣으면 누가 받았는지 표시합니다. 안 받은 선생님께 문자도 한 번에.
+   담당자 인계: 원본 · 서명 열쇠 · 배포 기록 · 지난 배포 명단을 '인계 코드'(12자)로 잠근 파일 하나로 넘깁니다.
+             새 담당자는 확인 코드를 그대로 이어 쓰거나(선생님 앱에 변화 없음), 새 확인 코드로 바꿀 수 있습니다.
+             바꿀 때는 이전 담당자 열쇠로 '새 담당자에게 넘김' 서명을 붙여, 선생님 앱이 경고 대신 안내만 합니다. */
+async function rcOf(rk){const h=new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode("rc|"+rk)));let s="";for(let i=0;i<4;i++)s+=CODE_AB[h[i]%CODE_AB.length];return s}
+async function verifySig(pub,obj,s){try{const key=await crypto.subtle.importKey("jwk",pubOnly(pub),{name:"ECDSA",namedCurve:"P-256"},false,["verify"]);
+  return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},key,B64.dec(s),new TextEncoder().encode(JSON.stringify(obj)))}catch(e){return false}}
+const hoObj=(pub,at)=>({kind:"teachers-life-handover",new:pubOnly(pub),at});
+async function hoOk(p,prevFp){const h=p.handover;if(!h||!h.pub||!h.s||!h.at)return false;return(await fpOf(h.pub))===prevFp&&await verifySig(h.pub,hoObj(p.sig.pub,h.at),h.s)}
+
+/* --- 선생님: 받았다고 알리기 --- */
+const rcptMsg=(R,name)=>`[교사의 생활] ${R.school} ${R.ver}번째 학교 묶음 받음 · ${name} · 확인 ${R.rc}`;
+function rcptNotify(){const R=rcptGet();if(!R||!R.rc)return;let name=R.name||meName()||"";
+  $("sheetBox").innerHTML=`<h2>받았다고 알리기</h2><p class="note">아래 문장을 학교 관리 담당자에게 메신저 · 문자로 보내 주세요. 담당자 앱이 ‘확인 ${esc(R.rc)}’로 실제로 받은 것을 확인합니다.</p>
+    <label class="lb" for="rnName">내 이름<input class="fld" id="rnName" maxlength="30" value="${esc(name)}"${R.mode==="assign"&&R.name?" readonly":""}></label>
+    <p class="conv" id="rnMsg"></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="rnCp">복사</button><button class="btn" type="button" id="rnSh">보내기…</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  const msg=()=>rcptMsg(R,($("rnName").value.trim()||"이름")),paint=()=>{$("rnMsg").textContent=msg()};paint();$("rnName").oninput=paint;
+  $("rnCp").onclick=async()=>{try{await navigator.clipboard.writeText(msg());toast("복사했습니다. 담당자에게 붙여 넣어 보내 주세요")}catch(e){toast("복사하지 못했습니다")}};
+  $("rnSh").onclick=async()=>{if(navigator.share){try{await navigator.share({text:msg()});return}catch(e){if(e&&e.name==="AbortError")return}}go(smsHref([],msg()))}}
+
+/* --- 담당자: 배포 기록 탭 --- */
+function packRecOf(ver){return(SCH.packs||[]).find(x=>x.ver===+ver)}
+async function rcptPaste(text){const re=/(\d+)\s*번째 학교 묶음 받음\s*·\s*([^·\n]+?)\s*·\s*확인\s*([0-9A-Za-z]{4})/g;let m,ok=0,bad=0,none=0;const now=new Date().toISOString();
+  while((m=re.exec(String(text||"")))){const P=packRecOf(m[1]),name=m[2].trim().slice(0,30),rc=m[3].toUpperCase();if(!P){none++;continue}P.got=P.got||{};
+    const t=(P.t||[]).find(x=>x.name===name&&x.rc===rc),pk=P.pick&&P.pick.rc===rc;
+    if(t||pk){P.got[name]={at:now,ok:true,via:t?"assign":"pick"};ok++}else{if(!(P.got[name]&&P.got[name].ok))P.got[name]={at:now,ok:false};bad++}}
+  await schSave();return{ok,bad,none}}
+function renderLogTab(L){const P=(SCH.packs||[]).slice().reverse();
+  L.innerHTML=`<div class="hd"><h2>배포 기록</h2><span class="sub">묶음 ${P.length}개</span></div>
+    <p class="note">선생님이 학교 묶음을 받은 뒤 ‘받았다고 알리기’로 보낸 문장을 아래에 붙여 넣으면(여러 개를 한꺼번에 붙여도 됨) 누가 받았는지 표시됩니다.</p>
+    <label class="lb" for="rpTx">받음 알림 붙여넣기<textarea class="fld" id="rpTx" rows="3" placeholder="[교사의 생활] ○○학교 3번째 학교 묶음 받음 · 김물리 · 확인 AB2C"></textarea></label>
+    <div class="row2"><button class="btn pri" type="button" id="rpGo">받음 확인</button><button class="btn" type="button" id="lgXl">기록 엑셀로</button></div>
+    ${P.length?P.map((x,i)=>{const got=x.got||{},T=x.t||[],n=T.filter(t=>got[t.name]&&got[t.name].ok).length,pk=Object.entries(got).filter(([k,v])=>v.ok&&v.via==="pick").length,bad=Object.values(got).filter(v=>!v.ok).length;
+      return `<details class="schk lgp"${i===0?" open":""}><summary><b>${esc(x.ver)}번째</b> · ${esc(fmtDTfull(new Date(x.at).getTime()))} · ${esc([T.length?`배정 ${T.length}명 중 받음 ${n}`:"",x.pick?`선택 ${x.pick.n}학급 · 받음 ${pk}명`:""].filter(Boolean).join(" · "))}${bad?` · <span class="warn">확인 안 됨 ${bad}</span>`:""}</summary>
+        <p class="note">${esc([x.sum&&Object.values(x.sum).some(Boolean)?"명단 변경 "+[x.sum.in?`전입 ${x.sum.in}`:"",x.sum.mv?`반 이동 ${x.sum.mv}`:"",x.sum.out?`전출 ${x.sum.out}`:"",x.sum.sid?`학번 ${x.sum.sid}`:"",x.sum.name?`이름 ${x.sum.name}`:""].filter(Boolean).join(" · "):"",x.acal?`학사일정 ${x.acal}건`:"",x.by?`만든 사람 ${x.by}`:"",x.fp?`확인 코드 ${x.fp}`:""].filter(Boolean).join(" · "))}</p>
+        ${T.length?`<div class="lgt">${T.map(t=>{const g=got[t.name];return`<span class="tagx${g&&g.ok?" hr":""}">${g&&g.ok?"✓ ":""}${esc(t.name)}</span>`}).join("")}</div>`:""}
+        ${pk?`<p class="note">선택 방식으로 받음: ${esc(Object.entries(got).filter(([k,v])=>v.ok&&v.via==="pick").map(([k])=>k).join(", "))}</p>`:""}
+        ${bad?`<p class="note warn">확인 4자가 맞지 않은 알림: ${esc(Object.entries(got).filter(([k,v])=>!v.ok).map(([k])=>k).join(", "))} (다른 묶음의 알림이거나 잘못 옮겨 적었을 수 있습니다)</p>`:""}
+        ${T.length&&n<T.length?`<div class="row2"><button class="btn sm" type="button" data-nag="${esc(x.ver)}">안 받은 ${T.length-n}명께 문자</button></div>`:""}</details>`}).join(""):`<div class="empty">아직 만든 묶음이 없습니다.</div>`}
+    <div class="shlb">작업 기록</div><div class="schlog">${SCH.log.slice().reverse().map(l=>`<div><small>${esc(fmtDTfull(new Date(l.at).getTime()))}</small> ${esc(l.what)}${l.file?" · "+esc(l.file):""}</div>`).join("")||"없음"}</div>`;
+  $("rpGo").onclick=async()=>{const r=await rcptPaste($("rpTx").value);if(!r.ok&&!r.bad&&!r.none)return toast("받음 알림 문장을 찾지 못했습니다");$("rpTx").value="";renderLogTab(L);toast(`받음 확인 ${r.ok}명${r.bad?` · 확인 안 됨 ${r.bad}`:""}${r.none?` · 기록에 없는 묶음 ${r.none}`:""}`)};
+  L.querySelectorAll("[data-nag]").forEach(b=>b.onclick=()=>{const x=packRecOf(b.dataset.nag),got=x.got||{},T=(x.t||[]).filter(t=>!(got[t.name]&&got[t.name].ok)),ph=T.map(t=>digits(t.phone||((SCH.staff.find(s=>s.uid===t.uid)||{}).phone)||"")).filter(p=>p.length>=8);
+    if(!ph.length)return toast("연락처가 있는 선생님이 없습니다");go(smsHref(ph,`[${SCH.school||"학교"} · 교사의 생활] ${x.ver}번째 학교 묶음이 올라와 있습니다. 설정 → 학교에서 받기에서 파일을 열고, 받은 뒤 ‘받았다고 알리기’를 보내 주세요.`))});
+  $("lgXl").onclick=()=>xlOut(`${APP_NAME.replace(/\s+/g,"")}_배포기록_${(SCH.school||"학교").replace(/\s+/g,"")}.xlsx`,[
+    {name:"배포",title:`${SCH.school||"학교"} 학교 묶음 배포 기록`,rows:[["번째","만든 때","방식","배정 선생님","받음","선택 방식 학급","선택 방식 받음","명단 변경","학사일정"],...P.map(x=>{const got=x.got||{};return[x.ver,fmtDTfull(new Date(x.at).getTime()),[x.t&&x.t.length?"배정":"",x.pick?"선택":""].filter(Boolean).join("+"),(x.t||[]).length,(x.t||[]).filter(t=>got[t.name]&&got[t.name].ok).length,x.pick?x.pick.n:"",Object.values(got).filter(v=>v.ok&&v.via==="pick").length,x.sum?Object.entries(x.sum).filter(([k,v])=>v).map(([k,v])=>({in:"전입",mv:"반 이동",out:"전출",sid:"학번",name:"이름"}[k]+" "+v)).join(", "):"",x.acal||0]})],widths:[6,18,10,10,8,12,12,30,8]},
+    {name:"받음",title:"선생님별 받음",rows:[["번째","선생님","받음","확인한 때"],...P.flatMap(x=>(x.t||[]).map(t=>{const g=(x.got||{})[t.name];return[x.ver,t.name,g&&g.ok?"받음":"",g&&g.ok?fmtDTfull(new Date(g.at).getTime()):""]}))],widths:[6,14,8,18]},
+    {name:"작업",title:"작업 기록",rows:[["때","작업","내용"],...SCH.log.map(l=>[fmtDTfull(new Date(l.at).getTime()),l.what,l.file||""])],widths:[18,20,40]}],"배포 기록을 저장했습니다").catch(e=>toast(e.message||"엑셀을 만들지 못했습니다"))}
+
+/* --- 담당자 인계 --- */
+function hoCode(){return newCode()+"-"+newCode().slice(0,4)}
+async function handoverMake(){const k=await schKeys(),fp=await fpOf(k.pub),code=hoCode(),dist=await distGet();
+  const o={...SCH};delete o._prev;const at=new Date().toISOString();
+  const file={kind:"teachers-life-school-handover",v:1,school:SCH.school||"학교",year:SCH.year,at,by:meName()||"",fp,n:{students:SCH.students.length,staff:SCH.staff.length,packs:(SCH.packs||[]).length},box:await sealFor(code,{sch:o,key:k,dist})};
+  SCH.log.push({at,what:"담당자 인계 파일 만들기",file:fp,cnt:{}});await schSave();
+  const f=new File([JSON.stringify(file)],`${APP_NAME.replace(/\s+/g,"")}_담당자인계_${(SCH.school||"학교").replace(/\s+/g,"")}_${today().replace(/-/g,"")}.json`,{type:"application/json"});
+  $("sheetBox").innerHTML=`<h2>담당자 인계 파일</h2><p class="note">새 담당자에게 <b>파일</b>과 <b>인계 코드</b>를 <b>따로</b> 전해 주세요(예: 파일은 학교 메신저, 코드는 직접 또는 문자). 둘이 함께 있어야 열립니다.</p>
+    <p class="fpbig" id="hoCode">${esc(code)}</p><p class="note">이 코드는 다시 보여 주지 않습니다. 잃어버리면 인계 파일을 새로 만들면 됩니다.</p>
+    <div class="row2"><button class="btn pri" type="button" id="hoSave">파일 저장 · 보내기</button><button class="btn" type="button" id="hoCp">코드 복사</button></div>
+    <div class="conv"><b>인계 순서</b><span>1. 새 담당자가 이 파일을 열고 인계 코드를 넣어 가져옵니다.</span><span>2. 새 담당자 기기에서 학교 관리 화면이 그대로 보이는지 확인합니다.</span><span>3. 그다음 이 기기의 학교 원본을 지웁니다(아래 단추).</span></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn bad ghost" type="button" id="hoWipe">이 기기의 학교 원본 지우기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("hoCp").onclick=async()=>{try{await navigator.clipboard.writeText(code);toast("복사했습니다")}catch(e){toast("복사하지 못했습니다")}};
+  $("hoSave").onclick=async()=>{if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:"담당자 인계"});return}catch(e){if(e&&e.name==="AbortError")return}}
+    const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);toast("인계 파일을 저장했습니다")};
+  twoStep($("hoWipe"),"정말 지우기 (새 담당자가 받은 뒤에)",schWipe)}
+async function schWipe(){for(const k of [SCH_KEY,"school:key","school:dist",SCH_PREV])await kvDel(k);SCH=null;await schLoad();try{localStorage.removeItem(SCH_ON)}catch(e){}
+  $("sheet").hidden=true;renderSchoolEntry();show("set");toast("이 기기의 학교 원본 · 서명 열쇠를 지웠습니다")}
+function handoverOpen(p){if(!p||p.kind!=="teachers-life-school-handover"||!p.box)return toast("담당자 인계 파일이 아닙니다");
+  if(!(window.crypto&&crypto.subtle))return toast("이 브라우저는 인계 파일을 열 수 없습니다. 최신 크롬 · 사파리에서 열어 주세요");
+  $("sheetBox").innerHTML=`<h2>담당자 인계 받기</h2><p class="note">${esc(p.school)} ${esc(p.year)}학년도 · 학생 ${esc((p.n||{}).students||0)}명 · 교직원 ${esc((p.n||{}).staff||0)}명${p.by?` · 넘겨준 사람 ${esc(p.by)}`:""} · ${esc(fmtDTfull(new Date(p.at).getTime()))}</p>
+    <p class="note">담당자 확인 코드 <span class="code">${esc(p.fp)}</span></p>
+    <label class="lb" for="hoIn">인계 코드 (12자)<input class="fld code" id="hoIn" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="16" placeholder="예: K7Q2-M9XD-3RTA"></label><p class="note" id="hoMsg">이전 담당자에게 따로 받은 인계 코드를 넣어 주세요.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="hoGo">열기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("hoGo").onclick=async()=>{const c=$("hoIn").value;if(codeNorm(c).length!==12)return toast("인계 코드 12자를 넣어 주세요");$("hoGo").disabled=true;$("hoMsg").textContent="여는 중…";
+    let d;try{d=await openWith(c,p.box)}catch(e){$("hoGo").disabled=false;$("hoMsg").innerHTML=`<span class="warn">인계 코드가 맞지 않습니다.</span>`;return}
+    if(!d||!d.sch||!d.key||!d.key.priv){$("hoMsg").textContent="인계 파일 내용이 올바르지 않습니다";return}
+    const n=schNorm(d.sch),fp=await fpOf(d.key.pub);
+    $("sheetBox").innerHTML=`<h2>담당자 인계 받기</h2><p class="note">${esc(n.school)} ${n.year}학년도 · 학생 ${n.students.length}명 · 교직원 ${n.staff.length}명 · 배정 ${n.staff.filter(hasAsg).length}명 · 배포 기록 ${(n.packs||[]).length}개</p>
+      ${schOn()&&SCH&&SCH.students.length?`<p class="warn">이 기기에 이미 학교 원본(${esc(SCH.school||"학교")}, 학생 ${SCH.students.length}명)이 있습니다. 인계받은 원본으로 바꾸고, 지금 원본은 ‘갱신 전으로 되돌리기’로 되돌릴 수 있게 남깁니다.</p>`:""}
+      <div class="shlb">담당자 확인 코드</div>
+      <label class="chk"><input type="radio" name="hoK" value="keep" checked><span><b>그대로 이어 쓰기</b> (${esc(fp)}) · 선생님 앱에 아무 변화가 없습니다. 권장</span></label>
+      <label class="chk"><input type="radio" name="hoK" value="new"><span><b>새 확인 코드로 바꾸기</b> · 이전 담당자 열쇠로 ‘새 담당자에게 넘김’ 서명을 붙여, 선생님 앱은 경고 대신 ‘담당자가 바뀌었습니다’ 안내만 보여 줍니다</span></label>
+      <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="hoApply">가져오기</button></div>`;
+    $("skNo").onclick=()=>{$("sheet").hidden=true};
+    $("hoApply").onclick=async()=>{const mode=($("sheetBox").querySelector("[name=hoK]:checked")||{}).value;$("hoApply").disabled=true;
+      try{await schLoad();if(SCH&&SCH.students.length)await kvSet(SCH_PREV,JSON.stringify(SCH));
+        let key=d.key;if(mode==="new"){const kp=await crypto.subtle.generateKey({name:"ECDSA",namedCurve:"P-256"},true,["sign","verify"]),pub=await crypto.subtle.exportKey("jwk",kp.publicKey),at=new Date().toISOString();
+          key={pub,priv:await crypto.subtle.exportKey("jwk",kp.privateKey),at,...(d.key.ecdh?{ecdh:d.key.ecdh}:{}),prev:{pub:pubOnly(d.key.pub),at,s:await signBody(hoObj(pub,at),d.key)}}}
+        await kvSet("school:key",JSON.stringify(key));if(d.dist)await kvSet("school:dist",JSON.stringify(d.dist));else await kvDel("school:dist");
+        SCH=n;SCH.log.push({at:new Date().toISOString(),what:"담당자 인계 받기",file:mode==="new"?`새 확인 코드 ${await fpOf(key.pub)}`:`확인 코드 ${fp} 이어 쓰기`,cnt:{}});await schSave();
+        try{localStorage.setItem(SCH_ON,"1")}catch(e){}$("sheet").hidden=true;renderSchoolEntry();show("school");renderSchool();scrollTo(0,0);
+        toast(mode==="new"?"인계받았습니다. 새 확인 코드를 학교에 한 번 공지해 주세요":"인계받았습니다. 확인 코드가 그대로라 선생님들은 하던 대로 받으면 됩니다")}
+      catch(e){$("hoApply").disabled=false;toast("가져오지 못했습니다: "+(e.message||e))}}}}
+
+/* ===== 5.36: 학교 관리 5단계 · 학생 인계 카드 =====
+   지난 선생님이 학생마다 '인계 카드'(출석 요약 · 관찰 경향 · 인계 메모, 고를 때만 관찰 메모 · 세특 초안)를 만들어
+   담당자에게만 열리는 파일로 보냅니다(담당자 공개 열쇠로 잠금: ECDH P-256 + AES-GCM). 담당자는 받은 카드를 학생 고유번호에 붙여 두고,
+   새 학년도 학교 묶음에 실어 새 담임(고를 때 교과 담당도)에게 그 학생의 카드만 나눠 줍니다. 선택 방식(공용 코드)에는 넣지 않습니다. */
+async function schEnc(){const k=await schKeys();if(!k.ecdh||!k.ecdh.priv){const kp=await crypto.subtle.generateKey({name:"ECDH",namedCurve:"P-256"},true,["deriveKey"]);
+  k.ecdh={pub:pubOnly(await crypto.subtle.exportKey("jwk",kp.publicKey)),priv:await crypto.subtle.exportKey("jwk",kp.privateKey)};await kvSet("school:key",JSON.stringify(k))}return k.ecdh}
+async function ecKey(pubJwk,privKey,use){return crypto.subtle.deriveKey({name:"ECDH",public:await crypto.subtle.importKey("jwk",pubOnly(pubJwk),{name:"ECDH",namedCurve:"P-256"},false,[])},privKey,{name:"AES-GCM",length:256},false,[use])}
+async function sealTo(pub,obj){const eph=await crypto.subtle.generateKey({name:"ECDH",namedCurve:"P-256"},true,["deriveKey"]),iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},await ecKey(pub,eph.privateKey,"encrypt"),new TextEncoder().encode(JSON.stringify(obj)));
+  return{epk:pubOnly(await crypto.subtle.exportKey("jwk",eph.publicKey)),iv:B64.enc(iv),ct:B64.enc(ct)}}
+async function openTo(priv,box){const pk=await crypto.subtle.importKey("jwk",priv,{name:"ECDH",namedCurve:"P-256"},false,["deriveKey"]);
+  const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:B64.dec(box.iv)},await ecKey(box.epk,pk,"decrypt"),B64.dec(box.ct));return JSON.parse(new TextDecoder().decode(pt))}
+function cs(v,n){return String(v==null?"":v).slice(0,n)}
+function cardNorm(c){if(!c||typeof c!=="object")return null;const a=c.att||{};
+  return{uid:cs(c.uid,40),name:cs(c.name,30),sid:cs(c.sid,20),year:+c.year||0,term:cs(c.term,4),cls:cs(c.cls,6),from:cs(c.from,30),role:c.role==="담임"?"담임":"교과",subj:cs(c.subj,40),at:cs(c.at,30),
+    att:{n:+a.n||0,abs:+a.abs||0,days:+a.days||0},tags:(Array.isArray(c.tags)?c.tags:[]).slice(0,10).map(t=>[cs(t[0],20),+t[1]||0,+t[2]||0]),
+    memo:cs(c.memo,1000),obs:(Array.isArray(c.obs)?c.obs:[]).slice(0,5).map(o=>({date:cs(o.date,10),memo:cs(o.memo,300)})),...(c.sts?{sts:cs(c.sts,1500)}:{})}}
+function cardsNorm(o){const r={};if(o&&typeof o==="object")for(const k in o){const l=(Array.isArray(o[k])?o[k]:[]).map(cardNorm).filter(Boolean).slice(-4);if(l.length)r[String(k).slice(0,20)]=l}return r}
+/* 카드 보기 (선생님 학생 화면) */
+function cardHTML(c){return`<div class="hcard"><div class="hch"><b>${esc(c.year)}학년도 ${esc(c.cls?ckLabel(c.cls):"")}</b> · ${esc(c.role==="담임"?"담임":c.subj||"교과")} ${esc(c.from)} 선생님</div>
+  <p class="note">출석 체크 ${c.att.n}회 · 결석 ${c.att.abs}회(${c.att.days}일)</p>
+  ${c.tags.length?`<div class="opills wrap">${c.tags.map(t=>`<span class="opill ${tone(t[2])}">${esc(t[0])} ${t[1]}</span>`).join("")}</div>`:""}
+  ${c.memo?`<p class="hcm">${esc(c.memo)}</p>`:""}
+  ${c.obs.length?`<div class="ohist">${c.obs.map(o=>`<div class="ohrow"><b>${esc(fmtDate(o.date))}</b><small>${esc(o.memo)}</small></div>`).join("")}</div>`:""}
+  ${c.sts?`<details><summary class="note">세특 초안 보기</summary><p class="hcm">${esc(c.sts)}</p></details>`:""}</div>`}
+function stuCardsHTML(sid){const l=(D.cards||{})[sid];if(!l||!l.length)return"";
+  return`<details class="stsec" open><summary>인계 카드 ${l.length}장</summary>${l.slice().reverse().map(cardHTML).join("")}<p class="note">지난 선생님이 남긴 기록입니다. 참고용으로만 쓰고, 다른 사람에게 옮기지 마세요.</p></details>`}
+
+/* --- 선생님: 인계 카드 만들기 --- */
+function cardAuto(d,sid){const ses=d.sessions.filter(sesOn),abs=ses.filter(s=>!s.p[sid]),hist=(d.obs||[]).filter(x=>x.sid===sid).sort((a,b)=>b.date.localeCompare(a.date)),sum={};
+  hist.forEach(h=>Object.entries(h.tags||{}).forEach(([k,n])=>{sum[k]=(sum[k]||0)+(+n||1)}));
+  const tags=Object.entries(sum).map(([k,n])=>{const t=tagOf(k);return t?[t.l,n,t.t]:null}).filter(Boolean).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  return{att:{n:ses.length,abs:abs.length,days:new Set(abs.map(s=>s.date)).size},tags,obs:hist.filter(h=>h.memo).slice(0,5).map(h=>({date:h.date,memo:String(h.memo).slice(0,300)}))}}
+const CD_KEY=id=>"att-app-carddraft-"+id;
+function cardDraft(id){try{return JSON.parse(localStorage.getItem(CD_KEY(id))||"null")||{memo:{},off:{},obs:false,sts:false}}catch(e){return{memo:{},off:{},obs:false,sts:false}}}
+function cardDraftSet(id,o){try{localStorage.setItem(CD_KEY(id),JSON.stringify(o))}catch(e){toast("저장 공간이 부족해 메모를 기억하지 못했습니다")}}
+function cardStart(){const R=rcptGet(),L=S.list.filter(c=>c.data.sch&&c.data.roster.length);
+  if(!L.length)return toast("학교 묶음으로 받은 학급이 없습니다. 인계 카드는 학교에서 받은 학급에서 만듭니다");
+  if(!R||!R.enc)return toast("담당자가 5.36 이후에 만든 학교 묶음을 한 번 받아야 인계 카드를 보낼 수 있습니다");
+  $("sheetBox").innerHTML=`<h2>학생 인계 카드</h2><p class="note">학년을 마칠 때, 내년에 이 학생들을 맡을 선생님께 전할 카드를 만듭니다. 카드 파일은 <b>학교 관리 담당자만</b> 열 수 있고, 담당자가 새 학년도 학교 묶음으로 새 담임에게 그 학생 카드만 나눠 줍니다.</p>
+    <div class="list">${L.map(c=>`<button class="prow" type="button" data-cc="${esc(c.id)}"><span class="pn">${esc(c.data.cls)}${c.data.sch.role==="담임"?'<i class="tagx hr">담임</i>':""}<small>${esc(c.data.year||"")}학년도 ${esc(c.data.term||"")} · ${c.data.roster.length}명${Object.keys(cardDraft(c.id).memo).length?` · 메모 ${Object.values(cardDraft(c.id).memo).filter(Boolean).length}명`:""}</small></span><span class="pe">열기</span></button>`).join("")}</div>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("sheetBox").querySelectorAll("[data-cc]").forEach(b=>b.onclick=()=>cardEdit(S.list.find(c=>c.id===b.dataset.cc)))}
+function cardEdit(cl){const d=cl.data,id=cl.id,dr=cardDraft(id),U=d.sch.uids||{};
+  const paint=()=>{$("sheetBox").innerHTML=`<h2>${esc(d.cls)} 인계 카드 <span class="sub">${d.roster.length}명</span></h2>
+    <p class="note">모두 선택 사항입니다. 학생마다 출석 요약과 관찰 경향이 자동으로 들어가고, <b>인계 메모</b>는 쓰고 싶은 학생에게만 쓰면 됩니다. 메모에는 강점, 도움이 필요한 점, 해 온 지원처럼 다음 선생님께 필요한 <b>사실</b>을 짧게 써 주세요. 건강 · 가정 사정 같은 민감한 내용은 학교 지침에 따라 꼭 필요한 만큼만 씁니다.</p>
+    <label class="chk"><input type="checkbox" id="cdOnly"${dr.only?" checked":""}><span>인계 메모를 쓴 학생만 보내기</span></label>
+    <label class="chk"><input type="checkbox" id="cdObs"${dr.obs?" checked":""}><span>최근 관찰 메모 5개 함께 넣기</span></label>
+    <label class="chk"><input type="checkbox" id="cdSts"${dr.sts?" checked":""}><span>세특 초안 함께 넣기 (담임 · 교과가 참고)</span></label>
+    <div class="cdl">${d.roster.map(([sid,name])=>{const a=cardAuto(d,sid),on=!dr.off[sid],nu=!U[sid];
+      return`<div class="schk cdr"><label class="chk"><input type="checkbox" data-on="${esc(sid)}"${on?" checked":""}${nu?" disabled":""}><span><b>${esc(name)}</b> <small>${esc(sid)} · 출석 ${a.att.n-a.att.abs}/${a.att.n}${a.tags.length?" · "+esc(a.tags.slice(0,3).map(t=>t[0]).join(", ")):""}</small></span></label>
+        ${nu?`<small class="note">학교 고유번호가 없는 학생이라 보낼 수 없습니다(직접 추가한 학생).</small>`:`<textarea class="fld" rows="2" maxlength="1000" data-m="${esc(sid)}" placeholder="인계 메모 (예: 수학 기초가 약해 방과후 보충을 받음. 발표를 좋아함)">${esc(dr.memo[sid]||"")}</textarea>`}</div>`}).join("")}</div>
+    <p class="note" id="cdN"></p>
+    <div class="row2"><button class="btn" type="button" id="cdBack">뒤로</button><button class="btn pri" type="button" id="cdMake">인계 카드 파일 만들기</button></div>`;
+    const sendOf=sid=>U[sid]&&!dr.off[sid]&&(!dr.only||(dr.memo[sid]||"").trim()),cnt=()=>{const n=d.roster.filter(([sid])=>sendOf(sid)).length,m=d.roster.filter(([sid])=>U[sid]&&!dr.off[sid]&&(dr.memo[sid]||"").trim()).length;$("cdN").textContent=`카드 ${n}장 · 인계 메모 쓴 학생 ${m}명 · 쓰는 대로 이 기기에 기억합니다`};cnt();
+    const box=$("sheetBox");box.querySelectorAll("[data-m]").forEach(t=>t.oninput=()=>{dr.memo[t.dataset.m]=t.value;cardDraftSet(id,dr);cnt()});
+    box.querySelectorAll("[data-on]").forEach(c=>c.onchange=()=>{if(c.checked)delete dr.off[c.dataset.on];else dr.off[c.dataset.on]=1;cardDraftSet(id,dr);cnt()});
+    $("cdOnly").onchange=e=>{dr.only=e.target.checked;cardDraftSet(id,dr);cnt()};$("cdObs").onchange=e=>{dr.obs=e.target.checked;cardDraftSet(id,dr)};$("cdSts").onchange=e=>{dr.sts=e.target.checked;cardDraftSet(id,dr)};
+    $("cdBack").onclick=cardStart;$("cdMake").onclick=()=>cardMake(cl,dr).catch(e=>toast("만들지 못했습니다: "+(e.message||e)))};
+  $("sheet").hidden=false;paint();$("sheetBox").scrollTop=0}
+async function cardMake(cl,dr){const d=cl.data,R=rcptGet(),U=d.sch.uids||{},me=R.name||meName()||"",at=new Date().toISOString();
+  if(!R||!R.enc)return toast("담당자 열쇠가 없습니다. 학교 묶음을 다시 받아 주세요");
+  const cards=d.roster.filter(([sid])=>U[sid]&&!dr.off[sid]&&(!dr.only||(dr.memo[sid]||"").trim())).map(([sid,name])=>{const a=cardAuto(d,sid);
+    return cardNorm({uid:U[sid],name,sid,year:d.year,term:d.term,cls:d.sch.key,from:me,role:d.sch.role,subj:(d.sch.subj||[]).join(", "),at,att:a.att,tags:a.tags,memo:(dr.memo[sid]||"").trim(),obs:dr.obs?a.obs:[],...(dr.sts&&d.sts&&d.sts[sid]?{sts:d.sts[sid].t}:{})})});
+  if(!cards.length)return toast("보낼 카드가 없습니다");
+  const file={kind:"teachers-life-cards",v:1,school:d.sch.school||R.school,year:d.year,from:me,cls:d.sch.key,role:d.sch.role,n:cards.length,at,box:await sealTo(R.enc,{cards})};
+  const f=new File([JSON.stringify(file)],`${APP_NAME.replace(/\s+/g,"")}_인계카드_${d.cls.replace(/\s+/g,"")}_${today().replace(/-/g,"")}.json`,{type:"application/json"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:"학생 인계 카드"});toast("담당자에게 보냈습니다");return}catch(e){if(e&&e.name==="AbortError")return}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+  toast(`인계 카드 ${cards.length}장을 저장했습니다. 이 파일을 학교 관리 담당자에게 보내 주세요`)}
+
+/* --- 담당자: 인계 카드 받기 · 보관 --- */
+async function cardImport(files){const k=await schKeys();if(!k.ecdh)return toast("이 기기의 담당자 열쇠로 잠긴 카드가 아닙니다");let ok=0,n=0,bad=[];
+  for(const f of files){let p;try{p=await readAnyText(await f.text())}catch(e){bad.push(f.name);continue}
+    if(!p||p.kind!=="teachers-life-cards"||!p.box){bad.push(f.name);continue}
+    let d;try{d=await openTo(k.ecdh.priv,p.box)}catch(e){bad.push(f.name);continue}
+    const src={id:uid(),from:cs(p.from,30),cls:cs(p.cls,6),role:p.role==="담임"?"담임":"교과",year:+p.year||0,at:cs(p.at,30),got:new Date().toISOString(),n:0};
+    SCH.cards=SCH.cards||{};SCH.cardSrc=(SCH.cardSrc||[]).filter(x=>!(x.from===src.from&&x.cls===src.cls&&x.year===src.year&&x.role===src.role));
+    (d.cards||[]).map(cardNorm).filter(c=>c&&c.uid).forEach(c=>{const l=(SCH.cards[c.uid]||[]).filter(x=>!(x.from===c.from&&x.cls===c.cls&&x.year===c.year&&x.role===c.role));l.push({...c,src:src.id});SCH.cards[c.uid]=l.slice(-6);src.n++});
+    SCH.cardSrc.push(src);ok++;n+=src.n}
+  for(const u in SCH.cards){SCH.cards[u]=SCH.cards[u].filter(c=>SCH.cardSrc.some(s=>s.id===c.src));if(!SCH.cards[u].length)delete SCH.cards[u]}
+  SCH.log.push({at:new Date().toISOString(),what:"인계 카드 받기",file:`파일 ${ok}개 · 카드 ${n}장`,cnt:{}});await schSave();
+  toast(`인계 카드 ${n}장을 받았습니다${bad.length?` · 열 수 없는 파일 ${bad.length}개(${bad.slice(0,2).join(", ")})`:""}`);return{ok,n,bad}}
+/* 5.36.2: 인계 카드 제출 현황 — 배정된 담임(고르면 교과 담당도) 기준으로 보냄 · 아직 · 안 씀 */
+function cardStatus(){const O=SCH.opt||{},skip=O.cardSkip||{},src=SCH.cardSrc||[],out=[];
+  SCH.staff.filter(hasAsg).forEach(t=>{const need=[];if(t.hr)need.push({cls:t.hr,role:"담임"});if(O.cardsExpSubj)(t.teach||[]).forEach(x=>x.cls.forEach(k=>{if(k!==t.hr&&!need.some(n=>n.cls===k))need.push({cls:k,role:"교과"})}));
+    if(!need.length)return;const sent=need.filter(n=>src.some(x=>x.from===t.name&&x.cls===n.cls));
+    out.push({t,need,sent,st:skip[t.uid]?"skip":sent.length>=need.length?"done":sent.length?"part":"todo"})});
+  return out}
+function renderCardTab(L){const src=(SCH.cardSrc||[]).slice().reverse(),live=schLive(),has=live.filter(s=>(SCH.cards||{})[s.uid]).length,O=SCH.opt||{};
+  L.innerHTML=`<div class="hd"><h2>학생 인계 카드</h2><span class="sub">카드 있는 학생 ${has}/${live.length}</span></div>
+    <p class="note">학년말에 선생님들이 보낸 <b>인계 카드 파일</b>을 받아 둡니다. 이 기기의 담당자 열쇠로만 열리고, 학생 고유번호에 붙여 둡니다. 새 학년도 명단을 올리고 배정한 뒤 학교 묶음을 만들면 새 담임에게 그 반 학생 카드만 들어갑니다.</p>
+    <label class="chk"><input type="checkbox" id="opCdU"${O.cardsUse?" checked":""}><span><b>우리 학교는 인계 카드를 씁니다</b> (선택 사항)</span></label>
+    <p class="note">켜고 학교 묶음을 만들면 선생님 앱에 ‘학생 인계 카드 만들기’가 보입니다. 끄면 보이지 않고, 받아 둔 카드도 묶음에 넣지 않습니다. 쓸지 말지, 누가 쓸지는 학교에서 정합니다.</p>
+    <div id="cdOpts"${O.cardsUse?"":" hidden"}><div class="row2"><label class="btn pri" for="cdIn">인계 카드 파일 받기<input type="file" id="cdIn" accept=".json,application/json" multiple hidden></label></div>
+    <label class="chk"><input type="checkbox" id="opCd"${O.cards!==false?" checked":""}><span>학교 묶음에 인계 카드 넣기 (담임에게)</span></label>
+    <label class="chk"><input type="checkbox" id="opCdS"${O.cardsSubj?" checked":""}><span>교과 담당에게도 넣기</span></label>
+    <p class="note">선택 방식(학교 공용 코드)에는 넣지 않습니다. 공용 코드는 여러 사람이 알기 때문입니다.</p>
+    ${(()=>{const R=cardStatus(),n=k=>R.filter(x=>x.st===k).length,todo=R.filter(x=>x.st==="todo"||x.st==="part");
+      return`<div class="shlb">제출 현황</div><p class="note">배정된 ${O.cardsExpSubj?"담임 · 교과 담당":"담임"} ${R.length}명 · <b>보냄 ${n("done")}</b>${n("part")?` · 일부 ${n("part")}`:""} · 아직 ${n("todo")} · 안 씀 ${n("skip")}</p>
+      <label class="chk"><input type="checkbox" id="opCdE"${O.cardsExpSubj?" checked":""}><span>교과 담당 선생님도 제출 대상에 넣기</span></label>
+      ${R.length?`<div class="list cdst">${R.map(x=>`<div class="prow"><span class="pn">${esc(x.t.name)} <i class="tagx${x.st==="done"?" hr":""}">${{done:"보냄",part:`일부 ${x.sent.length}/${x.need.length}`,todo:"아직",skip:"안 씀"}[x.st]}</i><small>${esc(x.need.map(k=>ckLabel(k.cls)+(k.role==="담임"?" 담임":"")).join(", "))}${x.t.phone?"":" · 번호 없음"}</small></span>${x.st==="done"?"":`<button class="btn sm ghost" type="button" data-skip="${esc(x.t.uid)}">${x.st==="skip"?"되돌리기":"안 씀"}</button>`}</div>`).join("")}</div>`:`<p class="note">‘배정’ 탭에서 담임을 정하면 여기에 제출 대상이 나옵니다.</p>`}
+      ${todo.length?`<div class="row2"><button class="btn" type="button" id="cdNag">아직 안 보낸 ${todo.length}명께 문자</button></div>`:""}
+      <p class="note">‘안 씀’은 쓰지 않기로 한 선생님(또는 학급)을 현황과 문자에서 빼는 표시입니다. 인계 카드는 선택 사항입니다.</p>`})()}</div>
+    ${src.length?`<div class="list">${src.map(s=>`<div class="prow"><span class="pn">${esc(s.from||"이름 없음")} · ${esc(s.cls?ckLabel(s.cls):"")} ${s.role==="담임"?'<i class="tagx hr">담임</i>':""}<small>${esc(s.year)}학년도 · 카드 ${s.n}장 · ${esc(fmtDTfull(new Date(s.got).getTime()))} 받음</small></span><button class="btn sm ghost" type="button" data-cdx="${esc(s.id)}">빼기</button></div>`).join("")}</div>`:`<div class="empty">아직 받은 인계 카드가 없습니다.</div>`}`;
+  $("cdIn").onchange=async e=>{const fs=[...(e.target.files||[])];e.target.value="";if(!fs.length)return;await cardImport(fs);renderCardTab(L)};
+  $("opCdE").onchange=e=>{SCH.opt=SCH.opt||{};SCH.opt.cardsExpSubj=e.target.checked;schSave();renderCardTab(L)};
+  L.querySelectorAll("[data-skip]").forEach(b=>b.onclick=async()=>{const O=SCH.opt=SCH.opt||{},u=b.dataset.skip;O.cardSkip=O.cardSkip||{};if(O.cardSkip[u])delete O.cardSkip[u];else O.cardSkip[u]=1;await schSave();renderCardTab(L)});
+  if($("cdNag"))$("cdNag").onclick=()=>{const T=cardStatus().filter(x=>x.st==="todo"||x.st==="part").map(x=>x.t),ph=T.map(t=>digits(t.phone||"")).filter(p=>p.length>=8);
+    if(!ph.length)return toast("연락처가 있는 선생님이 없습니다. 교직원 탭에서 번호를 넣어 주세요");
+    go(smsHref(ph,`[${SCH.school||"학교"} · 교사의 생활] 학생 인계 카드 제출 안내: 설정 → 학교에서 받기 → 학생 인계 카드 만들기에서 파일을 만들어 학교 관리 담당자에게 보내 주세요. 메모는 필요한 학생에게만 쓰면 되고, 쓰지 않으실 거면 담당자에게 알려 주세요.`));
+    if(ph.length<T.length)toast(`번호가 없는 ${T.length-ph.length}명은 빠졌습니다`)};
+  $("opCdU").onchange=e=>{SCH.opt=SCH.opt||{};SCH.opt.cardsUse=e.target.checked;$("cdOpts").hidden=!e.target.checked;schSave()};
+  $("opCd").onchange=e=>{SCH.opt=SCH.opt||{};SCH.opt.cards=e.target.checked;schSave()};$("opCdS").onchange=e=>{SCH.opt=SCH.opt||{};SCH.opt.cardsSubj=e.target.checked;schSave()};
+  L.querySelectorAll("[data-cdx]").forEach(b=>twoStep(b,"정말 빼기",async()=>{const id=b.dataset.cdx;SCH.cardSrc=SCH.cardSrc.filter(x=>x.id!==id);for(const u in SCH.cards){SCH.cards[u]=SCH.cards[u].filter(c=>c.src!==id);if(!SCH.cards[u].length)delete SCH.cards[u]}await schSave();renderCardTab(L);toast("그 파일의 카드를 뺐습니다")}))}
+const cardsFor=(s,role,me)=>{const O=SCH.opt||{};if(!O.cardsUse||(role==="담임"?O.cards===false:!O.cardsSubj))return null;const l=((SCH.cards||{})[s.uid]||[]).filter(c=>c.from!==me).map(({src,...c})=>c);return l.length?l:null};
+
 /* 5.30: 왼쪽으로 밀어 삭제 (앱 전체 공용)
    - 목록 줄을 손가락(또는 마우스)으로 왼쪽으로 밀면 오른쪽에 빨간 '삭제' 단추가 나오고, 누르면 지웁니다.
    - 지운 뒤 6초 동안 '되돌리기'로 되살릴 수 있습니다. 원래 있던 수정 · 삭제 단추는 그대로입니다.
@@ -4143,7 +5113,7 @@ $("backupFile").onclick=saveBackupFile;
 $("restoreFile").onchange=async e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;e.target.value="";
   try{const t=await f.text();const p=await readAnyText(t);
-    if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);
+    if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");
     if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));
     restoreSheet(readBackup(p))}
   catch(err){toast(fileErr(err))}
@@ -4361,8 +5331,10 @@ window.addEventListener("unhandledrejection",e=>{const r=e&&e.reason;if(r&&r.aut
 function renderAll(){safe("출석",renderAtt);safe("관찰 기록",renderObs);safe("메뉴",renderNav);safe("할 일 표시",renderTdBadge);if(view==="tt")safe("시간표",renderTT);if(view==="todo")safe("할 일",renderTodo);if(view==="call")safe("연락",renderCall);if(view==="stat")safe("평가·통계",renderStatView);if(view==="set")renderSet()}
 function show(v){
   if(v!=="set"){const a=S.list.find(c=>c.id===S.active);if(a&&D!==a.data){D=a.data;selId=null}}
+  if(v==="school"&&!schOn())v="set";
   view=v;document.documentElement.dataset.view=v;
-  ["tt","att","call","todo","stat","set"].forEach(k=>$("v-"+k).hidden=k!==v);try{localStorage.setItem("att-app-view",v)}catch(e){}
+  if(v==="school")setTimeout(()=>schLoad().then(()=>{if(view==="school")renderSchool()}).catch(()=>{}),0);
+  ["tt","att","call","todo","stat","set","school"].forEach(k=>$("v-"+k).hidden=k!==v);try{localStorage.setItem("att-app-view",v)}catch(e){}
   document.querySelectorAll(".navb").forEach(b=>{if(b.dataset.v===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   renderAll();window.scrollTo(0,0);
 }
@@ -4459,7 +5431,7 @@ function toastUndo(msg,undo,ms){
   let t=$("utoast");if(!t){t=document.createElement("div");t.id="utoast";t.className="utoast";document.body.appendChild(t)}
   t.innerHTML=`<span>${esc(msg)}</span><button type="button">되돌리기</button>`;t.hidden=false;
   /* 5.30: 아래쪽 알림 줄(새 버전 안내 등)이 떠 있으면 그 위에 띄워 '되돌리기'가 가려지지 않게 */
-  const lift=()=>{const nb=[...document.querySelectorAll(".newbar")].filter(x=>!x.hidden&&x.getClientRects().length>0);const top=nb.length?Math.min(...nb.map(x=>x.getBoundingClientRect().top)):0;t.style.bottom=top?(innerHeight-top+8)+"px":""};
+  const lift=()=>{const nb=[...document.querySelectorAll(".newbar")].filter(x=>!x.hidden&&x.getClientRects().length>0&&getComputedStyle(x).visibility!=="hidden");const top=nb.length?Math.min(...nb.map(x=>x.getBoundingClientRect().top)):0;t.style.bottom=top?(innerHeight-top+8)+"px":""};
   lift();clearInterval(t._l);t._l=setInterval(()=>{if(t.hidden)return clearInterval(t._l);lift()},250);
   clearTimeout(t._h);t._h=setTimeout(()=>{t.hidden=true},ms||3500);
   t.querySelector("button").onclick=()=>{t.hidden=true;undo()};
@@ -5412,7 +6384,7 @@ function mergeList(b,l,r,key,deep){
 }
 function mergeMap(b,l,r){b=b||{};l=l||{};r=r||{};const o={};new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{
   if(k in l&&k in r)o[k]=pick3(b[k],l[k],r[k]);else if(k in l){if(!(k in b)||J(l[k])!==J(b[k]))o[k]=l[k]}else if(!(k in b)||J(r[k])!==J(b[k]))o[k]=r[k]});return o}
-function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emails","teachers","msg","obsLock"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
+function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emails","teachers","msg","obsLock","sch","cards"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
@@ -5595,7 +6567,7 @@ safe("구글 로그인",renderSync);try{gPreload()}catch(e){reportErr("구글 �
 async function dropFile(f){
   if(/\.(json|txt)$/i.test(f.name)){
     try{const p=await readAnyText(await f.text());if(p&&p.kind==="teachers-life-sync"&&p.data)return toast("동기화 파일은 ‘구글 로그인 · 기기 연동’으로 자동으로 맞춰집니다");
-      if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
+      if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
     catch(err){toast(fileErr(err))}return;
   }
   if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|bmp)$/i.test(f.name)){show("tt");return ttUpload(f)}
@@ -5761,6 +6733,7 @@ function stuSheet(sid){
     ${abs.length?`<details class="stsec"><summary>결석한 날 ${absDays.length}일</summary><div class="opills wrap">${abs.slice(-30).reverse().map(s=>`<span class="opill neg">${esc(fmtDate(s.date))} ${esc(s.label||s.time||"")}</span>`).join("")}</div></details>`:""}
     ${hist.length?`<details class="stsec"><summary>관찰 기록 ${hist.length}일</summary><div class="opills wrap">${Object.entries(sum).sort((a,b)=>b[1]-a[1]).map(([k,n])=>{const t=tagOf(k);return t?`<span class="opill ${tone(t.t)}">${esc(t.l)} ${n}</span>`:""}).join("")}</div>
       <div class="ohist">${hist.filter(h=>h.memo).slice(0,12).map(h=>`<div class="ohrow"><b>${esc(fmtDate(h.date))}</b><small>${esc(h.memo)}</small></div>`).join("")}</div></details>`:""}
+    ${stuCardsHTML(sid)}
     ${evs.length?`<details class="stsec"><summary>학생 서명 ${evs.length}건</summary>${evs.map(o=>`<div class="stev"><span>${esc(o.e.title)}</span><b class="${stState(o.x)==="ok"?"ok":"no"}">${stState(o.x)==="ok"?"서명함":stState(o.x)==="stale"?"다시 받아야 함":"서명 안 함"}</b></div>`).join("")}</details>`:""}
     <h3 class="sh3">세부능력 및 특기사항 초안</h3>
     <div class="presets" id="stsLim">${STS_LIM.map(([b,l])=>`<button class="chip" type="button" data-b="${b}" aria-pressed="${b===stsLim()}">${l}</button>`).join("")}</div>
@@ -6584,10 +7557,12 @@ function foldTips(){try{
 safe("foldTips",foldTips);
 try{if(!meName()){const d=$("d-me");if(d)d.open=true}}catch(e){}
 try{if(!location.hash&&wizNeeded())setTimeout(()=>{if($("sheet").hidden)openWizard()},350)}catch(e){}
+try{renderSchoolEntry();$("schBack").onclick=()=>show("set")}catch(e){}
+try{renderPackEntry()}catch(e){}
 try{$("d-arc").addEventListener("toggle",()=>{if($("d-arc").open)safe("학년도 보관",renderArc)});renderArc()}catch(e){}
 try{$("d-cheer").addEventListener("toggle",()=>{if($("d-cheer").open)safe("응원 설정",renderCheerSet)});const P=cheerPref();$("cheerTag").textContent=P.am||P.pm?"켜짐":"꺼짐"}catch(e){}
 setTimeout(()=>{try{cheerCheck()}catch(e){}},1500);
-{let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set"].includes(v0)?v0:"att")}
+{let v0="att";try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";show(["tt","att","call","todo","stat","set","school"].includes(v0)?v0:"att")}
 setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
 handleHash();
 window.addEventListener("hashchange",handleHash);
