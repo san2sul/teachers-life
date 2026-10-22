@@ -359,7 +359,7 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .chip.otag.ed{display:inline-flex;align-items:center;gap:4px;padding-right:4px}
 .chip.otag.ed button{appearance:none;border:0;background:none;font:inherit;cursor:pointer;color:var(--muted);width:24px;height:24px;border-radius:50%}
 .chip.otag.pos.ed button[data-tg]{color:var(--present)}.chip.otag.neg.ed button[data-tg]{color:var(--absent)}
-.utoast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:31;background:var(--ink);color:var(--bg);border-radius:var(--r-m);padding:8px 8px 8px 14px;display:flex;align-items:center;gap:10px;font-size:.88rem;box-shadow:0 4px 14px rgba(0,0,0,.2);max-width:calc(100vw - 32px)}
+.utoast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:33;background:var(--ink);color:var(--bg);border-radius:var(--r-m);padding:8px 8px 8px 14px;display:flex;align-items:center;gap:10px;font-size:.88rem;box-shadow:0 4px 14px rgba(0,0,0,.2);max-width:calc(100vw - 32px)}
 .utoast span{flex:1;min-width:0}.utoast button{white-space:nowrap;flex:0 0 auto;appearance:none;border:0;background:var(--accent-soft);color:var(--accent);font:inherit;font-weight:700;border-radius:var(--r-s);padding:6px 10px;cursor:pointer}
 .chip.evc[aria-pressed="false"]{background:var(--paper);color:var(--ink);border-style:dashed}.chip.evc[aria-pressed="true"]::before{content:"✓ "}
 .chip.ghost2{min-height:30px;font-size:.8125rem;color:var(--muted)}
@@ -951,6 +951,20 @@ b,strong{font-weight:700}
 /* 5.29: 글꼴 고르기 */
 html[data-font="pre"]{--f-body:"Pretendard","NanumGothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif;--f-num:"Pretendard","NanumGothic","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 html[data-font="pre"] body{letter-spacing:-.005em}
+/* 5.30: 밀어서 삭제 */
+.swrow{touch-action:pan-y}
+.swrow.swing{user-select:none;-webkit-user-select:none}
+.swdel{position:fixed;z-index:200;display:flex;align-items:center;justify-content:center;gap:4px;overflow:hidden;white-space:nowrap;border:0;margin:0;padding:0;background:var(--absent);color:#fff;font:inherit;font-weight:700;font-size:.9375rem;border-radius:0 var(--r-m) var(--r-m) 0;cursor:pointer}
+.swdel svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.swdel:not(.full) span{display:none}
+/* 5.30: 오늘 탭 숫자 칸 누르기 */
+.kpib{font:inherit;color:inherit;text-align:left;cursor:pointer;position:relative;min-height:72px}
+.kpib i{font-style:normal;font-size:.75rem;color:var(--accent);font-weight:700;margin-top:2px}
+.kpib:active{transform:scale(.98)}
+.kpil{display:flex;flex-direction:column;max-height:58vh;overflow-y:auto;overflow-x:hidden;border-radius:var(--r-m);background:var(--paper)}
+.kpil .td{background:var(--paper)}
+/* 5.30: 되돌리기 알림은 아래 알림 줄과 같은 너비로 (글자가 세 줄로 접히지 않게) */
+.utoast{width:min(94vw,440px);box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -1389,8 +1403,9 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.29.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.30.0", APP_DATE="2026-10-22", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.30.0",date:"2026-10-22",items:["오늘 탭 숫자 칸(오늘 할 일 · 지난 미완료 · 남은 할 일)을 누르면 그 목록이 바로 열림: 네모를 눌러 완료, 줄을 눌러 고치기, ‘할 일 목록에서 보기’로 이동","왼쪽으로 밀어 삭제(앱 전체): 할 일, 일정(시간표 일정 목록 · 날짜 창), 수업 변동, 학생 명단, 수업 교사, 교직원 연락처, 평가 목록, 넓은 화면 오늘 패널의 할 일. 줄을 왼쪽으로 밀면 빨간 ‘삭제’ 단추, 누르면 삭제, 6초 동안 ‘되돌리기’. 원래의 수정 · 삭제 단추는 그대로","되돌리기 알림이 새 버전 · 백업 알림 줄에 가려지지 않게 그 위에 뜸"]},
   {v:"5.29.0",date:"2026-10-22",items:["출석 체크 자동 연결: 출석 탭 ‘＋ 체크 추가’로 수업 시간에 만든 체크가 시간표의 그 교시와 자동으로 이어짐. 예전에 따로 만든 체크(시간 또는 ‘N교시’ 이름이 맞는 것)도 하나로 보여 오늘 탭에 두 번 나오지 않고, 시간표 칸에 출석 수가 표시됨","시간표 하루 보기(주간 | 하루): 휴대폰에서도 큰 글자로 하루 수업·빈 시간·점심·방과 후를 한 줄씩. 지금 수업 초록, 출석 상태 표시, ‹ › 는 하루씩(주말 건너뜀), 기기마다 기억","불러오기 안전장치: 잘리거나 손상된 파일·모양이 틀린 백업·손상된 보관 파일을 미리 걸러 한국어로 안내, 학생이 없는 백업으로는 ‘완전히 바꾸기’를 막음, 학급 이름 40자·학생 이름 30자로 제한","글꼴 고르기(설정 → 화면 · 글자 크기): 나눔고딕(기본) 또는 Pretendard. Pretendard는 고른 기기에서만 한 번 내려받음","연락 화면 설명 글을 ‘사용 방법’으로 접고, ‘모두에게 문자 3명’ · ‘전표 올리기 엑셀·CSV’ 버튼 글자가 어색하게 끊기지 않게","자동 점검 묶음(teachers-life-tests): 41가지 시험을 저장소에서 한 번에 돌리는 run_all.py"]},
   {v:"5.28.0",date:"2026-10-22",items:["넓은 화면(컴퓨터·태블릿 가로 1100px 이상): 시간표 오른쪽에 ‘오늘’ 패널 — 오늘 수업과 출석 상태(지금 수업 초록 표시, 누르면 출석 체크), 연락할 결석 학생, 오늘 할 일(바로 체크), 지난 할 일 바로가기","넓은 화면 시간표는 칸 글자를 크게(과목 16px)","시간표에서 오늘 열을 옅은 파란 띠로, 지금 수업 칸과 교시 이름(● 2교시)을 초록으로 강조","디자인 규칙 정리: 모서리 둥글기 20가지 → 3단계(작게 8 · 보통 12 · 크게 18)+알약·원, 글자 굵기 3가지(400·600·700), 잠금·경고(노랑)와 일정(호박색)도 색 규칙으로 통일해 밝은·어두운 화면에서 같은 뜻","오른쪽 위 ‘도움말’ · 동기화 표시를 그림자 없는 조용한 글자 버튼으로"]},
   {v:"5.27.0",date:"2026-10-22",items:["학년도 마감 · 보관(설정 → 보관 · 화면 · 정보): 지난 학년도의 학급·명단·출석·관찰·세특 초안·평가(원본 전표 포함)·시간표·수업 메모·일정·학사일정을 한 번에 보관함으로 옮김. 올해와 지금 보는 기간은 보관하지 않음","보관함은 이 기기 대용량 저장소 + 구글 드라이브 앱 전용 공간(teachers-life-archive-연도.json)에 저장. 다른 기기에서도 보관함 목록이 보이고 드라이브에서 되살리기","되살리기: 같은 이름의 올해 학급과 섞이지 않고 그 학년도로 따로 들어감. 파일로 받기 · 보관 파일 불러오기 · 지우기 · 드라이브에서 찾기","백업 파일 저장에 보관함도 함께 들어가고, 백업을 불러오면 이 기기에 없는 보관 학년도도 되돌림","저장 공간 표시에 지난 학년도가 있으면 ‘학년도 마감 · 보관’ 바로가기. 1년 치 자료(9학급 261명·출석 709회) 기준 기본 저장 공간 사용이 약 0.7M자 → 2천 자, 동기화 파일은 약 1/7로 줄어듦"]},
@@ -2169,14 +2184,17 @@ function renderStu(){
   if(document.activeElement!==$("qStu"))$("qStu").value=LQ.stu;
   const items=D.roster.filter(([id,n])=>matchQ(LQ.stu,id,n,D.phones[id]||"",D.emails[id]||"")).map(([id,name])=>({key:id,name,sub:"학번 "+id+(D.emails[id]?" · "+D.emails[id]:""),phone:D.phones[id]||""}));
   const L=$("stuList");L.innerHTML=listHTML("stu",items);
-  L.querySelectorAll(".prow").forEach(b=>b.onclick=()=>editStudent(b.dataset.k));
+  L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editStudent(b.dataset.k);const d=D,st=d.roster.find(x=>x[0]===b.dataset.k);if(!st)return;
+    swipeDel(b,{del:()=>{b.remove();swRemove(`${st[1]} 학생을`,()=>{const id=st[0],ph=d.phones[id],em=(d.emails||{})[id],back=swOut(d.roster,st);delete d.phones[id];if(d.emails)delete d.emails[id];try{PK.stu.sel.delete(id)}catch(e){}
+      return()=>{back();if(ph)d.phones[id]=ph;if(em){d.emails=d.emails||{};d.emails[id]=em}}})}})});
 }
 function renderTcEdit(){
   $("tcCnt").textContent=D.teachers.length+"명";
   if(document.activeElement!==$("qTc"))$("qTc").value=LQ.tc;
   const items=D.teachers.filter(t=>matchQ(LQ.tc,t.name,t.role,t.phone)).map(t=>({key:t.id,name:t.name,sub:t.role||"과목·역할 없음",phone:t.phone}));
   const L=$("tcEdit");L.innerHTML=listHTML("tc",items);
-  L.querySelectorAll(".prow").forEach(b=>b.onclick=()=>editContact("tc",b.dataset.k));
+  L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editContact("tc",b.dataset.k);const d=D,t=d.teachers.find(x=>x.id===b.dataset.k);if(!t)return;
+    swipeDel(b,{del:()=>{b.remove();swRemove(`${t.name} 선생님을`,()=>swOut(d.teachers,t))}})});
 }
 function renderStaffEdit(){
   $("staffCnt").textContent=perStaff().length+"명";
@@ -2184,7 +2202,8 @@ function renderStaffEdit(){
   const items=perStaff().sort((a,b)=>(a.dept||"힣").localeCompare(b.dept||"힣","ko")||a.name.localeCompare(b.name,"ko"))
     .filter(t=>matchQ(LQ.staff,t.name,t.dept,t.role,t.phone)).map(t=>({key:t.id,name:t.name,sub:[t.dept,t.role].filter(Boolean).join(" · ")||"부서 없음",phone:t.phone}));
   const L=$("staffEdit");L.innerHTML=listHTML("staff",items);
-  L.querySelectorAll(".prow").forEach(b=>b.onclick=()=>editContact("staff",b.dataset.k));
+  L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editContact("staff",b.dataset.k);const t=S.staff.find(x=>x.id===b.dataset.k);if(!t)return;
+    swipeDel(b,{del:()=>{b.remove();swRemove(`${t.name} 연락처를`,()=>{const back=swOut(S.staff,t);try{PK.staff.sel.delete(t.id)}catch(e){}return back})}})});
 }
 $("qStu").oninput=e=>{LQ.stu=e.target.value;renderStu()};
 $("qTc").oninput=e=>{LQ.tc=e.target.value;renderTcEdit()};
@@ -3315,7 +3334,8 @@ function renderChgList(t){
   const l=(t.chg||[]).slice().sort((a,b)=>a.from.localeCompare(b.from));
   const td=today();
   L.innerHTML=l.length?l.map(c=>`<button class="prow" type="button" data-cg="${esc(c.id)}"><span class="pn">${esc(chgLabel(c))}${c.reason?` · ${esc(c.reason)}`:""}${c.to<td?'<em style="color:var(--muted)">지난 변동</em>':""}<small>${esc(chgWhen(c))}${c.type!=="cancel"?` → ${esc([c.subject,c.clsName,c.room].filter(Boolean).join(" · "))}`:""}</small></span><span class="pe">수정</span></button>`).join(""):`<div class="empty">등록된 수업 변동이 없습니다.<br>시간표 칸이나 요일을 눌러 ‘수업 변동’을 넣으세요.</div>`;
-  L.querySelectorAll("[data-cg]").forEach(b=>b.onclick=()=>changeSheet(t,{id:b.dataset.cg}));
+  L.querySelectorAll("[data-cg]").forEach(b=>{b.onclick=()=>changeSheet(t,{id:b.dataset.cg});const c=(t.chg||[]).find(y=>y.id===b.dataset.cg);
+    if(c)swipeDel(b,{del:()=>{b.remove();swRemove(`‘${chgLabel(c)}’ 변동을`,()=>swOut(t.chg,c),()=>renderTT())}})});
   $("ttChgCnt").textContent=l.filter(c=>c.to>=td).length?`예정 ${l.filter(c=>c.to>=td).length}개`:"";
 }
 
@@ -3412,6 +3432,69 @@ $("ttStart").oninput=e=>{const raw=e.target.value;clearTimeout(ttDeb.ttStart);tt
   $(id).oninput=e=>{const raw=e.target.value;clearTimeout(ttDeb[id]);ttDeb[id]=setTimeout(()=>{delete ttDeb[id];const v=parseInt(raw,10);if(!isNaN(v)&&v>=lo&&v<=hi)ttSet(k,v)},500)};
   $(id).onblur=e=>{const v=parseInt(e.target.value,10);if(isNaN(v)||v<lo||v>hi){toast(`${lo}~${hi}분 사이로 넣어 주세요`);e.target.value=TT()?TT()[k]:""}};
 });
+/* 5.30: 왼쪽으로 밀어 삭제 (앱 전체 공용)
+   - 목록 줄을 손가락(또는 마우스)으로 왼쪽으로 밀면 오른쪽에 빨간 '삭제' 단추가 나오고, 누르면 지웁니다.
+   - 지운 뒤 6초 동안 '되돌리기'로 되살릴 수 있습니다. 원래 있던 수정 · 삭제 단추는 그대로입니다.
+   - 단추는 줄이 비켜난 자리에만 떠 있어서(화면 맨 위 층) 목록 모양을 바꾸지 않고, 창(시트) 안에서도 똑같이 동작합니다. */
+const SW={open:null,W:88,btn:null};
+function swBtn(){if(!SW.btn){const b=document.createElement("button");b.type="button";b.className="swdel";b.hidden=true;b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span>삭제</span>';document.body.appendChild(b);SW.btn=b}return SW.btn}
+function swPlace(st,w){const b=swBtn();if(w<=1){b.hidden=true;return}const r=st.rect;b.hidden=false;b.style.top=r.top+"px";b.style.height=r.height+"px";b.style.left=(r.right-w)+"px";b.style.width=w+"px";b.classList.toggle("full",w>=SW.W-2)}
+function swClose(anim){const st=SW.open;if(!st)return;SW.open=null;st.row.style.transition=anim===false?"none":"transform .18s ease";st.row.style.transform="";st.row.classList.remove("swopen");swPlace(st,0)}
+function swipeDel(row,opt){
+  if(!row||row._sw)return;row._sw=opt;row.classList.add("swrow");
+  let x0=0,y0=0,dx=0,mode=0,pid=null,base=0,st=null;
+  const move=x=>{row.style.transition="none";row.style.transform=x?`translateX(${x}px)`:"";swPlace(st,-x)};
+  row.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button!==0)return;
+    if(SW.open&&SW.open.row!==row)swClose();
+    x0=e.clientX;y0=e.clientY;dx=0;mode=0;pid=e.pointerId;base=SW.open&&SW.open.row===row?-SW.W:0;
+    if(!base){const r=row.getBoundingClientRect();st={row,rect:{top:r.top,height:r.height,right:r.right},opt}}});
+  row.addEventListener("pointermove",e=>{if(e.pointerId!==pid||!st)return;const mx=e.clientX-x0,my=e.clientY-y0;
+    if(!mode){if(Math.abs(mx)>10&&Math.abs(mx)>Math.abs(my)*1.3){mode=1;try{row.setPointerCapture(pid)}catch(_){}row.classList.add("swing")}else if(Math.abs(my)>10)mode=2}
+    if(mode===1){dx=Math.max(-SW.W*1.35,Math.min(0,base+mx));move(dx);e.preventDefault()}});
+  const end=e=>{if(e.pointerId!==pid)return;pid=null;row.classList.remove("swing");
+    if(mode===1){row._swAt=Date.now();if(dx<-SW.W*.5){row.style.transition="transform .18s ease";row.style.transform=`translateX(${-SW.W}px)`;row.classList.add("swopen");SW.open=st;swPlace(st,SW.W)}else{SW.open=st;swClose()}}
+    mode=0};
+  row.addEventListener("pointerup",end);row.addEventListener("pointercancel",end);
+  /* 밀고 난 직후의 누름, 열린 줄을 누르면 닫기만 (줄의 원래 동작은 막음) */
+  row.addEventListener("click",e=>{if(row._swAt&&Date.now()-row._swAt<250){e.stopPropagation();e.preventDefault();return}
+    if(row.classList.contains("swopen")){e.stopPropagation();e.preventDefault();swClose()}},true);
+}
+document.addEventListener("pointerdown",e=>{if(!SW.open)return;if(SW.btn&&SW.btn.contains(e.target))return;if(!SW.open.row.contains(e.target))swClose()},true);
+window.addEventListener("scroll",()=>{if(SW.open)swClose(false)},true);window.addEventListener("resize",()=>{if(SW.open)swClose(false)});
+document.addEventListener("click",e=>{if(!SW.btn||!SW.btn.contains(e.target)||!SW.open)return;e.preventDefault();e.stopPropagation();
+  const st=SW.open,o=st.opt;SW.open=null;swPlace(st,0);
+  if(o.can&&!o.can()){st.row.style.transform="";st.row.classList.remove("swopen");return}
+  st.row.style.transition="transform .2s ease,opacity .2s ease";st.row.style.transform="translateX(-100%)";st.row.style.opacity="0";
+  setTimeout(()=>{try{o.del()}catch(err){reportErr("밀어서 삭제",err)}},190)},true);
+/* 지우고 되돌리기 한 묶음: rm()이 지우고 되살리는 함수를 돌려줍니다 */
+function swRemove(label,rm,after){const back=rm();save();try{after&&after()}catch(e){}renderAll();
+  toastUndo(`${label} 삭제했습니다`,()=>{back();save();try{after&&after()}catch(e){}renderAll();toast("되돌렸습니다")},6000)}
+const swOut=(arr,item)=>{const i=arr.indexOf(item);if(i>=0)arr.splice(i,1);return()=>{if(!arr.includes(item))arr.splice(Math.min(i,arr.length),0,item)}};
+/* 할 일 · 일정 하나 지우기 (일정은 일정 자체를, 수업 메모의 과제·면담은 그 항목만) */
+function swDelTodo(x,after){
+  if(x.kind==="ev")return swRemove(`‘${x.title}’ 일정을`,()=>swOut(S.events,x.ref),after);
+  const n=S.notes[x.nk];if(!n)return;const f=x.kind==="task"?"task":"meet",fd=f+"Done",old=[n[f],n[fd]];
+  swRemove(`‘${x.title}’ ${x.kind==="task"?"과제":"면담 약속"}를`,()=>{delete n[f];delete n[fd];return()=>{n[f]=old[0];if(old[1])n[fd]=old[1]}},after)}
+function swEventRows(box,after){if(!box)return;box.querySelectorAll("[data-ev]").forEach(el=>{const e=S.events.find(x=>x.id===el.dataset.ev);if(!e)return;
+  swipeDel(el,{del:()=>{el.remove();swRemove(`‘${e.title||e.cat}’ 일정을`,()=>swOut(S.events,e),after)}})})}
+/* 오늘 탭 숫자 칸: 누르면 그 목록을 바로 보여 줍니다 */
+function kpiSheet(kind){
+  const t=today(),open=todoItems().filter(x=>!x.done);
+  const L=kind==="today"?open.filter(x=>x.date===t):kind==="over"?open.filter(x=>x.date<t):open;
+  L.sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99")));
+  const T={today:"오늘 할 일",over:"지난 미완료",open:"남은 할 일"}[kind];
+  $("sheetBox").innerHTML=`<h2>${T} <span class="sub">${L.length}개</span></h2>
+    ${L.length?`<div class="kpil">${L.map((x,i)=>`<div class="td kpir${x.important?" imp":""}" data-i="${i}"><button class="tdc" type="button" role="checkbox" aria-checked="false" aria-label="${esc(x.title)} 완료 표시"></button>
+      <div class="tdb" role="button" tabindex="0"><span class="tdt">${fmtShort(x.date)} (${dow(x.date)})${x.time?" "+esc(x.time):""} <span class="evc${x.important?" imp":""}">${esc(x.cat)}</span></span><b>${esc(x.title)}</b>${x.sub?`<small>${esc(x.sub)}</small>`:""}</div></div>`).join("")}</div>
+      <p class="note" style="margin:0">네모를 누르면 완료, 줄을 누르면 고치기, 줄을 왼쪽으로 밀면 삭제입니다.</p>`:`<div class="empty">${kind==="over"?"밀린 할 일이 없습니다. 잘하셨어요!":"할 일이 없습니다."}</div>`}
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn" type="button" id="kpiAll">할 일 목록에서 보기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("kpiAll").onclick=()=>{$("sheet").hidden=true;if(kind==="over")TDX.over=true;TD.range=kind==="today"?"today":"all";TD.showDone=false;try{saveTD()}catch(e){}renderTodo();setTimeout(()=>{const l=$("tdList");if(l)l.scrollIntoView({behavior:"smooth",block:"start"})},50)};
+  $("sheetBox").querySelectorAll(".kpir").forEach(r=>{const x=L[+r.dataset.i];
+    r.querySelector(".tdc").onclick=()=>{toggleDone(x);kpiSheet(kind)};
+    r.querySelector(".tdb").onclick=()=>x.kind==="ev"?editEvent(x.ref):openMemoItem(x);
+    swipeDel(r,{del:()=>{r.remove();swDelTodo(x,()=>{if(!$("sheet").hidden&&document.querySelector(".kpil"))kpiSheet(kind)})}})});
+}
 /* 5.29: 하루 보기에서는 ‹ › 가 하루씩 (주말은 건너뜀) */
 const ttDayStep=k=>{let i=ttDay+k;if(i<0){ttWeek=addDays(ttWeek,-7);i=4}else if(i>4){ttWeek=addDays(ttWeek,7);i=0}ttDay=i;renderTT()};
 $("ttPrev").onclick=()=>{if(ttDayOn())return ttDayStep(-1);ttWeek=addDays(ttWeek,-7);renderTT()};
@@ -3764,7 +3847,7 @@ function evItemHTML(e,showDate){
     <span class="evb"><span class="evc">${esc(e.cat)}</span>${e.important?'<span class="evc imp">중요</span>':""}<b>${esc(e.title||e.cat)}</b><small>${esc([slotOf(e.date,e.start),evClsName(e)].filter(Boolean).join(" · "))}${e.alarm>=0?` · 알림 ${alarmLabel(e.alarm)}`:""}</small></span>
   </div>`;
 }
-function wireEvList(box){box.querySelectorAll("[data-ev]").forEach(el=>{const go=()=>{const e=S.events.find(x=>x.id===el.dataset.ev);if(e)editEvent(e)};el.onclick=go;el.onkeydown=k=>{if(k.key==="Enter"||k.key===" "){k.preventDefault();go()}}})}
+function wireEvList(box){box.querySelectorAll("[data-ev]").forEach(el=>{const go=()=>{const e=S.events.find(x=>x.id===el.dataset.ev);if(e)editEvent(e)};el.onclick=go;el.onkeydown=k=>{if(k.key==="Enter"||k.key===" "){k.preventDefault();go()}}});swEventRows(box)}
 let evRange="week";
 function renderAgenda(){
   const box=$("agList");if(!box)return;
@@ -4119,7 +4202,8 @@ function renderTodo(){
   $("tdImp").checked=TD.imp;$("tdDone").checked=TD.showDone;
   const list=todoFiltered(),all=todoItems(),t=today();
   const open=all.filter(x=>!x.done),overdue=open.filter(x=>x.date<t).length,todayN=open.filter(x=>x.date===t).length;
-  $("tdSum").innerHTML=`<div class="kpi"><span>오늘 할 일</span><b>${todayN}</b></div><div class="kpi"><span>지난 미완료</span><b class="${overdue?"a":""}">${overdue}</b></div><div class="kpi"><span>남은 할 일</span><b>${open.length}</b></div>`;
+  $("tdSum").innerHTML=`<button class="kpi kpib" type="button" data-kpi="today"><span>오늘 할 일</span><b>${todayN}</b><i>보기 ›</i></button><button class="kpi kpib" type="button" data-kpi="over"><span>지난 미완료</span><b class="${overdue?"a":""}">${overdue}</b><i>보기 ›</i></button><button class="kpi kpib" type="button" data-kpi="open"><span>남은 할 일</span><b>${open.length}</b><i>보기 ›</i></button>`;
+  $("tdSum").querySelectorAll("[data-kpi]").forEach(b=>b.onclick=()=>kpiSheet(b.dataset.kpi));
   const L=$("tdList");
   if(!list.length){L.innerHTML=`<div class="empty">${all.length?"조건에 맞는 할 일이 없습니다. 위에서 기간이나 분류를 바꿔 보세요.":"아직 기록된 일정이 없습니다.<br>‘＋ 할 일 추가’나 시간표에서 일정을 넣어 보세요."}</div>`;}
   else{
@@ -4147,6 +4231,7 @@ function renderTodo(){
       const open=()=>x.kind==="ev"?editEvent(x.ref):openMemoItem(x);
       const tb=row.querySelector(".tdb");tb.onclick=open;tb.onkeydown=k=>{if(k.key==="Enter"||k.key===" "){k.preventDefault();open()}};
       row.querySelector(".tdbell").onclick=()=>alarmSheet(x);
+      swipeDel(row,{del:()=>{row.remove();swDelTodo(x)}});
     });
   }
   renderAlarmPanel();
@@ -4370,10 +4455,13 @@ function quickTag(sid,k){
   const st=D.roster.find(x=>x[0]===sid),t=tagOf(k);
   toastUndo(`${st?st[1]:sid}: ${t.l}${r.tags[k]>1?" ×"+r.tags[k]:""}`,()=>{const x=obsRec(sid,selDate);if(x){x.tags[k]--;cleanRec(x)}save();renderObs()});
 }
-function toastUndo(msg,undo){
+function toastUndo(msg,undo,ms){
   let t=$("utoast");if(!t){t=document.createElement("div");t.id="utoast";t.className="utoast";document.body.appendChild(t)}
   t.innerHTML=`<span>${esc(msg)}</span><button type="button">되돌리기</button>`;t.hidden=false;
-  clearTimeout(t._h);t._h=setTimeout(()=>{t.hidden=true},3500);
+  /* 5.30: 아래쪽 알림 줄(새 버전 안내 등)이 떠 있으면 그 위에 띄워 '되돌리기'가 가려지지 않게 */
+  const lift=()=>{const nb=[...document.querySelectorAll(".newbar")].filter(x=>!x.hidden&&x.getClientRects().length>0);const top=nb.length?Math.min(...nb.map(x=>x.getBoundingClientRect().top)):0;t.style.bottom=top?(innerHeight-top+8)+"px":""};
+  lift();clearInterval(t._l);t._l=setInterval(()=>{if(t.hidden)return clearInterval(t._l);lift()},250);
+  clearTimeout(t._h);t._h=setTimeout(()=>{t.hidden=true},ms||3500);
   t.querySelector("button").onclick=()=>{t.hidden=true;undo()};
 }
 /* 학생별 기록 창 */
@@ -4921,7 +5009,8 @@ function renderEval(){
       L.querySelectorAll("[data-del]").forEach(b=>twoStep(b,"정말 삭제",()=>evDelete([b.dataset.del])));
       return}
     L.innerHTML=shown.length?shown.map(e=>{const n=e.stu.filter(x=>stState(x)==="ok").length,N=e.stu.length;return `<button class="prow" type="button" data-ev="${esc(e.id)}"><span class="pn">${esc(e.title)}${e.done?'<em class="arc">보관</em>':""}${n===N?'<em class="okb">서명 완료</em>':""}<small>${e.kind&&e.kind!=="score"?`<b class="kdtag">${esc(evKind(e).l)}</b> `:""}${esc(evYT(e).year+"학년도 "+evYT(e).term)} · ${esc(e.clsName||"학급 없음")} · 학생 ${N}명 · 마감 ${e.due?esc(fmtDate(e.due)):"없음"}${n<N?` · 미서명 ${N-n}명`:""}</small><span class="pbar"><i style="width:${N?Math.round(n/N*100):0}%"></i></span></span><span class="pe">${n}/${N}</span></button>`}).join(""):`<div class="empty">${list.length?(EVS.st==="done"?"보관한 평가가 없습니다.<br>평가를 마치면 평가 화면의 ‘평가 마치고 보관’을 누르세요.":"조건에 맞는 평가가 없습니다."):"아직 평가가 없습니다.<br>‘전표 올리기’로 점수 파일을 올리거나 ‘직접 만들기’로 점수를 입력하면 학생에게 점수와 서명 요청을 보낼 수 있습니다."}</div>`;
-    L.querySelectorAll("[data-ev]").forEach(b=>b.onclick=()=>{EVS.cur=b.dataset.ev;renderEval();window.scrollTo(0,0)});
+    L.querySelectorAll("[data-ev]").forEach(b=>{b.onclick=()=>{EVS.cur=b.dataset.ev;renderEval();window.scrollTo(0,0)};const e=evals().find(x=>x.id===b.dataset.ev);if(!e)return;
+      swipeDel(b,{del:()=>{b.remove();swRemove(`‘${e.title}’ 평가를`,()=>{const back=swOut(S.evals,e);EVS.sel.delete(e.id);return back},()=>renderEval())}})});
     return;
   }
   const n=ev.stu.filter(x=>stState(x)==="ok").length,N=ev.stu.length,sent=ev.stu.filter(x=>x.sentAt).length,withEm=ev.stu.filter(x=>isEmail(x.email));
@@ -6225,6 +6314,7 @@ function renderTtSide(){
   box.querySelectorAll("[data-si]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.si];if(x&&x.go)x.go()});
   box.querySelectorAll("[data-ti]").forEach(b=>b.onclick=()=>{toggleDone(tdy[+b.dataset.ti]);renderTtSide();try{renderTdBadge()}catch(e){}});
   box.querySelectorAll("[data-to]").forEach(b=>b.onclick=()=>{const x=tdy[+b.dataset.to];x.kind==="ev"?editEvent(x.ref):openMemoItem(x)});
+  box.querySelectorAll(".tstd").forEach((r,i)=>{const x=tdy[i];if(x)swipeDel(r,{del:()=>{r.remove();swDelTodo(x,()=>renderTtSide())}})});
   const g=(id,f)=>{const e=$(id);if(e)e.onclick=f};
   g("tsTodo",()=>show("todo"));g("tsOver",()=>{TDX.over=true;show("todo")});g("tsCall",()=>show("call"));
   g("tsAdd",()=>{const b=$("tdAdd")||document.querySelector("#v-todo .btn.pri");if(b)b.click();else show("todo")});

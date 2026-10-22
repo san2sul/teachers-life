@@ -2,7 +2,7 @@
 #   준비(처음 한 번): pip install playwright pillow openpyxl  →  python -m playwright install chromium
 #   실행: 저장소 폴더에서  python tests/run_all.py          (몇 개만:  python tests/run_all.py t105 t112)
 # 인터넷(구글 등)에 실제로 접속하지 않습니다. 구글 로그인·드라이브는 가짜(흉내)로 시험합니다.
-import gzip, os, re, shutil, subprocess, sys, time, socket, http.server, threading, functools
+import gzip, os, re, shutil, subprocess, sys, time, socket, http.server, threading, functools, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.abspath(os.path.join(HERE, ".."))          # tests 폴더의 바로 위 = 앱 폴더 (index.html 이 있는 곳)
@@ -24,6 +24,28 @@ def prepare():
     if os.path.isdir(WORK):
         shutil.rmtree(WORK)
     os.makedirs(os.path.join(WORK, "shot"))
+    # 깃허브 웹 업로드는 한 번에 100개까지라서, 시험 파일들은 bundle.zip 하나에 묶어 둡니다
+    B = os.path.join(HERE, "bundle.zip")
+    if os.path.exists(B):
+        with zipfile.ZipFile(B) as z:
+            for n in z.namelist():
+                if n.endswith("/"):
+                    continue
+                data = z.read(n)
+                if n.endswith(".py") and "/" not in n:
+                    data = data.decode("utf-8").replace("__TL_WORK__", WORK.replace("\\", "/")).replace("__TL_APP__", APP.replace("\\", "/")).encode("utf-8")
+                    dest = os.path.join(WORK, n)
+                elif n.startswith("fixtures/"):
+                    dest = os.path.join(WORK, *n[len("fixtures/"):].split("/"))
+                elif n.startswith("data/") and n.endswith(".gz"):
+                    data = gzip.decompress(data)
+                    dest = os.path.join(WORK, os.path.basename(n)[:-3])
+                else:
+                    continue
+                os.makedirs(os.path.dirname(dest), exist_ok=True)
+                with open(dest, "wb") as f:
+                    f.write(data)
+        return
     for f in os.listdir(HERE):
         if f.endswith(".py") and f != "run_all.py":
             s = open(os.path.join(HERE, f), encoding="utf-8").read()

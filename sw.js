@@ -1,11 +1,11 @@
-// 교사의 생활 (버전 5.29.0): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
-const CACHE = "attendance-app-5.29.0";
+// 교사의 생활 (버전 5.30.0): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
+const CACHE = "attendance-app-5.30.0";
 const FILES = ["./", "index.html", "config.js", "privacy.html", "sign.html", "help.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "NanumGothic-Regular.woff2", "NanumGothic-Bold.woff2", "vendor/qrcode.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
-// 5.29.0: 음악 파일(mp3)은 통째로 받아 저장해 두고, 재생기가 부분(Range)을 달라고 하면 잘라서 줍니다. (아이폰 재생 + 오프라인 재생)
+// 5.30.0: 음악 파일(mp3)은 통째로 받아 저장해 두고, 재생기가 부분(Range)을 달라고 하면 잘라서 줍니다. (아이폰 재생 + 오프라인 재생)
 async function audioResponse(req) {
   const url = new URL(req.url); url.search = "";
   const cache = await caches.open(CACHE);

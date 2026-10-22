@@ -9,6 +9,8 @@
      teachers-life/
        index.html
        tests/run_all.py   ← 여기
+   - tests 폴더에는 파일이 3개뿐입니다(run_all.py · README.txt · bundle.zip). 시험 파일 60여 개는 bundle.zip 안에 묶여 있어
+     깃허브 웹 업로드(한 번에 100개까지)에 걸리지 않습니다. bundle.zip 은 풀지 말고 그대로 두세요.
    - 저장소에 함께 올려도 됩니다. 시험 자료는 모두 가짜 이름·번호이고 비밀 정보는 없습니다.
      (깃허브 페이지에 공개되어도 괜찮지만, 원하지 않으면 컴퓨터에만 두고 쓰세요.)
 
