@@ -1,5 +1,5 @@
-// 교사의 생활 (버전 5.44.1): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
-const CACHE = "attendance-app-5.44.1";
+// 교사의 생활 (버전 5.44.2): 인터넷이 없어도 열리도록 앱 파일을 휴대폰에 저장합니다.
+const CACHE = "attendance-app-5.44.2";
 const FILES = ["./", "index.html", "config.js", "privacy.html", "sign.html", "help.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png", "NanumGothic-Regular.woff2", "NanumGothic-Bold.woff2", "vendor/qrcode.js"];
 // 5.44: 설치할 때 브라우저에 남은 옛 파일이 아니라 서버의 새 파일을 받습니다.
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "reload" })))).then(() => self.skipWaiting())); });
