@@ -971,7 +971,7 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 .schlog{display:flex;flex-direction:column;gap:4px;font-size:.875rem}.schlog small{color:var(--muted);margin-right:4px}
 .schdiff{display:flex;flex-direction:column;gap:8px;max-height:52vh;overflow:auto}
 .schk{background:var(--tint);border-radius:var(--r-m);padding:6px 10px}.schk>small{display:block;padding:0 0 6px 30px}.shlb.sm{font-size:.8125rem;margin-top:6px}#list .st,#list .st *,#obsList .obtn,#obsList .obtn *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.tagtap{display:inline-block;padding:3px 2px;margin:-3px 0;cursor:pointer;border-radius:8px}.st.tile .tagtap{display:block}.tagtap:active{background:rgba(0,0,0,.08)}.snallrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px}.snallrow small{color:var(--muted);font-size:.75rem}.snov{display:flex;flex-direction:column;gap:6px}.snovr{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:4px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;min-height:44px}.snovn{display:flex;align-items:baseline;gap:6px}.snovn small{color:var(--muted)}.snovl{display:flex;flex-direction:column;gap:2px;font-size:.875rem}.obsn{border:1px solid var(--line);border-radius:var(--r-m);padding:8px 10px;margin:8px 0}.obsnh{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.presets.sm .chip{min-height:36px}#sheetBox{position:relative}#sheetBox>.wred,#sheetBox>.wrtool,#sheetBox>.medgrid,#sheetBox>.medbtns,#sheetBox>.wrrowf,#sheetBox>#wrStus,#sheetBox>.wsl{flex-shrink:0}.wrnew{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0}.wrnew .btn{flex-direction:column;gap:2px;min-height:64px;font-size:.75rem;white-space:nowrap;padding:6px 2px;letter-spacing:-.02em}.wrnew .btn span{font-size:1.25rem}
-.wrlist{display:flex;flex-direction:column;gap:6px;margin-top:8px}.wrrow{display:flex;gap:6px;align-items:stretch}.wrmain{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit}
+.wrlbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px}.wrlbar small{color:var(--muted)}.wrchk{display:flex;align-items:center;padding:0 4px}.wrchk input{width:22px;height:22px}.wrlist{display:flex;flex-direction:column;gap:6px;margin-top:8px}.wrrow{display:flex;gap:6px;align-items:stretch}.wrmain{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit}
 .wrmain b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wrmain small{color:var(--muted)}.wrsn{font-size:.8125rem;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wrrow>.btn{align-self:center}
 .wrk{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--tint)}.wrk.stu{background:#fde2df;color:#8f2a1f}.wrk.meet{background:#ece4fb;color:#5a2ea6}.wrk.day{background:#e2f3e5;color:#1f6a35}.wrk.free{background:#e2eefb;color:#1d4b85}
 @media (prefers-color-scheme:dark){.wrk.stu{background:#4a2420;color:#f3b5ac}.wrk.meet{background:#33284a;color:#cdb8f5}.wrk.day{background:#1f3b27;color:#a6dcb3}.wrk.free{background:#1f3550;color:#a9c8f2}}
@@ -1462,8 +1462,9 @@ input.code{text-transform:uppercase;font-size:1.15rem}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.43.0", APP_DATE="2026-10-23", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.43.1", APP_DATE="2026-10-23", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.43.1",date:"2026-10-23",items:["오후 인사에 새 음악 ‘오후의 다짐’(G장조 · 88bpm, 1분 25초): 밝지만 차분하고 경쾌하지만 단정한 피아노에 잔잔한 종소리, 오후 일과를 다시 힘내어 여는 곡. 이 앱을 위해 새로 지은 곡. 설정 → 응원 메시지 · 음악 → ‘오후를 여는 음악’에서 내 음악 파일 · 링크 · 없음으로 바꿀 수 있음","글쓰기 취소 · 삭제: 쓰는 창에 ‘취소’(새 글은 저장하지 않고 닫기, 고친 글은 연 뒤 고친 내용과 새 첨부를 되돌리기, 한 번 더 확인). 목록에 ‘목록 편집 · 삭제’(골라서 한꺼번에 삭제 · 하나씩 삭제 · 취소, 되돌리기)와 왼쪽으로 밀어 삭제. 지운 글의 첨부 파일은 다음에 앱을 열 때 정리"]},
   {v:"5.43.0",date:"2026-10-23",items:["출석에 ‘글쓰기’ 탭 추가(평가 · 과제 옆): 학생 기록(작성 일시, 학생 수만큼 학번 · 이름 · 전화번호 칸, 우리 학생에서 고르기, 장소, 내용) · 회의 기록(일시, 회의명, 장소, 참석 인원 · 교직원 고르기, 내용) · 일상 기록(일시, 장소, 내용) · 자유 글","노션처럼 블록으로 쓰기: 제목 · 소제목 · 글머리 목록 · 번호 목록 · 할 일(체크) · 인용 · 구분선, ‘/’ 메뉴, #  -  1.  []  >  --- 줄임말, 도구 막대로 바꾸기 · 옮기기 · 지우기. 쓰는 대로 저장","모든 글에 사진 · 동영상 · 녹음 · 파일 불러오기(PDF · 한글 등)로 증빙, 이 기기에 저장","목록에서 찾기 · 종류별 보기, ‘전달’로 다른 선생님께 문자 · 전화 · 이메일 · 공유하기(첨부 포함), 전달 기록 남김. 글은 구글 연동 · 백업에 포함"]},
   {v:"5.42.0",date:"2026-10-23",items:["출석에 ‘평가 · 과제’ 탭 추가(출석 체크 · 관찰 기록 옆, 모든 학급 공통): 수행평가 · 형성평가 · 과제를 만들고 실시할 학급을 골라 배분(모두 선택 가능). 학급별 미참여 · 미제출 현황을 한눈에 보고, 학급을 눌러 체크 · 일괄 관리, 전체 명단 복사. 이름 · 날짜 · 종류 · 학급 배분 고치기, 삭제(되돌리기)","학급 관찰 기록과 연동: 공통에서 만든 것은 배분된 학급의 관찰 기록에 똑같이 나오고, 어느 쪽에서 체크해도 같은 기록. 학급에서 만들면 그 학급에만 배분되고 공통에도 나옴. 학급에서는 그 학급 것만 다루고, 여러 학급이 함께 쓰는 것은 ‘이 학급에서 빼기’만(다른 학급 기록은 그대로)","미참여 · 미제출 학생 연락하기: 학급 체크 창 · 공통 화면에서 문자(학생마다 이름 넣어 / 번호 있는 학생 한꺼번에) · 전화 · 이메일. 보낼 말을 고쳐 쓰고({이름} {학급} {항목} {날짜} 자동), ‘늦게 냄’ 포함 선택, 연락한 학생은 ‘연락함’으로 표시","5.41에서 학급별로 만든 수행평가 · 과제는 공통 목록으로 자동으로 옮김. 구글 연동 · 백업에 함께 들어감"]},
   {v:"5.41.0",date:"2026-10-23",items:["수행평가 · 과제 점검(관찰 기록 화면): 수행평가명 · 과제명과 날짜로 만들고, 미참여 · 미제출 학생을 눌러 체크. 체크한 학생과 안 된 학생을 나눠 보고 골라서 한 번에 넣기 · 빼기 · ‘늦게 냄’, 명단 복사, 보호자 문자, 되돌리기. 학생별 모아 보기로 안 낸 것 한눈에","항목별 모아 보기: 빠른 체크로 기록한 학생을 항목(과제 미제출 · 수행평가 미참여 등)별로 이 날 · 이번 주 · 전체로 모아 보고 한 번에 넣고 빼기(되돌리기, 잠긴 날은 그대로). 관찰 기록 화면에 이 날 항목별 인원 요약","빠른 체크 항목에 ‘수행평가 미참여’ 추가(항목을 고쳐 쓰던 경우에도 한 번 더해 드림)"]},
@@ -4897,7 +4898,7 @@ function tkContact(id,clIds,pick,back){const t=tasksAll().find(x=>x.id===id);if(
    목록에서 다른 선생님께 문자 · 전화 · 이메일 · 공유하기로 전달하고, 언제 누구에게 보냈는지 남깁니다. */
 const WR_K=[["stu","학생 기록","👤"],["meet","회의 기록","🗂"],["day","일상 기록","📅"],["free","자유 글","✏️"]];
 const WR_B=[["p","본문",""],["h1","제목","H1"],["h2","소제목","H2"],["ul","글머리 목록","•"],["ol","번호 목록","1."],["todo","할 일","☐"],["quote","인용","❝"],["hr","구분선","―"]];
-const WRX={f:"",q:""};
+const WRX={f:"",q:"",ed:false,sel:new Set(),purged:false};
 function recsAll(){if(!Array.isArray(S.recs))S.recs=[];return S.recs}
 const wrK=r=>WR_K.find(x=>x[0]===r.k)||WR_K[3];
 const nowLocal=()=>{const d=new Date(),z=n=>String(n).padStart(2,"0");return`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`};
@@ -4919,20 +4920,32 @@ function renderWrite(){const el=$("wrCard");if(!el)return;const all=recsAll().sl
     <div class="wrnew">${WR_K.map(k=>`<button class="btn" type="button" data-wn="${k[0]}"><span>${k[2]}</span>${k[1]}</button>`).join("")}</div>
     ${all.length?`<div class="presets">${[["","전체"],...WR_K.map(k=>[k[0],k[1]])].map(([v,l])=>`<button class="chip" type="button" data-wf="${v}" aria-pressed="${WRX.f===v}">${l}${v?` ${all.filter(r=>r.k===v).length}`:""}</button>`).join("")}</div>
     <input class="fld" id="wrQ" type="search" placeholder="찾기 (이름 · 회의명 · 내용)" value="${esc(WRX.q)}" autocomplete="off">
-    <div class="wrlist">${L.map(r=>`<div class="wrrow"><button class="wrmain" type="button" data-wo="${esc(r.id)}"><i class="wrk ${r.k}">${wrK(r)[1]}</i><b>${esc(wrTitle(r))}</b><small>${esc(wrWhen(r))}${r.place?" · "+esc(r.place):""}${(r.media||[]).length?` · 📎${r.media.length}`:""}${(r.sent||[]).length?` · 전달 ${r.sent.length}`:""}</small>
+    <div class="wrlbar">${WRX.ed?`<button class="btn sm" type="button" id="wrAllSel">${L.every(r=>WRX.sel.has(r.id))&&L.length?"선택 풀기":"모두 선택"}</button><button class="btn sm bad" type="button" id="wrSelDel"${WRX.sel.size?"":" disabled"}>선택 삭제 (${WRX.sel.size})</button><button class="btn sm" type="button" id="wrEdX">취소</button>`:`<button class="btn sm ghost" type="button" id="wrEdOn">목록 편집 · 삭제</button><small class="note">줄을 왼쪽으로 밀어도 지울 수 있습니다</small>`}</div>
+    <div class="wrlist${WRX.ed?" ed":""}">${L.map(r=>`<div class="wrrow" data-wr="${esc(r.id)}">${WRX.ed?`<label class="wrchk"><input type="checkbox" data-wsel="${esc(r.id)}"${WRX.sel.has(r.id)?" checked":""} aria-label="선택"></label>`:""}<button class="wrmain" type="button" data-wo="${esc(r.id)}"><i class="wrk ${r.k}">${wrK(r)[1]}</i><b>${esc(wrTitle(r))}</b><small>${esc(wrWhen(r))}${r.place?" · "+esc(r.place):""}${(r.media||[]).length?` · 📎${r.media.length}`:""}${(r.sent||[]).length?` · 전달 ${r.sent.length}`:""}</small>
       <span class="wrsn">${esc(wrPlain(r).split("\n").slice(r.k==="free"?2:2).filter(x=>x&&!/^(일시|장소|학생( \d+)?|회의명|참석|제목|첨부):/.test(x)).join(" ").slice(0,90))}</span></button>
-      <button class="btn sm" type="button" data-ws="${esc(r.id)}">전달</button></div>`).join("")||`<p class="note">찾는 글이 없습니다.</p>`}</div>`
+      ${WRX.ed?`<button class="btn sm bad ghost" type="button" data-wd="${esc(r.id)}">삭제</button>`:`<button class="btn sm" type="button" data-ws="${esc(r.id)}">전달</button>`}</div>`).join("")||`<p class="note">찾는 글이 없습니다.</p>`}</div>`
     :`<p class="note">우리 반이 아닌 학생의 중요한 일, 회의 내용, 그날의 일을 바로 적어 둡니다. 사진 · 동영상 · 녹음 · 파일로 증빙을 붙이고, 다른 선생님께 문자 · 전화 · 이메일로 전달할 수 있습니다.</p>`}`;
   el.querySelectorAll("[data-wn]").forEach(b=>b.onclick=()=>wrNew(b.dataset.wn));el.querySelectorAll("[data-wf]").forEach(b=>b.onclick=()=>{WRX.f=b.dataset.wf;renderWrite()});
   if($("wrQ"))$("wrQ").oninput=e=>{WRX.q=e.target.value;const p=e.target.selectionStart;renderWrite();const n=$("wrQ");n.focus();try{n.setSelectionRange(p,p)}catch(_){}};
-  el.querySelectorAll("[data-wo]").forEach(b=>b.onclick=()=>wrEdit(b.dataset.wo));el.querySelectorAll("[data-ws]").forEach(b=>b.onclick=()=>wrShare(b.dataset.ws))}
+  el.querySelectorAll("[data-wo]").forEach(b=>b.onclick=()=>{if(WRX.ed){const c=el.querySelector(`[data-wsel="${b.dataset.wo}"]`);if(c){c.checked=!c.checked;c.onchange()}return}wrEdit(b.dataset.wo)});el.querySelectorAll("[data-ws]").forEach(b=>b.onclick=()=>wrShare(b.dataset.ws));
+  const rmMany=ids=>{const bk=JSON.stringify(S.recs);S.recs=recsAll().filter(x=>!ids.includes(x.id));WRX.sel=new Set();save();renderWrite();toastUndo(`글 ${ids.length}개를 지웠습니다`,()=>{S.recs=JSON.parse(bk);save();renderWrite()},8000)};
+  if($("wrEdOn"))$("wrEdOn").onclick=()=>{WRX.ed=true;WRX.sel=new Set();renderWrite()};if($("wrEdX"))$("wrEdX").onclick=()=>{WRX.ed=false;WRX.sel=new Set();renderWrite()};
+  if($("wrAllSel"))$("wrAllSel").onclick=()=>{const all=L.every(r=>WRX.sel.has(r.id));L.forEach(r=>all?WRX.sel.delete(r.id):WRX.sel.add(r.id));renderWrite()};
+  el.querySelectorAll("[data-wsel]").forEach(c=>c.onchange=()=>{if(c.checked)WRX.sel.add(c.dataset.wsel);else WRX.sel.delete(c.dataset.wsel);const b=$("wrSelDel");if(b){b.disabled=!WRX.sel.size;b.textContent=`선택 삭제 (${WRX.sel.size})`}});
+  if($("wrSelDel"))twoStep($("wrSelDel"),"정말 삭제",()=>rmMany([...WRX.sel]));
+  el.querySelectorAll("[data-wd]").forEach(b=>twoStep(b,"정말",()=>rmMany([b.dataset.wd])));
+  if(!WRX.ed)el.querySelectorAll(".wrrow[data-wr]").forEach(row=>{const r=recsAll().find(x=>x.id===row.dataset.wr);if(r)swipeDel(row,{del:()=>{row.remove();swRemove(`‘${wrTitle(r)}’ 글을`,()=>swOut(S.recs,r),()=>renderWrite())}})});
+  if(!WRX.purged){WRX.purged=true;wrPurge()}}
+/* 지운 글의 첨부 파일 정리 (앱을 연 뒤 처음 한 번, 어디에도 쓰이지 않는 첨부만) */
+function wrPurge(){try{const used=new Set();recsAll().forEach(r=>(r.media||[]).forEach(m=>{used.add(m.id);used.add(m.id+":t")}));
+  mTx("readonly",st=>st.getAllKeys()).then(keys=>{(keys||[]).filter(k=>/^w[a-z0-9]+(:t)?$/.test(k)&&!used.has(k)).forEach(k=>mTx("readwrite",st=>st.delete(k)).catch(()=>{}))}).catch(()=>{})}catch(e){}}
 function wrNew(k){const r={id:uid(),k,at:nowLocal(),place:"",blocks:[{id:uid(),t:"p",x:""}],media:[],cAt:new Date().toISOString()};
   if(k==="stu")r.stus=[{sid:"",name:"",phone:""}];if(k==="meet")r.meet={name:"",cnt:"",who:[]};if(k==="free")r.title="";
   recsAll().push(r);save();wrEdit(r.id,true)}
 /* --- 쓰기 (양식 + 블록 편집기 + 증빙) --- */
 let WR_SAVE=null;
 function wrTouch(r){r.uAt=new Date().toISOString();clearTimeout(WR_SAVE);WR_SAVE=setTimeout(()=>{save();try{renderWrite()}catch(e){}},400)}
-function wrEdit(id,isNew){const r=recsAll().find(x=>x.id===id);if(!r)return;const K=wrK(r);
+function wrEdit(id,isNew,orig){const r=recsAll().find(x=>x.id===id);if(!r)return;const K=wrK(r);orig=orig||JSON.stringify(r);const reopen=()=>wrEdit(id,isNew,orig);
   const f=(lab,idn,val,ph,type)=>`<label class="lb" for="${idn}">${lab}<input class="fld" id="${idn}" ${type?`type="${type}"`:""} value="${esc(val||"")}" placeholder="${esc(ph||"")}" autocomplete="off"></label>`;
   let head="";
   if(r.k==="stu")head=`${f("작성 일시","wrAt",r.at,"","datetime-local")}
@@ -4950,18 +4963,18 @@ function wrEdit(id,isNew){const r=recsAll().find(x=>x.id===id);if(!r)return;cons
     <div class="shlb">증빙 · 첨부 <small class="note">이 기기에만 저장 (구글 연동으로 옮겨지지 않음)</small></div>
     <div class="medbtns"><button class="btn sm" type="button" data-wm="photo">📷 사진</button><button class="btn sm" type="button" data-wm="video">🎥 동영상</button><button class="btn sm" type="button" data-wm="audio">🎙 녹음</button><button class="btn sm" type="button" data-wm="file">📂 불러오기</button></div>
     <div class="medgrid" id="wrMed"></div>
-    <div class="row2"><button class="btn bad ghost" type="button" id="wrDel">삭제</button><button class="btn" type="button" id="wrShareB">전달</button><button class="btn pri" type="button" id="skNo">완료</button></div>`;
+    <div class="row2"><button class="btn bad ghost" type="button" id="wrDel">삭제</button><button class="btn" type="button" id="wrCancel">취소</button><button class="btn" type="button" id="wrShareB">전달</button><button class="btn pri" type="button" id="skNo">완료</button></div>`;
   $("sheet").hidden=false;$("sheetBox").scrollTop=0;const box=$("sheetBox");
   const bind=(idn,fn)=>{const e=$(idn);if(e)e.oninput=()=>{fn(e.value);wrTouch(r)}};
   bind("wrAt",v=>{if(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(v))r.at=v.slice(0,16)});bind("wrPl",v=>{r.place=v.slice(0,60)});bind("wrTi",v=>{r.title=v.slice(0,80)});
   if(r.k==="meet"){bind("wrMn",v=>{r.meet.name=v.slice(0,60)});bind("wrMc",v=>{r.meet.cnt=v.replace(/\D/g,"").slice(0,3)});
     const who=()=>{$("wrWhoL").innerHTML=(r.meet.who||[]).map((n,i)=>`<span class="chip">${esc(n)} <button type="button" data-wx="${i}" aria-label="${esc(n)} 빼기">×</button></span>`).join("");$("wrWhoL").querySelectorAll("[data-wx]").forEach(b=>b.onclick=()=>{r.meet.who.splice(+b.dataset.wx,1);wrTouch(r);who()})};who();
-    $("wrWho").onclick=()=>wrStaffPick(r,()=>{wrEdit(id)})}
+    $("wrWho").onclick=()=>wrStaffPick(r,reopen)}
   if(r.k==="stu"){const paintS=()=>{$("wrStus").innerHTML=r.stus.map((s,i)=>`<div class="wrstu"><span class="no">${i+1}</span><input class="fld" data-si="${i}" data-sk="sid" value="${esc(s.sid)}" placeholder="학번" inputmode="numeric" maxlength="12"><input class="fld" data-si="${i}" data-sk="name" value="${esc(s.name)}" placeholder="이름" maxlength="20"><input class="fld" data-si="${i}" data-sk="phone" value="${esc(s.phone||"")}" placeholder="전화번호 (선택)" type="tel" inputmode="tel" maxlength="20"></div>`).join("");
       $("wrStus").querySelectorAll("[data-si]").forEach(e=>e.oninput=()=>{r.stus[+e.dataset.si][e.dataset.sk]=e.value.trim().slice(0,30);wrTouch(r)})};paintS();
     $("wrN").oninput=e=>{const n=Math.max(1,Math.min(40,parseInt(e.target.value,10)||1));while(r.stus.length<n)r.stus.push({sid:"",name:"",phone:""});
       if(r.stus.length>n){const extra=r.stus.slice(n);if(extra.some(s=>s.sid||s.name||s.phone)&&!confirm(`입력한 학생 ${extra.filter(s=>s.sid||s.name).length}명이 지워집니다. 줄일까요?`)){e.target.value=r.stus.length;return}r.stus=r.stus.slice(0,n)}paintS();wrTouch(r)};
-    $("wrPick").onclick=()=>wrStuPick(r,()=>wrEdit(id))}
+    $("wrPick").onclick=()=>wrStuPick(r,reopen)}
   wrBlocks(r);wrMedia(r);
   box.querySelectorAll("[data-wm]").forEach(b=>b.onclick=()=>{const k=b.dataset.wm,got=(file,t,dur)=>wrAddMedia(r,t,file,dur).then(()=>wrMedia(r));
     if(k==="audio")return recordAudio((file,dur)=>got(file,"audio",dur));
@@ -4969,7 +4982,13 @@ function wrEdit(id,isNew){const r=recsAll().find(x=>x.id===id);if(!r)return;cons
     pickMedia(k,(file)=>got(file,k,0))});
   $("skNo").onclick=()=>{clearTimeout(WR_SAVE);const empty=!wrPlain(r).split("\n").slice(2).join("").trim()&&!(r.media||[]).length&&!(r.stus||[]).some(s=>s.name||s.sid)&&!(r.meet&&r.meet.name);
     if(empty){S.recs=recsAll().filter(x=>x!==r);toast("빈 글은 저장하지 않았습니다")}save();$("sheet").hidden=true;renderWrite()};
-  $("wrShareB").onclick=()=>{clearTimeout(WR_SAVE);save();wrShare(r.id,()=>wrEdit(id))};
+  $("wrShareB").onclick=()=>{clearTimeout(WR_SAVE);save();wrShare(r.id,reopen)};
+  $("wrCancel").onclick=()=>{clearTimeout(WR_SAVE);const o=JSON.parse(orig),keep=new Set((o.media||[]).map(m=>m.id)),added=(r.media||[]).filter(m=>!keep.has(m.id));
+    const changed=isNew||JSON.stringify(r)!==orig;const done=()=>{if(isNew)S.recs=recsAll().filter(x=>x!==r);else{Object.keys(r).forEach(k=>delete r[k]);Object.assign(r,o)}
+      added.forEach(m=>mDel(m.id).catch(()=>{}));save();$("sheet").hidden=true;renderWrite();toast(isNew?"새 글 쓰기를 취소했습니다":"고친 내용을 취소했습니다")};
+    if(!changed){$("sheet").hidden=true;return}
+    save();$("sheetBox").innerHTML=`<h2>${isNew?"새 글 쓰기 취소":"고친 내용 취소"}</h2><p class="note">${isNew?"이 글을 저장하지 않고 닫습니다.":"이 글을 연 뒤에 고친 내용을 모두 되돌리고 닫습니다."}${added.length?` 새로 붙인 첨부 ${added.length}개도 지웁니다.`:""}</p>
+      <div class="row2"><button class="btn" type="button" id="wcBack">계속 쓰기</button><button class="btn bad" type="button" id="wcOk">${isNew?"저장하지 않고 닫기":"되돌리고 닫기"}</button></div>`;$("wcBack").onclick=reopen;$("wcOk").onclick=done};
   twoStep($("wrDel"),"정말 삭제",()=>{const bk=JSON.stringify(r),i=recsAll().indexOf(r);S.recs.splice(i,1);save();$("sheet").hidden=true;renderWrite();
     toastUndo("글을 지웠습니다",()=>{recsAll().splice(i,0,JSON.parse(bk));save();renderWrite()},8000);setTimeout(()=>{if(!recsAll().some(x=>x.id===r.id))(r.media||[]).forEach(m=>mDel(m.id).catch(()=>{}))},9000)})}
 /* 블록 편집기 */
@@ -7807,7 +7826,7 @@ const CHEER_PM=[
 "누군가를 가르치는 하루는 생각보다 많은 에너지를 씁니다. 충전의 시간을 가지세요.","오늘 들은 고맙다는 말, 웃던 얼굴 하나를 떠올려 보세요.",
 "선생님의 하루가 있었기에 어떤 아이의 하루가 조금 더 괜찮았을 거예요.","오늘도 끝까지 자리를 지켜 주셔서 감사합니다."];
 const CHEER_MOOD=[["good","😊","좋았어요","좋은 하루였다니 다행이에요. 오늘의 좋은 순간을 오래 간직하세요."],["ok","🙂","괜찮았어요","무사히 지나간 하루도 소중한 하루입니다. 편히 쉬세요."],["tired","😮‍💨","힘들었어요","정말 애쓰셨어요. 오늘은 스스로에게 조금 더 너그러워져도 괜찮아요."],["hard","😢","속상했어요","속상한 마음이 드는 날도 있어요. 선생님 잘못이 아닌 일까지 안고 가지 마세요. 오늘은 푹 쉬세요."]];
-function cheerPref(){let o={};try{o=JSON.parse(localStorage.getItem(CHEER_KEY)||"{}")}catch(e){}return{am:o.am!==false,pm:o.pm!==false,pmAt:o.pmAt||"auto",wk:!!o.wk,amM:o.amM||"tune",pmM:o.pmM||"tune",amL:o.amL||"",pmL:o.pmL||"",brk:o.brk!==false,rg:typeof o.rg==="string"?o.rg:"",noon:o.noon!==false,noonAt:o.noonAt||"auto"}}
+function cheerPref(){let o={};try{o=JSON.parse(localStorage.getItem(CHEER_KEY)||"{}")}catch(e){}return{am:o.am!==false,pm:o.pm!==false,pmAt:o.pmAt||"auto",wk:!!o.wk,amM:o.amM||"tune",pmM:o.pmM||"tune",amL:o.amL||"",pmL:o.pmL||"",noonM:o.noonM||"tune",noonL:o.noonL||"",brk:o.brk!==false,rg:typeof o.rg==="string"?o.rg:"",noon:o.noon!==false,noonAt:o.noonAt||"auto"}}
 function cheerSet(k,v){const o=cheerPref();o[k]=v;try{localStorage.setItem(CHEER_KEY,JSON.stringify(o))}catch(e){}}
 function cheerSeen(){try{return JSON.parse(localStorage.getItem(CHEER_SEEN)||"{}")}catch(e){return{}}}
 function cheerMark(k){const o=cheerSeen();o[k]=today();try{localStorage.setItem(CHEER_SEEN,JSON.stringify(o))}catch(e){}}
@@ -7815,7 +7834,7 @@ function dayIdx(n){const d=today().split("-").map(Number);return(d[0]*372+d[1]*3
 function cheerPmTime(){const p=cheerPref();if(p.pmAt!=="auto")return p.pmAt;const t=TT(),d=today();
   if(t&&wdOf(d)<=4){const rows=ttRows(t,d);const last=rows[rows.length-1].end;const A=(t.acts||{})["after|"+wdOf(d)];return A?toHM(Math.max(toMin(last)+60,toMin(last))):last}return"16:30"}
 /* --- 앱이 연주하는 짧은 곡 (직접 만든 곡이라 저작권 걱정 없음) --- */
-let CHEER_AC=null,CHEER_AUD=null;const CHEER_SRC={am:"sounds/morning.mp3",pm:"sounds/evening.mp3"};
+let CHEER_AC=null,CHEER_AUD=null;const CHEER_SRC={am:"sounds/morning.mp3",noon:"sounds/noon.mp3",pm:"sounds/evening.mp3"},CHEER_TUNE={am:"아침 햇살",noon:"오후의 다짐",pm:"저녁 노을"},CHEER_LBL={am:"하루를 여는 음악",noon:"오후를 여는 음악",pm:"하루를 닫는 음악"};
 function cheerStop(){try{if(CHEER_AC){CHEER_AC.close();CHEER_AC=null}}catch(e){}try{if(CHEER_AUD){const a=CHEER_AUD;CHEER_AUD=null;a.onerror=null;a.pause();if(/^blob:/.test(a.src))URL.revokeObjectURL(a.src)}}catch(e){}document.querySelectorAll("[data-cplay]").forEach(b=>b.classList.remove("playing"))}
 function playTune(kind){
   cheerStop();const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return toast("이 브라우저는 소리를 낼 수 없습니다");
@@ -7846,18 +7865,18 @@ function playTune(kind){
 }
 async function cheerPlay(kind,btn){
   if(btn&&btn.classList.contains("playing")){cheerStop();return}
-  const P=cheerPref(),mode=kind==="am"?P.amM:P.pmM;
+  const P=cheerPref(),mode=P[kind+"M"]||"tune";
   if(mode==="none")return toast("설정 → 응원 메시지 · 음악에서 음악을 고르세요");
-  if(mode==="link"){const u=kind==="am"?P.amL:P.pmL;if(!/^https?:\/\//.test(u))return toast("설정에서 음악 링크를 넣어 주세요");window.open(u,"_blank","noopener");return}
+  if(mode==="link"){const u=P[kind+"L"]||"";if(!/^https?:\/\//.test(u))return toast("설정에서 음악 링크를 넣어 주세요");window.open(u,"_blank","noopener");return}
   if(mode==="file"){try{const blob=await mGet("cheer:"+kind);if(!blob)return toast("설정에서 음악 파일을 골라 주세요");cheerStop();const a=new Audio(URL.createObjectURL(blob));CHEER_AUD=a;a.volume=.8;a.onended=()=>cheerStop();await a.play()}catch(e){return toast("음악을 재생하지 못했습니다")}}
   else{/* 5.25.1: 앱에 들어 있는 음원 파일(sounds/)을 재생합니다. 휴대폰 무음 스위치와 상관없이 미디어 소리로 나옵니다. 버튼을 누른 그 순간에 바로 재생해야 휴대폰이 막지 않습니다. */
     cheerStop();const a=new Audio(CHEER_SRC[kind]);a.preload="auto";CHEER_AUD=a;a.volume=1;let fell=false;
-    const fallback=()=>{if(fell||CHEER_AUD!==a)return;fell=true;CHEER_AUD=null;playTune(kind);if(btn)btn.classList.add("playing")};
+    const fallback=()=>{if(fell||CHEER_AUD!==a)return;fell=true;CHEER_AUD=null;playTune(kind==="noon"?"am":kind);if(btn)btn.classList.add("playing")};
     a.onended=()=>{if(CHEER_AUD===a)cheerStop()};a.onerror=fallback;
     const pr=a.play();if(pr&&pr.catch)pr.catch(e=>{if(e&&e.name==="NotAllowedError"){cheerStop();toast("휴대폰이 소리 재생을 막았습니다. ▶ 버튼을 한 번 더 눌러 주세요")}else fallback()})}
   if(btn)btn.classList.add("playing");
 }
-function cheerMusicBtn(kind){const P=cheerPref(),m=kind==="am"?P.amM:P.pmM;if(m==="none")return"";const nm=m==="tune"?(kind==="am"?"아침 햇살":"저녁 노을"):m==="file"?"내 음악":"음악 링크";return `<button class="btn cplay" type="button" data-cplay="${kind}"><span class="pl">▶</span><span class="ps">■</span> ${kind==="am"?"하루를 여는 음악":"하루를 닫는 음악"} <small>${esc(nm)}</small></button>`}
+function cheerMusicBtn(kind){const P=cheerPref(),m=P[kind+"M"]||"tune";if(m==="none")return"";const nm=m==="tune"?CHEER_TUNE[kind]:m==="file"?"내 음악":"음악 링크";return `<button class="btn cplay" type="button" data-cplay="${kind}"><span class="pl">▶</span><span class="ps">■</span> ${CHEER_LBL[kind]} <small>${esc(nm)}</small></button>`}
 function cheerName(){const n=meName();return n?`${esc(n)} 선생님`:"선생님"}
 function showMorning(force){
   const d=today(),X=dayLoad(d),h=new Date().getHours(),hi=h<11?"좋은 아침입니다":"안녕하세요",prev=(diaryAll()[d]||{}).am||"";
@@ -7882,7 +7901,7 @@ function showNoon(force){
     <p class="cheermsg">${esc(recall+CHEER_NOON[dayIdx(CHEER_NOON.length)])}</p>
     <p class="cheerday">${esc(loadLine("noon",X))}</p>
     ${moodRow(CHEER_NOON_MOOD,prev)}<p class="cheerre" id="chRe">${prev?esc([(CHEER_NOON_MOOD.find(x=>x[0]===prev)||[])[3]||"",moodExtra("noon",prev,X)].filter(Boolean).join(" ")):""}</p>
-    <div class="cheerbtns">${cheerMusicBtn("am")}<button class="btn pri" type="button" id="chGo">오후 시작하기</button></div>
+    <div class="cheerbtns">${cheerMusicBtn("noon")}<button class="btn pri" type="button" id="chGo">오후 시작하기</button></div>
     <button class="cheeroff" type="button" id="chOff">오후 인사 그만 보기</button></div>`;
   $("sheet").hidden=false;if(!force)cheerMark("noon");
   wireCheer();wireMood(CHEER_NOON_MOOD,"noon",X,"noon");fillWx("noon");$("chGo").onclick=()=>{$("sheet").hidden=true};
@@ -7929,7 +7948,7 @@ function cheerCheck(){
 function renderCheerSet(){
   const B=$("cheerBody");if(!B)return;const P=cheerPref(),D0=diaryAll(),ks=Object.keys(D0).sort().reverse().slice(0,7);
   const opt=(k,v,l)=>`<button class="chip" type="button" data-ck="${k}" data-cv="${v}" aria-pressed="${String(P[k])===String(v)}">${l}</button>`;
-  const mus=kind=>{const k=kind==="am"?"amM":"pmM",lk=kind==="am"?"amL":"pmL";return `<div class="presets">${opt(k,"tune",kind==="am"?"앱 음악 ‘아침 햇살’":"앱 음악 ‘저녁 노을’")}${opt(k,"file","내 음악 파일")}${opt(k,"link","음악 링크")}${opt(k,"none","음악 없음")}</div>
+  const mus=kind=>{const k=kind+"M",lk=kind+"L";return `<div class="presets">${opt(k,"tune",`앱 음악 ‘${CHEER_TUNE[kind]}’`)}${opt(k,"file","내 음악 파일")}${opt(k,"link","음악 링크")}${opt(k,"none","음악 없음")}</div>
     ${P[k]==="file"?`<div class="row2"><label class="btn filebtn" for="cf_${kind}">음악 파일 고르기 (mp3 등)<input type="file" id="cf_${kind}" accept="audio/*"></label></div>`:""}
     ${P[k]==="link"?`<input class="fld" id="cl_${kind}" placeholder="https://… (유튜브·음원 사이트 주소)" value="${esc(P[lk])}">`:""}
     <div class="row2">${cheerMusicBtn(kind)||""}</div>`};
@@ -7940,12 +7959,13 @@ function renderCheerSet(){
     <div class="uirow"><div class="shlb">주말에도</div><div class="presets">${opt("wk",false,"평일만")}${opt("wk",true,"주말에도")}</div></div>
     ${brkSetHTML(P,opt)}
     <h3 class="sh3">하루를 여는 음악</h3>${mus("am")}
+    <h3 class="sh3">오후를 여는 음악</h3>${mus("noon")}
     <h3 class="sh3">하루를 닫는 음악</h3>${mus("pm")}
-    <p class="note">‘아침 햇살’(밝은 피아노, 1분 18초)과 ‘저녁 노을’(잔잔한 피아노, 1분 17초)은 이 앱을 위해 새로 지은 곡이라 저작권 걱정이 없습니다. 휴대폰 무음 모드에서도 미디어 소리로 나오니 미디어 음량을 확인해 주세요. 한 번 들으면 인터넷이 없어도 다시 들을 수 있습니다. 내 음악 파일은 이 기기에만 저장됩니다. 음악은 인사 창에서 ▶를 눌러야 나옵니다(자동으로 소리가 나지 않음).</p>
+    <p class="note">‘아침 햇살’(밝은 피아노, 1분 18초), ‘오후의 다짐’(밝고 단정한 피아노와 종소리, 1분 25초), ‘저녁 노을’(잔잔한 피아노, 1분 17초)은 이 앱을 위해 새로 지은 곡이라 저작권 걱정이 없습니다. 휴대폰 무음 모드에서도 미디어 소리로 나오니 미디어 음량을 확인해 주세요. 한 번 들으면 인터넷이 없어도 다시 들을 수 있습니다. 내 음악 파일은 이 기기에만 저장됩니다. 음악은 인사 창에서 ▶를 눌러야 나옵니다(자동으로 소리가 나지 않음).</p>
     ${ks.length?`<details class="gsfix"><summary>지난 ‘오늘의 한 줄’ (${Object.keys(D0).length}일)</summary><div class="abslist">${ks.map(k=>{const r=D0[k],m=CHEER_MOOD.find(x=>x[0]===r.m);return `<div><span><b>${esc(fmtDate(k))}</b> ${m?m[1]+" "+esc(m[2]):""}<br><small>${esc(r.t||"")}</small></span></div>`}).join("")}</div></details>`:""}`;
   B.querySelectorAll("[data-ck]").forEach(b=>b.onclick=()=>{let v=b.dataset.cv;if(v==="true")v=true;else if(v==="false")v=false;cheerSet(b.dataset.ck,v);renderCheerSet()});
-  ["am","pm"].forEach(kind=>{const f=$("cf_"+kind);if(f)f.onchange=async e=>{const x=e.target.files&&e.target.files[0];e.target.value="";if(!x)return;if(x.size>30*1048576)return toast("30MB 이하의 음악 파일을 골라 주세요");try{await mPut("cheer:"+kind,x);toast(`‘${x.name}’을(를) ${kind==="am"?"아침":"저녁"} 음악으로 저장했습니다`)}catch(err){toast("저장하지 못했습니다")}};
-    const l=$("cl_"+kind);if(l)l.onchange=()=>{const v=l.value.trim();if(v&&!/^https?:\/\//.test(v))return toast("https://로 시작하는 주소를 넣어 주세요");cheerSet(kind==="am"?"amL":"pmL",v);toast("음악 링크를 저장했습니다")}});
+  ["am","noon","pm"].forEach(kind=>{const f=$("cf_"+kind);if(f)f.onchange=async e=>{const x=e.target.files&&e.target.files[0];e.target.value="";if(!x)return;if(x.size>30*1048576)return toast("30MB 이하의 음악 파일을 골라 주세요");try{await mPut("cheer:"+kind,x);toast(`‘${x.name}’을(를) ${kind==="am"?"아침":"저녁"} 음악으로 저장했습니다`)}catch(err){toast("저장하지 못했습니다")}};
+    const l=$("cl_"+kind);if(l)l.onchange=()=>{const v=l.value.trim();if(v&&!/^https?:\/\//.test(v))return toast("https://로 시작하는 주소를 넣어 주세요");cheerSet(kind+"L",v);toast("음악 링크를 저장했습니다")}});
   B.querySelectorAll("[data-cplay]").forEach(b=>b.onclick=()=>cheerPlay(b.dataset.cplay,b));
   $("chPrevAm").onclick=()=>showMorning(true);$("chPrevNoon").onclick=()=>showNoon(true);$("chPrevPm").onclick=()=>showEvening(true);try{wireBrkSet()}catch(e){}
 }
