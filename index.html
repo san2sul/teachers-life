@@ -954,9 +954,13 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 /* 5.30: 밀어서 삭제 */
 .swrow{touch-action:pan-y}
 .swrow.swing{user-select:none;-webkit-user-select:none}
-.swdel{position:fixed;z-index:200;display:flex;align-items:center;justify-content:center;gap:4px;overflow:hidden;white-space:nowrap;border:0;margin:0;padding:0;background:var(--absent);color:#fff;font:inherit;font-weight:700;font-size:.9375rem;border-radius:0 var(--r-m) var(--r-m) 0;cursor:pointer}
-.swdel svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.swdel:not(.full) span{display:none}
+.swacts{position:fixed;z-index:200;display:flex;overflow:hidden;border-radius:0 var(--r-m) var(--r-m) 0}.swacts[hidden]{display:none}
+.swacts>button{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;overflow:hidden;white-space:nowrap;border:0;margin:0;padding:0 2px;color:#fff;font:inherit;font-weight:700;font-size:.8125rem;cursor:pointer}
+.swacts.one>button{flex-direction:row;gap:4px;font-size:.9375rem}
+.swdel{background:var(--absent)}.sw-edit{background:#2f5f8f}.sw-arch,.sw-unarch,.sw-out{background:#94680f}.sw-done,.sw-keep{background:#1f7a4d}.sw-undo{background:#5b665f}.sw-send{background:#4b5f8a}
+.swacts>button:active{filter:brightness(.88)}
+.swacts svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.swacts:not(.full) span{display:none}
 /* 5.30: 오늘 탭 숫자 칸 누르기 */
 .kpib{font:inherit;color:inherit;text-align:left;cursor:pointer;position:relative;min-height:72px}
 .kpib i{font-style:normal;font-size:.75rem;color:var(--accent);font-weight:700;margin-top:2px}
@@ -986,6 +990,7 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 .wbadd{display:block;margin-top:6px;border:0;background:none;color:var(--muted);font:inherit;font-size:.875rem;min-height:36px;padding:0}
 .wrslash{position:absolute;left:16px;right:16px;z-index:5;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:0 8px 24px rgba(0,0,0,.18);padding:4px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.wrslash button{display:flex;gap:8px;align-items:center;text-align:left;padding:8px;border:0;border-radius:8px;background:none;color:var(--ink);font:inherit;min-height:40px}.wrslash button span{min-width:28px;text-align:center;font-weight:700;color:var(--muted)}.wrslash button.on{background:var(--tint)}
 .wsprev pre{white-space:pre-wrap;font:inherit;font-size:.8125rem;background:var(--tint);padding:8px;border-radius:8px;max-height:220px;overflow:auto}.wsl{max-height:260px;overflow:auto;flex:none}
+.tkft:empty{display:none}.swhint{margin:2px 0 0;font-size:.75rem}.tkarn{margin:0;color:var(--warn)}
 .tklist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.tkrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;text-align:left;min-height:48px}.tkn{flex:1;min-width:0}.tkn b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tkn small{color:var(--muted)}.tkc{font-size:.8125rem;color:var(--muted);white-space:nowrap}.tkc.on{color:#a63f34;font-weight:700}.tkk{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;padding:1px 6px;border-radius:6px;white-space:nowrap;vertical-align:middle}.tkk.perf{background:#ece4fb;color:#5a2ea6}.tkk.hw{background:#e2eefb;color:#1d4b85}.tkk.form{background:#dcf3ee;color:#16655a}@media (prefers-color-scheme:dark){.tkk.perf{background:#33284a;color:#cdb8f5}.tkk.hw{background:#1f3550;color:#a9c8f2}.tkk.form{background:#1d3d38;color:#9fdccf}.tkc.on{color:#f0a49a}}.tkgrid{flex:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px;margin:8px 0}.tkt{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px;min-height:58px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;-webkit-user-select:none;user-select:none}.tkt .no{font-size:.6875rem;color:var(--muted)}.tkt small{font-size:.6875rem;min-height:1em}.tkt.m{background:#a63f34;border-color:#a63f34;color:#fff}.tkt.m .no{color:#fde2df}.tkt.l{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}.tsd i.ctd{background:#e2f3e5;color:#1f6a35}.tkcr{flex-wrap:wrap}.tkcr.done{background:var(--tint)}.tkcb{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.tkcd{display:block;color:#1f6a35!important}.tkcr .nop{display:block;color:var(--muted)}.tsd i.miss{background:#fde2df;color:#8f2a1f}.tsd i.late{background:var(--warn-soft);color:var(--warn)}.snovl .late{color:var(--muted)}.tsstrip{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tsstrip .chip b{margin-left:2px}.tsk{flex:none}.tshd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}.tshd>span{color:var(--muted);font-size:.875rem}.tsbt{margin-left:auto;display:flex;gap:6px}.otagt{font-size:1rem}.otagt.neg{color:var(--bad,#a63f34)}.otagt.pos{color:var(--accent)}.tslist{flex:none;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}.tslist.off{opacity:.92}.tsrow{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:44px;border-bottom:1px solid var(--line);cursor:pointer}.tsrow:last-child{border-bottom:0}.tsrow input{width:22px;height:22px;flex:none}.tsn{flex:1;min-width:0}.tsn small{color:var(--muted)}.tsd{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;font-size:.75rem;color:var(--muted)}.tsd i{font-style:normal;background:var(--tint);border-radius:6px;padding:1px 5px}.sntag{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;line-height:1.5;padding:0 5px;margin-left:4px;border-radius:6px;vertical-align:middle;white-space:nowrap;background:var(--tint);color:var(--ink)}.sntag.warn{background:#fde2df;color:#8f2a1f}.sntag.prom{background:#dceafc;color:#1d4b85}.sntag.note{background:#e2f3e5;color:#1f6a35}@media (prefers-color-scheme:dark){.sntag.warn{background:#4a2420;color:#f3b5ac}.sntag.prom{background:#1f3550;color:#a9c8f2}.sntag.note{background:#1f3b27;color:#a6dcb3}}.st.tile .sntag{margin:2px 1px 0}.snl{display:block;font-size:.75rem;color:var(--muted);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.snadd{display:flex;gap:6px;margin:8px 0}.snadd .fld{flex:1;min-width:0}.snrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}.snrow>span{flex:1;min-width:0}.snrow small{display:block;color:var(--muted)}.snrow.done b{text-decoration:line-through;color:var(--muted)}.snhd{display:flex;justify-content:space-between;align-items:center;gap:8px}.snsec{padding:8px 0}.cheerq{margin:10px 0 4px;font-size:.875rem;color:var(--muted)}.lowtag{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;line-height:1.5;padding:0 5px;margin-left:5px;border-radius:6px;background:var(--warn-soft);color:var(--warn);vertical-align:middle;white-space:nowrap}.st.tile .lowtag{display:block;width:max-content;margin:2px auto 0}.termnote{margin:0 0 10px}.termnote span{display:block}.cheerwx{font-size:.9375rem;line-height:1.6;margin:6px 0;opacity:.95}.lowl .chk{min-height:40px}.hcard{border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;margin:8px 0;background:var(--paper)}.hch{font-size:.875rem;margin-bottom:4px}.hcm{white-space:pre-wrap;margin:6px 0;font-size:.9375rem}.cdr textarea{margin:2px 0 6px 30px;width:calc(100% - 30px)}.lgt{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px}.lgp>summary{min-height:44px;font-size:.875rem;color:var(--ink)}.rosd{display:flex;flex-direction:column;padding:0 0 4px 22px}.rosd .chk{min-height:36px;font-weight:400;font-size:.875rem}.rosd small{color:var(--muted)}.chk>span{flex:1;min-width:0}.schk>.chk b{margin-left:4px;color:var(--accent)}
 .schk details>summary{cursor:pointer;color:var(--muted);font-size:.8125rem;min-height:32px;display:flex;align-items:center}
 .schkl{display:flex;flex-direction:column;gap:0;padding:4px 0 4px 28px}.schkl .chk{min-height:36px;font-size:.875rem}
@@ -1005,6 +1010,25 @@ input.code{text-transform:uppercase;font-size:1.15rem}
 .tagx{font-style:normal;font-size:.75rem;font-weight:700;border-radius:999px;padding:1px 8px;margin-left:6px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
 .tagx.hr{background:var(--present-soft);color:var(--present)}
 .schdiff.nomax{max-height:none;overflow:visible}
+
+/* 5.44: 창(시트) — 위쪽 × 닫기 · 아래에 붙는 닫기/취소 줄 · 부드러운 스크롤 */
+.sheet{overscroll-behavior:contain}
+.sheet>div{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#sheetBox>*{flex-shrink:0}
+.medgrid>p.note{grid-column:1/-1}
+#sheetBox>.skx{position:sticky;top:2px;z-index:4;align-self:flex-end;flex:none;width:36px;height:36px;margin:-8px -6px -50px 0;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--muted);font:inherit;font-size:1.35rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:box-shadow .15s}
+#sheetBox>.skx[hidden]{display:none}
+#sheetBox>.skx:hover,#sheetBox>.skx:focus-visible{color:var(--ink);background:var(--tint)}
+#sheetBox.sktop>.skx{box-shadow:0 2px 8px rgba(0,0,0,.16)}
+#sheetBox>.skx:not([hidden])+:is(h2,h3,p,label,.sub){padding-right:40px}
+#sheetBox>.skfoot{position:sticky;bottom:calc(-20px - env(safe-area-inset-bottom,0px));z-index:3;background:var(--paper);margin-inline:-16px;margin-bottom:calc(-20px - env(safe-area-inset-bottom,0px));padding:10px 16px calc(20px + env(safe-area-inset-bottom,0px));transition:box-shadow .15s}
+#sheetBox>.skfoot~*{position:relative;z-index:0}
+#sheetBox.skmore>.skfoot{box-shadow:0 -8px 14px -10px rgba(0,0,0,.28);border-top:1px solid var(--line)}
+@media (pointer:coarse){
+  html:has(body.shopen),body.shopen{overflow:hidden}
+  #sheetBox :is(.plist,.pklist,.abslist,.clist,.aclist,.kpil,.schdiff,.wsl,.bkprev){max-height:none;overflow:visible}
+  #sheetBox :is(.tblw,.scw,.vsw){max-height:none;overflow-y:visible}
+}
 </style>
 </head>
 <body>
@@ -1462,8 +1486,9 @@ input.code{text-transform:uppercase;font-size:1.15rem}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.43.1", APP_DATE="2026-10-23", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.44.0", APP_DATE="2026-10-23", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.44.0",date:"2026-10-23",items:["목록 줄을 왼쪽으로 밀면 수정 · 보관 · 삭제 단추: 평가 · 과제(공통 · 학급, 학급 화면의 공통 과제는 ‘빼기’), 글쓰기, 서명 받기(평가)는 수정 · 보관 · 삭제, 오늘 할 일 · 일정은 완료 · 수정 · 삭제, 학생 · 선생님 · 교직원 · 수업 변동 · 학교 명단은 수정 · 삭제, 짧은 메모의 약속은 지킴 · 삭제","평가 · 과제와 글쓰기에 📦 보관함: 보관한 것은 목록에서 빠지고 보관함에서 다시 꺼낼 수 있음(되돌리기 지원)","밀고 나서 바로 누른 단추가 가끔 듣지 않던 문제 고침","창(목록 보기 · 설정 등)의 위쪽 오른쪽에 × 닫기 단추: 길게 내려가지 않아도 바로 닫기(확인 창에서는 ‘취소’와 같음)","닫기 · 취소 · 완료 줄은 창 아래에 붙어 있어 스크롤 중에도 보이고 바로 누를 수 있음","휴대폰 뒤로 가기 버튼 · 컴퓨터 Esc 키로도 창 닫기","휴대폰에서 창 안 목록이 따로 스크롤되지 않고 창 하나로 부드럽게 스크롤, 창이 열린 동안 뒤 화면은 움직이지 않음, 창을 열면 맨 위부터","새 버전 빨리 받기: 컴퓨터에서 창을 다시 볼 때 · 인터넷이 다시 연결될 때 · 켜 둔 동안 30분마다 확인, 앱을 막 열었을 때 새 버전이 있으면 바로 바뀜(쓰던 중이면 안내만), 새 파일을 브라우저에 남은 옛 파일 대신 서버에서 받음"]},
   {v:"5.43.1",date:"2026-10-23",items:["오후 인사에 새 음악 ‘오후의 다짐’(G장조 · 88bpm, 1분 25초): 밝지만 차분하고 경쾌하지만 단정한 피아노에 잔잔한 종소리, 오후 일과를 다시 힘내어 여는 곡. 이 앱을 위해 새로 지은 곡. 설정 → 응원 메시지 · 음악 → ‘오후를 여는 음악’에서 내 음악 파일 · 링크 · 없음으로 바꿀 수 있음","글쓰기 취소 · 삭제: 쓰는 창에 ‘취소’(새 글은 저장하지 않고 닫기, 고친 글은 연 뒤 고친 내용과 새 첨부를 되돌리기, 한 번 더 확인). 목록에 ‘목록 편집 · 삭제’(골라서 한꺼번에 삭제 · 하나씩 삭제 · 취소, 되돌리기)와 왼쪽으로 밀어 삭제. 지운 글의 첨부 파일은 다음에 앱을 열 때 정리"]},
   {v:"5.43.0",date:"2026-10-23",items:["출석에 ‘글쓰기’ 탭 추가(평가 · 과제 옆): 학생 기록(작성 일시, 학생 수만큼 학번 · 이름 · 전화번호 칸, 우리 학생에서 고르기, 장소, 내용) · 회의 기록(일시, 회의명, 장소, 참석 인원 · 교직원 고르기, 내용) · 일상 기록(일시, 장소, 내용) · 자유 글","노션처럼 블록으로 쓰기: 제목 · 소제목 · 글머리 목록 · 번호 목록 · 할 일(체크) · 인용 · 구분선, ‘/’ 메뉴, #  -  1.  []  >  --- 줄임말, 도구 막대로 바꾸기 · 옮기기 · 지우기. 쓰는 대로 저장","모든 글에 사진 · 동영상 · 녹음 · 파일 불러오기(PDF · 한글 등)로 증빙, 이 기기에 저장","목록에서 찾기 · 종류별 보기, ‘전달’로 다른 선생님께 문자 · 전화 · 이메일 · 공유하기(첨부 포함), 전달 기록 남김. 글은 구글 연동 · 백업에 포함"]},
   {v:"5.42.0",date:"2026-10-23",items:["출석에 ‘평가 · 과제’ 탭 추가(출석 체크 · 관찰 기록 옆, 모든 학급 공통): 수행평가 · 형성평가 · 과제를 만들고 실시할 학급을 골라 배분(모두 선택 가능). 학급별 미참여 · 미제출 현황을 한눈에 보고, 학급을 눌러 체크 · 일괄 관리, 전체 명단 복사. 이름 · 날짜 · 종류 · 학급 배분 고치기, 삭제(되돌리기)","학급 관찰 기록과 연동: 공통에서 만든 것은 배분된 학급의 관찰 기록에 똑같이 나오고, 어느 쪽에서 체크해도 같은 기록. 학급에서 만들면 그 학급에만 배분되고 공통에도 나옴. 학급에서는 그 학급 것만 다루고, 여러 학급이 함께 쓰는 것은 ‘이 학급에서 빼기’만(다른 학급 기록은 그대로)","미참여 · 미제출 학생 연락하기: 학급 체크 창 · 공통 화면에서 문자(학생마다 이름 넣어 / 번호 있는 학생 한꺼번에) · 전화 · 이메일. 보낼 말을 고쳐 쓰고({이름} {학급} {항목} {날짜} 자동), ‘늦게 냄’ 포함 선택, 연락한 학생은 ‘연락함’으로 표시","5.41에서 학급별로 만든 수행평가 · 과제는 공통 목록으로 자동으로 옮김. 구글 연동 · 백업에 함께 들어감"]},
@@ -2269,7 +2294,7 @@ function renderStu(){
   const items=D.roster.filter(([id,n])=>matchQ(LQ.stu,id,n,D.phones[id]||"",D.emails[id]||"")).map(([id,name])=>({key:id,name,badge:lowShow()?[isLow(id)?"최성보":"",...SN_K.filter(k=>snOpen(id).some(n=>n.k===k[0])).map(k=>k[1])].filter(Boolean).join(" · "):"",sub:"학번 "+id+(D.emails[id]?" · "+D.emails[id]:""),phone:D.phones[id]||""}));
   const L=$("stuList");L.innerHTML=listHTML("stu",items);
   L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editStudent(b.dataset.k);const d=D,st=d.roster.find(x=>x[0]===b.dataset.k);if(!st)return;
-    swipeDel(b,{del:()=>{b.remove();swRemove(`${st[1]} 학생을`,()=>{const id=st[0],ph=d.phones[id],em=(d.emails||{})[id],back=swOut(d.roster,st);delete d.phones[id];if(d.emails)delete d.emails[id];try{PK.stu.sel.delete(id)}catch(e){}
+    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>editStudent(st[0])}],del:()=>{b.remove();swRemove(`${st[1]} 학생을`,()=>{const id=st[0],ph=d.phones[id],em=(d.emails||{})[id],back=swOut(d.roster,st);delete d.phones[id];if(d.emails)delete d.emails[id];try{PK.stu.sel.delete(id)}catch(e){}
       return()=>{back();if(ph)d.phones[id]=ph;if(em){d.emails=d.emails||{};d.emails[id]=em}}})}})});
 }
 function renderTcEdit(){
@@ -2278,7 +2303,7 @@ function renderTcEdit(){
   const items=D.teachers.filter(t=>matchQ(LQ.tc,t.name,t.role,t.phone)).map(t=>({key:t.id,name:t.name,sub:t.role||"과목·역할 없음",phone:t.phone}));
   const L=$("tcEdit");L.innerHTML=listHTML("tc",items);
   L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editContact("tc",b.dataset.k);const d=D,t=d.teachers.find(x=>x.id===b.dataset.k);if(!t)return;
-    swipeDel(b,{del:()=>{b.remove();swRemove(`${t.name} 선생님을`,()=>swOut(d.teachers,t))}})});
+    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>editContact("tc",t.id)}],del:()=>{b.remove();swRemove(`${t.name} 선생님을`,()=>swOut(d.teachers,t))}})});
 }
 function renderStaffEdit(){
   $("staffCnt").textContent=perStaff().length+"명";
@@ -2287,7 +2312,7 @@ function renderStaffEdit(){
     .filter(t=>matchQ(LQ.staff,t.name,t.dept,t.role,t.phone)).map(t=>({key:t.id,name:t.name,sub:[t.dept,t.role].filter(Boolean).join(" · ")||"부서 없음",phone:t.phone}));
   const L=$("staffEdit");L.innerHTML=listHTML("staff",items);
   L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editContact("staff",b.dataset.k);const t=S.staff.find(x=>x.id===b.dataset.k);if(!t)return;
-    swipeDel(b,{del:()=>{b.remove();swRemove(`${t.name} 연락처를`,()=>{const back=swOut(S.staff,t);try{PK.staff.sel.delete(t.id)}catch(e){}return back})}})});
+    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>editContact("staff",t.id)}],del:()=>{b.remove();swRemove(`${t.name} 연락처를`,()=>{const back=swOut(S.staff,t);try{PK.staff.sel.delete(t.id)}catch(e){}return back})}})});
 }
 $("qStu").oninput=e=>{LQ.stu=e.target.value;renderStu()};$("lowPick").onclick=()=>lowSheet();
 $("qTc").oninput=e=>{LQ.tc=e.target.value;renderTcEdit()};
@@ -3425,7 +3450,7 @@ function renderChgList(t){
   const td=today();
   L.innerHTML=l.length?l.map(c=>`<button class="prow" type="button" data-cg="${esc(c.id)}"><span class="pn">${esc(chgLabel(c))}${c.reason?` · ${esc(c.reason)}`:""}${c.to<td?'<em style="color:var(--muted)">지난 변동</em>':""}<small>${esc(chgWhen(c))}${c.type!=="cancel"?` → ${esc([c.subject,c.clsName,c.room].filter(Boolean).join(" · "))}`:""}</small></span><span class="pe">수정</span></button>`).join(""):`<div class="empty">등록된 수업 변동이 없습니다.<br>시간표 칸이나 요일을 눌러 ‘수업 변동’을 넣으세요.</div>`;
   L.querySelectorAll("[data-cg]").forEach(b=>{b.onclick=()=>changeSheet(t,{id:b.dataset.cg});const c=(t.chg||[]).find(y=>y.id===b.dataset.cg);
-    if(c)swipeDel(b,{del:()=>{b.remove();swRemove(`‘${chgLabel(c)}’ 변동을`,()=>swOut(t.chg,c),()=>renderTT())}})});
+    if(c)swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>changeSheet(t,{id:c.id})}],del:()=>{b.remove();swRemove(`‘${chgLabel(c)}’ 변동을`,()=>swOut(t.chg,c),()=>renderTT())}})});
   $("ttChgCnt").textContent=l.filter(c=>c.to>=td).length?`예정 ${l.filter(c=>c.to>=td).length}개`:"";
 }
 
@@ -3712,9 +3737,9 @@ function renderSchList(grades){
     $("schAddT").onclick=()=>schEditStaff(null);
   }
   L.querySelectorAll("[data-su]").forEach(b=>{const s=SCH.students.find(x=>x.uid===b.dataset.su);if(!s)return;b.onclick=()=>schEditStu(s);
-    swipeDel(b,{del:()=>{b.remove();schRemove(`${s.name} 학생을`,SCH.students,s)}})});
+    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>schEditStu(s)}],del:()=>{b.remove();schRemove(`${s.name} 학생을`,SCH.students,s)}})});
   L.querySelectorAll("[data-tu]").forEach(b=>{const t=SCH.staff.find(x=>x.uid===b.dataset.tu);if(!t)return;b.onclick=()=>schEditStaff(t);
-    swipeDel(b,{del:()=>{b.remove();schRemove(`${t.name} 교직원을`,SCH.staff,t)}})});
+    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>schEditStaff(t)}],del:()=>{b.remove();schRemove(`${t.name} 교직원을`,SCH.staff,t)}})});
 }
 function schRemove(label,arr,item){const back=swOut(arr,item);schSave();renderSchool();
   toastUndo(`${label} 원본에서 삭제했습니다`,async()=>{back();await schSave();renderSchool();toast("되돌렸습니다")},6000)}
@@ -4604,6 +4629,8 @@ function snSheet(sid,cl,back){cl=cl||curClass();const d=cl.data,st=d.roster.find
     $("snAdd").onclick=add;$("snT").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();add()}};
     box.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>{const l2=snAll(sid,d).map(n=>n.id===b.dataset.done?(n.done?(({done,...r})=>r)(n):{...n,done:new Date().toISOString()}):n);snSave(d,sid,l2);paint();renderAll()});
     box.querySelectorAll("[data-del]").forEach(b=>twoStep(b,"정말",()=>{snSave(d,sid,snAll(sid,d).filter(n=>n.id!==b.dataset.del));paint();renderAll()}));
+    box.querySelectorAll(".snrow").forEach(row=>{const db=row.querySelector("[data-del]");if(!db)return;const id=db.dataset.del,n=snAll(sid,d).find(x=>x.id===id);if(!n)return;
+      swipeDel(row,{acts:n.k==="prom"?[{k:n.done?"undo":"done",l:n.done?"되돌리기":"지킴",fn:()=>swTap(row,"[data-done]")}]:[],del:()=>{const bk=snAll(sid,d);snSave(d,sid,bk.filter(x=>x.id!==id));paint();renderAll();toastUndo("메모를 지웠습니다",()=>{snSave(d,sid,bk);if(!$("sheet").hidden&&$("snT"))paint();renderAll()})}})});
     $("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true}};
   $("sheet").hidden=false;paint()}
 /* 오늘 탭: 아직 지키지 않은 약속 */
@@ -4773,23 +4800,32 @@ function tkRowHTML(t,cl){const k=tkK(t);if(cl){const m=tkSt(t,cl,"m").length,l=t
   return`<button class="tkrow" type="button" data-tk="${esc(t.id)}"><i class="tkk ${t.k}">${k[1]}</i><span class="tkn"><b>${esc(t.n)}</b><small>${t.due?esc(fmtDateW(t.due)):"날짜 없음"} · ${C.length?esc(C.map(c=>c.data.cls||"학급").join(", ")):"학급 없음"}</small></span><span class="tkc${tot?" on":""}">${tot?`${k[2]} ${tot}명`:C.length?"모두 냄":""}</span></button>`}
 /* --- 학급 관찰 기록: 그 학급 것만 --- */
 const TKX={more:false,f:""};
-function renderTaskCard(){const el=$("tkCard");if(!el)return;const cl=curClass();if(!cl)return;const L=tasksOf(cl).sort(tkSort);
-  el.innerHTML=`<div class="hd"><h2>평가 · 과제 점검</h2><span class="sub">${L.length?`이 학급 ${L.length}개`:""}</span></div>
-    <div class="row2"><button class="btn pri" type="button" id="tkNew">＋ 이 학급 평가 · 과제 만들기</button>${L.length?`<button class="btn" type="button" id="tkStu">학생별 모아 보기</button>`:""}</div>
-    ${L.length?`<div class="tklist">${L.slice(0,TKX.more?999:6).map(t=>tkRowHTML(t,cl)).join("")}</div>${L.length>6?`<button class="btn sm ghost" type="button" id="tkMore">${TKX.more?"접기":`${L.length-6}개 더 보기`}</button>`:""}`
+function renderTaskCard(){const el=$("tkCard");if(!el)return;const cl=curClass();if(!cl)return;const A=tasksOf(cl).sort(tkSort),na=A.filter(t=>t.arch).length;if(!na)TKX.carch=false;const L=A.filter(t=>!!t.arch===!!TKX.carch);
+  el.innerHTML=`<div class="hd"><h2>평가 · 과제 점검</h2><span class="sub">${A.length-na?`이 학급 ${A.length-na}개`:""}${na?` · 보관 ${na}`:""}</span></div>
+    <div class="row2"><button class="btn pri" type="button" id="tkNew">＋ 이 학급 평가 · 과제 만들기</button>${A.length?`<button class="btn" type="button" id="tkStu">학생별 모아 보기</button>`:""}</div>
+    ${A.length?`${TKX.carch?`<p class="note tkarn">📦 보관함 · 줄을 왼쪽으로 밀어 꺼내거나 지웁니다</p>`:""}<div class="tklist">${L.slice(0,TKX.more?999:6).map(t=>tkRowHTML(t,cl)).join("")||`<p class="note">진행 중인 평가 · 과제가 없습니다.</p>`}</div><div class="row2 tkft">${L.length>6?`<button class="btn sm ghost" type="button" id="tkMore">${TKX.more?"접기":`${L.length-6}개 더 보기`}</button>`:""}${na?`<button class="btn sm ghost" type="button" id="tkArc">${TKX.carch?"‹ 진행 중 목록":`📦 보관함 ${na}`}</button>`:""}</div><p class="note swhint">줄을 왼쪽으로 밀면 수정 · 보관 · 삭제</p>`
       :`<p class="note">수행평가 · 형성평가 · 과제를 만들고 미참여 · 미제출 학생을 체크합니다. 여러 학급에 함께 내는 것은 위쪽 <b>평가 · 과제</b>에서 만들고 학급을 고르면 이 화면에도 나옵니다.</p>`}`;
-  $("tkNew").onclick=()=>tkEdit(null,cl);if($("tkStu"))$("tkStu").onclick=()=>tkStudents(cl);if($("tkMore"))$("tkMore").onclick=()=>{TKX.more=!TKX.more;renderTaskCard()};
-  el.querySelectorAll("[data-tk]").forEach(b=>b.onclick=()=>tkSheet(b.dataset.tk,cl.id))}
+  $("tkNew").onclick=()=>tkEdit(null,cl);if($("tkStu"))$("tkStu").onclick=()=>tkStudents(cl);if($("tkMore"))$("tkMore").onclick=()=>{TKX.more=!TKX.more;renderTaskCard()};if($("tkArc"))$("tkArc").onclick=()=>{TKX.carch=!TKX.carch;renderTaskCard()};
+  el.querySelectorAll("[data-tk]").forEach(b=>{b.onclick=()=>tkSheet(b.dataset.tk,cl.id);const t=tasksAll().find(x=>x.id===b.dataset.tk);if(t)tkSwipe(b,t,cl)})}
+/* 5.44: 평가 · 과제 줄을 왼쪽으로 밀어 수정 · 보관(꺼내기) · 삭제 (학급 화면에서 여러 학급 공통이면 ‘빼기’ = 이 학급에서만 빼기) */
+function tkArch(t){const was=t.arch;if(was)delete t.arch;else t.arch=new Date().toISOString();save();tkRefresh();
+  toastUndo(was?`‘${t.n}’을(를) 보관함에서 꺼냈습니다`:`‘${t.n}’을(를) 보관했습니다 (📦 보관함에서 꺼낼 수 있음)`,()=>{const x=tasksAll().find(y=>y.id===t.id);if(!x)return;if(was)x.arch=was;else delete x.arch;save();tkRefresh()},6000)}
+function tkSwipe(row,t,cl){const shared=!!(cl&&t.cls.length>1);
+  swipeDel(row,{acts:()=>[{k:"edit",l:"수정",fn:()=>tkEdit(t,cl||null)},{k:t.arch?"unarch":"arch",l:t.arch?"꺼내기":"보관",fn:()=>tkArch(t)}],delL:shared?"빼기":"삭제",
+    del:()=>{row.remove();const bk=JSON.stringify(S.tasks);if(shared){t.cls=t.cls.filter(id=>id!==cl.id);if(t.miss)delete t.miss[cl.id]}else S.tasks=S.tasks.filter(x=>x!==t);
+      save();tkRefresh();toastUndo(shared?`‘${t.n}’에서 이 학급을 뺐습니다`:`‘${t.n}’을(를) 지웠습니다`,()=>{S.tasks=JSON.parse(bk);save();tkRefresh()},6000)}})}
 /* --- 출석 → 평가 · 과제(공통): 모든 평가 · 과제 --- */
-function renderTtTasks(){const el=$("ttTasks");if(!el)return;const cur=curClass(),all=tasksAll().slice().sort(tkSort),L=all.filter(t=>(!TKX.f||t.k===TKX.f)&&(!TKX.mine||(cur&&t.cls.includes(cur.id))));
-  el.innerHTML=`<div class="hd"><h2>평가 · 과제</h2><span class="sub">${all.length?`${all.length}개`:"공통"}</span></div>
+function renderTtTasks(){const el=$("ttTasks");if(!el)return;const cur=curClass(),every=tasksAll().slice().sort(tkSort),na=every.filter(t=>t.arch).length;if(!na)TKX.arch=false;const all=every.filter(t=>!!t.arch===!!TKX.arch),L=all.filter(t=>(!TKX.f||t.k===TKX.f)&&(!TKX.mine||(cur&&t.cls.includes(cur.id))));
+  el.innerHTML=`<div class="hd"><h2>평가 · 과제</h2><span class="sub">${every.length?`${every.length-na}개${na?` · 보관 ${na}`:""}`:"공통"}</span></div>
     <div class="row2"><button class="btn pri" type="button" id="ttTkNew">＋ 평가 · 과제 만들기</button></div>
-    ${all.length?`<div class="presets">${[["","전체"],...TK_K.map(x=>[x[0],x[1]])].map(([v,l])=>`<button class="chip" type="button" data-tkf="${v}" aria-pressed="${TKX.f===v}">${l}${v?` ${all.filter(t=>t.k===v).length}`:""}</button>`).join("")}</div>
+    ${every.length?`${TKX.arch?`<p class="note tkarn">📦 보관함 · 줄을 왼쪽으로 밀어 꺼내거나 지웁니다</p>`:""}`+`<div class="presets">${[["","전체"],...TK_K.map(x=>[x[0],x[1]])].map(([v,l])=>`<button class="chip" type="button" data-tkf="${v}" aria-pressed="${TKX.f===v}">${l}${v?` ${all.filter(t=>t.k===v).length}`:""}</button>`).join("")}</div>
       <label class="chk"><input type="checkbox" id="tkMine"${TKX.mine?" checked":""}><span>${esc((cur&&cur.data.cls)||"이 학급")}에 배분된 것만 보기</span></label>
-      <div class="tklist">${L.map(t=>tkRowHTML(t,null)).join("")||`<p class="note">해당하는 평가 · 과제가 없습니다.</p>`}</div>`
+      <div class="tklist">${L.map(t=>tkRowHTML(t,null)).join("")||`<p class="note">해당하는 평가 · 과제가 없습니다.</p>`}</div>
+      <div class="row2 tkft">${na?`<button class="btn sm ghost" type="button" id="tkArcAll">${TKX.arch?"‹ 진행 중 목록":`📦 보관함 ${na}`}</button>`:""}</div><p class="note swhint">줄을 왼쪽으로 밀면 수정 · 보관 · 삭제</p>`
       :`<p class="note">모든 학급의 평가 · 과제를 여기서 관리합니다. 수행평가 · 형성평가 · 과제를 한 번 만들고 실시할 학급을 고르면, 그 학급들의 관찰 기록에도 똑같이 나옵니다. 학급마다 미참여 · 미제출 학생을 체크하고 한 번에 관리합니다.</p>`}`;
   $("ttTkNew").onclick=()=>tkEdit(null,null);if($("tkMine"))$("tkMine").onchange=e=>{TKX.mine=e.target.checked;renderTtTasks()};el.querySelectorAll("[data-tkf]").forEach(b=>b.onclick=()=>{TKX.f=b.dataset.tkf;renderTtTasks()});
-  el.querySelectorAll("[data-tk]").forEach(b=>b.onclick=()=>tkHub(b.dataset.tk))}
+  if($("tkArcAll"))$("tkArcAll").onclick=()=>{TKX.arch=!TKX.arch;renderTtTasks()};
+  el.querySelectorAll("[data-tk]").forEach(b=>{b.onclick=()=>tkHub(b.dataset.tk);const t=tasksAll().find(x=>x.id===b.dataset.tk);if(t)tkSwipe(b,t,null)})}
 function tkRefresh(){try{renderTaskCard()}catch(e){}try{renderTtTasks()}catch(e){}}
 /* 만들기 · 고치기. cl이 있으면 학급 관찰 기록에서 (그 학급만) */
 function tkEdit(t,cl){const isNew=!t;let k=t?t.k:"perf";const pool=perList().length?perList():S.list;let sel=new Set(t?t.cls:cl?[cl.id]:[]);
@@ -4914,13 +4950,13 @@ function wrPlain(r,withMedia){const L=[`[${wrK(r)[1]}] ${wrTitle(r)}`,`일시: $
   if(withMedia&&(r.media||[]).length)L.push("",`첨부: ${(r.media||[]).map(m=>(MEDIA_T[m.t]||{l:"파일"}).l+(m.name?`(${m.name})`:"")).join(", ")}`);
   return L.join("\n").replace(/\n{3,}/g,"\n\n").trim()}
 /* --- 목록 --- */
-function renderWrite(){const el=$("wrCard");if(!el)return;const all=recsAll().slice().sort((a,b)=>String(b.at).localeCompare(String(a.at))),q=WRX.q.trim().toLowerCase();
+function renderWrite(){const el=$("wrCard");if(!el)return;const every=recsAll().slice().sort((a,b)=>String(b.at).localeCompare(String(a.at))),na=every.filter(r=>r.arch).length;if(!na)WRX.arch=false;const all=every.filter(r=>!!r.arch===!!WRX.arch),q=WRX.q.trim().toLowerCase();
   const L=all.filter(r=>(!WRX.f||r.k===WRX.f)&&(!q||wrPlain(r).toLowerCase().includes(q)));
-  el.innerHTML=`<div class="hd"><h2>글쓰기</h2><span class="sub">${all.length?`${all.length}개`:""}</span></div>
+  el.innerHTML=`<div class="hd"><h2>글쓰기</h2><span class="sub">${every.length?`${every.length-na}개${na?` · 보관 ${na}`:""}`:""}</span></div>
     <div class="wrnew">${WR_K.map(k=>`<button class="btn" type="button" data-wn="${k[0]}"><span>${k[2]}</span>${k[1]}</button>`).join("")}</div>
-    ${all.length?`<div class="presets">${[["","전체"],...WR_K.map(k=>[k[0],k[1]])].map(([v,l])=>`<button class="chip" type="button" data-wf="${v}" aria-pressed="${WRX.f===v}">${l}${v?` ${all.filter(r=>r.k===v).length}`:""}</button>`).join("")}</div>
+    ${every.length?`${WRX.arch?`<p class="note tkarn">📦 보관함 · 줄을 왼쪽으로 밀어 꺼내거나 지웁니다</p>`:""}<div class="presets">${[["","전체"],...WR_K.map(k=>[k[0],k[1]])].map(([v,l])=>`<button class="chip" type="button" data-wf="${v}" aria-pressed="${WRX.f===v}">${l}${v?` ${all.filter(r=>r.k===v).length}`:""}</button>`).join("")}</div>
     <input class="fld" id="wrQ" type="search" placeholder="찾기 (이름 · 회의명 · 내용)" value="${esc(WRX.q)}" autocomplete="off">
-    <div class="wrlbar">${WRX.ed?`<button class="btn sm" type="button" id="wrAllSel">${L.every(r=>WRX.sel.has(r.id))&&L.length?"선택 풀기":"모두 선택"}</button><button class="btn sm bad" type="button" id="wrSelDel"${WRX.sel.size?"":" disabled"}>선택 삭제 (${WRX.sel.size})</button><button class="btn sm" type="button" id="wrEdX">취소</button>`:`<button class="btn sm ghost" type="button" id="wrEdOn">목록 편집 · 삭제</button><small class="note">줄을 왼쪽으로 밀어도 지울 수 있습니다</small>`}</div>
+    <div class="wrlbar">${WRX.ed?`<button class="btn sm" type="button" id="wrAllSel">${L.every(r=>WRX.sel.has(r.id))&&L.length?"선택 풀기":"모두 선택"}</button><button class="btn sm bad" type="button" id="wrSelDel"${WRX.sel.size?"":" disabled"}>선택 삭제 (${WRX.sel.size})</button><button class="btn sm" type="button" id="wrEdX">취소</button>`:`<button class="btn sm ghost" type="button" id="wrEdOn">목록 편집 · 삭제</button>${na?`<button class="btn sm ghost" type="button" id="wrArc">${WRX.arch?"‹ 글 목록":`📦 보관함 ${na}`}</button>`:""}<small class="note">줄을 왼쪽으로 밀면 수정 · 보관 · 삭제</small>`}</div>
     <div class="wrlist${WRX.ed?" ed":""}">${L.map(r=>`<div class="wrrow" data-wr="${esc(r.id)}">${WRX.ed?`<label class="wrchk"><input type="checkbox" data-wsel="${esc(r.id)}"${WRX.sel.has(r.id)?" checked":""} aria-label="선택"></label>`:""}<button class="wrmain" type="button" data-wo="${esc(r.id)}"><i class="wrk ${r.k}">${wrK(r)[1]}</i><b>${esc(wrTitle(r))}</b><small>${esc(wrWhen(r))}${r.place?" · "+esc(r.place):""}${(r.media||[]).length?` · 📎${r.media.length}`:""}${(r.sent||[]).length?` · 전달 ${r.sent.length}`:""}</small>
       <span class="wrsn">${esc(wrPlain(r).split("\n").slice(r.k==="free"?2:2).filter(x=>x&&!/^(일시|장소|학생( \d+)?|회의명|참석|제목|첨부):/.test(x)).join(" ").slice(0,90))}</span></button>
       ${WRX.ed?`<button class="btn sm bad ghost" type="button" data-wd="${esc(r.id)}">삭제</button>`:`<button class="btn sm" type="button" data-ws="${esc(r.id)}">전달</button>`}</div>`).join("")||`<p class="note">찾는 글이 없습니다.</p>`}</div>`
@@ -4934,7 +4970,9 @@ function renderWrite(){const el=$("wrCard");if(!el)return;const all=recsAll().sl
   el.querySelectorAll("[data-wsel]").forEach(c=>c.onchange=()=>{if(c.checked)WRX.sel.add(c.dataset.wsel);else WRX.sel.delete(c.dataset.wsel);const b=$("wrSelDel");if(b){b.disabled=!WRX.sel.size;b.textContent=`선택 삭제 (${WRX.sel.size})`}});
   if($("wrSelDel"))twoStep($("wrSelDel"),"정말 삭제",()=>rmMany([...WRX.sel]));
   el.querySelectorAll("[data-wd]").forEach(b=>twoStep(b,"정말",()=>rmMany([b.dataset.wd])));
-  if(!WRX.ed)el.querySelectorAll(".wrrow[data-wr]").forEach(row=>{const r=recsAll().find(x=>x.id===row.dataset.wr);if(r)swipeDel(row,{del:()=>{row.remove();swRemove(`‘${wrTitle(r)}’ 글을`,()=>swOut(S.recs,r),()=>renderWrite())}})});
+  if($("wrArc"))$("wrArc").onclick=()=>{WRX.arch=!WRX.arch;renderWrite()};
+  const wArch=r=>{const was=r.arch;if(was)delete r.arch;else r.arch=new Date().toISOString();save();renderWrite();toastUndo(was?"글을 보관함에서 꺼냈습니다":`‘${wrTitle(r)}’ 글을 보관했습니다 (📦 보관함에서 꺼낼 수 있음)`,()=>{if(was)r.arch=was;else delete r.arch;save();renderWrite()},6000)};
+  if(!WRX.ed)el.querySelectorAll(".wrrow[data-wr]").forEach(row=>{const r=recsAll().find(x=>x.id===row.dataset.wr);if(r)swipeDel(row,{acts:()=>[{k:"edit",l:"수정",fn:()=>wrEdit(r.id)},{k:r.arch?"unarch":"arch",l:r.arch?"꺼내기":"보관",fn:()=>wArch(r)}],del:()=>{row.remove();swRemove(`‘${wrTitle(r)}’ 글을`,()=>swOut(S.recs,r),()=>renderWrite())}})});
   if(!WRX.purged){WRX.purged=true;wrPurge()}}
 /* 지운 글의 첨부 파일 정리 (앱을 연 뒤 처음 한 번, 어디에도 쓰이지 않는 첨부만) */
 function wrPurge(){try{const used=new Set();recsAll().forEach(r=>(r.media||[]).forEach(m=>{used.add(m.id);used.add(m.id+":t")}));
@@ -5098,13 +5136,52 @@ function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;cons
     $("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true}};
   $("sheet").hidden=false;paint()}
 
+/* ===== 5.44: 창(시트) — 위쪽 × 닫기, 닫기 · 취소 줄은 아래에 붙어 있게, 뒤로 가기 · Esc로 닫기, 창 하나만 부드럽게 스크롤 ===== */
+(function(){const sh=$("sheet"),box=$("sheetBox");if(!sh||!box)return;
+  const CL=/^(닫기|취소|뒤로|완료|나중에|열지 않기)$/;
+  function closeBtn(){for(const id of ["skNo","wcBack","wrCancel","ttDcBack","cdBack","evBack"]){const n=box.querySelector("#"+id);if(n&&!n.disabled&&n.offsetParent!==null)return n}
+    return[...box.querySelectorAll("button")].reverse().find(b=>b.id!=="skX"&&!b.disabled&&b.offsetParent!==null&&CL.test(b.textContent.trim()))||null}
+  function doClose(){if(sh.hidden)return;const b=closeBtn();if(b)b.click();else if(box.querySelector(".skx:not([hidden])"))sh.hidden=true}
+  window.sheetClose=doClose;
+  function more(){box.classList.toggle("skmore",box.scrollTop+box.clientHeight<box.scrollHeight-2);box.classList.toggle("sktop",box.scrollTop>4)}
+  function deco(){if(sh.hidden)return;const b=closeBtn();let x=box.querySelector(":scope>.skx");
+    if(!x){x=document.createElement("button");x.type="button";x.className="skx";x.id="skX";x.setAttribute("aria-label","창 닫기");x.title="닫기 (Esc)";x.textContent="×";x.onclick=e=>{e.preventDefault();e.stopPropagation();doClose()}}
+    if(box.firstElementChild!==x)box.prepend(x);
+    const wiz=!!box.querySelector(":scope>.wizw");if(x.hidden!==(!b||wiz))x.hidden=!b||wiz;
+    let f=null;if(b&&!wiz){let r=b;while(r&&r.parentElement!==box)r=r.parentElement;
+      if(r&&r!==box&&r.offsetHeight<170&&r.querySelectorAll("button").length<=4&&!r.querySelector("textarea,input:not([type=checkbox]):not([type=radio]),select")){let s=r.nextElementSibling,ok=true;while(s){if(s.offsetHeight>90){ok=false;break}s=s.nextElementSibling}if(ok)f=r}}
+    box.querySelectorAll(":scope>.skfoot").forEach(r=>{if(r!==f)r.classList.remove("skfoot")});if(f&&!f.classList.contains("skfoot"))f.classList.add("skfoot");
+    more()}
+  let q=0;const sched=()=>{if(q)return;q=1;requestAnimationFrame(()=>{q=0;deco()})};
+  new MutationObserver(sched).observe(box,{childList:true,subtree:true});
+  box.addEventListener("scroll",more,{passive:true});addEventListener("resize",()=>{if(!sh.hidden)more()});
+  /* 뒤로 가기(안드로이드 뒤로 버튼 · 브라우저 뒤로)로 창 닫기 */
+  let pushed=false,skip=0,wasOpen=!sh.hidden;
+  new MutationObserver(()=>{const open=!sh.hidden;if(open&&!wasOpen){box.scrollTop=0;deco();if(!pushed){try{history.pushState({sk:1},"");pushed=true}catch(e){}}}
+    if(!open&&wasOpen&&pushed){pushed=false;try{if(history.state&&history.state.sk){skip++;history.back()}}catch(e){}}
+    wasOpen=open}).observe(sh,{attributes:true,attributeFilter:["hidden"]});
+  addEventListener("popstate",()=>{if(skip){skip--;return}if(!pushed)return;pushed=false;if(!sh.hidden){doClose();if(!sh.hidden){try{history.pushState({sk:1},"");pushed=true}catch(e){}}}});
+  document.addEventListener("keydown",e=>{if(e.key!=="Escape"||e.isComposing||sh.hidden)return;e.preventDefault();doClose()});
+})();
+/* ===== 5.44: 새 버전 빨리 받기 — 창을 다시 볼 때 · 인터넷이 다시 연결될 때 · 켜 둔 동안 30분마다 확인, 앱을 막 열었을 때는 바로 새 버전으로 ===== */
+(function(){const t0=Date.now();let used=false;["pointerdown","keydown"].forEach(ev=>addEventListener(ev,()=>{used=true},{once:true,capture:true}));
+  window.__updAuto=v=>{if(used||Date.now()-t0>15000||!$("sheet").hidden||document.hidden)return false;try{if(localStorage.getItem("att-app-autoupd")===v)return false;localStorage.setItem("att-app-autoupd",v)}catch(e){return false}toast(`새 버전 ${v}으로 바꾸는 중입니다…`);setTimeout(refreshApp,600);return true};
+  const chk=()=>{try{if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(r=>{if(r)r.update().catch(()=>{})}).catch(()=>{})}catch(e){}try{checkUpdate(false)}catch(e){}};
+  addEventListener("focus",chk);addEventListener("online",()=>{UPD.at=0;chk()});setInterval(()=>{if(!document.hidden){UPD.at=0;chk()}},30*60000);
+  try{navigator.serviceWorker&&navigator.serviceWorker.addEventListener("controllerchange",()=>{UPD.at=0;try{checkUpdate(false)}catch(e){}})}catch(e){}
+})();
 /* 5.30: 왼쪽으로 밀어 삭제 (앱 전체 공용)
    - 목록 줄을 손가락(또는 마우스)으로 왼쪽으로 밀면 오른쪽에 빨간 '삭제' 단추가 나오고, 누르면 지웁니다.
    - 지운 뒤 6초 동안 '되돌리기'로 되살릴 수 있습니다. 원래 있던 수정 · 삭제 단추는 그대로입니다.
    - 단추는 줄이 비켜난 자리에만 떠 있어서(화면 맨 위 층) 목록 모양을 바꾸지 않고, 창(시트) 안에서도 똑같이 동작합니다. */
-const SW={open:null,W:88,btn:null};
-function swBtn(){if(!SW.btn){const b=document.createElement("button");b.type="button";b.className="swdel";b.hidden=true;b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg><span>삭제</span>';document.body.appendChild(b);SW.btn=b}return SW.btn}
-function swPlace(st,w){const b=swBtn();if(w<=1){b.hidden=true;return}const r=st.rect;b.hidden=false;b.style.top=r.top+"px";b.style.height=r.height+"px";b.style.left=(r.right-w)+"px";b.style.width=w+"px";b.classList.toggle("full",w>=SW.W-2)}
+const SW={open:null,W:88,U:74,btn:null};
+/* 5.44: 밀면 여러 단추(수정 · 보관 · 완료 · 삭제 등). opt.acts=[{k,l,fn}] 또는 함수, opt.del=삭제 */
+const SW_IC={edit:'<path d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/>',arch:'<path d="M3 5h18v4H3zM5 9v10h14V9M10 13h4"/>',unarch:'<path d="M3 5h18v4H3zM5 9v10h14V9M12 18v-6M9.5 14.5 12 12l2.5 2.5"/>',done:'<path d="M5 12.5l4.5 4.5L19 7"/>',undo:'<path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/>',del:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',out:'<path d="M15 12H5M9 8l-4 4 4 4M14 5h5v14h-5"/>',send:'<path d="M4 12 20 4l-6 16-3-7z"/>',keep:'<path d="M5 12.5l4.5 4.5L19 7"/>'};
+function swBtn(){if(!SW.btn){const b=document.createElement("div");b.className="swacts";b.hidden=true;document.body.appendChild(b);SW.btn=b}return SW.btn}
+function swActs(o){let a=typeof o.acts==="function"?o.acts():(o.acts||[]);a=(a||[]).filter(Boolean).slice();if(o.del)a.push({k:"del",l:o.delL||"삭제",fn:o.del,del:true});return a}
+function swPlace(st,w){const b=swBtn();if(w<=1){b.hidden=true;b._st=null;return}
+  if(b._st!==st){b._st=st;b.innerHTML=st.acts.map((x,i)=>`<button type="button" class="${x.del?"swdel":"swa sw-"+(x.ic||x.k)}" data-i="${i}"><svg viewBox="0 0 24 24" aria-hidden="true">${SW_IC[x.ic||x.k]||SW_IC.edit}</svg><span>${esc(x.l)}</span></button>`).join("");b.classList.toggle("one",st.acts.length===1)}
+  const r=st.rect;b.hidden=false;b.style.top=r.top+"px";b.style.height=r.height+"px";b.style.left=(r.right-w)+"px";b.style.width=w+"px";b.classList.toggle("full",w>=st.W-2)}
 function swClose(anim){const st=SW.open;if(!st)return;SW.open=null;st.row.style.transition=anim===false?"none":"transform .18s ease";st.row.style.transform="";st.row.classList.remove("swopen");swPlace(st,0)}
 function swipeDel(row,opt){
   if(!row||row._sw)return;row._sw=opt;row.classList.add("swrow");
@@ -5112,26 +5189,36 @@ function swipeDel(row,opt){
   const move=x=>{row.style.transition="none";row.style.transform=x?`translateX(${x}px)`:"";swPlace(st,-x)};
   row.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button!==0)return;
     if(SW.open&&SW.open.row!==row)swClose();
-    x0=e.clientX;y0=e.clientY;dx=0;mode=0;pid=e.pointerId;base=SW.open&&SW.open.row===row?-SW.W:0;
-    if(!base){const r=row.getBoundingClientRect();st={row,rect:{top:r.top,height:r.height,right:r.right},opt}}});
+    x0=e.clientX;y0=e.clientY;dx=0;mode=0;pid=e.pointerId;const op=SW.open&&SW.open.row===row?SW.open:null;base=op?-op.W:0;
+    if(op)st=op;else{const r=row.getBoundingClientRect(),acts=swActs(opt);if(!acts.length){st=null;return}const W=acts.length===1?SW.W:Math.min(SW.U*acts.length,Math.round(r.width*.8));st={row,rect:{top:r.top,height:r.height,right:r.right},opt,acts,W}}});
   row.addEventListener("pointermove",e=>{if(e.pointerId!==pid||!st)return;const mx=e.clientX-x0,my=e.clientY-y0;
     if(!mode){if(Math.abs(mx)>10&&Math.abs(mx)>Math.abs(my)*1.3){mode=1;try{row.setPointerCapture(pid)}catch(_){}row.classList.add("swing")}else if(Math.abs(my)>10)mode=2}
-    if(mode===1){dx=Math.max(-SW.W*1.35,Math.min(0,base+mx));move(dx);e.preventDefault()}});
+    if(mode===1){dx=Math.max(-st.W*1.25,Math.min(0,base+mx));move(dx);e.preventDefault()}});
   const end=e=>{if(e.pointerId!==pid)return;pid=null;row.classList.remove("swing");
-    if(mode===1){row._swAt=Date.now();if(dx<-SW.W*.5){row.style.transition="transform .18s ease";row.style.transform=`translateX(${-SW.W}px)`;row.classList.add("swopen");SW.open=st;swPlace(st,SW.W)}else{SW.open=st;swClose()}}
+    if(mode===1&&st){row._swAt=Date.now();if(dx<-Math.min(st.W*.5,110)){row.style.transition="transform .18s ease";row.style.transform=`translateX(${-st.W}px)`;row.classList.add("swopen");SW.open=st;swPlace(st,st.W)}else{SW.open=st;swClose()}}
     mode=0};
   row.addEventListener("pointerup",end);row.addEventListener("pointercancel",end);
   /* 밀고 난 직후의 누름, 열린 줄을 누르면 닫기만 (줄의 원래 동작은 막음) */
   row.addEventListener("click",e=>{if(row._swAt&&Date.now()-row._swAt<250){e.stopPropagation();e.preventDefault();return}
     if(row.classList.contains("swopen")){e.stopPropagation();e.preventDefault();swClose()}},true);
 }
+/* 줄을 누른 것처럼 (수정 = 원래 누르면 열리는 화면) */
+function swTap(row,sel){row._swAt=0;const t=sel?row.querySelector(sel):row;if(t)t.click()}
 document.addEventListener("pointerdown",e=>{if(!SW.open)return;if(SW.btn&&SW.btn.contains(e.target))return;if(!SW.open.row.contains(e.target))swClose()},true);
 window.addEventListener("scroll",()=>{if(SW.open)swClose(false)},true);window.addEventListener("resize",()=>{if(SW.open)swClose(false)});
-document.addEventListener("click",e=>{if(!SW.btn||!SW.btn.contains(e.target)||!SW.open)return;e.preventDefault();e.stopPropagation();
-  const st=SW.open,o=st.opt;SW.open=null;swPlace(st,0);
+/* 밀고 나서 바로 누르면 브라우저가 click을 건너뛸 때가 있어(밀기 관성 멈춤), 손을 뗄 때(pointerup) 바로 실행합니다 */
+let swDown=null;
+document.addEventListener("pointerdown",e=>{swDown=SW.btn&&SW.btn.contains(e.target)?{b:e.target.closest("button[data-i]"),x:e.clientX,y:e.clientY}:null},true);
+document.addEventListener("pointerup",e=>{const d=swDown;swDown=null;if(!d||!d.b||!SW.open||!SW.btn.contains(e.target))return;if(Math.abs(e.clientX-d.x)>12||Math.abs(e.clientY-d.y)>12)return;
+  if(e.target.closest("button[data-i]")!==d.b)return;SW.upAt=Date.now();swRun(d.b)},true);
+document.addEventListener("click",e=>{if(!SW.btn||!SW.btn.contains(e.target))return;e.preventDefault();e.stopPropagation();
+  if(SW.upAt&&Date.now()-SW.upAt<800)return;if(!SW.open)return;swRun(e.target.closest("button[data-i]"))},true);
+function swRun(bt){const st=SW.open;if(!st)return;const o=st.opt,x=bt&&st.acts[+bt.dataset.i];if(!x)return;
+  if(!x.del){swClose();setTimeout(()=>{try{x.fn()}catch(err){reportErr("밀어서 "+x.l,err)}},0);return}
+  SW.open=null;swPlace(st,0);
   if(o.can&&!o.can()){st.row.style.transform="";st.row.classList.remove("swopen");return}
   st.row.style.transition="transform .2s ease,opacity .2s ease";st.row.style.transform="translateX(-100%)";st.row.style.opacity="0";
-  setTimeout(()=>{try{o.del()}catch(err){reportErr("밀어서 삭제",err)}},190)},true);
+  setTimeout(()=>{try{x.fn()}catch(err){reportErr("밀어서 삭제",err)}},190)}
 /* 지우고 되돌리기 한 묶음: rm()이 지우고 되살리는 함수를 돌려줍니다 */
 function swRemove(label,rm,after){const back=rm();save();try{after&&after()}catch(e){}renderAll();
   toastUndo(`${label} 삭제했습니다`,()=>{back();save();try{after&&after()}catch(e){}renderAll();toast("되돌렸습니다")},6000)}
@@ -5142,7 +5229,7 @@ function swDelTodo(x,after){
   const n=S.notes[x.nk];if(!n)return;const f=x.kind==="task"?"task":"meet",fd=f+"Done",old=[n[f],n[fd]];
   swRemove(`‘${x.title}’ ${x.kind==="task"?"과제":"면담 약속"}를`,()=>{delete n[f];delete n[fd];return()=>{n[f]=old[0];if(old[1])n[fd]=old[1]}},after)}
 function swEventRows(box,after){if(!box)return;box.querySelectorAll("[data-ev]").forEach(el=>{const e=S.events.find(x=>x.id===el.dataset.ev);if(!e)return;
-  swipeDel(el,{del:()=>{el.remove();swRemove(`‘${e.title||e.cat}’ 일정을`,()=>swOut(S.events,e),after)}})})}
+  swipeDel(el,{acts:()=>[{k:e.done?"undo":"done",l:e.done?"되돌리기":"완료",fn:()=>{e.done=!e.done;save();renderAll();try{after&&after()}catch(_){}toast(e.done?"완료했습니다":"다시 할 일로 돌렸습니다")}},{k:"edit",l:"수정",fn:()=>editEvent(e)}],del:()=>{el.remove();swRemove(`‘${e.title||e.cat}’ 일정을`,()=>swOut(S.events,e),after)}})})}
 /* 오늘 탭 숫자 칸: 누르면 그 목록을 바로 보여 줍니다 */
 function kpiSheet(kind){
   const t=today(),open=todoItems().filter(x=>!x.done);
@@ -5159,7 +5246,7 @@ function kpiSheet(kind){
   $("sheetBox").querySelectorAll(".kpir").forEach(r=>{const x=L[+r.dataset.i];
     r.querySelector(".tdc").onclick=()=>{toggleDone(x);kpiSheet(kind)};
     r.querySelector(".tdb").onclick=()=>x.kind==="ev"?editEvent(x.ref):openMemoItem(x);
-    swipeDel(r,{del:()=>{r.remove();swDelTodo(x,()=>{if(!$("sheet").hidden&&document.querySelector(".kpil"))kpiSheet(kind)})}})});
+    swipeDel(r,{acts:()=>[{k:x.done?"undo":"done",l:x.done?"되돌리기":"완료",fn:()=>{toggleDone(x);kpiSheet(kind)}},{k:"edit",l:"수정",fn:()=>x.kind==="ev"?editEvent(x.ref):openMemoItem(x)}],del:()=>{r.remove();swDelTodo(x,()=>{if(!$("sheet").hidden&&document.querySelector(".kpil"))kpiSheet(kind)})}})});
 }
 /* 5.29: 하루 보기에서는 ‹ › 가 하루씩 (주말은 건너뜀) */
 const ttDayStep=k=>{let i=ttDay+k;if(i<0){ttWeek=addDays(ttWeek,-7);i=4}else if(i>4){ttWeek=addDays(ttWeek,7);i=0}ttDay=i;renderTT()};
@@ -5897,7 +5984,7 @@ function renderTodo(){
       const open=()=>x.kind==="ev"?editEvent(x.ref):openMemoItem(x);
       const tb=row.querySelector(".tdb");tb.onclick=open;tb.onkeydown=k=>{if(k.key==="Enter"||k.key===" "){k.preventDefault();open()}};
       row.querySelector(".tdbell").onclick=()=>alarmSheet(x);
-      swipeDel(row,{del:()=>{row.remove();swDelTodo(x)}});
+      swipeDel(row,{acts:()=>[{k:x.done?"undo":"done",l:x.done?"되돌리기":"완료",fn:()=>toggleDone(x)},{k:"edit",l:"수정",fn:open}],del:()=>{row.remove();swDelTodo(x)}});
     });
   }
   renderAlarmPanel();
@@ -6010,10 +6097,10 @@ async function refreshApp(){try{if(navigator.serviceWorker){const rs=await navig
 var UPD={at:0,shown:""};
 function checkUpdate(manual){
   if(!/^https?:$/.test(location.protocol))return;
-  if(!manual&&Date.now()-UPD.at<20*60000)return;UPD.at=Date.now();
+  if(!manual&&Date.now()-UPD.at<10*60000)return;UPD.at=Date.now();
   fetch("manifest.webmanifest?u="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(m=>{
     const v=m&&m.version;if(!v){if(manual)toast("새 버전을 확인하지 못했습니다");return}
-    if(verNum(v)>verNum(APP_VERSION)){showUpdBar(v);if($("updMsg"))$("updMsg").textContent=`새 버전 ${v}이 있습니다. ‘새 버전 확인 · 업데이트’를 누르면 바로 바뀝니다.`;if(manual)refreshApp()}
+    if(verNum(v)>verNum(APP_VERSION)){if(!manual&&window.__updAuto&&window.__updAuto(v))return;showUpdBar(v);if($("updMsg"))$("updMsg").textContent=`새 버전 ${v}이 있습니다. ‘새 버전 확인 · 업데이트’를 누르면 바로 바뀝니다.`;if(manual)refreshApp()}
     else if(manual){toast(`지금 최신 버전(${APP_VERSION})입니다`);if($("updMsg"))$("updMsg").textContent=`최신 버전 ${APP_VERSION}을 쓰고 있습니다 (확인: ${fmtDT(Date.now())})`}
   }).catch(()=>{if(manual)toast("인터넷에 연결되어 있지 않아 확인하지 못했습니다")});
 }
@@ -6685,7 +6772,7 @@ function renderEval(){
       return}
     L.innerHTML=shown.length?shown.map(e=>{const n=e.stu.filter(x=>stState(x)==="ok").length,N=e.stu.length;return `<button class="prow" type="button" data-ev="${esc(e.id)}"><span class="pn">${esc(e.title)}${e.done?'<em class="arc">보관</em>':""}${n===N?'<em class="okb">서명 완료</em>':""}<small>${e.kind&&e.kind!=="score"?`<b class="kdtag">${esc(evKind(e).l)}</b> `:""}${esc(evYT(e).year+"학년도 "+evYT(e).term)} · ${esc(e.clsName||"학급 없음")} · 학생 ${N}명 · 마감 ${e.due?esc(fmtDate(e.due)):"없음"}${n<N?` · 미서명 ${N-n}명`:""}</small><span class="pbar"><i style="width:${N?Math.round(n/N*100):0}%"></i></span></span><span class="pe">${n}/${N}</span></button>`}).join(""):`<div class="empty">${list.length?(EVS.st==="done"?"보관한 평가가 없습니다.<br>평가를 마치면 평가 화면의 ‘평가 마치고 보관’을 누르세요.":"조건에 맞는 평가가 없습니다."):"아직 평가가 없습니다.<br>‘전표 올리기’로 점수 파일을 올리거나 ‘직접 만들기’로 점수를 입력하면 학생에게 점수와 서명 요청을 보낼 수 있습니다."}</div>`;
     L.querySelectorAll("[data-ev]").forEach(b=>{b.onclick=()=>{EVS.cur=b.dataset.ev;renderEval();window.scrollTo(0,0)};const e=evals().find(x=>x.id===b.dataset.ev);if(!e)return;
-      swipeDel(b,{del:()=>{b.remove();swRemove(`‘${e.title}’ 평가를`,()=>{const back=swOut(S.evals,e);EVS.sel.delete(e.id);return back},()=>renderEval())}})});
+      swipeDel(b,{acts:()=>[{k:"edit",l:"수정",fn:()=>swTap(b)},{k:e.done?"unarch":"arch",l:e.done?"꺼내기":"보관",fn:()=>{const was=e.done;if(was)delete e.done;else e.done=Date.now();save();renderEval();toastUndo(was?`‘${e.title}’을(를) 진행 중으로 꺼냈습니다`:`‘${e.title}’을(를) 보관했습니다`,()=>{if(was)e.done=was;else delete e.done;save();renderEval()})}}],del:()=>{b.remove();swRemove(`‘${e.title}’ 평가를`,()=>{const back=swOut(S.evals,e);EVS.sel.delete(e.id);return back},()=>renderEval())}})});
     return;
   }
   const n=ev.stu.filter(x=>stState(x)==="ok").length,N=ev.stu.length,sent=ev.stu.filter(x=>x.sentAt).length,withEm=ev.stu.filter(x=>isEmail(x.email));
@@ -8018,7 +8105,7 @@ function renderTtSide(){
   box.querySelectorAll("[data-si]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.si];if(x&&x.go)x.go()});
   box.querySelectorAll("[data-ti]").forEach(b=>b.onclick=()=>{toggleDone(tdy[+b.dataset.ti]);renderTtSide();try{renderTdBadge()}catch(e){}});
   box.querySelectorAll("[data-to]").forEach(b=>b.onclick=()=>{const x=tdy[+b.dataset.to];x.kind==="ev"?editEvent(x.ref):openMemoItem(x)});
-  box.querySelectorAll(".tstd").forEach((r,i)=>{const x=tdy[i];if(x)swipeDel(r,{del:()=>{r.remove();swDelTodo(x,()=>renderTtSide())}})});
+  box.querySelectorAll(".tstd").forEach((r,i)=>{const x=tdy[i];if(x)swipeDel(r,{acts:()=>[{k:x.done?"undo":"done",l:x.done?"되돌리기":"완료",fn:()=>{toggleDone(x);renderTtSide();try{renderTdBadge()}catch(_){}}},{k:"edit",l:"수정",fn:()=>x.kind==="ev"?editEvent(x.ref):openMemoItem(x)}],del:()=>{r.remove();swDelTodo(x,()=>renderTtSide())}})});
   const g=(id,f)=>{const e=$(id);if(e)e.onclick=f};
   g("tsTodo",()=>show("todo"));g("tsOver",()=>{TDX.over=true;show("todo")});g("tsCall",()=>show("call"));
   g("tsAdd",()=>{const b=$("tdAdd")||document.querySelector("#v-todo .btn.pri");if(b)b.click();else show("todo")});
@@ -8304,7 +8391,7 @@ setTimeout(()=>{try{cheerCheck()}catch(e){}},1500);
 setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
 handleHash();
 window.addEventListener("hashchange",handleHash);
-if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).catch(()=>{});
 })();
 </script>
 </body>
