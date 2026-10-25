@@ -1135,6 +1135,11 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 /* 5.53: 너무 작은 글자 막기 (11px 아래로 안 내려감) · 긴 낱말 줄바꿈 */
 .ttg .dbtn small,.ttg thead .dbtn small{font-size:max(11px,.66rem)!important}.wrtool small{font-size:max(11px,.625rem)}.wrk{font-size:max(11px,.6875rem)}.lb small{font-size:max(11px,.68rem)}.shn{font-size:max(11px,.85em)}
 .card,.sheet>div,.wovb{overflow-wrap:anywhere}.sheet>div img,.wovb img{max-width:100%;height:auto}
+.row2[style*="column"]>.btn,.row2[style*="column"]>label.btn{flex:0 0 auto}
+.shlock{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;background:var(--accent-soft)}.shlock small{display:block;color:var(--muted);font-weight:400}.shexp select{max-width:12rem}
+.lcode{border:2px solid var(--accent);border-radius:var(--r-m);padding:10px 12px;display:flex;flex-direction:column;gap:6px}.lcrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lcrow b{font-size:1.4rem;letter-spacing:.12em;font-family:ui-monospace,Menlo,Consolas,monospace}
+.savebad{position:fixed;left:0;right:0;top:0;z-index:60;background:var(--absent);color:#fff;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;font-weight:700;font-size:.9rem;box-shadow:0 2px 8px rgba(0,0,0,.25)}.savebad button{background:#fff;color:var(--absent);border:0;border-radius:8px;padding:4px 10px;font-weight:700}
+.bkcmp{border-collapse:collapse;width:100%;font-size:.88rem}.bkcmp th,.bkcmp td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:right}.bkcmp th:first-child,.bkcmp td:first-child{text-align:left}.bkcmp tr.less td{color:var(--absent);font-weight:700}
 .svtab{margin:2px 0 4px}.svbox{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}.svbox textarea{font-size:.85rem}
 .svn{width:84px;display:inline-block;min-height:36px;padding:4px 8px;margin:0 4px}
 .svsec{border:2px solid var(--accent);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:10px}.svsh{display:flex;gap:4px;align-items:center}.svsh .sp{flex:1}
@@ -1551,9 +1556,13 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
     <label class="chk" for="shCal"><input type="checkbox" id="shCal"> 학사일정 (단축수업 · 시험 · 행사 등 하루 전체 수업 변동)</label>
     <label class="chk" for="shTags"><input type="checkbox" id="shTags"> 관찰 기록 항목 (빠른 체크 항목)</label>
     <p class="ttsum" id="shSum" aria-live="polite"></p>
-    <p class="warn">연락처를 넣으면 링크나 파일을 받은 사람은 누구나 번호를 볼 수 있습니다. 같은 학교 선생님에게만 보내세요.</p>
+    <p class="warn">연락처를 넣으면 잠금이 꼭 켜집니다. 링크와 받는 코드는 같은 학교 선생님에게만, 서로 다른 방법으로 보내세요.</p>
+    <div class="shlock"><label class="chk" for="shLock"><input type="checkbox" id="shLock" checked> <span>🔒 <b>받는 코드로 잠그기</b> <small>링크나 파일만으로는 이름 · 연락처가 보이지 않습니다</small></span></label>
+      <label class="lb shexp" for="shExp">링크 · 파일 유효 기간<select class="fld" id="shExp"><option value="1">1일</option><option value="7" selected>7일</option><option value="30">30일</option><option value="0">기간 없음</option></select></label>
+      <p class="note" id="shLockNote"></p></div>
     <div class="row2"><button class="btn pri" id="mkLink" type="button">공유 링크 만들기</button><button class="btn" id="mkFile" type="button">파일로 보내기</button></div>
     <div id="linkOut" hidden class="out"></div>
+    <div class="lcode" id="linkCode" hidden></div>
     <div class="row2" id="linkBtns" hidden><button class="btn" id="shareLink" type="button">보내기</button><button class="btn" id="copyLink" type="button">복사</button><button class="btn" id="linkQrBtn" type="button">QR 코드</button></div>
     <div id="linkQr" class="qrbox" hidden></div>
   </details>
@@ -1615,8 +1624,9 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.53.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.54.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.54.0",date:"2026-10-25",items:["🔒 공유 잠금: 학생 명단 · 교사 · 교직원이 들어가는 공유 링크 · 파일을 받는 코드(8자)로 잠금(PBKDF2 + AES-GCM, 기본 켜짐, 연락처를 넣으면 끌 수 없음). 링크만으로는 이름 · 연락처가 보이지 않음. 받는 쪽은 코드를 넣어 열기", "공유 유효 기간(1일 · 7일 · 30일 · 없음, 기본 7일): 기간이 지난 링크 · 파일은 열지 않음. 링크를 만들면 받는 코드 · 담긴 것 · 기간을 한눈에", "저장 확인: 저장한 뒤 다시 읽어 확인, 실패하면 화면 위 ‘저장되지 않았습니다’ 띠(다시 저장 · 백업 파일 받기), 띠가 있으면 앱을 닫기 전에 한 번 더 물음", "백업 검사: 불러오기 전에 백업과 지금 자료를 항목별로 비교, 줄어드는 항목은 빨간색 경고", "세로로 쌓인 단추(백업 불러오기 등)가 휴대폰에서 지나치게 커지던 문제 고침"]},
   {v:"5.53.0",date:"2026-10-25",items:["화면 폭 자동 맞춤: 글자 크기가 화면 가로 폭에 따라 저절로 바뀜(작은 휴대폰 15px ~ 넓은 화면 19px, 설정의 글자 크기를 곱함). 글쓰기 · 전달하기 등 새로 열리는 창도 휴대폰에서는 가로를 꽉 채우고 태블릿 · 컴퓨터에서는 화면에 맞춰 넓어짐(전에는 560px로 고정). 본문 폭도 화면에 맞춰 넓어짐, 긴 낱말 줄바꿈, 너무 작은 글씨(11px 아래) 막기. 도움말 · 웹 페이지 보기 창도 같은 방식", "글쓰기에서 수업자료 · 설문 · 화이트보드 · 서류 받기(학교 서류 양식 포함)를 없앰. 예전에 만든 글은 목록에서 열어 보고 지울 수 있음"]},
   {v:"5.52.0",date:"2026-10-25",items:["🏫 학교 서류 양식: 설정 → 학교 서류 양식에서 서류마다 학교 양식(PDF · 사진)을 올리고, 양식 위에 입력칸 · 학생 · 보호자 서명란 · ○ 표시 · 흰 가리개를 끌어 놓아 정하기(글자 크기 · 정렬 · 여러 줄 · 복제 · 삭제 · 확대 · 미리 보기). 받은 서류를 학교 양식에 채워 보기 · A4 인쇄 · PDF, 증빙 사진은 붙임 · 별지에, 넘친 본문은 별지에 이어 쓰기", "기본 제공 양식(갈매고등학교 5가지: 결석 · 조퇴 · 결과 · 지각 신고서, 교외체험학습 신청서, 결과보고서와 별지, 성적 이의 신청 기간 동의서)을 칸까지 맞춰 불러오기. 양식 파일로 내보내기 · 가져오기(그림 · 칸 함께)", "서류 받기에 📝 학생 · 학부모 동의서(성적 이의 신청 기간 교외체험학습) 추가: 학년도 · 학기 · 차수 · 이의 신청 기간을 선생님이 정해 미리 채움, 학생 전화번호, 동의 체크, 학생 · 보호자 서명", "서류 항목을 학교 양식에 맞춤: 결석신고서 구분(질병 · 출석인정 · 기타 · 미인정) · 종류(결석 · 조퇴 · 결과 · 지각) · 학부모 의견서, 체험학습 신청서 · 결과보고서 1일 · 반일 기준(시각), 학습 형태 4가지, 숙박 장소, 세부 규칙 확인 · 학생 안전 동의, 결과보고서 제목 · 동반자", "새 파일: tlsheet.js(양식 채우기) · forms/galmae/(기본 제공 양식 그림 5개)"]},
   {v:"5.51.0",date:"2026-10-25",items:["전달하기 받는 사람 찾기: 👩‍🏫 교직원(이름 · 부서 · 역할 · 교과로 찾기, 부서 · 교과 단추) · 🧑‍🎓 학생(학년 · 반 단추, 학년 · 반 · 이름 · 학번으로 찾기)에서 여러 명 고르기 + 번호 · 메일 직접 입력, 고른 사람 칩 · 빼기. 직접 보내기 칸(연락 · 웹 링크 · 설문 · 서류 · 평가 연락)에도 명단에서 찾아 넣기", "서류 받기: 받을 학생을 등록된 학생에서 찾아 넣기(다른 학급 포함) · 직접 입력(이름 · 학번 · 학년 반 · 휴대폰). 학생 화면의 학년 · 반 · 번호 · 이름은 등록 정보로 채우고 고칠 수 있음", "링크는 단추로: 웹 페이지 · 설문 · 서류 공용 · 명단 공유 링크 글자를 화면에 보이지 않고 공유 · 링크 복사 · 열어 보기 · QR 단추로. 공유하면 카톡 등에서 누르는 링크 카드로 보이고, 문자 · 이메일에는 ‘▶ 작성하기 · 응답하기 · 보기’ 안내와 함께 넣음", "교직원 이메일(학교 묶음 등으로 받은 것)을 지우지 않고 보관해 이메일 전달에 씀"]},
@@ -1783,14 +1793,25 @@ var FILEOK={},FILES_READY=null,STO={warned:false};
 function stripJSON(obj){return JSON.stringify(obj,function(k,v){if(k==="b64"&&typeof v==="string"&&v.length>4096&&this&&this.fid&&FILEOK[this.fid]===v.length)return"";return v})}
 function stashFiles(){try{(S.evals||[]).forEach(ev=>{const f=ev&&ev.file;if(!f||typeof f.b64!=="string"||f.b64.length<=4096)return;if(!f.fid)f.fid=ev.id;const fid=f.fid,len=f.b64.length;if(FILEOK[fid]===len||FILEOK[fid]==="w")return;FILEOK[fid]="w";
   mTx("readwrite",st=>st.put(f.b64,"f:"+fid)).then(()=>{FILEOK[fid]=len;clearTimeout(STO.t);STO.t=setTimeout(()=>saveLS(),300)}).catch(()=>{delete FILEOK[fid]})})}catch(e){}}
+/* 5.54: 저장한 뒤 다시 읽어 확인하고, 실패하면 화면 위에 ‘저장 안 됨’ 띠를 계속 보여 줌 */
+function saveVerify(str){let back=null;try{back=localStorage.getItem(KEY2)}catch(e){}if(back===null||back.length!==str.length)throw new Error("저장 확인 실패");return true}
 function saveLS(){
   const str=stripJSON(S);
-  try{localStorage.setItem(KEY2,str);return true}catch(e){
+  try{localStorage.setItem(KEY2,str);saveVerify(str);saveState(true);return true}catch(e){
     /* 공간이 모자라면 예전 방식으로 남아 있던 큰 항목을 대용량 저장소로 옮긴 뒤 다시 시도 */
-    try{["att-app-undo","att-app-gbase"].forEach(k=>localStorage.removeItem(k));Object.keys(localStorage).filter(k=>k.startsWith("att-app-prof:")).forEach(k=>localStorage.removeItem(k));localStorage.setItem(KEY2,str);return true}catch(e2){}
+    try{["att-app-undo","att-app-gbase"].forEach(k=>localStorage.removeItem(k));Object.keys(localStorage).filter(k=>k.startsWith("att-app-prof:")).forEach(k=>localStorage.removeItem(k));localStorage.setItem(KEY2,str);saveVerify(str);saveState(true);return true}catch(e2){}
+    saveState(false);
     if(!STO.warned){STO.warned=true;setTimeout(()=>{STO.warned=false},60000);toast("저장 공간이 부족해 저장하지 못했습니다. 설정 → 백업 · 저장 공간에서 백업한 뒤 지난 평가를 정리해 주세요")}
     return false}
 }
+let SAVE_BAD=false;
+function saveState(ok){if(ok===!SAVE_BAD)return;SAVE_BAD=!ok;let el=document.getElementById("saveBad");
+  if(ok){if(el)el.remove();return}
+  if(!el){el=document.createElement("div");el.id="saveBad";el.className="savebad";el.setAttribute("role","alert");document.body.appendChild(el)}
+  el.innerHTML='<span>⚠ 방금 입력한 내용이 저장되지 않았습니다</span><button type="button" id="sbRetry">다시 저장</button><button type="button" id="sbBk">백업 파일 받기</button>';
+  el.querySelector("#sbRetry").onclick=()=>{save();if(!SAVE_BAD)toast("저장했습니다")};
+  el.querySelector("#sbBk").onclick=()=>{try{saveBackupFile()}catch(e){}}}
+addEventListener("beforeunload",e=>{if(SAVE_BAD){e.preventDefault();e.returnValue=""}});
 function save(){try{stampPeriods()}catch(e){}S.appVersion=APP_VERSION;stashFiles();saveLS();gTouch()}
 /* 시작할 때: 대용량 저장소에 있는 원본 전표를 다시 붙입니다 */
 function hydrateFiles(){
@@ -2738,7 +2759,7 @@ $("appSend").onclick=async()=>{
 $("appCopy").onclick=()=>copy(installGuide(appUrl()),"앱 주소와 설치 안내를 복사했습니다");
 $("appQr").onclick=()=>{drawQR($("appQrBox"),appUrl(),APP_NAME+" 앱 주소",APP_NAME.replace(/\s+/g,"")+"_앱_QR").then(()=>$("appQr").setAttribute("aria-expanded",!$("appQrBox").hidden))};
 /* 명단 골라 공유 */
-function shReset(){$("linkOut").hidden=true;$("linkBtns").hidden=true;$("linkQr").hidden=true;SH.url=""}
+function shReset(){$("linkOut").hidden=true;$("linkBtns").hidden=true;$("linkQr").hidden=true;if($("linkCode"))$("linkCode").hidden=true;SH.url=""}
 function renderShare(){
   renderAppShare();
   if(!SH.cls)SH.cls=new Set([S.active]);
@@ -2754,7 +2775,7 @@ function renderShare(){
   $("shStaffBox").hidden=!$("shStaff").checked;
   $("shStaffPick").textContent=`교직원 고르기 (${perStaff().filter(x=>SH.staff.has(x.id)).length}/${perStaff().length}명)`;
   {const t=perTT();["shTime","shCal"].forEach(id=>{$(id).disabled=!t;if(!t)$(id).checked=false});$("shTtNote").textContent=t?`${ttName(t)} 시간표에서 · 학사일정 ${calCount(t)}개`:`${perLabel()} 시간표가 없어 보낼 수 없습니다`}
-  $("shSum").textContent=shSummary();
+  $("shSum").textContent=shSummary();shLockSync();
 }
 ["shTime","shCal","shTags"].forEach(id=>$(id).addEventListener("change",()=>{shReset();renderShare()}));
 $("shSchool").onclick=()=>{SH.cls=new Set(perList().map(c=>c.id));SH.staff=new Set(perStaff().map(x=>x.id));
@@ -2826,24 +2847,47 @@ function pickShareStaff(){
   $("pkStOk").onclick=()=>{SH.staff=sel;$("sheet").hidden=true;shReset();renderShare()};
   paint();
 }
+/* 5.54: 공유 잠금 · 유효 기간 — 학생 명단 · 연락처가 들어가는 링크는 받는 코드(8자)로 잠금 (PBKDF2 + AES-GCM) */
+function shPersonal(){const o=shPick();return{any:(o.stu&&o.cls.length)||o.ph||o.stPh||(o.st&&o.staff.length)||(o.tc&&o.cls.some(c=>c.data.teachers.length)),force:o.ph||o.stPh}}
+function shLockSync(){const L=$("shLock");if(!L)return;const p=shPersonal();if(p.force){L.checked=true;L.disabled=true}else L.disabled=false;
+  $("shLockNote").innerHTML=p.force?"연락처가 들어 있어 <b>잠금을 끌 수 없습니다</b>.":L.checked?"받는 분은 링크를 연 뒤 <b>받는 코드</b>를 넣어야 내용을 볼 수 있습니다. 코드는 링크와 <b>다른 방법</b>(전화 · 만나서 · 다른 메신저)으로 알려 주세요.":p.any?'<span class="warn">잠그지 않으면 링크를 가진 누구나 학생 · 교사 이름을 볼 수 있습니다.</span>':"이름 · 연락처가 없는 자료라 잠그지 않아도 됩니다."}
+async function shBuild(){const p=sharePayload(),days=+$("shExp").value||0;if(days)p.exp=addDays(today(),days);
+  if(!$("shLock").checked)return{p,body:p,code:""};const code=newCode();return{p,code,body:{k:"lock",v:1,app:APP_NAME,exp:p.exp||"",e:await sealFor(code,p)}}}
+function shCodeBox(code,p){const el=$("linkCode");if(!code){el.hidden=true;return}el.hidden=false;
+  el.innerHTML=`<div class="lcrow"><span>받는 코드</span><b id="linkCodeV">${esc(code)}</b><button class="btn sm" type="button" id="lcCopy">코드 복사</button></div><p class="note">${esc(shSummary().replace("보낼 내용: ","담긴 것: "))}${p.exp?` · <b>${esc(fmtDate(p.exp))}까지</b> 열 수 있음`:""}</p><p class="warn">코드는 링크와 <b>다른 방법</b>(전화 · 만나서 · 다른 메신저)으로 알려 주세요. 링크와 코드를 한 메시지에 같이 보내면 잠금 효과가 없습니다.</p>`;
+  $("lcCopy").onclick=()=>copy(code,"받는 코드를 복사했습니다")}
+$("shLock").addEventListener("change",()=>{shReset();shLockSync()});$("shExp").addEventListener("change",()=>shReset());
 $("mkLink").onclick=async()=>{
-  let p;try{p=sharePayload()}catch(e){return toast(e.message)}
-  const url=appUrl()+"#d="+await encode(p);SH.url=url;
-  $("linkOut").textContent=url;$("linkOut").hidden=true;$("linkBtns").hidden=false;toast("✅ 링크가 준비되었습니다. 아래 단추로 보내세요");$("linkQr").hidden=true;
+  let B;try{B=await shBuild()}catch(e){return toast(e.message)}const p=B.p;
+  const url=appUrl()+"#d="+await encode(B.body);SH.url=url;
+  $("linkOut").textContent=url;$("linkOut").hidden=true;$("linkBtns").hidden=false;$("linkQr").hidden=true;shCodeBox(B.code,p);
   $("shareLink").hidden=!navigator.share;
-  const title=shTitle(p);
-  $("shareLink").onclick=async()=>{try{await navigator.share({title:title+" · "+APP_NAME,text:`${title} 명단입니다. 링크를 열면 ${APP_NAME} 앱에 바로 들어갑니다.`,url})}catch(e){}};
+  const title=B.code?"학급 명단 (잠김)":shTitle(p);
+  $("shareLink").onclick=async()=>{try{await navigator.share({title:title+" · "+APP_NAME,text:B.code?`${APP_NAME} 명단 링크입니다. 받는 코드는 따로 알려 드립니다.`:`${title} 명단입니다. 링크를 열면 ${APP_NAME} 앱에 바로 들어갑니다.`,url})}catch(e){}};
   $("copyLink").onclick=()=>copy(url,"공유 링크를 복사했습니다");
   $("linkQrBtn").onclick=()=>drawQR($("linkQr"),url,title+" 공유 링크",APP_NAME.replace(/\s+/g,"")+"_공유_QR");
-  toast(url.length>6000?`링크가 깁니다 (${Math.round(url.length/1000)}천 자). 문자로는 잘릴 수 있으니 메신저나 ‘파일로 보내기’를 쓰세요`:appOnline()?"링크를 만들었습니다":"링크를 만들었습니다. 앱을 인터넷 주소로 열어야 다른 사람이 열 수 있습니다");
+  toast(url.length>6000?`링크가 깁니다 (${Math.round(url.length/1000)}천 자). 문자로는 잘릴 수 있으니 메신저나 ‘파일로 보내기’를 쓰세요`:B.code?"✅ 잠긴 링크를 만들었습니다. 받는 코드는 따로 알려 주세요":appOnline()?"✅ 링크가 준비되었습니다. 아래 단추로 보내세요":"링크를 만들었습니다. 앱을 인터넷 주소로 열어야 다른 사람이 열 수 있습니다");
 };
 $("mkFile").onclick=async()=>{
-  let p;try{p=sharePayload()}catch(e){return toast(e.message)}
-  const f=new File([JSON.stringify(p)],`${APP_NAME.replace(/\s+/g,"")}_공유_${shTitle(p).replace(/[\\/:*?"<>|\s]+/g,"_")}_${today().replace(/-/g,"")}.json`,{type:"application/json"});
-  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:shTitle(p)+" · "+APP_NAME});return}catch(e){if(e&&e.name==="AbortError")return}}
+  let B;try{B=await shBuild()}catch(e){return toast(e.message)}const p=B.p;
+  const f=new File([JSON.stringify(B.body)],`${APP_NAME.replace(/\s+/g,"")}_공유_${(B.code?"잠김":shTitle(p)).replace(/[\\/:*?"<>|\s]+/g,"_")}_${today().replace(/-/g,"")}.json`,{type:"application/json"});shCodeBox(B.code,p);
+  if(Array.isArray(window.__fileSpy)){window.__fileSpy.push({name:f.name,size:f.size,text:JSON.stringify(B.body).slice(0,4000)});return}
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:(B.code?"학급 명단 (잠김)":shTitle(p))+" · "+APP_NAME});return}catch(e){if(e&&e.name==="AbortError")return}}
   const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
-  toast("공유 파일을 저장했습니다. 받는 분은 설정 → 백업 파일 불러오기로 엽니다");
+  toast(B.code?"잠긴 공유 파일을 저장했습니다. 받는 코드는 따로 알려 주세요":"공유 파일을 저장했습니다. 받는 분은 설정 → 백업 파일 불러오기로 엽니다");
 };
+/* 잠긴 링크 · 파일 열기 */
+function unlockSheet(env,done){if(env.exp&&today()>env.exp)return expiredMsg(env.exp);let tries=0;
+  $("sheetBox").innerHTML=`<h2>🔒 잠긴 명단</h2><p class="note">보낸 선생님께 받은 <b>받는 코드</b>(8자)를 넣으세요.${env.exp?` 이 링크는 <b>${esc(fmtDate(env.exp))}</b>까지 열 수 있습니다.`:""}</p>
+    <input class="fld" id="ulCode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="예: ABCD-2345" maxlength="12"><p class="warn" id="ulErr" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="ulOk">열기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};setTimeout(()=>{try{$("ulCode").focus()}catch(e){}},50);
+  const go=async()=>{const c=$("ulCode").value;if(codeNorm(c).length<8){$("ulErr").hidden=false;$("ulErr").textContent="코드 8자를 모두 넣어 주세요";return}
+    $("ulOk").disabled=true;let p=null;try{p=await openWith(c,env.e)}catch(e){}$("ulOk").disabled=false;
+    if(!p){tries++;$("ulErr").hidden=false;$("ulErr").textContent=tries>=5?"코드가 계속 맞지 않습니다. 보낸 선생님께 코드를 다시 확인해 주세요":"코드가 맞지 않습니다";return}
+    $("sheet").hidden=true;receive(p,done)};
+  $("ulOk").onclick=go;$("ulCode").onkeydown=e=>{if(e.key==="Enter")go()}}
+function expiredMsg(exp){toast(`유효 기간(${fmtDate(exp)}까지)이 지난 공유입니다. 보낸 선생님께 새로 받아 주세요`);return false}
 /* 공유 받은 내용 가져오기 */
 function mergeShareStaff(list){
   let n=0;(list||[]).forEach(r=>{if(!r||!r.name)return;
@@ -3021,7 +3065,7 @@ function placeAll(p){
     list.forEach(x=>{const same=x.cls?S.list.find(c=>c.data.cls===x.cls):null;if(same)same.data=normalize(x);else if(S.list.length===1&&!D.roster.length&&!D.teachers.length&&!S.list[0].used){S.list[0].data=normalize(x);S.list[0].used=1}else S.list.push({id:x._id&&!S.list.some(c=>c.id===x._id)?String(x._id):uid(),data:normalize(x)})});
     S.list.forEach(c=>delete c.used);mergeStaff(p.staff);if(p.tt&&Array.isArray(p.tt.list))p.tt.list.forEach(x=>{const n=normTT(x);const same=S.tt.list.findIndex(y=>y.year===n.year&&y.term===n.term);if(same>=0)S.tt.list[same]=n;else S.tt.list.push(n)});initTT();if(p.notes&&typeof p.notes==="object")Object.assign(S.notes,p.notes);if(Array.isArray(p.events))p.events.forEach(e=>{if(e&&!S.events.some(x=>x.id===e.id))S.events.push(e)});initEv();D=S.list.find(c=>c.id===S.active).data;selId=null;save();renderAll();toast("백업을 불러왔습니다");$("impIn").value="";$("impMsg").textContent="불러왔습니다.";}}]);
 }
-function receive(p,done){try{if(p&&p.kind==="share")return shareSheet(p,done);if(p&&(Array.isArray(p.classes)||(Array.isArray(p.list)&&!p.roster)||(Array.isArray(p.roster)&&(Array.isArray(p.rounds)||Array.isArray(p.sessions)))))return restoreSheet(readBackup(p),done);placeClass(p,done)}catch(e){toast(e.message||"불러오지 못했습니다")}}
+function receive(p,done){try{if(p&&p.k==="lock"&&p.e)return unlockSheet(p,done);if(p&&p.kind==="share"&&p.exp&&today()>p.exp)return expiredMsg(p.exp);if(p&&p.kind==="share")return shareSheet(p,done);if(p&&(Array.isArray(p.classes)||(Array.isArray(p.list)&&!p.roster)||(Array.isArray(p.roster)&&(Array.isArray(p.rounds)||Array.isArray(p.sessions)))))return restoreSheet(readBackup(p),done);placeClass(p,done)}catch(e){toast(e.message||"불러오지 못했습니다")}}
 async function importText(text){
   text=(text||"").trim();if(!text)return;
   if(/^(z1|b1)\./.test(text)||/#d=/.test(text)||text.startsWith("{")){
@@ -7063,6 +7107,7 @@ function restoreSheet(b,done){
   $("sheetBox").innerHTML=`<h2>백업 불러오기</h2>
     <p class="note"><b>${esc(b.from)}</b> 백업${b.savedAt&&!isNaN(new Date(b.savedAt))?` · ${esc(fmtDateW(ymd(new Date(b.savedAt))))} 저장`:""}</p>
     <p class="note">${items.map(esc).join(" · ")}<br>${b.classes.map(x=>esc(x.cls||"이름 없는 학급")).join(", ")}</p>
+    ${bkCompare(b)}
     ${b.conv.length?`<div class="conv"><b>지금 버전(${APP_VERSION})에 맞게 바꿔서 불러옵니다</b>${b.conv.map(x=>`<span>· ${esc(x)}</span>`).join("")}</div>`:""}
     <div class="row2" style="flex-direction:column">
       <button class="btn pri" type="button" id="rsMerge">지금 데이터와 합치기</button>
@@ -7076,6 +7121,12 @@ function restoreSheet(b,done){
   if(!b.cnt.students){$("rsReplace").hidden=true;$("rsMerge").insertAdjacentHTML("beforebegin",`<p class="warn">이 백업에는 학생 명단이 없어 ‘완전히 바꾸기’를 할 수 없습니다. 들어 있는 것만 합칩니다.</p>`)}
   twoStep($("rsReplace"),"정말 바꾸기",()=>{$("sheet").hidden=true;restoreReplace(b);done&&done()});
 }
+/* 5.54: 백업 검사 — 불러오기 전에 백업과 지금 자료를 항목별로 비교 */
+function bkCountOf(classes,raw){const C=classes||[],o=raw||{};const ar=x=>Array.isArray(x)?x.length:0;
+  return[["학급",C.length],["학생",C.reduce((a,d)=>a+ar(d.roster),0)],["출석 체크",C.reduce((a,d)=>a+ar(d.sessions),0)],["수업 메모",o.notes&&typeof o.notes==="object"?Object.keys(o.notes).length:0],["일정",ar(o.events)],["평가",ar(o.evals)],["과제",ar(o.tasks)],["글",ar(o.recs)]]}
+function bkCompare(b){let cur;try{cur=bkCountOf(S.list.map(c=>c.data),S)}catch(e){return""}const bk=bkCountOf(b.classes,b.raw);let less=0;
+  const rows=bk.map(([k,v],i)=>{const n=cur[i][1],l=v<n;if(l)less++;return`<tr${l?' class="less"':""}><td>${k}</td><td>${v}</td><td>${n}</td></tr>`}).join("");
+  return`<div class="bkchk"><table class="bkcmp"><thead><tr><th>항목</th><th>백업</th><th>지금</th></tr></thead><tbody>${rows}</tbody></table>${less?`<p class="warn">빨간 항목은 <b>지금 자료가 백업보다 많습니다</b>. ‘완전히 바꾸기’를 하면 그만큼 줄어듭니다. 잘 모르겠으면 ‘합치기’를 고르세요.</p>`:`<p class="note">백업이 지금 자료보다 적은 항목은 없습니다.</p>`}</div>`}
 /* ---------- 저장 공간 사용량 · 백업 날짜 ---------- */
 const LS_LIMIT=5*1024*1024,LAST_BK="att-app-lastbackup";
 function lsBytes(){let n=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);n+=(k.length+(localStorage.getItem(k)||"").length)*2}}catch(e){}return n}
@@ -7145,7 +7196,7 @@ $("backupFile").onclick=saveBackupFile;
 $("restoreFile").onchange=async e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;e.target.value="";
   try{const t=await f.text();const p=await readAnyText(t);
-    if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");
+    if(p&&(p.kind==="share"||(p.k==="lock"&&p.e)))return receive(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");
     if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));
     restoreSheet(readBackup(p))}
   catch(err){toast(fileErr(err))}
@@ -8606,7 +8657,7 @@ safe("구글 로그인",renderSync);try{gPreload()}catch(e){reportErr("구글 �
 async function dropFile(f){
   if(/\.(json|txt)$/i.test(f.name)){
     try{const p=await readAnyText(await f.text());if(p&&p.kind==="teachers-life-sync"&&p.data)return toast("동기화 파일은 ‘구글 로그인 · 기기 연동’으로 자동으로 맞춰집니다");
-      if(p&&p.kind==="share")return shareSheet(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
+      if(p&&(p.kind==="share"||(p.k==="lock"&&p.e)))return receive(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
     catch(err){toast(fileErr(err))}return;
   }
   if(/^image\//.test(f.type)||/\.(png|jpe?g|webp|bmp)$/i.test(f.name)){show("tt");return ttUpload(f)}
