@@ -379,7 +379,9 @@ table.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
 .ocnt{color:var(--accent)!important;font-weight:700!important}
 
 /* ---------- 기기 맞춤 레이아웃 ---------- */
-html{font-size:100%}html[data-fs="s"]{font-size:93.75%}html[data-fs="l"]{font-size:112.5%}html[data-fs="xl"]{font-size:125%}
+/* 5.53: 화면 가로 폭에 맞춰 글자 크기가 저절로 바뀜 (작은 휴대폰 15px ~ 큰 화면 19px) × 설정의 글자 크기 */
+:root{--fsk:1}html[data-fs="s"]{--fsk:.94}html[data-fs="l"]{--fsk:1.125}html[data-fs="xl"]{--fsk:1.25}
+html{font-size:calc(var(--fsk)*clamp(15px,13.6px + .36vw,19px))}
 body{font-size:1rem;overflow-x:hidden}
 img,video,canvas{max-width:100%}
 .btn{white-space:normal;line-height:1.25;text-align:center;overflow-wrap:anywhere}
@@ -389,7 +391,6 @@ html:not([data-tt="wide"]) table.ttg{min-width:0}
 html[data-tt="wide"] table.ttg{min-width:560px}
 .sheet>div{max-height:88vh;max-height:88dvh}
 @media (max-width:379px){
-  html:not([data-fs]){font-size:93.75%}
   .wrap{padding-inline:12px}.ttwrap{margin-inline:-12px;padding-inline:3px}
   .navb{font-size:.75rem}.navb svg{width:22px;height:22px}
   .ttg th.tcol{width:2.45rem}.ttg tbody th.tcol b{font-size:.7rem}.ttg tbody th.tcol small{font-size:.62rem}
@@ -404,15 +405,15 @@ html[data-tt="wide"] table.ttg{min-width:560px}
   .wrap>header.top{margin-top:6px}.wrap>header.top .sub{display:none}.topbtns{top:4px}
   .sheet>div{max-height:94dvh;padding-top:12px}
 }
-/* 태블릿 이상: 가운데 창 */
-@media (min-width:760px){.sheet{align-items:center;padding:20px}.sheet>div{border-radius:var(--r-l);max-width:640px;max-height:86dvh}}
+/* 태블릿 이상: 가운데 창 (창 너비도 화면 · 글자 크기에 맞춰 커짐) */
+@media (min-width:760px){.sheet{align-items:center;padding:20px}.sheet>div{border-radius:var(--r-l);max-width:min(46rem,92vw);max-height:88dvh}.wrap{max-width:min(50rem,100%)}}
 /* 넓은 화면: 메뉴는 왼쪽, 내용은 넓게 */
 @media (min-width:1100px){
   html:not([data-nav="bottom"]) body{padding-left:104px;padding-bottom:0}
   html:not([data-nav="bottom"]) nav.bottom{top:0;right:auto;width:104px;grid-template-columns:1fr;grid-auto-rows:76px;align-content:start;padding:60px 0 0;border-top:0;border-right:1px solid var(--line)}
   html:not([data-nav="bottom"]) .navb{height:76px}
   html:not([data-nav="bottom"]) .toast,html:not([data-nav="bottom"]) .utoast,html:not([data-nav="bottom"]) .newbar{bottom:24px;margin-left:52px}
-  html:not([data-lay="one"]) .wrap{max-width:1180px}
+  html:not([data-lay="one"]) .wrap{max-width:min(78rem,100%)}
 }
 /* 두 줄 배치 (넓은 화면 자동, 또는 직접 고름) */
 @media (min-width:1100px){
@@ -596,7 +597,7 @@ nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--pa
 .navb .cnt[hidden]{display:none}
 /* sheet + toast */
 .sheet{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
-.sheet>div{max-height:88vh;overflow:auto;background:var(--paper);width:100%;max-width:560px;border-radius:var(--r-l) var(--r-l) 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
+.sheet>div{max-height:88vh;overflow:auto;background:var(--paper);width:100%;max-width:min(46rem,100%);border-radius:var(--r-l) var(--r-l) 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
 .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--ink);color:var(--bg);font-size:.88rem;border-radius:var(--r-m);padding:9px 16px;max-width:calc(100% - 32px);text-align:center}
 @media (max-width:420px){
   .srow{grid-template-columns:3.6rem minmax(0,1fr) auto}
@@ -1056,7 +1057,7 @@ input.code{text-transform:uppercase;font-size:1.15rem}
 .wdtx{white-space:pre-wrap;word-break:break-word;line-height:1.35;padding:6px 8px;border-radius:6px;font-family:inherit}
 foreignObject{overflow:visible}
 .wov{position:fixed;inset:0;z-index:45;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
-.wovb{background:var(--paper);color:var(--ink);width:100%;max-width:640px;max-height:92dvh;overflow:auto;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.wovb{background:var(--paper);color:var(--ink);width:100%;max-width:min(46rem,100vw);max-height:92dvh;overflow:auto;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
 @media (min-width:760px){.wov{align-items:center}.wovb{border-radius:16px}}
 body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 .wmpal{display:flex;flex-wrap:wrap;gap:4px}.wmpal button{min-width:40px;min-height:36px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:.9rem;cursor:pointer}
@@ -1131,6 +1132,9 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 .sei.tym{border-color:#c0392b;background:rgba(192,57,43,.10);border-radius:50%}.sei.tym span{color:#8e2a1f}.sei.tys{border-color:#1d6b33;background:rgba(29,107,51,.10)}.sei.tys span{color:#155026}.sei.tyw{border-color:#777;background:rgba(255,255,255,.75)}.sei.on{border-style:solid;border-width:2px;box-shadow:0 0 0 2px rgba(31,111,178,.35);z-index:2}
 .seh{position:absolute;right:-9px;bottom:-9px;width:14px;height:14px;background:#1f6fb2;border:2px solid #fff;border-radius:50%;cursor:nwse-resize;box-shadow:0 0 0 1px #1f6fb2}.seprop{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px solid var(--line);padding-top:8px}.sepg2{display:inline-flex;gap:4px;align-items:center}#seHint.seon{color:#c0392b;font-weight:700}
 .sepv{box-shadow:none;margin:0;position:absolute;inset:0;max-width:none;background:transparent}.fmsch{background:#e9ecef;padding:8px}@media print{.fmsch{background:none!important;padding:0!important}}.shpick .wovb{max-width:640px}
+/* 5.53: 너무 작은 글자 막기 (11px 아래로 안 내려감) · 긴 낱말 줄바꿈 */
+.ttg .dbtn small,.ttg thead .dbtn small{font-size:max(11px,.66rem)!important}.wrtool small{font-size:max(11px,.625rem)}.wrk{font-size:max(11px,.6875rem)}.lb small{font-size:max(11px,.68rem)}.shn{font-size:max(11px,.85em)}
+.card,.sheet>div,.wovb{overflow-wrap:anywhere}.sheet>div img,.wovb img{max-width:100%;height:auto}
 .svtab{margin:2px 0 4px}.svbox{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}.svbox textarea{font-size:.85rem}
 .svn{width:84px;display:inline-block;min-height:36px;padding:4px 8px;margin:0 4px}
 .svsec{border:2px solid var(--accent);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:10px}.svsh{display:flex;gap:4px;align-items:center}.svsh .sp{flex:1}
@@ -1504,7 +1508,6 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
     <div class="plist" id="staffEdit"></div>
     <p class="note" style="margin:0">이름을 누르면 이름·부서·직위·전화번호를 고치거나 삭제할 수 있습니다.</p>
   </details>
-  <details class="card" id="d-sheets"><summary>학교 서류 양식 <span class="sub" id="shtCnt"></span></summary><div id="shtBox"></div></details>
   </div></section>
   <section class="sgrp"><h2 class="sgt">가져오기 · 공유</h2><div class="sgl">
   <details class="card" id="d-pack"><summary>학교에서 받기 <span class="sub" id="packTag"></span></summary><div id="packBody"></div></details>
@@ -1612,8 +1615,9 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.52.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.53.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.53.0",date:"2026-10-25",items:["화면 폭 자동 맞춤: 글자 크기가 화면 가로 폭에 따라 저절로 바뀜(작은 휴대폰 15px ~ 넓은 화면 19px, 설정의 글자 크기를 곱함). 글쓰기 · 전달하기 등 새로 열리는 창도 휴대폰에서는 가로를 꽉 채우고 태블릿 · 컴퓨터에서는 화면에 맞춰 넓어짐(전에는 560px로 고정). 본문 폭도 화면에 맞춰 넓어짐, 긴 낱말 줄바꿈, 너무 작은 글씨(11px 아래) 막기. 도움말 · 웹 페이지 보기 창도 같은 방식", "글쓰기에서 수업자료 · 설문 · 화이트보드 · 서류 받기(학교 서류 양식 포함)를 없앰. 예전에 만든 글은 목록에서 열어 보고 지울 수 있음"]},
   {v:"5.52.0",date:"2026-10-25",items:["🏫 학교 서류 양식: 설정 → 학교 서류 양식에서 서류마다 학교 양식(PDF · 사진)을 올리고, 양식 위에 입력칸 · 학생 · 보호자 서명란 · ○ 표시 · 흰 가리개를 끌어 놓아 정하기(글자 크기 · 정렬 · 여러 줄 · 복제 · 삭제 · 확대 · 미리 보기). 받은 서류를 학교 양식에 채워 보기 · A4 인쇄 · PDF, 증빙 사진은 붙임 · 별지에, 넘친 본문은 별지에 이어 쓰기", "기본 제공 양식(갈매고등학교 5가지: 결석 · 조퇴 · 결과 · 지각 신고서, 교외체험학습 신청서, 결과보고서와 별지, 성적 이의 신청 기간 동의서)을 칸까지 맞춰 불러오기. 양식 파일로 내보내기 · 가져오기(그림 · 칸 함께)", "서류 받기에 📝 학생 · 학부모 동의서(성적 이의 신청 기간 교외체험학습) 추가: 학년도 · 학기 · 차수 · 이의 신청 기간을 선생님이 정해 미리 채움, 학생 전화번호, 동의 체크, 학생 · 보호자 서명", "서류 항목을 학교 양식에 맞춤: 결석신고서 구분(질병 · 출석인정 · 기타 · 미인정) · 종류(결석 · 조퇴 · 결과 · 지각) · 학부모 의견서, 체험학습 신청서 · 결과보고서 1일 · 반일 기준(시각), 학습 형태 4가지, 숙박 장소, 세부 규칙 확인 · 학생 안전 동의, 결과보고서 제목 · 동반자", "새 파일: tlsheet.js(양식 채우기) · forms/galmae/(기본 제공 양식 그림 5개)"]},
   {v:"5.51.0",date:"2026-10-25",items:["전달하기 받는 사람 찾기: 👩‍🏫 교직원(이름 · 부서 · 역할 · 교과로 찾기, 부서 · 교과 단추) · 🧑‍🎓 학생(학년 · 반 단추, 학년 · 반 · 이름 · 학번으로 찾기)에서 여러 명 고르기 + 번호 · 메일 직접 입력, 고른 사람 칩 · 빼기. 직접 보내기 칸(연락 · 웹 링크 · 설문 · 서류 · 평가 연락)에도 명단에서 찾아 넣기", "서류 받기: 받을 학생을 등록된 학생에서 찾아 넣기(다른 학급 포함) · 직접 입력(이름 · 학번 · 학년 반 · 휴대폰). 학생 화면의 학년 · 반 · 번호 · 이름은 등록 정보로 채우고 고칠 수 있음", "링크는 단추로: 웹 페이지 · 설문 · 서류 공용 · 명단 공유 링크 글자를 화면에 보이지 않고 공유 · 링크 복사 · 열어 보기 · QR 단추로. 공유하면 카톡 등에서 누르는 링크 카드로 보이고, 문자 · 이메일에는 ‘▶ 작성하기 · 응답하기 · 보기’ 안내와 함께 넣음", "교직원 이메일(학교 묶음 등으로 받은 것)을 지우지 않고 보관해 이메일 전달에 씀"]},
   {v:"5.50.0",date:"2026-10-25",items:["📑 서류 받기(글쓰기 새 유형): 결석신고서 · 교외체험학습 신청서 · 결과보고서를 학생마다(이름이 채워진 링크 · 문자) 또는 공용 링크 · QR · 교실 기기로 보냄. 학생 · 보호자는 앱 없이 웹에서 작성하고 학생 · 보호자 서명, 증빙(진료확인서 · 처방전 · 체험 사진 · 문서) 사진 · 파일 첨부 → 서류 파일 하나로 선생님께 보냄", "받은 서류: 파일(.html) 여러 개 한꺼번에 넣기 · 링크로 받은 서류 넣기 · 교실 기기 자동 넣기, 같은 서류 한 번만, 미제출 학생 · 다시 문자, 서류 보기(양식 · 서명 · 증빙 사진) · 첨부 열기 · 저장 · 인쇄 · PDF · ✓ 확인함 · 삭제. 증빙 파일은 이 기기에만 저장", "교직원 입력 양식: 이름 · 연락처 · 부서 · 업무 · 교과(일괄 입력 · 엑셀 양식 · 머리글 인식, 예전 4칸 양식도 읽음). 연락 · 전달하기에서 교과로도 찾기", "회의 참석자 고르기: 이름 · 부서 · 교과 · 업무로 찾기, 부서 · 교과 단추로 거르기, 보이는 사람 모두 고르기, 명단 밖 이름 직접 넣기", "✍ 직접 보내기: 연락 → ✍ 직접 입력 탭에서 명단에 없는 전화번호 · 이메일(쉼표로 여러 명)로 문자 · 전화 · 이메일, 최근 받는 사람 단추. 전달하기 · 웹 페이지 링크 · 설문 링크 · 서류 안내 · 평가 · 과제 연락하기에도 같은 칸", "설문 기간 · 마감: 일시를 연도 → 월 → 일 → 시 → 분 순서로 고르기(요일 표시), 시작 일시 예약 · 마감 일시 예약, 응답 받는 방식(마감 때까지 모두 받기 · 선착순 N명 마감) 고르기, 정한 내용 요약 줄. 설문 페이지 · 앱의 날짜를 ‘2026년 10월 25일 14:00’ 꼴로", "포스트잇 · 링크는 따로 된 칸 대신 글 안에서: 🗒 포스트잇 블록(색 바꾸기 · 발표 · 웹 · 인쇄에서 나란히), 🔗 링크 카드 블록(누르면 열기 · 고치기). 화이트보드의 포스트잇 도구는 그대로. 예전 🔖 링크 모음은 ‘링크 모음’ 글(★)로 저절로 옮김, 예전 포스트잇 벽 글은 그대로 열림", "새 파일: form.html(학생 서류 작성 페이지) · tlform.js(서류 양식)"]},
@@ -5134,6 +5138,8 @@ function tkContact(id,clIds,pick,back){tkAttSync();const t=tasksAll().find(x=>x.
    출석 → 글쓰기 탭. 노션처럼 블록으로 씁니다(제목 · 목록 · 번호 · 할 일 · 인용 · 구분선, ‘/’ 메뉴, 마크다운 줄임말).
    모든 글에 사진 · 동영상 · 녹음 · 파일 불러오기(증빙). 사진 등 파일은 이 기기에만 저장(관찰 기록과 같음), 글은 구글 연동 · 백업에 들어갑니다.
    목록에서 다른 선생님께 문자 · 전화 · 이메일 · 공유하기로 전달하고, 언제 누구에게 보냈는지 남깁니다. */
+/* 5.53: 수업자료 · 설문 · 화이트보드 · 서류 받기 · 포스트잇 벽은 새로 만들지 않음 (예전 글은 열고 지울 수 있음) */
+const WR_OFF=new Set(["lesson","survey","board","form","notes"]);
 const WR_K=[["stu","학생 기록","👤"],["meet","회의 기록","🗂"],["day","일상 기록","📅"],["free","자유 글","✏️"],["lesson","수업자료","📚"],["survey","설문","📋"],["board","화이트보드","🖍"],["notes","포스트잇","🗒"],["form","서류 받기","📑"]];
 const WR_B=[["p","본문",""],["h1","제목","H1"],["h2","소제목","H2"],["ul","글머리 목록","•"],["ol","번호 목록","1."],["todo","할 일","☐"],["quote","인용","❝"],["call","강조 상자","💡"],["pi","포스트잇","🗒"],["hr","구분선","―"]];
 const WRX={f:"",q:"",ed:false,sel:new Set(),purged:false};
@@ -5161,7 +5167,7 @@ function wrPlain(r,withMedia){const L=[`[${wrK(r)[1]}] ${wrTitle(r)}`,`일시: $
 function renderWrite(){const el=$("wrCard");if(!el)return;if(wrLinksMigrate())setTimeout(()=>toast("보관한 링크를 ‘링크 모음’ 글(★)로 옮겼습니다. 글 안에서 🔗 링크 카드로 씁니다"),400);const every=recsAll().slice().sort((a,b)=>String(b.at).localeCompare(String(a.at))),na=every.filter(r=>r.arch).length;if(!na)WRX.arch=false;const all=every.filter(r=>!!r.arch===!!WRX.arch),q=WRX.q.trim().toLowerCase();
   const L=all.filter(r=>(!WRX.f||(WRX.f==="fav"?r.fav:r.k===WRX.f))&&(!q||wrPlain(r).toLowerCase().includes(q))).sort((a,b)=>(b.fav?1:0)-(a.fav?1:0));
   el.innerHTML=`<div class="hd"><h2>글쓰기</h2><span class="sub">${every.length?`${every.length-na}개${na?` · 보관 ${na}`:""}`:""}</span></div>
-    <div class="wrnew">${WR_K.filter(k=>k[0]!=="notes").map(k=>`<button class="btn" type="button" data-wn="${k[0]}"><span>${k[2]}</span>${k[1]}</button>`).join("")}</div>
+    <div class="wrnew">${WR_K.filter(k=>!WR_OFF.has(k[0])).map(k=>`<button class="btn" type="button" data-wn="${k[0]}"><span>${k[2]}</span>${k[1]}</button>`).join("")}</div>
     ${every.length?`${WRX.arch?`<p class="note tkarn">📦 보관함 · 줄을 왼쪽으로 밀어 꺼내거나 지웁니다</p>`:""}<div class="presets">${[["","전체"],["fav","★ 즐겨찾기"],...WR_K.filter(k=>all.some(r=>r.k===k[0])).map(k=>[k[0],k[1]])].map(([v,l])=>`<button class="chip" type="button" data-wf="${v}" aria-pressed="${WRX.f===v}">${l}${v?` ${all.filter(r=>r.k===v).length}`:""}</button>`).join("")}</div>
     <input class="fld" id="wrQ" type="search" placeholder="찾기 (이름 · 회의명 · 내용)" value="${esc(WRX.q)}" autocomplete="off">
     <div class="wrlbar">${WRX.ed?`<button class="btn sm" type="button" id="wrAllSel">${L.every(r=>WRX.sel.has(r.id))&&L.length?"선택 풀기":"모두 선택"}</button><button class="btn sm bad" type="button" id="wrSelDel"${WRX.sel.size?"":" disabled"}>선택 삭제 (${WRX.sel.size})</button><button class="btn sm" type="button" id="wrEdX">취소</button>`:`<button class="btn sm ghost" type="button" id="wrEdOn">목록 편집 · 삭제</button>${na?`<button class="btn sm ghost" type="button" id="wrArc">${WRX.arch?"‹ 글 목록":`📦 보관함 ${na}`}</button>`:""}<small class="note">줄을 왼쪽으로 밀면 수정 · 보관 · 삭제</small>`}</div>
