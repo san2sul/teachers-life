@@ -1125,6 +1125,12 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 .wb.bm{position:relative}.wbm2{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:12px;padding:6px 8px;margin:4px 28px 4px 0;background:var(--paper)}.wbmo{flex:1;display:flex;gap:10px;align-items:center;background:none;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer;min-width:0;padding:4px}.wbmi{font-size:1.3rem}.wbmt{display:flex;flex-direction:column;min-width:0}.wbmt b{color:#1f6fb2;overflow-wrap:anywhere}.wbmt small{color:var(--muted);overflow-wrap:anywhere}.wbmt i{font-style:normal;font-size:.85rem}
 .wb.pi{background:var(--pic,#fff3a8);color:#1d2621;border-radius:4px;box-shadow:0 3px 8px rgba(0,0,0,.15);padding:10px 12px;margin:8px 0;max-width:360px;min-height:72px;transform:rotate(-.4deg)}.wb.pi:nth-child(even){transform:rotate(.5deg)}.wpic{width:18px;height:18px;border-radius:50%;border:2px solid rgba(0,0,0,.25);padding:0;cursor:pointer}
 .rcsel{gap:6px}.rcc{display:inline-flex;align-items:center;gap:4px}.rcc small{color:var(--muted)}.rcc button{border:0;background:none;font-size:1rem;cursor:pointer;color:var(--muted);padding:0 2px}.rcct{margin-left:auto;font-size:.8rem;color:var(--muted);white-space:nowrap}.rcl{max-height:48vh;overflow:auto}.rcov .wovb{max-width:560px}.fmman{display:grid;grid-template-columns:1fr 1fr;gap:6px}.fmman .btn{grid-column:1/-1}.lbx{display:flex;flex-direction:column;gap:6px}
+.shtl{display:flex;flex-direction:column;gap:2px}.shtr{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.shtn{display:flex;flex-direction:column;min-width:0}.shtn small{color:var(--muted)}.shtb{display:flex;gap:4px;flex-wrap:wrap}
+.shed .wovb{max-width:980px;width:100%;max-height:96dvh}.sest{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#e9ecef;max-height:62dvh;touch-action:pan-x pan-y}.sepg{position:relative;width:100%;margin:0 auto;background:#fff;user-select:none;-webkit-user-select:none;touch-action:none}
+.sei{position:absolute;box-sizing:border-box;border:1.5px dashed #1f6fb2;background:rgba(31,111,178,.10);border-radius:3px;overflow:visible;cursor:move;display:flex;align-items:center;justify-content:center}.sei span{overflow:hidden;max-width:100%;max-height:100%;font-size:10px;line-height:1.1;color:#174d7c;text-align:center;padding:1px;pointer-events:none;word-break:keep-all}
+.sei.tym{border-color:#c0392b;background:rgba(192,57,43,.10);border-radius:50%}.sei.tym span{color:#8e2a1f}.sei.tys{border-color:#1d6b33;background:rgba(29,107,51,.10)}.sei.tys span{color:#155026}.sei.tyw{border-color:#777;background:rgba(255,255,255,.75)}.sei.on{border-style:solid;border-width:2px;box-shadow:0 0 0 2px rgba(31,111,178,.35);z-index:2}
+.seh{position:absolute;right:-9px;bottom:-9px;width:14px;height:14px;background:#1f6fb2;border:2px solid #fff;border-radius:50%;cursor:nwse-resize;box-shadow:0 0 0 1px #1f6fb2}.seprop{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px solid var(--line);padding-top:8px}.sepg2{display:inline-flex;gap:4px;align-items:center}#seHint.seon{color:#c0392b;font-weight:700}
+.sepv{box-shadow:none;margin:0;position:absolute;inset:0;max-width:none;background:transparent}.fmsch{background:#e9ecef;padding:8px}@media print{.fmsch{background:none!important;padding:0!important}}.shpick .wovb{max-width:640px}
 .svtab{margin:2px 0 4px}.svbox{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}.svbox textarea{font-size:.85rem}
 .svn{width:84px;display:inline-block;min-height:36px;padding:4px 8px;margin:0 4px}
 .svsec{border:2px solid var(--accent);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:10px}.svsh{display:flex;gap:4px;align-items:center}.svsh .sp{flex:1}
@@ -1498,6 +1504,7 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
     <div class="plist" id="staffEdit"></div>
     <p class="note" style="margin:0">이름을 누르면 이름·부서·직위·전화번호를 고치거나 삭제할 수 있습니다.</p>
   </details>
+  <details class="card" id="d-sheets"><summary>학교 서류 양식 <span class="sub" id="shtCnt"></span></summary><div id="shtBox"></div></details>
   </div></section>
   <section class="sgrp"><h2 class="sgt">가져오기 · 공유</h2><div class="sgl">
   <details class="card" id="d-pack"><summary>학교에서 받기 <span class="sub" id="packTag"></span></summary><div id="packBody"></div></details>
@@ -1605,8 +1612,9 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.51.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.52.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.52.0",date:"2026-10-25",items:["🏫 학교 서류 양식: 설정 → 학교 서류 양식에서 서류마다 학교 양식(PDF · 사진)을 올리고, 양식 위에 입력칸 · 학생 · 보호자 서명란 · ○ 표시 · 흰 가리개를 끌어 놓아 정하기(글자 크기 · 정렬 · 여러 줄 · 복제 · 삭제 · 확대 · 미리 보기). 받은 서류를 학교 양식에 채워 보기 · A4 인쇄 · PDF, 증빙 사진은 붙임 · 별지에, 넘친 본문은 별지에 이어 쓰기", "기본 제공 양식(갈매고등학교 5가지: 결석 · 조퇴 · 결과 · 지각 신고서, 교외체험학습 신청서, 결과보고서와 별지, 성적 이의 신청 기간 동의서)을 칸까지 맞춰 불러오기. 양식 파일로 내보내기 · 가져오기(그림 · 칸 함께)", "서류 받기에 📝 학생 · 학부모 동의서(성적 이의 신청 기간 교외체험학습) 추가: 학년도 · 학기 · 차수 · 이의 신청 기간을 선생님이 정해 미리 채움, 학생 전화번호, 동의 체크, 학생 · 보호자 서명", "서류 항목을 학교 양식에 맞춤: 결석신고서 구분(질병 · 출석인정 · 기타 · 미인정) · 종류(결석 · 조퇴 · 결과 · 지각) · 학부모 의견서, 체험학습 신청서 · 결과보고서 1일 · 반일 기준(시각), 학습 형태 4가지, 숙박 장소, 세부 규칙 확인 · 학생 안전 동의, 결과보고서 제목 · 동반자", "새 파일: tlsheet.js(양식 채우기) · forms/galmae/(기본 제공 양식 그림 5개)"]},
   {v:"5.51.0",date:"2026-10-25",items:["전달하기 받는 사람 찾기: 👩‍🏫 교직원(이름 · 부서 · 역할 · 교과로 찾기, 부서 · 교과 단추) · 🧑‍🎓 학생(학년 · 반 단추, 학년 · 반 · 이름 · 학번으로 찾기)에서 여러 명 고르기 + 번호 · 메일 직접 입력, 고른 사람 칩 · 빼기. 직접 보내기 칸(연락 · 웹 링크 · 설문 · 서류 · 평가 연락)에도 명단에서 찾아 넣기", "서류 받기: 받을 학생을 등록된 학생에서 찾아 넣기(다른 학급 포함) · 직접 입력(이름 · 학번 · 학년 반 · 휴대폰). 학생 화면의 학년 · 반 · 번호 · 이름은 등록 정보로 채우고 고칠 수 있음", "링크는 단추로: 웹 페이지 · 설문 · 서류 공용 · 명단 공유 링크 글자를 화면에 보이지 않고 공유 · 링크 복사 · 열어 보기 · QR 단추로. 공유하면 카톡 등에서 누르는 링크 카드로 보이고, 문자 · 이메일에는 ‘▶ 작성하기 · 응답하기 · 보기’ 안내와 함께 넣음", "교직원 이메일(학교 묶음 등으로 받은 것)을 지우지 않고 보관해 이메일 전달에 씀"]},
   {v:"5.50.0",date:"2026-10-25",items:["📑 서류 받기(글쓰기 새 유형): 결석신고서 · 교외체험학습 신청서 · 결과보고서를 학생마다(이름이 채워진 링크 · 문자) 또는 공용 링크 · QR · 교실 기기로 보냄. 학생 · 보호자는 앱 없이 웹에서 작성하고 학생 · 보호자 서명, 증빙(진료확인서 · 처방전 · 체험 사진 · 문서) 사진 · 파일 첨부 → 서류 파일 하나로 선생님께 보냄", "받은 서류: 파일(.html) 여러 개 한꺼번에 넣기 · 링크로 받은 서류 넣기 · 교실 기기 자동 넣기, 같은 서류 한 번만, 미제출 학생 · 다시 문자, 서류 보기(양식 · 서명 · 증빙 사진) · 첨부 열기 · 저장 · 인쇄 · PDF · ✓ 확인함 · 삭제. 증빙 파일은 이 기기에만 저장", "교직원 입력 양식: 이름 · 연락처 · 부서 · 업무 · 교과(일괄 입력 · 엑셀 양식 · 머리글 인식, 예전 4칸 양식도 읽음). 연락 · 전달하기에서 교과로도 찾기", "회의 참석자 고르기: 이름 · 부서 · 교과 · 업무로 찾기, 부서 · 교과 단추로 거르기, 보이는 사람 모두 고르기, 명단 밖 이름 직접 넣기", "✍ 직접 보내기: 연락 → ✍ 직접 입력 탭에서 명단에 없는 전화번호 · 이메일(쉼표로 여러 명)로 문자 · 전화 · 이메일, 최근 받는 사람 단추. 전달하기 · 웹 페이지 링크 · 설문 링크 · 서류 안내 · 평가 · 과제 연락하기에도 같은 칸", "설문 기간 · 마감: 일시를 연도 → 월 → 일 → 시 → 분 순서로 고르기(요일 표시), 시작 일시 예약 · 마감 일시 예약, 응답 받는 방식(마감 때까지 모두 받기 · 선착순 N명 마감) 고르기, 정한 내용 요약 줄. 설문 페이지 · 앱의 날짜를 ‘2026년 10월 25일 14:00’ 꼴로", "포스트잇 · 링크는 따로 된 칸 대신 글 안에서: 🗒 포스트잇 블록(색 바꾸기 · 발표 · 웹 · 인쇄에서 나란히), 🔗 링크 카드 블록(누르면 열기 · 고치기). 화이트보드의 포스트잇 도구는 그대로. 예전 🔖 링크 모음은 ‘링크 모음’ 글(★)로 저절로 옮김, 예전 포스트잇 벽 글은 그대로 열림", "새 파일: form.html(학생 서류 작성 페이지) · tlform.js(서류 양식)"]},
   {v:"5.49.0",date:"2026-10-25",items:["엔터 개선: 한글 조합 중 엔터 · 휴대폰 자판이 문단을 직접 넣는 경우도 새 문단으로 나눔, Shift+엔터는 같은 문단에서 줄만 바꿈, 꾸미기 줄에 ↵ 새 문단 단추","문단 · 간격(¶): 줄 간격 · 문단 앞뒤 간격 · 정렬(왼쪽 · 가운데 · 오른쪽 · 양쪽) · 들여쓰기 · 첫 줄 들여쓰기 · 글자 크기 · 자간 · 글꼴, 글 전체 기본값 · 문단 사이 간격 · 여백. 엔터로 만든 문단에 같은 모양이 이어짐","글자 꾸미기 추가: 고른 글자의 크기 · 자간 · 글꼴(명조 · 고정폭), 🔗 링크(웹 · 이메일 · 전화, 누르면 열기 · 고치기 · 빼기)","되돌리기 ↶ · 다시 ↷(글 전체), 🔍 찾아 바꾸기(본문 · 표 · 캡션 · 글상자), 글자 수 · 낱말 · 문단 수, 💡 강조 상자, ‘/’ → 오늘 날짜","🖨 발표 · 인쇄 · 내보내기: ▶ 발표(전체 화면, 큰 제목 · 구분선마다 한 쪽), 인쇄 · PDF, 🌐 웹 페이지 링크 · QR(앱 없이 웹으로 보기), 웹 페이지 파일(.html, 게시용), Word 파일(.doc, 그림 포함)","글쓰기 유형 4가지 추가: 📚 수업자료(틀 제공 · 수업 화면으로 띄우기), 📋 설문, 🖍 화이트보드(큰 도화지 · 포스트잇), 🗒 포스트잇(칸별 포스트잇 벽 · 크게 보기). 도화지에 포스트잇 도구","설문: 제목 · 설명 · 개인정보 수집 · 이용 및 제3자 제공 동의(기본 문구 · 체크해야 시작), 응답자 이름(익명 · 선택 · 필수), 섹션, 객관식 · 체크박스(최소 · 최대, 기타) · 드롭다운 · 주관식(짧게 · 길게) · 척도 · 객관식 그리드 · 체크박스 그리드 · 2차원 행렬 · 날짜, 답에 따라 섹션 이동, 시작(예약) · 종료, 종료 방식(마감 시한 · 참여 인원 제한)","설문 게시 · 응답: 설문 링크 · QR · 공유, 응답자는 제출 후 문자 · 카톡 · 이메일로 응답을 보냄 → 받은 링크를 누르거나 한꺼번에 붙여 넣으면 집계, 이 기기에서 돌아가며 응답 받기(자동으로 들어옴), 같은 응답 두 번 안 들어감, 마감 · 다시 열기","설문 집계: 문항별 막대 · 비율, 척도 평균, 그리드 · 행렬 표, 주관식 모아 보기, 응답 하나씩 보기 · 집계에서 빼기 · 삭제, 엑셀(CSV), 결과 인쇄 · 웹 페이지 파일","🔖 링크 모음: 참고 사이트를 분류 · 메모 · ★ 즐겨찾기로 보관, 분류별 보기 · 찾기, 누르면 열기 · 공유, 밀어서 수정 · 즐겨찾기 · 삭제. 글에도 ★ 즐겨찾기(맨 위에 · 따로 보기)","새 파일: wrview.js · view.html(웹 공유 페이지) · survey.html(설문 페이지)"]},
@@ -6011,15 +6019,16 @@ function renderDirect(){const el=$("c-direct");if(!el)return;if(el.dataset.on)re
   try{$("dmMsg").value=localStorage.getItem("tl-direct-msg")||""}catch(e){}$("dmMsg").oninput=e=>{try{localStorage.setItem("tl-direct-msg",e.target.value)}catch(_){}};
   dsendWire("dmTo",{text:()=>$("dmMsg").value,subject:()=>$("dmSub").value.trim()||"안내"})}
 /* ===== 5.50: 학생 서류 받기 — 결석신고서 · 교외체험학습 신청서 · 결과보고서 ===== */
-const FM_L={absence:["결석신고서","🏥"],trip:["교외체험학습 신청서","🧳"],report:["교외체험학습 결과보고서","📸"]};
+const FM_L={absence:["결석신고서","🏥"],trip:["교외체험학습 신청서","🧳"],report:["교외체험학습 결과보고서","📸"],consent:["학생 · 학부모 동의서 (성적 이의신청 기간 교외체험학습)","📝"]};
 const FM_MSG={absence:"결석한 날의 결석신고서를 작성해 주세요. 진료확인서 · 처방전 등 증빙 서류를 사진으로 찍어 첨부하고, 학생과 보호자가 함께 서명해 주세요.",
   trip:"교외체험학습을 신청할 때 작성해 주세요. 체험학습 시작 전까지 제출해야 합니다. 학생과 보호자가 함께 서명해 주세요.",
-  report:"교외체험학습을 다녀온 뒤 결과보고서를 작성해 주세요. 체험 사진 · 입장권 등 증빙 자료를 첨부하고, 학생과 보호자가 함께 서명해 주세요."};
+  report:"교외체험학습을 다녀온 뒤 결과보고서를 작성해 주세요. 체험 사진 · 입장권 등 증빙 자료를 첨부하고, 학생과 보호자가 함께 서명해 주세요.",
+  consent:"성적 이의신청 기간에 교외체험학습을 가는 학생은 학생 · 보호자 동의서를 작성해 주세요. 성적 확인 방법을 고르고, 확인 사항에 체크한 뒤 학생과 보호자가 함께 서명해 주세요."};
 let TLFL=null;
 function wrTLF(){if(window.TLF)return Promise.resolve(window.TLF);if(TLFL)return TLFL;TLFL=new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="tlform.js";sc.onload=()=>window.TLF?res(window.TLF):rej(new Error("서류 도구를 불러오지 못했습니다"));sc.onerror=()=>{TLFL=null;rej(new Error("서류 도구를 불러오지 못했습니다"))};document.head.appendChild(sc)});return TLFL}
 function fmDef(r){if(!r.fm)r.fm={};const f=r.fm;if(!f.id)f.id=uid();if(!FM_L[f.t])f.t="absence";if(f.msg==null)f.msg=FM_MSG[f.t];if(!f.cls){const c=curClass();if(c)f.cls=c.id}if(f.sch==null)try{f.sch=localStorage.getItem("tl-sch-name")||""}catch(e){f.sch=""}if(!Array.isArray(r.subs))r.subs=[];if(!f.sent)f.sent={};return f}
 const fmCls=r=>S.list.find(c=>c.id===(r.fm||{}).cls);
-function fmPack(r,rc){const f=fmDef(r),cl=fmCls(r),o={k:"tlf",v:1,id:f.id,t:f.t,cls:cl?clsName(cl.data):"",who:meName(),due:f.due||"",msg:f.msg||"",to:f.to||"",sch:f.sch||"",ap:wrAppBase()};if(f.req!=null)o.req=f.req?1:0;
+function fmPack(r,rc){const f=fmDef(r),cl=fmCls(r),o={k:"tlf",v:1,id:f.id,t:f.t,cls:cl?clsName(cl.data):"",who:meName(),due:f.due||"",msg:f.msg||"",to:f.to||"",sch:f.sch||"",ap:wrAppBase()};if(f.req!=null)o.req=f.req?1:0;if(f.t==="consent"&&f.pre){o.pre={};["yr","sem","cha","os","oe"].forEach(k=>{if(f.pre[k])o.pre[k]=f.pre[k]})}
   if(rc){if(Array.isArray(rc))rc={sid:rc[0],nm:rc[1]};o.s={sid:rc.sid||"",nm:rc.nm||""};if(rc.cls)o.cls=rc.cls}return o}
 /* 받을 학생: 서류 학급 명단(등록 정보) + 다른 학급에서 찾은 학생 + 직접 입력한 학생 */
 function fmRecips(r){const f=fmDef(r),cl=fmCls(r),L=cl?cl.data.roster.map(([sid,nm])=>({key:sid,sid,nm,cls:"",ph:digits((cl.data.phones||{})[sid]||"")})):[];
@@ -6036,9 +6045,13 @@ function wrFormEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!r)
   if(tab==="set")body=`<div class="shlb">서류 종류</div><div class="presets">${Object.keys(FM_L).map(k=>`<button class="chip" type="button" data-ft="${k}" aria-pressed="${f.t===k}">${FM_L[k][1]} ${FM_L[k][0]}</button>`).join("")}</div>
     <label class="lb" for="fmCl">학급<select class="fld" id="fmCl">${S.list.map(c=>`<option value="${esc(c.id)}"${c.id===f.cls?" selected":""}>${esc(clsName(c.data))}</option>`).join("")}</select></label>
     <label class="lb" for="fmSch">학교 이름 (서류에 ‘○○학교장 귀하’로 들어감)<input class="fld" id="fmSch" value="${esc(f.sch||"")}" maxlength="40" placeholder="예: 한빛고등학교" autocomplete="off"></label>
+    ${f.t==="consent"?`<div class="svbox"><b>성적 이의 신청 기간</b> <small class="note">학생 화면에 미리 채워집니다</small><div class="fmman"><label class="lb" for="fpYr">학년도<input class="fld" id="fpYr" inputmode="numeric" maxlength="4" value="${esc((f.pre||{}).yr||String(new Date().getMonth()<2?new Date().getFullYear()-1:new Date().getFullYear()))}"></label>
+      <label class="lb" for="fpSem">학기<select class="fld" id="fpSem">${["1","2"].map(v=>`<option${(f.pre||{}).sem===v?" selected":""}>${v}</option>`).join("")}</select></label>
+      <label class="lb" for="fpCha">지필평가 차수<select class="fld" id="fpCha">${["1","2"].map(v=>`<option${(f.pre||{}).cha===v?" selected":""}>${v}</option>`).join("")}</select></label><span></span>
+      <label class="lb" for="fpOs">시작일<input class="fld" id="fpOs" type="date" value="${esc((f.pre||{}).os||"")}"></label><label class="lb" for="fpOe">끝나는 날<input class="fld" id="fpOe" type="date" value="${esc((f.pre||{}).oe||"")}"></label></div></div>`:""}
     <label class="lb" for="fmDue">제출 기한 (선택)<input class="fld" id="fmDue" type="date" value="${esc(f.due||"")}"></label>
     <label class="lb" for="fmMsg">안내 문구<textarea class="fld" id="fmMsg" rows="4" maxlength="1000">${esc(f.msg||"")}</textarea></label>
-    <label class="chk"><input type="checkbox" id="fmReq"${(f.req!=null?f.req:f.t!=="trip")?" checked":""}><span>증빙 서류 첨부를 꼭 받기 ${f.t==="absence"?"(진료확인서 · 처방전 등)":f.t==="report"?"(체험 사진 · 입장권 등)":"(계획서 등)"}</span></label>
+    <label class="chk"><input type="checkbox" id="fmReq"${(f.req!=null?f.req:f.t!=="trip"&&f.t!=="consent")?" checked":""}><span>증빙 서류 첨부를 꼭 받기 ${f.t==="absence"?"(진료확인서 · 처방전 등)":f.t==="report"?"(체험 사진 · 입장권 등)":f.t==="consent"?"(관련 서류)":"(계획서 등)"}</span></label>
     <label class="lb" for="fmTo">서류를 받을 이메일 (선택 · 학생 안내에 표시)<input class="fld" id="fmTo" type="email" value="${esc(f.to||"")}" placeholder="teacher@school.go.kr" autocomplete="email"></label>
     <p class="note">학생은 링크를 열어 온라인으로 작성하고, <b>학생과 보호자가 서명</b>하고, 증빙 서류를 사진 · 파일로 붙입니다. 다 쓰면 서류가 <b>파일 하나</b>로 만들어지고, 학생은 그 파일을 카톡 · 메일로 선생님께 보냅니다. 선생님은 받은 파일을 <b>📥 받은 서류</b>에 넣어 모읍니다.</p>`;
   else if(tab==="send")body=`<div class="svbox"><b>학생마다 보내기</b> <small class="note">이름이 미리 채워진 링크 · 누가 냈는지 바로 보입니다</small>
@@ -6061,7 +6074,7 @@ function wrFormEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!r)
   $("sheetBox").innerHTML=head+body+foot;$("sheet").hidden=false;const box=$("sheetBox"),T=()=>wrTouch(r);
   box.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{clearTimeout(WR_SAVE);save();reopen(b.dataset.tab)});
   if(tab==="set"){box.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{const was=f.t;f.t=b.dataset.ft;if(!f.msg||f.msg===FM_MSG[was])f.msg=FM_MSG[f.t];delete f.req;r.title=FM_L[f.t][0]+" 받기";T();reopen("set")});
-    $("fmCl").onchange=e=>{f.cls=e.target.value;T()};$("fmSch").oninput=e=>{f.sch=e.target.value.trim();try{localStorage.setItem("tl-sch-name",f.sch)}catch(_){}T()};$("fmDue").onchange=e=>{f.due=e.target.value;T()};
+    $("fmCl").onchange=e=>{f.cls=e.target.value;T()};$("fmSch").oninput=e=>{f.sch=e.target.value.trim();try{localStorage.setItem("tl-sch-name",f.sch)}catch(_){}T()};$("fmDue").onchange=e=>{f.due=e.target.value;T()};[["fpYr","yr"],["fpSem","sem"],["fpCha","cha"],["fpOs","os"],["fpOe","oe"]].forEach(([id,k])=>{const e=$(id);if(e){const set=()=>{f.pre=f.pre||{};f.pre[k]=e.value.trim();T()};e.oninput=set;e.onchange=set;if(!(f.pre||{})[k]&&e.value)set()}});
     $("fmMsg").oninput=e=>{f.msg=e.target.value;T()};$("fmReq").onchange=e=>{f.req=e.target.checked?1:0;T()};$("fmTo").oninput=e=>{f.to=e.target.value.trim();T()}}
   if(tab==="send"){const byKey=k=>RC.find(x=>x.key===k);const sendOne=async k=>{const x=byKey(k);if(!x)return;const link=await fmLink(r,x);f.sent[k]=new Date().toISOString();T();go(smsHref([x.ph],fmSms(r,link)))};
     box.querySelectorAll("[data-fs]").forEach(b=>b.onclick=()=>sendOne(b.dataset.fs).then(()=>reopen("send")));
@@ -6108,13 +6121,20 @@ function fmHash(){if(!location.hash.startsWith("#fa="))return false;const h=loca
 async function fmView(r,s,back){if(!s)return;const TL=await wrTLF();const urls={};for(const x of (s.files||[])){try{const bl=await mGet(x.mid);if(bl)urls[x.id]=URL.createObjectURL(bl)}catch(e){}}
   const imgs={};(s.files||[]).forEach(x=>{if(/^image\//.test(x.type)&&urls[x.id])imgs[x.id]=urls[x.id]});const cl=fmCls(r),rq={t:r.fm.t,cls:cl?clsName(cl.data):"",sch:r.fm.sch||""};
   const{ov,box}=wrOv("fmov");box.innerHTML=`<div class="fmvt"><b>${esc(s.nm||"")} · ${esc(FM_L[r.fm.t][0])}</b><span class="sp"></span><button class="btn sm" type="button" id="fvP">🖨 인쇄 · PDF</button><button class="btn sm" type="button" id="fvX">닫기</button></div>
-    <div class="fmdocw"><style>${TL.css}</style>${TL.docHTML(rq,s,{imgs})}</div>
+    ${shOf(r.fm.t,"main")?`<div class="presets"><button class="chip" type="button" data-fvm="sch" aria-pressed="true">🏫 학교 양식</button><button class="chip" type="button" data-fvm="app" aria-pressed="false">📄 앱 양식</button></div>`:""}
+    <div class="fmdocw" id="fvDoc"><style>${TL.css}</style>${TL.docHTML(rq,s,{imgs})}</div>
     <div class="svbox"><b>첨부 ${(s.files||[]).length}개</b>${(s.files||[]).map(x=>`<div class="fmf"><span>${/^image\//.test(x.type)?"🖼":/pdf/.test(x.type)?"📕":"📄"} ${esc(x.name)} <small>${Math.max(1,Math.round((x.size||0)/1024))}KB</small></span>${urls[x.id]?`<a class="btn sm" href="${urls[x.id]}" target="_blank" rel="noopener">열기</a><a class="btn sm" href="${urls[x.id]}" download="${esc(x.name)}">저장</a>`:`<small class="note">이 기기에 파일 없음</small>`}</div>`).join("")||`<p class="note">첨부 없음</p>`}</div>
     <div class="row2"><button class="btn bad ghost" type="button" id="fvD">이 서류 삭제</button><button class="btn${s.ok?"":" pri"}" type="button" id="fvOk">${s.ok?"확인 취소":"✓ 확인함"}</button></div>`;
   const close=()=>{ov._close();Object.values(urls).forEach(u=>{try{URL.revokeObjectURL(u)}catch(e){}});back&&back()};ov._close=(o=>()=>{o()})(ov._close);
   box.querySelector("#fvX").onclick=close;box.querySelector("#fvOk").onclick=()=>{if(s.ok)delete s.ok;else s.ok=new Date().toISOString();wrTouch(r);close()};
   twoStep(box.querySelector("#fvD"),"정말 삭제",()=>{const i=r.subs.indexOf(s);r.subs.splice(i,1);wrTouch(r);close();toastUndo("서류를 지웠습니다",()=>{r.subs.splice(i,0,s);wrTouch(r);back&&back()})});
-  box.querySelector("#fvP").onclick=()=>{const old=$("wrPrint");if(old)old.remove();const el=document.createElement("div");el.id="wrPrint";el.innerHTML=`<style>${TL.css}</style>`+TL.docHTML(rq,s,{imgs});document.body.appendChild(el);document.body.classList.add("wrprinting");
+  const imgL=(s.files||[]).filter(x=>/^image\//.test(x.type)&&urls[x.id]).map(x=>({u:urls[x.id],n:x.name}));let mode="app";
+  const appDoc=()=>`<style>${TL.css}</style>`+TL.docHTML(rq,s,{imgs});
+  const setMode=async m=>{const el=box.querySelector("#fvDoc");box.querySelectorAll("[data-fvm]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.fvm===m));
+    if(m==="sch"){el.classList.add("fmsch");if(await shRender(el,r,s,imgL)){mode="sch";return}toast("이 기기에 학교 양식 그림이 없어 앱 양식으로 보여 줍니다");m="app";box.querySelectorAll("[data-fvm]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.fvm==="app"))}
+    el.classList.remove("fmsch");el.innerHTML=appDoc();mode="app"};
+  box.querySelectorAll("[data-fvm]").forEach(b=>b.onclick=()=>setMode(b.dataset.fvm));if(shOf(r.fm.t,"main"))setMode("sch");
+  box.querySelector("#fvP").onclick=async()=>{const old=$("wrPrint");if(old)old.remove();const el=document.createElement("div");el.id="wrPrint";document.body.appendChild(el);if(mode==="sch"){el.className="fmsch";await shRender(el,r,s,imgL)}else el.innerHTML=appDoc();document.body.classList.add("wrprinting");
     const done=()=>{document.body.classList.remove("wrprinting");el.remove();removeEventListener("afterprint",done)};addEventListener("afterprint",done);if(Array.isArray(window.__printSpy)){window.__printSpy.push(el.innerHTML);done();return}setTimeout(()=>window.print(),100)}}
 
 /* 5.50: 링크 카드 블록 — 글 안에 사이트 주소를 카드로 넣고 누르면 열기 (예전 ‘링크 모음’ 탭을 대신함) */
@@ -6138,6 +6158,113 @@ function wrLinksMigrate(){const L=linksAll();if(!L.length)return false;const cat
   cats.forEach(c=>{const g=L.filter(x=>(x.c||"")===c&&!x.f);if(!g.length)return;blocks.push({id:uid(),t:"h2",x:esc(c||"분류 없음")});g.forEach(x=>blocks.push(lkB(x)))});blocks.push({id:uid(),t:"p",x:""});
   recsAll().push({id:uid(),k:"free",title:"링크 모음",at:nowLocal(),place:"",blocks,media:[],fav:1,cAt:new Date().toISOString()});S.links=[];save();return true}
 function lkB(x){const o={id:uid(),t:"bm",u:x.u};if(x.t)o.ti=x.t;if(x.n)o.n=x.n;return o}
+/* ===== 5.53: 학교 서류 양식 — 학교 양식(PDF · 사진)을 올리고 입력칸 · 서명란 · ○ 표시를 정해 그대로 채워 인쇄 ===== */
+let TLSL=null;
+function shLib(){const need=[];if(!window.TLF)need.push("tlform.js");if(!window.TLS)need.push("tlsheet.js");if(!need.length)return Promise.resolve(window.TLS);if(TLSL)return TLSL;
+  TLSL=need.reduce((p,src)=>p.then(()=>new Promise((res,rej)=>{const sc=document.createElement("script");sc.src=src;sc.onload=res;sc.onerror=()=>{TLSL=null;rej(new Error("양식 도구를 불러오지 못했습니다"))};document.head.appendChild(sc)})),Promise.resolve()).then(()=>window.TLS);return TLSL}
+function shAll(){if(!Array.isArray(S.sheets))S.sheets=[];return S.sheets}
+const shOf=(t,part)=>shAll().find(x=>x.t===t&&(x.part||"main")===(part||"main"));
+const SH_PART={main:"양식",att:"별지 (이어 쓰기 · 사진)"};
+const SHURL=new Map();
+async function shBg(tp){if(!tp)return null;if(SHURL.has(tp.id))return SHURL.get(tp.id);try{const bl=await mGet("f"+tp.id);if(!bl)return null;const u=URL.createObjectURL(bl);SHURL.set(tp.id,u);return u}catch(e){return null}}
+function shPut(tp,blob){SHURL.delete(tp.id);return mPut("f"+tp.id,blob)}
+/* PDF 첫 쪽 · 사진 → 그림(가로 1654px 안팎) */
+async function shImage(file){const W=1654;let cv=document.createElement("canvas"),w,h;
+  if(/pdf/i.test(file.type)||/\.pdf$/i.test(file.name)){const L=await loadPDFJS();const doc=await L.getDocument({data:new Uint8Array(await file.arrayBuffer()),cMapUrl:"vendor/pdf/cmaps/",cMapPacked:true,isEvalSupported:false}).promise;
+    const pg=await doc.getPage(1),v0=pg.getViewport({scale:1}),sc=W/v0.width,vp=pg.getViewport({scale:sc});cv.width=w=Math.round(vp.width);cv.height=h=Math.round(vp.height);const c=cv.getContext("2d");c.fillStyle="#fff";c.fillRect(0,0,w,h);await pg.render({canvasContext:c,viewport:vp}).promise}
+  else{const bmp=await createImageBitmap(file);const sc=Math.min(1,W/bmp.width)||1;cv.width=w=Math.round(bmp.width*sc);cv.height=h=Math.round(bmp.height*sc);const c=cv.getContext("2d");c.fillStyle="#fff";c.fillRect(0,0,w,h);c.drawImage(bmp,0,0,w,h)}
+  const blob=await new Promise(r=>cv.toBlob(r,"image/png"));return{blob,w,h}}
+/* 설정 → 학교 서류 양식 */
+function renderSheets(){const el=$("shtBox");if(!el)return;const L=shAll(),types=Object.keys(FM_L);$("shtCnt").textContent=L.length?`${L.length}개`:"";
+  const row=(t,part)=>{const tp=shOf(t,part),nm=part==="att"?"└ "+SH_PART.att:FM_L[t][1]+" "+FM_L[t][0];
+    return`<div class="shtr" data-t="${t}" data-p="${part}"><div class="shtn"><b>${esc(nm)}</b><small>${tp?`${esc(tp.name||"학교 양식")} · 칸 ${tp.items.length}개`:part==="att"?"없으면 이어 쓰기 · 사진은 흰 종이에":"없으면 앱 기본 양식으로 인쇄"}</small></div>
+      <div class="shtb"><button class="btn sm" type="button" data-su="${t}:${part}">${tp?"바꾸기":"올리기"}</button>${tp?`<button class="btn sm pri" type="button" data-se="${t}:${part}">칸 정하기</button><button class="btn sm ghost" type="button" data-sp="${t}:${part}">미리 보기</button><button class="btn sm ghost bad" type="button" data-sx="${t}:${part}">삭제</button>`:""}</div></div>`};
+  el.innerHTML=`<p class="note">학교마다 서류 양식이 다릅니다. 학교 양식(PDF · 사진)을 올리고 <b>칸 정하기</b>로 이름 · 기간 · 사유 같은 입력칸과 학생 · 보호자 서명란, ○ 표시 자리를 양식 위에 놓으면, 학생 · 보호자가 온라인으로 쓴 내용이 그 자리에 채워져 그대로 인쇄됩니다.</p>
+    <div class="shtl">${types.map(t=>row(t,"main")+(t==="report"?row(t,"att"):"")).join("")}</div>
+    <div class="row2"><button class="btn" type="button" id="shtPre">🏫 기본 제공 양식 불러오기 (갈매고등학교)</button></div>
+    <div class="row2"><button class="btn sm" type="button" id="shtEx"${L.length?"":" disabled"}>양식 파일로 내보내기</button><button class="btn sm" type="button" id="shtIm">양식 파일 가져오기</button></div>
+    <input type="file" id="shtFile" accept="application/pdf,.pdf,image/*" hidden><input type="file" id="shtImF" accept=".json,application/json" hidden>
+    <p class="note">양식 그림은 이 기기에 저장됩니다. 다른 기기나 다른 선생님께는 <b>양식 파일로 내보내기</b>로 옮기세요(칸 위치까지 함께).</p>`;
+  let up=null;
+  el.querySelectorAll("[data-su]").forEach(b=>b.onclick=()=>{up=b.dataset.su.split(":");$("shtFile").click()});
+  $("shtFile").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f||!up)return;const[t,part]=up;toast("양식을 읽는 중입니다…");
+    try{const im=await shImage(f);let tp=shOf(t,part);const isNew=!tp;if(!tp){tp={id:uid(),t,part,items:[]};shAll().push(tp)}tp.name=f.name.replace(/\.[^.]+$/,"").slice(0,40);tp.w=im.w;tp.h=im.h;tp.at=new Date().toISOString();await shPut(tp,im.blob);save();renderSheets();
+      toast(isNew?"양식을 올렸습니다. ‘칸 정하기’로 입력칸을 놓으세요":"양식 그림을 바꿨습니다(칸은 그대로)");if(isNew)shEdit(tp)}catch(err){toast("양식을 읽지 못했습니다"+(err&&err.message?` (${err.message})`:""))}};
+  el.querySelectorAll("[data-se]").forEach(b=>b.onclick=()=>{const[t,part]=b.dataset.se.split(":");shEdit(shOf(t,part))});
+  el.querySelectorAll("[data-sp]").forEach(b=>b.onclick=()=>{const[t,part]=b.dataset.sp.split(":");shPreview(t,part)});
+  el.querySelectorAll("[data-sx]").forEach(b=>twoStep(b,"정말",()=>{const[t,part]=b.dataset.sx.split(":");const tp=shOf(t,part);if(!tp)return;const i=shAll().indexOf(tp);shAll().splice(i,1);save();renderSheets();toastUndo("양식을 지웠습니다",()=>{shAll().splice(i,0,tp);save();renderSheets()},8000)}));
+  $("shtPre").onclick=()=>shPreset();
+  $("shtEx").onclick=async()=>{const out=[];for(const tp of shAll()){let bg="";try{const bl=await mGet("f"+tp.id);if(bl)bg=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(bl)})}catch(e){}out.push({...tp,bg})}
+    const f=new File([JSON.stringify({k:"tlsheets",v:1,app:APP_NAME,at:new Date().toISOString(),sheets:out})],`학교서류양식_${(L[0]&&L[0].name)||"양식"}.json`.replace(/[\\/:*?"<>|\s]+/g,"_"),{type:"application/json"});
+    if(Array.isArray(window.__fileSpy)){window.__fileSpy.push({name:f.name,size:f.size,text:await f.text()});return}await shareOrSave(f)};
+  $("shtIm").onclick=()=>$("shtImF").click();
+  $("shtImF").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;try{const p=JSON.parse(await f.text());if(!p||p.k!=="tlsheets"||!Array.isArray(p.sheets))throw new Error("양식 파일이 아닙니다");let n=0;
+      for(const x of p.sheets){if(!x||!FM_L[x.t]||!Array.isArray(x.items))continue;const part=x.part==="att"?"att":"main";let tp=shOf(x.t,part);if(!tp){tp={id:uid(),t:x.t,part};shAll().push(tp)}
+        Object.assign(tp,{name:String(x.name||"학교 양식").slice(0,40),w:+x.w||1654,h:+x.h||2339,items:shClean(x.items),at:new Date().toISOString()});if(/^data:image\//.test(x.bg||"")){const bl=await (await fetch(x.bg)).blob();await shPut(tp,bl)}n++}
+      save();renderSheets();toast(`양식 ${n}개를 가져왔습니다`)}catch(err){toast("양식 파일을 읽지 못했습니다"+(err&&err.message?` (${err.message})`:""))}}}
+function shClean(items){const T=new Set(["t","a","s","m","w"]),num=v=>Math.max(-50,Math.min(5000,+v||0));return(items||[]).filter(it=>it&&T.has(it.ty)&&typeof it.k==="string").slice(0,300).map(it=>{const o={ty:it.ty,k:String(it.k).slice(0,30),x:num(it.x),y:num(it.y),w:Math.max(4,num(it.w)),h:Math.max(4,num(it.h))};
+  if(it.fs)o.fs=Math.max(3,Math.min(80,+it.fs||12));if(["l","c","r"].includes(it.al))o.al=it.al;if(it.v!=null)o.v=String(it.v).slice(0,60);if(it.mk==="v")o.mk="v";if(it.lh)o.lh=Math.max(5,Math.min(80,+it.lh));return o})}
+async function shPreset(){const TL=await shLib();const G=TL.GALMAE,has=shAll().length;
+  const go=async()=>{let n=0;for(const t of Object.keys(G.pages)){for(const part of ["main","att"]){const P=G.pages[t][part];if(!P)continue;const src=`forms/galmae/${part==="att"?"report2":t}.png`;
+      try{const bl=await (await fetch(src)).blob();let tp=shOf(t,part);if(!tp){tp={id:uid(),t,part};shAll().push(tp)}Object.assign(tp,{name:G.name+" 양식",w:P.w,h:P.h,items:JSON.parse(JSON.stringify(P.items)),at:new Date().toISOString(),src:"galmae"});await shPut(tp,bl);n++}catch(e){}}}
+    save();renderSheets();toast(n?`${G.name} 양식 ${n}개를 불러왔습니다`:"양식을 불러오지 못했습니다 (인터넷 연결 확인)")};
+  if(!has)return go();choose(`<h2>기본 제공 양식 불러오기</h2><p class="note">${esc(G.name)} 양식(결석 · 조퇴 · 결과 · 지각 신고서, 교외체험학습 신청서, 결과보고서와 별지, 성적 이의 신청 기간 동의서)을 불러옵니다. 같은 서류에 이미 올린 양식은 바뀝니다.</p>`,[{label:"불러오기",pri:true,go}])}
+/* 미리 보기 (예시 값) */
+async function shPreview(t,part){const TL=await shLib(),tp=shOf(t,part);if(!tp)return;const bg=await shBg(tp);const{ov,box}=wrOv("shov");
+  box.innerHTML=`<div class="fmvt"><b>${esc(FM_L[t][0])} · 미리 보기</b><span class="sp"></span><button class="btn sm" type="button" id="spX">닫기</button></div><p class="note">예시 값으로 채운 모습입니다. 서명란은 빨간 글씨로 보입니다.</p><div id="spR"></div>`;
+  box.querySelector("#spX").onclick=()=>ov._close();const w=document.createElement("div");w.innerHTML=TL.pageHTML(tp,bg,TL.ctx({t,cls:"1학년 2반",sch:"○○학교"},{d:{},at:new Date().toISOString()}),{sample:true});box.querySelector("#spR").innerHTML=`<style>${TL.css}</style>`;box.querySelector("#spR").appendChild(w.firstChild);TL.fit(box.querySelector("#spR"))}
+/* 칸 정하기 편집기 */
+const SH_DEF={t:[90,26],a:[400,120],s:[130,50],m:[40,30],w:[60,24],ph:[780,900]};
+async function shEdit(tp){if(!tp)return;const TL=await shLib(),bg=await shBg(tp);if(!bg)return toast("이 기기에 양식 그림이 없습니다. ‘바꾸기’로 양식을 다시 올리세요");
+  const{ov,box}=wrOv("shov shed");let sel=null,place=null,zoom=1,prev=false;const H=()=>1000*tp.h/tp.w,G=TL.fields(tp.t);
+  box.innerHTML=`<div class="fmvt"><b>${esc(FM_L[tp.t][0])}${tp.part==="att"?" · 별지":""} · 칸 정하기</b><span class="sp"></span><button class="btn sm ghost" type="button" id="seZo">−</button><button class="btn sm ghost" type="button" id="seZi">＋</button><button class="btn sm" type="button" id="sePv">미리 보기</button><button class="btn sm pri" type="button" id="seOk">완료</button></div>
+    <div class="row2"><button class="btn pri" type="button" id="seAdd">＋ 칸 넣기</button><span class="note" id="seHint">‘칸 넣기’로 넣을 내용을 고른 뒤 양식에서 놓을 곳을 누르세요. 칸을 끌어 옮기고, 오른쪽 아래 모서리로 크기를 바꿉니다.</span></div>
+    <div class="sest" id="seSt"><div class="sepg" id="sePg"><img class="tsbg" src="${bg}" alt=""><div id="seIt"></div></div></div>
+    <div class="seprop" id="seProp" hidden></div>`;
+  const pg=box.querySelector("#sePg"),itEl=box.querySelector("#seIt"),prop=box.querySelector("#seProp"),hint=box.querySelector("#seHint");pg.style.aspectRatio=tp.w+"/"+tp.h;
+  const u=()=>1000/pg.clientWidth;
+  const paint=()=>{pg.style.width=(zoom*100)+"%";if(prev){itEl.innerHTML=`<style>${TL.css}</style>`;const w=document.createElement("div");w.innerHTML=TL.pageHTML(tp,null,TL.ctx({t:tp.t,cls:"1학년 2반",sch:"○○학교"},{d:{},at:new Date().toISOString()}),{sample:true});const sec=w.firstChild;sec.classList.add("sepv");itEl.appendChild(sec);TL.fit(itEl);return}
+    itEl.innerHTML=tp.items.map((it,i)=>`<div class="sei ty${it.ty}${it===sel?" on":""}" data-i="${i}" style="left:${it.x/10}%;top:${it.y/H()*100}%;width:${it.w/10}%;height:${it.h/H()*100}%"><span>${esc(TL.label(tp.t,it))}</span>${it===sel?'<i class="seh" data-h="1"></i>':""}</div>`).join("");
+    paintProp()};
+  const paintProp=()=>{if(!sel||prev){prop.hidden=true;return}prop.hidden=false;const it=sel,txt=it.ty==="t"||it.ty==="a";
+    prop.innerHTML=`<b>${esc(TL.label(tp.t,it))}</b>${txt?`<span class="sepg2"><button class="btn sm" type="button" data-pf="-1">가−</button><small>${Math.round((it.fs||12)*10)/10}</small><button class="btn sm" type="button" data-pf="1">가＋</button></span>`:""}
+      ${it.ty==="t"?`<span class="sepg2">${[["l","왼쪽"],["c","가운데"],["r","오른쪽"]].map(([v,l])=>`<button class="chip" type="button" data-pa="${v}" aria-pressed="${(it.al||"c")===v}">${l}</button>`).join("")}</span>`:""}
+      ${txt&&it.k!=="_photo"?`<button class="chip" type="button" data-pm aria-pressed="${it.ty==="a"}">여러 줄</button>`:""}
+      ${it.ty==="m"?`<span class="sepg2"><button class="chip" type="button" data-pk="o" aria-pressed="${it.mk!=="v"}">○ 동그라미</button><button class="chip" type="button" data-pk="v" aria-pressed="${it.mk==="v"}">✓ 체크</button></span>`:""}
+      <span class="sepg2"><button class="btn sm" type="button" data-pd>복제</button><button class="btn sm bad ghost" type="button" data-px>삭제</button></span>`;
+    prop.querySelectorAll("[data-pf]").forEach(b=>b.onclick=()=>{sel.fs=Math.max(3,Math.min(80,Math.round(((sel.fs||12)+(+b.dataset.pf)*1.5)*10)/10));paint()});
+    prop.querySelectorAll("[data-pa]").forEach(b=>b.onclick=()=>{sel.al=b.dataset.pa;paint()});
+    prop.querySelectorAll("[data-pm]").forEach(b=>b.onclick=()=>{sel.ty=sel.ty==="a"?"t":"a";paint()});
+    prop.querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{if(b.dataset.pk==="v"){sel.mk="v";sel.fs=sel.fs||16}else delete sel.mk;paint()});
+    prop.querySelector("[data-pd]").onclick=()=>{const c=JSON.parse(JSON.stringify(sel));c.x+=12;c.y+=12;tp.items.push(c);sel=c;paint()};
+    prop.querySelector("[data-px]").onclick=()=>{const i=tp.items.indexOf(sel),it=sel;tp.items.splice(i,1);sel=null;paint();toastUndo("칸을 지웠습니다",()=>{tp.items.splice(i,0,it);sel=it;paint()})}};
+  /* 칸 고르기 */
+  box.querySelector("#seAdd").onclick=()=>{const{ov:o2,box:b2}=wrOv("shpick");
+    b2.innerHTML=`<h2>넣을 칸 고르기</h2>${G.map((g,gi)=>`<div class="shlb">${esc(g.g)}</div><div class="presets">${g.L.map((x,i)=>`<button class="chip" type="button" data-g="${gi}" data-i="${i}">${esc(g.mark?x[2]:x[1])}</button>`).join("")}</div>`).join("")}<div class="row2"><button class="btn" type="button" id="spC">취소</button></div>`;
+    b2.querySelector("#spC").onclick=()=>o2._close();
+    b2.querySelectorAll("[data-g]").forEach(b=>b.onclick=()=>{const g=G[+b.dataset.g],x=g.L[+b.dataset.i];o2._close();
+      if(g.mark)place={ty:"m",k:x[0],v:x[1]};else if(g.sig)place={ty:"s",k:x[0]};else if(x[0]==="_white")place={ty:"w",k:"_white"};else if(x[0]==="_photo")place={ty:"t",k:"_photo",big:1};else if(x[0]==="_cont"||x[0]==="_body")place={ty:"a",k:x[0],lh:1};
+      else{const f=(window.TLF.FORMS[tp.t]||{f:[]}).f.find(y=>y.k===x[0]);place={ty:f&&f.type==="area"?"a":"t",k:x[0]}}
+      hint.textContent=`‘${g.mark?x[2]:x[1]}’ 칸을 놓을 곳을 양식에서 누르세요`;hint.classList.add("seon")})};
+  /* 끌기 · 크기 */
+  let D=null;
+  pg.addEventListener("pointerdown",e=>{if(prev)return;const r=pg.getBoundingClientRect(),px=(e.clientX-r.left)*u(),py=(e.clientY-r.top)*u();
+    if(place){const d=place.big?SH_DEF.ph:SH_DEF[place.ty]||SH_DEF.t,it={ty:place.ty,k:place.k,x:Math.max(0,px-d[0]/2),y:Math.max(0,py-d[1]/2),w:d[0],h:d[1]};if(place.v!=null)it.v=place.v;if(it.ty==="t"||it.ty==="a")it.fs=17;if(place.lh){it.lh=36;it.fs=17}tp.items.push(it);sel=it;place=null;hint.classList.remove("seon");hint.textContent="칸을 끌어 옮기고, 오른쪽 아래 모서리로 크기를 바꿉니다.";paint();e.preventDefault();return}
+    const h=e.target.closest(".seh"),c=e.target.closest(".sei");if(!c){sel=null;paint();return}const it=tp.items[+c.dataset.i];if(sel!==it){sel=it;paint()}
+    D={it,mode:h?"size":"move",sx:px,sy:py,ox:it.x,oy:it.y,ow:it.w,oh:it.h};try{pg.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
+  pg.addEventListener("pointermove",e=>{if(!D)return;const r=pg.getBoundingClientRect(),px=(e.clientX-r.left)*u(),py=(e.clientY-r.top)*u(),dx=px-D.sx,dy=py-D.sy;
+    if(D.mode==="move"){D.it.x=Math.round(Math.max(-20,Math.min(1000-D.it.w+20,D.ox+dx))*10)/10;D.it.y=Math.round(Math.max(-20,Math.min(H()-D.it.h+20,D.oy+dy))*10)/10}else{D.it.w=Math.round(Math.max(6,D.ow+dx)*10)/10;D.it.h=Math.round(Math.max(6,D.oh+dy)*10)/10}
+    const el=itEl.querySelector(`.sei[data-i="${tp.items.indexOf(D.it)}"]`);if(el){el.style.left=D.it.x/10+"%";el.style.top=D.it.y/H()*100+"%";el.style.width=D.it.w/10+"%";el.style.height=D.it.h/H()*100+"%"}});
+  const up=()=>{D=null};pg.addEventListener("pointerup",up);pg.addEventListener("pointercancel",up);
+  box.querySelector("#seZi").onclick=()=>{zoom=Math.min(3,zoom+.5);paint()};box.querySelector("#seZo").onclick=()=>{zoom=Math.max(1,zoom-.5);paint()};
+  box.querySelector("#sePv").onclick=e=>{prev=!prev;e.target.textContent=prev?"칸 보기":"미리 보기";paint()};
+  const fin=()=>{tp.at=new Date().toISOString();save();renderSheets()};box.querySelector("#seOk").onclick=()=>{fin();ov._close()};const oc=ov._close;ov._close=()=>{fin();oc()};
+  paint()}
+/* 받은 서류를 학교 양식으로 그리기 (서류 보기 · 인쇄) */
+async function shRender(root,r,s,imgs){const TL=await shLib(),main=shOf(r.fm.t,"main");if(!main)return false;const mainBg=await shBg(main);if(!mainBg)return false;const att=r.fm.t==="report"?shOf("report","att"):null,attBg=att?await shBg(att):null;
+  const cl=fmCls(r);TL.render(root,{rq:{t:r.fm.t,cls:cl?clsName(cl.data):"",sch:r.fm.sch||""},s,main,mainBg,att:att&&attBg?att:null,attBg,imgs});return true}
+
+{const d=$("d-sheets");if(d)d.addEventListener("toggle",()=>{if(d.open)renderSheets()})}
 /* 이 글의 블록에 들어 있는 그림 파일 */
 const wrBlkMedia=r=>(r.blocks||[]).filter(b=>b.t==="img"&&b.m).map(b=>b.m);
 /* 증빙 파일 */
@@ -6860,7 +6987,7 @@ $("ntBtn").onclick=()=>askNotify();
 
 /* ---------- 백업 저장 · 이전 버전 백업 불러오기 ---------- */
 const UNDO_KEY="att-app-undo";
-function backupObj(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
+function backupObj(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],sheets:S.sheets||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
 const verNum=v=>String(v||"0").split(".").map(n=>parseInt(n,10)||0).reduce((a,n,i)=>a+n*Math.pow(1000,2-i),0);
 /* 어떤 버전의 백업이든 같은 모양으로 맞춥니다 */
 function readBackup(p){
@@ -6902,7 +7029,7 @@ function restoreReplace(b){
   const p=b.raw,used=new Set();
   const list=b.classes.map(x=>{let id=x._id&&!used.has(String(x._id))?String(x._id):uid();used.add(id);return{id,data:normalize(x)}});
   if(!list.length)list.push({id:uid(),data:fresh()});
-  S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[]};
+  S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[],sheets:Array.isArray(p.sheets)?p.sheets.filter(x=>x&&x.id&&x.t&&Array.isArray(x.items)):(S.sheets||[])};
   mergeStaff(p.staff);
   arcFromBackup(p);
   afterLoad("백업 내용으로 바꿨습니다");
@@ -8266,7 +8393,7 @@ async function gUpload(body,id){
 }
 /* 동기화할 내용 (보고 있는 학급·화면 같은 기기별 설정은 빼고) */
 function syncData(){const extra={};SYNC_EXTRA.forEach(k=>{try{const v=localStorage.getItem(k);if(v!=null)extra[k]=v}catch(e){}});
-  return JSON.parse(JSON.stringify({classes:S.list.map(c=>({_id:c.id,...c.data})),staff:S.staff||[],tt:S.tt||{list:[],active:""},notes:S.notes||{},events:S.events||[],evals:S.evals||[],obsTags:S.obsTags||null,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],extra}))}
+  return JSON.parse(JSON.stringify({classes:S.list.map(c=>({_id:c.id,...c.data})),staff:S.staff||[],tt:S.tt||{list:[],active:""},notes:S.notes||{},events:S.events||[],evals:S.evals||[],obsTags:S.obsTags||null,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],sheets:S.sheets||[],extra}))}
 function gHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0).toString(36)+":"+s.length}
 function pristine(d){return !(d.evals||[]).length&&d.classes.length<=1&&!d.classes.some(c=>(c.roster||[]).length||(c.teachers||[]).length||(c.sessions||[]).length)&&!d.staff.length&&!(d.tt.list||[]).length&&!d.events.length&&!Object.keys(d.notes).length}
 /* 3방향 합치기: 마지막 동기화(base) 이후 바뀐 쪽을 살리고, 둘 다 바뀌면 이 기기 쪽을 씁니다 */
@@ -8294,7 +8421,7 @@ function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emai
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
-    events:mergeList(b.events,l.events,r.events,"id"),evals:mergeList(b.evals,l.evals||[],r.evals||[],"id",mergeEval),obsTags:pick3(b.obsTags,l.obsTags,r.obsTags),tasks:mergeList(b.tasks,l.tasks||[],r.tasks||[],"id"),recs:mergeList(b.recs,l.recs||[],r.recs||[],"id"),links:mergeList(b.links,l.links||[],r.links||[],"id"),extra:mergeMap(b.extra,l.extra,r.extra)}}
+    events:mergeList(b.events,l.events,r.events,"id"),evals:mergeList(b.evals,l.evals||[],r.evals||[],"id",mergeEval),obsTags:pick3(b.obsTags,l.obsTags,r.obsTags),tasks:mergeList(b.tasks,l.tasks||[],r.tasks||[],"id"),recs:mergeList(b.recs,l.recs||[],r.recs||[],"id"),links:mergeList(b.links,l.links||[],r.links||[],"id"),sheets:mergeList(b.sheets,l.sheets||[],r.sheets||[],"id"),extra:mergeMap(b.extra,l.extra,r.extra)}}
 function mergeEval(b,l,r){b=b||{};const o={...pick3(b,l,r)};o.stu=mergeList(b.stu,l.stu,r.stu,"sid");return o}
 /* 받은 내용을 이 기기에 넣습니다 */
 function applyData(d){
@@ -8303,7 +8430,7 @@ function applyData(d){
     let list=(d.classes||[]).filter(x=>x&&Array.isArray(x.roster)).map(x=>({id:String(x._id||uid()),data:normalize(x)}));
     if(!list.length)list=[{id:uid(),data:fresh()}];
     const act=list.some(c=>c.id===S.active)?S.active:list[0].id;
-    S={active:act,list,staff:Array.isArray(d.staff)?d.staff:[],tt:d.tt&&Array.isArray(d.tt.list)?d.tt:{list:[],active:""},notes:d.notes&&typeof d.notes==="object"?d.notes:{},events:Array.isArray(d.events)?d.events:[],evals:Array.isArray(d.evals)?d.evals:[],obsTags:d.obsTags||undefined,tasks:Array.isArray(d.tasks)?d.tasks:(S.tasks||[]),recs:Array.isArray(d.recs)?d.recs:(S.recs||[]),links:Array.isArray(d.links)?d.links:(S.links||[]),period:S.period};
+    S={active:act,list,staff:Array.isArray(d.staff)?d.staff:[],tt:d.tt&&Array.isArray(d.tt.list)?d.tt:{list:[],active:""},notes:d.notes&&typeof d.notes==="object"?d.notes:{},events:Array.isArray(d.events)?d.events:[],evals:Array.isArray(d.evals)?d.evals:[],obsTags:d.obsTags||undefined,tasks:Array.isArray(d.tasks)?d.tasks:(S.tasks||[]),recs:Array.isArray(d.recs)?d.recs:(S.recs||[]),links:Array.isArray(d.links)?d.links:(S.links||[]),sheets:Array.isArray(d.sheets)?d.sheets:(S.sheets||[]),period:S.period};
     Object.entries(d.extra||{}).forEach(([k,v])=>{if(SYNC_EXTRA.includes(k))try{localStorage.setItem(k,v)}catch(e){}});
     try{const m=JSON.parse(localStorage.getItem("att-app-msgs")||"{}");PK.stu.msg=m.stu||"";PK.staff.msg=m.staff||""}catch(e){}
     initTT();initEv();D=S.list.find(c=>c.id===S.active).data;selId=null;save();renderAll();

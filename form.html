@@ -25,7 +25,7 @@ textarea.i{min-height:96px;resize:vertical}.two{display:grid;grid-template-colum
 .pad{position:relative;border:2px dashed var(--line);border-radius:12px;background:#fff;touch-action:none;aspect-ratio:5/2;width:100%;overflow:hidden}.pad canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}.pad .hint{position:absolute;inset:0;display:grid;place-items:center;color:#9aa49d;pointer-events:none}
 .row{display:flex;gap:8px}.btn{appearance:none;flex:1;min-height:50px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;padding:0 12px}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--paper)}.btn.sm{min-height:40px;font-size:.88rem;flex:0 0 auto}.btn:disabled{opacity:.45}
-.chk{display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer}.chk input{width:22px;height:22px;flex:none;margin-top:2px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer}.fchk{font-weight:500;margin:8px 0;line-height:1.5}.fchk input{margin-top:4px;width:20px;height:20px;flex:0 0 auto}.chk input{width:22px;height:22px;flex:none;margin-top:2px}
 .err{color:var(--bad);font-size:.88rem;font-weight:700}.bad{outline:2px solid var(--bad);outline-offset:2px}
 .banner{background:#fff3a3;color:#5a4a00;border-radius:10px;padding:8px 12px;font-size:.88rem;font-weight:700}
 .done{text-align:center}.done .big{font-size:2.6rem}.steps{text-align:left;font-size:.9rem;margin:0;padding-left:1.2em}
@@ -58,14 +58,15 @@ var hs=location.hash.replace(/^#/,"").split("&"),code="",KI=false;hs.forEach(fun
 var RQ=null,F=null,FILES=[],SIG={st:[],pa:[]},DK="";
 if(!code){fail("선생님께 받은 링크를 눌러 다시 열어 주세요.");return}
 decode(decodeURIComponent(code)).then(function(p){if(!p||p.k!=="tlf"||!TLF.FORMS[p.t])throw new Error("서류 링크가 올바르지 않습니다.");RQ=p;F=TLF.FORMS[p.t];start()}).catch(function(e){fail(e.message||"서류 링크를 읽지 못했습니다.")});
-function start(){document.title=F.ti+" · 교사의 생활";$("ti").textContent=F.ic+" "+F.ti;$("kb").hidden=!KI;
+function start(){document.title=F.ti+" · 교사의 생활";$("ti").textContent=F.ic+" "+F.ti+(F.sub?" ("+F.sub+")":"");$("kb").hidden=!KI;
   var meta=[RQ.cls,RQ.who?RQ.who+" 선생님":"",RQ.due?"제출 기한 "+TLF.kday(RQ.due):""].filter(Boolean);$("meta").textContent=meta.join(" · ");if(RQ.msg){$("msg").hidden=false;$("msg").textContent=RQ.msg}$("head").hidden=false;
   DK="tl-form-draft:"+RQ.id+":"+((RQ.s&&RQ.s.sid)||"");build()}
 var evReq=function(){return RQ.req!=null?!!RQ.req:F.evReq};
 function field(f){var id="f_"+f.k,r=f.req?'<span class="req"> *</span>':"";
+  if(f.type==="chk")return'<label class="chk fchk"><input type="checkbox" id="'+id+'" data-k="'+f.k+'"><span>'+esc(f.l)+r+'</span></label>';
   if(f.type==="select")return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><select class="i" id="'+id+'" data-k="'+f.k+'"><option value="">고르세요</option>'+f.o.map(function(o){return'<option>'+esc(o)+'</option>'}).join("")+'</select></label>';
   if(f.type==="area")return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><textarea class="i" id="'+id+'" data-k="'+f.k+'" maxlength="3000" placeholder="'+esc(f.ph||"")+'"></textarea></label>';
-  return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><input class="i" id="'+id+'" data-k="'+f.k+'" type="'+(f.type==="date"?"date":f.type==="tel"?"tel":"text")+'"'+(f.type==="tel"?' inputmode="tel"':"")+' maxlength="200" placeholder="'+esc(f.ph||"")+'"></label>'}
+  return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><input class="i" id="'+id+'" data-k="'+f.k+'" type="'+(f.type==="date"?"date":f.type==="time"?"time":f.type==="tel"?"tel":"text")+'"'+(f.type==="tel"?' inputmode="tel"':"")+' maxlength="200" placeholder="'+esc(f.ph||"")+'"></label>'}
 function build(){var s=RQ.s||{},fr=F.f.filter(function(f){return f.k==="from"||f.k==="to"}),rest=F.f.filter(function(f){return f.k!=="from"&&f.k!=="to"});
   var h='<div class="card"><h2>학생</h2><div class="two"><label class="f" for="f_cls"><span>학년 · 반</span><input class="i" id="f_cls" data-k="cls" maxlength="20" value="'+esc(RQ.cls||"")+'" placeholder="예: 1학년 1반"></label><label class="f" for="f_no"><span>번호 (학번)<span class="req"> *</span></span><input class="i" id="f_no" data-k="no" inputmode="numeric" maxlength="12" value="'+esc(s.sid||"")+'"></label></div>'+
     '<label class="f" for="f_nm"><span>이름<span class="req"> *</span></span><input class="i" id="f_nm" data-k="nm" maxlength="20" value="'+esc(s.nm||"")+'"></label>'+(s.nm?'<div class="sub">학교에 등록된 정보로 채웠습니다. 다르면 직접 고쳐 쓰세요.</div>':'<div class="sub">번호(학번)와 이름을 직접 적어 주세요.</div>')+'</div>';
@@ -78,13 +79,14 @@ function build(){var s=RQ.s||{},fr=F.f.filter(function(f){return f.k==="from"||f
     '<div><b>보호자 서명</b><div class="pad" id="pad_pa"><canvas></canvas><div class="hint">여기에 보호자가 손가락으로 서명</div></div><div class="row" style="margin-top:6px"><button class="btn sm" type="button" data-clr="pa">다시 쓰기</button></div></div></div>';
   h+='<p class="err" id="err" hidden></p><div class="row"><button class="btn pri" type="submit" id="go">제출 서류 만들기</button></div>';
   $("frm").innerHTML=h;$("frm").hidden=false;
-  try{var dr=JSON.parse(localStorage.getItem(DK)||"null");if(dr)Object.keys(dr).forEach(function(k){var e=$("frm").querySelector('[data-k="'+k+'"]');if(e&&!e.readOnly)e.value=dr[k]})}catch(e){}
+  try{var dr=JSON.parse(localStorage.getItem(DK)||"null");if(dr)Object.keys(dr).forEach(function(k){var e=$("frm").querySelector('[data-k="'+k+'"]');if(e&&!e.readOnly){if(e.type==="checkbox")e.checked=!!dr[k];else e.value=dr[k]}})}catch(e){}
+  F.f.forEach(function(f){if(f.pre&&RQ.pre&&RQ.pre[f.k]){var e=$("f_"+f.k);if(e&&!e.value){e.value=RQ.pre[f.k];if(e.tagName==="SELECT")e.disabled=true;else e.readOnly=true;e.title="선생님이 정한 값"}}});
   $("frm").addEventListener("change",function(e){if(e.target&&e.target.classList)e.target.classList.remove("bad")});$("frm").addEventListener("input",function(e){if(e.target&&e.target.classList)e.target.classList.remove("bad");upd();try{localStorage.setItem(DK,JSON.stringify(vals()))}catch(e){}});upd();
   ["st","pa"].forEach(pad);document.querySelectorAll("[data-clr]").forEach(function(b){b.onclick=function(){SIG[b.dataset.clr]=[];drawSig(b.dataset.clr)}});
   $("cam").onclick=function(){$("fcam").click()};$("pick").onclick=function(){$("fpick").click()};
   [$("fcam"),$("fpick")].forEach(function(inp){inp.onchange=function(){addFiles([].slice.call(inp.files||[]));inp.value=""}});
   $("frm").onsubmit=function(e){e.preventDefault();submit()}}
-function vals(){var o={};$("frm").querySelectorAll("[data-k]").forEach(function(e){o[e.dataset.k]=e.value.trim()});return o}
+function vals(){var o={};$("frm").querySelectorAll("[data-k]").forEach(function(e){o[e.dataset.k]=e.type==="checkbox"?(e.checked?"1":""):e.value.trim()});return o}
 function upd(){var v=vals(),d=$("days");if(d){var n=TLF.days(v.from,v.to);d.textContent=n?n+"일간 (평일 "+TLF.wdays(v.from,v.to)+"일)":v.from&&v.to?"끝나는 날이 시작일보다 앞입니다":""}}
 var pads={};
 function pad(k){var cv=$("pad_"+k).querySelector("canvas"),ctx=cv.getContext("2d"),W=600,H=240,cur=null;pads[k]={cv:cv,ctx:ctx};
@@ -107,9 +109,9 @@ function paintFiles(){var box=$("files");box.innerHTML=FILES.map(function(x,i){v
   box.querySelectorAll("img[data-i]").forEach(function(im){im.src=URL.createObjectURL(FILES[+im.dataset.i].blob)});box.querySelectorAll("[data-x]").forEach(function(b){b.onclick=function(){FILES.splice(+b.dataset.x,1);paintFiles()}})}
 function check(v){var bad=[],F2=F.f.concat([{k:"no",req:1},{k:"nm",req:1},{k:"pname",req:1},{k:"prel",req:1},{k:"ptel",req:1}]);
   document.querySelectorAll(".bad").forEach(function(e){e.classList.remove("bad")});
-  F2.forEach(function(f){if(f.req&&!v[f.k]){var e=$("frm").querySelector('[data-k="'+f.k+'"]');if(e)e.classList.add("bad");bad.push(f.l||({no:"번호",nm:"이름",pname:"보호자 이름",prel:"관계",ptel:"보호자 연락처"})[f.k])}});
+  F2.forEach(function(f){if(f.req&&!v[f.k]){var e=$("frm").querySelector('[data-k="'+f.k+'"]');if(e)e.classList.add("bad");bad.push(f.type==="chk"?"확인 사항 체크":f.l||({no:"번호",nm:"이름",pname:"보호자 이름",prel:"관계",ptel:"보호자 연락처"})[f.k])}});
   if(v.from&&v.to&&TLF.days(v.from,v.to)<1)bad.push("기간(끝나는 날)");if(evReq()&&!FILES.length)bad.push("증빙 서류");
-  if(!$("agree").checked)bad.push("확인 체크");if(ink("st")<8)bad.push("학생 서명");if(ink("pa")<8)bad.push("보호자 서명");return bad}
+  if(!$("agree").checked)bad.push("확인 체크");bad=bad.filter(function(x,i){return bad.indexOf(x)===i});if(ink("st")<8)bad.push("학생 서명");if(ink("pa")<8)bad.push("보호자 서명");return bad}
 function submit(){var v=vals(),bad=check(v);if(bad.length){$("err").hidden=false;$("err").textContent="빠진 것: "+bad.join(", ");var f=document.querySelector(".bad");if(f)f.scrollIntoView({behavior:"smooth",block:"center"});return}
   $("err").hidden=true;$("go").disabled=true;$("go").textContent="서류를 만드는 중…";
   var d={};Object.keys(v).forEach(function(k){if(k!=="no"&&k!=="nm"&&v[k])d[k]=v[k]});
