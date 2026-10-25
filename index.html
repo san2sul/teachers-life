@@ -1198,6 +1198,14 @@ table.ttg.d3 .tc b{font-size:.86rem}table.ttg.d3 .tc span{font-size:.74rem}table
 .wrcmdl button{display:flex;gap:10px;align-items:center;text-align:left;padding:6px 10px;border:0;border-radius:8px;background:none;font:inherit;color:var(--ink);min-height:44px;cursor:pointer}
 .wrcmdl button.on,.wrcmdl button:hover{background:var(--tint)}.wrcmdl button:disabled{opacity:.4}
 .wrcmdl i{width:2em;text-align:center;font-style:normal;flex:none}.wrcmdl em{margin-left:auto;font-style:normal;color:var(--muted);font-size:.8rem}
+
+/* 5.57 학부모 연락처 */
+.gpbox{background:var(--bg);border-radius:var(--r-m);padding:8px 10px;margin:4px 0 8px}.gpbox .shlb{margin-top:0}
+.gprow{display:grid;grid-template-columns:6.2rem minmax(0,1fr) 44px;gap:6px;align-items:center;margin-bottom:6px}.gprow .fld{margin:0}
+.gpline{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0}.gpline .gpw{flex:1 1 9rem;min-width:0;font-size:.88rem}.gpline .gpw small{color:var(--muted);margin-left:4px}
+.gpline .btn{flex:none}
+.ctto{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 8px}.ctto>span{font-size:.85rem;color:var(--muted);margin-right:2px}
+.gpv{font-weight:600;color:var(--accent);font-size:.92em}
 </style>
 </head>
 <body>
@@ -1363,7 +1371,7 @@ table.ttg.d3 .tc b{font-size:.86rem}table.ttg.d3 .tc span{font-size:.74rem}table
       <p class="note">이름 줄을 누르면 선택됩니다. 오른쪽 버튼으로 바로 전화하거나 문자를 보낼 수 있습니다.</p>
     </section>
     <section class="card" id="cp-stu">
-      <h2>보낼 문자</h2>
+      <h2>보낼 문자</h2><div class="ctbox" id="ctStu"></div>
       <textarea class="fld" id="m-stu" rows="4" placeholder="예: {이름} 학생, 내일 체육복을 챙겨 오세요."></textarea>
       <p class="note">{이름}은 한 명씩 보낼 때 학생 이름으로 바뀝니다. 내용은 문자 앱에서 고칠 수도 있습니다.</p>
       <p class="note cpinfo"></p>
@@ -1674,8 +1682,9 @@ table.ttg.d3 .tc b{font-size:.86rem}table.ttg.d3 .tc span{font-size:.74rem}table
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.56.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.57.0", APP_DATE="2026-10-26", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.57.0",date:"2026-10-26",items:["👪 학부모 연락처(선택): 학생 정보에서 학생 전화와 따로 학부모 2명까지(어머니 · 아버지 · 보호자 · 조부모 · 기타), 명단 일괄 입력 · 엑셀 양식에 ‘학부모 전화번호’ 칸, 학번 변경 · 반 이동 때 함께 옮김", "연락 → 결석 학생 · 학생 골라 연락에 ‘받는 사람: 학생 · 학부모 · 둘 다’(학생 번호가 없으면 학부모로), 결석 학생 줄에 학부모마다 전화 · 문자, 학생 한눈에 보기 · 전달하기 학생 찾기에도 학부모", "학교 관리 묶음의 보호자 연락처는 학부모 연락처로 받음(학생 전화와 분리)", "학부모 연락처는 기기 · 백업 · 기기 연동에만 저장, 공유 링크 · 학교 묶음에는 넣지 않음", "자동 점검 추가: 학부모 연락처"]},
   {v:"5.56.0",date:"2026-10-25",items:["📝 글쓰기 편집 도구를 다섯 묶음(⭐ 자주 · ¶ 문단 · ＋ 넣기 · 가 꾸미기 · 🧰 도구)으로 정리: 한 번에 보이는 단추 41개 → 17개 안팎, 글자를 고르면 꾸미기 도구가 저절로, 많이 쓴 기능 8개가 ⭐ 자주에 자동으로, 🔍 기능 찾기(Ctrl+K · 초성 · 다른 이름 · Enter로 실행), ¶ 탭에 지금 블록 종류 표시","● 지금 수업 단추: 수업 시간에 앱을 열면 출석 · 오늘 · 시간표 화면 맨 위에 크게, 한 번 누르면 그 수업 출석 체크(이미 했으면 ‘출석 이어서’와 현황), ✕로 그 수업 동안 닫기", "출석을 마치면 명단 아래 ‘📞 결석 N명’ 줄: 문자 한 명씩(이름 들어간 문구) · 결석 학생 연락 화면으로 바로", "📝 출석 체크 아래 같은 교시 수업 메모(진도 · 한 줄 메모, 지난 수업 진도), 시간표 메모장에 바로 저장", "시간표 3일 보기(주간 | 3일 | 하루): 세로 휴대폰에서 큰 글씨로 사흘씩, ‹ › 하루씩 옮기기", "아이폰 홈 화면 앱을 처음 열면 사파리에서 쓰던 자료 옮기는 방법(전체 백업 파일 · 구글 연동) 안내", "학번을 바꾸면 세특 초안도 새 학번으로 옮김", "자동 점검 추가: 시간표 예외(임시 변경 취소 · 휴업일 · 시간표 교체 · 학기 전환, 백업 복원 뒤까지) · 동명이인 학생 · 글쓰기 도구 묶음"]},
   {v:"5.55.0",date:"2026-10-25",items:["결석 학생 출결 구분(나이스 입력용): 출석 체크 아래에서 결석한 학생마다 종류(결석 · 지각 · 조퇴 · 결과) × 사유(질병 · 미인정 · 기타 · 출석인정), 학생 칸에도 표시, 기기 연동 · 백업에 함께", "📋 나이스 입력용 출결 요약: 출석 통계에서 기간 · 학급을 고르면 날짜별(‘홍길동(지각 - 질병)’) · 학생별 합계를 만들어 복사", "📦 새 기기로 옮기기 · 전체 백업(.tlbak): 자료 + 기기 안 사진 · 동영상 · 녹음 · 첨부를 한 파일로, 비밀번호(AES-GCM) 선택, 새 기기에서 백업 파일 불러오기로 복원", "학번을 바꾸면 출결 구분 · 연락 완료 표시 · 평가 명단까지 새 학번으로 옮김", "아이폰: 사파리와 홈 화면 앱은 자료가 따로 저장된다는 안내 추가"]},
   {v:"5.54.0",date:"2026-10-25",items:["🔒 공유 잠금: 학생 명단 · 교사 · 교직원이 들어가는 공유 링크 · 파일을 받는 코드(8자)로 잠금(PBKDF2 + AES-GCM, 기본 켜짐, 연락처를 넣으면 끌 수 없음). 링크만으로는 이름 · 연락처가 보이지 않음. 받는 쪽은 코드를 넣어 열기", "공유 유효 기간(1일 · 7일 · 30일 · 없음, 기본 7일): 기간이 지난 링크 · 파일은 열지 않음. 링크를 만들면 받는 코드 · 담긴 것 · 기간을 한눈에", "저장 확인: 저장한 뒤 다시 읽어 확인, 실패하면 화면 위 ‘저장되지 않았습니다’ 띠(다시 저장 · 백업 파일 받기), 띠가 있으면 앱을 닫기 전에 한 번 더 물음", "백업 검사: 불러오기 전에 백업과 지금 자료를 항목별로 비교, 줄어드는 항목은 빨간색 경고", "세로로 쌓인 단추(백업 불러오기 등)가 휴대폰에서 지나치게 커지던 문제 고침"]},
@@ -1799,6 +1808,17 @@ function load(){
 function cleanDone(o){if(!o||typeof o!=="object")return null;const r={};for(const k in o)if(o[k])r[k]=+o[k]||Date.now();return Object.keys(r).length?r:null}
 /* 5.55: 결석 학생 출결 구분 (나이스 입력용) — 종류(결석 · 지각 · 조퇴 · 결과) × 사유(질병 · 미인정 · 기타 · 출석인정) */
 const AK_K=["결석","지각","조퇴","결과"],AK_R=["질병","미인정","기타","출석인정"];
+/* 5.57: 학부모(보호자) 연락처 - 학생마다 2명까지, 기기 · 백업 · 기기 연동에만 (공유 링크 · 학교 묶음에는 넣지 않음) */
+const GP_R=["어머니","아버지","보호자","조부모","기타"];
+function gpFmt(v){const d=String(v||"").replace(/\D/g,"");return d.length===11?`${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}`:d.length===10?`${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}`:d}
+function gpClean(o){const out={};if(o&&typeof o==="object")for(const k in o){const l=(Array.isArray(o[k])?o[k]:[]).filter(x=>x&&String(x.p||"").replace(/\D/g,"").length>=8).slice(0,2).map(x=>({r:GP_R.includes(x.r)?x.r:"보호자",p:gpFmt(x.p)}));if(l.length)out[String(k).slice(0,20)]=l}return Object.keys(out).length?out:null}
+function gpOf(sid,d){d=d||D;return((d.gph||{})[sid])||[]}
+const CTO_KEY="att-app-callto";
+function callTo(){try{const v=localStorage.getItem(CTO_KEY);return v==="par"||v==="both"?v:"stu"}catch(e){return"stu"}}
+function numsOf(sid,d,to){d=d||D;to=to||callTo();const st=digits((d.phones||{})[sid]||""),g=gpOf(sid,d).map(x=>digits(x.p)).filter(n=>n.length>=8),a=st.length>=8?[st]:[];return to==="par"?g:to==="both"?[...new Set([...a,...g])]:(a.length?a:g)}
+function numsVia(sid,d,to){d=d||D;to=to||callTo();const st=digits((d.phones||{})[sid]||"").length>=8,g=gpOf(sid,d);return to==="stu"?(st?"":g.length?"학부모 번호로":""):to==="par"?(g.length?g.map(x=>x.r).join(" · "):""):""}
+function ctoHTML(){const t=callTo();return `<div class="ctto" role="group" aria-label="받는 사람"><span>받는 사람</span>${[["stu","학생"],["par","학부모"],["both","둘 다"]].map(([k,l])=>`<button class="chip" type="button" data-cto="${k}" aria-pressed="${t===k}">${l}</button>`).join("")}</div>`}
+function ctoNone(){const t=callTo();return t==="par"?"학부모 번호 없음":t==="both"?"번호 없음":"번호 없음"}
 function akClean(o,allow){if(!o||typeof o!=="object")return null;const r={};for(const k in o)if(allow.includes(o[k]))r[String(k).slice(0,20)]=o[k];return Object.keys(r).length?r:null}
 function cleanP(p){const o={};if(p&&typeof p==="object")for(const k in p)if(p[k])o[k]=true;return o}
 
@@ -1808,6 +1828,7 @@ function normalize(d){
   if(+d.year)f.year=+d.year;if(d.term==="1학기"||d.term==="2학기")f.term=d.term;
   f.roster=(Array.isArray(d.roster)?d.roster:[]).filter(x=>Array.isArray(x)&&x[0]&&x[1]).map(x=>[String(x[0]).slice(0,20),String(x[1]).slice(0,30)]);
   f.phones=d.phones&&typeof d.phones==="object"?{...d.phones}:{};
+  {const g=gpClean(d.gph);if(g)f.gph=g}
   f.obs=Array.isArray(d.obs)?d.obs.filter(r=>r&&r.sid&&/^\d{4}-\d{2}-\d{2}$/.test(r.date||"")).map(r=>({id:String(r.id||uid()),sid:String(r.sid),date:r.date,tags:r.tags&&typeof r.tags==="object"?{...r.tags}:{},memo:String(r.memo||""),at:+r.at||0,...(Array.isArray(r.media)&&r.media.length?{media:r.media.filter(m=>m&&m.id&&["photo","video","audio"].includes(m.t)).map(m=>({id:String(m.id),t:m.t,mime:String(m.mime||""),size:+m.size||0,at:+m.at||0,...(m.dev?{dev:String(m.dev)}:{}),...(m.dur?{dur:+m.dur}:{})}))}:{})})):[];
   {const ol={};if(d.obsLock&&typeof d.obsLock==="object")Object.entries(d.obsLock).forEach(([k,v])=>{if(/^\d{4}-\d{2}-\d{2}$/.test(k)&&+v)ol[k]=+v});if(Object.keys(ol).length)f.obsLock=ol}
   if(d.sts&&typeof d.sts==="object"){const o={};for(const k in d.sts){const v=d.sts[k];if(v&&typeof v.t==="string"&&v.t.trim())o[k]={t:v.t.slice(0,6000),at:+v.at||0}}if(Object.keys(o).length)f.sts=o}
@@ -2106,13 +2127,13 @@ function renderCall(){
   $("callSub").textContent=s0?`${fmtDateW(s0.date)} ${sesName(s0)} 기준 · 출석 화면에서 바꿀 수 있습니다`:`${fmtDateW(selDate)} · 출석 체크가 없습니다`;
   $("abCount").textContent=ab.length?(fin.length?`${ab.length}명 · 남은 연락 ${todo.length}명`:ab.length+"명"):"0명";
   // bulk
-  const ready=todo.filter(([id])=>digits(D.phones[id]).length>=8);
+  const ready=todo.filter(([id])=>numsOf(id).length);
   const B=$("bulk");
   const k=(s0?s0.id:"")+"|"+ready.map(r=>r[0]).join(",");
   if(seq.key!==k)seq={key:k,i:0};
   const nx=ready[seq.i];
-  B.innerHTML=`<h2>한꺼번에 보내기</h2>
-    <p class="note">결석 ${ab.length}명${fin.length?` 중 연락 완료 ${fin.length}명을 빼고, 남은 ${todo.length}명`:""} 중 번호가 있는 ${ready.length}명에게 보낼 수 있습니다.</p>
+  B.innerHTML=`<h2>한꺼번에 보내기</h2>${ctoHTML()}
+    <p class="note">결석 ${ab.length}명${fin.length?` 중 연락 완료 ${fin.length}명을 빼고, 남은 ${todo.length}명`:""} 중 ${callTo()==="par"?"학부모 번호가":"번호가"} 있는 ${ready.length}명에게 보낼 수 있습니다.</p>
     <div class="row2">
       <button class="btn ok${nx?"":" off"}" id="bNext" type="button">${ICON.sms}${nx?`한 명씩 보내기 ${seq.i+1}/${ready.length} · ${esc(nx[1])}`:(ready.length?"한 명씩 보내기 완료 · 처음부터":"한 명씩 보내기")}</button>
     </div>
@@ -2126,13 +2147,13 @@ function renderCall(){
     if(!ready.length)return toast("결석 학생의 전화번호를 먼저 입력하세요");
     if(!nx){seq.i=0;renderCall();return}
     seq.i++;renderCall();
-    go(smsHref([digits(D.phones[nx[0]])],fill(D.msg,nx[1])));
+    go(smsHref(numsOf(nx[0]),fill(D.msg,nx[1])));
   };
   $("bAll").onclick=()=>{
     if(ready.length<2)return toast(ready.length?"한 명뿐이면 아래 학생 칸의 문자 버튼을 쓰세요":"결석 학생의 전화번호를 먼저 입력하세요");
-    go(smsHref(ready.map(([id])=>digits(D.phones[id])),fill(D.msg,"")));
+    go(smsHref([...new Set(ready.flatMap(([id])=>numsOf(id)))],fill(D.msg,"")));
   };
-  $("bCopy").onclick=()=>{if(!ready.length)return toast("복사할 번호가 없습니다");copy(ready.map(([id])=>D.phones[id]).join(", "),ready.length+"명 번호를 복사했습니다")};
+  $("bCopy").onclick=()=>{if(!ready.length)return toast("복사할 번호가 없습니다");copy([...new Set(ready.flatMap(([id])=>numsOf(id)))].map(gpFmt).join(", "),ready.length+"명 번호를 복사했습니다")};
   // list
   const L=$("abList");L.innerHTML="";
   if(!ab.length){L.innerHTML=`<div class="empty">${!D.roster.length?"학생 명단이 비어 있습니다.":!s0?"출석 화면에서 출석 체크를 먼저 시작하세요.":"이번 출석 체크에서 결석한 학생이 없습니다."}</div>`}
@@ -2141,14 +2162,17 @@ function renderCall(){
   const mkRow=([id,name],done)=>{
     const num=digits(D.phones[id]),off=num.length<8;
     const row=document.createElement("div");row.className="crow"+(done?" done":"");
-    row.innerHTML=`<div class="head"><span class="who">${esc(name)}<small>${off?"번호 없음 · 설정에서 입력":esc(D.phones[id])}${done?` · ${fmtT(s0.done[id])} 연락 완료`:""}</small></span>
+    row.innerHTML=`<div class="head"><span class="who">${esc(name)}<small>${off?(gpOf(id).length?"학생 번호 없음":"번호 없음 · 설정에서 입력"):"학생 "+esc(D.phones[id])}${done?` · ${fmtT(s0.done[id])} 연락 완료`:""}</small></span>
         <button class="btn dbtn${done?"":" ok2"}" type="button" data-a="done" aria-pressed="${done}">${done?"완료 취소":"✓ 연락 완료"}</button></div>
+      ${done||!gpOf(id).length?"":`<div class="gpline">${gpOf(id).map((g,gi)=>`<span class="gpw">${esc(g.r)} <small>${esc(g.p)}</small></span><button class="btn sm ok" type="button" data-gt="${gi}">${ICON.tel}전화</button><button class="btn sm pri" type="button" data-gs="${gi}">${ICON.sms}문자</button>`).join("")}</div>`}
       ${done?"":`<div class="row2"><button class="btn ok${off?" off":""}" type="button" data-a="tel">${ICON.tel}전화</button><button class="btn pri${off?" off":""}" type="button" data-a="sms">${ICON.sms}문자</button><button class="btn" type="button" data-a="copy">문구 복사</button>${D.emails[id]?`<button class="btn" type="button" data-a="mail">${ICON.mail}메일</button>`:""}</div>`}`;
     row.querySelector('[data-a=done]').onclick=()=>{setDone(s0,[id],!done);toast(done?`${name} 학생을 다시 연락할 목록에 넣었습니다`:`${name} 학생 연락 완료 · 출결은 결석 그대로입니다`)};
     if(!done){
       row.querySelector('[data-a=tel]').onclick=()=>{if(off)return need(name,id);go("tel:"+num)};
       row.querySelector('[data-a=sms]').onclick=()=>{if(off)return need(name,id);go(smsHref([num],fill(D.msg,name)))};
       row.querySelector('[data-a=copy]').onclick=()=>copy(fill(D.msg,name),name+" 학생 문구를 복사했습니다");
+      row.querySelectorAll("[data-gt]").forEach(b=>b.onclick=()=>go("tel:"+digits(gpOf(id)[+b.dataset.gt].p)));
+      row.querySelectorAll("[data-gs]").forEach(b=>b.onclick=()=>go(smsHref([digits(gpOf(id)[+b.dataset.gs].p)],fill(D.msg,name))));
       const mb=row.querySelector('[data-a=mail]');if(mb)mb.onclick=()=>go(mailHref([D.emails[id]],fill(D.msg,name),`[${clsName()}] 출결 안내`));
     }
     return row;
@@ -2180,12 +2204,13 @@ function need(name,id){toast(name+" 학생 번호를 먼저 입력하세요");sh
 
 /* ---------- 골라서 연락 (학생 · 교직원) ---------- */
 let ctab="abs";
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-cto]");if(!b)return;try{localStorage.setItem(CTO_KEY,b.dataset.cto)}catch(_){}renderAll();try{if(view==="call"){renderCall();if(ctab==="pick")renderPicker("stu")}}catch(_){}toast(b.dataset.cto==="par"?"학부모 번호로 보냅니다":b.dataset.cto==="both"?"학생과 학부모 모두에게 보냅니다":"학생 번호로 보냅니다 (학생 번호가 없으면 학부모)")});
 const PK={
   stu:{sel:new Set(),q:"",msg:"",seq:{key:"",i:0},cls:new Set(),
     items:()=>{const ids=pkClasses(),multi=ids.length>1;
       return ids.flatMap(cid=>{const c=S.list.find(x=>x.id===cid);if(!c)return[];const d=c.data;
         const l=daySes(d,selDate),s=c.id===S.active?R():(l[l.length-1]||null);
-        return d.roster.map(([id,name])=>({key:c.id+"|"+id,sid:id,clsId:c.id,cls:clsName(d),group:clsName(d),name,sub:id,phone:d.phones[id]||"",email:(d.emails||{})[id]||"",tag:s&&!s.p[id]?"결석":""}))})},
+        return d.roster.map(([id,name])=>({key:c.id+"|"+id,sid:id,clsId:c.id,cls:clsName(d),group:clsName(d),name,sub:id,phone:d.phones[id]||"",nums:numsOf(id,d),via:numsVia(id,d),email:(d.emails||{})[id]||"",tag:s&&!s.p[id]?"결석":""}))})},
     fillOne:(m,it)=>m.replaceAll("{이름}",it.name).replaceAll("{학급}",it.cls||clsName()),
     fillAll:m=>{const ids=pkClasses();const cn=ids.length===1?clsName(S.list.find(x=>x.id===ids[0]).data):"우리 학교";return m.replaceAll("{이름} 학생","학생").replaceAll("{이름}","").replaceAll("{학급}",cn).replace(/[ \t]{2,}/g," ").trim()},
     unit:"학생"},
@@ -2219,21 +2244,21 @@ function renderPicker(kind){
   let html="",lastG=null;
   list.forEach(it=>{
     if((kind==="staff"||(kind==="stu"&&pkClasses().length>1))&&!q&&it.group!==lastG){html+=`<div class="pkg">${esc(it.group)}</div>`;lastG=it.group}
-    const num=digits(it.phone),off=num.length<8,on=P.sel.has(it.key);
+    const nn=PKN(it),num=nn[0]||"",off=!nn.length,on=P.sel.has(it.key);
     html+=`<div class="pk${on?" on":""}" data-k="${esc(it.key)}" role="checkbox" aria-checked="${on}" tabindex="0">
       <span class="box" aria-hidden="true"></span>
-      <span class="who">${esc(it.name)}${it.tag?` <em>${it.tag}</em>`:""}<small>${esc(it.sub)}${it.sub?" · ":""}${off?"번호 없음":esc(it.phone)}</small></span>
+      <span class="who">${esc(it.name)}${it.tag?` <em>${it.tag}</em>`:""}<small>${esc(it.sub)}${it.sub?" · ":""}${off?(it.nums?ctoNone():"번호 없음"):it.nums?esc(nn.map(gpFmt).join(", "))+(it.via?` <b class="gpv">${esc(it.via)}</b>`:""):esc(it.phone)}</small></span>
       <span class="ic2">${kind==="stu"?`<button class="mini ml${it.email?"":" off"}" type="button" data-a="mail" aria-label="${esc(it.name)} 이메일">${ICON.mail}</button>`:""}<button class="mini ok${off?" off":""}" type="button" data-a="tel" aria-label="${esc(it.name)} 전화">${ICON.tel}</button><button class="mini pri${off?" off":""}" type="button" data-a="sms" aria-label="${esc(it.name)} 문자">${ICON.sms}</button></span>
     </div>`;
   });
   box.innerHTML=html||`<div class="empty">‘${esc(P.q)}’와 맞는 사람이 없습니다.</div>`;
   box.querySelectorAll(".pk").forEach(row=>{
-    const it=all.find(x=>x.key===row.dataset.k),num=digits(it.phone),off=num.length<8;
+    const it=all.find(x=>x.key===row.dataset.k),nn=PKN(it),num=nn[0]||"",off=!nn.length;
     const tg=()=>{if(P.sel.has(it.key))P.sel.delete(it.key);else P.sel.add(it.key);renderPicker(kind)};
     row.onclick=e=>{if(e.target.closest("button"))return;tg()};
     row.onkeydown=e=>{if((e.key===" "||e.key==="Enter")&&e.target===row){e.preventDefault();tg()}};
     row.querySelector('[data-a=tel]').onclick=()=>{if(off)return noNum(kind,it);go("tel:"+num)};
-    row.querySelector('[data-a=sms]').onclick=()=>{if(off)return noNum(kind,it);go(smsHref([num],P.msg.trim()?P.fillOne(P.msg,it):""))};
+    row.querySelector('[data-a=sms]').onclick=()=>{if(off)return noNum(kind,it);go(smsHref(nn,P.msg.trim()?P.fillOne(P.msg,it):""))};
     const mb=row.querySelector('[data-a=mail]');if(mb)mb.onclick=()=>{if(!it.email)return noMail(it);go(mailHref([it.email],P.msg.trim()?P.fillOne(P.msg,it):"",mailSubj(it)))};
   });
   renderComposer(kind,all);
@@ -2243,9 +2268,10 @@ function mailSubj(it){return `[${it&&it.cls?it.cls:clsName()}] 안내`}
 /* 이메일: 여러 명은 숨은참조(bcc)로 보내 서로 주소가 보이지 않게 합니다 */
 function mailHref(list,body,subj,bcc){const q=[];if(subj)q.push("subject="+encodeURIComponent(subj));if(body)q.push("body="+encodeURIComponent(body));if(bcc){q.push("bcc="+encodeURIComponent(list.join(",")));return "mailto:?"+q.join("&")}return "mailto:"+list.map(encodeURIComponent).join(",")+(q.length?"?"+q.join("&"):"")}
 function noNum(kind,it){if(kind==="stu"){if(it.clsId&&it.clsId!==S.active){S.active=it.clsId;D=S.list.find(c=>c.id===it.clsId).data;selId=null;save()}need(it.name,it.sid||it.key)}else{toast(it.name+" 님의 번호를 먼저 입력하세요");show("set");$("d-staff").open=true}}
+function PKN(it){return it.nums||(digits(it.phone).length>=8?[digits(it.phone)]:[])}
 function renderComposer(kind,all){
-  const P=PK[kind],c=$("cp-"+kind);
-  const chosen=all.filter(i=>P.sel.has(i.key)),ready=chosen.filter(i=>digits(i.phone).length>=8);
+  const P=PK[kind],c=$("cp-"+kind);if(kind==="stu"&&$("ctStu"))$("ctStu").innerHTML=ctoHTML();
+  const chosen=all.filter(i=>P.sel.has(i.key)),ready=chosen.filter(i=>PKN(i).length);
   const k=ready.map(i=>i.key).join(",")+"|"+P.msg;
   if(P.seq.key!==k)P.seq={key:k,i:0};
   const nx=ready[P.seq.i];
@@ -2259,13 +2285,13 @@ function renderComposer(kind,all){
     if(!ready.length)return toast(chosen.length?"고른 사람 중 번호가 있는 사람이 없습니다":"받을 사람을 먼저 고르세요");
     if(!nx){P.seq.i=0;renderComposer(kind,all);return}
     P.seq.i++;renderComposer(kind,all);
-    go(smsHref([digits(nx.phone)],P.msg.trim()?P.fillOne(P.msg,nx):""));
+    go(smsHref(PKN(nx),P.msg.trim()?P.fillOne(P.msg,nx):""));
   };
   ba.onclick=()=>{
     if(ready.length<2)return toast(ready.length?"한 명이면 ‘한 명씩 보내기’나 이름 옆 문자 버튼을 쓰세요":"받을 사람을 먼저 고르세요");
-    go(smsHref(ready.map(i=>digits(i.phone)),P.msg.trim()?P.fillAll(P.msg):""));
+    go(smsHref([...new Set(ready.flatMap(PKN))],P.msg.trim()?P.fillAll(P.msg):""));
   };
-  bc.onclick=()=>{if(!ready.length)return toast("복사할 번호가 없습니다");copy(ready.map(i=>i.phone).join(", "),ready.length+"명 번호를 복사했습니다")};
+  bc.onclick=()=>{if(!ready.length)return toast("복사할 번호가 없습니다");copy([...new Set(ready.flatMap(PKN))].map(gpFmt).join(", "),ready.length+"명 번호를 복사했습니다")};
   if(kind==="stu"){
     let mrow=c.querySelector(".mailrow");
     if(!mrow){mrow=document.createElement("div");mrow.className="row2 mailrow";mrow.innerHTML='<button class="btn" type="button" data-a="mailall"></button><button class="btn" type="button" data-a="mailcopy">이메일 주소 복사</button>';bc.parentNode.after(mrow)}
@@ -2438,35 +2464,39 @@ async function downloadTemplate(kind,fmt){
   }
   const pc=T.header.findIndex(h=>/전화/.test(h)),ic=T.header.findIndex(h=>/학번/.test(h));
   try{await xlOut(base+".xlsx",[
-    {name:T.sheet,title,rows:[T.header,...T.examples],blank:60,widths:T.header.map(h=>/전화/.test(h)?16:/학번/.test(h)?10:/이메일/.test(h)?24:14),text:[pc,ic].filter(x=>x>=0)},
+    {name:T.sheet,title,rows:[T.header,...T.examples],blank:60,widths:T.header.map(h=>/전화/.test(h)?16:/학번/.test(h)?10:/이메일/.test(h)?24:14),text:[...T.header.map((h,i)=>/전화/.test(h)?i:-1),ic].filter(x=>x>=0)},
     {name:"안내",title:`${T.sheet} 입력 안내`,head:false,rows:[...T.guide.map(g=>[g]),[""],[`${APP_NAME} 설정 → 일괄 입력 · 파일 업로드에서 이 파일을 고르면 됩니다. 위쪽 제목·내려받은 일시 줄은 그대로 두어도 됩니다.`]],widths:[90]}],"엑셀 양식을 저장했습니다")}
   catch(e){toast(e.message||"엑셀 파일을 만들지 못했습니다");return downloadTemplate(kind,"csv")}
 }
 const GUIDE_COMMON=["첫 줄(제목 줄)은 지우지 마세요. 둘째 줄부터 한 줄에 한 명씩 입력합니다.","‘예시’라고 적힌 줄은 불러올 때 건너뜁니다. 지우거나 그대로 두어도 됩니다.","전화번호는 010-1234-5678처럼 입력하세요. 앞자리 0이 빠져도 자동으로 고칩니다.","엑셀(.xlsx) 그대로 올려도 되고, CSV로 저장해 올려도 됩니다."];
+function gpPut(r){if(!r.gp)return;const o=gpOf(r.id);if(o.some(g=>digits(g.p)===digits(r.gp)))return;D.gph=D.gph||{};D.gph[r.id]=[{r:(o[0]&&o[0].r)||"보호자",p:r.gp},...o.slice(1)].slice(0,2)}
 function parseStudents(text){
   const rows=[],skipped=[];
   String(text||"").replace(/^﻿/,"").split(/\r?\n/).forEach(raw=>{
     const line0=raw.trim();if(!line0||/예시/.test(line0)||isHeadLine(line0)||isMetaLine(line0))return;
-    let line=line0,em="";line=line.replace(EMAIL_RE,m=>{em=m;return "\t"});line=fixPhones(line);let ph=null;
-    line=line.replace(/01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}/,m=>{const d=m.replace(/\D/g,"");ph=d.length===11?`${d.slice(0,3)}-${d.slice(3,7)}-${d.slice(7)}`:`${d.slice(0,3)}-${d.slice(3,6)}-${d.slice(6)}`;return "\t"});
+    let line=line0,em="";line=line.replace(EMAIL_RE,m=>{em=m;return "\t"});line=fixPhones(line);let ph=null,gp=null;
+    const PH=/01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}/;
+    /* 양식 순서(학번, 이름, 학생 전화, 학부모 전화)에서 학생 칸이 비고 넷째 칸에 번호가 있으면 학부모 번호 */
+    {const fs=fixPhones(raw).split(/\t|,/).map(x=>x.trim());const pi=fs.findIndex(x=>PH.test(x));if(pi>=3&&fs[2]==="")gp=gpFmt(fs[pi].match(PH)[0])}
+    line=line.replace(new RegExp(PH.source,"g"),m=>{const d=gpFmt(m);if(gp&&!ph&&digits(d)===digits(gp))return "\t";if(!ph&&!gp)ph=d;else if(!gp)gp=d;return "\t"});
     const cells=line.split(/[\t,;]+|\s+/).map(c=>c.trim().replace(/^"|"$/g,"")).filter(Boolean);
     let id=null,name=null;
     cells.forEach(c=>{if(!id&&/^\d{3,10}$/.test(c))id=c;else if(!name&&/[가-힣A-Za-z]/.test(c)&&!isHeadCell(c))name=c});
-    if(id&&name)rows.push({id,name,phone:ph||"",email:em});else skipped.push(line0);
+    if(id&&name)rows.push({id,name,phone:ph||"",gp:gp||"",email:em});else skipped.push(line0);
   });
   return{rows,skipped};
 }
 const BULK={
-  stu:{title:"학생 명단 일괄 입력",cols:"학번, 이름, 전화번호, 이메일",what:"학생",scope:()=>`‘${clsName()}’ 학급의 학생 명단으로 넣습니다. 학번이 같으면 같은 학생으로 봅니다.`,
-    sample:"10101\t홍길동\t010-1234-5678\thong@school.kr\n10102\t김영희\t010-2345-6789\n10103 이철수",
+  stu:{title:"학생 명단 일괄 입력",cols:"학번, 이름, 학생 전화, 학부모 전화(선택), 이메일",what:"학생",scope:()=>`‘${clsName()}’ 학급의 학생 명단으로 넣습니다. 학번이 같으면 같은 학생으로 봅니다.`,
+    sample:"10101\t홍길동\t010-1234-5678\t010-9876-5432\thong@school.kr\n10102\t김영희\t010-2345-6789\n10103 이철수",
     parse:t=>parseStudents(t),key:r=>r.id,exists:()=>new Set(D.roster.map(x=>x[0])),
-    head:["학번","이름","전화번호","이메일"],cells:r=>[r.id,r.name,r.phone||"—",r.email||"—"],
+    head:["학번","이름","학생 전화","학부모 전화","이메일"],cells:r=>[r.id,r.name,r.phone||"—",r.gp||"—",r.email||"—"],
     apply:(rows,replace)=>{let n=0,u=0;
-      if(replace){D.roster=[];const seen=new Set();rows.forEach(r=>{if(seen.has(r.id))return;seen.add(r.id);D.roster.push([r.id,r.name]);if(r.phone)D.phones[r.id]=r.phone;if(r.email)D.emails[r.id]=r.email;n++})}
-      else rows.forEach(r=>{const x=D.roster.find(y=>y[0]===r.id);if(x){x[1]=r.name;u++}else{D.roster.push([r.id,r.name]);n++}if(r.phone)D.phones[r.id]=r.phone;if(r.email)D.emails[r.id]=r.email});
+      if(replace){D.roster=[];const seen=new Set();rows.forEach(r=>{if(seen.has(r.id))return;seen.add(r.id);D.roster.push([r.id,r.name]);if(r.phone)D.phones[r.id]=r.phone;if(r.email)D.emails[r.id]=r.email;gpPut(r);n++})}
+      else rows.forEach(r=>{const x=D.roster.find(y=>y[0]===r.id);if(x){x[1]=r.name;u++}else{D.roster.push([r.id,r.name]);n++}if(r.phone)D.phones[r.id]=r.phone;if(r.email)D.emails[r.id]=r.email;gpPut(r)});
       sortRoster();return{n,u}},
-    tpl:{sheet:"학생명단",header:["학번","이름","전화번호","이메일"],examples:[["10101","홍길동(예시)","010-1234-5678","hong@example.com"],["10102","김영희(예시)","010-2345-6789",""]],
-      guide:["학번, 이름, 전화번호(학생 또는 학부모)를 입력합니다. 전화번호는 비워 두어도 됩니다.",...GUIDE_COMMON]}},
+    tpl:{sheet:"학생명단",header:["학번","이름","학생 전화번호","학부모 전화번호","이메일"],examples:[["10101","홍길동(예시)","010-1234-5678","010-9876-5432","hong@example.com"],["10102","김영희(예시)","010-2345-6789","",""]],
+      guide:["학번, 이름, 학생 전화번호, 학부모 전화번호(선택)를 입력합니다. 전화번호는 비워 두어도 됩니다.","학부모 전화번호는 이 기기 · 백업 · 기기 연동에만 저장되고, 공유 링크에는 들어가지 않습니다.",...GUIDE_COMMON]}},
   tc:{title:"수업 교사 일괄 입력",cols:"이름, 과목·역할, 전화번호",what:"명",scope:()=>`‘${clsName()}’ 학급의 수업 교사로 넣습니다.`,
     sample:"김수학\t수학\t010-1234-5678\n이영어\t영어, 2학년부장\t010-2345-6789\n박과학 과학 01034567890",
     parse:t=>parseContacts(t,"tc"),key:r=>digits(r.phone),exists:()=>new Set(D.teachers.map(x=>digits(x.phone))),
@@ -2545,11 +2575,11 @@ function matchQ(q,...xs){q=q.trim().toLowerCase();return !q||xs.join(" ").toLowe
 function renderStu(){
   $("stuCnt").textContent=D.roster.length+"명";
   if(document.activeElement!==$("qStu"))$("qStu").value=LQ.stu;
-  const items=D.roster.filter(([id,n])=>matchQ(LQ.stu,id,n,D.phones[id]||"",D.emails[id]||"")).map(([id,name])=>({key:id,name,badge:lowShow()?[isLow(id)?"최성보":"",...SN_K.filter(k=>snOpen(id).some(n=>n.k===k[0])).map(k=>k[1])].filter(Boolean).join(" · "):"",sub:"학번 "+id+(D.emails[id]?" · "+D.emails[id]:""),phone:D.phones[id]||""}));
+  const items=D.roster.filter(([id,n])=>matchQ(LQ.stu,id,n,D.phones[id]||"",D.emails[id]||"",gpOf(id).map(g=>g.p+" "+g.r).join(" "))).map(([id,name])=>({key:id,name,badge:lowShow()?[isLow(id)?"최성보":"",...SN_K.filter(k=>snOpen(id).some(n=>n.k===k[0])).map(k=>k[1])].filter(Boolean).join(" · "):"",sub:"학번 "+id+(D.emails[id]?" · "+D.emails[id]:"")+(gpOf(id).length?" · 학부모 "+gpOf(id).map(g=>g.r).join("·"):""),phone:D.phones[id]||""}));
   const L=$("stuList");L.innerHTML=listHTML("stu",items);
   L.querySelectorAll(".prow").forEach(b=>{b.onclick=()=>editStudent(b.dataset.k);const d=D,st=d.roster.find(x=>x[0]===b.dataset.k);if(!st)return;
-    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>editStudent(st[0])}],del:()=>{b.remove();swRemove(`${st[1]} 학생을`,()=>{const id=st[0],ph=d.phones[id],em=(d.emails||{})[id],back=swOut(d.roster,st);delete d.phones[id];if(d.emails)delete d.emails[id];try{PK.stu.sel.delete(id)}catch(e){}
-      return()=>{back();if(ph)d.phones[id]=ph;if(em){d.emails=d.emails||{};d.emails[id]=em}}})}})});
+    swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>editStudent(st[0])}],del:()=>{b.remove();swRemove(`${st[1]} 학생을`,()=>{const id=st[0],ph=d.phones[id],em=(d.emails||{})[id],gp=(d.gph||{})[id],back=swOut(d.roster,st);delete d.phones[id];if(d.gph)delete d.gph[id];if(d.emails)delete d.emails[id];try{PK.stu.sel.delete(id)}catch(e){}
+      return()=>{back();if(ph)d.phones[id]=ph;if(gp){d.gph=d.gph||{};d.gph[id]=gp}if(em){d.emails=d.emails||{};d.emails[id]=em}}})}})});
 }
 function renderTcEdit(){
   $("tcCnt").textContent=D.teachers.length+"명";
@@ -2581,7 +2611,8 @@ function editStudent(id){
   $("sheetBox").innerHTML=`<h2>학생 정보 수정 <span class="sub">${esc(clsName())}</span></h2>
     <div class="range"><label class="lb" for="esId">학번<input class="fld" id="esId" inputmode="numeric" autocomplete="off"></label>
     <label class="lb" for="esName">이름<input class="fld" id="esName" autocomplete="off"></label></div>
-    <label class="lb" for="esPh">전화번호 (학생·학부모)<input class="fld" id="esPh" type="tel" inputmode="tel" placeholder="010-0000-0000" autocomplete="off"></label>
+    <label class="lb" for="esPh">학생 전화번호<input class="fld" id="esPh" type="tel" inputmode="tel" placeholder="010-0000-0000" autocomplete="off"></label>
+    <div class="gpbox"><div class="shlb">학부모 연락처 <small class="note">(선택 · 2명까지 · 공유 링크에는 들어가지 않음)</small></div><div id="esGp"></div><button class="btn sm" type="button" id="esGpAdd">＋ 학부모 연락처</button></div>
     <label class="lb" for="esEm">이메일 (학생)<input class="fld" id="esEm" type="email" inputmode="email" placeholder="student@example.com" autocomplete="off" spellcheck="false"></label>
     ${others.length?`<label class="lb" for="esMove">다른 학급으로 옮기기<select class="fld" id="esMove"><option value="">옮기지 않음</option>${others.map(c=>`<option value="${esc(c.id)}">${esc(clsName(c.data))}</option>`).join("")}</select></label>`:""}
     <label class="chk"><input type="checkbox" id="esLow"${isLow(id)?" checked":""}><span>최소성취수준 보장지도 대상 (최성보)</span></label>
@@ -2590,6 +2621,11 @@ function editStudent(id){
     <p class="warn" id="esErr" hidden></p>
     <div class="row2"><button class="btn bad" type="button" id="esDel">삭제</button><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="esOk">저장</button></div>`;
   $("sheet").hidden=false;$("esSn").onclick=()=>snSheet(id,null,()=>editStudent(id));$("esId").value=st[0];$("esName").value=st[1];$("esPh").value=D.phones[id]||"";$("esEm").value=D.emails[id]||"";
+  let GP=gpOf(id).map(x=>({...x}));
+  const gpPaint=()=>{$("esGp").innerHTML=GP.map((g,i)=>`<div class="gprow"><select class="fld" data-gr="${i}" aria-label="관계">${GP_R.map(r=>`<option${r===g.r?" selected":""}>${r}</option>`).join("")}</select><input class="fld" data-gpp="${i}" type="tel" inputmode="tel" placeholder="010-0000-0000" value="${esc(g.p)}" autocomplete="off" aria-label="${esc(g.r)} 전화번호"><button class="btn sm ghost" type="button" data-gx="${i}" aria-label="빼기">×</button></div>`).join("");
+    $("esGp").querySelectorAll("[data-gr]").forEach(e=>e.onchange=()=>{GP[+e.dataset.gr].r=e.value});$("esGp").querySelectorAll("[data-gpp]").forEach(e=>e.oninput=()=>{GP[+e.dataset.gpp].p=e.value});
+    $("esGp").querySelectorAll("[data-gx]").forEach(b=>b.onclick=()=>{GP.splice(+b.dataset.gx,1);gpPaint()});$("esGpAdd").hidden=GP.length>=2};
+  gpPaint();$("esGpAdd").onclick=()=>{if(GP.length>=2)return;GP.push({r:GP.length?"아버지":"어머니",p:""});gpPaint();const l=$("esGp").querySelectorAll("[data-gpp]");if(l.length)l[l.length-1].focus()};
   $("skNo").onclick=()=>{$("sheet").hidden=true};
   const err=m=>{$("esErr").textContent=m;$("esErr").hidden=false};
   $("esOk").onclick=()=>{
@@ -2598,21 +2634,23 @@ function editStudent(id){
     if(!name)return err("이름을 입력하세요.");
     if(ph&&digits(ph).length<8)return err("전화번호를 확인하세요.");
     if(em&&!isEmail(em))return err("이메일 주소를 확인하세요.");
+    const gpn=GP.filter(g=>String(g.p).trim());if(gpn.some(g=>digits(g.p).length<8))return err("학부모 전화번호를 확인하세요.");const gpv=gpn.map(g=>({r:g.r,p:gpFmt(g.p)}));
     const mv=$("esMove")?$("esMove").value:"",low=$("esLow").checked;
     if(nid!==id&&D.roster.some(x=>x[0]===nid))return err(`학번 ${nid}은(는) 이미 이 학급에 있습니다.`);
     if(mv){
       const to=S.list.find(c=>c.id===mv).data;
       if(to.roster.some(x=>x[0]===nid))return err(`‘${clsName(to)}’에 학번 ${nid}이(가) 이미 있습니다.`);
-      to.roster.push([nid,name]);if(ph)to.phones[nid]=ph;if(em){if(!to.emails)to.emails={};to.emails[nid]=em}to.roster.sort((a,b)=>a[0].localeCompare(b[0],"ko",{numeric:true}));
-      D.roster=D.roster.filter(x=>x!==st);delete D.phones[id];delete D.emails[id];if(low){to.low=to.low||{};to.low[nid]=1}if(D.low){delete D.low[id];if(!Object.keys(D.low).length)delete D.low}if(D.snote&&D.snote[id]){to.snote=to.snote||{};to.snote[nid]=D.snote[id];delete D.snote[id];if(!Object.keys(D.snote).length)delete D.snote}
+      to.roster.push([nid,name]);if(ph)to.phones[nid]=ph;if(gpv.length){to.gph=to.gph||{};to.gph[nid]=gpv}if(em){if(!to.emails)to.emails={};to.emails[nid]=em}to.roster.sort((a,b)=>a[0].localeCompare(b[0],"ko",{numeric:true}));
+      D.roster=D.roster.filter(x=>x!==st);delete D.phones[id];delete D.emails[id];if(D.gph){delete D.gph[id];if(!Object.keys(D.gph).length)delete D.gph}if(low){to.low=to.low||{};to.low[nid]=1}if(D.low){delete D.low[id];if(!Object.keys(D.low).length)delete D.low}if(D.snote&&D.snote[id]){to.snote=to.snote||{};to.snote[nid]=D.snote[id];delete D.snote[id];if(!Object.keys(D.snote).length)delete D.snote}
       save();$("sheet").hidden=true;renderAll();return toast(`${name} 학생을 ‘${clsName(to)}’로 옮겼습니다. 이 학급의 출석 기록은 남습니다`);
     }
     if(nid!==id){D.sessions.forEach(s=>{if(s.p[id]){s.p[nid]=true;delete s.p[id]}["done","ak","ar"].forEach(k=>{if(s[k]&&id in s[k]){s[k][nid]=s[k][id];delete s[k][id]}})});{const cid=curClass().id;(S.evals||[]).forEach(ev=>{if(ev.clsId===cid&&Array.isArray(ev.stu))ev.stu.forEach(x=>{if(x.sid===id)x.sid=nid})})}(D.obs||[]).forEach(r=>{if(r.sid===id)r.sid=nid});delete D.phones[id];delete D.emails[id];PK.stu.sel.delete(id)}
     if(D.low)delete D.low[id];if(low){D.low=D.low||{};D.low[nid]=1}if(nid!==id&&D.snote&&D.snote[id]){D.snote[nid]=D.snote[id];delete D.snote[id]}if(nid!==id&&D.sts&&D.sts[id]){D.sts[nid]=D.sts[id];delete D.sts[id]}if(nid!==id){const cid=curClass().id;(S.tasks||[]).forEach(t=>{[t.miss,t.ct].forEach(o=>{const m=o&&o[cid];if(m&&id in m){m[nid]=m[id];delete m[id]}})})}if(D.low&&!Object.keys(D.low).length)delete D.low;
+    if(D.gph)delete D.gph[id];if(gpv.length){D.gph=D.gph||{};D.gph[nid]=gpv}else if(D.gph){delete D.gph[nid];if(!Object.keys(D.gph).length)delete D.gph}
     st[0]=nid;st[1]=name;if(ph)D.phones[nid]=ph;else delete D.phones[nid];if(em)D.emails[nid]=em;else delete D.emails[nid];
     sortRoster();save();$("sheet").hidden=true;renderAll();toast(name+" 학생 정보를 고쳤습니다");
   };
-  twoStep($("esDel"),"정말 삭제",()=>{D.roster=D.roster.filter(x=>x!==st);delete D.phones[id];if(D.low)delete D.low[id];if(D.snote)delete D.snote[id];PK.stu.sel.delete(id);save();$("sheet").hidden=true;renderAll();toast(st[1]+" 학생을 삭제했습니다. 출석 기록은 남습니다")});
+  twoStep($("esDel"),"정말 삭제",()=>{D.roster=D.roster.filter(x=>x!==st);delete D.phones[id];if(D.gph)delete D.gph[id];if(D.low)delete D.low[id];if(D.snote)delete D.snote[id];PK.stu.sel.delete(id);save();$("sheet").hidden=true;renderAll();toast(st[1]+" 학생을 삭제했습니다. 출석 기록은 남습니다")});
   setTimeout(()=>$("esName").focus(),50);
 }
 /* 수업 교사·교직원 수정 */
@@ -2742,7 +2780,7 @@ function newTermSheet(y,t){
     if(perCounts(np).cls&&!confirm(`${perLabel(np)}에 이미 학급이 ${perCounts(np).cls}개 있습니다. 그대로 더할까요?`))return;
     snapshot();let nc=0,ns=0;
     if(v){const[yy,tt]=v.split("|"),src={year:+yy,term:tt},ids=[...$("ntCls").querySelectorAll("input:checked")].map(x=>x.value);
-      S.list.filter(c=>ids.includes(c.id)).forEach(c=>{const d=c.data;const nd=normalize({cls:d.cls,msg:d.msg,roster:$("ntR").checked?d.roster.map(r=>[...r]):[],phones:$("ntR").checked&&$("ntP").checked?{...d.phones}:{},emails:$("ntR").checked&&$("ntP").checked?{...(d.emails||{})}:{},teachers:$("ntC").checked?d.teachers.map(x=>({...x,id:uid()})):[]});nd.year=ny;nd.term=nt;S.list.push({id:uid(),data:nd});nc++});
+      S.list.filter(c=>ids.includes(c.id)).forEach(c=>{const d=c.data;const nd=normalize({cls:d.cls,msg:d.msg,roster:$("ntR").checked?d.roster.map(r=>[...r]):[],phones:$("ntR").checked&&$("ntP").checked?{...d.phones}:{},gph:$("ntR").checked&&$("ntP").checked?d.gph:null,emails:$("ntR").checked&&$("ntP").checked?{...(d.emails||{})}:{},teachers:$("ntC").checked?d.teachers.map(x=>({...x,id:uid()})):[]});nd.year=ny;nd.term=nt;S.list.push({id:uid(),data:nd});nc++});
       if($("ntF").checked)(S.staff||[]).filter(x=>inPer(x,src)).forEach(x=>{if(!S.staff.some(z=>inPer(z,np)&&digits(z.phone)===digits(x.phone)&&z.name===x.name)){S.staff.push({...x,id:uid(),year:ny,term:nt});ns++}})}
     $("sheet").hidden=true;S.period=np;
     if(!perList().length){const c=addClass({cls:"새 학급"},false);c.data.year=ny;c.data.term=nt;nc++}
@@ -4359,10 +4397,10 @@ async function packApply(p,data,fp,who,opt){
   if(data.rk)R.rc=await rcOf(data.rk);R.enc=p.enc||(prev.school===p.school?prev.enc:null)||null;R.cardsOn=!!(p.opt&&p.opt.cards);
   if(prev.school===p.school){R.cls=prev.cls||[];R.staff=prev.staff||[];R.acal=prev.acal||[];R.tt=prev.tt||null}
   const made=[];let addN=0,newCls=0,updN=0,skipN=0,cardN=0;
-  data.classes.forEach(c=>{const ph={},em={},uids={};c.students.forEach(s=>{const v=s.pphone||s.phone;if(v)ph[s.sid]=v;if(s.email)em[s.sid]=s.email;uids[s.sid]=s.uid});
+  data.classes.forEach(c=>{const ph={},em={},uids={},gp={};c.students.forEach(s=>{if(s.phone)ph[s.sid]=s.phone;if(s.pphone)gp[s.sid]=[{r:"보호자",p:s.pphone}];if(s.email)em[s.sid]=s.email;uids[s.sid]=s.uid});
     const sch={key:c.key,role:c.role,subj:c.subj||[],school:String(p.school||""),uids};let cl=packFind(c,per);
     const me=(data.teacher||{}).name||meName(),tch=(c.teachers||[]).filter(t=>t.name&&t.name!==me).map(t=>({id:uid(),name:t.name,role:t.subj||"",phone:t.phone||"",src:"school"}));
-    if(!cl){cl=addClass({cls:ckLabel(c.key),year:per.year,term:per.term,roster:c.students.map(s=>[s.sid,s.name]),phones:ph,emails:em,teachers:tch,sch},false);newCls++;addN+=c.students.length}
+    if(!cl){cl=addClass({cls:ckLabel(c.key),year:per.year,term:per.term,roster:c.students.map(s=>[s.sid,s.name]),phones:ph,gph:gp,emails:em,teachers:tch,sch},false);newCls++;addN+=c.students.length}
     else{const d=cl.data,r=rosApply(d,c._sel||rosDiff(cl,c));addN+=r.add;updN+=r.n;skipN+=r.skip;
       tch.forEach(t=>{if(!d.teachers.some(x=>x.name===t.name&&x.role===t.role))d.teachers.push(t)});d.sch={...d.sch,...sch,uids:d.sch.uids}}
     {const d=cl.data,U=(d.sch&&d.sch.uids)||{};c.students.forEach(s=>{if(!s.cards)return;const sid=Object.keys(U).find(k=>U[k]===s.uid&&d.roster.some(r=>r[0]===k));const l=cardsNorm({x:s.cards}).x;if(sid&&l){d.cards=d.cards||{};d.cards[sid]=l;cardN++}})}
@@ -4516,7 +4554,8 @@ function rosDiff(cl,c){const d=cl.data,U=(d.sch&&d.sch.uids)||{},u2s={},items=[]
     got.add(sid);const r=inR(sid);
     if(s.sid!==sid)items.push({k:"sid",uid:s.uid,old:sid,neu:s.sid,name:s.name});
     if(r[1]!==s.name)items.push({k:"name",uid:s.uid,sid,old:r[1],neu:s.name});
-    const ph=s.pphone||s.phone;if(ph&&digits(ph)!==digits(d.phones[sid]||""))items.push({k:"ph",uid:s.uid,sid,name:s.name,old:d.phones[sid]||"",neu:ph});
+    const ph=s.phone;if(ph&&digits(ph)!==digits(d.phones[sid]||"")&&digits(ph)!==digits(s.pphone||""))items.push({k:"ph",uid:s.uid,sid,name:s.name,old:d.phones[sid]||"",neu:ph});
+    if(s.pphone&&!gpOf(sid,d).some(g=>digits(g.p)===digits(s.pphone)))items.push({k:"gp",uid:s.uid,sid,name:s.name,old:(gpOf(sid,d)[0]||{}).p||"",neu:s.pphone});
     if(s.email&&s.email!==(d.emails||{})[sid])items.push({k:"em",uid:s.uid,sid,name:s.name,old:(d.emails||{})[sid]||"",neu:s.email})});
   for(const sid in U){const u=U[sid];if(!inR(sid)||got.has(sid)||c.students.some(s=>s.uid===u))continue;const l=(chg.left||[]).find(x=>x.uid===u)||{};items.push({k:"out",uid:u,sid,name:inR(sid)[1],why:l.why||"명단에서 빠짐",to:l.to||""})}
   const free=new Set([...items.filter(x=>x.k==="out").map(x=>x.sid),...items.filter(x=>x.k==="sid").map(x=>x.old)]),taken=new Set(items.filter(x=>x.k==="sid").map(x=>x.neu));
@@ -4528,22 +4567,23 @@ function rosLabel(x){const n=`${x.name||(x.s&&x.s.name)||""}`;switch(x.k){
   case"sid":return`<b>학번</b> ${esc(n)} ${esc(x.old)} → ${esc(x.neu)} <small>(기록도 옮김)</small>`;
   case"name":return`<b>이름</b> ${esc(x.old)} → ${esc(x.neu)} (${esc(x.sid)})`;
   case"ph":return`<b>연락처</b> ${esc(n)} ${x.old?"바뀜":"새로"}`;
+  case"gp":return`<b>학부모 연락처</b> ${esc(n)} ${x.old?"바뀜":"새로"}`;
   case"em":return`<b>이메일</b> ${esc(n)} ${x.old?"바뀜":"새로"}`}return""}
 function mvSid(d,a,b){if(a===b)return;const r=d.roster.find(x=>x[0]===a);if(r)r[0]=b;
   d.sessions.forEach(s=>{if(s.p&&a in s.p){s.p[b]=s.p[a];delete s.p[a]}if(s.done&&typeof s.done==="object"&&a in s.done){s.done[b]=s.done[a];delete s.done[a]}});
-  (d.obs||[]).forEach(o=>{if(o.sid===a)o.sid=b});["phones","emails","sts","cards","low","snote"].forEach(k=>{if(d[k]&&a in d[k]){d[k][b]=d[k][a];delete d[k][a]}});
+  (d.obs||[]).forEach(o=>{if(o.sid===a)o.sid=b});["phones","gph","emails","sts","cards","low","snote"].forEach(k=>{if(d[k]&&a in d[k]){d[k][b]=d[k][a];delete d[k][a]}});
   (d.tasks||[]).forEach(t=>{if(t.miss&&a in t.miss){t.miss[b]=t.miss[a];delete t.miss[a]}});
   {const cl=S.list.find(c=>c.data===d);if(cl)(S.tasks||[]).forEach(t=>{[t.miss,t.ct].forEach(o=>{const m=o&&o[cl.id];if(m&&a in m){m[b]=m[a];delete m[a]}})})}
   const U=d.sch&&d.sch.uids;if(U&&a in U){U[b]=U[a];delete U[a]}}
 /* 고른 것만 적용 (빠짐 → 학번 → 이름 · 연락처 → 들어옴 순서). 돌려주는 값: 더한 학생 수 */
 function rosApply(d,items){d.sch=d.sch||{};d.sch.uids=d.sch.uids||{};const U=d.sch.uids;let add=0,skip=0;const by=k=>items.filter(x=>x.k===k);
-  by("out").forEach(x=>{d.roster=d.roster.filter(r=>r[0]!==x.sid);delete U[x.sid];delete d.phones[x.sid];if(d.emails)delete d.emails[x.sid]});
+  by("out").forEach(x=>{d.roster=d.roster.filter(r=>r[0]!==x.sid);delete U[x.sid];delete d.phones[x.sid];if(d.emails)delete d.emails[x.sid];if(d.gph)delete d.gph[x.sid]});
   by("link").forEach(x=>{U[x.sid]=x.uid});
   const sids=by("sid");sids.forEach(x=>mvSid(d,x.old,"~"+x.uid));sids.forEach(x=>{if(d.roster.some(r=>r[0]===x.neu)){mvSid(d,"~"+x.uid,x.old);skip++}else mvSid(d,"~"+x.uid,x.neu)});
   const cur=x=>Object.keys(U).find(k=>U[k]===x.uid)||x.sid;
   by("name").forEach(x=>{const r=d.roster.find(r=>r[0]===cur(x));if(r)r[1]=String(x.neu).slice(0,30)});
-  by("ph").forEach(x=>{d.phones[cur(x)]=x.neu});by("em").forEach(x=>{d.emails=d.emails||{};d.emails[cur(x)]=x.neu});
-  by("in").forEach(x=>{const s=x.s;if(d.roster.some(r=>r[0]===s.sid)){skip++;return}d.roster.push([s.sid,s.name]);U[s.sid]=s.uid;const ph=s.pphone||s.phone;if(ph)d.phones[s.sid]=ph;if(s.email){d.emails=d.emails||{};d.emails[s.sid]=s.email}add++});
+  by("ph").forEach(x=>{d.phones[cur(x)]=x.neu});by("gp").forEach(x=>{const k=cur(x),o=gpOf(k,d);d.gph=d.gph||{};d.gph[k]=[{r:(o[0]&&o[0].r)||"보호자",p:gpFmt(x.neu)},...o.slice(1)]});by("em").forEach(x=>{d.emails=d.emails||{};d.emails[cur(x)]=x.neu});
+  by("in").forEach(x=>{const s=x.s;if(d.roster.some(r=>r[0]===s.sid)){skip++;return}d.roster.push([s.sid,s.name]);U[s.sid]=s.uid;const ph=s.phone;if(ph)d.phones[s.sid]=ph;if(s.pphone){d.gph=d.gph||{};d.gph[s.sid]=[{r:"보호자",p:gpFmt(s.pphone)}]}if(s.email){d.emails=d.emails||{};d.emails[s.sid]=s.email}add++});
   d.roster.sort((a,b)=>a[0].localeCompare(b[0],"ko",{numeric:true}));return{add,skip,n:items.filter(x=>!x.auto).length}}
 
 /* ===== 5.35: 학교 관리 4단계 · 배포 기록과 담당자 인계 =====
@@ -6527,7 +6567,8 @@ function wrStaffPick(r,back){const L=((typeof perStaff==="function"?perStaff():S
 /* ===== 5.51: 받는 사람 찾기 — 학생(학년 · 반 · 이름 · 학번) · 교직원(이름 · 부서 · 역할 · 교과) ===== */
 const rcKo=(a,b)=>String(a).localeCompare(String(b),"ko",{numeric:true});
 const rcGrade=c=>{const m=/(\d+)\s*학년/.exec(clsName(c.data));return m?m[1]:""};
-function rcStu(){return perList().flatMap(c=>c.data.roster.map(([sid,nm])=>({k:"stu",id:c.id+":"+sid,nm,sid,cls:clsName(c.data),g:rcGrade(c),ph:digits((c.data.phones||{})[sid]||""),em:(c.data.emails||{})[sid]||""})))}
+function rcStu(){return perList().flatMap(c=>c.data.roster.flatMap(([sid,nm])=>[{k:"stu",id:c.id+":"+sid,nm,sid,cls:clsName(c.data),g:rcGrade(c),ph:digits((c.data.phones||{})[sid]||""),em:(c.data.emails||{})[sid]||""},
+  ...gpOf(sid,c.data).map((x,i)=>({k:"stu",id:c.id+":"+sid+":g"+i,nm:`${nm} 학부모(${x.r})`,sid,cls:clsName(c.data),g:rcGrade(c),ph:digits(x.p),em:"",gp:1}))]))}
 function rcStaff(){return((typeof perStaff==="function"?perStaff():S.staff)||[]).map((s,i)=>({k:"staff",id:"s"+i+":"+s.name,nm:s.name,dept:s.dept||"",role:s.role||"",subj:s.subj||"",ph:digits(s.phone||""),em:s.email||""}))}
 function rcPick(kind,onOk,o){o=o||{};const stu=kind==="stu",L=stu?rcStu():rcStaff(),sel=new Map();let q="",f1="",f2="";
   const F1=stu?[...new Set(L.map(x=>x.g).filter(Boolean))].sort(rcKo):[...new Set(L.map(x=>x.dept).filter(Boolean))].sort(rcKo);
@@ -8668,7 +8709,7 @@ function mergeList(b,l,r,key,deep){
 }
 function mergeMap(b,l,r){b=b||{};l=l||{};r=r||{};const o={};new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{
   if(k in l&&k in r)o[k]=pick3(b[k],l[k],r[k]);else if(k in l){if(!(k in b)||J(l[k])!==J(b[k]))o[k]=l[k]}else if(!(k in b)||J(r[k])!==J(b[k]))o[k]=r[k]});return o}
-function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","emails","teachers","msg","obsLock","sch","cards","low","snote","tasks"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
+function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","gph","emails","teachers","msg","obsLock","sch","cards","low","snote","tasks"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
@@ -8983,13 +9024,13 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout
 function renderAbGo(s){const el=$("abGoBar");if(!el)return;
   const ab=sesOn(s)?D.roster.filter(([id])=>!s.p[id]):[],N=D.roster.length;
   if(!ab.length||(ab.length===N&&!s.lock)){el.hidden=true;el.innerHTML="";return}
-  const todo=ab.filter(([id])=>!isDone(s,id)),ready=todo.filter(([id])=>digits(D.phones[id]).length>=8);
+  const todo=ab.filter(([id])=>!isDone(s,id)),ready=todo.filter(([id])=>numsOf(id).length);
   const k=s.id+"|"+ready.map(r=>r[0]).join(",");if(seq.key!==k)seq={key:k,i:0};const nx=ready[seq.i];
   el.hidden=false;el.classList.toggle("okd",!todo.length);
   el.innerHTML=!todo.length?`<span>✓ 결석 ${ab.length}명 모두 연락을 마쳤습니다</span><button class="btn sm" type="button" id="abGo">연락 화면</button>`
-   :`<span>📞 <b>결석 ${ab.length}명</b>${todo.length<ab.length?` · 연락 전 ${todo.length}명`:""}${ready.length<todo.length?` · 번호 없음 ${todo.length-ready.length}명`:""}</span>${ready.length?`<button class="btn sm ok" type="button" id="abNext">${ICON.sms}${nx?`문자 ${seq.i+1}/${ready.length} · ${esc(nx[1])}`:"처음부터 다시"}</button>`:""}<button class="btn sm${ready.length?"":" pri"}" type="button" id="abGo">결석 ${todo.length}명에게 연락</button>`;
+   :`<span>📞 <b>결석 ${ab.length}명</b>${todo.length<ab.length?` · 연락 전 ${todo.length}명`:""}${ready.length<todo.length?` · 번호 없음 ${todo.length-ready.length}명`:""}</span>${ready.length?`<button class="btn sm ok" type="button" id="abNext">${ICON.sms}${nx?`문자 ${seq.i+1}/${ready.length} · ${esc(nx[1])}${callTo()==="par"?" 학부모":callTo()==="both"?" · 학부모":""}`:"처음부터 다시"}</button>`:""}<button class="btn sm${ready.length?"":" pri"}" type="button" id="abGo">결석 ${todo.length}명에게 연락</button>`;
   $("abGo").onclick=()=>{selId=s.id;ctab="abs";save();show("call")};
-  const b=$("abNext");if(b)b.onclick=()=>{if(!nx){seq.i=0;renderAbGo(s);return}seq.i++;renderAbGo(s);go(smsHref([digits(D.phones[nx[0]])],fill(D.msg,nx[1])))};
+  const b=$("abNext");if(b)b.onclick=()=>{if(!nx){seq.i=0;renderAbGo(s);return}seq.i++;renderAbGo(s);go(smsHref(numsOf(nx[0]),fill(D.msg,nx[1])))};
 }
 /* 5.56: 출석 체크 아래 같은 교시 수업 메모 (진도 · 메모 한 줄) */
 function sesCellOf(s){const m=String(s&&s.src||"").match(/^(.+):(\d):(\d+)$/);if(!m)return null;const t=S.tt.list.find(x=>x.id===m[1]);if(!t)return null;
@@ -9078,7 +9119,8 @@ function stuSheet(sid){
     <div class="stsmeter"><div class="pbar"><i id="stsBar"></i></div><span id="stsN"></span></div>
     <div class="row2"><button class="btn" type="button" id="stsGen">관찰 기록으로 초안</button><button class="btn" type="button" id="stsCopy">복사</button></div>
     <p class="note">초안은 관찰 메모와 자주 체크한 항목(긍정·중립만)으로 만든 뼈대입니다. 학생의 구체적인 활동과 변화가 드러나도록 고쳐 쓰세요. 나이스 기준으로 한글·기호는 3byte, 영문·숫자·공백은 1byte, 줄바꿈은 2byte로 셉니다.</p>
-    <div class="row2">${ph?`<a class="btn" href="tel:${esc(digits(ph))}">전화</a>`:""}<button class="btn" type="button" id="stsObs">관찰 기록 쓰기</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
+    ${gpOf(sid).length?`<div class="stsec gpsec"><b>학부모 연락처</b>${gpOf(sid).map(g=>`<div class="gpline"><span class="gpw">${esc(g.r)} <small>${esc(g.p)}</small></span><a class="btn sm ok" href="tel:${esc(digits(g.p))}">${ICON.tel}전화</a><a class="btn sm pri" href="${esc(smsHref([digits(g.p)],""))}">${ICON.sms}문자</a></div>`).join("")}</div>`:""}
+    <div class="row2">${ph?`<a class="btn" href="tel:${esc(digits(ph))}">학생 전화</a>`:""}<button class="btn" type="button" id="stsObs">관찰 기록 쓰기</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
   $("sheet").hidden=false;$("sheetBox").scrollTop=0;$("stSn").onclick=()=>snSheet(sid,null,()=>stuSheet(sid));
   const T=$("stsT");T.value=(stsOf(sid)||{}).t||"";
   const meter=()=>{const lim=stsLim(),b=neisBytes(T.value),n=[...T.value.replace(/\r/g,"")].length;$("stsN").innerHTML=`${n}자 · <b class="${b>lim?"over":""}">${b.toLocaleString()}</b> / ${lim.toLocaleString()} byte${b>lim?` <b class="over">(${(b-lim).toLocaleString()} byte 넘음)</b>`:""}`;
