@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>학생 서류 · 교사의 생활</title>
+<link rel="icon" href="icon-192.png">
+<style>
+@font-face{font-family:"NanumGothic";src:url(NanumGothic-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"NanumGothic";src:url(NanumGothic-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{--bg:#eef1f4;--paper:#fff;--ink:#1d2621;--muted:#5b665f;--line:#dde3de;--accent:#24476b;--soft:#e3ebf3;--bad:#c0392b;--ok:#1f7a4d}
+@media (prefers-color-scheme:dark){:root{--bg:#141917;--paper:#1c2320;--ink:#e7ece8;--muted:#97a39b;--line:#2d3833;--accent:#8fb4dc;--soft:#1f2c3a;--bad:#ef7b6e;--ok:#5fc08e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"NanumGothic",system-ui,sans-serif;line-height:1.55;-webkit-text-size-adjust:100%}
+main{max-width:640px;margin:0 auto;padding:14px 14px calc(40px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.top{border-top:8px solid var(--accent)}h1{font-size:1.35rem;margin:0}h2{font-size:1.05rem;margin:0}
+.sub{color:var(--muted);font-size:.85rem}.msg{background:var(--soft);border-radius:10px;padding:10px 12px;white-space:pre-wrap;font-size:.92rem}
+label.f{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.92rem}label.f .req{color:var(--bad)}
+input.i,textarea.i,select.i{width:100%;font:inherit;font-size:1rem;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);min-height:46px}
+textarea.i{min-height:96px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end}
+.days{font-size:.85rem;color:var(--accent);font-weight:700}
+.files{display:flex;flex-direction:column;gap:6px}.fi{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 8px}.fi img{width:52px;height:52px;object-fit:cover;border-radius:6px;background:var(--soft)}.fi .ic{width:52px;height:52px;display:grid;place-items:center;font-size:1.6rem;background:var(--soft);border-radius:6px}.fi span{flex:1;min-width:0;font-size:.85rem;word-break:break-all}.fi button{border:0;background:none;color:var(--bad);font-size:1.2rem;min-width:40px;min-height:40px;cursor:pointer}
+.pad{position:relative;border:2px dashed var(--line);border-radius:12px;background:#fff;touch-action:none;aspect-ratio:5/2;width:100%;overflow:hidden}.pad canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}.pad .hint{position:absolute;inset:0;display:grid;place-items:center;color:#9aa49d;pointer-events:none}
+.row{display:flex;gap:8px}.btn{appearance:none;flex:1;min-height:50px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;padding:0 12px}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--paper)}.btn.sm{min-height:40px;font-size:.88rem;flex:0 0 auto}.btn:disabled{opacity:.45}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer}.chk input{width:22px;height:22px;flex:none;margin-top:2px}
+.err{color:var(--bad);font-size:.88rem;font-weight:700}.bad{outline:2px solid var(--bad);outline-offset:2px}
+.banner{background:#fff3a3;color:#5a4a00;border-radius:10px;padding:8px 12px;font-size:.88rem;font-weight:700}
+.done{text-align:center}.done .big{font-size:2.6rem}.steps{text-align:left;font-size:.9rem;margin:0;padding-left:1.2em}
+.foot{text-align:center;color:var(--muted);font-size:.75rem}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main id="main">
+  <div class="banner" id="kb" hidden>교실 기기에서 작성 중입니다. 제출하면 선생님 앱에 바로 들어갑니다.</div>
+  <div class="card top" id="head" hidden><h1 id="ti"></h1><div class="sub" id="meta"></div><div class="msg" id="msg" hidden></div></div>
+  <form id="frm" hidden novalidate></form>
+  <div class="card done" id="done" hidden></div>
+  <div class="card" id="fail" hidden><h2>서류를 열 수 없습니다</h2><p id="failM"></p></div>
+  <p class="foot">교사의 생활 · 작성한 서류는 서버에 올라가지 않고, 선생님께 보낸 파일로만 전달됩니다</p>
+</main>
+<script src="tlform.js"></script>
+<script>
+(function(){"use strict";
+var $=function(id){return document.getElementById(id)},esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+function fail(m){$("fail").hidden=false;$("failM").textContent=m}
+if(!window.TLF){fail("페이지를 다 불러오지 못했습니다. 인터넷 연결을 확인하고 다시 열어 주세요.");return}
+var b64u={enc:function(b){var s="";for(var i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")},dec:function(t){var s=atob(t.replace(/-/g,"+").replace(/_/g,"/"));var b=new Uint8Array(s.length);for(var i=0;i<s.length;i++)b[i]=s.charCodeAt(i);return b}};
+function pump(st,bytes){var w=st.writable.getWriter();w.write(bytes).catch(function(){});w.close().catch(function(){});return new Response(st.readable).arrayBuffer().then(function(a){return new Uint8Array(a)})}
+function encode(o){var bytes=new TextEncoder().encode(JSON.stringify(o));if(typeof CompressionStream==="function")return pump(new CompressionStream("deflate-raw"),bytes).then(function(b){return"z1."+b64u.enc(b)}).catch(function(){return"b1."+b64u.enc(bytes)});return Promise.resolve("b1."+b64u.enc(bytes))}
+function decode(code){code=code.replace(/\s+/g,"");var tag=code.slice(0,3),body=code.slice(3);if(tag==="z1."){if(typeof DecompressionStream!=="function")return Promise.reject(new Error("브라우저가 오래되어 열 수 없습니다. 크롬 · 사파리 최신 버전으로 열어 주세요."));return pump(new DecompressionStream("deflate-raw"),b64u.dec(body)).then(function(b){return JSON.parse(new TextDecoder().decode(b))})}
+  if(tag==="b1.")return Promise.resolve(JSON.parse(new TextDecoder().decode(b64u.dec(body))));return Promise.reject(new Error("서류 링크가 올바르지 않습니다."))}
+function rid(){var a=new Uint8Array(9);crypto.getRandomValues(a);return Array.prototype.map.call(a,function(x){return("0"+x.toString(36)).slice(-2)}).join("").slice(0,14)}
+var hs=location.hash.replace(/^#/,"").split("&"),code="",KI=false;hs.forEach(function(x){if(x.indexOf("f=")===0)code=x.slice(2);if(x==="kiosk=1")KI=true});
+var RQ=null,F=null,FILES=[],SIG={st:[],pa:[]},DK="";
+if(!code){fail("선생님께 받은 링크를 눌러 다시 열어 주세요.");return}
+decode(decodeURIComponent(code)).then(function(p){if(!p||p.k!=="tlf"||!TLF.FORMS[p.t])throw new Error("서류 링크가 올바르지 않습니다.");RQ=p;F=TLF.FORMS[p.t];start()}).catch(function(e){fail(e.message||"서류 링크를 읽지 못했습니다.")});
+function start(){document.title=F.ti+" · 교사의 생활";$("ti").textContent=F.ic+" "+F.ti;$("kb").hidden=!KI;
+  var meta=[RQ.cls,RQ.who?RQ.who+" 선생님":"",RQ.due?"제출 기한 "+TLF.kday(RQ.due):""].filter(Boolean);$("meta").textContent=meta.join(" · ");if(RQ.msg){$("msg").hidden=false;$("msg").textContent=RQ.msg}$("head").hidden=false;
+  DK="tl-form-draft:"+RQ.id+":"+((RQ.s&&RQ.s.sid)||"");build()}
+var evReq=function(){return RQ.req!=null?!!RQ.req:F.evReq};
+function field(f){var id="f_"+f.k,r=f.req?'<span class="req"> *</span>':"";
+  if(f.type==="select")return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><select class="i" id="'+id+'" data-k="'+f.k+'"><option value="">고르세요</option>'+f.o.map(function(o){return'<option>'+esc(o)+'</option>'}).join("")+'</select></label>';
+  if(f.type==="area")return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><textarea class="i" id="'+id+'" data-k="'+f.k+'" maxlength="3000" placeholder="'+esc(f.ph||"")+'"></textarea></label>';
+  return'<label class="f" for="'+id+'"><span>'+esc(f.l)+r+'</span><input class="i" id="'+id+'" data-k="'+f.k+'" type="'+(f.type==="date"?"date":f.type==="tel"?"tel":"text")+'"'+(f.type==="tel"?' inputmode="tel"':"")+' maxlength="200" placeholder="'+esc(f.ph||"")+'"></label>'}
+function build(){var s=RQ.s||{},fr=F.f.filter(function(f){return f.k==="from"||f.k==="to"}),rest=F.f.filter(function(f){return f.k!=="from"&&f.k!=="to"});
+  var h='<div class="card"><h2>학생</h2><div class="two"><label class="f"><span>학년 · 반</span><input class="i" value="'+esc(RQ.cls||"")+'" disabled></label><label class="f" for="f_no"><span>번호 (학번)<span class="req"> *</span></span><input class="i" id="f_no" data-k="no" inputmode="numeric" maxlength="12" value="'+esc(s.sid||"")+'"'+(s.sid?" readonly":"")+'></label></div>'+
+    '<label class="f" for="f_nm"><span>이름<span class="req"> *</span></span><input class="i" id="f_nm" data-k="nm" maxlength="20" value="'+esc(s.nm||"")+'"'+(s.nm?" readonly":"")+'></label></div>';
+  h+='<div class="card"><h2>'+esc(F.ti)+' 내용</h2>'+(fr.length?'<div class="two">'+fr.map(field).join("")+'</div><div class="days" id="days"></div>':"")+rest.map(field).join("")+'</div>';
+  h+='<div class="card"><h2>증빙 서류'+(evReq()?'<span style="color:var(--bad)"> *</span>':' (선택)')+'</h2><div class="sub">'+esc(F.ev)+'. 사진으로 찍거나 파일(사진 · PDF · 한글 · 워드)을 고르세요. 사진은 알맞게 줄여 넣습니다.</div>'+
+    '<div class="files" id="files"></div><div class="row"><button class="btn sm" type="button" id="cam">📷 사진 찍기</button><button class="btn sm" type="button" id="pick">📂 파일 고르기</button></div><input type="file" id="fcam" accept="image/*" capture="environment" hidden><input type="file" id="fpick" accept="image/*,application/pdf,.pdf,.hwp,.hwpx,.doc,.docx,.xls,.xlsx" multiple hidden></div>';
+  h+='<div class="card"><h2>보호자</h2><div class="two"><label class="f" for="f_pname"><span>보호자 이름<span class="req"> *</span></span><input class="i" id="f_pname" data-k="pname" maxlength="20"></label><label class="f" for="f_prel"><span>관계<span class="req"> *</span></span><select class="i" id="f_prel" data-k="prel"><option value="">고르세요</option>'+TLF.REL.map(function(o){return"<option>"+esc(o)+"</option>"}).join("")+'</select></label></div><label class="f" for="f_ptel"><span>보호자 연락처<span class="req"> *</span></span><input class="i" id="f_ptel" data-k="ptel" type="tel" inputmode="tel" maxlength="20" placeholder="010-0000-0000"></label></div>';
+  h+='<div class="card"><h2>확인 · 서명</h2><label class="chk"><input type="checkbox" id="agree"><span>위 내용이 사실임을 학생과 보호자가 확인합니다.</span></label>'+
+    '<div><b>학생 서명</b><div class="pad" id="pad_st"><canvas></canvas><div class="hint">여기에 학생이 손가락으로 서명</div></div><div class="row" style="margin-top:6px"><button class="btn sm" type="button" data-clr="st">다시 쓰기</button></div></div>'+
+    '<div><b>보호자 서명</b><div class="pad" id="pad_pa"><canvas></canvas><div class="hint">여기에 보호자가 손가락으로 서명</div></div><div class="row" style="margin-top:6px"><button class="btn sm" type="button" data-clr="pa">다시 쓰기</button></div></div></div>';
+  h+='<p class="err" id="err" hidden></p><div class="row"><button class="btn pri" type="submit" id="go">제출 서류 만들기</button></div>';
+  $("frm").innerHTML=h;$("frm").hidden=false;
+  try{var dr=JSON.parse(localStorage.getItem(DK)||"null");if(dr)Object.keys(dr).forEach(function(k){var e=$("frm").querySelector('[data-k="'+k+'"]');if(e&&!e.readOnly)e.value=dr[k]})}catch(e){}
+  $("frm").addEventListener("change",function(e){if(e.target&&e.target.classList)e.target.classList.remove("bad")});$("frm").addEventListener("input",function(e){if(e.target&&e.target.classList)e.target.classList.remove("bad");upd();try{localStorage.setItem(DK,JSON.stringify(vals()))}catch(e){}});upd();
+  ["st","pa"].forEach(pad);document.querySelectorAll("[data-clr]").forEach(function(b){b.onclick=function(){SIG[b.dataset.clr]=[];drawSig(b.dataset.clr)}});
+  $("cam").onclick=function(){$("fcam").click()};$("pick").onclick=function(){$("fpick").click()};
+  [$("fcam"),$("fpick")].forEach(function(inp){inp.onchange=function(){addFiles([].slice.call(inp.files||[]));inp.value=""}});
+  $("frm").onsubmit=function(e){e.preventDefault();submit()}}
+function vals(){var o={};$("frm").querySelectorAll("[data-k]").forEach(function(e){o[e.dataset.k]=e.value.trim()});return o}
+function upd(){var v=vals(),d=$("days");if(d){var n=TLF.days(v.from,v.to);d.textContent=n?n+"일간 (평일 "+TLF.wdays(v.from,v.to)+"일)":v.from&&v.to?"끝나는 날이 시작일보다 앞입니다":""}}
+var pads={};
+function pad(k){var cv=$("pad_"+k).querySelector("canvas"),ctx=cv.getContext("2d"),W=600,H=240,cur=null;pads[k]={cv:cv,ctx:ctx};
+  function size(){var r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;cv.width=Math.max(1,Math.round(r.width*dpr));cv.height=Math.max(1,Math.round(r.height*dpr));drawSig(k)}
+  function pos(e){var r=cv.getBoundingClientRect();return[Math.max(0,Math.min(W,Math.round((e.clientX-r.left)/r.width*W))),Math.max(0,Math.min(H,Math.round((e.clientY-r.top)/r.height*H)))]}
+  cv.addEventListener("pointerdown",function(e){e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}cur=[pos(e)];SIG[k].push(cur);drawSig(k)});
+  cv.addEventListener("pointermove",function(e){if(!cur)return;e.preventDefault();var p=pos(e),l=cur[cur.length-1];if(Math.abs(p[0]-l[0])+Math.abs(p[1]-l[1])<2)return;cur.push(p);drawSig(k)});
+  var end=function(){cur=null};cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);window.addEventListener("resize",size);size()}
+function drawSig(k){var P=pads[k];if(!P)return;var cv=P.cv,ctx=P.ctx,s=cv.width/600;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.strokeStyle="#111";ctx.lineWidth=3*s;ctx.lineCap="round";ctx.lineJoin="round";
+  SIG[k].forEach(function(a){ctx.beginPath();a.forEach(function(p,i){i?ctx.lineTo(p[0]*s,p[1]*s):ctx.moveTo(p[0]*s,p[1]*s)});if(a.length===1)ctx.lineTo(a[0][0]*s+.1,a[0][1]*s);ctx.stroke()});$("pad_"+k).querySelector(".hint").hidden=SIG[k].length>0}
+function ink(k){var n=0;SIG[k].forEach(function(a){n+=a.length});return n}
+function toB64(blob){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(String(r.result).split(",")[1])};r.onerror=rej;r.readAsDataURL(blob)})}
+function shrink(file){return createImageBitmap(file).then(function(bmp){var sc=Math.min(1,1600/Math.max(bmp.width,bmp.height)),w=Math.round(bmp.width*sc),h=Math.round(bmp.height*sc),cv=document.createElement("canvas");cv.width=w;cv.height=h;var c=cv.getContext("2d");c.fillStyle="#fff";c.fillRect(0,0,w,h);c.drawImage(bmp,0,0,w,h);
+  return new Promise(function(res){cv.toBlob(function(b){res(b)},"image/jpeg",.82)})}).catch(function(){return file})}
+var TOTAL=15*1048576;
+function addFiles(L){var p=Promise.resolve();L.forEach(function(f){p=p.then(function(){if(FILES.length>=10){alert("첨부는 10개까지입니다.");return}
+  return(/^image\//.test(f.type)&&!/gif|svg/.test(f.type)?shrink(f):Promise.resolve(f)).then(function(b){var used=FILES.reduce(function(a,x){return a+x.blob.size},0);if(used+b.size>TOTAL){alert("첨부 파일이 너무 큽니다(모두 합쳐 15MB까지). 사진을 줄이거나 나누어 보내 주세요.");return}
+    var nm=String(f.name||"사진.jpg");if(b!==f)nm=nm.replace(/\.[^.]+$/,"")+".jpg";FILES.push({id:rid(),name:nm.slice(0,80),type:b.type||f.type||"application/octet-stream",blob:b,size:b.size})})})});p.then(paintFiles)}
+function paintFiles(){var box=$("files");box.innerHTML=FILES.map(function(x,i){var img=/^image\//.test(x.type);return'<div class="fi">'+(img?'<img data-i="'+i+'" alt="">':'<span class="ic">'+(/pdf/.test(x.type)?"📕":"📄")+'</span>')+'<span>'+esc(x.name)+' · '+Math.max(1,Math.round(x.size/1024))+'KB</span><button type="button" data-x="'+i+'" aria-label="빼기">✕</button></div>'}).join("");
+  box.querySelectorAll("img[data-i]").forEach(function(im){im.src=URL.createObjectURL(FILES[+im.dataset.i].blob)});box.querySelectorAll("[data-x]").forEach(function(b){b.onclick=function(){FILES.splice(+b.dataset.x,1);paintFiles()}})}
+function check(v){var bad=[],F2=F.f.concat([{k:"no",req:1},{k:"nm",req:1},{k:"pname",req:1},{k:"prel",req:1},{k:"ptel",req:1}]);
+  document.querySelectorAll(".bad").forEach(function(e){e.classList.remove("bad")});
+  F2.forEach(function(f){if(f.req&&!v[f.k]){var e=$("frm").querySelector('[data-k="'+f.k+'"]');if(e)e.classList.add("bad");bad.push(f.l||({no:"번호",nm:"이름",pname:"보호자 이름",prel:"관계",ptel:"보호자 연락처"})[f.k])}});
+  if(v.from&&v.to&&TLF.days(v.from,v.to)<1)bad.push("기간(끝나는 날)");if(evReq()&&!FILES.length)bad.push("증빙 서류");
+  if(!$("agree").checked)bad.push("확인 체크");if(ink("st")<8)bad.push("학생 서명");if(ink("pa")<8)bad.push("보호자 서명");return bad}
+function submit(){var v=vals(),bad=check(v);if(bad.length){$("err").hidden=false;$("err").textContent="빠진 것: "+bad.join(", ");var f=document.querySelector(".bad");if(f)f.scrollIntoView({behavior:"smooth",block:"center"});return}
+  $("err").hidden=true;$("go").disabled=true;$("go").textContent="서류를 만드는 중…";
+  var d={};Object.keys(v).forEach(function(k){if(k!=="no"&&k!=="nm"&&v[k])d[k]=v[k]});
+  var sub={k:"tlfs",v:1,fid:RQ.id,t:RQ.t,rid:rid(),at:new Date().toISOString(),sid:(RQ.s&&RQ.s.sid)||"",no:v.no,nm:v.nm,d:d,sg:{st:{w:600,h:240,p:SIG.st},pa:{w:600,h:240,p:SIG.pa}}};
+  Promise.all(FILES.map(function(x){return toB64(x.blob).then(function(b){return{id:x.id,name:x.name,type:x.type,size:x.size,b64:b}})})).then(function(fl){sub.files=fl;
+    if(KI)return kiosk(sub);
+    var imgs={};fl.forEach(function(x){if(/^image\//.test(x.type))imgs[x.id]="data:"+x.type+";base64,"+x.b64});
+    var other=fl.filter(function(x){return!/^image\//.test(x.type)});
+    var json=JSON.stringify(sub).replace(/</g,"\\u003c");
+    var html='<!doctype html>\n<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(F.ti+" "+v.no+" "+v.nm)+'</title><style>body{margin:0;background:#eef1f4}'+TLF.css+'.tfother{max-width:760px;margin:0 auto 30px;background:#fff;padding:14px 24px}.tfother a{display:block;margin:6px 0}</style></head><body>'+
+      TLF.docHTML(RQ,{nm:v.nm,no:v.no,at:sub.at,d:d,sg:sub.sg,files:fl},{imgs:imgs})+(other.length?'<div class="tfother"><b>첨부 파일 내려받기</b>'+other.map(function(x){return'<a download="'+esc(x.name)+'" href="data:'+esc(x.type)+';base64,'+x.b64+'">📎 '+esc(x.name)+'</a>'}).join("")+'</div>':"")+
+      '<script type="application/json" id="tlform-data">'+json+'<\/script></body></html>';
+    var name=(F.ti+"_"+v.no+"_"+v.nm).replace(/[\\/:*?"<>|\s]+/g,"_")+".html",file=new File([html],name,{type:"text/html"});
+    var small=null;if(!fl.length){var s2=JSON.parse(JSON.stringify(sub));s2.files=[];encode(s2).then(function(c){small=(RQ.ap||"").split("#")[0]+"#fa="+c;show(file,small)})}else show(file,null);
+    try{localStorage.removeItem(DK)}catch(e){}})}
+function show(file,link){$("frm").hidden=true;$("done").hidden=false;window.scrollTo(0,0);var canShare=!!(navigator.canShare&&navigator.canShare({files:[file]}));
+  $("done").innerHTML='<div class="big">📨</div><h2>서류를 만들었습니다</h2><p><b>아래 단추로 선생님께 보내야 제출됩니다.</b></p>'+
+    (canShare?'<div class="row"><button class="btn pri" type="button" id="sh">카톡 · 문자 · 메일로 서류 보내기</button></div>':"")+
+    '<div class="row"><button class="btn'+(canShare?"":" pri")+'" type="button" id="dl">서류 파일 저장 ('+Math.max(1,Math.round(file.size/1024))+'KB)</button></div>'+(link?'<div class="row"><button class="btn" type="button" id="lk">링크로 보내기 (첨부 없을 때)</button></div>':"")+
+    '<ol class="steps"><li>‘보내기’를 누르고 카카오톡의 선생님 대화방(또는 '+(RQ.to?esc(RQ.to)+" 메일":"선생님 메일")+')을 고릅니다.</li><li>보내기 단추가 없으면 ‘서류 파일 저장’ 후, 저장된 파일을 카톡 · 메일에 첨부해 보냅니다.</li><li>선생님은 받은 파일을 앱에 넣어 모읍니다. 파일을 열면 서류를 볼 수 있습니다.</li></ol>';
+  if(canShare)$("sh").onclick=function(){navigator.share({files:[file],title:file.name,text:F.ti+" 제출"}).catch(function(){})};
+  $("dl").onclick=function(){var a=document.createElement("a");a.href=URL.createObjectURL(file);a.download=file.name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},3000)};
+  if(link)$("lk").onclick=function(){var t=F.ti+" 제출: "+link;if(navigator.share)navigator.share({title:F.ti,text:t}).catch(function(){});else(navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(function(){$("lk").textContent="링크를 복사했습니다"},function(){prompt("아래 링크를 복사하세요",link)})}}
+/* 교실 기기(선생님 앱과 같은 기기): 앱 저장소에 바로 넣기 */
+function kiosk(sub){var q=indexedDB.open("teachers-life-media",1);q.onupgradeneeded=function(){try{q.result.createObjectStore("m")}catch(e){}};
+  q.onsuccess=function(){var db=q.result,tx=db.transaction("m","readwrite"),st=tx.objectStore("m"),meta=JSON.parse(JSON.stringify(sub));meta.files=sub.files.map(function(x){var key="w"+x.id+"k";var bin=atob(x.b64),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);st.put(new Blob([u],{type:x.type}),key);return{id:x.id,mid:key,name:x.name,type:x.type,size:x.size}});
+    tx.oncomplete=function(){var L=[];try{L=JSON.parse(localStorage.getItem("tl-form-inbox")||"[]")}catch(e){}L.push(meta);try{localStorage.setItem("tl-form-inbox",JSON.stringify(L))}catch(e){alert("저장 공간이 부족합니다");return}try{localStorage.removeItem(DK)}catch(e){}
+      $("frm").hidden=true;$("done").hidden=false;$("done").innerHTML='<div class="big">✅</div><h2>제출했습니다</h2><p>서류가 선생님 앱에 들어갔습니다. 다음 학생에게 기기를 건네주세요.</p><div class="row"><button class="btn pri" type="button" id="again">다음 학생 작성하기</button></div>';
+      $("again").onclick=function(){location.reload()}};tx.onerror=function(){alert("저장하지 못했습니다")}};q.onerror=function(){alert("이 기기에 저장하지 못했습니다")}}
+})();
+</script>
+</body>
+</html>
