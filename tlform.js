@@ -30,7 +30,7 @@ function fval(f,v){if(v==null||v==="")return"";if(f.type==="date")return kday(v)
 /* 서류 한 장 (인쇄 · 파일 · 앱 보기 공통) */
 function docHTML(rq,s,o){o=o||{};var F=FORMS[rq.t]||FORMS.absence,d=s.d||{},sch=rq.sch||"",at=s.at||new Date().toISOString();
   var h='<article class="tfdoc"><h1>'+esc(F.ti)+'</h1>'+(sch?'<div class="tfsch">'+esc(sch)+'</div>':"")+'<table class="tft"><tbody>';
-  h+='<tr><th>학년 · 반</th><td>'+esc(rq.cls||d.cls||"")+'</td><th>번호 (학번)</th><td>'+esc(s.no||d.no||"")+'</td></tr><tr><th>이름</th><td colspan="3">'+esc(s.nm||d.nm||"")+'</td></tr>';
+  h+='<tr><th>학년 · 반</th><td>'+esc(d.cls||rq.cls||"")+'</td><th>번호 (학번)</th><td>'+esc(s.no||d.no||"")+'</td></tr><tr><th>이름</th><td colspan="3">'+esc(s.nm||d.nm||"")+'</td></tr>';
   var per=d.from&&d.to?kday(d.from)+" ~ "+kday(d.to)+" ("+days(d.from,d.to)+"일간 · 평일 "+wdays(d.from,d.to)+"일)":"";
   F.f.forEach(function(f){if(f.k==="from"||f.k==="to")return;h+='<tr><th>'+esc(f.l)+'</th><td colspan="3" class="'+(f.type==="area"?"tfa":"")+'">'+esc(fval(f,d[f.k])).replace(/\n/g,"<br>")+'</td></tr>'});
   if(per){var k=h.indexOf('</tr>',h.indexOf('<th>이름</th>'))+5;h=h.slice(0,k)+'<tr><th>기간</th><td colspan="3">'+esc(per)+'</td></tr>'+h.slice(k)}

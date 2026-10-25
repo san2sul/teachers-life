@@ -1124,6 +1124,7 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 .svopt{display:flex;flex-direction:column;gap:6px;padding:6px 0;border-bottom:1px dashed var(--line)}.svopt>b{font-size:.9rem}.dtp{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}.dtpi{display:flex;align-items:center;gap:3px}.dtp select.fld{width:auto;min-width:0;padding:6px 6px}.dtpw{color:var(--muted);font-size:.85rem}.svnl{display:flex;align-items:center;gap:6px;flex-direction:row;font-weight:600}.svnl .svn{width:90px;flex:0 0 auto}.svsum{background:var(--paper);border-radius:8px;padding:6px 8px;margin:4px 0 0}
 .wb.bm{position:relative}.wbm2{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:12px;padding:6px 8px;margin:4px 28px 4px 0;background:var(--paper)}.wbmo{flex:1;display:flex;gap:10px;align-items:center;background:none;border:0;text-align:left;font:inherit;color:inherit;cursor:pointer;min-width:0;padding:4px}.wbmi{font-size:1.3rem}.wbmt{display:flex;flex-direction:column;min-width:0}.wbmt b{color:#1f6fb2;overflow-wrap:anywhere}.wbmt small{color:var(--muted);overflow-wrap:anywhere}.wbmt i{font-style:normal;font-size:.85rem}
 .wb.pi{background:var(--pic,#fff3a8);color:#1d2621;border-radius:4px;box-shadow:0 3px 8px rgba(0,0,0,.15);padding:10px 12px;margin:8px 0;max-width:360px;min-height:72px;transform:rotate(-.4deg)}.wb.pi:nth-child(even){transform:rotate(.5deg)}.wpic{width:18px;height:18px;border-radius:50%;border:2px solid rgba(0,0,0,.25);padding:0;cursor:pointer}
+.rcsel{gap:6px}.rcc{display:inline-flex;align-items:center;gap:4px}.rcc small{color:var(--muted)}.rcc button{border:0;background:none;font-size:1rem;cursor:pointer;color:var(--muted);padding:0 2px}.rcct{margin-left:auto;font-size:.8rem;color:var(--muted);white-space:nowrap}.rcl{max-height:48vh;overflow:auto}.rcov .wovb{max-width:560px}.fmman{display:grid;grid-template-columns:1fr 1fr;gap:6px}.fmman .btn{grid-column:1/-1}.lbx{display:flex;flex-direction:column;gap:6px}
 .svtab{margin:2px 0 4px}.svbox{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}.svbox textarea{font-size:.85rem}
 .svn{width:84px;display:inline-block;min-height:36px;padding:4px 8px;margin:0 4px}
 .svsec{border:2px solid var(--accent);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:10px}.svsh{display:flex;gap:4px;align-items:center}.svsh .sp{flex:1}
@@ -1604,8 +1605,9 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.50.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.51.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.51.0",date:"2026-10-25",items:["전달하기 받는 사람 찾기: 👩‍🏫 교직원(이름 · 부서 · 역할 · 교과로 찾기, 부서 · 교과 단추) · 🧑‍🎓 학생(학년 · 반 단추, 학년 · 반 · 이름 · 학번으로 찾기)에서 여러 명 고르기 + 번호 · 메일 직접 입력, 고른 사람 칩 · 빼기. 직접 보내기 칸(연락 · 웹 링크 · 설문 · 서류 · 평가 연락)에도 명단에서 찾아 넣기", "서류 받기: 받을 학생을 등록된 학생에서 찾아 넣기(다른 학급 포함) · 직접 입력(이름 · 학번 · 학년 반 · 휴대폰). 학생 화면의 학년 · 반 · 번호 · 이름은 등록 정보로 채우고 고칠 수 있음", "링크는 단추로: 웹 페이지 · 설문 · 서류 공용 · 명단 공유 링크 글자를 화면에 보이지 않고 공유 · 링크 복사 · 열어 보기 · QR 단추로. 공유하면 카톡 등에서 누르는 링크 카드로 보이고, 문자 · 이메일에는 ‘▶ 작성하기 · 응답하기 · 보기’ 안내와 함께 넣음", "교직원 이메일(학교 묶음 등으로 받은 것)을 지우지 않고 보관해 이메일 전달에 씀"]},
   {v:"5.50.0",date:"2026-10-25",items:["📑 서류 받기(글쓰기 새 유형): 결석신고서 · 교외체험학습 신청서 · 결과보고서를 학생마다(이름이 채워진 링크 · 문자) 또는 공용 링크 · QR · 교실 기기로 보냄. 학생 · 보호자는 앱 없이 웹에서 작성하고 학생 · 보호자 서명, 증빙(진료확인서 · 처방전 · 체험 사진 · 문서) 사진 · 파일 첨부 → 서류 파일 하나로 선생님께 보냄", "받은 서류: 파일(.html) 여러 개 한꺼번에 넣기 · 링크로 받은 서류 넣기 · 교실 기기 자동 넣기, 같은 서류 한 번만, 미제출 학생 · 다시 문자, 서류 보기(양식 · 서명 · 증빙 사진) · 첨부 열기 · 저장 · 인쇄 · PDF · ✓ 확인함 · 삭제. 증빙 파일은 이 기기에만 저장", "교직원 입력 양식: 이름 · 연락처 · 부서 · 업무 · 교과(일괄 입력 · 엑셀 양식 · 머리글 인식, 예전 4칸 양식도 읽음). 연락 · 전달하기에서 교과로도 찾기", "회의 참석자 고르기: 이름 · 부서 · 교과 · 업무로 찾기, 부서 · 교과 단추로 거르기, 보이는 사람 모두 고르기, 명단 밖 이름 직접 넣기", "✍ 직접 보내기: 연락 → ✍ 직접 입력 탭에서 명단에 없는 전화번호 · 이메일(쉼표로 여러 명)로 문자 · 전화 · 이메일, 최근 받는 사람 단추. 전달하기 · 웹 페이지 링크 · 설문 링크 · 서류 안내 · 평가 · 과제 연락하기에도 같은 칸", "설문 기간 · 마감: 일시를 연도 → 월 → 일 → 시 → 분 순서로 고르기(요일 표시), 시작 일시 예약 · 마감 일시 예약, 응답 받는 방식(마감 때까지 모두 받기 · 선착순 N명 마감) 고르기, 정한 내용 요약 줄. 설문 페이지 · 앱의 날짜를 ‘2026년 10월 25일 14:00’ 꼴로", "포스트잇 · 링크는 따로 된 칸 대신 글 안에서: 🗒 포스트잇 블록(색 바꾸기 · 발표 · 웹 · 인쇄에서 나란히), 🔗 링크 카드 블록(누르면 열기 · 고치기). 화이트보드의 포스트잇 도구는 그대로. 예전 🔖 링크 모음은 ‘링크 모음’ 글(★)로 저절로 옮김, 예전 포스트잇 벽 글은 그대로 열림", "새 파일: form.html(학생 서류 작성 페이지) · tlform.js(서류 양식)"]},
   {v:"5.49.0",date:"2026-10-25",items:["엔터 개선: 한글 조합 중 엔터 · 휴대폰 자판이 문단을 직접 넣는 경우도 새 문단으로 나눔, Shift+엔터는 같은 문단에서 줄만 바꿈, 꾸미기 줄에 ↵ 새 문단 단추","문단 · 간격(¶): 줄 간격 · 문단 앞뒤 간격 · 정렬(왼쪽 · 가운데 · 오른쪽 · 양쪽) · 들여쓰기 · 첫 줄 들여쓰기 · 글자 크기 · 자간 · 글꼴, 글 전체 기본값 · 문단 사이 간격 · 여백. 엔터로 만든 문단에 같은 모양이 이어짐","글자 꾸미기 추가: 고른 글자의 크기 · 자간 · 글꼴(명조 · 고정폭), 🔗 링크(웹 · 이메일 · 전화, 누르면 열기 · 고치기 · 빼기)","되돌리기 ↶ · 다시 ↷(글 전체), 🔍 찾아 바꾸기(본문 · 표 · 캡션 · 글상자), 글자 수 · 낱말 · 문단 수, 💡 강조 상자, ‘/’ → 오늘 날짜","🖨 발표 · 인쇄 · 내보내기: ▶ 발표(전체 화면, 큰 제목 · 구분선마다 한 쪽), 인쇄 · PDF, 🌐 웹 페이지 링크 · QR(앱 없이 웹으로 보기), 웹 페이지 파일(.html, 게시용), Word 파일(.doc, 그림 포함)","글쓰기 유형 4가지 추가: 📚 수업자료(틀 제공 · 수업 화면으로 띄우기), 📋 설문, 🖍 화이트보드(큰 도화지 · 포스트잇), 🗒 포스트잇(칸별 포스트잇 벽 · 크게 보기). 도화지에 포스트잇 도구","설문: 제목 · 설명 · 개인정보 수집 · 이용 및 제3자 제공 동의(기본 문구 · 체크해야 시작), 응답자 이름(익명 · 선택 · 필수), 섹션, 객관식 · 체크박스(최소 · 최대, 기타) · 드롭다운 · 주관식(짧게 · 길게) · 척도 · 객관식 그리드 · 체크박스 그리드 · 2차원 행렬 · 날짜, 답에 따라 섹션 이동, 시작(예약) · 종료, 종료 방식(마감 시한 · 참여 인원 제한)","설문 게시 · 응답: 설문 링크 · QR · 공유, 응답자는 제출 후 문자 · 카톡 · 이메일로 응답을 보냄 → 받은 링크를 누르거나 한꺼번에 붙여 넣으면 집계, 이 기기에서 돌아가며 응답 받기(자동으로 들어옴), 같은 응답 두 번 안 들어감, 마감 · 다시 열기","설문 집계: 문항별 막대 · 비율, 척도 평균, 그리드 · 행렬 표, 주관식 모아 보기, 응답 하나씩 보기 · 집계에서 빼기 · 삭제, 엑셀(CSV), 결과 인쇄 · 웹 페이지 파일","🔖 링크 모음: 참고 사이트를 분류 · 메모 · ★ 즐겨찾기로 보관, 분류별 보기 · 찾기, 누르면 열기 · 공유, 밀어서 수정 · 즐겨찾기 · 삭제. 글에도 ★ 즐겨찾기(맨 위에 · 따로 보기)","새 파일: wrview.js · view.html(웹 공유 페이지) · survey.html(설문 페이지)"]},
   {v:"5.48.0",date:"2026-10-23",items:["글쓰기 글자 꾸미기: 굵게 · 기울임 · 밑줄 · 가운데 줄 · 아래첨자 · 위첨자 · 글자색 · 음영(배경색) · 그림자 · 서식 지우기 (Ctrl+B/I/U)","수식: 문장 속 수식과 수식 블록. 분수 · 첨자 · 루트 · ∑ · ∫ · lim · 그리스 문자 · 행렬 · 연립방정식 틀 단추와 바로 보는 미리 보기(LaTeX). 수식 글꼴은 앱에 들어 있어 인터넷 없이도 보임","표: 줄 · 칸 넣기/빼기, 머리글 줄 · 칸, 칸 음영, 선 색, Tab · Enter로 칸 이동, 엑셀 · 웹 표 붙여넣기","그림 + 캡션: 사진 넣기 · 크기(작게 · 중간 · 크게) · 바꾸기 · 삭제. 사진 · 표 · 여러 줄 글 붙여넣기(📋 붙여넣기 단추도)","도화지 블록: 펜(손글씨) · 지우개 · 직선 · 화살표 · 사각형 · 원 · 글상자. 선 색 · 면 색 · 굵기 · 글자 크기, 옮기기 · 크기 조절 · 복제 · 삭제 · 되돌리기, 도화지 늘리기 · 줄이기. 글 어디에나 넣을 수 있고 글상자는 도화지 안 어디든 놓임","손글씨 → 글자: 크롬 손글씨 인식이 있는 기기는 그것으로, 없으면 앱에 들어 있는 글자 읽기(기기 안)로 바꾼 뒤 확인 · 수정해서 글 블록이나 글상자로 넣음","글쓰기 창의 수식 · 손글씨 창은 Esc · 뒤로 가기로 그 창만 닫힘. 검색 · 문자 · 이메일 보내기에 표 · 캡션 · 수식 · 글상자 내용도 들어감"]},
@@ -1755,7 +1757,7 @@ function normalize(d){
 /* 여러 학급: {active, list:[{id, data}]} */
 function loadStore(){
   try{const st=JSON.parse(localStorage.getItem(KEY2)||"null");
-    if(st&&Array.isArray(st.list)&&st.list.length){st.list=st.list.filter(c=>c&&c.data).map(c=>({id:String(c.id||uid()),data:normalize(c.data)}));if(st.list.length){if(!st.list.some(c=>c.id===st.active))st.active=st.list[0].id;st.staff=Array.isArray(st.staff)?st.staff.filter(x=>x&&x.name).map(x=>({id:String(x.id||uid()),name:String(x.name),dept:String(x.dept||""),role:String(x.role||""),phone:String(x.phone||""),...(x.subj?{subj:String(x.subj).slice(0,30)}:{}),...(+x.year?{year:+x.year,term:x.term}:{})})):[];return st}}}catch(e){}
+    if(st&&Array.isArray(st.list)&&st.list.length){st.list=st.list.filter(c=>c&&c.data).map(c=>({id:String(c.id||uid()),data:normalize(c.data)}));if(st.list.length){if(!st.list.some(c=>c.id===st.active))st.active=st.list[0].id;st.staff=Array.isArray(st.staff)?st.staff.filter(x=>x&&x.name).map(x=>({id:String(x.id||uid()),name:String(x.name),dept:String(x.dept||""),role:String(x.role||""),phone:String(x.phone||""),...(x.subj?{subj:String(x.subj).slice(0,30)}:{}),...(x.email?{email:String(x.email).slice(0,80)}:{}),...(+x.year?{year:+x.year,term:x.term}:{})})):[];return st}}}catch(e){}
   const first={id:uid(),data:load()};
   return {active:first.id,list:[first],staff:[]};
 }
@@ -2815,7 +2817,7 @@ function pickShareStaff(){
 $("mkLink").onclick=async()=>{
   let p;try{p=sharePayload()}catch(e){return toast(e.message)}
   const url=appUrl()+"#d="+await encode(p);SH.url=url;
-  $("linkOut").textContent=url;$("linkOut").hidden=false;$("linkBtns").hidden=false;$("linkQr").hidden=true;
+  $("linkOut").textContent=url;$("linkOut").hidden=true;$("linkBtns").hidden=false;toast("✅ 링크가 준비되었습니다. 아래 단추로 보내세요");$("linkQr").hidden=true;
   $("shareLink").hidden=!navigator.share;
   const title=shTitle(p);
   $("shareLink").onclick=async()=>{try{await navigator.share({title:title+" · "+APP_NAME,text:`${title} 명단입니다. 링크를 열면 ${APP_NAME} 앱에 바로 들어갑니다.`,url})}catch(e){}};
@@ -5729,16 +5731,16 @@ async function wrWebLink(r){clearTimeout(WR_SAVE);save();const hasImg=(r.blocks|
   const paint=async()=>{box.innerHTML=`<h2>웹 페이지 링크</h2><p class="note">링크를 받은 사람은 앱 없이 웹 브라우저로 이 글을 봅니다. 글은 링크 안에 들어 있어 서버에 올라가지 않습니다(링크를 아는 사람은 누구나 볼 수 있음).</p>
     ${r.k==="stu"?`<p class="warn">학생 기록입니다. 학생 이름 · 학번은 빼고 만들지만, 내용에 개인정보가 없는지 꼭 확인하세요.</p>`:""}
     ${hasImg?`<label class="chk"><input type="checkbox" id="wwI"${withImg?" checked":""}><span>그림 넣기 <small>(작게 줄여 넣음 · 링크가 길어짐)</small></span></label>`:""}
-    <p class="note" id="wwS">링크를 만드는 중…</p><textarea class="fld" id="wwU" rows="3" readonly></textarea>
-    <div class="row2"><button class="btn" type="button" id="wwC">복사</button><button class="btn" type="button" id="wwSh">공유 · 문자 · 카톡</button><button class="btn" type="button" id="wwO">미리 보기</button></div>
-    <div class="row2"><button class="btn" type="button" id="wwQ">QR 코드</button><button class="btn pri" type="button" id="wwNo">닫기</button></div><div class="qrbox" id="wwQB" hidden></div>${dsendHTML("wwDs","이 링크를 직접 보내기")}`;
+    <p class="note" id="wwS">링크를 만드는 중…</p><input type="hidden" id="wwU">
+    <div class="row2"><button class="btn pri" type="button" id="wwSh">📤 공유 (카톡 · 문자)</button><button class="btn" type="button" id="wwC">📋 링크 복사</button></div>
+    <div class="row2"><button class="btn" type="button" id="wwO">🔗 열어 보기</button><button class="btn" type="button" id="wwQ">QR 코드</button><button class="btn" type="button" id="wwNo">닫기</button></div><div class="qrbox" id="wwQB" hidden></div>${dsendHTML("wwDs","이 링크를 직접 보내기")}`;
     box.querySelector("#wwNo").onclick=()=>ov._close();if(box.querySelector("#wwI"))box.querySelector("#wwI").onchange=e=>{withImg=e.target.checked;paint()};
     const R=await wrPack(r,{img:withImg,max:520,q:.6,noNames:true});const url=wrAppBase()+"view.html#v="+await encode({k:"doc",v:1,r:R});if(!document.body.contains(ov))return;
     const U=box.querySelector("#wwU"),S2=box.querySelector("#wwS");U.value=url;const kb=Math.round(url.length/1024);
-    S2.innerHTML=url.length>16000?`<b class="warn">링크가 깁니다 (${kb}KB).</b> 문자 · 카톡에서 잘릴 수 있습니다. 그림을 빼거나 <b>웹 페이지 파일(.html)</b>로 게시하세요.`:`링크 길이 ${url.length.toLocaleString()}자 · 복사해서 보내거나 QR로 보여 주세요.`;
+    S2.innerHTML=url.length>16000?`<b class="warn">링크가 깁니다 (${kb}KB).</b> 문자 · 카톡에서 잘릴 수 있습니다. 그림을 빼거나 <b>웹 페이지 파일(.html)</b>로 게시하세요.`:`✅ 링크가 준비되었습니다. 링크 글자는 보이지 않고, 아래 단추로 보내거나 엽니다. 받는 사람은 링크를 누르면 바로 열립니다.`;
     box.querySelector("#wwC").onclick=()=>copy(url,"링크를 복사했습니다");box.querySelector("#wwO").onclick=()=>{if(Array.isArray(window.__goSpy))window.__goSpy.push(url);else window.open(url,"_blank","noopener")};
     box.querySelector("#wwSh").onclick=()=>{const t=wrTitle(r);if(navigator.share)navigator.share({title:t,text:t,url}).catch(()=>{});else copy(url,"링크를 복사했습니다. 붙여 넣어 보내세요")};
-    box.querySelector("#wwQ").onclick=()=>{if(url.length>2800)return toast("링크가 길어 QR 코드로 만들 수 없습니다. 그림을 빼 보세요");drawQR(box.querySelector("#wwQB"),url,wrTitle(r),"글 QR")};dsendWire("wwDs",{text:()=>`${wrTitle(r)}\n${url}`,subject:()=>wrTitle(r)})};
+    box.querySelector("#wwQ").onclick=()=>{if(url.length>2800)return toast("링크가 길어 QR 코드로 만들 수 없습니다. 그림을 빼 보세요");drawQR(box.querySelector("#wwQB"),url,wrTitle(r),"글 QR")};dsendWire("wwDs",{text:()=>`${wrTitle(r)}\n▶ 보기: ${url}`,subject:()=>wrTitle(r)})};
   paint()}
 function wrExport(r){clearTimeout(WR_SAVE);save();const{ov,box}=wrOv("wexp");
   box.innerHTML=`<h2>발표 · 인쇄 · 내보내기 · 웹 공유</h2><div class="wexl">
@@ -5854,7 +5856,7 @@ function wrSurveyEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!
   else if(tab==="pub"){body=`<div class="svbox"><p><b>상태</b>: <b class="svst ${st[0]}">${st[1]}</b>${v.st?` · 시작 ${esc(svWhen(v.st))}`:""}${v.em.dl&&v.en?` · 종료 ${esc(svWhen(v.en))}`:""}${v.em.lim?` · 선착순 ${v.em.n}명 (지금 ${svCounted(r).length}명)`:""}</p><p class="note">${esc(svPlanText(v))}</p>
       <label class="lb" for="svTo">응답을 받을 이메일 (선택 · 응답자가 ‘이메일로 보내기’를 누르면 받는 사람)<input class="fld" id="svTo" type="email" value="${esc(v.to||"")}" placeholder="예: teacher@school.go.kr" autocomplete="email"></label>
       <div class="row2"><button class="btn pri" type="button" id="svLink">🔗 설문 링크 만들기</button>${v.pub&&!v.closed?`<button class="btn" type="button" id="svClose">설문 마감하기</button>`:v.closed?`<button class="btn" type="button" id="svOpen">다시 열기</button>`:""}</div>
-      <div id="svLB" hidden><textarea class="fld" id="svU" rows="3" readonly></textarea><div class="row2"><button class="btn" type="button" id="svC">복사</button><button class="btn" type="button" id="svSh">공유 · 문자 · 카톡</button><button class="btn" type="button" id="svQ">QR 코드</button></div><div class="row2"><button class="btn" type="button" id="svKiosk">이 기기에서 응답 받기</button><button class="btn" type="button" id="svO">설문 열어 보기</button></div><div class="qrbox" id="svQB" hidden></div>${dsendHTML("svDs","설문 링크를 직접 보내기")}</div></div>
+      <div id="svLB" hidden class="lbx"><input type="hidden" id="svU"><p class="note">✅ 설문 링크가 준비되었습니다. 링크 글자는 보이지 않고, 단추로 보내거나 엽니다.</p><div class="row2"><button class="btn pri" type="button" id="svSh">📤 공유 (카톡 · 문자)</button><button class="btn" type="button" id="svC">📋 링크 복사</button><button class="btn" type="button" id="svQ">QR 코드</button></div><div class="row2"><button class="btn" type="button" id="svKiosk">이 기기에서 응답 받기</button><button class="btn" type="button" id="svO">🔗 설문 열어 보기</button></div><div class="qrbox" id="svQB" hidden></div>${dsendHTML("svDs","설문 링크를 직접 보내기")}</div></div>
     <div class="svbox"><b>응답은 이렇게 모입니다</b><ol class="note svsteps"><li>학생 · 학부모가 링크(또는 QR)로 설문에 답하고 <b>제출</b>합니다.</li><li>제출하면 <b>‘선생님께 응답 보내기’</b>가 나옵니다. 문자 · 카톡 · 이메일 중 편한 것으로 보내면 됩니다.</li><li>선생님은 받은 응답 링크를 누르거나, <b>응답 · 집계 → 응답 넣기</b>에 한꺼번에 붙여 넣습니다. 바로 집계됩니다.</li><li>교실 태블릿 하나로 돌아가며 받을 때는 <b>이 기기에서 응답 받기</b>를 쓰면 응답이 자동으로 들어옵니다.</li></ol>
       <p class="note">설문 내용은 링크 안에 들어 있어 서버에 저장되지 않습니다. 응답도 선생님께 보낸 것만 이 앱에 들어옵니다.</p></div>`}
   else{const C=svCounted(r),cs=new Set(C.map(x=>x.id)),qs=svAllQ(v);
@@ -5900,7 +5902,7 @@ function wrSurveyEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!
       $("svC").onclick=()=>copy(u,"설문 링크를 복사했습니다");$("svSh").onclick=()=>{const t=`[설문] ${v.ti||"설문"}`;if(navigator.share)navigator.share({title:t,text:t+(v.en&&v.em.dl?` (마감 ${svWhen(v.en)})`:""),url:u}).catch(()=>{});else copy(u,"링크를 복사했습니다")};
       $("svQ").onclick=()=>{if(u.length>2800)return toast("설문이 길어 QR 코드로 만들 수 없습니다. 링크로 보내 주세요");drawQR($("svQB"),u,v.ti||"설문","설문 QR")};
       $("svO").onclick=()=>{if(Array.isArray(window.__goSpy))window.__goSpy.push(u);else window.open(u,"_blank","noopener")};$("svKiosk").onclick=()=>{const k=u+"&kiosk=1";if(Array.isArray(window.__goSpy))window.__goSpy.push(k);else window.open(k,"_blank","noopener");toast("이 기기에서 받은 응답은 앱에 자동으로 들어옵니다")};
-      dsendWire("svDs",{text:()=>`[설문] ${v.ti||"설문"}${v.en&&v.em.dl?` (마감 ${svWhen(v.en)})`:""}\n${u}`,subject:()=>`[설문] ${v.ti||"설문"}`});
+      dsendWire("svDs",{text:()=>`[설문] ${v.ti||"설문"}${v.en&&v.em.dl?` (마감 ${svWhen(v.en)})`:""}\n▶ 응답하기: ${u}`,subject:()=>`[설문] ${v.ti||"설문"}`});
       const st2=svStatus(r);document.querySelectorAll("#sheetBox .svst").forEach(el2=>{el2.className="svst "+st2[0];el2.textContent=st2[1]})};
     $("svLink").onclick=show;if($("svClose"))$("svClose").onclick=()=>{v.closed=new Date().toISOString();T();toast("설문을 마감했습니다. 이후 넣는 응답은 집계에서 빠집니다");reopen("pub")};if($("svOpen"))$("svOpen").onclick=()=>{delete v.closed;T();reopen("pub")}}
   if(tab==="resp"){$("svImp").onclick=()=>svImport($("svIn").value,r);
@@ -5991,8 +5993,10 @@ function dsRemember(v){const p=dsParse(v);const L=dsRecent().filter(x=>!p.ph.inc
 const dsShow=x=>/@/.test(x)?x:fmtPhone(x);
 function dsendHTML(id,label){const R=dsRecent();return`<div class="dsend" id="${id}"><label class="lb" for="${id}T">${esc(label||"받는 사람 직접 입력")} <small>전화번호 · 이메일, 여러 명은 쉼표로</small><input class="fld" id="${id}T" type="text" inputmode="email" autocomplete="off" placeholder="예: 010-1234-5678, parent@mail.com" list="${id}L"></label>
   <datalist id="${id}L">${R.map(x=>`<option value="${esc(dsShow(x))}">`).join("")}</datalist>${R.length?`<div class="presets dsr">${R.slice(0,6).map(x=>`<button class="chip" type="button" data-dr="${esc(dsShow(x))}">${esc(dsShow(x))}</button>`).join("")}</div>`:""}
+  <div class="row2"><button class="btn sm ghost" type="button" data-dsp="staff">👩‍🏫 교직원에서 찾기</button><button class="btn sm ghost" type="button" data-dsp="stu">🧑‍🎓 학생에서 찾기</button></div>
   <div class="row2"><button class="btn" type="button" data-ds="sms">💬 문자</button><button class="btn" type="button" data-ds="tel">📞 전화</button><button class="btn" type="button" data-ds="mail">✉️ 이메일</button></div></div>`}
 function dsendWire(id,o){const box=$(id);if(!box)return;const T=$(id+"T");
+  box.querySelectorAll("[data-dsp]").forEach(b=>b.onclick=()=>rcPick(b.dataset.dsp,L=>{const add=L.filter(x=>x.ph||x.em).map(rcLine);if(!add.length)return toast("고른 사람의 연락처가 없습니다");const cur=T.value.trim().replace(/[,\s]+$/,"");T.value=(cur?cur+", ":"")+add.join(", ");if(add.length<L.length)toast(`연락처가 없는 ${L.length-add.length}명은 빠졌습니다`)}));
   box.querySelectorAll("[data-dr]").forEach(b=>b.onclick=()=>{const cur=T.value.trim();T.value=cur?(cur.replace(/[,\s]+$/,"")+", "+b.dataset.dr):b.dataset.dr});
   box.querySelectorAll("[data-ds]").forEach(b=>b.onclick=async()=>{const how=b.dataset.ds,p=dsParse(T.value);
     if(how==="mail"){if(!p.em.length)return toast("이메일 주소를 적어 주세요");dsRemember(T.value);const txt=await o.text("mail");if(o.log)o.log("mail",p.em.join(", "));go(`mailto:${p.em.map(encodeURIComponent).join(",")}?subject=${encodeURIComponent(await (o.subject?o.subject():""))}&body=${encodeURIComponent(txt)}`);return}
@@ -6015,12 +6019,17 @@ let TLFL=null;
 function wrTLF(){if(window.TLF)return Promise.resolve(window.TLF);if(TLFL)return TLFL;TLFL=new Promise((res,rej)=>{const sc=document.createElement("script");sc.src="tlform.js";sc.onload=()=>window.TLF?res(window.TLF):rej(new Error("서류 도구를 불러오지 못했습니다"));sc.onerror=()=>{TLFL=null;rej(new Error("서류 도구를 불러오지 못했습니다"))};document.head.appendChild(sc)});return TLFL}
 function fmDef(r){if(!r.fm)r.fm={};const f=r.fm;if(!f.id)f.id=uid();if(!FM_L[f.t])f.t="absence";if(f.msg==null)f.msg=FM_MSG[f.t];if(!f.cls){const c=curClass();if(c)f.cls=c.id}if(f.sch==null)try{f.sch=localStorage.getItem("tl-sch-name")||""}catch(e){f.sch=""}if(!Array.isArray(r.subs))r.subs=[];if(!f.sent)f.sent={};return f}
 const fmCls=r=>S.list.find(c=>c.id===(r.fm||{}).cls);
-function fmPack(r,stu){const f=fmDef(r),cl=fmCls(r),o={k:"tlf",v:1,id:f.id,t:f.t,cls:cl?clsName(cl.data):"",who:meName(),due:f.due||"",msg:f.msg||"",to:f.to||"",sch:f.sch||"",ap:wrAppBase()};if(f.req!=null)o.req=f.req?1:0;if(stu)o.s={sid:stu[0],nm:stu[1]};return o}
+function fmPack(r,rc){const f=fmDef(r),cl=fmCls(r),o={k:"tlf",v:1,id:f.id,t:f.t,cls:cl?clsName(cl.data):"",who:meName(),due:f.due||"",msg:f.msg||"",to:f.to||"",sch:f.sch||"",ap:wrAppBase()};if(f.req!=null)o.req=f.req?1:0;
+  if(rc){if(Array.isArray(rc))rc={sid:rc[0],nm:rc[1]};o.s={sid:rc.sid||"",nm:rc.nm||""};if(rc.cls)o.cls=rc.cls}return o}
+/* 받을 학생: 서류 학급 명단(등록 정보) + 다른 학급에서 찾은 학생 + 직접 입력한 학생 */
+function fmRecips(r){const f=fmDef(r),cl=fmCls(r),L=cl?cl.data.roster.map(([sid,nm])=>({key:sid,sid,nm,cls:"",ph:digits((cl.data.phones||{})[sid]||"")})):[];
+  (f.extra||[]).forEach(x=>{const key=x.sid||("x:"+x.nm);if(!L.some(y=>y.key===key))L.push({key,sid:x.sid||"",nm:x.nm,cls:x.cls||"",ph:digits(x.ph||""),ex:x.man?"man":"oth"})});return L}
 async function fmLink(r,stu,kiosk){return wrAppBase()+"form.html#f="+await encode(fmPack(r,stu))+(kiosk?"&kiosk=1":"")}
-function fmSms(r,link){const f=r.fm,cl=fmCls(r);return`[${cl?clsName(cl.data):"학급"}] ${FM_L[f.t][0]} 작성 안내\n${f.msg||""}${f.due?`\n제출 기한: ${fmtDate(f.due)}`:""}\n아래 링크에서 작성하고 학생 · 보호자 서명 후 ‘서류 보내기’로 선생님께 보내 주세요.\n${link}`}
-function fmSubOf(r,sid){return(r.subs||[]).filter(s=>s.sid===sid||(!s.sid&&s.no===sid)).sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0]}
+function fmMsgText(r){const f=r.fm,cl=fmCls(r);return`[${cl?clsName(cl.data):"학급"}] ${FM_L[f.t][0]} 작성 안내\n${f.msg||""}${f.due?`\n제출 기한: ${fmtDate(f.due)}`:""}\n작성하고 학생 · 보호자 서명 후 ‘서류 보내기’로 선생님께 보내 주세요.`}
+function fmSms(r,link){return`${fmMsgText(r)}\n▶ 작성하기: ${link}`}
+function fmSubOf(r,rc){if(typeof rc==="string")rc={sid:rc};return(r.subs||[]).filter(s=>rc.sid?(s.sid===rc.sid||(!s.sid&&s.no===rc.sid)):s.nm===rc.nm).sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0]}
 function wrFormEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!r)return;const f=fmDef(r);orig=orig||JSON.stringify(r);tab=tab||(isNew?"set":"recv");const reopen=t=>wrFormEd(id,isNew,orig,t||tab);
-  const cl=fmCls(r),ros=cl?cl.data.roster:[],nSub=(r.subs||[]).length,L=FM_L[f.t];
+  const cl=fmCls(r),RC=fmRecips(r),nSub=(r.subs||[]).length,L=FM_L[f.t];
   const head=`<h2>📑 서류 받기 <span class="sub">${esc(L[1]+" "+L[0])}${cl?" · "+esc(clsName(cl.data)):""}</span></h2>
     <div class="presets svtab"><button class="chip" type="button" data-tab="set" aria-pressed="${tab==="set"}">✏️ 설정</button><button class="chip" type="button" data-tab="send" aria-pressed="${tab==="send"}">📤 보내기</button><button class="chip" type="button" data-tab="recv" aria-pressed="${tab==="recv"}">📥 받은 서류 ${nSub}</button></div>`;
   let body="";
@@ -6034,36 +6043,43 @@ function wrFormEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!r)
     <p class="note">학생은 링크를 열어 온라인으로 작성하고, <b>학생과 보호자가 서명</b>하고, 증빙 서류를 사진 · 파일로 붙입니다. 다 쓰면 서류가 <b>파일 하나</b>로 만들어지고, 학생은 그 파일을 카톡 · 메일로 선생님께 보냅니다. 선생님은 받은 파일을 <b>📥 받은 서류</b>에 넣어 모읍니다.</p>`;
   else if(tab==="send")body=`<div class="svbox"><b>학생마다 보내기</b> <small class="note">이름이 미리 채워진 링크 · 누가 냈는지 바로 보입니다</small>
       <div class="row2"><button class="btn pri" type="button" id="fmAll">번호 있는 미제출 학생에게 한 명씩 문자</button></div>
-      <div class="fmrl">${ros.map(([sid,nm])=>{const s=fmSubOf(r,sid),ph=digits((cl.data.phones||{})[sid]||"");return`<div class="fmr"><span class="tsn"><b>${esc(nm)}</b> <small>${esc(sid)}</small>${s?` <i class="fmok">제출 ${esc(fmtShort((s.at||"").slice(0,10)))}</i>`:f.sent[sid]?` <i class="fmsent">보냄</i>`:""}</span><span class="fmb">${ph.length>=8?`<button class="btn sm" type="button" data-fs="${esc(sid)}">문자</button>`:""}<button class="btn sm ghost" type="button" data-fc="${esc(sid)}">링크</button></span></div>`}).join("")||`<p class="note">학급 명단이 없습니다.</p>`}</div></div>
+      <div class="fmrl">${RC.map(x=>{const s=fmSubOf(r,x),ph=x.ph;return`<div class="fmr"><span class="tsn"><b>${esc(x.nm)}</b> <small>${esc([x.cls,x.sid].filter(Boolean).join(" · "))}</small>${x.ex==="man"?` <i class="fmsent">직접 입력</i>`:x.ex?` <i class="fmsent">다른 학급</i>`:""}${s?` <i class="fmok">제출 ${esc(fmtShort((s.at||"").slice(0,10)))}</i>`:f.sent[x.key]?` <i class="fmsent">보냄</i>`:""}</span><span class="fmb">${ph.length>=8?`<button class="btn sm" type="button" data-fs="${esc(x.key)}">문자</button>`:""}<button class="btn sm ghost" type="button" data-fc="${esc(x.key)}">링크 복사</button>${x.ex?`<button class="btn sm ghost bad" type="button" data-fx="${esc(x.key)}" aria-label="빼기">×</button>`:""}</span></div>`}).join("")||`<p class="note">학급 명단이 없습니다. 아래에서 학생을 찾거나 직접 넣으세요.</p>`}</div>
+      <div class="row2"><button class="btn" type="button" id="fmFind">🧑‍🎓 등록된 학생에서 찾기</button><button class="btn" type="button" id="fmMan">✍ 학생 직접 입력</button></div>
+      <div id="fmManB" hidden class="fmman"><input class="fld" id="fmMnN" maxlength="20" placeholder="이름" autocomplete="off"><input class="fld" id="fmMnS" maxlength="12" inputmode="numeric" placeholder="학번 (선택)" autocomplete="off"><input class="fld" id="fmMnC" maxlength="20" placeholder="학년 · 반 (선택)" autocomplete="off"><input class="fld" id="fmMnP" type="tel" inputmode="tel" maxlength="20" placeholder="휴대폰 (선택)" autocomplete="off"><button class="btn pri" type="button" id="fmMnOk">넣기</button></div></div>
     <div class="svbox"><b>한 링크로 보내기</b> <small class="note">학생이 번호 · 이름을 직접 적습니다 (학급 단톡방 · 알림장 · QR)</small>
       <div class="row2"><button class="btn" type="button" id="fmCom">공용 링크 만들기</button><button class="btn" type="button" id="fmKi">이 기기에서 받기 (교실 기기)</button></div>
-      <div id="fmCB" hidden><textarea class="fld" id="fmCU" rows="3" readonly></textarea><div class="row2"><button class="btn" type="button" id="fmCc">복사</button><button class="btn" type="button" id="fmCs">공유</button><button class="btn" type="button" id="fmCq">QR 코드</button></div><div class="qrbox" id="fmQB" hidden></div></div>
+      <div id="fmCB" hidden class="lbx"><input type="hidden" id="fmCU"><p class="note">공용 링크가 준비되었습니다. 링크 글자는 보이지 않고, 단추로 보내거나 엽니다.</p><div class="row2"><button class="btn pri" type="button" id="fmCs">📤 공유 (카톡 · 문자)</button><button class="btn" type="button" id="fmCc">📋 링크 복사</button></div><div class="row2"><button class="btn" type="button" id="fmCo">🔗 열어 보기</button><button class="btn" type="button" id="fmCq">QR 코드</button></div><div class="qrbox" id="fmQB" hidden></div></div>
       ${dsendHTML("fmDs","학부모 등 명단에 없는 사람에게 직접 보내기")}</div>`;
-  else{const subs=(r.subs||[]).slice().sort((a,b)=>String(b.at).localeCompare(String(a.at))),miss=ros.filter(([sid])=>!fmSubOf(r,sid));
+  else{const subs=(r.subs||[]).slice().sort((a,b)=>String(b.at).localeCompare(String(a.at))),miss=RC.filter(x=>!fmSubOf(r,x));
     body=`<div class="svbox"><div class="row2"><button class="btn pri" type="button" id="fmImp">📥 받은 서류 파일 넣기</button></div><input type="file" id="fmFile" accept=".html,.htm,text/html" multiple hidden>
       <textarea class="fld" id="fmPaste" rows="2" placeholder="첨부 없이 링크로 받은 서류(…#fa=…)는 여기에 붙여 넣기"></textarea><div class="row2"><button class="btn" type="button" id="fmPI">링크로 받은 서류 넣기</button></div>
       <p class="note">카톡 · 메일로 받은 서류 파일(.html)을 휴대폰 · 컴퓨터에 저장한 뒤 넣으세요. 여러 개를 한꺼번에 고를 수 있습니다. 같은 서류는 두 번 들어가지 않습니다.</p></div>
-      <p class="note">제출 ${subs.length}건${ros.length?` · 미제출 ${miss.length}명`:""}</p>
+      <p class="note">제출 ${subs.length}건${RC.length?` · 미제출 ${miss.length}명`:""}</p>
       <div class="fmsl">${subs.map(s=>`<button type="button" class="fms${s.ok?" ok":""}" data-sv="${esc(s.id)}"><span><b>${esc(s.nm||"")}</b> <small>${esc(s.no||"")}</small>${s.ok?` <i class="fmok">확인함</i>`:` <i class="fmnew">새 서류</i>`}</span><small>${esc(svWhen(s.at))} · ${esc(fmSum(r,s))}${(s.files||[]).length?` · 📎${s.files.length}`:""}</small></button>`).join("")||`<p class="note">아직 받은 서류가 없습니다.</p>`}</div>
-      ${miss.length?`<details class="svbox"><summary><b>미제출 ${miss.length}명</b></summary><p class="note">${miss.map(([sid,nm])=>esc(nm)).join(", ")}</p><div class="row2"><button class="btn sm" type="button" id="fmRe">미제출 학생에게 다시 문자</button></div></details>`:""}`}
+      ${miss.length?`<details class="svbox"><summary><b>미제출 ${miss.length}명</b></summary><p class="note">${miss.map(x=>esc(x.nm)).join(", ")}</p><div class="row2"><button class="btn sm" type="button" id="fmRe">미제출 학생에게 다시 문자</button></div></details>`:""}`}
   const foot=`<div class="row2"><button class="btn bad ghost" type="button" id="wrDel">삭제</button><button class="btn" type="button" id="wrCancel">취소</button><button class="btn pri" type="button" id="skNo">완료</button></div>`;
   $("sheetBox").innerHTML=head+body+foot;$("sheet").hidden=false;const box=$("sheetBox"),T=()=>wrTouch(r);
   box.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{clearTimeout(WR_SAVE);save();reopen(b.dataset.tab)});
   if(tab==="set"){box.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{const was=f.t;f.t=b.dataset.ft;if(!f.msg||f.msg===FM_MSG[was])f.msg=FM_MSG[f.t];delete f.req;r.title=FM_L[f.t][0]+" 받기";T();reopen("set")});
     $("fmCl").onchange=e=>{f.cls=e.target.value;T()};$("fmSch").oninput=e=>{f.sch=e.target.value.trim();try{localStorage.setItem("tl-sch-name",f.sch)}catch(_){}T()};$("fmDue").onchange=e=>{f.due=e.target.value;T()};
     $("fmMsg").oninput=e=>{f.msg=e.target.value;T()};$("fmReq").onchange=e=>{f.req=e.target.checked?1:0;T()};$("fmTo").oninput=e=>{f.to=e.target.value.trim();T()}}
-  if(tab==="send"){const sendOne=async sid=>{const st=ros.find(x=>x[0]===sid);if(!st)return;const ph=digits((cl.data.phones||{})[sid]||"");const link=await fmLink(r,st);f.sent[sid]=new Date().toISOString();T();go(smsHref([ph],fmSms(r,link)))};
+  if(tab==="send"){const byKey=k=>RC.find(x=>x.key===k);const sendOne=async k=>{const x=byKey(k);if(!x)return;const link=await fmLink(r,x);f.sent[k]=new Date().toISOString();T();go(smsHref([x.ph],fmSms(r,link)))};
     box.querySelectorAll("[data-fs]").forEach(b=>b.onclick=()=>sendOne(b.dataset.fs).then(()=>reopen("send")));
-    box.querySelectorAll("[data-fc]").forEach(b=>b.onclick=async()=>{const st=ros.find(x=>x[0]===b.dataset.fc);copy(await fmLink(r,st),`${st[1]} 학생 링크를 복사했습니다`)});
-    $("fmAll").onclick=()=>{const Q=ros.filter(([sid])=>!fmSubOf(r,sid)&&digits((cl.data.phones||{})[sid]||"").length>=8);if(!Q.length)return toast("번호가 있는 미제출 학생이 없습니다");fmQueue(r,Q,()=>reopen("send"))};
-    $("fmCom").onclick=async()=>{const u=await fmLink(r,null);$("fmCB").hidden=false;$("fmCU").value=u;$("fmCc").onclick=()=>copy(u,"공용 링크를 복사했습니다");$("fmCs").onclick=()=>{if(navigator.share)navigator.share({title:FM_L[f.t][0],text:fmSms(r,u)}).catch(()=>{});else copy(fmSms(r,u),"안내문과 링크를 복사했습니다")};
+    box.querySelectorAll("[data-fc]").forEach(b=>b.onclick=async()=>{const x=byKey(b.dataset.fc);copy(await fmLink(r,x),`${x.nm} 학생 링크를 복사했습니다`)});
+    box.querySelectorAll("[data-fx]").forEach(b=>b.onclick=()=>{const k=b.dataset.fx;f.extra=(f.extra||[]).filter(x=>(x.sid||("x:"+x.nm))!==k);T();reopen("send")});
+    const addEx=L=>{f.extra=f.extra||[];let n=0;L.forEach(x=>{const key=x.sid||("x:"+x.nm);if(RC.some(y=>y.key===key)||f.extra.some(y=>(y.sid||("x:"+y.nm))===key))return;f.extra.push(x);n++});T();reopen("send");if(n)toast(`학생 ${n}명을 넣었습니다`)};
+    $("fmFind").onclick=()=>rcPick("stu",L=>addEx(L.map(x=>({sid:x.sid,nm:x.nm,cls:x.cls,ph:x.ph}))),{title:"서류 받을 학생 찾기"});
+    $("fmMan").onclick=()=>{$("fmManB").hidden=!$("fmManB").hidden;if(!$("fmManB").hidden)$("fmMnN").focus()};
+    $("fmMnOk").onclick=()=>{const nm=$("fmMnN").value.trim();if(!nm)return toast("이름을 적어 주세요");addEx([{sid:$("fmMnS").value.trim(),nm,cls:$("fmMnC").value.trim(),ph:digits($("fmMnP").value),man:1}])};
+    $("fmAll").onclick=()=>{const Q=RC.filter(x=>!fmSubOf(r,x)&&x.ph.length>=8);if(!Q.length)return toast("번호가 있는 미제출 학생이 없습니다");fmQueue(r,Q,()=>reopen("send"))};
+    $("fmCom").onclick=async()=>{const u=await fmLink(r,null);$("fmCB").hidden=false;$("fmCU").value=u;$("fmCc").onclick=()=>copy(u,"공용 링크를 복사했습니다");$("fmCs").onclick=()=>{if(navigator.share)navigator.share({title:FM_L[f.t][0],text:fmMsgText(r),url:u}).catch(()=>{});else copy(fmSms(r,u),"안내문과 링크를 복사했습니다")};$("fmCo").onclick=()=>{if(Array.isArray(window.__goSpy))window.__goSpy.push(u);else window.open(u,"_blank","noopener")};
       $("fmCq").onclick=()=>{if(u.length>2800)return toast("링크가 길어 QR로 만들 수 없습니다");drawQR($("fmQB"),u,FM_L[f.t][0],"서류 QR")}};
     $("fmKi").onclick=async()=>{const u=await fmLink(r,null,true);if(Array.isArray(window.__goSpy))window.__goSpy.push(u);else window.open(u,"_blank","noopener");toast("이 기기에서 제출한 서류는 앱에 자동으로 들어옵니다")};
     dsendWire("fmDs",{text:async()=>fmSms(r,await fmLink(r,null)),subject:()=>`[${FM_L[f.t][0]}] 작성 안내`})}
   if(tab==="recv"){$("fmImp").onclick=()=>$("fmFile").click();$("fmFile").onchange=e=>{fmImportFiles([...(e.target.files||[])]).then(()=>{if($("fmFile"))reopen("recv")});e.target.value=""};
     $("fmPI").onclick=()=>fmImportLinks($("fmPaste").value).then(()=>reopen("recv"));
     box.querySelectorAll("[data-sv]").forEach(b=>b.onclick=()=>fmView(r,(r.subs||[]).find(s=>s.id===b.dataset.sv),()=>reopen("recv")));
-    if($("fmRe"))$("fmRe").onclick=()=>{const Q=ros.filter(([sid])=>!fmSubOf(r,sid)&&digits((cl.data.phones||{})[sid]||"").length>=8);if(!Q.length)return toast("번호가 있는 미제출 학생이 없습니다");fmQueue(r,Q,()=>reopen("recv"))}}
+    if($("fmRe"))$("fmRe").onclick=()=>{const Q=RC.filter(x=>!fmSubOf(r,x)&&x.ph.length>=8);if(!Q.length)return toast("번호가 있는 미제출 학생이 없습니다");fmQueue(r,Q,()=>reopen("recv"))}}
   $("skNo").onclick=()=>{clearTimeout(WR_SAVE);save();$("sheet").hidden=true;renderWrite()};
   $("wrCancel").onclick=()=>{clearTimeout(WR_SAVE);const changed=isNew||JSON.stringify(r)!==orig;if(!changed){$("sheet").hidden=true;return}
     $("sheetBox").innerHTML=`<h2>${isNew?"서류 받기 취소":"고친 내용 취소"}</h2><p class="note">${isNew?"저장하지 않고 닫습니다.":"연 뒤에 고친 내용(넣은 서류 포함)을 모두 되돌리고 닫습니다."}</p><div class="row2"><button class="btn" type="button" id="wcBack">계속 쓰기</button><button class="btn bad" type="button" id="wcOk">${isNew?"저장하지 않고 닫기":"되돌리고 닫기"}</button></div>`;
@@ -6071,10 +6087,10 @@ function wrFormEd(id,isNew,orig,tab){const r=recsAll().find(x=>x.id===id);if(!r)
   twoStep($("wrDel"),"정말 삭제",()=>{const bk=JSON.stringify(r),i=recsAll().indexOf(r);S.recs.splice(i,1);save();$("sheet").hidden=true;renderWrite();toastUndo("서류 받기를 지웠습니다 (받은 서류 포함)",()=>{recsAll().splice(i,0,JSON.parse(bk));save();renderWrite()},8000)})}
 function fmSum(r,s){const d=s.d||{};if(r.fm.t==="absence")return[d.kind,d.from&&d.to?`${fmtShort(d.from)}~${fmtShort(d.to)}`:""].filter(Boolean).join(" · ");return[d.place,d.from&&d.to?`${fmtShort(d.from)}~${fmtShort(d.to)}`:""].filter(Boolean).join(" · ")}
 /* 한 명씩 문자 (차례로) */
-function fmQueue(r,Q,done){let i=0;const f=r.fm,next=async()=>{if(i>=Q.length){$("sheet").hidden=true;done();return}const[sid,nm]=Q[i],ph=digits((fmCls(r).data.phones||{})[sid]||"");
+function fmQueue(r,Q,done){let i=0;const f=r.fm,next=async()=>{if(i>=Q.length){$("sheet").hidden=true;done();return}const x=Q[i],nm=x.nm,ph=x.ph;
   $("sheetBox").innerHTML=`<h2>한 명씩 문자 <span class="sub">${i+1} / ${Q.length}</span></h2><p><b>${esc(nm)}</b> ${esc(fmtPhone(ph))}</p><p class="note">‘보내기’를 누르면 문자 앱이 열립니다. 보내고 돌아와서 다음을 누르세요.</p>
     <div class="row2"><button class="btn" type="button" id="fqX">그만</button><button class="btn" type="button" id="fqS">건너뛰기</button><button class="btn pri" type="button" id="fqGo">보내기</button></div>`;
-  $("fqX").onclick=()=>{done()};$("fqS").onclick=()=>{i++;next()};$("fqGo").onclick=async()=>{const link=await fmLink(r,[sid,nm]);f.sent[sid]=new Date().toISOString();wrTouch(r);go(smsHref([ph],fmSms(r,link)));i++;setTimeout(next,300)}};$("sheet").hidden=false;next()}
+  $("fqX").onclick=()=>{done()};$("fqS").onclick=()=>{i++;next()};$("fqGo").onclick=async()=>{const link=await fmLink(r,x);f.sent[x.key]=new Date().toISOString();wrTouch(r);go(smsHref([ph],fmSms(r,link)));i++;setTimeout(next,300)}};$("sheet").hidden=false;next()}
 /* 받은 서류 넣기 */
 async function fmAdd(p){if(!p||p.k!=="tlfs"||!p.fid||!p.rid)return"bad";const r=recsAll().find(x=>x.k==="form"&&x.fm&&x.fm.id===p.fid);if(!r)return"miss";fmDef(r);if(r.subs.some(s=>s.id===p.rid))return"dup";
   const files=[];for(const x of (p.files||[]).slice(0,10)){try{if(x.mid){files.push({id:String(x.id),mid:String(x.mid),name:String(x.name||"첨부").slice(0,80),type:String(x.type||""),size:+x.size||0});continue}
@@ -6176,29 +6192,62 @@ function wrStaffPick(r,back){const L=((typeof perStaff==="function"?perStaff():S
     $("swOk").onclick=()=>{r.meet.who=[...sel].slice(0,120);if(r.meet.who.length&&(!r.meet.cnt||+r.meet.cnt<r.meet.who.length))r.meet.cnt=String(r.meet.who.length);wrTouch(r);back()}};
   paint()}
 /* --- 전달: 다른 선생님께 문자 · 전화 · 이메일 · 공유 --- */
-function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;const L=(typeof perStaff==="function"?perStaff():S.staff)||[];let pick=null,q="";
-  const paint=()=>{const T=L.filter(s=>!q||(s.name+(s.dept||"")+(s.role||"")+(s.subj||"")).includes(q)).slice(0,60);
-    $("sheetBox").innerHTML=`<h2>전달하기 <span class="sub">${esc(wrK(r)[1])} · ${esc(wrTitle(r))}</span></h2>
-      <input class="fld" id="wsQ" type="search" placeholder="선생님 찾기" value="${esc(q)}" autocomplete="off">
-      <div class="tslist wsl">${T.map((s,i)=>`<label class="tsrow"><input type="radio" name="wsr" data-wt="${L.indexOf(s)}"${pick===s?" checked":""}><span class="tsn"><b>${esc(s.name)}</b> <small>${esc([s.dept,s.role,s.subj,s.phone].filter(Boolean).join(" · "))}</small></span></label>`).join("")||`<p class="note">교직원 연락처가 없습니다. 아래에 번호나 메일 주소를 넣으세요.</p>`}</div>
-      <div class="wrrowf"><input class="fld" id="wsTo" list="wsToL" placeholder="또는 번호 · 메일 직접 입력 (여러 명은 쉼표로)" value="${esc(pick&&pick.manual||"")}" autocomplete="off"><datalist id="wsToL">${dsRecent().map(x=>`<option value="${esc(dsShow(x))}">`).join("")}</datalist></div>
+/* ===== 5.51: 받는 사람 찾기 — 학생(학년 · 반 · 이름 · 학번) · 교직원(이름 · 부서 · 역할 · 교과) ===== */
+const rcKo=(a,b)=>String(a).localeCompare(String(b),"ko",{numeric:true});
+const rcGrade=c=>{const m=/(\d+)\s*학년/.exec(clsName(c.data));return m?m[1]:""};
+function rcStu(){return perList().flatMap(c=>c.data.roster.map(([sid,nm])=>({k:"stu",id:c.id+":"+sid,nm,sid,cls:clsName(c.data),g:rcGrade(c),ph:digits((c.data.phones||{})[sid]||""),em:(c.data.emails||{})[sid]||""})))}
+function rcStaff(){return((typeof perStaff==="function"?perStaff():S.staff)||[]).map((s,i)=>({k:"staff",id:"s"+i+":"+s.name,nm:s.name,dept:s.dept||"",role:s.role||"",subj:s.subj||"",ph:digits(s.phone||""),em:s.email||""}))}
+function rcPick(kind,onOk,o){o=o||{};const stu=kind==="stu",L=stu?rcStu():rcStaff(),sel=new Map();let q="",f1="",f2="";
+  const F1=stu?[...new Set(L.map(x=>x.g).filter(Boolean))].sort(rcKo):[...new Set(L.map(x=>x.dept).filter(Boolean))].sort(rcKo);
+  const F2=()=>stu?[...new Set(L.filter(x=>!f1||x.g===f1).map(x=>x.cls))].sort(rcKo):[...new Set(L.map(x=>x.subj).filter(Boolean))].sort(rcKo);
+  const hay=x=>(stu?[x.nm,x.sid,x.cls,x.g?x.g+"학년":""]:[x.nm,x.dept,x.role,x.subj]).join(" ").toLowerCase();
+  const vis=()=>{const qs=q.toLowerCase().split(/\s+/).filter(Boolean);return L.filter(x=>(stu?(!f1||x.g===f1)&&(!f2||x.cls===f2):(!f1||x.dept===f1)&&(!f2||x.subj===f2))&&qs.every(t=>hay(x).includes(t)))};
+  const{ov,box}=wrOv("rcov");
+  box.innerHTML=`<h2>${esc(o.title||(stu?"학생 찾기":"교직원 찾기"))} <span class="sub" id="rcN">0명 고름</span></h2>
+    ${L.length?`<input class="fld" id="rcQ" type="search" placeholder="${stu?"학년 · 반 · 이름 · 학번으로 찾기 (예: 1학년 2반 김)":"이름 · 부서 · 역할 · 교과로 찾기"}" autocomplete="off"><div id="rcF"></div><div class="row2"><button class="btn sm" type="button" id="rcAll"></button></div><div class="tslist rcl" id="rcL"></div>`
+      :`<p class="note">${stu?"등록된 학생이 없습니다. 설정에서 학급 명단을 넣거나, 번호 · 메일을 직접 적으세요.":"교직원 연락처가 없습니다. 설정 → 교직원 연락처에서 이름 · 연락처 · 부서 · 업무 · 교과를 넣으세요."}</p>`}
+    <div class="row2"><button class="btn" type="button" id="rcX">취소</button><button class="btn pri" type="button" id="rcOk">넣기</button></div>`;
+  const $b=s=>box.querySelector(s);
+  const paintF=()=>{const el=$b("#rcF");if(!el)return;const f2s=F2();if(f2&&!f2s.includes(f2))f2="";
+    el.innerHTML=(F1.length?`<div class="presets swf"><span class="shlb sm">${stu?"학년":"부서"}</span><button class="chip" type="button" data-r1="" aria-pressed="${!f1}">전체</button>${F1.map(v=>`<button class="chip" type="button" data-r1="${esc(v)}" aria-pressed="${f1===v}">${esc(stu?v+"학년":v)}</button>`).join("")}</div>`:"")
+      +(f2s.length?`<div class="presets swf"><span class="shlb sm">${stu?"반":"교과"}</span><button class="chip" type="button" data-r2="" aria-pressed="${!f2}">전체</button>${f2s.map(v=>`<button class="chip" type="button" data-r2="${esc(v)}" aria-pressed="${f2===v}">${esc(v)}</button>`).join("")}</div>`:"");
+    el.querySelectorAll("[data-r1]").forEach(b=>b.onclick=()=>{f1=b.dataset.r1;f2="";paintF();paintL()});el.querySelectorAll("[data-r2]").forEach(b=>b.onclick=()=>{f2=b.dataset.r2;paintF();paintL()})};
+  const paintL=()=>{const el=$b("#rcL");if(!el)return;const V=vis();
+    el.innerHTML=V.slice(0,300).map(x=>`<label class="tsrow"><input type="checkbox" data-rc="${esc(x.id)}"${sel.has(x.id)?" checked":""}><span class="tsn"><b>${esc(x.nm)}</b> <small>${esc(stu?[x.cls,x.sid].join(" · "):[x.dept,x.role,x.subj].filter(Boolean).join(" · "))}</small></span><small class="rcct">${x.ph?"📱":""}${x.em?"✉️":""}${!x.ph&&!x.em?"연락처 없음":""}</small></label>`).join("")||`<p class="note">찾는 ${stu?"학생":"교직원"}이 없습니다.</p>`;
+    el.querySelectorAll("[data-rc]").forEach(c=>c.onchange=()=>{const x=L.find(y=>y.id===c.dataset.rc);if(c.checked)sel.set(x.id,x);else sel.delete(x.id);cnt()});
+    const all=$b("#rcAll");if(all){all.textContent=`보이는 ${V.length}명 ${V.length&&V.every(x=>sel.has(x.id))?"모두 빼기":"모두 고르기"}`;all.onclick=()=>{const on=!(V.length&&V.every(x=>sel.has(x.id)));V.forEach(x=>on?sel.set(x.id,x):sel.delete(x.id));paintL();cnt()}}};
+  const cnt=()=>{$b("#rcN").textContent=`${sel.size}명 고름`;const a=$b("#rcAll"),V=vis();if(a)a.textContent=`보이는 ${V.length}명 ${V.length&&V.every(x=>sel.has(x.id))?"모두 빼기":"모두 고르기"}`};
+  if($b("#rcQ"))$b("#rcQ").oninput=e=>{q=e.target.value.trim();paintL()};paintF();paintL();
+  $b("#rcX").onclick=()=>ov._close();$b("#rcOk").onclick=()=>{const out=[...sel.values()];ov._close();if(out.length)onOk(out)}}
+const rcLine=x=>[x.nm,x.ph?fmtPhone(x.ph):"",x.em||""].filter(Boolean).join(" ");
+/* 전달하기 (글): 받는 사람 = 교직원 · 학생에서 찾기 + 직접 입력 */
+function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;const sel=[];let to="";
+  const paint=()=>{$("sheetBox").innerHTML=`<h2>전달하기 <span class="sub">${esc(wrK(r)[1])} · ${esc(wrTitle(r))}</span></h2>
+      <div class="shlb">받는 사람 <small class="note">${sel.length?sel.length+"명":""}</small></div>
+      ${sel.length?`<div class="presets rcsel">${sel.map((x,i)=>`<span class="chip rcc">${x.k==="stu"?"🧑‍🎓":"👩‍🏫"} <b>${esc(x.nm)}</b> <small>${esc(x.ph?fmtPhone(x.ph):x.em||"연락처 없음")}</small><button type="button" data-rx="${i}" aria-label="${esc(x.nm)} 빼기">×</button></span>`).join("")}</div>`:""}
+      <div class="row2"><button class="btn" type="button" id="wsPS">👩‍🏫 교직원에서 찾기</button><button class="btn" type="button" id="wsPU">🧑‍🎓 학생에서 찾기</button></div>
+      <div class="wrrowf"><input class="fld" id="wsTo" list="wsToL" placeholder="직접 입력: 번호 · 메일 (여러 명은 쉼표로)" value="${esc(to)}" autocomplete="off"><datalist id="wsToL">${dsRecent().map(x=>`<option value="${esc(dsShow(x))}">`).join("")}</datalist></div>
+      ${r.k==="stu"&&sel.some(x=>x.k==="stu")?`<p class="warn">학생 기록을 학생에게 보냅니다. 다른 학생의 이름 · 내용이 들어 있지 않은지 확인하세요.</p>`:""}
       <details class="wsprev"><summary>보낼 내용 보기</summary><pre>${esc(wrPlain(r,true))}</pre></details>
       <div class="medbtns"><button class="btn" type="button" data-wsh="sms">💬 문자</button><button class="btn" type="button" data-wsh="tel">📞 전화</button><button class="btn" type="button" data-wsh="mail">✉️ 이메일</button><button class="btn pri" type="button" data-wsh="share">📤 공유하기${(r.media||[]).length?" (첨부 포함)":""}</button></div>
-      <p class="note">문자 · 이메일에는 글 내용이 들어가고, 사진 등 첨부는 ‘공유하기’로 함께 보낼 수 있습니다(휴대폰에 따라 다름). 전달한 기록이 글에 남습니다.</p>
+      <p class="note">문자 · 이메일에는 글 내용이 들어가고, 사진 등 첨부는 ‘공유하기’로 함께 보낼 수 있습니다(휴대폰에 따라 다름). 여러 명에게 문자를 보내면 단체 문자가 됩니다. 전달한 기록이 글에 남습니다.</p>
       ${(r.sent||[]).length?`<div class="shlb">전달 기록</div><div class="schlog">${r.sent.slice().reverse().slice(0,8).map(x=>`<div><small>${esc(fmtDT(x.at))}</small> ${esc(x.to||"")} · ${esc({sms:"문자",tel:"전화",mail:"이메일",share:"공유"}[x.how]||x.how)}</div>`).join("")}</div>`:""}
       <div class="row2"><button class="btn" type="button" id="skNo">${back?"뒤로":"닫기"}</button></div>`;
-    const box=$("sheetBox");$("wsQ").oninput=e=>{q=e.target.value.trim();const p=e.target.selectionStart;paint();$("wsQ").focus();try{$("wsQ").setSelectionRange(p,p)}catch(_){}};
-    box.querySelectorAll("[data-wt]").forEach(c=>c.onchange=()=>{pick=L[+c.dataset.wt]});
-    const target=()=>{const v=$("wsTo").value.trim();if(v){const p=dsParse(v);dsRemember(v);return{name:v.slice(0,40),phone:p.ph.join(","),phs:p.ph,email:p.em.join(","),manual:v}}return pick?{name:pick.name,phone:pick.phone||"",email:pick.email||""}:null};
-    const log=(how,to)=>{r.sent=(r.sent||[]).concat([{at:Date.now(),how,to:String(to||"").slice(0,40)}]).slice(-30);save();renderWrite()};
-    box.querySelectorAll("[data-wsh]").forEach(b=>b.onclick=async()=>{const how=b.dataset.wsh,t=target(),txt=wrPlain(r,true);
+    const box=$("sheetBox");$("wsTo").oninput=e=>{to=e.target.value};
+    box.querySelectorAll("[data-rx]").forEach(b=>b.onclick=()=>{sel.splice(+b.dataset.rx,1);paint()});
+    const add=L=>{L.forEach(x=>{if(!sel.some(y=>y.id===x.id))sel.push(x)});paint()};
+    $("wsPS").onclick=()=>rcPick("staff",add,{title:"전달할 교직원 찾기"});$("wsPU").onclick=()=>rcPick("stu",add,{title:"전달할 학생 찾기"});
+    const tgt=()=>{const p=dsParse(to);if(to.trim())dsRemember(to);const ph=[...new Set(sel.map(x=>x.ph).filter(x=>x&&x.length>=8).concat(p.ph))],em=[...new Set(sel.map(x=>x.em).filter(Boolean).concat(p.em))];
+      return{ph,em,name:sel.map(x=>x.nm).concat(p.ph.map(fmtPhone),p.em).join(", ").slice(0,60),any:sel.length||p.ph.length||p.em.length}};
+    const log=(how,who)=>{r.sent=(r.sent||[]).concat([{at:Date.now(),how,to:String(who||"").slice(0,60)}]).slice(-30);save();renderWrite()};
+    box.querySelectorAll("[data-wsh]").forEach(b=>b.onclick=async()=>{const how=b.dataset.wsh,t=tgt(),txt=wrPlain(r,true);
       if(how==="share"){let files=[];try{for(const id of wrBlkMedia(r)){const bl=await mGet(id);if(bl)files.push(new File([bl],`그림_${files.length+1}.jpg`,{type:bl.type||"image/jpeg"}))}for(const m of (r.media||[])){const bl=await mGet(m.id);if(bl)files.push(new File([bl],m.name||`${(MEDIA_T[m.t]||{l:"첨부"}).l}_${files.length+1}.${/png/.test(bl.type)?"png":/jpe?g/.test(bl.type)?"jpg":/webm/.test(bl.type)?"webm":/mp4/.test(bl.type)?(m.t==="audio"?"m4a":"mp4"):"bin"}`,{type:bl.type}))}}catch(e){}
         const data={title:wrTitle(r),text:txt,...(files.length&&navigator.canShare&&navigator.canShare({files})?{files}:{})};
-        if(navigator.share){try{await navigator.share(data);log("share",t?t.name:"");toast("공유했습니다")}catch(e){if(!(e&&e.name==="AbortError"))copy(txt,"공유할 수 없어 내용을 복사했습니다")}}else{copy(txt,"내용을 복사했습니다. 붙여 넣어 보내세요");log("share","복사")}return}
-      if(!t)return toast("받을 선생님을 고르거나 번호 · 메일을 넣어 주세요");
-      if(how==="sms"){if(t.phs){if(!t.phs.length)return toast("전화번호를 적어 주세요");log("sms",t.name);go(smsHref(t.phs,txt))}else{if(digits(t.phone).length<8)return toast("이 선생님의 전화번호가 없습니다");log("sms",t.name);go(smsHref([digits(t.phone)],txt))}}
-      else if(how==="tel"){const ph=t.phs?t.phs[0]||"":digits(t.phone);if(ph.length<8)return toast(t.phs?"전화번호를 적어 주세요":"이 선생님의 전화번호가 없습니다");log("tel",t.name);go("tel:"+ph)}
-      else{if(t.phs&&!t.email)return toast("이메일 주소를 적어 주세요");log("mail",t.name);go(`mailto:${(t.email||"").split(",").filter(Boolean).map(encodeURIComponent).join(",")}?subject=${encodeURIComponent(`[${wrK(r)[1]}] ${wrTitle(r)}`)}&body=${encodeURIComponent(txt)}`)}
+        if(navigator.share){try{await navigator.share(data);log("share",t.name);toast("공유했습니다")}catch(e){if(!(e&&e.name==="AbortError"))copy(txt,"공유할 수 없어 내용을 복사했습니다")}}else{copy(txt,"내용을 복사했습니다. 붙여 넣어 보내세요");log("share","복사")}return}
+      if(!t.any)return toast("받는 사람을 찾아 고르거나 번호 · 메일을 적어 주세요");
+      if(how==="sms"){if(!t.ph.length)return toast("고른 사람의 휴대폰 번호가 없습니다");log("sms",t.name);go(smsHref(t.ph,txt))}
+      else if(how==="tel"){if(!t.ph.length)return toast("고른 사람의 휴대폰 번호가 없습니다");if(t.ph.length>1)toast("전화는 첫 사람에게 겁니다");log("tel",t.name);go("tel:"+t.ph[0])}
+      else{if(!t.em.length)return toast("고른 사람의 이메일 주소가 없습니다");log("mail",t.name);go(`mailto:${t.em.map(encodeURIComponent).join(",")}?subject=${encodeURIComponent(`[${wrK(r)[1]}] ${wrTitle(r)}`)}&body=${encodeURIComponent(txt)}`)}
       paint()});
     $("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true}};
   $("sheet").hidden=false;paint()}
