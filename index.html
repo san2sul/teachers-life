@@ -1136,6 +1136,8 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 .ttg .dbtn small,.ttg thead .dbtn small{font-size:max(11px,.66rem)!important}.wrtool small{font-size:max(11px,.625rem)}.wrk{font-size:max(11px,.6875rem)}.lb small{font-size:max(11px,.68rem)}.shn{font-size:max(11px,.85em)}
 .card,.sheet>div,.wovb{overflow-wrap:anywhere}.sheet>div img,.wovb img{max-width:100%;height:auto}
 .row2[style*="column"]>.btn,.row2[style*="column"]>label.btn{flex:0 0 auto}
+.akbox .akd summary{cursor:pointer}.akbox small{color:var(--muted);font-weight:400}.akl{display:flex;flex-direction:column;gap:6px;margin-top:8px}.akr{display:grid;grid-template-columns:minmax(4em,1fr) auto auto;gap:6px;align-items:center}.akr select.fld{width:auto;min-width:5.5em;padding:6px 8px}.akn{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}textarea.neis{font-family:inherit;font-size:.9rem;line-height:1.55}
+.fbk{border:1px dashed var(--line);border-radius:var(--r-m);padding:10px 12px;display:flex;flex-direction:column;gap:6px}.fbk small{color:var(--muted)}
 .shlock{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;background:var(--accent-soft)}.shlock small{display:block;color:var(--muted);font-weight:400}.shexp select{max-width:12rem}
 .lcode{border:2px solid var(--accent);border-radius:var(--r-m);padding:10px 12px;display:flex;flex-direction:column;gap:6px}.lcrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lcrow b{font-size:1.4rem;letter-spacing:.12em;font-family:ui-monospace,Menlo,Consolas,monospace}
 .savebad{position:fixed;left:0;right:0;top:0;z-index:60;background:var(--absent);color:#fff;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;font-weight:700;font-size:.9rem;box-shadow:0 2px 8px rgba(0,0,0,.25)}.savebad button{background:#fff;color:var(--absent);border:0;border-radius:8px;padding:4px 10px;font-weight:700}
@@ -1281,6 +1283,7 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
   <div class="snallrow" id="snAllRow" hidden><button class="btn sm" type="button" id="snAllBtn">메모 · 최성보 모아 보기</button><small>칸의 작은 표시를 누르면 그 학생 메모가 열립니다</small></div>
   <div class="list" id="list"></div>
   <div class="card sesend" id="sesEnd">
+    <div id="akBox" class="akbox" hidden></div>
     <div class="lockbar" id="lockBar"><span id="lockTxt"></span><button class="btn sm" id="lockBtn" type="button"></button></div>
     <div class="lockbar offbar" id="offBar"></div>
     <div class="row2 delrow"><button class="btn sm bad ghost" id="sDel" type="button">이 출석 체크 삭제</button></div>
@@ -1381,6 +1384,7 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
       <label class="lb" for="stTo">종료일<input class="fld" type="date" id="stTo"></label>
     </div>
     <label class="lb" for="stScope">학급<select class="fld" id="stScope"></select></label>
+    <div class="row2"><button class="btn" type="button" id="neisBtn">📋 나이스 입력용 출결 요약</button></div>
   </section>
   <section class="kpis" id="kpis"></section>
   <section class="card empty" id="stEmpty" hidden></section>
@@ -1570,9 +1574,12 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
   <section class="sgrp"><h2 class="sgt">보관 · 화면 · 정보</h2><div class="sgl">
   <details class="card" id="d-bk"><summary>백업 · 저장 공간 <span class="sub" id="bkTag"></span></summary>
     <div id="stoMeter"></div>
-    <p class="note">백업에는 모든 학급의 명단, 연락처, 출석 기록, 교직원 연락처, 시간표, 수업 메모, 일정이 들어 있습니다.</p>
+    <p class="note">백업 파일(.json)에는 모든 학급의 명단, 연락처, 출석 기록, 교직원 연락처, 시간표, 수업 메모, 일정, 평가, 글이 들어 있습니다. 사진 · 녹음 같은 첨부는 아래 <b>전체 백업</b>에만 들어갑니다.</p>
     <div class="row2"><button class="btn pri" id="backupFile" type="button">백업 파일 저장</button><button class="btn" id="backup" type="button">백업 코드 복사</button></div>
-    <div class="row2"><label class="btn filebtn" for="restoreFile">백업 파일 불러오기<input type="file" id="restoreFile" accept=".json,.txt,application/json,text/plain"></label></div>
+    <div class="row2"><label class="btn filebtn" for="restoreFile">백업 파일 불러오기<input type="file" id="restoreFile" accept=".json,.txt,.tlbak,application/json,text/plain,application/octet-stream"></label></div>
+    <div class="fbk"><b>📦 새 기기로 옮기기</b> <small>사진 · 동영상 · 녹음 · 첨부까지 모두 담은 전체 백업 (.tlbak)</small>
+      <div class="row2"><button class="btn" id="fullBk" type="button">전체 백업 파일 만들기</button></div>
+      <p class="note">휴대폰을 바꿀 때: 이 파일을 만들어 새 기기로 보낸 뒤(카톡 나에게 · 메일 · 클라우드), 새 기기 앱의 <b>백업 파일 불러오기</b>로 엽니다. 비밀번호를 걸 수 있습니다.</p></div>
     <p class="note">예전 버전(출석부앱 1.x~4.x)의 백업 코드와 백업 파일도 그대로 불러옵니다. 백업 코드는 ‘명단 가져오기’ 칸에 붙여 넣으세요. 불러올 때 지금 버전에 맞게 자동으로 바꾸고, 바꾸는 내용을 미리 보여 줍니다.</p>
     <div class="row2"><button class="btn" id="undoBtn" type="button" hidden>불러오기 전으로 되돌리기</button></div>
     <div class="row2"><button class="btn bad" id="resetAtt" type="button">출석 기록 지우기</button><button class="btn bad" id="resetAll" type="button">모든 학급 지우기</button></div>
@@ -1624,8 +1631,9 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.54.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.55.0", APP_DATE="2026-10-25", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.55.0",date:"2026-10-25",items:["결석 학생 출결 구분(나이스 입력용): 출석 체크 아래에서 결석한 학생마다 종류(결석 · 지각 · 조퇴 · 결과) × 사유(질병 · 미인정 · 기타 · 출석인정), 학생 칸에도 표시, 기기 연동 · 백업에 함께", "📋 나이스 입력용 출결 요약: 출석 통계에서 기간 · 학급을 고르면 날짜별(‘홍길동(지각 - 질병)’) · 학생별 합계를 만들어 복사", "📦 새 기기로 옮기기 · 전체 백업(.tlbak): 자료 + 기기 안 사진 · 동영상 · 녹음 · 첨부를 한 파일로, 비밀번호(AES-GCM) 선택, 새 기기에서 백업 파일 불러오기로 복원", "학번을 바꾸면 출결 구분 · 연락 완료 표시 · 평가 명단까지 새 학번으로 옮김", "아이폰: 사파리와 홈 화면 앱은 자료가 따로 저장된다는 안내 추가"]},
   {v:"5.54.0",date:"2026-10-25",items:["🔒 공유 잠금: 학생 명단 · 교사 · 교직원이 들어가는 공유 링크 · 파일을 받는 코드(8자)로 잠금(PBKDF2 + AES-GCM, 기본 켜짐, 연락처를 넣으면 끌 수 없음). 링크만으로는 이름 · 연락처가 보이지 않음. 받는 쪽은 코드를 넣어 열기", "공유 유효 기간(1일 · 7일 · 30일 · 없음, 기본 7일): 기간이 지난 링크 · 파일은 열지 않음. 링크를 만들면 받는 코드 · 담긴 것 · 기간을 한눈에", "저장 확인: 저장한 뒤 다시 읽어 확인, 실패하면 화면 위 ‘저장되지 않았습니다’ 띠(다시 저장 · 백업 파일 받기), 띠가 있으면 앱을 닫기 전에 한 번 더 물음", "백업 검사: 불러오기 전에 백업과 지금 자료를 항목별로 비교, 줄어드는 항목은 빨간색 경고", "세로로 쌓인 단추(백업 불러오기 등)가 휴대폰에서 지나치게 커지던 문제 고침"]},
   {v:"5.53.0",date:"2026-10-25",items:["화면 폭 자동 맞춤: 글자 크기가 화면 가로 폭에 따라 저절로 바뀜(작은 휴대폰 15px ~ 넓은 화면 19px, 설정의 글자 크기를 곱함). 글쓰기 · 전달하기 등 새로 열리는 창도 휴대폰에서는 가로를 꽉 채우고 태블릿 · 컴퓨터에서는 화면에 맞춰 넓어짐(전에는 560px로 고정). 본문 폭도 화면에 맞춰 넓어짐, 긴 낱말 줄바꿈, 너무 작은 글씨(11px 아래) 막기. 도움말 · 웹 페이지 보기 창도 같은 방식", "글쓰기에서 수업자료 · 설문 · 화이트보드 · 서류 받기(학교 서류 양식 포함)를 없앰. 예전에 만든 글은 목록에서 열어 보고 지울 수 있음"]},
   {v:"5.52.0",date:"2026-10-25",items:["🏫 학교 서류 양식: 설정 → 학교 서류 양식에서 서류마다 학교 양식(PDF · 사진)을 올리고, 양식 위에 입력칸 · 학생 · 보호자 서명란 · ○ 표시 · 흰 가리개를 끌어 놓아 정하기(글자 크기 · 정렬 · 여러 줄 · 복제 · 삭제 · 확대 · 미리 보기). 받은 서류를 학교 양식에 채워 보기 · A4 인쇄 · PDF, 증빙 사진은 붙임 · 별지에, 넘친 본문은 별지에 이어 쓰기", "기본 제공 양식(갈매고등학교 5가지: 결석 · 조퇴 · 결과 · 지각 신고서, 교외체험학습 신청서, 결과보고서와 별지, 성적 이의 신청 기간 동의서)을 칸까지 맞춰 불러오기. 양식 파일로 내보내기 · 가져오기(그림 · 칸 함께)", "서류 받기에 📝 학생 · 학부모 동의서(성적 이의 신청 기간 교외체험학습) 추가: 학년도 · 학기 · 차수 · 이의 신청 기간을 선생님이 정해 미리 채움, 학생 전화번호, 동의 체크, 학생 · 보호자 서명", "서류 항목을 학교 양식에 맞춤: 결석신고서 구분(질병 · 출석인정 · 기타 · 미인정) · 종류(결석 · 조퇴 · 결과 · 지각) · 학부모 의견서, 체험학습 신청서 · 결과보고서 1일 · 반일 기준(시각), 학습 형태 4가지, 숙박 장소, 세부 규칙 확인 · 학생 안전 동의, 결과보고서 제목 · 동반자", "새 파일: tlsheet.js(양식 채우기) · forms/galmae/(기본 제공 양식 그림 5개)"]},
@@ -1745,6 +1753,9 @@ function load(){
   return fresh();
 }
 function cleanDone(o){if(!o||typeof o!=="object")return null;const r={};for(const k in o)if(o[k])r[k]=+o[k]||Date.now();return Object.keys(r).length?r:null}
+/* 5.55: 결석 학생 출결 구분 (나이스 입력용) — 종류(결석 · 지각 · 조퇴 · 결과) × 사유(질병 · 미인정 · 기타 · 출석인정) */
+const AK_K=["결석","지각","조퇴","결과"],AK_R=["질병","미인정","기타","출석인정"];
+function akClean(o,allow){if(!o||typeof o!=="object")return null;const r={};for(const k in o)if(allow.includes(o[k]))r[String(k).slice(0,20)]=o[k];return Object.keys(r).length?r:null}
 function cleanP(p){const o={};if(p&&typeof p==="object")for(const k in p)if(p[k])o[k]=true;return o}
 
 function normalize(d){
@@ -1766,7 +1777,7 @@ function normalize(d){
   /* 5.32: 학교 묶음으로 받은 학급 표시 (담임 · 교과, 학교 원본의 학생 고유번호) */
   if(d.sch&&typeof d.sch==="object"&&/^\d-\d{1,2}$/.test(d.sch.key||""))f.sch={key:d.sch.key,role:d.sch.role==="담임"?"담임":"교과",subj:Array.isArray(d.sch.subj)?d.sch.subj.map(x=>String(x).slice(0,20)).slice(0,10):[],school:String(d.sch.school||"").slice(0,40),uids:d.sch.uids&&typeof d.sch.uids==="object"?{...d.sch.uids}:{}};
   if(Array.isArray(d.sessions)){
-    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{})}));
+    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{})}));
   }else if(Array.isArray(d.rounds)){
     /* 예전 1~6차 기록을 날짜별 출석 체크로 옮깁니다 */
     const used=d.rounds.filter(r=>r&&(r.date||Object.values(r.p||{}).some(Boolean)));
@@ -1793,6 +1804,38 @@ var FILEOK={},FILES_READY=null,STO={warned:false};
 function stripJSON(obj){return JSON.stringify(obj,function(k,v){if(k==="b64"&&typeof v==="string"&&v.length>4096&&this&&this.fid&&FILEOK[this.fid]===v.length)return"";return v})}
 function stashFiles(){try{(S.evals||[]).forEach(ev=>{const f=ev&&ev.file;if(!f||typeof f.b64!=="string"||f.b64.length<=4096)return;if(!f.fid)f.fid=ev.id;const fid=f.fid,len=f.b64.length;if(FILEOK[fid]===len||FILEOK[fid]==="w")return;FILEOK[fid]="w";
   mTx("readwrite",st=>st.put(f.b64,"f:"+fid)).then(()=>{FILEOK[fid]=len;clearTimeout(STO.t);STO.t=setTimeout(()=>saveLS(),300)}).catch(()=>{delete FILEOK[fid]})})}catch(e){}}
+/* 5.55: 결석 학생 출결 구분 · 나이스 입력용 요약 */
+function renderAk(s){const el=$("akBox");if(!el)return;const off=sesOff(s),ab=off?[]:D.roster.filter(([id])=>!s.p[id]);
+  if(!ab.length){el.hidden=true;el.innerHTML="";return}el.hidden=false;const lk=!!s.lock;
+  el.innerHTML=`<details class="akd"${s.ak||s.ar?" open":""}><summary><b>결석 학생 출결 구분</b> <small>나이스 입력용 · 고르지 않으면 ‘결석’</small></summary><div class="akl">${ab.map(([id,nm])=>`<div class="akr"><span class="akn">${esc(nm)}</span>
+    <select class="fld" data-akk="${esc(id)}" aria-label="${esc(nm)} 종류"${lk?" disabled":""}>${AK_K.map(k=>`<option${((s.ak||{})[id]||"결석")===k?" selected":""}>${k}</option>`).join("")}</select>
+    <select class="fld" data-akr="${esc(id)}" aria-label="${esc(nm)} 사유"${lk?" disabled":""}><option value="">사유</option>${AK_R.map(k=>`<option${(s.ar||{})[id]===k?" selected":""}>${k}</option>`).join("")}</select></div>`).join("")}</div></details>`;
+  el.querySelectorAll("[data-akk]").forEach(x=>x.onchange=()=>{const id=x.dataset.akk;s.ak=s.ak||{};if(x.value==="결석")delete s.ak[id];else s.ak[id]=x.value;if(!Object.keys(s.ak).length)delete s.ak;save();renderAtt()});
+  el.querySelectorAll("[data-akr]").forEach(x=>x.onchange=()=>{const id=x.dataset.akr;s.ar=s.ar||{};if(!x.value)delete s.ar[id];else s.ar[id]=x.value;if(!Object.keys(s.ar).length)delete s.ar;save()})}
+const akLab=(s,id)=>{const k=(s.ak||{})[id]||"결석",r=(s.ar||{})[id];return r?`${k} - ${r}`:k};
+/* 나이스 입력용 요약: 날짜별 · 학생별 */
+function neisText(from,to,clsIds){const L=[],per={};const cls=S.list.filter(c=>clsIds.includes(c.id));
+  cls.forEach(c=>{const d=c.data,names=Object.fromEntries(d.roster.map(r=>[r[0],r[1]]));
+    const ses=(d.sessions||[]).filter(x=>x.date>=from&&x.date<=to&&!sesOffOf(x,c)).sort((a,b)=>a.date.localeCompare(b.date)||String(a.time).localeCompare(String(b.time)));
+    const lines=[];ses.forEach(x=>{const ab=d.roster.filter(([id])=>!x.p[id]);if(!ab.length)return;
+      lines.push(`${fmtDateW(x.date)}${x.label?" "+x.label:""}: ${ab.map(([id,nm])=>`${nm}(${akLab(x,id)})`).join(", ")}`);
+      ab.forEach(([id])=>{const k=(c.id+"|"+id);per[k]=per[k]||{nm:names[id],cls:clsName(d),n:{}};const t=akLab(x,id);per[k].n[t]=(per[k].n[t]||0)+1})});
+    if(lines.length){L.push(`■ ${clsName(d)} (${fmtDate(from)} ~ ${fmtDate(to)})`);L.push(...lines);L.push("")}});
+  const P=Object.values(per);if(P.length){L.push("■ 학생별 합계");P.sort((a,b)=>a.cls.localeCompare(b.cls,"ko")||a.nm.localeCompare(b.nm,"ko")).forEach(p=>L.push(`${cls.length>1?p.cls+" ":""}${p.nm}: ${Object.entries(p.n).map(([k,v])=>`${k} ${v}`).join(", ")}`))}
+  return L.join("\n").trim()}
+function sesOffOf(x,c){try{const keep=D;D=c.data;const r=sesOff(x);D=keep;return r}catch(e){return!!x.off}}
+function neisSheet(){const cur=S.active,P=perList();let from=ST.from||addDays(today(),-6),to=ST.to||today(),sel=new Set([cur]);
+  const paint=()=>{const t=neisText(from,to,[...sel]);$("sheetBox").innerHTML=`<h2>📋 나이스 입력용 출결 요약</h2>
+    <div class="range"><label class="lb" for="neF">시작일<input class="fld" type="date" id="neF" value="${esc(from)}"></label><label class="lb" for="neT">종료일<input class="fld" type="date" id="neT" value="${esc(to)}"></label></div>
+    ${P.length>1?`<div class="presets">${P.map(c=>`<button class="chip" type="button" data-nc="${esc(c.id)}" aria-pressed="${sel.has(c.id)}">${esc(clsName(c.data))}</button>`).join("")}</div>`:""}
+    <textarea class="fld neis" id="neTx" rows="12" readonly>${esc(t||"이 기간에 결석 · 지각 · 조퇴 · 결과 학생이 없습니다.")}</textarea>
+    <p class="note">출석 체크 화면 아래 <b>결석 학생 출결 구분</b>에서 고른 종류 · 사유가 ‘홍길동(지각 - 질병)’처럼 들어갑니다. 고르지 않은 학생은 ‘결석’으로 나옵니다. 휴강 처리한 체크는 빠집니다.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="neCp"${t?"":" disabled"}>복사</button></div>`;
+    $("skNo").onclick=()=>{$("sheet").hidden=true};$("neF").onchange=e=>{from=e.target.value||from;paint()};$("neT").onchange=e=>{to=e.target.value||to;paint()};
+    $("sheetBox").querySelectorAll("[data-nc]").forEach(b=>b.onclick=()=>{const id=b.dataset.nc;if(sel.has(id)&&sel.size>1)sel.delete(id);else sel.add(id);paint()});
+    $("neCp").onclick=()=>copy(t,"나이스 입력용 요약을 복사했습니다")};
+  $("sheet").hidden=false;paint()}
+{const b=$("neisBtn");if(b)b.onclick=()=>neisSheet()}
 /* 5.54: 저장한 뒤 다시 읽어 확인하고, 실패하면 화면 위에 ‘저장 안 됨’ 띠를 계속 보여 줌 */
 function saveVerify(str){let back=null;try{back=localStorage.getItem(KEY2)}catch(e){}if(back===null||back.length!==str.length)throw new Error("저장 확인 실패");return true}
 function saveLS(){
@@ -1950,7 +1993,7 @@ function renderAtt(){try{snAllPaint()}catch(e){}
   ["sTime","sLabel","allIn","allOut","sDel"].forEach(k=>$(k).disabled=lk);
   if(document.activeElement!==$("sTime"))$("sTime").value=s.time;
   if(document.activeElement!==$("sLabel"))$("sLabel").value=s.label;
-  try{renderSesSlots(s)}catch(e){}
+  try{renderSesSlots(s)}catch(e){}try{renderAk(s)}catch(e){}
   const ab=absent().length,off=sesOff(s);
   $("sp").textContent="출석 "+(D.roster.length-(off?D.roster.length-D.roster.filter(([id])=>s.p[id]).length:ab));$("sa").textContent=off?"휴강":"결석 "+ab;
   $("offBar").innerHTML=off?`<span>⛔ <b>${esc(off)}</b> · 이 출석 체크는 출석 통계와 결석 연락에서 빠집니다${s.off?"":" (시간표의 수업 변동)"}</span>${s.off?`<button class="btn sm" type="button" id="offUndo">휴강 처리 풀기</button>`:""}`:`<span>수업을 하지 않았으면 휴강 · 결강으로 처리해 통계에서 빼세요</span><button class="btn sm" type="button" id="offSet">휴강 · 결강 처리</button>`;
@@ -1964,10 +2007,10 @@ function renderAtt(){try{snAllPaint()}catch(e){}
     if(list.length>MAXD)dots+=`<span class="n">…</span>`;
     const row=document.createElement("div");row.className="st"+(on?" on":"")+(AV==="grid"?" tile":"");row.setAttribute("role","switch");row.setAttribute("aria-checked",on);row.tabIndex=0;
     row.setAttribute("aria-label",`${name} ${sesName(s)} ${on?"출석":"결석"}`);
-    if(AV==="grid")row.innerHTML=`<span class="no">${i+1}</span><span class="tnm">${esc(name)}${lowTag(id)}</span><span class="tst">${on?"출석":!isDone(s,id)?"결석":"결석 · 연락됨"}</span>`;
+    if(AV==="grid")row.innerHTML=`<span class="no">${i+1}</span><span class="tnm">${esc(name)}${lowTag(id)}</span><span class="tst">${on?"출석":""}${on?"":!isDone(s,id)?((s.ak||{})[id]||"결석"):((s.ak||{})[id]||"결석")+" · 연락됨"}</span>`;
     else row.innerHTML=`<span class="no">${i+1}</span><span class="nm">${esc(name)}${lowTag(id)}${snLine(id)}<small>${esc(id)}${!on&&isDone(s,id)?' <b class="dtag">연락 완료</b>':""}</small><span class="dots">${dots}<span class="n">${selDate===today()?"오늘":"이날"} ${n}/${list.length}</span></span></span>
-      <span class="sw"><span class="knob"></span><span class="lab">${on?"출석":"결석"}</span></span>`;
-    const tg=()=>{if(s.lock){lockNudge();return}if(s.p[id])delete s.p[id];else s.p[id]=true;save();renderAtt();renderNav()};
+      <span class="sw"><span class="knob"></span><span class="lab">${on?"출석":((s.ak||{})[id]||"결석")}</span></span>`;
+    const tg=()=>{if(s.lock){lockNudge();return}if(s.p[id])delete s.p[id];else{s.p[id]=true;if(s.ak)delete s.ak[id];if(s.ar)delete s.ar[id]}save();renderAtt();renderNav()};
     {let lt=null,lf=false,lx=0,ly=0;row.addEventListener("pointerdown",e=>{lf=false;lx=e.clientX;ly=e.clientY;clearTimeout(lt);lt=setTimeout(()=>{lf=true;try{navigator.vibrate&&navigator.vibrate(30)}catch(_){}snSheet(id)},600)});
       row.addEventListener("pointermove",e=>{if(Math.abs(e.clientX-lx)>8||Math.abs(e.clientY-ly)>8)clearTimeout(lt)});["pointerup","pointercancel","pointerleave"].forEach(v=>row.addEventListener(v,()=>clearTimeout(lt)));
       row.addEventListener("contextmenu",e=>e.preventDefault());row.onclick=()=>{if(lf){lf=false;return}tg()}}
@@ -2520,7 +2563,7 @@ function editStudent(id){
       D.roster=D.roster.filter(x=>x!==st);delete D.phones[id];delete D.emails[id];if(low){to.low=to.low||{};to.low[nid]=1}if(D.low){delete D.low[id];if(!Object.keys(D.low).length)delete D.low}if(D.snote&&D.snote[id]){to.snote=to.snote||{};to.snote[nid]=D.snote[id];delete D.snote[id];if(!Object.keys(D.snote).length)delete D.snote}
       save();$("sheet").hidden=true;renderAll();return toast(`${name} 학생을 ‘${clsName(to)}’로 옮겼습니다. 이 학급의 출석 기록은 남습니다`);
     }
-    if(nid!==id){D.sessions.forEach(s=>{if(s.p[id]){s.p[nid]=true;delete s.p[id]}});(D.obs||[]).forEach(r=>{if(r.sid===id)r.sid=nid});delete D.phones[id];delete D.emails[id];PK.stu.sel.delete(id)}
+    if(nid!==id){D.sessions.forEach(s=>{if(s.p[id]){s.p[nid]=true;delete s.p[id]}["done","ak","ar"].forEach(k=>{if(s[k]&&id in s[k]){s[k][nid]=s[k][id];delete s[k][id]}})});{const cid=curClass().id;(S.evals||[]).forEach(ev=>{if(ev.clsId===cid&&Array.isArray(ev.stu))ev.stu.forEach(x=>{if(x.sid===id)x.sid=nid})})}(D.obs||[]).forEach(r=>{if(r.sid===id)r.sid=nid});delete D.phones[id];delete D.emails[id];PK.stu.sel.delete(id)}
     if(D.low)delete D.low[id];if(low){D.low=D.low||{};D.low[nid]=1}if(nid!==id&&D.snote&&D.snote[id]){D.snote[nid]=D.snote[id];delete D.snote[id]}if(nid!==id){const cid=curClass().id;(S.tasks||[]).forEach(t=>{[t.miss,t.ct].forEach(o=>{const m=o&&o[cid];if(m&&id in m){m[nid]=m[id];delete m[id]}})})}if(D.low&&!Object.keys(D.low).length)delete D.low;
     st[0]=nid;st[1]=name;if(ph)D.phones[nid]=ph;else delete D.phones[nid];if(em)D.emails[nid]=em;else delete D.emails[nid];
     sortRoster();save();$("sheet").hidden=true;renderAll();toast(name+" 학생 정보를 고쳤습니다");
@@ -7144,7 +7187,7 @@ function renderSto(){
     <p class="note" id="stoBig">대용량 저장소(원본 전표·사진·녹음·되돌리기): 계산 중…</p>
     <p class="note" id="stoPer"></p>
     <p class="note">마지막 백업: <b>${esc(agoDays(lb))}</b>${synced?` · 구글 동기화: <b>${esc(fmtAgo(G.syncedAt))}</b>`:""}</p>
-    ${isIOS&&!isStandalone()?`<p class="warn">아이폰·아이패드에서는 사파리 <b>공유 → 홈 화면에 추가</b>로 설치해 쓰세요. 설치하지 않고 7일 넘게 열지 않으면 브라우저가 자료를 지울 수 있습니다.</p>`:""}</div>`;
+    ${isIOS&&!isStandalone()?`<p class="warn">아이폰·아이패드에서는 사파리 <b>공유 → 홈 화면에 추가</b>로 설치해 쓰세요. 설치하지 않고 7일 넘게 열지 않으면 브라우저가 자료를 지울 수 있습니다. <b>사파리와 홈 화면 앱은 자료를 따로 저장</b>하므로, 사파리에서 쓰던 자료는 <b>전체 백업 파일</b>로 옮기세요.</p>`:isIOS?`<p class="note">아이폰 · 아이패드에서는 사파리와 홈 화면 앱의 자료가 따로 저장됩니다. 지금은 홈 화면 앱입니다.</p>`:""}</div>`;
   if($("stoArc"))$("stoArc").onclick=openArc;try{renderArc()}catch(e){}
   $("bkTag").textContent=pct>=70?`저장 공간 ${pct}%`:(lb?`백업 ${agoDays(lb)}`:"");
   try{if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(e=>{const el=$("stoBig");if(el&&e)el.innerHTML=`대용량 저장소(원본 전표·사진·녹음·되돌리기): <b>${fmtSize(e.usage||0)}</b> 사용${e.quota?` · 기기 여유 ${fmtSize(Math.max(0,e.quota-(e.usage||0)))}`:""}`}).catch(()=>{});else $("stoBig").hidden=true}catch(e){}
@@ -7192,10 +7235,49 @@ async function saveBackupFile(){
   const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
   markBackup();toast("백업 파일을 저장했습니다");
 }
+/* 5.55: 전체 백업(.tlbak) — 자료 + 기기 안 사진 · 녹음 · 첨부를 한 파일로, 비밀번호(선택)로 암호화 */
+const TLBK_MAGIC="TLBK1\n";
+async function fbkKey(pw,salt){const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:150000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function fbkMediaAll(){const out=[];try{const keys=await mTx("readonly",st=>st.getAllKeys());for(const k of (keys||[])){if(typeof k!=="string")continue;const v=await mGet(k);if(v==null)continue;
+  if(v instanceof Blob)out.push({k,kind:"blob",type:v.type||"",blob:v});else out.push({k,kind:"json",blob:new Blob([JSON.stringify(v)],{type:"application/json"})})}}catch(e){}return out}
+async function fbkBuild(pw){const data=new Blob([JSON.stringify(backupObj())],{type:"application/json"}),media=await fbkMediaAll();let key=null,salt=null;
+  if(pw){salt=crypto.getRandomValues(new Uint8Array(16));key=await fbkKey(pw,salt)}
+  const parts=[],head={kind:"teachers-life-full",v:1,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),enc:salt?{salt:B64.enc(salt),it:150000}:null,data:null,media:[]};
+  const pack=async b=>{if(!key)return{blob:b,iv:null};const iv=crypto.getRandomValues(new Uint8Array(12));const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,await b.arrayBuffer());return{blob:new Blob([ct]),iv:B64.enc(iv)}};
+  const d=await pack(data);head.data={len:d.blob.size,iv:d.iv};parts.push(d.blob);
+  for(const m of media){const x=await pack(m.blob);head.media.push({k:m.k,kind:m.kind,type:m.type||"",len:x.blob.size,iv:x.iv});parts.push(x.blob)}
+  const hb=new TextEncoder().encode(JSON.stringify(head)),hl=new Uint8Array(4);new DataView(hl.buffer).setUint32(0,hb.length,true);
+  return{file:new Blob([TLBK_MAGIC,hl,hb,...parts],{type:"application/octet-stream"}),n:media.length,size:media.reduce((a,m)=>a+m.blob.size,0)}}
+async function fbkHead(f){const mg=await f.slice(0,6).text();if(mg!==TLBK_MAGIC)return null;const hl=new DataView(await f.slice(6,10).arrayBuffer()).getUint32(0,true);if(hl>5e7)throw new Error("전체 백업 파일이 망가졌습니다");
+  const head=JSON.parse(await f.slice(10,10+hl).text());if(!head||head.kind!=="teachers-life-full")throw new Error("전체 백업 파일이 아닙니다");return{head,off:10+hl}}
+async function fbkRead(f,H,pw){const{head}=H;let key=null;if(head.enc){if(!pw)throw new Error("비밀번호가 필요합니다");key=await fbkKey(pw,B64.dec(head.enc.salt))}let off=H.off;
+  const take=async(len,iv)=>{const b=f.slice(off,off+len);off+=len;if(!key)return b;const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:B64.dec(iv)},key,await b.arrayBuffer());return new Blob([pt])};
+  let data;try{data=JSON.parse(await (await take(head.data.len,head.data.iv)).text())}catch(e){throw new Error(head.enc?"비밀번호가 맞지 않습니다":"전체 백업 파일이 망가졌습니다")}
+  const media=[];for(const m of head.media||[]){const b=await take(m.len,m.iv);media.push({k:m.k,kind:m.kind,blob:m.kind==="blob"?new Blob([b],{type:m.type||""}):b})}return{data,media}}
+function fbkSheet(){let info="";const go=async()=>{const pw=$("fbP1").value,pw2=$("fbP2").value;if(pw!==pw2)return toast("비밀번호가 서로 다릅니다");if(pw&&pw.length<4)return toast("비밀번호는 4자 이상으로 해 주세요");
+    $("fbGo").disabled=true;$("fbGo").textContent="만드는 중…";try{const B=await fbkBuild(pw);const f=new File([B.file],`${APP_NAME.replace(/\s+/g,"")}_전체백업_${today().replace(/-/g,"")}.tlbak`,{type:"application/octet-stream"});
+      if(Array.isArray(window.__fileSpy)){window.__fileSpy.push({name:f.name,size:f.size,blob:f});window.__fbk=f;$("sheet").hidden=true;markBackup();return}
+      $("sheet").hidden=true;await shareOrSave(f);markBackup();toast(`전체 백업 파일을 만들었습니다 (첨부 ${B.n}개 · ${fmtSize(f.size)})`)}catch(e){toast("전체 백업을 만들지 못했습니다"+(e&&e.message?` (${e.message})`:""));$("fbGo").disabled=false;$("fbGo").textContent="만들기"}};
+  $("sheetBox").innerHTML=`<h2>📦 새 기기로 옮기기 · 전체 백업</h2><p class="note">학급 · 명단 · 출석 · 관찰 · 평가 · 글 등 모든 자료와 <b>이 기기에만 있던 사진 · 동영상 · 녹음 · 첨부</b>를 한 파일(.tlbak)에 담습니다. <span id="fbInfo">첨부를 세는 중…</span></p>
+    <label class="lb" for="fbP1">비밀번호 (선택 · 걸면 파일만으로는 열 수 없음)<input class="fld" id="fbP1" type="password" autocomplete="new-password"></label>
+    <label class="lb" for="fbP2">비밀번호 확인<input class="fld" id="fbP2" type="password" autocomplete="new-password"></label>
+    <p class="warn">비밀번호를 잊으면 이 파일은 아무도 열 수 없습니다. 학생 개인정보가 들어 있으니 다른 사람에게 보내지 마세요.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="fbGo">만들기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("fbGo").onclick=go;
+  fbkMediaAll().then(m=>{const el=$("fbInfo");if(el)el.textContent=`기기 안 첨부 ${m.length}개 · 약 ${fmtSize(m.reduce((a,x)=>a+x.blob.size,0))}`})}
+async function fbkOpen(f,H){const ask=H.head.enc;const run=async pw=>{try{const R=await fbkRead(f,H,pw);let n=0;for(const m of R.media){try{await mPut(m.k,m.kind==="json"?JSON.parse(await m.blob.text()):m.blob);n++}catch(e){}}
+      try{hydrateFiles().then(()=>{})}catch(e){}if(n)toast(`사진 · 녹음 · 첨부 ${n}개를 이 기기에 넣었습니다`);restoreSheet(readBackup(R.data))}catch(e){if(ask){$("fbErr").hidden=false;$("fbErr").textContent=e.message||"열지 못했습니다";$("fbOk").disabled=false}else toast(e.message||"열지 못했습니다")}};
+  if(!ask)return run("");
+  $("sheetBox").innerHTML=`<h2>📦 전체 백업 열기</h2><p class="note">${H.head.savedAt?esc(fmtDT(new Date(H.head.savedAt).getTime()))+" 저장 · ":""}첨부 ${(H.head.media||[]).length}개. 만들 때 건 <b>비밀번호</b>를 넣으세요.</p>
+    <input class="fld" id="fbPw" type="password" autocomplete="current-password"><p class="warn" id="fbErr" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="fbOk">열기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("fbOk").onclick=()=>{$("fbOk").disabled=true;run($("fbPw").value)}}
+$("fullBk").onclick=fbkSheet;
 $("backupFile").onclick=saveBackupFile;
 $("restoreFile").onchange=async e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;e.target.value="";
-  try{const t=await f.text();const p=await readAnyText(t);
+  try{const H=await fbkHead(f).catch(err=>{throw err});if(H)return fbkOpen(f,H);
+    const t=await f.text();const p=await readAnyText(t);
     if(p&&(p.kind==="share"||(p.k==="lock"&&p.e)))return receive(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");
     if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));
     restoreSheet(readBackup(p))}
@@ -8459,7 +8541,7 @@ const pick3=(b,l,r)=>J(l)===J(b)?r:l;
 /* 출석 체크 하나를 두 기기에서 동시에 고쳐도 학생별로 합칩니다 (한쪽 기기의 체크가 통째로 덮이지 않게) */
 function mergeSes(b,l,r){b=b||{};if(J(l)===J(r))return l;
   const out={...pick3(b,l,r)};
-  ["p","done"].forEach(k=>{const B=b[k]||{},L=l[k]||{},R=r[k]||{},m={};
+  ["p","done","ak","ar"].forEach(k=>{const B=b[k]||{},L=l[k]||{},R=r[k]||{},m={};
     new Set([...Object.keys(B),...Object.keys(L),...Object.keys(R)]).forEach(id=>{const v=J(L[id])===J(B[id])?R[id]:L[id];if(v!==undefined&&v!==null&&v!==false)m[id]=v});
     if(k==="p"||Object.keys(m).length)out[k]=m;else delete out[k]});
   ["date","time","label","lock","lockAt","slot","manual","src","off","offWhy"].forEach(f=>{const v=J(l[f])===J(b[f])?r[f]:l[f];if(v===undefined)delete out[f];else out[f]=v});
@@ -8655,6 +8737,7 @@ safe("구글 로그인",renderSync);try{gPreload()}catch(e){reportErr("구글 �
   window.addEventListener("drop",e=>{if(!hasFile(e))return;e.preventDefault();depth=0;ov.hidden=true;const f=e.dataTransfer.files[0];if(f)dropFile(f)});
 }
 async function dropFile(f){
+  if(/\.tlbak$/i.test(f.name)){try{const H=await fbkHead(f);if(H)return fbkOpen(f,H)}catch(err){return toast(err.message||"열지 못했습니다")}}
   if(/\.(json|txt)$/i.test(f.name)){
     try{const p=await readAnyText(await f.text());if(p&&p.kind==="teachers-life-sync"&&p.data)return toast("동기화 파일은 ‘구글 로그인 · 기기 연동’으로 자동으로 맞춰집니다");
       if(p&&(p.kind==="share"||(p.k==="lock"&&p.e)))return receive(p);if(p&&p.kind==="teachers-life-archive")return arcFileSheet(p);if(p&&p.kind==="teachers-life-school-pack")return packOpen(p);if(p&&p.kind==="teachers-life-school-handover")return handoverOpen(p);if(p&&p.kind==="teachers-life-cards")return toast(schOn()?"학교 관리 → 인계 카드 탭에서 ‘인계 카드 파일 받기’로 열어 주세요":"학생 인계 카드는 학교 관리 담당자만 열 수 있습니다. 담당자에게 보내 주세요");if(p&&p.kind==="teachers-life-school")return schOn()?schLoad().then(()=>{show("school");renderSchool();schRestoreSheet(p)}):toast("학교 원본 백업입니다. 설정 → 학교 관리 (담당자용)에서 모드를 켠 뒤 불러오세요");if(p&&Array.isArray(p.roster)&&!Array.isArray(p.classes))return placeClass(p,()=>toast("불러왔습니다"));restoreSheet(readBackup(p))}
