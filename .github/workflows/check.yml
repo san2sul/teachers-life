@@ -28,7 +28,28 @@ jobs:
           pip install playwright pillow openpyxl
           python -m playwright install --with-deps chromium
       - name: 자동 점검 실행
-        run: python tests/run_all.py
+        shell: bash
+        run: |
+          set -o pipefail
+          python tests/run_all.py 2>&1 | tee run.log
+      - name: 실패한 시험을 요약에 남기기
+        if: failure()
+        shell: bash
+        run: |
+          {
+            echo "## 자동 점검 결과"
+            grep -E "통과 ·" run.log || true
+            echo
+            echo "| 시험 | 기록 |"
+            echo "| --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          for t in $(grep -E "^실패" run.log | awk '{print $2}'); do
+            f="tests/_work/$t.log"
+            msg=$( { grep -E "^FAIL" "$f" 2>/dev/null | head -5; grep -E "Error|Exception" "$f" 2>/dev/null | tail -2; } | cut -c1-200 )
+            [ -z "$msg" ] && msg=$(tail -3 "$f" 2>/dev/null | cut -c1-200)
+            echo "| $t | $(echo "$msg" | tr '\n' ' ' | sed 's/|/¦/g') |" >> "$GITHUB_STEP_SUMMARY"
+            echo "::error title=자동 점검 실패 $t::$(echo "$msg" | sed ':a;N;$!ba;s/\n/%0A/g')"
+          done
       - name: 실패 기록 올리기
         if: failure()
         uses: actions/upload-artifact@v4
