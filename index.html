@@ -1210,6 +1210,22 @@ table.ttg.d3 .tc b{font-size:.86rem}table.ttg.d3 .tc span{font-size:.74rem}table
 .pkgp{grid-column:2/-1;display:flex;flex-direction:column;gap:4px;margin-top:-2px}
 .pkgl{display:flex;align-items:center;gap:8px;padding:4px 8px;background:var(--bg);border-radius:8px}.pkgl .gpw{flex:1;min-width:0;font-size:.85rem}.pkgl .gpw small{color:var(--muted);margin-left:4px}
 .ctbox .ctto{margin:2px 0 8px}
+
+/* 5.59 주간 점검 반영: 지금 수업 카드 · 시간표 기간 · 밀어서 삭제 · 작은 글자 · 알림 띠 여백 */
+.nowhero{display:block;position:relative}
+.nowgo{width:100%;align-items:center;padding-right:12px}
+.nowgo .nht em{display:block;font-style:normal;font-size:.8rem;font-weight:700;color:var(--present)}
+.nowgo .nht b{word-break:keep-all;overflow-wrap:anywhere;line-height:1.3;padding-right:30px}
+.nowgo .nha{align-self:flex-end;margin-bottom:2px}
+.nowhero .nhx{position:absolute;top:2px;right:2px;width:44px;height:44px;border:0;background:transparent;color:var(--muted);font-size:1rem;border-radius:var(--r-m)}
+#ttWeekTxt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:430px){.weekbar{grid-template-columns:44px minmax(0,1fr) 44px auto}.weekbar .ttmode{grid-column:1/-1;justify-self:center;grid-row:2}.weekbar #ttThisWeek{grid-column:4;grid-row:1}}
+:is(div,section,ul,main):has(>.swrow){overflow-x:clip}
+.swrow.swopen :is(button,a,input,select){visibility:hidden}
+body{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + var(--nbpad,0px))}
+@media (min-width:1100px){html:not([data-nav="bottom"]) body{padding-bottom:var(--nbpad,0px)}}
+.lkrow{display:flex;flex-wrap:wrap;gap:4px 6px}.lkrow a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:var(--r-m);text-decoration:none;color:var(--accent);font-weight:600}
+.ttg tbody th.tcol small,.ttg .aft small,.ttg i.ck,.ttg .lc span,.shlb small,.ttg tbody th.tcol b,.ttg .aft b,.tbtn.pre b{font-size:max(11px,.62rem)!important}
 </style>
 </head>
 <body>
@@ -1656,11 +1672,11 @@ table.ttg.d3 .tc b{font-size:.86rem}table.ttg.d3 .tc span{font-size:.74rem}table
   </details>
   <details class="card" id="d-ver"><summary>앱 정보 · 버전 기록 <span class="sub" id="verTag"></span></summary>
     <p class="note" id="verMaker"></p>
-    <p class="note"><a href="home.html" target="_blank" rel="noopener">앱 소개</a> · <a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a> · <a href="terms.html" target="_blank" rel="noopener">이용약관</a></p>
+    <p class="note lkrow"><a href="home.html" target="_blank" rel="noopener">앱 소개</a><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a><a href="terms.html" target="_blank" rel="noopener">이용약관</a></p>
     <div class="row2"><button class="btn pri" type="button" id="helpAll">도움말 전체 보기</button><button class="btn" type="button" id="helpNew">바뀐 점 보기</button></div>
     <div class="row2"><button class="btn" type="button" id="updChk">새 버전 확인 · 업데이트</button></div>
     <p class="note" id="updMsg">새 버전을 올리면 앱을 열 때 자동으로 확인해 ‘지금 업데이트’ 안내가 나옵니다. 업데이트해도 입력한 자료는 그대로입니다.</p>
-    <p class="note"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
+    <p class="note lkrow"><a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
     <div class="abslist" id="verList"></div>
   </details>
   </div></section>
@@ -1686,8 +1702,9 @@ table.ttg.d3 .tc b{font-size:.86rem}table.ttg.d3 .tc span{font-size:.74rem}table
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.58.0", APP_DATE="2026-10-26", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.59.0", APP_DATE="2026-10-26", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.59.0",date:"2026-10-26",items:["‘지금 수업’ 카드: ✕를 카드 안 오른쪽 위로, 시각을 윗줄에 따로 두어 제목(‘2교시 물리학’)이 한 줄로", "시간표: 세로 휴대폰(폭 430px 이하)은 처음에 3일 보기(주간을 고른 적이 있으면 그대로), 기간 표시는 한 줄(좁은 화면에서는 주간 · 3일 · 하루 단추를 아랫줄로)", "11px보다 작은 글자 없애기: 시간표 교시 · 시각 · 출석 수 · 빈 시간, 설정의 ‘1개 고름’ 등 · 앱 소개 · 개인정보처리방침 · 이용약관을 44px 높이 단추로", "밀어서 삭제: 밀린 줄 내용이 카드 밖으로 보이지 않고, 🔔 같은 줄 안의 단추가 완료 · 수정 · 삭제 옆에 남지 않음", "아래 알림 띠(백업 안내 · 새 버전 등)가 떠 있는 동안 화면 아래에 그 높이만큼 여백: 끝까지 밀면 마지막 줄도 보임", "저장소에 올릴 때마다 자동 점검(GitHub Actions, 가짜 자료만) · 자동 점검 추가: 주간 점검 반영 화면 다듬기"]},
   {v:"5.58.0",date:"2026-10-26",items:["학생 골라 연락에도 결석 학생 연락처럼 학생마다 학부모 줄(관계 · 번호 · 전화 · 문자 단추), 받는 사람(학생 · 학부모 · 둘 다)을 학생 목록 위로 옮김, 보내기 안내에 받는 사람 표시"]},
   {v:"5.57.0",date:"2026-10-26",items:["👪 학부모 연락처(선택): 학생 정보에서 학생 전화와 따로 학부모 2명까지(어머니 · 아버지 · 보호자 · 조부모 · 기타), 명단 일괄 입력 · 엑셀 양식에 ‘학부모 전화번호’ 칸, 학번 변경 · 반 이동 때 함께 옮김", "연락 → 결석 학생 · 학생 골라 연락에 ‘받는 사람: 학생 · 학부모 · 둘 다’(학생 번호가 없으면 학부모로), 결석 학생 줄에 학부모마다 전화 · 문자, 학생 한눈에 보기 · 전달하기 학생 찾기에도 학부모", "학교 관리 묶음의 보호자 연락처는 학부모 연락처로 받음(학생 전화와 분리)", "학부모 연락처는 기기 · 백업 · 기기 연동에만 저장, 공유 링크 · 학교 묶음에는 넣지 않음", "자동 점검 추가: 학부모 연락처"]},
   {v:"5.56.0",date:"2026-10-25",items:["📝 글쓰기 편집 도구를 다섯 묶음(⭐ 자주 · ¶ 문단 · ＋ 넣기 · 가 꾸미기 · 🧰 도구)으로 정리: 한 번에 보이는 단추 41개 → 17개 안팎, 글자를 고르면 꾸미기 도구가 저절로, 많이 쓴 기능 8개가 ⭐ 자주에 자동으로, 🔍 기능 찾기(Ctrl+K · 초성 · 다른 이름 · Enter로 실행), ¶ 탭에 지금 블록 종류 표시","● 지금 수업 단추: 수업 시간에 앱을 열면 출석 · 오늘 · 시간표 화면 맨 위에 크게, 한 번 누르면 그 수업 출석 체크(이미 했으면 ‘출석 이어서’와 현황), ✕로 그 수업 동안 닫기", "출석을 마치면 명단 아래 ‘📞 결석 N명’ 줄: 문자 한 명씩(이름 들어간 문구) · 결석 학생 연락 화면으로 바로", "📝 출석 체크 아래 같은 교시 수업 메모(진도 · 한 줄 메모, 지난 수업 진도), 시간표 메모장에 바로 저장", "시간표 3일 보기(주간 | 3일 | 하루): 세로 휴대폰에서 큰 글씨로 사흘씩, ‹ › 하루씩 옮기기", "아이폰 홈 화면 앱을 처음 열면 사파리에서 쓰던 자료 옮기는 방법(전체 백업 파일 · 구글 연동) 안내", "학번을 바꾸면 세특 초안도 새 학번으로 옮김", "자동 점검 추가: 시간표 예외(임시 변경 취소 · 휴업일 · 시간표 교체 · 학기 전환, 백업 복원 뒤까지) · 동명이인 학생 · 글쓰기 도구 묶음"]},
@@ -3452,7 +3469,7 @@ function mondayOf(d){const[y,m,dd]=d.split("-").map(Number);const x=new Date(y,m
 let ttWeek=mondayOf(today()), ttEdit=false, ttDay=-1;
 /* 5.29: 시간표 보기 - 주간(5일) / 하루(큰 글자). 기기마다 기억 */
 const TTM_KEY="att-app-ttmode";
-function ttMode(){try{const v=localStorage.getItem(TTM_KEY);return v==="day"||v==="d3"?v:"week"}catch(e){return"week"}}
+function ttMode(){let v=null;try{v=localStorage.getItem(TTM_KEY)}catch(e){}if(v==="day"||v==="d3"||v==="week")return v;/* 5.59: 세로 휴대폰(폭 430px 이하)은 처음에 3일 보기 */return innerWidth<=430&&innerHeight>innerWidth?"d3":"week"}
 function tt3On(){return ttMode()==="d3"&&!ttEdit}
 let tt3=-1;function tt3Start(){if(tt3<0)tt3=Math.max(0,Math.min(2,Math.min(4,wdOf(today()))-1));return tt3}
 function tt3Step(k){let w=tt3Start()+k;if(w<0){ttWeek=addDays(ttWeek,-7);w=2}else if(w>2){ttWeek=addDays(ttWeek,7);w=0}tt3=w;renderTT()}
@@ -7370,6 +7387,9 @@ function storageStartup(){
       storeBar(`마지막 백업: ${agoDays(lb)}. 자료를 잃지 않도록 백업 파일을 저장하거나 구글 연동을 켜 두세요.`,"지금 백업",saveBackupFile)}
   }catch(e){}},4000);
 }
+/* 아래 알림 띠가 떠 있는 동안 그 높이만큼 아래 여백 (끝까지 밀면 가려진 줄도 보이게) */
+function nbPad(){let h=0;document.querySelectorAll(".newbar").forEach(b=>{if(b.offsetParent!==null||getComputedStyle(b).position==="fixed")h=Math.max(h,b.getBoundingClientRect().height)});document.documentElement.style.setProperty("--nbpad",h?Math.ceil(h+16)+"px":"0px")}
+try{new MutationObserver(()=>nbPad()).observe(document.body,{childList:true})}catch(e){}
 function storeBar(msg,label,fn){const b=document.createElement("div");b.className="newbar";b.setAttribute("role","status");
   b.innerHTML=`<span>${esc(msg)}</span><button class="go" type="button">${esc(label)}</button><button class="x" type="button" aria-label="닫기">×</button>`;
   document.body.appendChild(b);b.querySelector(".go").onclick=()=>{b.remove();fn()};b.querySelector(".x").onclick=()=>b.remove();setTimeout(()=>{if(b.isConnected)b.remove()},20000)}
@@ -9020,7 +9040,7 @@ function renderNowHero(){const els=document.querySelectorAll(".nowhero");if(!els
     if(dk===k)hide=true;
     if(view==="att"&&OBSmode()==="att"&&selDate===x.date&&x.s&&R()===x.s)hide=true;
     if(!hide){const N=x.cl.data.roster.length,pr=x.s?x.cl.data.roster.filter(([id])=>x.s.p[id]).length:0;
-      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><b>지금 수업 · ${esc(x.title)}</b><small>${esc(clsName(x.cl.data))} · ${esc(x.start)}~${esc(x.end)}${x.s?` · 출석 ${pr}/${N}`:""}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button>`;
+      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button>`;
       els.forEach(el=>{if(el.dataset.k!==k+html){el.dataset.k=k+html;el.innerHTML=html;el.querySelector("[data-nhgo]").onclick=()=>{x.go();try{if(OBS.mode!=="att")setAmode("att")}catch(e){}};el.querySelector("[data-nhx]").onclick=()=>{try{sessionStorage.setItem(NH_KEY,k)}catch(e){}renderNowHero()}}});
     }}
   els.forEach(el=>{const v=el.closest(".view");el.hidden=hide||!v||v.hidden;if(hide){el.innerHTML="";el.dataset.k=""}});
