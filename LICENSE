@@ -1,0 +1,36 @@
+교사의 생활 (Teacher's Life)
+Copyright (c) 2026 물리공작소 (san2sul). All rights reserved.
+
+공식 주소: https://san2sul.github.io/teachers-life/
+공식 저장소: https://github.com/san2sul/teachers-life
+
+1. 사용
+   누구나 공식 주소에서 이 앱을 무료로 사용할 수 있습니다.
+
+2. 금지
+   저작권자의 사전 서면 허락 없이, 이 저장소의 소스 코드 · 화면 디자인 · 도움말 등 문서 · 음악 · 그림의
+   전부 또는 일부를 수정하거나, 복제해 다른 주소에 게시하거나, 재배포 · 판매하거나,
+   이를 바탕으로 한 다른 앱을 만들 수 없습니다.
+
+3. 예외
+   - 사용자가 앱에 입력하거나 앱으로 만든 자료(명단 · 기록 · 백업 파일 등)는 사용자의 것입니다.
+   - 공개 저장소를 열람하는 것과 GitHub 안에서의 보기 · 포크는 GitHub 이용약관을 따릅니다.
+     포크하더라도 위 2의 행위(수정해 배포 · 다른 주소에 게시 등)는 허락되지 않습니다.
+   - vendor/ 폴더의 외부 라이브러리와 글꼴은 각자의 라이선스를 따릅니다
+     (예: NanumGothic-OFL.txt, KaTeX, SheetJS, ExcelJS 등).
+
+4. 보증 없음
+   이 앱은 있는 그대로 무료로 제공되며, 법이 허용하는 범위에서 어떠한 보증도 하지 않습니다.
+
+5. 허락 문의
+   수정 · 재배포 허락이 필요하면 저작권자에게 문의하세요: san2sul@gmail.com
+
+----------------------------------------------------------------
+English summary
+Copyright (c) 2026 물리공작소 (san2sul). All rights reserved.
+You may use the app free of charge at the official address above.
+Without prior written permission from the copyright holder, you may not modify, copy to
+another address, redistribute, sell, or create derivative apps from any part of this
+repository (source code, design, documentation, music, images).
+Data you create with the app belongs to you. Third-party components under vendor/ and
+fonts remain under their own licenses. Provided "as is", without warranty.

@@ -1238,6 +1238,19 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
   input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]),textarea,select{font-size:max(16px,1em)}
 }
 .wred img,.wred video{max-width:100%}
+
+/* 5.61 일정 알림 마감(완료) 표시 */
+.ev{grid-template-columns:34px 4.2rem minmax(0,1fr);gap:8px;padding-left:6px}
+.evck{appearance:none;width:30px;height:30px;margin:2px 0;border-radius:var(--r-s);border:2px solid var(--track);background:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;position:relative}
+.evck::before{content:"";position:absolute;inset:-7px}
+.ev.imp .evck{border-color:var(--absent)}
+.ev.done .evck{background:var(--present);border-color:var(--present)}
+.ev.done .evck::after{content:"";width:7px;height:13px;border:solid var(--paper);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.ev.done{opacity:.6}.ev.done .evb b{text-decoration:line-through;color:var(--muted)}
+.evc.dn{color:var(--present);background:var(--present-soft,var(--bg))}
+
+.offwarn{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--absent);color:#fff;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top,0px));font-size:.88rem}
+.offwarn>span{flex:1 1 14rem;min-width:0}.offwarn .btn{background:#fff;color:var(--absent);flex:none}.offwarn .x{flex:none;width:44px;height:44px;border:0;background:transparent;color:#fff;font-size:1.2rem;cursor:pointer}
 </style>
 </head>
 <body>
@@ -1272,7 +1285,7 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
     <input type="file" id="ttUpIn" accept="image/*,.xlsx,.xls,.xlsm,.csv,.htm,.html" hidden>
   </div>
   <section class="card" id="agCard">
-    <div class="hd"><h2>일정 · 알림</h2><button class="btn pri" type="button" id="agAdd">＋ 일정 추가</button></div>
+    <div class="hd"><h2>일정 알림</h2><button class="btn pri" type="button" id="agAdd">＋ 일정 · 할 일</button></div>
     <div class="presets" id="agRange"><button class="chip" type="button" data-r="week">이번 주</button><button class="chip" type="button" data-r="month">앞으로 30일</button></div>
     <div class="evlist" id="agList"></div>
     <div class="row2"><button class="btn" type="button" id="acUp2"><svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>학사일정 파일 올리기</button></div>
@@ -1492,7 +1505,7 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 
 <!-- 할 일 -->
 <main class="wrap view" id="v-todo" hidden>
-  <header class="top"><div><h1>오늘</h1><div class="sub" id="tdDate">오늘 수업 · 연락 · 마감 · 할 일</div></div><button class="btn pri" type="button" id="tdAdd">＋ 할 일 추가</button></header>
+  <header class="top"><div><h1>오늘</h1><div class="sub" id="tdDate">오늘 수업 · 연락 · 마감 · 할 일</div></div><button class="btn pri" type="button" id="tdAdd">＋ 일정 · 할 일</button></header>
   <div class="nowhero" hidden></div>
   <section class="card tday" id="tdToday"></section>
   <h2 class="sgt">할 일 · 일정</h2>
@@ -1714,8 +1727,11 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.60.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.61.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
+const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
+function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const VERSIONS=[
+  {v:"5.61.0",date:"2026-10-27",items:["시간표 ‘일정 알림’ · 오늘 ‘할 일’ 마감 연동: 어느 쪽에서 마감(완료)해도 다른 쪽에 바로 같이 표시. 시간표 일정 알림의 일정마다 마감(완료) 단추, 마감한 일정은 흐리게 · 줄 긋기 · ‘✓ 마감’, 마감하면 알림도 울리지 않음. 일정 창에도 ‘마감(완료)’ 칸", "추가 단추 하나로: 시간표 ‘＋ 일정 추가’와 오늘 ‘＋ 할 일 추가’를 같은 ‘＋ 일정 · 할 일’ 창으로(넣으면 두 곳에 함께 나옴)", "‘일정 · 알림’ 제목을 ‘일정 알림’으로", "저작권 · 공식 주소: 저장소에 LICENSE 파일(사용은 자유, 무단 수정 · 복제 · 재배포 금지), 이용약관에 ‘저작권과 공식 주소’ 조항, 앱 정보에 공식 주소 · 저작권 표시, 공식 주소가 아닌 곳에서 열리면 ‘공식 앱이 아닙니다’ 경고와 공식 앱 열기", "자동 점검 추가: 일정 · 할 일 마감 연동 · 공식 주소"]},
   {v:"5.60.0",date:"2026-10-27",items:["휴대폰 화면 고정: 아이폰에서 16px보다 작은 입력 칸을 누르면 화면이 저절로 확대되어 화면이 기기 폭을 넘고 아래 바가 함께 움직이던 문제 — 글쓰기 본문 · 표 칸 · 수식 칸 등 모든 입력 칸을 휴대폰에서 16px 이상으로", "입력을 마치거나 다른 화면 · 발표로 넘어갈 때 화면이 확대된 채면 원래 크기로 되돌림", "휴대폰에서 글을 입력하는 동안(키보드가 떠 있는 동안) 아래 바와 알림 띠를 숨김", "문서 전체 가로 넘침 막기를 html에도(아이폰), 서명 · 웹 페이지 · 설문 · 서류 화면에도 같은 설정", "발표 · 미리보기: 띄어쓰기 없는 긴 주소 · 낱말도 줄바꿈, 그림이 화면 폭을 넘지 않게", "자동 점검 추가: 휴대폰 화면 고정"]},
   {v:"5.59.0",date:"2026-10-26",items:["‘지금 수업’ 카드: ✕를 카드 안 오른쪽 위로, 시각을 윗줄에 따로 두어 제목(‘2교시 물리학’)이 한 줄로", "시간표: 세로 휴대폰(폭 430px 이하)은 처음에 3일 보기(주간을 고른 적이 있으면 그대로), 기간 표시는 한 줄(좁은 화면에서는 주간 · 3일 · 하루 단추를 아랫줄로)", "11px보다 작은 글자 없애기: 시간표 교시 · 시각 · 출석 수 · 빈 시간, 설정의 ‘1개 고름’ 등 · 앱 소개 · 개인정보처리방침 · 이용약관을 44px 높이 단추로", "밀어서 삭제: 밀린 줄 내용이 카드 밖으로 보이지 않고, 🔔 같은 줄 안의 단추가 완료 · 수정 · 삭제 옆에 남지 않음", "아래 알림 띠(백업 안내 · 새 버전 등)가 떠 있는 동안 화면 아래에 그 높이만큼 여백: 끝까지 밀면 마지막 줄도 보임", "저장소에 올릴 때마다 자동 점검(GitHub Actions, 가짜 자료만) · 자동 점검 추가: 주간 점검 반영 화면 다듬기"]},
   {v:"5.58.0",date:"2026-10-26",items:["학생 골라 연락에도 결석 학생 연락처럼 학생마다 학부모 줄(관계 · 번호 · 전화 · 문자 단추), 받는 사람(학생 · 학부모 · 둘 다)을 학생 목록 위로 옮김, 보내기 안내에 받는 사람 표시"]},
@@ -2827,7 +2843,7 @@ function newTermSheet(y,t){
 function renderVer(){
   $("verTag").textContent="v"+APP_VERSION;
   $("verFoot").textContent=`${APP_NAME} · 버전 ${APP_VERSION} (${APP_DATE}) · 만든 사람 ${APP_MAKER}`;
-  $("verMaker").innerHTML=`<b>${esc(APP_NAME)}</b> 버전 ${esc(APP_VERSION)}<br>만든 사람 <b>${esc(APP_MAKER)}</b><br>인터넷 없이도 열리며, 입력한 내용은 이 휴대폰에만 저장됩니다.`;
+  $("verMaker").innerHTML=`<b>${esc(APP_NAME)}</b> 버전 ${esc(APP_VERSION)}<br>만든 사람 <b>${esc(APP_MAKER)}</b><br>공식 주소 <a href="${OFFICIAL_URL}" target="_blank" rel="noopener">${OFFICIAL_URL.replace(/^https:\/\//,"")}</a>${isOfficial()?"":` <b class="warn">(지금은 공식 주소가 아님)</b>`}<br>© 2026 ${esc(APP_MAKER)} · 무단 수정 · 복제 · 재배포 금지 (이용약관 · LICENSE)<br>인터넷 없이도 열리며, 입력한 내용은 이 휴대폰에만 저장됩니다.`;
   $("verList").innerHTML=VERSIONS.map(x=>`<div style="flex-direction:column;align-items:flex-start;gap:4px"><b style="color:var(--ink)">v${esc(x.v)} <span class="sub">${esc(x.date)}${x.v===APP_VERSION?" · 지금 쓰는 버전":""}</span></b><span>${x.items.map(i=>"· "+esc(i)).join("<br>")}</span></div>`).join("");
 }
 $("clsIn").oninput=e=>{const n=e.target.value.trim(),c=curClass();if(!n||S.list.some(x=>x!==c&&x.data.cls===n&&inPer(x.data)))return;renameClass(c,n);save();renderAtt();renderSetCls()};
@@ -7123,11 +7139,15 @@ function evClsName(e){const c=S.list.find(x=>x.id===e.clsId);return c?clsName(c.
 function evItemHTML(e,showDate){
   const past=evTime(e)<Date.now()-3600000;
   return `<div class="ev${e.important?" imp":""}${past?" past":""}${e.done?" done":""}" data-ev="${esc(e.id)}" role="button" tabindex="0">
+    <button class="evck" type="button" role="checkbox" aria-checked="${!!e.done}" aria-label="${esc(e.title||e.cat)} 마감(완료) 표시"></button>
     <span class="evt">${showDate?`<small>${fmtShort(e.date)} (${dow(e.date)})</small>`:""}<b>${esc(e.start)}</b>${e.end?`<small>~${esc(e.end)}</small>`:""}</span>
-    <span class="evb"><span class="evc">${esc(e.cat)}</span>${e.important?'<span class="evc imp">중요</span>':""}<b>${esc(e.title||e.cat)}</b><small>${esc([slotOf(e.date,e.start),evClsName(e)].filter(Boolean).join(" · "))}${e.alarm>=0?` · 알림 ${alarmLabel(e.alarm)}`:""}</small></span>
+    <span class="evb"><span class="evc">${esc(e.cat)}</span>${e.important?'<span class="evc imp">중요</span>':""}${e.done?'<span class="evc dn">✓ 마감</span>':""}<b>${esc(e.title||e.cat)}</b><small>${esc([slotOf(e.date,e.start),evClsName(e)].filter(Boolean).join(" · "))}${e.alarm>=0&&!e.done?` · 알림 ${alarmLabel(e.alarm)}`:""}</small></span>
   </div>`;
 }
-function wireEvList(box){box.querySelectorAll("[data-ev]").forEach(el=>{const go=()=>{const e=S.events.find(x=>x.id===el.dataset.ev);if(e)editEvent(e)};el.onclick=go;el.onkeydown=k=>{if(k.key==="Enter"||k.key===" "){k.preventDefault();go()}}});swEventRows(box)}
+/* 5.61: 일정 · 할 일 마감(완료)은 한 곳(e.done)에 저장 → 시간표 일정 알림 · 오늘 할 일 · 그날 일정 어디서 바꿔도 같이 */
+function evSetDone(e,v){e.done=v;if(v){delete e.snooze}save();renderAll();try{if(view==="todo")renderTodo()}catch(_){}toast(v?"마감했습니다 · 오늘 할 일에도 반영":"다시 할 일로 돌렸습니다")}
+function wireEvList(box){box.querySelectorAll("[data-ev]").forEach(el=>{const go=()=>{const e=S.events.find(x=>x.id===el.dataset.ev);if(e)editEvent(e)};el.onclick=go;
+  const ck=el.querySelector(".evck");if(ck){ck.onpointerdown=k=>k.stopPropagation();ck.onclick=k=>{k.stopPropagation();const e=S.events.find(x=>x.id===el.dataset.ev);if(!e)return;evSetDone(e,!e.done);const v=!!e.done;el.classList.toggle("done",v);ck.setAttribute("aria-checked",String(v))}}el.onkeydown=k=>{if(k.key==="Enter"||k.key===" "){k.preventDefault();go()}}});swEventRows(box)}
 let evRange="week";
 function renderAgenda(){
   const box=$("agList");if(!box)return;
@@ -7157,7 +7177,7 @@ function dayMenu(date,slot){
 }
 function editEvent(e,pre){
   const isNew=!e;const v=e?{...e}:Object.assign({id:uid(),date:today(),start:nowHM(),end:"",cat:"학생 면담",title:"",memo:"",clsId:"",alarm:10,important:false,done:false},pre||{});
-  $("sheetBox").innerHTML=`<h2>${isNew?"일정 추가":"일정"}</h2>
+  $("sheetBox").innerHTML=`<h2>${isNew?"일정 · 할 일 추가":"일정 · 할 일"}</h2><p class="note" style="margin-top:-4px">여기에 넣으면 시간표의 일정 알림과 오늘의 할 일에 함께 나오고, 어느 쪽에서 마감해도 같이 바뀝니다.</p>
     <div class="presets" id="evCats">${EV_CATS.map(c=>`<button class="chip" type="button" data-c="${c}">${c}</button>`).join("")}</div>
     <label class="lb" for="evTitle">제목<input class="fld" id="evTitle" placeholder="예: 김동환 진로 상담" autocomplete="off"></label>
     <div class="ttset evdt"><label class="lb" for="evDate">날짜<input class="fld" id="evDate" type="date"></label>
@@ -7170,6 +7190,7 @@ function editEvent(e,pre){
     <label class="lb" for="evMemo">메모<textarea class="fld" id="evMemo" rows="3"></textarea></label>
     <div class="range"><label class="lb" for="evAlarm">알림<select class="fld" id="evAlarm">${ALARMS.map(([m,l])=>`<option value="${m}">${l}</option>`).join("")}</select></label>
       <label class="chk" for="evImp" style="align-self:end;min-height:44px"><input type="checkbox" id="evImp"> 중요 일정</label></div>
+    ${isNew?"":`<label class="chk" for="evDone"><input type="checkbox" id="evDone"${v.done?" checked":""}> 마감(완료) — 오늘 할 일에서도 완료로 보입니다</label>`}
     <p class="note" id="evAlarmNote"></p>
     <div class="row2"><button class="btn" type="button" id="evGcal"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>구글 캘린더에 추가</button></div>
     <div class="row2">${isNew?"":`<button class="btn bad" type="button" id="evDel">삭제</button>`}<button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="evOk">저장</button></div>`;
@@ -7189,7 +7210,7 @@ function editEvent(e,pre){
     {const t0=TT(),gk=d&&st?(slotK&&["pre","lunch","after"].includes(slotK)||String(slotK).startsWith("x")?slotK:gapKeyOf(t0,d,st)):"";const show=isNew&&!!gk;$("evWkL").hidden=!show;if(show){$("evWkT").textContent=`매주 ${DAYS[wdOf(d)]}요일 ${slotTime(t0,d,gk).label} 고정 활동으로 시간표에 넣기 (일정 대신)`;$("evWkL").dataset.k=gk}else $("evWk").checked=false}};
   $("evDate").oninput=()=>{const d=$("evDate").value;if(slotK){const st=d?slotTime(TT(),d,slotK):null;if(st){$("evStart").value=st.start;$("evEnd").value=st.end}else slotK=""}paintSlots()};
   $("evStart").oninput=()=>{slotK="";paintSlots()};$("evEnd").oninput=()=>{if(slotK){slotK="";paintSlots()}};$("evAlarm").onchange=paintSlot;paintSlots();
-  const read=()=>({...v,slot:slotK||undefined,title:$("evTitle").value.trim(),date:$("evDate").value,start:$("evStart").value,end:$("evEnd").value,cat,clsId:$("evCls").value,memo:$("evMemo").value.trim(),alarm:+$("evAlarm").value,important:$("evImp").checked});
+  const read=()=>({...v,slot:slotK||undefined,title:$("evTitle").value.trim(),date:$("evDate").value,start:$("evStart").value,end:$("evEnd").value,cat,clsId:$("evCls").value,memo:$("evMemo").value.trim(),alarm:+$("evAlarm").value,important:$("evImp").checked,...($("evDone")?{done:$("evDone").checked}:{})});
   $("skNo").onclick=()=>{$("sheet").hidden=true;renderAll()};
   $("evGcal").onclick=()=>{const x=read();if(!x.date||!x.start)return toast("날짜와 시작 시간을 넣어 주세요");openGcal(x)};
   if(!isNew)twoStep($("evDel"),"정말 삭제",()=>{S.events=S.events.filter(x=>x.id!==v.id);save();$("sheet").hidden=true;toast("일정을 삭제했습니다");renderAll()});
@@ -7207,7 +7228,9 @@ function editEvent(e,pre){
   };
   if(isNew)setTimeout(()=>$("evTitle").focus(),50);
 }
-$("agAdd").onclick=()=>{const td=today();const inWeek=td>=ttWeek&&td<=addDays(ttWeek,6);editEvent(null,{date:inWeek?td:ttWeek})};
+/* 5.61: 시간표 ‘＋ 일정 · 할 일’과 오늘 ‘＋ 일정 · 할 일’은 같은 창 · 같은 자료(오늘 할 일 = 시간표 일정 알림) */
+function addPlan(date){editEvent(null,{date:date||today(),start:nowHM()})}
+$("agAdd").onclick=()=>{const td=today();const inWeek=td>=ttWeek&&td<=addDays(ttWeek,6);addPlan(inWeek?td:ttWeek)};
 document.querySelectorAll("#agRange .chip").forEach(b=>b.onclick=()=>{evRange=b.dataset.r;renderAgenda()});
 /* --- 알림 --- */
 function askNotify(){
@@ -7400,6 +7423,12 @@ function storageStartup(){
       storeBar(`마지막 백업: ${agoDays(lb)}. 자료를 잃지 않도록 백업 파일을 저장하거나 구글 연동을 켜 두세요.`,"지금 백업",saveBackupFile)}
   }catch(e){}},4000);
 }
+/* 5.61: 공식 주소 확인 — 다른 주소에 복사된 앱이면 경고 (테스트용 .test · 내 컴퓨터 주소 · 파일로 열기는 제외) */
+function officialWarn(){if(isOfficial())return;let skip=false;try{skip=sessionStorage.getItem("att-app-offwarn")==="1"}catch(e){}if(skip||document.getElementById("offWarn"))return;
+  const b=document.createElement("div");b.id="offWarn";b.className="offwarn";b.setAttribute("role","alert");
+  b.innerHTML=`<span>⚠ <b>공식 앱이 아닙니다.</b> 이 주소(${esc(location.host)})의 앱은 만든 사람이 관리하지 않습니다. 학생 정보를 넣기 전에 공식 주소에서 여세요.</span><a class="btn sm" href="${OFFICIAL_URL}">공식 앱 열기</a><button type="button" class="x" aria-label="이번에는 닫기">×</button>`;
+  document.body.prepend(b);b.querySelector(".x").onclick=()=>{try{sessionStorage.setItem("att-app-offwarn","1")}catch(e){}b.remove()}}
+setTimeout(officialWarn,600);
 /* 5.60: 휴대폰에서 입력하는 동안 아래 바를 숨기고, 입력을 마쳤는데 화면이 확대된 채면 원래 크기로 */
 (function(){const coarse=matchMedia("(pointer:coarse)");
   /* 키보드가 뜨는 칸만 (날짜 · 시각 · 고르기 칸은 키보드 대신 고르는 창이라 제외) */
@@ -7577,7 +7606,7 @@ function renderTodo(){
 function toggleDone(x){
   if(x.kind==="ev")x.ref.done=!x.ref.done;
   else{const n=S.notes[x.nk];if(!n)return;if(x.kind==="task")n.taskDone=!n.taskDone;else n.meetDone=!n.meetDone}
-  save();renderTodo();toast(x.done?"다시 할 일로 돌렸습니다":"완료했습니다");
+  save();renderTodo();try{renderAgenda()}catch(_){}toast(x.done?"다시 할 일로 돌렸습니다":x.kind==="ev"?"완료했습니다 · 시간표 일정 알림에도 반영":"완료했습니다");
 }
 function openMemoItem(x){
   const n=x.ref;
@@ -7652,7 +7681,7 @@ $("tdMail").onclick=()=>{
   };
 };
 $("tdCopy").onclick=()=>copy(todoText(),"할 일 목록을 복사했습니다");
-$("tdAdd").onclick=()=>editEvent(null,{date:today(),start:nowHM()});
+$("tdAdd").onclick=()=>addPlan(today());
 document.querySelectorAll("#tdRange .chip").forEach(b=>b.onclick=()=>{TD.range=b.dataset.r;saveTD();renderTodo()});
 $("tdImp").onchange=e=>{TD.imp=e.target.checked;saveTD();renderTodo()};
 $("tdDone").onchange=e=>{TD.showDone=e.target.checked;saveTD();renderTodo()};
