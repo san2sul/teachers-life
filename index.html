@@ -1226,6 +1226,18 @@ body{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + var(--
 @media (min-width:1100px){html:not([data-nav="bottom"]) body{padding-bottom:var(--nbpad,0px)}}
 .lkrow{display:flex;flex-wrap:wrap;gap:4px 6px}.lkrow a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:var(--r-m);text-decoration:none;color:var(--accent);font-weight:600}
 .ttg tbody th.tcol small,.ttg .aft small,.ttg i.ck,.ttg .lc span,.shlb small,.ttg tbody th.tcol b,.ttg .aft b,.tbtn.pre b{font-size:max(11px,.62rem)!important}
+
+/* 5.60 휴대폰 화면 고정: 입력 칸 자동 확대 막기 · 가로 넘침 막기 · 키보드가 떠 있는 동안 아래 바 숨기기 */
+html{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
+@media (pointer:coarse){
+  .wred{font-size:max(16px,calc(1rem * var(--wfs,1)))}
+  .wtbl{font-size:max(16px,.9rem)}
+  #wmT{font-size:16px}
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]),textarea,select{font-size:max(16px,1em)}
+}
+.wred img,.wred video{max-width:100%}
 </style>
 </head>
 <body>
@@ -1702,8 +1714,9 @@ body{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + var(--
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.59.0", APP_DATE="2026-10-26", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.60.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
 const VERSIONS=[
+  {v:"5.60.0",date:"2026-10-27",items:["휴대폰 화면 고정: 아이폰에서 16px보다 작은 입력 칸을 누르면 화면이 저절로 확대되어 화면이 기기 폭을 넘고 아래 바가 함께 움직이던 문제 — 글쓰기 본문 · 표 칸 · 수식 칸 등 모든 입력 칸을 휴대폰에서 16px 이상으로", "입력을 마치거나 다른 화면 · 발표로 넘어갈 때 화면이 확대된 채면 원래 크기로 되돌림", "휴대폰에서 글을 입력하는 동안(키보드가 떠 있는 동안) 아래 바와 알림 띠를 숨김", "문서 전체 가로 넘침 막기를 html에도(아이폰), 서명 · 웹 페이지 · 설문 · 서류 화면에도 같은 설정", "발표 · 미리보기: 띄어쓰기 없는 긴 주소 · 낱말도 줄바꿈, 그림이 화면 폭을 넘지 않게", "자동 점검 추가: 휴대폰 화면 고정"]},
   {v:"5.59.0",date:"2026-10-26",items:["‘지금 수업’ 카드: ✕를 카드 안 오른쪽 위로, 시각을 윗줄에 따로 두어 제목(‘2교시 물리학’)이 한 줄로", "시간표: 세로 휴대폰(폭 430px 이하)은 처음에 3일 보기(주간을 고른 적이 있으면 그대로), 기간 표시는 한 줄(좁은 화면에서는 주간 · 3일 · 하루 단추를 아랫줄로)", "11px보다 작은 글자 없애기: 시간표 교시 · 시각 · 출석 수 · 빈 시간, 설정의 ‘1개 고름’ 등 · 앱 소개 · 개인정보처리방침 · 이용약관을 44px 높이 단추로", "밀어서 삭제: 밀린 줄 내용이 카드 밖으로 보이지 않고, 🔔 같은 줄 안의 단추가 완료 · 수정 · 삭제 옆에 남지 않음", "아래 알림 띠(백업 안내 · 새 버전 등)가 떠 있는 동안 화면 아래에 그 높이만큼 여백: 끝까지 밀면 마지막 줄도 보임", "저장소에 올릴 때마다 자동 점검(GitHub Actions, 가짜 자료만) · 자동 점검 추가: 주간 점검 반영 화면 다듬기"]},
   {v:"5.58.0",date:"2026-10-26",items:["학생 골라 연락에도 결석 학생 연락처럼 학생마다 학부모 줄(관계 · 번호 · 전화 · 문자 단추), 받는 사람(학생 · 학부모 · 둘 다)을 학생 목록 위로 옮김, 보내기 안내에 받는 사람 표시"]},
   {v:"5.57.0",date:"2026-10-26",items:["👪 학부모 연락처(선택): 학생 정보에서 학생 전화와 따로 학부모 2명까지(어머니 · 아버지 · 보호자 · 조부모 · 기타), 명단 일괄 입력 · 엑셀 양식에 ‘학부모 전화번호’ 칸, 학번 변경 · 반 이동 때 함께 옮김", "연락 → 결석 학생 · 학생 골라 연락에 ‘받는 사람: 학생 · 학부모 · 둘 다’(학생 번호가 없으면 학부모로), 결석 학생 줄에 학부모마다 전화 · 문자, 학생 한눈에 보기 · 전달하기 학생 찾기에도 학부모", "학교 관리 묶음의 보호자 연락처는 학부모 연락처로 받음(학생 전화와 분리)", "학부모 연락처는 기기 · 백업 · 기기 연동에만 저장, 공유 링크 · 학교 묶음에는 넣지 않음", "자동 점검 추가: 학부모 연락처"]},
@@ -6004,7 +6017,7 @@ async function wrPrint(r){try{const V=await wrView();try{await wrKatex()}catch(e
   await Promise.all([...el.querySelectorAll("img")].map(im=>im.complete&&im.naturalWidth?0:new Promise(res=>{im.onload=im.onerror=res;setTimeout(res,2500)})));
   document.body.classList.add("wrprinting");const done=()=>{document.body.classList.remove("wrprinting");el.remove();removeEventListener("afterprint",done)};addEventListener("afterprint",done);
   if(Array.isArray(window.__printSpy)){window.__printSpy.push(el.innerHTML);done();return}setTimeout(()=>window.print(),60)}catch(e){toast(e.message||"인쇄하지 못했습니다")}}
-function wrPresent(r,start){clearTimeout(WR_SAVE);save();wrView().then(V=>V.present(r,{fillImg:wrFill,loadMath:wrKatex,mode:r.sm||"h1",start:start||0})).catch(e=>toast(e.message))}
+function wrPresent(r,start){try{window.tlUnzoom&&window.tlUnzoom()}catch(e){}clearTimeout(WR_SAVE);save();wrView().then(V=>V.present(r,{fillImg:wrFill,loadMath:wrKatex,mode:r.sm||"h1",start:start||0})).catch(e=>toast(e.message))}
 async function wrWebLink(r){clearTimeout(WR_SAVE);save();const hasImg=(r.blocks||[]).some(b=>b.t==="img");let withImg=hasImg;const{ov,box}=wrOv("wweb");
   const paint=async()=>{box.innerHTML=`<h2>웹 페이지 링크</h2><p class="note">링크를 받은 사람은 앱 없이 웹 브라우저로 이 글을 봅니다. 글은 링크 안에 들어 있어 서버에 올라가지 않습니다(링크를 아는 사람은 누구나 볼 수 있음).</p>
     ${r.k==="stu"?`<p class="warn">학생 기록입니다. 학생 이름 · 학번은 빼고 만들지만, 내용에 개인정보가 없는지 꼭 확인하세요.</p>`:""}
@@ -7387,6 +7400,15 @@ function storageStartup(){
       storeBar(`마지막 백업: ${agoDays(lb)}. 자료를 잃지 않도록 백업 파일을 저장하거나 구글 연동을 켜 두세요.`,"지금 백업",saveBackupFile)}
   }catch(e){}},4000);
 }
+/* 5.60: 휴대폰에서 입력하는 동안 아래 바를 숨기고, 입력을 마쳤는데 화면이 확대된 채면 원래 크기로 */
+(function(){const coarse=matchMedia("(pointer:coarse)");
+  /* 키보드가 뜨는 칸만 (날짜 · 시각 · 고르기 칸은 키보드 대신 고르는 창이라 제외) */
+  const isEd=e=>!!e&&(e.isContentEditable||(/^(INPUT|TEXTAREA)$/.test(e.tagName)&&!/^(checkbox|radio|button|submit|reset|range|color|file|image|date|time|datetime-local|month|week)$/i.test(e.type||"")));
+  let t=null;
+  const unzoom=window.tlUnzoom=()=>{const vv=window.visualViewport;if(!vv||vv.scale<=1.01)return;const m=document.querySelector('meta[name="viewport"]');if(!m)return;const o=m.getAttribute("content");m.setAttribute("content",o+",maximum-scale=1");setTimeout(()=>m.setAttribute("content",o),400)};
+  document.addEventListener("focusin",e=>{if(!coarse.matches||!isEd(e.target))return;clearTimeout(t);document.documentElement.classList.add("kbopen")});
+  document.addEventListener("focusout",()=>{if(!coarse.matches)return;clearTimeout(t);t=setTimeout(()=>{if(isEd(document.activeElement))return;document.documentElement.classList.remove("kbopen");unzoom()},150)});
+})();
 /* 아래 알림 띠가 떠 있는 동안 그 높이만큼 아래 여백 (끝까지 밀면 가려진 줄도 보이게) */
 function nbPad(){let h=0;document.querySelectorAll(".newbar").forEach(b=>{if(b.offsetParent!==null||getComputedStyle(b).position==="fixed")h=Math.max(h,b.getBoundingClientRect().height)});document.documentElement.style.setProperty("--nbpad",h?Math.ceil(h+16)+"px":"0px")}
 try{new MutationObserver(()=>nbPad()).observe(document.body,{childList:true})}catch(e){}
@@ -7675,7 +7697,7 @@ function showUpdBar(v){if(UPD.shown===v)return;UPD.shown=v;
 window.addEventListener("error",e=>{if(e&&e.message&&!/Script error/i.test(e.message))reportErr("오류",{message:e.message+(e.lineno?` (줄 ${e.lineno})`:"")})});
 window.addEventListener("unhandledrejection",e=>{const r=e&&e.reason;if(r&&r.auth)return;if(r&&r.name==="AbortError")return;reportErr("처리 중 오류",r||{message:"알 수 없음"})});
 function renderAll(){safe("출석",renderAtt);safe("지금 수업",renderNowHero);safe("관찰 기록",renderObs);safe("메뉴",renderNav);safe("할 일 표시",renderTdBadge);if(view==="tt")safe("시간표",renderTT);if(view==="todo")safe("할 일",renderTodo);if(view==="call")safe("연락",renderCall);if(view==="stat")safe("평가·통계",renderStatView);if(view==="set")renderSet()}
-function show(v){
+function show(v){try{window.tlUnzoom&&window.tlUnzoom()}catch(e){}
   if(v!=="set"){const a=S.list.find(c=>c.id===S.active);if(a&&D!==a.data){D=a.data;selId=null}}
   if(v==="school"&&!schOn())v="set";
   view=v;document.documentElement.dataset.view=v;

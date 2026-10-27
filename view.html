@@ -20,6 +20,8 @@ main{max-width:min(53.75rem,100%);margin:16px auto 48px;background:var(--paper);
 .err{max-width:min(35.0rem,100%);margin:40px auto;padding:20px;background:#fff;border-radius:16px;text-align:center;line-height:1.6}
 .foot{text-align:center;font-size:.75rem;color:#8a8f8c;margin:-30px 0 30px}
 @media print{.bar,.foot{display:none}body{background:#fff}main{box-shadow:none;margin:0;max-width:none;padding:0}}
+
+/* 5.60 휴대폰 화면 고정 */html{overflow-x:hidden}@supports (overflow:clip){html,body{overflow-x:clip}}@media (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]),textarea,select,[contenteditable]{font-size:max(16px,1em)}}
 </style>
 <style id="wvcss"></style>
 </head>

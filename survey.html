@@ -38,6 +38,8 @@ table.g input[type=radio],table.g input[type=checkbox]{width:22px;height:22px;ac
 .done{text-align:center}.done .big{font-size:2.6rem}
 .foot{text-align:center;color:var(--muted);font-size:.75rem}
 [hidden]{display:none!important}
+
+/* 5.60 휴대폰 화면 고정 */html{overflow-x:hidden}@supports (overflow:clip){html,body{overflow-x:clip}}@media (pointer:coarse){input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]),textarea,select,[contenteditable]{font-size:max(16px,1em)}}
 </style>
 </head>
 <body>
