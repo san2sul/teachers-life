@@ -589,7 +589,7 @@ details.card[open]>summary::after{content:"－"}
 .newcls{display:flex;gap:8px}
 .newcls .fld{flex:1}
 /* bottom nav */
-nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--paper);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--paper);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
 .navb{appearance:none;border:0;background:none;height:var(--nav-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.75rem;color:var(--muted);cursor:pointer;position:relative}
 .navb svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .navb[aria-current="page"]{color:var(--accent);font-weight:700}
@@ -1251,6 +1251,15 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 
 .offwarn{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--absent);color:#fff;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top,0px));font-size:.88rem}
 .offwarn>span{flex:1 1 14rem;min-width:0}.offwarn .btn{background:#fff;color:var(--absent);flex:none}.offwarn .x{flex:none;width:44px;height:44px;border:0;background:transparent;color:#fff;font-size:1.2rem;cursor:pointer}
+
+/* 5.62 출석·기록 메뉴 타일 (3 × 2) */
+.amgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.amgrid .amt.chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;padding:8px 4px;border-radius:var(--r-m);border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:.85rem;font-weight:600;line-height:1.2;white-space:nowrap;cursor:pointer;box-shadow:none}
+.amgrid .amt svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--accent)}
+.amgrid .amt.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.amgrid .amt[aria-pressed="true"] svg{color:#fff}
+.amgrid .amt.chip:active{transform:scale(.98)}
+@media (min-width:700px){.amgrid{grid-template-columns:repeat(6,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -1337,7 +1346,7 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
     </div>
     <p class="dayhead" id="dayHead"></p>
   </div>
-  <div class="ctabs" id="amode"><button class="chip" type="button" data-m="att" aria-pressed="true">출석 체크</button><button class="chip" type="button" data-m="obs">관찰 기록</button><button class="chip" type="button" data-m="task">평가 · 과제</button><button class="chip" type="button" data-m="write">글쓰기</button></div>
+  <div class="amgrid" id="amode" role="group" aria-label="출석·기록 메뉴"></div>
   <div id="m-task" hidden><section class="card tkcard" id="ttTasks"></section></div>
   <div id="m-write" hidden><section class="card wrcard" id="wrCard"></section></div>
   <div id="m-obs" hidden>
@@ -1448,7 +1457,7 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 <!-- 통계 -->
 <main class="wrap view" id="v-stat" hidden>
   <header class="top"><div><h1 id="stTitle">학생 서명</h1><div class="sub" id="stSub"></div></div></header>
-  <div class="ctabs" id="stabs"><button class="chip" type="button" data-t="eval" aria-pressed="true">학생 서명</button><button class="chip" type="button" data-t="att">출석 통계</button></div>
+  <div class="amgrid" id="stabs" role="group" aria-label="출석·기록 메뉴"></div>
   <div id="s-eval">
     <section class="card" id="evListBox"><div class="hd"><h2>학생 서명 받기 <span class="sub">수행평가 · 활동 확인 · 안내문 · 동의서</span></h2></div>
       <p class="note">수행평가 점수 확인뿐 아니라 활동 참여 확인, 안내문·가정통신문 확인, 동의서·서약서 등 학생 자필 서명이 필요한 일에 씁니다. 학생마다 서명 링크를 보내면 학생은 휴대폰에서 내용을 확인하고 손가락으로 서명해 보내고, 서명이 들어간 전표를 파일로 받습니다.</p>
@@ -1711,11 +1720,10 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 <div class="topbtns" id="topBtns"><button class="helpbtn" type="button" id="helpBtn" aria-label="이 화면 도움말">ⓘ 도움말</button></div>
 <div class="helpov" id="helpOv" hidden role="dialog" aria-label="도움말"><div class="hb"><b>도움말</b><button class="btn sm" type="button" id="helpX">닫기</button></div><iframe id="helpFr" title="도움말"></iframe></div>
 <nav class="bottom" aria-label="화면">
-  <button class="navb" type="button" data-v="tt"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M9 4v17M15 4v17M3 15h18"/></svg>시간표</button>
-  <button class="navb" type="button" data-v="att" aria-current="page"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>출석</button>
-  <button class="navb" type="button" data-v="call"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>연락<span class="cnt" id="navCnt" hidden></span></button>
   <button class="navb" type="button" data-v="todo"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.5 1.5L7.5 5M3.5 12l1.5 1.5L7.5 11M3.5 18l1.5 1.5L7.5 17"/></svg>오늘<span class="cnt" id="navTd" hidden></span></button>
-  <button class="navb" type="button" data-v="stat"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>평가·통계</button>
+  <button class="navb" type="button" data-v="tt"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M9 4v17M15 4v17M3 15h18"/></svg>시간표</button>
+  <button class="navb" type="button" data-v="att" aria-current="page"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>출석·기록</button>
+  <button class="navb" type="button" data-v="call"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>연락<span class="cnt" id="navCnt" hidden></span></button>
   <button class="navb" type="button" data-v="set"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>설정</button>
 </nav>
 <div class="toast" id="toast" role="status" hidden></div>
@@ -1727,10 +1735,13 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.61.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.62.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
+const AM_ICON={att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
+const AM_ITEMS=[["m","att","출석 체크","att"],["t","att","출석 통계","stat"],["m","obs","관찰 기록","obs"],["m","write","글쓰기","write"],["m","task","평가 · 과제","task"],["t","eval","학생 서명","sign"]];
 const VERSIONS=[
+  {v:"5.62.0",date:"2026-10-27",items:["아래 메뉴를 다섯 개로: 오늘 · 시간표 · 출석·기록 · 연락 · 설정(오늘을 맨 왼쪽으로, ‘출석’을 ‘출석·기록’으로)", "‘평가·통계’를 출석·기록에 합침: 출석·기록 위쪽에 여섯 칸 메뉴(3 × 2, 아이콘) — 출석 체크 · 출석 통계 · 관찰 기록 · 글쓰기 · 평가 · 과제 · 학생 서명. 어느 칸에서든 한 번에 오가고, 지금 칸은 진한 색, 서명 · 통계 화면에도 같은 메뉴", "도움말의 ‘평가·통계 → …’ 길 안내를 ‘출석·기록 → 학생 서명 · 출석 통계’로", "자동 점검 추가: 아래 메뉴 · 출석·기록 여섯 칸"]},
   {v:"5.61.0",date:"2026-10-27",items:["시간표 ‘일정 알림’ · 오늘 ‘할 일’ 마감 연동: 어느 쪽에서 마감(완료)해도 다른 쪽에 바로 같이 표시. 시간표 일정 알림의 일정마다 마감(완료) 단추, 마감한 일정은 흐리게 · 줄 긋기 · ‘✓ 마감’, 마감하면 알림도 울리지 않음. 일정 창에도 ‘마감(완료)’ 칸", "추가 단추 하나로: 시간표 ‘＋ 일정 추가’와 오늘 ‘＋ 할 일 추가’를 같은 ‘＋ 일정 · 할 일’ 창으로(넣으면 두 곳에 함께 나옴)", "‘일정 · 알림’ 제목을 ‘일정 알림’으로", "저작권 · 공식 주소: 저장소에 LICENSE 파일(사용은 자유, 무단 수정 · 복제 · 재배포 금지), 이용약관에 ‘저작권과 공식 주소’ 조항, 앱 정보에 공식 주소 · 저작권 표시, 공식 주소가 아닌 곳에서 열리면 ‘공식 앱이 아닙니다’ 경고와 공식 앱 열기", "자동 점검 추가: 일정 · 할 일 마감 연동 · 공식 주소"]},
   {v:"5.60.0",date:"2026-10-27",items:["휴대폰 화면 고정: 아이폰에서 16px보다 작은 입력 칸을 누르면 화면이 저절로 확대되어 화면이 기기 폭을 넘고 아래 바가 함께 움직이던 문제 — 글쓰기 본문 · 표 칸 · 수식 칸 등 모든 입력 칸을 휴대폰에서 16px 이상으로", "입력을 마치거나 다른 화면 · 발표로 넘어갈 때 화면이 확대된 채면 원래 크기로 되돌림", "휴대폰에서 글을 입력하는 동안(키보드가 떠 있는 동안) 아래 바와 알림 띠를 숨김", "문서 전체 가로 넘침 막기를 html에도(아이폰), 서명 · 웹 페이지 · 설문 · 서류 화면에도 같은 설정", "발표 · 미리보기: 띄어쓰기 없는 긴 주소 · 낱말도 줄바꿈, 그림이 화면 폭을 넘지 않게", "자동 점검 추가: 휴대폰 화면 고정"]},
   {v:"5.59.0",date:"2026-10-26",items:["‘지금 수업’ 카드: ✕를 카드 안 오른쪽 위로, 시각을 윗줄에 따로 두어 제목(‘2교시 물리학’)이 한 줄로", "시간표: 세로 휴대폰(폭 430px 이하)은 처음에 3일 보기(주간을 고른 적이 있으면 그대로), 기간 표시는 한 줄(좁은 화면에서는 주간 · 3일 · 하루 단추를 아랫줄로)", "11px보다 작은 글자 없애기: 시간표 교시 · 시각 · 출석 수 · 빈 시간, 설정의 ‘1개 고름’ 등 · 앱 소개 · 개인정보처리방침 · 이용약관을 44px 높이 단추로", "밀어서 삭제: 밀린 줄 내용이 카드 밖으로 보이지 않고, 🔔 같은 줄 안의 단추가 완료 · 수정 · 삭제 옆에 남지 않음", "아래 알림 띠(백업 안내 · 새 버전 등)가 떠 있는 동안 화면 아래에 그 높이만큼 여백: 끝까지 밀면 마지막 줄도 보임", "저장소에 올릴 때마다 자동 점검(GitHub Actions, 가짜 자료만) · 자동 점검 추가: 주간 점검 반영 화면 다듬기"]},
@@ -7732,7 +7743,7 @@ function show(v){try{window.tlUnzoom&&window.tlUnzoom()}catch(e){}
   view=v;document.documentElement.dataset.view=v;
   if(v==="school")setTimeout(()=>schLoad().then(()=>{if(view==="school")renderSchool()}).catch(()=>{}),0);
   ["tt","att","call","todo","stat","set","school"].forEach(k=>$("v-"+k).hidden=k!==v);try{localStorage.setItem("att-app-view",v)}catch(e){}
-  document.querySelectorAll(".navb").forEach(b=>{if(b.dataset.v===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+  document.querySelectorAll(".navb").forEach(b=>{if(b.dataset.v===v||(v==="stat"&&b.dataset.v==="att"))b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   renderAll();window.scrollTo(0,0);
 }
 document.querySelectorAll(".navb").forEach(b=>b.onclick=()=>show(b.dataset.v));
@@ -7790,7 +7801,7 @@ function setAmode(m){OBS.mode=m;try{localStorage.setItem("att-app-amode",m)}catc
 function renderObs(){{const sc=$("stsCnt");if(sc){const n=D.roster.filter(([id])=>(stsOf(id)||{}).t).length;sc.textContent=D.roster.length?`초안 ${n}/${D.roster.length}명`:""}}
   if(!OBS||!$("m-obs"))return;
   const isObs=OBS.mode==="obs",isTask=OBS.mode==="task",isWr=OBS.mode==="write";
-  document.querySelectorAll("#amode .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===OBS.mode));
+  try{amGridPaint()}catch(_){}
   $("m-att").hidden=isObs||isTask||isWr;$("m-obs").hidden=!isObs;$("m-task").hidden=!isTask;$("m-write").hidden=!isWr;
   $("cls").textContent=isWr?"글쓰기":(D.cls?D.cls+" ":"")+(isObs?"관찰 기록":isTask?"평가 · 과제":"출석부");
   if(isTask){try{renderTtTasks()}catch(e){}return}
@@ -8022,7 +8033,7 @@ function obsExport(){
       {name:"학생별 누적",title:`학생 관찰 기록 · 학생별 누적 · ${clsName()}`,rows:b,widths:[10,10,10,50,80],text:[0],wrap:[3,4]},
       {name:"날짜별 기록",title:`학생 관찰 기록 · 날짜별 · ${clsName()}`,rows:a,widths:[12,10,10,30,16,22,50,18],text:[1],wrap:[3,5,6]}],"관찰 기록 엑셀 파일을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))}
 }
-document.querySelectorAll("#amode .chip").forEach(b=>b.onclick=()=>setAmode(b.dataset.m));
+amGridBuild();
 $("obsLockBtn").onclick=()=>{if(!D.obsLock||typeof D.obsLock!=="object")D.obsLock={};
   if(D.obsLock[selDate]){delete D.obsLock[selDate];if(!Object.keys(D.obsLock).length)delete D.obsLock;toast(`${fmtDate(selDate)} 관찰 기록 잠금을 풀었습니다`)}
   else{D.obsLock[selDate]=Date.now();OBS.arm=null;toast(`${fmtDate(selDate)} 관찰 기록을 잠갔습니다`)}
@@ -8148,7 +8159,7 @@ function evalTemplateCls(c,its,withEm,sumF,docT){
   xlOut(`${docT.replace(/[\\/:*?"<>|\s]+/g,"_")}_${clsName(d).replace(/\s+/g,"")}_${today().replace(/-/g,"")}.xlsx`,[
     {name:docT==="수행평가 전표"?"수행평가":docT.replace(/[\\/?*[\]:]/g," ").slice(0,30),title:`${docT} · ${clsName(d)}`,rows:[head,...rows],text:[0],widths:head.map((h,j)=>j===0?10:j===1?10:withEm&&j===2?24:/의견|비고/.test(h)?28:Math.max(9,h.length*1.9)),
       formulas:off=>sumF&&ti>=0&&nums.length?rows.map((r,i)=>{const R=off+2+i;return{r:R,c:pre+ti+1,f:`SUM(${nums.map(j=>colL(pre+j)+R).join(",")})`}}):[]},
-    {name:"안내",title:`${docT} 안내 (이 시트는 읽지 않습니다)`,head:false,widths:[90],rows:[[`‘${docT==="수행평가 전표"?"수행평가":docT}’ 시트에 ${clsName(d)} 학생 ${rows.length}명이 미리 들어 있습니다. ${its.length?"항목 칸만 채우세요.":"그대로 올리면 명단으로 서명을 받습니다."}`],["표의 제목 줄(학번·이름…)은 지우거나 바꾸지 마세요. 칸을 더하려면 오른쪽에 제목을 쓰고 아래에 입력하면 됩니다. 맨 위 문서 제목과 ‘내려받은 일시’ 줄은 그대로 두어도 됩니다."],["다 채우면 교사의 생활 → 평가·통계 → 학생 서명 → ‘전표 올리기’로 이 파일을 고르고 서명 종류를 정하세요."]]}],
+    {name:"안내",title:`${docT} 안내 (이 시트는 읽지 않습니다)`,head:false,widths:[90],rows:[[`‘${docT==="수행평가 전표"?"수행평가":docT}’ 시트에 ${clsName(d)} 학생 ${rows.length}명이 미리 들어 있습니다. ${its.length?"항목 칸만 채우세요.":"그대로 올리면 명단으로 서명을 받습니다."}`],["표의 제목 줄(학번·이름…)은 지우거나 바꾸지 마세요. 칸을 더하려면 오른쪽에 제목을 쓰고 아래에 입력하면 됩니다. 맨 위 문서 제목과 ‘내려받은 일시’ 줄은 그대로 두어도 됩니다."],["다 채우면 교사의 생활 → 출석·기록 → 학생 서명 → ‘전표 올리기’로 이 파일을 고르고 서명 종류를 정하세요."]]}],
     `${clsName(d)} 학생 ${rows.length}명이 들어간 ${docT} 양식을 저장했습니다`).catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"));
 }
 function evalTemplate(){
@@ -8355,7 +8366,14 @@ function evFiltered(){const q=(EVS.q||"").trim().toLowerCase();return evals().fi
 /* 전표 표: 직접 만든 평가는 학생 점수로 표를 만듭니다 */
 function evTable(ev){return ev.manual?{head:["학번","이름",...ev.cols],rows:ev.stu.map(st=>[st.sid,st.name,...ev.cols.map((c,i)=>st.vals[i]||"")])}:ev.table}
 /* 화면: 평가 목록과 상세 */
-function setStab(t){EVS.tab=t;document.querySelectorAll("#stabs .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));$("s-eval").hidden=t!=="eval";$("s-att").hidden=t!=="att";$("stTitle").textContent=t==="eval"?"학생 서명":"출석 통계";if(t==="eval")renderEval();else renderStat()}
+/* 5.62: 출석·기록 메뉴 (아래 메뉴의 ‘출석·기록’ 하나에 출석 체크 · 출석 통계 · 관찰 기록 · 글쓰기 · 평가 · 과제 · 학생 서명) */
+function amGridBuild(){["amode","stabs"].forEach(id=>{const g=$(id);if(!g||g.dataset.b)return;g.dataset.b="1";
+  g.innerHTML=AM_ITEMS.map(([k,v,l,ic])=>`<button class="amt chip" type="button" data-${k}="${v}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true">${AM_ICON[ic]}</svg><span>${l}</span></button>`).join("");
+  g.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{const m=b.dataset.m;if(view!=="att"){OBS.mode=m;try{localStorage.setItem("att-app-amode",m)}catch(e){}show("att")}else setAmode(m)});
+  g.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const t=b.dataset.t;if(view!=="stat")show("stat");setStab(t)})});amGridPaint()}
+function amGridPaint(){const a=$("amode"),s=$("stabs");if(a)a.querySelectorAll(".amt").forEach(b=>b.setAttribute("aria-pressed",String(!!b.dataset.m&&b.dataset.m===OBS.mode)));
+  if(s)s.querySelectorAll(".amt").forEach(b=>b.setAttribute("aria-pressed",String(!!b.dataset.t&&b.dataset.t===((typeof EVS!=="undefined"&&EVS&&EVS.tab)||"eval"))))}
+function setStab(t){try{amGridPaint()}catch(_){}EVS.tab=t;document.querySelectorAll("#stabs .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));$("s-eval").hidden=t!=="eval";$("s-att").hidden=t!=="att";$("stTitle").textContent=t==="eval"?"학생 서명":"출석 통계";if(t==="eval")renderEval();else renderStat()}
 function evDelete(idList){
   const set=new Set(idList),gone=evals().filter(e=>set.has(e.id));if(!gone.length)return;
   snapshot();S.evals=evals().filter(e=>!set.has(e.id));gone.forEach(e=>EVS.sel.delete(e.id));if(set.has(EVS.cur))EVS.cur=null;
@@ -8447,7 +8465,7 @@ function renderEval(){
     if(a==="sms"){const c=S.list.find(x=>x.id===ev.clsId),ph=c&&c.data.phones[st.sid];if(!ph||digits(ph).length<8)return toast(st.name+" 학생 전화번호가 없습니다");st.sentAt=Date.now();st.via="sms";save();renderEval();
       go(smsHref([digits(ph)],`[${ev.title}] ${st.name} 학생 ${evKind(ev).k==="score"?"점수 확인 및 ":""}서명: ${link}`))}});
 }
-document.querySelectorAll("#stabs .chip").forEach(b=>b.onclick=()=>setStab(b.dataset.t));
+amGridBuild();
 $("evTpl").onclick=evalTemplateSheet;
 $("evNew").onclick=()=>evalManual();
 $("evQ").oninput=e=>{EVS.q=e.target.value;renderEval()};
