@@ -1264,6 +1264,11 @@ html.kbopen nav.bottom,html.kbopen .newbar{visibility:hidden}
 /* 5.63 아래 메뉴 고정: 아이폰 홈 화면 앱에서 화면 끝을 당길 때 출렁이며 메뉴가 같이 움직이던 것 막기 */
 html,body{overscroll-behavior-y:none}
 nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+
+/* 5.64 출석 체크 고치기 · 삭제 */
+.dzone{margin-top:16px;padding:12px;border:1px solid var(--absent);border-radius:var(--r-m);background:var(--bg)}.dzone>b{color:var(--absent)}
+.delsum{display:flex;flex-direction:column;gap:6px;background:var(--bg);border-radius:var(--r-m);padding:10px 12px;margin:8px 0}.delsum>div{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.delsum span{color:var(--muted);font-size:.85rem}.delsum b{text-align:right}
+.binrow{justify-content:center}.binlist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.binrow2{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:var(--r-m);padding:8px 10px}.binrow2>span{flex:1;min-width:0;display:flex;flex-direction:column}.binrow2 small{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1371,7 +1376,7 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
   <div id="m-att">
   <div class="tabs" role="tablist" id="tabs" aria-label="출석 체크 시간"></div>
   <div class="card" id="sesCard">
-    <details class="sesinfo" id="sesInfo"><summary><span class="sih"><b id="sesSum"></b><small>수업 정보 · 시간 바꾸기</small></span><span class="stats"><span class="p" id="sp"></span><span class="a" id="sa"></span></span></summary>
+    <details class="sesinfo" id="sesInfo"><summary><span class="sih"><b id="sesSum"></b><small>수업 정보 · 시간 바꾸기 · 고치기</small></span><span class="stats"><span class="p" id="sp"></span><span class="a" id="sa"></span></span></summary>
       <div class="sesrow">
         <label class="lb" for="sTime">시간<input class="fld" type="time" id="sTime"></label>
         <label class="lb" for="sLabel">교과·수업 이름 (선택)<input class="fld" id="sLabel" placeholder="예: 4교시 물리, 조회" autocomplete="off"></label>
@@ -1394,8 +1399,9 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
     <div id="sesMemo" class="sesmemo" hidden></div>
     <div class="lockbar" id="lockBar"><span id="lockTxt"></span><button class="btn sm" id="lockBtn" type="button"></button></div>
     <div class="lockbar offbar" id="offBar"></div>
-    <div class="row2 delrow"><button class="btn sm bad ghost" id="sDel" type="button">이 출석 체크 삭제</button></div>
+    <div class="row2 delrow"><button class="btn sm" id="sEdit" type="button">✎ 날짜 · 시간 고치기</button><button class="btn sm bad ghost" id="sDel" type="button">이 출석 체크 삭제…</button></div>
   </div>
+  <div class="row2 binrow" id="sesBinRow" hidden><button class="btn sm ghost" type="button" id="sesBinBtn"></button></div>
   <p class="note">학생 칸(줄)을 누르면 출석과 결석이 바뀝니다. ▦ 격자 보기는 한 반을 한 화면에, ☰ 목록 보기는 이날 출석 흐름까지 보여 줍니다. ‘＋ 체크 추가’로 하루에 몇 번이든 체크할 수 있습니다.</p>
   </div>
 </main>
@@ -1739,12 +1745,13 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.63.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.64.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
 const AM_ITEMS=[["m","att","출석 체크","att"],["t","att","출석 통계","stat"],["m","obs","관찰 기록","obs"],["m","write","글쓰기","write"],["m","task","평가 · 과제","task"],["t","eval","학생 서명","sign"]];
 const VERSIONS=[
+  {v:"5.64.0",date:"2026-10-27",items:["출석 체크 고치기: 출석 화면의 ‘✎ 날짜 · 시간 고치기’ 또는 고른 출석 체크 탭을 한 번 더 누르면 날짜 · 시간 · 수업 이름을 고침(출석 · 결석 · 출결 구분 · 연락 완료는 그대로 옮겨짐, 다른 요일로 옮기면 시간표 연결만 풀림)", "출석 체크 삭제는 확인 절차를 거침: 지워질 내용(날짜 · 출석 · 결석 · 연락 완료 · 출결 구분 · 시간표 연결)을 보여 주고 ‘확인했습니다’를 체크해야 삭제 단추가 켜짐, 잠긴 출석 체크는 삭제 불가", "삭제한 출석 체크는 30일 보관: 삭제 직후 ‘되돌리기’, 출석 화면 아래 ‘🗑 삭제한 출석 체크’에서 되살리기(기기 연동 · 백업에도 함께)", "고치기 · 삭제 · 되살리기는 연락(결석 학생), 오늘, 시간표 칸 표시, 출석 통계 · 나이스 요약, 기기 연동에 바로 반영", "자동 점검 추가: 출석 체크 고치기 · 삭제 확인 · 되살리기"]},
   {v:"5.63.0",date:"2026-10-27",items:["아래 메뉴 고정(아이폰 홈 화면 앱): 화면 끝까지 밀 때 화면이 출렁이며 아래 메뉴가 같이 위아래로 움직이던 것 막기, 메뉴를 따로 그려 스크롤할 때 흔들리지 않게, 키보드가 내려간 뒤 메뉴를 제자리로", "가로 넘침 막기 설정을 아이폰 최신 방식(clip)으로 정리"]},
   {v:"5.62.0",date:"2026-10-27",items:["아래 메뉴를 다섯 개로: 오늘 · 시간표 · 출석·기록 · 연락 · 설정(오늘을 맨 왼쪽으로, ‘출석’을 ‘출석·기록’으로)", "‘평가·통계’를 출석·기록에 합침: 출석·기록 위쪽에 여섯 칸 메뉴(3 × 2, 아이콘) — 출석 체크 · 출석 통계 · 관찰 기록 · 글쓰기 · 평가 · 과제 · 학생 서명. 어느 칸에서든 한 번에 오가고, 지금 칸은 진한 색, 서명 · 통계 화면에도 같은 메뉴", "도움말의 ‘평가·통계 → …’ 길 안내를 ‘출석·기록 → 학생 서명 · 출석 통계’로", "자동 점검 추가: 아래 메뉴 · 출석·기록 여섯 칸"]},
   {v:"5.61.0",date:"2026-10-27",items:["시간표 ‘일정 알림’ · 오늘 ‘할 일’ 마감 연동: 어느 쪽에서 마감(완료)해도 다른 쪽에 바로 같이 표시. 시간표 일정 알림의 일정마다 마감(완료) 단추, 마감한 일정은 흐리게 · 줄 긋기 · ‘✓ 마감’, 마감하면 알림도 울리지 않음. 일정 창에도 ‘마감(완료)’ 칸", "추가 단추 하나로: 시간표 ‘＋ 일정 추가’와 오늘 ‘＋ 할 일 추가’를 같은 ‘＋ 일정 · 할 일’ 창으로(넣으면 두 곳에 함께 나옴)", "‘일정 · 알림’ 제목을 ‘일정 알림’으로", "저작권 · 공식 주소: 저장소에 LICENSE 파일(사용은 자유, 무단 수정 · 복제 · 재배포 금지), 이용약관에 ‘저작권과 공식 주소’ 조항, 앱 정보에 공식 주소 · 저작권 표시, 공식 주소가 아닌 곳에서 열리면 ‘공식 앱이 아닙니다’ 경고와 공식 앱 열기", "자동 점검 추가: 일정 · 할 일 마감 연동 · 공식 주소"]},
@@ -1865,6 +1872,8 @@ function ymd(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDat
 function today(){return ymd(new Date())}
 function nowHM(){const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}`}
 function addDays(s,n){const[y,m,d]=s.split("-").map(Number);return ymd(new Date(y,m-1,d+n))}
+const sesOk=s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"");
+function sesNorm(s){return {id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{}),...(s.edAt?{edAt:+s.edAt}:{})}}
 function fresh(){return{v:3,cls:"",roster:[],phones:{},emails:{},teachers:[],msg:DEFAULT_MSG,sessions:[]}}
 const EMAIL_RE=/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/;
 function isEmail(v){return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(String(v||"").trim())}
@@ -1909,8 +1918,11 @@ function normalize(d){
   /* 5.32: 학교 묶음으로 받은 학급 표시 (담임 · 교과, 학교 원본의 학생 고유번호) */
   if(d.sch&&typeof d.sch==="object"&&/^\d-\d{1,2}$/.test(d.sch.key||""))f.sch={key:d.sch.key,role:d.sch.role==="담임"?"담임":"교과",subj:Array.isArray(d.sch.subj)?d.sch.subj.map(x=>String(x).slice(0,20)).slice(0,10):[],school:String(d.sch.school||"").slice(0,40),uids:d.sch.uids&&typeof d.sch.uids==="object"?{...d.sch.uids}:{}};
   if(Array.isArray(d.sessions)){
-    f.sessions=d.sessions.filter(s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"")).map(s=>({id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{})}));
-  }else if(Array.isArray(d.rounds)){
+    f.sessions=d.sessions.filter(sesOk).map(s=>sesNorm(s));
+  }
+  /* 5.64: 삭제한 출석 체크 (30일 보관 · 되살리기) */
+  if(Array.isArray(d.sesBin)){const lim=Date.now()-30*864e5;const b=d.sesBin.filter(x=>x&&x.s&&sesOk(x.s)&&+x.at>lim).slice(0,50).map(x=>({s:sesNorm(x.s),at:+x.at,...(x.why?{why:String(x.why).slice(0,60)}:{})}));if(b.length)f.sesBin=b}
+  if(Array.isArray(d.sessions)){}else if(Array.isArray(d.rounds)){
     /* 예전 1~6차 기록을 날짜별 출석 체크로 옮깁니다 */
     const used=d.rounds.filter(r=>r&&(r.date||Object.values(r.p||{}).some(Boolean)));
     const fallback=(used.find(r=>r.date)||{}).date||today();
@@ -2088,13 +2100,67 @@ function renderTabs(){
     const b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",s.id===selId);
     const off=sesOff(s);if(off)b.classList.add("offtab");
     b.innerHTML=`<b>${s.lock?"🔒 ":""}${esc(s.time||"시간 없음")}</b><small>${esc(s.label||"출석 체크")}</small><small>${off?esc(off):`${n}/${D.roster.length}`}</small>`;
-    b.onclick=()=>{selId=s.id;renderAll()};
+    b.onclick=()=>{if(s.id===selId)return sesEditSheet(s);selId=s.id;renderAll()};
+    if(s.id===selId)b.title="한 번 더 누르면 고치기 · 삭제";
     t.appendChild(b);
   });
   const add=document.createElement("button");add.className="tab add";add.type="button";add.innerHTML=`<b>＋</b><small>체크 추가</small>`;
   add.onclick=addSession;t.appendChild(add);
   const sel=t.querySelector('[aria-selected="true"]');if(sel)t.scrollLeft=Math.max(0,sel.offsetLeft-(t.clientWidth-sel.offsetWidth)/2);
 }
+/* 5.64: 출석 체크 고치기 · 삭제 (확인 절차, 30일 되살리기) — 연락 · 오늘 · 시간표 · 통계 · 기기 연동은 같은 자료를 쓰므로 함께 바뀝니다 */
+function sesSummary(s){const N=D.roster.length,pr=D.roster.filter(([id])=>s.p[id]).length,ab=N-pr,dn=Object.keys(s.done||{}).filter(id=>!s.p[id]).length,ak=Object.keys(s.ak||{}).length;return{N,pr,ab,dn,ak}}
+function sesEditSheet(s){if(!s)return;const lk=!!s.lock,x=sesSummary(s),off=sesOff(s);
+  $("sheetBox").innerHTML=`<h2>출석 체크 고치기 <span class="sub">${esc(clsName())}</span></h2>
+    <p class="note"><b>${esc(fmtDateW(s.date))} ${esc(s.time||"시간 없음")} ${esc(s.label||"출석 체크")}</b><br>출석 ${x.pr}/${x.N} · 결석 ${x.ab}${x.dn?` (연락 완료 ${x.dn})`:""}${off?` · ${esc(off)}`:""}</p>
+    ${lk?`<p class="warn">🔒 잠긴 출석 체크입니다. 고치거나 지우려면 출석 화면 아래의 ‘잠금 해제’를 먼저 누르세요.</p>`:""}
+    <div class="range"><label class="lb" for="seDate">날짜<input class="fld" type="date" id="seDate" value="${esc(s.date)}"${lk?" disabled":""}></label><label class="lb" for="seTime">시간<input class="fld" type="time" id="seTime" value="${esc(s.time||"")}"${lk?" disabled":""}></label></div>
+    <label class="lb" for="seLabel">교과 · 수업 이름<input class="fld" id="seLabel" value="${esc(s.label||"")}" autocomplete="off"${lk?" disabled":""}></label>
+    ${s.src?`<p class="note" id="seSrc">시간표 수업과 연결되어 있습니다. 날짜를 다른 요일로 옮기면 연결이 풀리고 이 출석 체크만 옮겨집니다.</p>`:""}
+    <p class="note">출석 · 결석 표시, 출결 구분, 연락 완료 표시는 그대로 함께 옮겨집니다. 연락 · 오늘 · 시간표 · 출석 통계 · 나이스 요약에 바로 반영됩니다.</p>
+    <p class="warn" id="seErr" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="seOk"${lk?" disabled":""}>고친 내용 저장</button></div>
+    <div class="dzone"><b>삭제</b><p class="note">잘못 만든 출석 체크라면 지울 수 있습니다. 지운 것은 30일 동안 되살릴 수 있습니다.</p><button class="btn bad ghost" type="button" id="seDel"${lk?" disabled":""}>이 출석 체크 삭제…</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("seDel").onclick=()=>sesDelSheet(s);
+  $("seOk").onclick=()=>{if(s.lock)return;const nd=$("seDate").value,nt=$("seTime").value,nl=$("seLabel").value.trim().slice(0,60);
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(nd)){$("seErr").textContent="날짜를 골라 주세요.";$("seErr").hidden=false;return}
+    const ch=[];if(nd!==s.date)ch.push("날짜");if(nt!==(s.time||""))ch.push("시간");if(nl!==(s.label||""))ch.push("수업 이름");
+    if(!ch.length){$("sheet").hidden=true;return toast("바뀐 내용이 없습니다")}
+    if(nd!==s.date&&s.src&&wdOf(nd)!==wdOf(s.date)){delete s.src;delete s.slot;delete s.manual}
+    if(nt!==(s.time||"")){delete s.slot;if(s.src)s.manual=true}
+    s.date=nd;s.time=nt;s.label=nl;s.edAt=Date.now();
+    const dup=D.sessions.find(o=>o!==s&&o.date===s.date&&o.time&&o.time===s.time);
+    selDate=s.date;selId=s.id;save();$("sheet").hidden=true;renderAll();
+    toast(`출석 체크를 고쳤습니다 (${ch.join(" · ")})${dup?" · 같은 날 같은 시간 출석 체크가 하나 더 있습니다":""}`)};
+}
+function sesDelSheet(s){if(!s)return;const x=sesSummary(s);
+  if(s.lock){toast("잠긴 출석 체크는 지울 수 없습니다. 잠금을 먼저 푸세요");return lockNudge()}
+  $("sheetBox").innerHTML=`<h2>출석 체크 삭제</h2>
+    <p class="warn">출석 기록이 지워집니다. 아래 내용을 확인해 주세요.</p>
+    <div class="delsum"><div><span>출석 체크</span><b>${esc(fmtDateW(s.date))} ${esc(s.time||"시간 없음")} ${esc(s.label||"")}</b></div><div><span>학급</span><b>${esc(clsName())}</b></div><div><span>출석 · 결석</span><b>출석 ${x.pr}명 · 결석 ${x.ab}명</b></div>${x.dn?`<div><span>연락 완료 표시</span><b>${x.dn}명</b></div>`:""}${x.ak?`<div><span>출결 구분</span><b>${x.ak}명</b></div>`:""}${s.src?`<div><span>시간표 연결</span><b>연결된 수업 칸의 출석 표시가 사라짐</b></div>`:""}</div>
+    <p class="note">함께 바뀌는 곳: 연락(결석 학생), 오늘 화면, 시간표 칸 표시, 출석 통계 · 나이스 요약, 기기 연동. 수업 메모 · 관찰 기록 · 일정은 지워지지 않습니다.</p>
+    <p class="note">지운 출석 체크는 30일 동안 출석 화면 아래 ‘삭제한 출석 체크’에서 되살릴 수 있습니다.</p>
+    <label class="chk"><input type="checkbox" id="sdOk"> 위 내용을 확인했고, 이 출석 체크를 지웁니다</label>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn bad" type="button" id="sdGo" disabled>삭제</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("sdOk").onchange=e=>{$("sdGo").disabled=!e.target.checked};
+  $("sdGo").onclick=()=>{if(!$("sdOk").checked||s.lock)return;const i=D.sessions.indexOf(s);if(i<0){$("sheet").hidden=true;return}
+    D.sessions.splice(i,1);D.sesBin=[{s:JSON.parse(JSON.stringify(s)),at:Date.now()},...(D.sesBin||[])].slice(0,50);
+    if(selId===s.id)selId=null;save();$("sheet").hidden=true;renderAll();
+    toastUndo(`${fmtDate(s.date)} ${s.time||""} 출석 체크를 삭제했습니다`,()=>sesRestore(s.id),8000)};
+}
+function sesRestore(id){const b=D.sesBin||[],i=b.findIndex(x=>x.s.id===id);if(i<0)return;const it=b[i];b.splice(i,1);if(!b.length)delete D.sesBin;
+  if(!D.sessions.some(x=>x.id===it.s.id))D.sessions.push(it.s);selDate=it.s.date;selId=it.s.id;save();renderAll();toast(`${fmtDate(it.s.date)} ${it.s.time||""} 출석 체크를 되살렸습니다`)}
+function sesBinSheet(){const b=D.sesBin||[];
+  $("sheetBox").innerHTML=`<h2>삭제한 출석 체크 <span class="sub">${esc(clsName())} · 30일 보관</span></h2>
+    ${b.length?`<div class="binlist">${b.map((x,i)=>{const N=D.roster.length,pr=D.roster.filter(([id])=>x.s.p[id]).length;return `<div class="binrow2"><span><b>${esc(fmtDateW(x.s.date))} ${esc(x.s.time||"시간 없음")}</b><small>${esc(x.s.label||"출석 체크")} · 출석 ${pr}/${N} · ${esc(fmtDT(x.at))} 삭제</small></span><button class="btn sm pri" type="button" data-rs="${i}">되살리기</button></div>`}).join("")}</div>`:`<p class="note">삭제한 출석 체크가 없습니다.</p>`}
+    <p class="note">30일이 지나면 저절로 없어집니다.</p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("sheetBox").querySelectorAll("[data-rs]").forEach(bt=>bt.onclick=()=>{const x=b[+bt.dataset.rs];if(!x)return;$("sheet").hidden=true;sesRestore(x.s.id)})}
+function renderSesBin(){const r=$("sesBinRow");if(!r)return;const lim=Date.now()-30*864e5;if(D.sesBin){D.sesBin=D.sesBin.filter(x=>+x.at>lim);if(!D.sesBin.length)delete D.sesBin}
+  const n=(D.sesBin||[]).length;r.hidden=!n;if(n)$("sesBinBtn").textContent=`🗑 삭제한 출석 체크 ${n}개 · 되살리기`}
 function addSession(){
   if(!D.roster.length)return toast("먼저 설정에서 학생 명단을 넣어 주세요");
   if(!selDate)selDate=today();
@@ -2103,7 +2169,7 @@ function addSession(){
    if(hit){s.src=`${hit.t.id}:${hit.d}:${hit.p}`;s.time=hit.r.start;s.label=`${hit.p}교시${hit.c.subject?" "+hit.c.subject:""}`}}
   D.sessions.push(s);selId=s.id;save();renderAll();toast(s.src?`시간표의 ${s.label} 수업으로 출석 체크를 시작합니다`:`${fmtDate(s.date)} ${s.time} 출석 체크를 만들었습니다`);
 }
-function renderAtt(){try{snAllPaint()}catch(e){}
+function renderAtt(){try{snAllPaint()}catch(e){}try{renderSesBin()}catch(e){}
   $("cls").textContent=(D.cls?D.cls+" ":"")+"출석부";
   $("clsSub").textContent=`${perLabel()} · ${perList().length>1?`학급 ${perList().length}개 · 바꾸기 ▾`:"학급 바꾸기 · 추가 ▾"}`;
   document.title=APP_NAME+(D.cls?" · "+D.cls:"");
@@ -2178,7 +2244,7 @@ $("lockBtn").onclick=()=>{const s=R();if(!s)return;
   else{s.lock=true;s.lockAt=Date.now();save();renderAll();toast("출석 체크를 잠갔습니다")}};
 $("allIn").onclick=()=>{const s=R();if(!s||s.lock)return;D.roster.forEach(([id])=>s.p[id]=true);save();renderAll()};
 $("allOut").onclick=()=>{const s=R();if(!s||s.lock)return;s.p={};save();renderAll()};
-twoStep($("sDel"),"정말 삭제",()=>{const s=R();if(!s||s.lock)return;D.sessions=D.sessions.filter(x=>x!==s);selId=null;save();toast(sesName(s)+" 출석 체크를 삭제했습니다");renderAll()});
+$("sDel").onclick=()=>{const s=R();if(s)sesDelSheet(s)};$("sEdit").onclick=()=>{const s=R();if(s)sesEditSheet(s)};$("sesBinBtn").onclick=()=>sesBinSheet();
 
 /* ---------- 연락 ---------- */
 var seq={key:"",i:0};
@@ -8811,7 +8877,7 @@ function mergeList(b,l,r,key,deep){
 }
 function mergeMap(b,l,r){b=b||{};l=l||{};r=r||{};const o={};new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{
   if(k in l&&k in r)o[k]=pick3(b[k],l[k],r[k]);else if(k in l){if(!(k in b)||J(l[k])!==J(b[k]))o[k]=l[k]}else if(!(k in b)||J(r[k])!==J(b[k]))o[k]=r[k]});return o}
-function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","gph","emails","teachers","msg","obsLock","sch","cards","low","snote","tasks"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
+function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","gph","emails","teachers","msg","obsLock","sch","cards","low","snote","tasks","sesBin"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
