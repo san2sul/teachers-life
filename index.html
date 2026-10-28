@@ -1455,6 +1455,31 @@ em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;
 .otile .otgs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px}.otile .otgs:empty{display:none}.otile .otgs i{font-style:normal;font-size:.625rem;font-weight:700;line-height:1.3;padding:0 4px;border-radius:6px;background:var(--tint);color:var(--muted)}
 .otile .otgs i.pos{background:#e2f3e9;color:#1f7a4d}.otile .otgs i.neg{background:#fbe5e1;color:#b03a2e}.otile .otgs i.memo{background:var(--accent-soft);color:var(--accent)}
 .otile.has{background:color-mix(in srgb,var(--accent-soft) 60%,var(--paper));border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+
+/* 5.77 수업 흐름 */
+.flowwrap{margin-top:8px}.flowwrap[hidden],.flowwrap:empty{display:none}
+.flowset{width:100%;min-height:44px;border:1.5px dashed color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:var(--r-m);background:transparent;color:var(--accent);font:inherit;font-weight:700;font-size:.875rem}.flowset small{color:var(--muted);font-weight:400;margin-left:4px;font-size:.8125rem}
+.flowbox{background:var(--paper);border:1.5px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:var(--r-m);padding:10px 12px}
+.flowbox.warn{border-color:var(--warn)}
+.flh{display:flex;align-items:baseline;gap:8px}.fln{flex:1;min-width:0;font-size:.875rem;color:var(--muted)}.fln b{color:var(--ink);font-size:1.0625rem}.flt{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.5rem;color:var(--accent)}
+.flbar{display:flex;gap:3px;height:8px;margin:8px 0 6px}.flbar i{display:block;border-radius:4px;background:var(--tint)}.flbar i.dn{background:color-mix(in srgb,var(--accent) 35%,var(--tint))}.flbar i.on{background:var(--accent)}
+.flsub{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.8125rem;color:var(--muted)}.flw{color:var(--warn);font-weight:700}
+.flbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.flbtns .btn{flex:1 1 0;min-width:0}.flbtns [data-flfit]{flex:1 1 100%}.flbtns [data-flmore]{flex:0 0 44px}
+html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
+@keyframes flfl{50%{background:var(--accent);color:#fff}}
+.flpill{position:fixed;left:12px;bottom:calc(var(--nav-h,50px) + env(safe-area-inset-bottom) + 12px);z-index:790;border:0;border-radius:999px;padding:10px 14px;background:var(--paper);color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.18);font:inherit;font-size:.875rem;display:flex;gap:6px;align-items:center;max-width:62vw}
+.flpill[hidden]{display:none}.flpill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.flpill b{font-variant-numeric:tabular-nums;color:var(--accent)}.flpill.warn{outline:2px solid var(--warn)}
+.flsteps{display:flex;flex-direction:column;gap:4px;margin:8px 0}.flsr{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--tint)}.flsr.on{background:var(--accent-soft);outline:1.5px solid var(--accent)}.flsr.dn{opacity:.55}
+.flst{font-variant-numeric:tabular-nums;font-size:.75rem;color:var(--muted);width:3em;flex:none}.flsr b{flex:1;min-width:0;font-size:.9375rem}.flsr b small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.flsm{font-size:.8125rem;white-space:nowrap}.flsm small{color:var(--muted)}
+.flsb{display:flex;gap:4px}.flsb .btn{min-width:38px;padding:0 6px}.flfix,.flb{font-size:.625rem;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 5px;vertical-align:1px}
+.flpick{display:flex;flex-direction:column;gap:6px;margin:8px 0}.flpr{text-align:left;border:1.5px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;padding:10px 12px}.flpr[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}.flpr b{display:block;font-size:.9375rem}.flpr small{color:var(--muted);font-size:.75rem}
+.flmr{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.flmr>div{flex:1;min-width:0}.flmr b{display:block;font-size:.9375rem}.flmr small{color:var(--muted);font-size:.75rem}
+.fleds{display:flex;flex-direction:column;gap:6px;margin:8px 0}.fled{background:var(--tint);border-radius:var(--r-m);padding:8px}
+.fler{display:flex;align-items:center;gap:4px}.fler .fld{min-height:40px;margin:0}.fler [data-k=n]{flex:1;min-width:0}.fler .flm{width:4.2em;flex:none;text-align:center}.flu{font-size:.8125rem;color:var(--muted)}.flno{width:1.4em;text-align:center;font-weight:700;color:var(--accent)}.fler .btn{min-width:34px;padding:0 4px}
+.flopt{margin-top:6px}.flopt summary{font-size:.8125rem;color:var(--muted);cursor:pointer}.flopt .fld{margin:6px 0 0}.flor{display:grid;grid-template-columns:1fr 1fr;gap:6px}.flor label{font-size:.75rem;color:var(--muted)}
+.flsum{font-weight:700;font-size:.875rem}.flsum.ok{color:#1f6a35}.flsum.df{color:var(--warn)}
+.flsubl{display:grid;grid-template-columns:7em 1fr;align-items:center;gap:8px}
+.flsr b small.flfix{display:inline-block;color:#fff;font-size:.625rem;font-weight:700;margin-left:4px}.fled .fld{background:var(--paper)}
 </style>
 </head>
 <body>
@@ -1939,7 +1964,7 @@ em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.76.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.77.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1951,6 +1976,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.77.0",date:"2026-10-29",items:["⏱ 수업 흐름: 도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 두면 지금 수업 카드에 지금 단계 · 남은 시간 · 진행 막대 · 다음 단계를 보여 줌(카드가 안 보일 때는 아래 작은 ⏱ 표시)","단계 끝나기 1분 전 · 단계가 바뀔 때 알림(화면 깜빡임 · 진동 · 소리, 단계마다 고름), 도구를 정해 둔 단계는 시작할 때 타이머(그 단계 시간) · 발표자 뽑기 · 모둠 나누기를 열어 줌, 흐름이 도는 동안 화면 켜 두기","기본 틀(3단계 · 5단계 · 실험 수업 · 모둠 활동 수업 — 수업 시간에 맞춰 늘이고 줄임)과 직접 설계한 틀: 단계 이름 · 시간 · 할 일 메모 · 알림 · 함께 열 도구 · 꼭 지킬 단계, 합계 확인 · 수업 시간에 맞추기, 기본 틀 복사해 고치기, 틀 파일 주고받기","적용: 이 수업에서 고른 틀 → 진도표 차시에 붙인 틀 → 교과 기본 틀. 시간표 수업 시작 시각에 맞춰 저절로 시작, ‘지금부터 다시 시작’ · 흐름 끄기","시간이 밀릴 때: ＋2분 · 다음 단계 · 단계마다 −1/＋1분, 수업 끝을 넘으면 경고 → ‘남은 단계 줄여 맞추기’(꼭 지킬 단계는 그대로)","자동 점검 추가: 수업 흐름(틀 · 지금 단계 · 알림 · 밀림 맞추기 · 직접 설계)"]},
   {v:"5.76.1",date:"2026-10-29",items:["타이머 안내 문구를 알기 쉽게: ‘6분 준비됨 — ＋분 단추로 시간 더하기, ▶ 시작으로 출발’처럼 시간 더하기(＋분 단추)와 시작(▶ 시작)을 나눠서"]},
   {v:"5.76.0",date:"2026-10-29",items:["수업 도구 타이머: 시간 단추를 누르면 바로 시작되던 것을 고침 — 시간 단추는 시간만 맞추고(누를 때마다 더해짐, 예: 3분 두 번 → 6분) ▶ 시작을 눌러야 시작. ‘수업 끝까지’도 같음"]},
   {v:"5.75.0",date:"2026-10-28",items:["수업 관찰 명단 보기를 출석부처럼 두 가지로: ▦ 격자(학생 칸 — 그 날 기록한 항목 · 메모 표시, 기록한 학생은 색으로) · ☰ 목록(예전 모양). 빠른 체크 항목을 고른 뒤 칸을 누르면 바로 넣고, 아니면 그 학생 기록 창. 고른 보기는 기억","자동 점검 추가: 수업 관찰 격자 · 목록 보기"]},
@@ -7877,7 +7903,7 @@ function stripGrades(o){(o.classes||[]).forEach(c=>{if(c&&c.ctl&&c.ctl.lv){c.ctl
 function bkNoCns(){try{return localStorage.getItem("att-app-bkcns")==="0"}catch(e){return false}}
 function stripCns(o){o.recs=(o.recs||[]).filter(r=>!(r&&r.k==="stu"&&r.sub==="cns"));o.events=(o.events||[]).filter(e=>!(e&&String(e.id||"").startsWith("cns_")));o.noCns=true;return o}
 function backupObj(){let o=backupObj0();if(bkNoGr())o=stripGrades(o);if(bkNoCns())o=stripCns(o);return o}
-function backupObj0(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],plans:S.plans||[],links:S.links||[],sheets:S.sheets||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
+function backupObj0(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],plans:S.plans||[],flows:S.flows||[],flowSub:S.flowSub||{},links:S.links||[],sheets:S.sheets||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
 const verNum=v=>String(v||"0").split(".").map(n=>parseInt(n,10)||0).reduce((a,n,i)=>a+n*Math.pow(1000,2-i),0);
 /* 어떤 버전의 백업이든 같은 모양으로 맞춥니다 */
 function readBackup(p){
@@ -7921,7 +7947,7 @@ function restoreReplace(b){
   const p=b.raw,used=new Set(),old=S;
   const list=b.classes.map(x=>{let id=x._id&&!used.has(String(x._id))?String(x._id):uid();used.add(id);return{id,data:normalize(x)}});
   if(!list.length)list.push({id:uid(),data:fresh()});
-  S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],plans:Array.isArray(p.plans)?p.plans.filter(x=>x&&x.id&&x.subj):(S.plans||[]),links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[],sheets:Array.isArray(p.sheets)?p.sheets.filter(x=>x&&x.id&&x.t&&Array.isArray(x.items)):(S.sheets||[])};
+  S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],plans:Array.isArray(p.plans)?p.plans.filter(x=>x&&x.id&&x.subj):(S.plans||[]),flows:Array.isArray(p.flows)?p.flows.filter(x=>x&&x.id&&Array.isArray(x.steps)):(S.flows||[]),flowSub:p.flowSub&&typeof p.flowSub==="object"?p.flowSub:(S.flowSub||{}),links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[],sheets:Array.isArray(p.sheets)?p.sheets.filter(x=>x&&x.id&&x.t&&Array.isArray(x.items)):(S.sheets||[])};
   mergeStaff(p.staff);
   if(p.noGrades){const ot=new Map((old.tasks||[]).map(t=>[t&&t.id,t]));S.tasks.forEach(t=>{const o=ot.get(t.id);if(o&&o.sc)t.sc=o.sc});
     (old.evals||[]).filter(e=>e&&((e.kind||"score")==="score")&&!S.evals.some(x=>x.id===e.id)).forEach(e=>S.evals.push(e))}
@@ -9392,7 +9418,7 @@ async function gUpload(body,id){
 }
 /* 동기화할 내용 (보고 있는 학급·화면 같은 기기별 설정은 빼고) */
 function syncData(){const extra={};SYNC_EXTRA.forEach(k=>{try{const v=localStorage.getItem(k);if(v!=null)extra[k]=v}catch(e){}});
-  return JSON.parse(JSON.stringify({classes:S.list.map(c=>({_id:c.id,...c.data})),staff:S.staff||[],tt:S.tt||{list:[],active:""},notes:S.notes||{},events:S.events||[],evals:S.evals||[],obsTags:S.obsTags||null,tasks:S.tasks||[],recs:S.recs||[],plans:S.plans||[],links:S.links||[],sheets:S.sheets||[],extra}))}
+  return JSON.parse(JSON.stringify({classes:S.list.map(c=>({_id:c.id,...c.data})),staff:S.staff||[],tt:S.tt||{list:[],active:""},notes:S.notes||{},events:S.events||[],evals:S.evals||[],obsTags:S.obsTags||null,tasks:S.tasks||[],recs:S.recs||[],plans:S.plans||[],flows:S.flows||[],flowSub:S.flowSub||{},links:S.links||[],sheets:S.sheets||[],extra}))}
 function gHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0).toString(36)+":"+s.length}
 function pristine(d){return !(d.evals||[]).length&&d.classes.length<=1&&!d.classes.some(c=>(c.roster||[]).length||(c.teachers||[]).length||(c.sessions||[]).length)&&!d.staff.length&&!(d.tt.list||[]).length&&!d.events.length&&!Object.keys(d.notes).length}
 /* 3방향 합치기: 마지막 동기화(base) 이후 바뀐 쪽을 살리고, 둘 다 바뀌면 이 기기 쪽을 씁니다 */
@@ -9420,7 +9446,7 @@ function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","gph"
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
-    events:mergeList(b.events,l.events,r.events,"id"),evals:mergeList(b.evals,l.evals||[],r.evals||[],"id",mergeEval),obsTags:pick3(b.obsTags,l.obsTags,r.obsTags),tasks:mergeList(b.tasks,l.tasks||[],r.tasks||[],"id"),recs:mergeList(b.recs,l.recs||[],r.recs||[],"id"),plans:mergeList(b.plans,l.plans||[],r.plans||[],"id",mergePlan),links:mergeList(b.links,l.links||[],r.links||[],"id"),sheets:mergeList(b.sheets,l.sheets||[],r.sheets||[],"id"),extra:mergeMap(b.extra,l.extra,r.extra)}}
+    events:mergeList(b.events,l.events,r.events,"id"),evals:mergeList(b.evals,l.evals||[],r.evals||[],"id",mergeEval),obsTags:pick3(b.obsTags,l.obsTags,r.obsTags),tasks:mergeList(b.tasks,l.tasks||[],r.tasks||[],"id"),recs:mergeList(b.recs,l.recs||[],r.recs||[],"id"),plans:mergeList(b.plans,l.plans||[],r.plans||[],"id",mergePlan),flows:mergeList(b.flows,l.flows||[],r.flows||[],"id"),flowSub:mergeMap(b.flowSub,l.flowSub,r.flowSub),links:mergeList(b.links,l.links||[],r.links||[],"id"),sheets:mergeList(b.sheets,l.sheets||[],r.sheets||[],"id"),extra:mergeMap(b.extra,l.extra,r.extra)}}
 function mergePlan(b,l,r){b=b||{};const o={...pick3(b,l,r)},B=b.pg||{},Lg=l.pg||{},Rg=r.pg||{},pg={};new Set([...Object.keys(Lg),...Object.keys(Rg)]).forEach(k=>{const m=mergeMap(B[k],Lg[k],Rg[k]);if(Object.keys(m).length)pg[k]=m});o.pg=pg;return o}
 function mergeEval(b,l,r){b=b||{};const o={...pick3(b,l,r)};o.stu=mergeList(b.stu,l.stu,r.stu,"sid");return o}
 /* 받은 내용을 이 기기에 넣습니다 */
@@ -9430,7 +9456,7 @@ function applyData(d){
     let list=(d.classes||[]).filter(x=>x&&Array.isArray(x.roster)).map(x=>({id:String(x._id||uid()),data:normalize(x)}));
     if(!list.length)list=[{id:uid(),data:fresh()}];
     const act=list.some(c=>c.id===S.active)?S.active:list[0].id;
-    S={active:act,list,staff:Array.isArray(d.staff)?d.staff:[],tt:d.tt&&Array.isArray(d.tt.list)?d.tt:{list:[],active:""},notes:d.notes&&typeof d.notes==="object"?d.notes:{},events:Array.isArray(d.events)?d.events:[],evals:Array.isArray(d.evals)?d.evals:[],obsTags:d.obsTags||undefined,tasks:Array.isArray(d.tasks)?d.tasks:(S.tasks||[]),recs:Array.isArray(d.recs)?d.recs:(S.recs||[]),plans:Array.isArray(d.plans)?d.plans:(S.plans||[]),links:Array.isArray(d.links)?d.links:(S.links||[]),sheets:Array.isArray(d.sheets)?d.sheets:(S.sheets||[]),period:S.period};
+    S={active:act,list,staff:Array.isArray(d.staff)?d.staff:[],tt:d.tt&&Array.isArray(d.tt.list)?d.tt:{list:[],active:""},notes:d.notes&&typeof d.notes==="object"?d.notes:{},events:Array.isArray(d.events)?d.events:[],evals:Array.isArray(d.evals)?d.evals:[],obsTags:d.obsTags||undefined,tasks:Array.isArray(d.tasks)?d.tasks:(S.tasks||[]),recs:Array.isArray(d.recs)?d.recs:(S.recs||[]),plans:Array.isArray(d.plans)?d.plans:(S.plans||[]),flows:Array.isArray(d.flows)?d.flows:(S.flows||[]),flowSub:d.flowSub&&typeof d.flowSub==="object"?d.flowSub:(S.flowSub||{}),links:Array.isArray(d.links)?d.links:(S.links||[]),sheets:Array.isArray(d.sheets)?d.sheets:(S.sheets||[]),period:S.period};
     Object.entries(d.extra||{}).forEach(([k,v])=>{if(SYNC_EXTRA.includes(k))try{localStorage.setItem(k,v)}catch(e){}});
     try{const m=JSON.parse(localStorage.getItem("att-app-msgs")||"{}");PK.stu.msg=m.stu||"";PK.staff.msg=m.staff||""}catch(e){}
     initTT();initEv();D=S.list.find(c=>c.id===S.active).data;selId=null;save();renderAll();
@@ -9720,10 +9746,11 @@ function renderNowHero(){const els=document.querySelectorAll(".nowhero");if(!els
     if(dk===k)hide=true;
     if(view==="att"&&OBSmode()==="att"&&selDate===x.date&&x.s&&R()===x.s)hide=true;
     if(!hide){const N=x.cl.data.roster.length,pr=x.s?x.cl.data.roster.filter(([id])=>x.s.p[id]).length:0;
-      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}${(()=>{try{const h=pnHint(x.cl,String(x.title||"").replace(/^\d+교시\s*/,""));return h?" · "+h:""}catch(e){return""}})()}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button><button class="nhtl" type="button" data-nhtl>🧰 수업 도구 <small>타이머 · 뽑기 · 모둠</small></button>`;
+      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}${(()=>{try{const h=pnHint(x.cl,String(x.title||"").replace(/^\d+교시\s*/,""));return h?" · "+h:""}catch(e){return""}})()}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button><button class="nhtl" type="button" data-nhtl>🧰 수업 도구 <small>타이머 · 뽑기 · 모둠</small></button><div class="flowwrap" data-flow></div>`;
       els.forEach(el=>{if(el.dataset.k!==k+html){el.dataset.k=k+html;el.innerHTML=html;el.querySelector("[data-nhgo]").onclick=()=>{x.go();try{if(OBS.mode!=="att")setAmode("att")}catch(e){}};el.querySelector("[data-nhx]").onclick=()=>{try{sessionStorage.setItem(NH_KEY,k)}catch(e){}renderNowHero()};el.querySelector("[data-nhtl]").onclick=()=>ctOpen(x.cl)}});
     }}
   els.forEach(el=>{const v=el.closest(".view");el.hidden=hide||!v||v.hidden;if(hide){el.innerHTML="";el.dataset.k=""}});
+  try{flowTick(1)}catch(e){}
 }
 function OBSmode(){try{return OBS.mode||"att"}catch(e){return"att"}}
 setInterval(()=>{if(!document.hidden)try{renderNowHero()}catch(e){}},30000);
@@ -10956,7 +10983,7 @@ function renderPn(){const el=$("ttProg");if(!el||typeof PN==="undefined"||!PN)re
   const M=pnSubjects(),subs=[...M.keys()];if(!subs.includes(PN.subj))PN.subj=subs[0]||"";const subj=PN.subj;
   const C=[...(M.get(subj)||[])].map(id=>S.list.find(c=>c.id===id)).filter(Boolean).sort((a,b)=>clsName(a.data).localeCompare(clsName(b.data),"ko",{numeric:true}));
   const p=subj&&C.length?pnFind(subj,C[0]):subj?plansAll().find(x=>x.subj===subj):null,tot=p?pnCh(p).length:0;
-  el.innerHTML=`<div class="presets pnsubj">${subs.map(s=>`<button class="chip" type="button" data-pns="${esc(s)}" aria-pressed="${s===subj}">${esc(s)}${M.get(s).size?` · ${M.get(s).size}개 반`:""}</button>`).join("")||`<span class="note">시간표에 교과가 없습니다. 시간표를 먼저 만들어 주세요.</span>`}<button class="chip ghost2" type="button" id="pnNew">＋ 진도표</button></div>
+  el.innerHTML=`<div class="presets pnsubj">${subs.map(s=>`<button class="chip" type="button" data-pns="${esc(s)}" aria-pressed="${s===subj}">${esc(s)}${M.get(s).size?` · ${M.get(s).size}개 반`:""}</button>`).join("")||`<span class="note">시간표에 교과가 없습니다. 시간표를 먼저 만들어 주세요.</span>`}<button class="chip ghost2" type="button" id="pnNew">＋ 진도표</button><button class="chip ghost2" type="button" id="flMgrB">⏱ 수업 흐름 틀</button></div>
     ${!subj?"":!p?`<section class="card"><h2>${esc(subj)} 진도표</h2><p class="note">단원과 차시를 한 번 넣어 두면, 수업할 때 출석 체크 화면에서 한 번 눌러 반별 진도를 기록하고 반마다 어디까지 했는지 · 남은 수업 시간이 충분한지 봅니다.</p><div class="row2"><button class="btn pri" type="button" id="pnMk">📘 ${esc(subj)} 진도표 만들기</button></div></section>`
     :`<section class="card"><div class="hd"><h2>${esc(subj)} 진도 현황</h2><span class="sub">전체 ${tot}차시 · 학기 끝 ${esc(fmtDate(pnTermEnd(p)))}</span></div>
       ${C.map(c=>{const dn=pnDoneN(p,c),nx=pnNext(p,c),[k,l]=pnStatus(p,c,C),left=pnLeft(p,c),need=tot-dn,short=left!=null&&need>left?need-left:0;
@@ -10971,7 +10998,7 @@ function renderPn(){const el=$("ttProg");if(!el||typeof PN==="undefined"||!PN)re
         <button class="btn sm ghost" type="button" id="pnOrigReset">비교 기준을 지금 진도표로</button></details>`})()}
       <div class="row2"><button class="btn" type="button" id="pnEd">진도표 고치기</button><button class="btn" type="button" id="pnXl">수업 진도 기록부 (엑셀)</button><button class="btn" type="button" id="pnXp">진도표 + 기록 (엑셀 · 고쳐서 올리기)</button><button class="btn" type="button" id="pnShare">진도표 보내기</button></div></section>`}`;
   el.querySelectorAll("[data-pns]").forEach(b=>b.onclick=()=>{PN.subj=b.dataset.pns;try{localStorage.setItem("att-app-pnsubj",PN.subj)}catch(e){}renderPn()});
-  $("pnNew").onclick=()=>pnEdit(null,subj,C);if($("pnMk"))$("pnMk").onclick=()=>pnEdit(null,subj,C);if($("pnEd"))$("pnEd").onclick=()=>pnEdit(p,subj,C);
+  $("pnNew").onclick=()=>pnEdit(null,subj,C);$("flMgrB").onclick=()=>flowMgr();if($("pnMk"))$("pnMk").onclick=()=>pnEdit(null,subj,C);if($("pnEd"))$("pnEd").onclick=()=>pnEdit(p,subj,C);
   if($("pnXl"))$("pnXl").onclick=()=>pnExport(p,C);if($("pnXp"))$("pnXp").onclick=()=>pnXlPlan(p,p.subj,C);if($("pnShare"))$("pnShare").onclick=()=>pnSend(p);
   el.querySelectorAll("[data-pnc]").forEach(b=>b.onclick=()=>pnChSheet(p,b.dataset.pnc,C));
   if($("pnOrigReset"))twoStep($("pnOrigReset"),"정말 바꾸기",()=>{delete p.orig;pnOrig(p);save();renderPn();toast("비교 기준을 지금 진도표로 바꿨습니다")})}
@@ -10981,9 +11008,11 @@ function pnChSheet(p,chId,C){const x=pnCh(p).find(y=>y.c.id===chId);if(!x)return
     ${C.map(c=>{const v=pnG(p,c)[chId];return`<div class="pncl"><b>${esc(c.data.cls||"학급")}</b><div class="seg2 sm">${[["d","마침"],["h","반만"],["","안 함"]].map(([k,l])=>`<button type="button" data-pk="${esc(c.id)}|${k}" aria-pressed="${(v?v.st:"")===k}">${l}</button>`).join("")}</div><small>${v?esc(fmtDate(v.d)):""}</small></div>`}).join("")}
     <label class="lb" for="pnWk">계획 날짜 (선택 · 계획 대비 앞섬 · 늦음을 봄)<input class="fld" id="pnWk" type="date" value="${esc(x.c.wk||"")}"></label>
     <label class="lb" for="pnT">차시 이름<input class="fld" id="pnT" value="${esc(x.c.t)}" maxlength="60"></label>
-    <div class="row2"><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
+    <label class="lb" for="pnFl">⏱ 이 차시의 수업 흐름 <small class="note">(비우면 교과 기본 틀)</small><select class="fld" id="pnFl"><option value="">(교과 기본 틀${flowSubs()[p.subj]?` · ${esc((flowById(flowSubs()[p.subj])||{n:""}).n)}`:" 없음"})</option>${[...FL_BASE,...flowsAll()].map(f=>`<option value="${esc(f.id)}"${x.c.flow===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></label>
+    <div class="row2"><button class="btn" type="button" id="pnFlM">⏱ 수업 흐름 틀 관리</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
     $("sheet").hidden=false;$("sheetBox").querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{const[cid,k]=b.dataset.pk.split("|"),c=S.list.find(q=>q.id===cid);pnSet(p,c,chId,k,today());save();paint()});
     $("pnWk").onchange=e=>{const v=e.target.value;if(/^\d{4}-\d{2}-\d{2}$/.test(v))x.c.wk=v;else delete x.c.wk;save()};$("pnT").oninput=e=>{x.c.t=e.target.value.trim().slice(0,60)||x.c.t;save()};
+    $("pnFl").onchange=e=>{if(e.target.value)x.c.flow=e.target.value;else delete x.c.flow;save();toast("이 차시의 수업 흐름을 정했습니다")};$("pnFlM").onclick=()=>flowMgr(()=>paint());
     $("skNo").onclick=()=>{$("sheet").hidden=true;renderPn()}};paint()}
 /* 진도표 만들기 · 고치기: 개요 글로 (# 단원 / 차시 한 줄씩) · 빠르게 만들기(단원 이름 + 차시 수) · 붙여넣기 · 엑셀 */
 function pnOutline(p){return p.units.map(u=>`# ${u.n}\n`+u.ch.map(c=>c.t).join("\n")).join("\n")}
@@ -11020,7 +11049,7 @@ function pnEdit(p,subj,C,after){const isNew=!p;let imp=null,txt=p?pnOutline(p):"
     $("skNo").onclick=()=>{$("sheet").hidden=true};
     if($("pnDel"))twoStep($("pnDel"),"정말 삭제",()=>{const bk=JSON.stringify(S.plans);S.plans=plansAll().filter(x=>x!==p);save();$("sheet").hidden=true;renderPn();toastUndo("진도표를 지웠습니다",()=>{S.plans=JSON.parse(bk);save();renderPn()},6000)});
     $("pnOk").onclick=()=>{subjV=$("pnS").value.trim();txt=$("pnTx").value;const U=pnParse(txt);if(!subjV)return toast("교과 이름을 넣어 주세요");if(!U.length)return toast("단원과 차시를 넣어 주세요");if(!sel.size)return toast("적용할 반을 하나 이상 고르세요");
-      const P=period(),old=p?p.units:[];const units=U.map((u,ui)=>{const ou=old[ui];return{id:ou?ou.id:uid(),n:u.n.slice(0,60),ch:u.ch.map((t,ci)=>{const oc=ou&&ou.ch[ci];return{id:oc?oc.id:uid(),t:String(t).slice(0,60),...(oc&&oc.wk?{wk:oc.wk}:{}),...(oc&&oc.add?{add:oc.add}:{})}})}});
+      const P=period(),old=p?p.units:[];const units=U.map((u,ui)=>{const ou=old[ui];return{id:ou?ou.id:uid(),n:u.n.slice(0,60),ch:u.ch.map((t,ci)=>{const oc=ou&&ou.ch[ci];return{id:oc?oc.id:uid(),t:String(t).slice(0,60),...(oc&&oc.wk?{wk:oc.wk}:{}),...(oc&&oc.add?{add:oc.add}:{}),...(oc&&oc.flow?{flow:oc.flow}:{})}})}});
       if(p){pnOrig(p);p.subj=subjV;p.units=units;p.cls=[...sel];delete p.end;const ids=new Set(pnCh(p).map(x=>x.c.id));Object.values(p.pg||{}).forEach(g=>Object.keys(g).forEach(k=>{if(!ids.has(k))delete g[k]}))}
       else{plansAll().push({id:uid(),subj:subjV,year:+P.year,term:P.term,cls:[...sel],units,pg:{}});pnOrig(plansAll()[plansAll().length-1])}
       if(imp){const pl=p||plansAll()[plansAll().length-1];Object.entries(imp.wk).forEach(([pos,d])=>{const[ui,ci]=pos.split("-").map(Number),c=units[ui]&&units[ui].ch[ci];if(c)c.wk=d});
@@ -11108,7 +11137,7 @@ function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).fi
     const def=last?`${last.ui}|${last.ci}`:nx?`${nx.ui}|${nx.ci-1}`:`0|-1`;
     f.hidden=false;f.innerHTML=`<label class="lb" for="pnInsT">진도표에 넣을 차시 이름<input class="fld" id="pnInsT" maxlength="60" value="${esc((fr.value||"").replace(/\d{1,2}\s*-\s*\d{1,2}/g,"").replace(/^[\s,·]+|[\s,·]+$/g,"").slice(0,60))}" placeholder="예: 실험 보충"></label>
       <label class="lb" for="pnInsP">넣을 자리<select class="fld" id="pnInsP">${p.units.map((u,ui)=>`<optgroup label="${esc(u.n)}"><option value="${ui}|-1"${def===`${ui}|-1`?" selected":""}>${esc(u.n)} 맨 앞</option>${u.ch.map((c,ci)=>`<option value="${ui}|${ci}"${def===`${ui}|${ci}`?" selected":""}>${ui+1}-${ci+1} ${esc(c.t)} 다음</option>`).join("")}</optgroup>`).join("")}</select></label>
-      <label class="ck"><input type="checkbox" id="pnInsD" checked> 이 수업에서 마침으로 기록</label>
+      <label class="chk"><input type="checkbox" id="pnInsD" checked> 이 수업에서 마침으로 기록</label>
       <div class="row2"><button class="btn sm" type="button" id="pnInsX">취소</button><button class="btn sm pri" type="button" id="pnInsOk">진도표에 넣기</button></div>`;
     $("pnInsX").onclick=()=>{f.hidden=true;f.innerHTML=""};
     $("pnInsOk").onclick=()=>{const t=$("pnInsT").value.trim();if(!t)return toast("차시 이름을 넣어 주세요");const[ui,ci]=$("pnInsP").value.split("|").map(Number);const c=pnInsert(p,ui,ci,t,x.date);if(!c)return;
@@ -11139,6 +11168,150 @@ function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).fi
     $("pnList").querySelectorAll("[data-uo]").forEach(b=>b.onclick=()=>{const id=b.dataset.uo;openU.has(id)?openU.delete(id):openU.add(id);paint()});
     $("pnList").querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{mark(b.dataset.pc)})};
   paint();link()}
+/* ===== 5.77: 수업 흐름 — 도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 두고, 수업 중 지금 단계 · 남은 시간을 알려 줌
+   틀: 기본 틀(앱에 들어 있음) + 선생님이 직접 설계한 틀 S.flows=[{id,n,steps:[{id,n,m,memo,al:"quiet"|"vib"|"snd",tool:""|"tm"|"pk"|"gp",fix}]}]
+   적용: 진도표 차시의 틀(c.flow) > 교과 기본 틀(S.flowSub[교과]) · 수업마다 바꾼 틀(이 기기, att-app-flowrun) */
+var FL_BASE=[{id:"b:3",n:"3단계 (도입 · 전개 · 정리)",b:1,steps:[["도입",5,"",""],["전개",35,"",""],["정리",10,"",1]]},
+  {id:"b:5",n:"5단계 (동기 유발 · 개념 · 활동 · 공유 · 정리)",b:1,steps:[["동기 유발",5,"",""],["개념 학습",15,"",""],["활동",15,"tm",""],["발표 · 공유",10,"pk",""],["정리",5,"",1]]},
+  {id:"b:exp",n:"실험 수업",b:1,steps:[["도입 · 안전 교육",5,"",""],["실험 설명",8,"",""],["실험",22,"tm",""],["결과 정리",10,"",""],["정리",5,"",1]]},
+  {id:"b:grp",n:"모둠 활동 수업",b:1,steps:[["도입",5,"",""],["모둠 구성",3,"gp",""],["모둠 활동",25,"tm",""],["발표",10,"pk",""],["정리",7,"",1]]}]
+  .map(f=>({...f,steps:f.steps.map(([n,m,tool,fix],i)=>({id:f.id+"-"+i,n,m,tool,fix:!!fix,al:"vib",memo:""}))}));
+var FL_TOOL={"":"없음",tm:"⏱ 타이머",pk:"🎯 발표자 뽑기",gp:"👥 모둠 나누기"},FL_AL={quiet:"화면만",vib:"진동",snd:"진동 + 소리"};
+function flowsAll(){if(!Array.isArray(S.flows))S.flows=[];return S.flows}
+function flowSubs(){if(!S.flowSub||typeof S.flowSub!=="object")S.flowSub={};return S.flowSub}
+function flowLen(){const t=TT();return(t&&+t.classMin)||50}
+function flowById(id,len){if(!id)return null;const b=FL_BASE.find(f=>f.id===id);if(b){/* 기본 틀은 수업 시간(분)에 맞춰 늘이거나 줄임 */const L=len||flowLen(),tot=b.steps.reduce((a,s)=>a+s.m,0);if(L===tot)return b;let acc=0;const st=b.steps.map((s,i)=>{const m=i===b.steps.length-1?Math.max(1,L-acc):Math.max(1,Math.round(s.m*L/tot));acc+=m;return{...s,m}});return{...b,steps:st}}
+  return flowsAll().find(f=>f.id===id)||null}
+function flowSum(f){return(f&&f.steps||[]).reduce((a,s)=>a+(+s.m||0),0)}
+function flowRunAll(){try{const o=JSON.parse(localStorage.getItem("att-app-flowrun")||"{}")||{};const lim=addDays(today(),-3);Object.keys(o).forEach(k=>{if(k.slice(0,10)<lim)delete o[k]});return o}catch(e){return{}}}
+function flowRunPut(k,v){const o=flowRunAll();if(v)o[k]=v;else delete o[k];try{localStorage.setItem("att-app-flowrun",JSON.stringify(o))}catch(e){}}
+function flowSubjOf(x){return String(x&&x.title||"").replace(/^\d+교시\s*/,"").trim()}
+function flowKey(x){return x.date+"|"+(x.src||x.title)}
+/* 이 수업에 쓸 틀: 수업마다 바꾼 틀 > 다음 차시의 틀 > 교과 기본 틀 */
+function flowOf(x){if(!x)return null;const run=flowRunAll()[flowKey(x)];if(run&&run.off)return null;const len=Math.max(1,Math.round((toMin(x.end)-toMin(x.start))))||flowLen();
+  let id=run&&run.fid,src="run";if(!id){try{const subj=flowSubjOf(x),p=pnFind(subj,x.cl);const nx=p&&pnNext(p,x.cl);if(nx&&nx.c.flow){id=nx.c.flow;src="ch"}}catch(e){}}
+  if(!id){id=flowSubs()[flowSubjOf(x)];src="subj"}const f=flowById(id,len);return f?{f,src,run:run||null,len}:null}
+/* 지금 어느 단계인지: 시작 시각(수업 시작 또는 ‘지금 시작’) + 단계 시간(＋ 조정) */
+function flowState(x,now){const F=flowOf(x);if(!F)return null;now=now||Date.now();const run=F.run||{},adj=run.adj||{};
+  const st=run.st||new Date(x.date+"T"+x.start+":00").getTime(),end=new Date(x.date+"T"+x.end+":00").getTime();
+  let t=st;const S2=F.f.steps.map(s=>{const d=Math.max(30000,(+s.m||0)*60000+(adj[s.id]||0)),o={s,a:t,b:t+d,d};t+=d;return o});
+  const i=S2.findIndex(o=>now<o.b),cur=i<0?null:S2[i];return{F,x,st,end,steps:S2,i,cur,left:cur?cur.b-now:0,fin:t,over:t-end,now,before:now<st}}
+function flowFmt(ms){ms=Math.max(0,Math.round(ms/1000));return`${Math.floor(ms/60)}:${String(ms%60).padStart(2,"0")}`}
+function flowAdj(x,sid,ms){const k=flowKey(x),o=flowRunAll()[k]||{};o.adj=o.adj||{};o.adj[sid]=(o.adj[sid]||0)+ms;flowRunPut(k,o)}
+function flowSet(x,patch){const k=flowKey(x),o={...(flowRunAll()[k]||{}),...patch};Object.keys(o).forEach(q=>{if(o[q]==null)delete o[q]});flowRunPut(k,Object.keys(o).length?o:null)}
+/* 수업 끝을 넘으면: 줄일 수 있는 단계(꼭 지킬 단계 빼고)를 남은 시간 비율대로 줄이기 */
+function flowFit(x){const st=flowState(x);if(!st||st.over<=15000)return 0;let need=st.over;const cand=st.steps.filter((o,j)=>j>=Math.max(0,st.i)&&!o.s.fix).map(o=>({o,room:Math.max(0,(o===st.cur?o.b-st.now:o.d)-60000)}));const room=cand.reduce((a,c)=>a+c.room,0);if(!room)return-1;
+  const k=flowKey(x),run=flowRunAll()[k]||{};run.adj=run.adj||{};cand.forEach(c=>{const cut=Math.round(Math.min(c.room,need*c.room/room)/1000)*1000;run.adj[c.o.s.id]=(run.adj[c.o.s.id]||0)-cut});flowRunPut(k,run);return Math.min(need,room)}
+function flowBoxHTML(st){if(!st)return"";const{F,cur,i,steps}=st,tot=st.fin-st.st;
+  const seg=steps.map((o,j)=>`<i class="${j<i||i<0?"dn":j===i?"on":""}" style="flex:${o.d}"></i>`).join("");
+  const nx=i>=0?steps[i+1]:null,warn=st.over>15000;
+  return`<div class="flowbox${warn?" warn":""}" data-flowbox>
+    <div class="flh"><span class="fln">${st.before?`⏱ 곧 시작 · ${esc(F.f.steps[0].n)}`:cur?`⏱ ${i+1}/${steps.length} <b>${esc(cur.s.n)}</b>`:"⏱ 수업 흐름 끝"}</span><span class="flt" data-fltime>${st.before?flowFmt(st.st-st.now):cur?flowFmt(st.left):""}</span></div>
+    <div class="flbar">${seg}</div>
+    <div class="flsub">${cur&&cur.s.memo?`<span>📝 ${esc(cur.s.memo)}</span>`:""}${nx?`<span>다음 · ${esc(nx.s.n)} ${Math.round(nx.d/60000)}분</span>`:cur?`<span>마지막 단계</span>`:`<span>남은 수업 ${flowFmt(st.end-st.now)}</span>`}${warn?`<span class="flw">⚠ 수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</div>
+    <div class="flbtns">${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 단계 ›</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
+function flowWire(el,x){const q=s=>el.querySelector(s);
+  if(q("[data-flplus]"))q("[data-flplus]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,120000);toast(`${st.cur.s.n} ＋2분 · 다음 단계가 2분 뒤로`);flowTick(1)}};
+  if(q("[data-flnext]"))q("[data-flnext]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,-(st.cur.b-st.now));FLA.prev[flowKey(x)]=st.i;flowTick(1);flowStepStart(x,st.i+1)}};
+  if(q("[data-flfit]"))q("[data-flfit]").onclick=()=>{const r=flowFit(x);toast(r>0?`남은 단계를 ${Math.ceil(r/60000)}분 줄여 수업 끝에 맞췄습니다`:"줄일 수 있는 단계가 없습니다(꼭 지킬 단계만 남음)");flowTick(1)};
+  if(q("[data-flmore]"))q("[data-flmore]").onclick=()=>flowSheet(x);
+  if(q("[data-flpick]"))q("[data-flpick]").onclick=()=>flowPick(x)}
+/* 1초마다: 지금 수업 카드 · 작은 표시를 고치고, 단계 끝나기 1분 전 · 단계가 바뀔 때 알림 */
+var FLA={prev:{},pre:{},wl:null};
+function flowTick(force){let x=null;try{x=nowLesson()}catch(e){}const st=x?flowState(x):null;
+  document.querySelectorAll("[data-flow]").forEach(el=>{if(!x||!st){el.dataset.sig="";el.hidden=!x;if(!x){el.innerHTML="";return}if(!el.querySelector("[data-flpick]")){el.innerHTML=`<button type="button" class="flowset" data-flpick>⏱ 수업 흐름 정하기 <small>도입 · 전개 · 정리 시간 알림</small></button>`;el.querySelector("[data-flpick]").onclick=()=>flowPick(x)}return}
+    const sig=[st.F.f.id,st.i,st.over>15000,st.before,JSON.stringify((st.F.run||{}).adj||{})].join("|");
+    if(force||el.dataset.sig!==sig){el.dataset.sig=sig;el.innerHTML=flowBoxHTML(st);flowWire(el,x)}else{const t=el.querySelector("[data-fltime]");if(t)t.textContent=st.before?flowFmt(st.st-st.now):st.cur?flowFmt(st.left):""}el.hidden=false});
+  /* 지금 수업 카드가 안 보일 때(출석 체크 중 등) 아래 작은 표시 */
+  let pill=$("flPill");const heroOn=[...document.querySelectorAll(".nowhero")].some(h=>!h.hidden&&h.querySelector("[data-flowbox]"));
+  if(st&&st.cur&&!heroOn&&!st.before){if(!pill){pill=document.createElement("button");pill.type="button";pill.id="flPill";pill.className="flpill";document.body.appendChild(pill)}pill.hidden=false;pill.classList.toggle("warn",st.over>15000);pill.innerHTML=`⏱ <span>${esc(st.cur.s.n)}</span> <b>${flowFmt(st.left)}</b>`;pill.onclick=()=>flowSheet(x)}else if(pill)pill.hidden=true;
+  if(!st||!st.cur||st.before){flowWake(false);return}flowWake(true);
+  const k=flowKey(x),pv=FLA.prev[k];
+  if(pv==null){FLA.prev[k]=st.i;return}
+  if(pv!==st.i){FLA.prev[k]=st.i;if(st.i>pv)flowStepStart(x,st.i,st)}
+  else if(st.left<=60000&&st.cur.d>90000&&!FLA.pre[k+"|"+st.i]){FLA.pre[k+"|"+st.i]=1;const nx=st.steps[st.i+1];flowAlert(st.cur.s.al,`${st.cur.s.n} 1분 남음${nx?` · 다음 ${nx.s.n}`:""}`)}}
+function flowStepStart(x,i,st){st=st||flowState(x);const o=st&&st.steps[i];if(!o)return;flowAlert(o.s.al,`${o.s.n} 시작 · ${Math.round(o.d/60000)}분`);
+  if(o.s.tool&&x.cl){const el=$("ctool");if(!el||el.hidden){if(o.s.tool==="tm"){const ms=Math.max(60000,Math.round((o.b-Date.now())/60000)*60000);Object.assign(CT.tm,{run:false,done:false,dur:ms,left:ms,end:0,sel:true})}try{ctOpen(x.cl,o.s.tool)}catch(e){}}}}
+function flowAlert(al,msg){al=al||"vib";document.documentElement.classList.add("flowflash");setTimeout(()=>document.documentElement.classList.remove("flowflash"),1800);
+  if(al!=="quiet")try{navigator.vibrate&&navigator.vibrate([160,90,160])}catch(e){}
+  if(al==="snd")try{const A=window.AudioContext||window.webkitAudioContext;if(A){const ac=CT.ac||(CT.ac=new A());ac.resume&&ac.resume();[0,.22].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.setValueAtTime(.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.18,ac.currentTime+t+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+t+.18);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.2)})}}catch(e){}
+  if(msg)toast("⏱ "+msg);window.__flowAlerts=(window.__flowAlerts||[]).concat([[al,msg]])}
+/* 흐름이 도는 동안 화면이 꺼지지 않게 */
+function flowWake(on){try{if(on&&!FLA.wl&&navigator.wakeLock&&!document.hidden){FLA.wl=1;navigator.wakeLock.request("screen").then(w=>{FLA.wl=w;w.addEventListener&&w.addEventListener("release",()=>{if(FLA.wl===w)FLA.wl=null})}).catch(()=>{FLA.wl=null})}else if(!on&&FLA.wl&&FLA.wl.release){FLA.wl.release();FLA.wl=null}}catch(e){}}
+setInterval(()=>{if(!document.hidden)try{flowTick()}catch(e){}},1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){FLA.wl=null;setTimeout(()=>{try{flowTick(1)}catch(e){}},200)}});
+/* 수업 흐름 창: 단계 목록 · 조정 · 틀 바꾸기 */
+function flowSheet(x){const paint=()=>{const st=flowState(x);if(!st)return flowPick(x);const{F}=st;
+    $("sheetBox").innerHTML=`<h2>⏱ 수업 흐름 <span class="sub">${esc(x.title)} · ${esc(x.start)}~${esc(x.end)}</span></h2>
+      <p class="note">틀: <b>${esc(F.f.n)}</b> ${F.src==="ch"?"(진도표 차시의 틀)":F.src==="subj"?"(교과 기본 틀)":"(이 수업에서 고른 틀)"} · 합계 ${Math.round((st.fin-st.st)/60000)}분${st.over>15000?` · <b class="flw">수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</b>`:""}</p>
+      <div class="flsteps">${st.steps.map((o,j)=>`<div class="flsr${j===st.i?" on":j<st.i||st.i<0?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(F.run&&F.run.adj&&F.run.adj[o.s.id])?` <small>(${F.run.adj[o.s.id]>0?"＋":""}${Math.round(F.run.adj[o.s.id]/60000)})</small>`:""}</span>${j>=st.i&&st.i>=0?`<span class="flsb"><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button></span>`:""}</div>`).join("")}</div>
+      <div class="row2">${st.over>15000?`<button class="btn pri" type="button" id="flFit">남은 단계 줄여 수업 끝에 맞추기</button>`:""}<button class="btn" type="button" id="flNow">지금부터 다시 시작</button><button class="btn" type="button" id="flChg">틀 바꾸기</button></div>
+      <div class="row2"><button class="btn ghost" type="button" id="flOff">이 수업은 흐름 끄기</button><button class="btn ghost" type="button" id="flMgr">수업 흐름 틀 관리</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
+    $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true;flowTick(1)};
+    $("sheetBox").querySelectorAll("[data-fla]").forEach(b=>b.onclick=()=>{const[id,ms]=b.dataset.fla.split("|");flowAdj(x,id,+ms);paint();flowTick(1)});
+    if($("flFit"))$("flFit").onclick=()=>{const r=flowFit(x);toast(r>0?`${Math.ceil(r/60000)}분 줄여 맞췄습니다`:"줄일 수 있는 단계가 없습니다");paint();flowTick(1)};
+    $("flNow").onclick=()=>{flowSet(x,{st:Date.now(),adj:null});FLA.prev[flowKey(x)]=null;toast("지금부터 첫 단계를 시작합니다");paint();flowTick(1)};
+    $("flChg").onclick=()=>flowPick(x);$("flOff").onclick=()=>{flowSet(x,{off:true});$("sheet").hidden=true;flowTick(1);toast("이 수업은 수업 흐름을 껐습니다")};
+    $("flMgr").onclick=()=>flowMgr(()=>flowSheet(x))};paint()}
+var fmtHM=ms=>{const d=new Date(ms);return`${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`};
+function flowStepsTxt(f){return f.steps.map(s=>`${s.n} ${s.m}`).join(" · ")}
+/* 이 수업에 쓸 틀 고르기 */
+function flowPick(x){const subj=flowSubjOf(x),cur=flowOf(x),p=(()=>{try{return pnFind(subj,x.cl)}catch(e){return null}})(),nx=p&&pnNext(p,x.cl),len=Math.round(toMin(x.end)-toMin(x.start))||flowLen();
+  const all=[...FL_BASE,...flowsAll()];let sel=cur?cur.f.id:(flowSubs()[subj]||"");
+  const paint=()=>{$("sheetBox").innerHTML=`<h2>⏱ 수업 흐름 고르기 <span class="sub">${esc(x.title)} · ${len}분</span></h2>
+    <div class="flpick">${all.map(f=>{const g=flowById(f.id,len);return`<button type="button" class="flpr" data-fp="${esc(f.id)}" aria-pressed="${sel===f.id}"><b>${esc(f.n)}${f.b?` <small class="flb">기본</small>`:""}</b><small>${esc(flowStepsTxt(g))}${!f.b&&flowSum(g)!==len?` · 합계 ${flowSum(g)}분`:""}</small></button>`}).join("")}</div>
+    <label class="chk"><input type="checkbox" id="flAsSub"${flowSubs()[subj]?"":" checked"}> ${esc(subj)} 수업의 기본 틀로도 쓰기</label>
+    ${nx?`<label class="chk"><input type="checkbox" id="flAsCh"> 진도표 ${esc(pnCode(nx))} ${esc(nx.c.t)} 차시에 이 틀 붙이기</label>`:""}
+    <div class="row2"><button class="btn" type="button" id="flNew">＋ 새 틀 직접 만들기</button><button class="btn ghost" type="button" id="flMgr2">틀 관리</button></div>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="flUse"${sel?"":" disabled"}>이 틀로 시작</button></div>`;
+    $("sheet").hidden=false;$("sheetBox").querySelectorAll("[data-fp]").forEach(b=>b.onclick=()=>{sel=b.dataset.fp;paint()});
+    $("skNo").onclick=()=>{$("sheet").hidden=true};$("flNew").onclick=()=>flowEdit(null,id=>{sel=id;paint()});$("flMgr2").onclick=()=>flowMgr(()=>flowPick(x));
+    $("flUse").onclick=()=>{if(!sel)return;if($("flAsSub").checked)flowSubs()[subj]=sel;if($("flAsCh")&&$("flAsCh").checked)nx.c.flow=sel;save();
+      const run=flowRunAll()[flowKey(x)]||{};const keepSt=run.st;flowSet(x,{fid:sel,off:null,adj:null,st:keepSt||null});FLA.prev[flowKey(x)]=null;$("sheet").hidden=true;flowTick(1);toast("수업 흐름을 정했습니다")}};paint()}
+/* 틀 관리: 기본 틀 · 내 틀 · 교과 기본 틀 · 파일로 주고받기 */
+function flowMgr(back){const paint=()=>{const subs=[...pnSubjects().keys()],all=[...FL_BASE,...flowsAll()];
+    $("sheetBox").innerHTML=`<h2>⏱ 수업 흐름 틀</h2><p class="note">도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 둡니다. 수업 시간이 되면 지금 수업 카드에 지금 단계와 남은 시간이 나오고, 단계 끝나기 1분 전과 단계가 바뀔 때 알려 줍니다.</p>
+      <div class="shlb">내가 만든 틀</div>${flowsAll().length?flowsAll().map(f=>`<div class="flmr"><div><b>${esc(f.n)}</b><small>${esc(flowStepsTxt(f))} · 합계 ${flowSum(f)}분</small></div><button class="btn sm" type="button" data-fe="${esc(f.id)}">고치기</button><button class="btn sm ghost" type="button" data-fs="${esc(f.id)}" aria-label="보내기">보내기</button></div>`).join(""):`<p class="note">아직 없습니다. 기본 틀을 복사해 고치거나 새로 만드세요.</p>`}
+      <div class="row2"><button class="btn pri" type="button" id="flNew2">＋ 새 틀 만들기</button><label class="btn filebtn" for="flFi">📄 틀 파일 넣기<input type="file" id="flFi" accept=".json"></label></div>
+      <div class="shlb">기본 틀 <small class="note">복사해서 내 틀로 고칠 수 있습니다</small></div>${FL_BASE.map(f=>`<div class="flmr"><div><b>${esc(f.n)}</b><small>${esc(flowStepsTxt(flowById(f.id)))}</small></div><button class="btn sm" type="button" data-fc="${esc(f.id)}">복사해 고치기</button></div>`).join("")}
+      ${subs.length?`<div class="shlb">교과 기본 틀 <small class="note">진도표 차시에 붙인 틀이 있으면 그 틀이 먼저</small></div>${subs.map(su=>`<label class="lb flsubl">${esc(su)}<select class="fld" data-fsub="${esc(su)}"><option value="">(쓰지 않음)</option>${all.map(f=>`<option value="${esc(f.id)}"${flowSubs()[su]===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></label>`).join("")}`:""}
+      <div class="row2"><button class="btn pri" type="button" id="skNo">${back?"돌아가기":"닫기"}</button></div>`;
+    $("sheet").hidden=false;$("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true;flowTick(1)};
+    $("flNew2").onclick=()=>flowEdit(null,()=>paint());
+    $("sheetBox").querySelectorAll("[data-fe]").forEach(b=>b.onclick=()=>flowEdit(flowsAll().find(f=>f.id===b.dataset.fe),()=>paint()));
+    $("sheetBox").querySelectorAll("[data-fc]").forEach(b=>b.onclick=()=>{const g=flowById(b.dataset.fc);flowEdit({n:g.n.replace(/\s*\(.*\)$/,"")+" (내 틀)",steps:g.steps.map(s=>({...s,id:uid()}))},()=>paint(),true)});
+    $("sheetBox").querySelectorAll("[data-fs]").forEach(b=>b.onclick=()=>{const f=flowsAll().find(q=>q.id===b.dataset.fs);if(!f)return;const file=new File([JSON.stringify({k:"tlflow",v:1,app:APP_NAME,n:f.n,steps:f.steps.map(s=>({n:s.n,m:s.m,memo:s.memo||"",al:s.al||"vib",tool:s.tool||"",fix:!!s.fix}))})],`수업흐름_${f.n.replace(/[\\/:*?"<>|\s]+/g,"")}.json`,{type:"application/json"});shareOrSave(file).then(()=>toast("틀 파일을 만들었습니다. 받는 선생님은 수업 흐름 틀 → 📄 틀 파일 넣기")).catch(()=>{})});
+    $("sheetBox").querySelectorAll("[data-fsub]").forEach(sl=>sl.onchange=()=>{const su=sl.dataset.fsub;if(sl.value)flowSubs()[su]=sl.value;else delete flowSubs()[su];save();toast(`${su} 기본 틀을 ${sl.value?"정했습니다":"뺐습니다"}`)});
+    $("flFi").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;try{const o=JSON.parse(await f.text());if(!o||o.k!=="tlflow"||!Array.isArray(o.steps)||!o.steps.length)throw new Error("수업 흐름 틀 파일이 아닙니다");
+        flowsAll().push(flowClean({id:uid(),n:String(o.n||"받은 틀"),steps:o.steps}));save();paint();toast(`‘${o.n||"받은 틀"}’ 틀을 넣었습니다`)}catch(err){toast(err.message||"파일을 읽지 못했습니다")}}};paint()}
+function flowClean(f){return{id:f.id||uid(),n:String(f.n||"내 수업 흐름").trim().slice(0,40)||"내 수업 흐름",steps:(f.steps||[]).map(s=>({id:s.id||uid(),n:String(s.n||"단계").trim().slice(0,30)||"단계",m:Math.max(1,Math.min(180,Math.round(+s.m||1))),memo:String(s.memo||"").slice(0,80),al:FL_AL[s.al]?s.al:"vib",tool:FL_TOOL[s.tool]!=null?s.tool:"",fix:!!s.fix})).slice(0,20)}}
+/* 틀 설계: 단계 이름 · 시간 · 메모 · 알림 · 함께 열 도구 · 꼭 지킬 단계 */
+function flowEdit(f0,done,copy){const isNew=!f0||copy||!f0.id;const W=flowClean(f0?JSON.parse(JSON.stringify(f0)):{n:"",steps:[{n:"도입",m:5},{n:"전개",m:Math.max(1,flowLen()-15)},{n:"정리",m:10,fix:true}]});if(isNew)W.id=uid();if(!f0||!f0.n)W.n="";const L=flowLen();
+  const sumP=()=>{const t=flowSum(W),el=$("flSum");if(el){el.textContent=t===L?`합계 ${t}분 · 수업 ${L}분에 딱 맞음 ✓`:t>L?`합계 ${t}분 · 수업 ${L}분보다 ${t-L}분 넘침`:`합계 ${t}분 · 수업 ${L}분보다 ${L-t}분 모자람`;el.className="flsum "+(t===L?"ok":"df")}};
+  const paint=()=>{$("sheetBox").innerHTML=`<h2>${isNew?"수업 흐름 틀 만들기":"수업 흐름 틀 고치기"}</h2>
+    <label class="lb" for="flN">틀 이름<input class="fld" id="flN" maxlength="40" value="${esc(W.n)}" placeholder="예: 3학년 실험 · 발표 수업"></label>
+    <div class="fleds">${W.steps.map((s,j)=>`<div class="fled" data-j="${j}"><div class="fler"><span class="flno">${j+1}</span><input class="fld" data-k="n" value="${esc(s.n)}" maxlength="30" aria-label="${j+1}단계 이름" placeholder="단계 이름"><input class="fld flm" data-k="m" type="number" inputmode="numeric" min="1" max="180" value="${s.m}" aria-label="${j+1}단계 시간(분)"><span class="flu">분</span>
+        <button type="button" class="btn sm ghost" data-mv="-1" aria-label="위로"${j?"":" disabled"}>▲</button><button type="button" class="btn sm ghost" data-mv="1" aria-label="아래로"${j<W.steps.length-1?"":" disabled"}>▼</button><button type="button" class="btn sm ghost" data-rm aria-label="이 단계 빼기"${W.steps.length>1?"":" disabled"}>✕</button></div>
+        <details class="flopt"><summary>${[s.memo?"📝 메모":"",s.tool?FL_TOOL[s.tool]:"",FL_AL[s.al],s.fix?"꼭 지킴":""].filter(Boolean).join(" · ")||"자세히"}</summary>
+          <input class="fld" data-k="memo" maxlength="80" value="${esc(s.memo||"")}" placeholder="이 단계에서 할 일 (예: 활동지 2번까지)" aria-label="${j+1}단계 메모">
+          <div class="flor"><label>알림<select class="fld" data-k="al">${Object.entries(FL_AL).map(([k,l])=>`<option value="${k}"${s.al===k?" selected":""}>${l}</option>`).join("")}</select></label><label>시작할 때 열 도구<select class="fld" data-k="tool">${Object.entries(FL_TOOL).map(([k,l])=>`<option value="${k}"${s.tool===k?" selected":""}>${l}</option>`).join("")}</select></label></div>
+          <label class="chk"><input type="checkbox" data-k="fix"${s.fix?" checked":""}> 꼭 지킬 단계 (시간이 밀려도 줄이지 않음)</label></details></div>`).join("")}</div>
+    <p class="flsum" id="flSum"></p>
+    <div class="row2"><button class="btn" type="button" id="flAdd">＋ 단계 넣기</button><button class="btn" type="button" id="flFit2">수업 ${L}분에 맞추기</button></div>
+    <div class="row2">${!isNew?`<button class="btn bad ghost" type="button" id="flDel">삭제</button>`:""}<button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="flOk">저장</button></div>`;
+    $("sheet").hidden=false;sumP();
+    $("flN").oninput=e=>{W.n=e.target.value};
+    $("sheetBox").querySelectorAll(".fled").forEach(row=>{const j=+row.dataset.j,s=W.steps[j];
+      row.querySelectorAll("[data-k]").forEach(inp=>{const k=inp.dataset.k;const h=()=>{if(k==="m"){s.m=Math.max(1,Math.min(180,parseInt(inp.value,10)||1));sumP()}else if(k==="fix")s.fix=inp.checked;else s[k]=inp.value};inp.oninput=h;inp.onchange=h});
+      row.querySelectorAll("[data-mv]").forEach(b=>b.onclick=()=>{const t=j+(+b.dataset.mv);if(t<0||t>=W.steps.length)return;[W.steps[j],W.steps[t]]=[W.steps[t],W.steps[j]];paint()});
+      row.querySelector("[data-rm]").onclick=()=>{if(W.steps.length<2)return;W.steps.splice(j,1);paint()}});
+    $("flAdd").onclick=()=>{const k=Math.max(0,W.steps.length-1);W.steps.splice(k,0,{id:uid(),n:"활동",m:5,memo:"",al:"vib",tool:"",fix:false});paint();setTimeout(()=>{try{$("sheetBox").querySelector(`.fled[data-j="${k}"] [data-k=n]`).select()}catch(_){}},30)};
+    $("flFit2").onclick=()=>{const t=flowSum(W);if(t===L)return toast("이미 딱 맞습니다");const fx=W.steps.filter(s=>s.fix).reduce((a,s)=>a+s.m,0),fl=W.steps.filter(s=>!s.fix);if(!fl.length||L-fx<fl.length)return toast("꼭 지킬 단계만으로 수업 시간을 넘습니다");
+      const tf=t-fx;let acc=0;fl.forEach((s,i)=>{const m=i===fl.length-1?Math.max(1,L-fx-acc):Math.max(1,Math.round(s.m*(L-fx)/tf));acc+=m;s.m=m});paint();toast(`수업 ${L}분에 맞췄습니다`)};
+    $("skNo").onclick=()=>{done&&done()};
+    if($("flDel"))twoStep($("flDel"),"정말 삭제",()=>{S.flows=flowsAll().filter(f=>f.id!==W.id);Object.keys(flowSubs()).forEach(k=>{if(flowSubs()[k]===W.id)delete flowSubs()[k]});save();toast("틀을 지웠습니다");done&&done()});
+    $("flOk").onclick=()=>{W.n=($("flN").value||"").trim();if(!W.n)return toast("틀 이름을 넣어 주세요");const c=flowClean(W);const i=flowsAll().findIndex(f=>f.id===c.id);if(i>=0)flowsAll()[i]=c;else flowsAll().push(c);save();toast(`‘${c.n}’ 틀을 저장했습니다 (${c.steps.length}단계 · ${flowSum(c)}분)`);done&&done(c.id)}};paint()}
+
 /* 지금 수업 카드 · 학생 화면에 쓰는 짧은 표시 */
 function pnHint(cl,subj){const p=pnFind(subj,cl);if(!p)return"";const nx=pnNext(p,cl);return nx?`📘 ${pnCode(nx)}`:""}
 function pnMissed(cl,date){const out=[];plansAll().filter(p=>p.cls.includes(cl.id)).forEach(p=>{const g=pnG(p,cl);pnCh(p).forEach(x=>{const v=g[x.c.id];if(v&&v.d===date)out.push(`${p.subj} ${pnCode(x)} ${x.c.t}`)})});return out}
