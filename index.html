@@ -1849,7 +1849,7 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.68.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.68.1", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1860,6 +1860,7 @@ const AM_SEC=[{k:"att",l:"출석",ic:"att",subs:[["m","att","출석 체크"],["t
   {k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["t","eval","학생 서명"]]},
   {k:"rec",l:"관찰 기록",ic:"obs",subs:[["m","obs","수업 관찰"],["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]}];
 const VERSIONS=[
+  {v:"5.68.1",date:"2026-10-28",items:["아이폰: 생활 기록(상담) 등 글쓰기 창에서 칸을 눌러 키보드가 올라오면 창 위쪽이 잘려 보이지 않던 문제 수정 — 창을 지금 보이는 화면에 맞춰 붙이고, 누른 칸이 창 가운데로 오게", "수업 도구: 뽑기 · 모둠 나누기에서 뜸 들이는 동안 드럼롤이 나지 않던 문제 수정(시작하자마자 꺼지던 것), 휴대폰 스피커에서도 잘 들리게 북소리 높이 · 크기 조정, 아이폰 무음 스위치를 켜도 효과음이 나게(지원하는 iOS)"]},
   {v:"5.68.0",date:"2026-10-28",items:["출석·기록 메뉴를 세 섹션으로: 📋 출석(출석 체크 · 출석 통계) · 📊 평가(평가 점수 · 학생 서명) · ✎ 관찰 기록(수업 관찰 · 생활 기록 · 업무 기록 · 일상 기록), 섹션마다 마지막 하위 화면 기억", "평가 만들기 3단계: 1. 정보(정기시험 · 수행평가 · 형성평가 · 과제, 평가명, 학년도 · 학기, 실시일, 대상 학급) → 2. 점수(직접 · 붙여넣기 · 엑셀) → 3. 학생 서명을 받을지 묻기(받으면 학급마다 점수 확인 서명, 안 받으면 학생 · 상담 자료로만)", "생활 기록: 💬 상담 · 🏫 학교생활로 나눔, 상담 칸(대상 · 방법 · 주제 · 후속 조치 · 다음 상담 → 일정 자동 등록), 상담 기록은 공유 링크 · 학교 묶음 · 인계 카드에 안 들어가고 전달 때 한 번 더 확인", "업무 기록(예전 회의 기록) · 일상 기록(예전 자유 글을 옮김, 제목 칸), 찾기는 모든 기록에서", "수업 도구 뜸 들이기 · 효과음: 뽑기 · 모둠 나누기에서 결과가 나오기 전 시간(바로 · 2 · 3 · 5 · 8초)을 고름, 그동안 이름이 난수표처럼 돌다가 점점 느려지며 멈추고(모둠은 1모둠부터 차례로 확정), 드럼롤 → 심벌 · ‘짠’ 화음 (🔊/🔇, 인터넷 없이도 남)","자동 점검 추가: 출석·평가·관찰 기록 메뉴 · 생활/상담 기록 · 평가 3단계"]},
   {v:"5.67.0",date:"2026-10-28",items:["글쓰기 전체 선택: Ctrl+A(⌘A) 또는 🧰 도구 → ☑ 전체 선택으로 글 전체(모든 문단 · 표 · 그림 캡션)를 고름 — 복사 · 잘라내기 · 지우기(되돌리기 가능), 바로 글자를 치거나 붙여 넣으면 글 전체를 바꿔 씀 (전에는 한 문단만 골라짐)", "오늘 화면에서 수업을 누르면 시간표 칸을 누를 때와 같은 창(출석 체크 · 수업 메모 · 시간 바꾸기 등)이 열림, 휴강 수업은 휴강 정보 창", "수업 관찰: 빠른 체크 항목을 고르면 ‘모두에게 넣기(그 날 출석한 학생)’ · ‘모두에서 빼기’ 단추(되돌리기 가능), 학생을 하나씩 누르는 기록도 그대로", "자동 점검 추가: 글 전체 선택 · 오늘 수업 창 · 관찰 모두 넣기/빼기"]},
   {v:"5.66.0",date:"2026-10-28",items:["수업 도구(🧰): 지금 수업 카드의 ‘🧰 수업 도구’ 또는 출석 화면의 ‘🧰 도구’ — 수업 중 화면 전체로 여는 타이머 · 발표자 뽑기 · 모둠 나누기", "화면 스타일 세 가지: 밝은 카드(앱과 같은 모양) · 칠판(교실 TV · 전자칠판) · 큰 글씨(프로젝터 · 멀리서) — 위쪽 🎨 단추로 바꾸고 기억, 가로 화면도 맞춤", "타이머: 1 · 3 · 5 · 10분, ‘수업 끝까지’(지금 수업 끝 시각), 잠깐 멈춤 · 다시 · ＋1분, 끝나면 소리 · 진동 · 깜빡임, 도구를 닫아도 화면 아래 작은 표시로 남은 시간", "발표자 뽑기: 오늘 출석한 학생만(출석 체크 전이면 명단 전체), 뽑힌 학생 빼기(모두 뽑히면 처음부터), ‘관찰 기록 적은 학생 먼저’, ✓ 발표함 → 관찰 기록 ‘발표함’에 바로 기록(되돌리기 가능), 넘기기 · 다시 뽑기", "모둠 나누기: 모둠 수 또는 모둠당 인원(남는 학생은 한 명씩 더 / 작은 모둠 하나), 출석한 학생 기준 미리 안내(예: 27명 → 4명 × 3모둠 + 5명 × 3모둠)", "성적 고르게: 평가 · 과제 점수(만점 대비 %, 여러 평가 평균) · 교사가 정한 상 · 중 · 하로 모둠 평균을 맞춤, 점수는 ‘균형 보기’를 눌렀을 때만 보임(화면에 띄워도 이름만)", "모둠 조건: 떼어 놓기 · 붙여 놓기(학급에 저장), 이름 두 개를 눌러 바꾸기 · 모둠 이름을 눌러 옮기기(조건을 어기면 경고), 늦게 온 학생 넣기, 명단 복사, 저장 · 지난 모둠 불러오기", "5.65 보완: 학생 정보에서 학번을 바꿀 때 평가 점수도 함께 옮겨지게", "자동 점검 추가: 수업 도구(타이머 · 뽑기 · 모둠 · 스타일)"]},
@@ -10577,24 +10578,28 @@ function ctFx(){try{const o={sec:3,snd:true,...JSON.parse(localStorage.getItem("
 function ctFxBar(){const o=ctFx();return`<div class="ctfx" role="group" aria-label="결과가 나오기 전 뜸 들이기"><span>🥁 뜸</span>${[0,2,3,5,8].map(x=>`<button type="button" data-fx="${x}" aria-pressed="${o.sec===x}">${x?x+"초":"바로"}</button>`).join("")}<button type="button" data-snd aria-pressed="${o.snd}" aria-label="효과음 ${o.snd?"끄기":"켜기"}">${o.snd?"🔊":"🔇"}</button></div>`}
 function ctFxWire(re){const B=$("ctBody");if(!B)return;const put=p=>{try{localStorage.setItem("att-app-ctfx",JSON.stringify({...ctFx(),...p}))}catch(e){}re()};
   B.querySelectorAll("[data-fx]").forEach(b=>b.onclick=()=>put({sec:+b.dataset.fx}));B.querySelectorAll("[data-snd]").forEach(b=>b.onclick=()=>{const on=!ctFx().snd;put({snd:on});if(on)ctTada(true)})}
-function ctSpin(D,tick,end){ctSpinStop();const t0=performance.now();let last=-1e9;CT.spin=true;
+function ctSpin(D,tick,end){CT.spin=false;try{cancelAnimationFrame(CT.raf)}catch(e){}const t0=performance.now();let last=-1e9;CT.spin=true;
   const step=()=>{if(!CT.spin)return;const e=performance.now()-t0,p=Math.min(1,e/D),gap=45+Math.pow(p,3)*380;if(e-last>=gap){last=e;try{tick(p)}catch(_){}}
     if(p>=1){CT.spin=false;end();return}CT.raf=requestAnimationFrame(step)};CT.raf=requestAnimationFrame(step)}
 function ctSpinStop(){CT.spin=false;try{cancelAnimationFrame(CT.raf)}catch(e){}ctSndStop()}
-const CTA={nodes:[],nb:null};
-function ctAC(){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;try{if(!CT.ac)CT.ac=new A();if(CT.ac.state==="suspended")CT.ac.resume()}catch(e){return null}return CT.ac}
+const CTA={nodes:[],nb:null,bus:null};
+function ctAC(){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;
+  try{if(navigator.audioSession&&navigator.audioSession.type!=="playback")navigator.audioSession.type="playback"}catch(e){}
+  try{if(!CT.ac)CT.ac=new A();if(CT.ac.state==="suspended")CT.ac.resume()}catch(e){return null}return CT.ac}
+/* 모든 효과음은 압축기를 거쳐 크게 (휴대폰 스피커에서도 들리게) */
+function ctBus(ac){if(CTA.bus&&CTA.bus.context===ac)return CTA.bus;const g=ac.createGain();g.gain.value=1.6;const c=ac.createDynamicsCompressor();c.threshold.value=-22;c.knee.value=10;c.ratio.value=6;c.attack.value=.003;c.release.value=.15;g.connect(c);c.connect(ac.destination);CTA.bus=g;return g}
 function ctNoise(ac){if(!CTA.nb||CTA.nb.sampleRate!==ac.sampleRate){const b=ac.createBuffer(1,ac.sampleRate,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;CTA.nb=b}return CTA.nb}
-function ctHit(ac,t,vol,f0,dec,type){const s=ac.createBufferSource();s.buffer=ctNoise(ac);const f=ac.createBiquadFilter();f.type=type||"bandpass";f.frequency.value=f0;f.Q.value=.9;const g=ac.createGain();g.gain.setValueAtTime(Math.max(.0002,vol),t);g.gain.exponentialRampToValueAtTime(.0001,t+dec);s.connect(f);f.connect(g);g.connect(ac.destination);s.start(t);s.stop(t+dec+.02);CTA.nodes.push(s)}
-function ctTone(ac,t,fr,vol,dec,type,toFr){const o=ac.createOscillator(),g=ac.createGain();o.type=type||"triangle";o.frequency.setValueAtTime(fr,t);if(toFr)o.frequency.exponentialRampToValueAtTime(toFr,t+dec);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dec);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+dec+.05);CTA.nodes.push(o)}
-/* 드럼롤: 점점 빠르고 크게 + 낮게 깔리는 긴장음 */
-function ctRoll(sec){if(!ctFx().snd||!sec)return;const ac=ctAC();if(!ac)return;ctSndStop();const t0=ac.currentTime+.03;let t=t0;
-  while(t<t0+sec){const p=(t-t0)/sec;ctHit(ac,t,.06+.3*p*p,1700+600*p,.08);t+=.13-.09*p}
-  for(let b=0;b<sec;b+=.5)ctTone(ac,t0+b,70+30*(b/sec),.18,.25,"sine",50);
-  ctTone(ac,t0,110,.035,sec,"sawtooth",330)}
+function ctHit(ac,t,vol,f0,dec,type){const s=ac.createBufferSource();s.buffer=ctNoise(ac);const f=ac.createBiquadFilter();f.type=type||"bandpass";f.frequency.value=f0;f.Q.value=.7;const g=ac.createGain();g.gain.setValueAtTime(Math.max(.0002,vol),t);g.gain.exponentialRampToValueAtTime(.0001,t+dec);s.connect(f);f.connect(g);g.connect(ctBus(ac));s.start(t);s.stop(t+dec+.02);CTA.nodes.push(s)}
+function ctTone(ac,t,fr,vol,dec,type,toFr){const o=ac.createOscillator(),g=ac.createGain();o.type=type||"triangle";o.frequency.setValueAtTime(fr,t);if(toFr)o.frequency.exponentialRampToValueAtTime(toFr,t+dec);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+dec);o.connect(g);g.connect(ctBus(ac));o.start(t);o.stop(t+dec+.05);CTA.nodes.push(o)}
+/* 드럼롤: 스네어(잡음 + 짧은 몸통 소리)가 점점 빠르고 크게, 반 박자마다 북(휴대폰에서 들리는 높이), 끝으로 갈수록 올라가는 긴장음 */
+function ctRoll(sec){if(!ctFx().snd||!sec)return;const ac=ctAC();if(!ac)return;ctSndStop();const t0=ac.currentTime+.03;let t=t0,k=0;
+  while(t<t0+sec){const p=(t-t0)/sec,v=.35+.65*p;ctHit(ac,t,v*(k%2?.8:1),2600,.07);ctTone(ac,t,240,.25*v,.05,"triangle",170);t+=.14-.1*p;k++}
+  for(let b=0;b<sec-.2;b+=.5)ctTone(ac,t0+b,190-40*(b/sec),.6,.22,"sine",120);
+  ctTone(ac,t0,220,.09,sec,"sawtooth",660)}
 /* 짠: 심벌 + 밝은 화음 (짧게 = 바로 뽑을 때) */
 function ctTada(short){if(!ctFx().snd)return;const ac=ctAC();if(!ac)return;const t=ac.currentTime+.02;
-  if(short){[784,1047].forEach((f,i)=>ctTone(ac,t+i*.07,f,.16,.35));return}
-  ctHit(ac,t,.35,6000,1.3,"highpass");ctHit(ac,t,.25,180,.25,"lowpass");[523.25,659.25,783.99,1046.5].forEach((f,i)=>ctTone(ac,t+i*.035,f,.13,1.2))}
+  if(short){[784,1047].forEach((f,i)=>ctTone(ac,t+i*.07,f,.3,.35));return}
+  ctHit(ac,t,.8,6000,1.3,"highpass");ctHit(ac,t,.6,300,.25,"lowpass");[523.25,659.25,783.99,1046.5].forEach((f,i)=>ctTone(ac,t+i*.035,f,.26,1.2))}
 function ctSndStop(){CTA.nodes.forEach(n=>{try{n.stop()}catch(e){}});CTA.nodes=[]}
 /* --- 모둠 나누기 --- */
 function ctG(){const c=ctCtl(CT.cl),g=c.g||{};return{m:g.m==="count"?"count":"size",n:Math.max(1,Math.min(20,+g.n||4)),rem:g.rem==="small"?"small":"spread",bal:g.bal==="score"?"score":"rand",src:Array.isArray(g.src)?g.src:[]}}
@@ -10664,7 +10669,7 @@ function ctGpSpin(){const D=window.__ctFast?0:ctFx().sec*1000,G=CT.gp,cl=CT.cl;i
   ctSpin(D,p=>{cards.forEach((c,i)=>{const at=.62+.38*(i/Math.max(1,cards.length));if(p>=at&&!fixed.has(i)){fixed.add(i);c.classList.remove("spin");c.classList.add("reveal");try{const ac=ctFx().snd&&ctAC();if(ac)ctTone(ac,ac.currentTime+.01,660+i*60,.12,.18)}catch(e){}
         c.querySelectorAll("[data-gn]").forEach(b=>{b.textContent=ctName(cl,b.dataset.gn)});return}
       if(!fixed.has(i))c.querySelectorAll("[data-gn]").forEach(b=>{b.textContent=rnd()})})},
-    ()=>{ctSndStop();ctTada();ctGroups()})}
+    ()=>{ctTada();ctGroups()})}
 /* 작은 창: 상중하 · 조건 · 더 보기 */
 function ctPopPaint(){const el=$("ctPop");if(!el)return;const cl=CT.cl,d=cl.data,c=d.ctl||{},close=()=>{CT.pop="";el.hidden=true;el.innerHTML="";if(CT.tab==="gp")ctGroups()};
   el.hidden=false;let h="";
@@ -10695,6 +10700,16 @@ function ctPopPaint(){const el=$("ctPop");if(!el)return;const cl=CT.cl,d=cl.data
     else{let best=1e9;G.forEach((x,i)=>{if(x.length<best){best=x.length;gi=i}})}
     G[gi].push(s);toast(`${ctName(cl,s)} → ${gi+1}모둠`);ctPopPaint()})}
 document.addEventListener("keydown",e=>{const el=$("ctool");if(!el||el.hidden||e.key!=="Escape")return;if(CT.pop){CT.pop="";const p=$("ctPop");if(p){p.hidden=true;p.innerHTML=""}}else ctClose()});
+/* 5.68.1: 아이폰에서 창(시트) 안의 칸을 눌러 키보드가 올라오면 화면이 밀려 창 위쪽이 잘리던 것 —
+   창을 ‘지금 보이는 영역(visualViewport)’에 맞춰 붙이고, 누른 칸은 창 안에서 가운데로 */
+(function(){const vv=window.visualViewport,sh=$("sheet"),bx=$("sheetBox");if(!vv||!sh||!bx)return;let raf=0;
+  const fit=()=>{raf=0;if(sh.hidden){sh.style.top=sh.style.height=sh.style.bottom="";bx.style.maxHeight="";return}
+    const kb=window.innerHeight-vv.height>80||vv.offsetTop>1;
+    if(kb){sh.style.top=Math.max(0,vv.offsetTop)+"px";sh.style.bottom="auto";sh.style.height=vv.height+"px";bx.style.maxHeight=Math.max(200,vv.height-8)+"px"}
+    else{sh.style.top=sh.style.height=sh.style.bottom="";bx.style.maxHeight=""}};
+  const q=()=>{if(!raf)raf=requestAnimationFrame(fit)};vv.addEventListener("resize",q);vv.addEventListener("scroll",q);
+  new MutationObserver(q).observe(sh,{attributes:true,attributeFilter:["hidden"]});
+  bx.addEventListener("focusin",e=>{const t=e.target;if(!t||!t.matches||!t.matches("input,textarea,select,[contenteditable=true]"))return;setTimeout(()=>{fit();try{const r=t.getBoundingClientRect(),b=bx.getBoundingClientRect();if(r.top<b.top+8||r.bottom>b.bottom-8)bx.scrollTop+=r.top-b.top-b.height/3}catch(_){}},350)})})();
 /* ===== 5.65: 앱 잠금 (PIN) — 성적 · 연락처가 든 기기를 남이 열어 보지 못하게 =====
    이 기기에만 저장(동기화 · 백업에 안 들어감). PIN 자체는 저장하지 않고 소금 친 해시만 둡니다.
    화면 잠금일 뿐 자료를 암호화하지는 않습니다 → 휴대폰 자체 잠금과 함께 쓰도록 안내합니다. */
