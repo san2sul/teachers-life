@@ -1395,8 +1395,10 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 .pnprev{background:var(--tint);border-radius:var(--r-m);padding:8px 10px;font-size:.8125rem;line-height:1.7}.pnprev small{color:var(--muted)}
 .pnbar{background:var(--tint);border:1.5px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:var(--r-m);padding:10px 12px;margin:10px 0 0}.pnbar[hidden]{display:none}.pnt{font-size:.75rem;color:var(--muted);display:flex;gap:6px;align-items:center;flex-wrap:wrap}.pnn{font-weight:800;font-size:1rem;margin:2px 0 8px}.pnbar .row2{margin:0}.pnbar .note{margin:6px 0 0}
 /* 5.71 아래 메뉴 · 설정 단추 */
-.topbtns .navb.setb{position:static;display:inline-flex;align-items:center;justify-content:center;flex-direction:row;gap:0;width:40px;min-width:40px;flex:0 0 40px;height:36px;min-height:36px;padding:0;margin:0;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--muted);font-size:0}
-.topbtns .navb.setb svg{width:20px;height:20px;margin:0}.topbtns .navb.setb span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.topbtns .navb.setb{position:static;display:inline-flex;align-items:center;justify-content:center;flex-direction:row;gap:0;width:36px;min-width:36px;max-width:36px;flex:0 0 36px;height:36px;min-height:36px;max-height:36px;box-sizing:border-box;padding:0;margin:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--muted);font-size:0}
+.topbtns .navb.setb svg{width:19px;height:19px;margin:0}
+/* 5.73: 오른쪽 위 단추(도움말 · 설정)와 오늘 화면 ‘＋ 일정 · 할 일’이 겹치지 않게 */
+#v-todo>header.top{padding-top:14px}.topbtns .navb.setb span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .topbtns .navb.setb[aria-current="page"]{color:#fff;background:var(--accent);border-color:var(--accent)}.topbtns .navb.setb[aria-current="page"]::before{display:none}
 .amsub.c3{grid-template-columns:repeat(3,minmax(0,1fr))}.amsub.one{display:none}
 #cnav{margin:0 0 12px}
@@ -1915,7 +1917,7 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.72.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.73.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1927,6 +1929,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.73.0",date:"2026-10-28",items:["오늘 화면: 오른쪽 위 설정(⚙) 단추와 ‘＋ 일정 · 할 일’ 단추가 겹치던 것 고침 — 설정 단추를 36px 원으로 맞춤","수업 도구 타이머: 도는(또는 멈춘) 동안 시간 단추(1 · 3 · 5 · 10분)를 누르면 누를 때마다 그 시간만큼 늘어남(3분을 두 번 → 6분), 단추에 ‘＋3분’처럼 표시 · 늘어난 시간 알림. ‘다시’를 누른 뒤에는 고른 시간으로 새로 시작"]},
   {v:"5.72.0",date:"2026-10-28",items:["시간표 → 수업 칸(학급 정보)의 진도 칸: 진도표가 있으면 단원별 차시 목록으로 — 차시마다 마침 · 반만 · 안 함을 바로 기록, 다음 차시 · 지난 기록 날짜 · 이 수업 표시","진도 기록 연동: 학급 정보 · 출석부의 ‘오늘 할 차시’ · 시간표 📘 진도 현황이 같은 기록 — 어디서 고쳐도 모두 바뀜, 수업 메모의 진도 글도 기록한 차시로 자동","진도표가 없는 교과는 학급 정보에서 바로 ‘📘 진도표 만들기’ → 만들고 나면 그 수업 창으로 돌아와 기록","키보드가 올라와 입력하는 동안 아래 단추 줄을 숨기는 것을 글쓰기 창뿐 아니라 학급 정보 등 내용이 긴 모든 창에 — 입력 칸이 가려지지 않음","진도표의 학기 끝 날짜 = 시간표의 학기 종료일(시간 설정 · 학기) — 따로 넣지 않고, 시간표에서 바꾸면 남은 수업 계산도 바로 바뀜","진도표 고치기 · 링크 찾기: 한글이 제대로 입력되지 않던 것 고침(글을 칠 때 미리보기 · 목록만 다시 그림)","진도표 엑셀 양식 받기 · 채워 올리기: 단원 · 차시 · 계획 날짜 · 반마다 마침 · 반만(날짜 선택). 시간표 → 📘 진도 → ‘진도표 + 기록 (엑셀)’로 지금 진도표를 받아 고쳐 올리기, 내려받은 수업 진도 기록부도 올려서 기록 되살리기","오른쪽 위 설정(⚙) 단추의 원 배경을 앱 바탕색과 같게","도움말 · 앱 소개를 새 메뉴(오늘 · 시간표 · 출석 · 연락 · 기록)에 맞게 고침 — 장 제목과 경로, 화면마다 ⓘ 도움말이 여는 곳(평가 · 기록 · 학생 정보)","자동 점검 추가: 학급 정보 진도 목록(마침 · 반만 · 안 함) · 진도표 연동, 진도표 엑셀 양식 받기 · 채워 올리기 · 기록부 올리기"]},
   {v:"5.71.0",date:"2026-10-28",items:["아래 메뉴를 오늘 · 시간표 · 출석 · 연락 · 기록으로: 출석(출석부 · 수업 관찰 · 출석 통계), 연락(결석 학생 · 골라 연락 · 교직원 연락 · 직접 입력), 기록(평가 · 기록 · 학생 정보)","설정은 오른쪽 맨 위 ‘동기화됨’ 표시 옆 ⚙ 톱니바퀴로","출석부 날짜를 메뉴 아래로 — 하위 메뉴를 옮겨 다녀도 메뉴가 늘 같은 자리(화면이 위아래로 흔들리지 않음)","글쓰기 창: 키보드가 올라와 글을 쓰는 동안 삭제 · 취소 · 전달 · 완료 단추를 숨겨 쓰는 자리를 넓힘, 키보드의 ‘완료’로 닫으면 다시 보임","글쓰기 창: 엔터를 치면 새 줄이 키보드나 단추에 가리지 않도록 창이 저절로 올라감","학생 찾기 · 기록 찾기: 한글이 제대로 입력되지 않던 것 고침(ㅎ→하→한 조합이 끊기지 않음)","학생 화면 다듬기: 이름 옆 큰 머리글자 빼기, 학생 정보 목록의 연락 단추 줄은 아래 메뉴 ‘연락’과 겹쳐 빼기","자동 점검 추가: 아래 메뉴 · 설정 위치 · 한글 찾기 · 입력 중 단추 숨김"]},
   {v:"5.70.0",date:"2026-10-28",items:["진도 관리(📘): 시간표 → 📘 진도 — 교과마다 진도표(단원 · 차시)를 만들고 반별로 어디까지 했는지 막대로, 가장 앞선 반 · 계획 날짜 대비 앞섬 · 늦음", "진도표 만들기: ‘1. 힘과 운동 6’처럼 단원 이름 + 차시 수 한 줄씩(빠르게), # 단원 아래 차시 이름 한 줄씩, 엑셀 · 한글 표의 ‘단원 · 차시’ 두 칸 붙여넣기, 엑셀 파일, 동교과 선생님이 보낸 진도표 파일(진도표 보내기)", "출석 체크 화면에 ‘📘 오늘 할 차시’: ✓ 마침 · 반만 함 · 다른 차시(한 수업에 여러 차시) · 되돌리기, 수업 메모의 진도 칸도 자동으로 채움, 지금 수업 카드에 다음 차시 표시", "남은 수업 계산: 시간표와 수업 변동(시험 · 휴업 · 휴강)을 빼고 학기 끝 날짜까지 그 반 수업 수를 세어 ‘남은 수업 8시간 · 남은 차시 11 → 3차시 부족’ 경고", "진도표에서 차시를 누르면 반마다 마침 · 반만 · 안 함, 계획 날짜, 차시 이름 고치기. 진도표를 고쳐도 기록한 진도는 같은 자리에 그대로", "수업 진도 기록부(반 · 날짜 · 차시 · 단원 · 내용) 엑셀, 학생 화면의 결석 줄에 그 날 놓친 진도 표시", "자동 점검 추가: 진도 관리(진도표 · 한 번 눌러 기록 · 현황 · 남은 수업)"]},
@@ -10687,15 +10690,18 @@ function ctRing(){try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300]
   const el=$("ctool");if(el&&!el.hidden){if(CT.tab==="tm")ctPaint()}else toast("⏱ 타이머가 끝났습니다");ctPill()}
 function ctSet(ms){const t=CT.tm;t.dur=ms;t.left=ms;t.end=Date.now()+ms;t.done=false;t.run=true;try{const A=window.AudioContext||window.webkitAudioContext;if(A&&!CT.ac)CT.ac=new A();CT.ac&&CT.ac.resume&&CT.ac.resume()}catch(e){}ctRun();ctPaint()}
 function ctTimer(){const t=CT.tm,L=ctLesson(CT.cl);let endMin=0;if(L&&L.end){const[h,m]=L.end.split(":").map(Number),e=new Date();e.setHours(h,m,0,0);endMin=Math.floor((e-Date.now())/60000)}
-  const ring=ctTheme()!=="proj",p=t.dur?ctLeft()/t.dur:0;
+  const ring=ctTheme()!=="proj",p=t.dur?ctLeft()/t.dur:0,act=!t.done&&(t.run||t.left<t.dur);
   $("ctBody").innerHTML=`<div class="ctmain">${ring?`<div class="ctring${t.done?" done":""}" id="ctRing" style="--p:${p}"><div class="ctbig" id="ctBig">${t.done?"끝!":ctFmt(ctLeft())}</div></div>`:`<div class="ctbig${t.done?" done":""}" id="ctBig">${t.done?"끝!":ctFmt(ctLeft())}</div>`}
-      <p class="ctsub">${t.done?"시간이 다 됐습니다":t.run?`${Math.round(t.dur/60000)}분 · 끝나면 소리와 진동`:t.left<t.dur?"잠깐 멈춤":"시간을 고르면 바로 시작합니다"}</p>
-      <div class="ctchips">${[1,3,5,10].map(m=>`<button type="button" data-tm="${m}" aria-pressed="${t.dur===m*60000&&(t.run||t.left<t.dur||t.done)}">${m}분</button>`).join("")}${endMin>0?`<button type="button" data-tm="${endMin}">수업 끝까지 (${endMin}분)</button>`:""}</div></div>
+      <p class="ctsub">${t.done?"시간이 다 됐습니다":t.run?`${Math.round(t.dur/60000)}분 · 시간 단추를 누를 때마다 그만큼 늘어남`:t.left<t.dur?"잠깐 멈춤 · 시간 단추를 누르면 그만큼 늘어남":"시간을 고르면 바로 시작 · 한 번 더 누르면 그만큼 늘어남"}</p>
+      <div class="ctchips">${[1,3,5,10].map(m=>`<button type="button" data-tm="${m}" aria-pressed="${!act&&t.dur===m*60000&&t.done}">${act?"＋":""}${m}분</button>`).join("")}${endMin>0?`<button type="button" data-tmend="${endMin}">수업 끝까지 (${endMin}분)</button>`:""}</div></div>
     <div class="ctbtns"><button type="button" id="ctTmR">다시</button><button type="button" class="p" id="ctTmGo">${t.run?"❚❚ 잠깐 멈춤":t.done?"▶ 다시 시작":"▶ 시작"}</button><button type="button" id="ctTmP">＋1분</button></div>`;
-  $("ctBody").querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>ctSet(+b.dataset.tm*60000));
+  /* 5.72: 타이머가 돌거나 멈춰 있을 때 시간 단추를 누르면 그 시간만큼 더함(3분 → 한 번 더 → 6분) */
+  const add=ms=>{if(t.run)t.end+=ms;else{t.left+=ms;t.done=false}t.dur+=ms;ctPaint();ctPill();toast(`＋${Math.round(ms/60000)}분 · 남은 시간 ${ctFmt(ctLeft())}`)};
+  $("ctBody").querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>{const ms=+b.dataset.tm*60000;if(!t.done&&(t.run||t.left<t.dur))add(ms);else ctSet(ms)});
+  $("ctBody").querySelectorAll("[data-tmend]").forEach(b=>b.onclick=()=>ctSet(+b.dataset.tmend*60000));
   $("ctTmR").onclick=()=>{t.run=false;t.done=false;t.left=t.dur;ctPaint();ctPill()};
   $("ctTmGo").onclick=()=>{if(t.run){t.left=Math.max(0,t.end-Date.now());t.run=false;ctPaint();ctPill();return}if(t.done||t.left<=0){ctSet(t.dur);return}t.end=Date.now()+t.left;t.run=true;ctRun();ctPaint()};
-  $("ctTmP").onclick=()=>{if(t.run)t.end+=60000;else{t.left+=60000;t.done=false}t.dur+=60000;ctPaint()};
+  $("ctTmP").onclick=()=>add(60000);
   if(t.run)ctRun()}
 /* 도구를 닫아도 타이머가 돌면 작은 표시 */
 function ctPill(){let p=$("ctPill");const t=CT.tm,on=(t.run||t.done)&&($("ctool")||{}).hidden!==false;
