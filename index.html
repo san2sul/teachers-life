@@ -1341,6 +1341,9 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 .nhtl{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;min-height:44px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--card,var(--paper));color:var(--ink);font:inherit;font-size:.9375rem;font-weight:600}
 @media (orientation:landscape) and (max-height:500px){.ctin{padding-top:calc(env(safe-area-inset-top) + 6px)}.ctring{width:min(52vh,240px)}.ctring .ctbig{font-size:min(11vh,64px)}.cttabs{margin:6px 0}.cttabs button{min-height:38px}.ctmain{gap:8px;padding:0}.ctbtns button{min-height:44px}.ctx,.ctth{height:38px}}
 @media (prefers-reduced-motion:reduce){.ctbig.done,.ctring.done .ctbig,.ctpill.done{animation:none}}
+/* 5.67 글 전체 선택 */
+.wred.wrall{outline:3px solid var(--accent);outline-offset:4px;border-radius:6px}.wred.wrall .wb{background:color-mix(in srgb,var(--accent) 16%,transparent)}.wred.wrall .wbt{caret-color:transparent}
+.wrallbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;justify-content:space-between;background:var(--paper);border:1px solid var(--accent);border-radius:var(--r-m);padding:8px 10px;margin:6px 0}.wrallbar[hidden]{display:none}.wrallbar b small{font-weight:400;color:var(--muted);margin-left:4px}.wrallbar span{display:flex;gap:6px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -1435,7 +1438,7 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
       <div class="lockbar" id="obsLockBar"><span id="obsLockTxt"></span><button class="btn sm" type="button" id="obsLockBtn"></button></div>
       <p class="note" style="margin:0">날짜를 고르지 않으면 오늘 날짜로 기록됩니다.</p>
       <div class="hd"><h2>빠른 체크</h2><button class="btn sm" type="button" id="obsEdit">항목 편집</button></div>
-      <div id="obsBar"></div><p class="note" id="obsHint"></p><p class="note">항목 줄은 옆으로 밀어 더 볼 수 있습니다.</p>
+      <div id="obsBar"></div><p class="note" id="obsHint"></p><div class="row2 obsall" id="obsAll" hidden></div><p class="note">항목 줄은 옆으로 밀어 더 볼 수 있습니다.</p>
       <div id="obsTsBox"></div></div>
     <section class="card tkcard" id="tkCard"></section>
     <div class="list" id="obsList"></div>
@@ -1819,12 +1822,13 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.66.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.67.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
 const AM_ITEMS=[["m","att","출석 체크","att"],["t","att","출석 통계","stat"],["m","obs","관찰 기록","obs"],["m","write","글쓰기","write"],["m","task","평가 · 과제","task"],["t","eval","학생 서명","sign"]];
 const VERSIONS=[
+  {v:"5.67.0",date:"2026-10-28",items:["글쓰기 전체 선택: Ctrl+A(⌘A) 또는 🧰 도구 → ☑ 전체 선택으로 글 전체(모든 문단 · 표 · 그림 캡션)를 고름 — 복사 · 잘라내기 · 지우기(되돌리기 가능), 바로 글자를 치거나 붙여 넣으면 글 전체를 바꿔 씀 (전에는 한 문단만 골라짐)", "오늘 화면에서 수업을 누르면 시간표 칸을 누를 때와 같은 창(출석 체크 · 수업 메모 · 시간 바꾸기 등)이 열림, 휴강 수업은 휴강 정보 창", "수업 관찰: 빠른 체크 항목을 고르면 ‘모두에게 넣기(그 날 출석한 학생)’ · ‘모두에서 빼기’ 단추(되돌리기 가능), 학생을 하나씩 누르는 기록도 그대로", "자동 점검 추가: 글 전체 선택 · 오늘 수업 창 · 관찰 모두 넣기/빼기"]},
   {v:"5.66.0",date:"2026-10-28",items:["수업 도구(🧰): 지금 수업 카드의 ‘🧰 수업 도구’ 또는 출석 화면의 ‘🧰 도구’ — 수업 중 화면 전체로 여는 타이머 · 발표자 뽑기 · 모둠 나누기", "화면 스타일 세 가지: 밝은 카드(앱과 같은 모양) · 칠판(교실 TV · 전자칠판) · 큰 글씨(프로젝터 · 멀리서) — 위쪽 🎨 단추로 바꾸고 기억, 가로 화면도 맞춤", "타이머: 1 · 3 · 5 · 10분, ‘수업 끝까지’(지금 수업 끝 시각), 잠깐 멈춤 · 다시 · ＋1분, 끝나면 소리 · 진동 · 깜빡임, 도구를 닫아도 화면 아래 작은 표시로 남은 시간", "발표자 뽑기: 오늘 출석한 학생만(출석 체크 전이면 명단 전체), 뽑힌 학생 빼기(모두 뽑히면 처음부터), ‘관찰 기록 적은 학생 먼저’, ✓ 발표함 → 관찰 기록 ‘발표함’에 바로 기록(되돌리기 가능), 넘기기 · 다시 뽑기", "모둠 나누기: 모둠 수 또는 모둠당 인원(남는 학생은 한 명씩 더 / 작은 모둠 하나), 출석한 학생 기준 미리 안내(예: 27명 → 4명 × 3모둠 + 5명 × 3모둠)", "성적 고르게: 평가 · 과제 점수(만점 대비 %, 여러 평가 평균) · 교사가 정한 상 · 중 · 하로 모둠 평균을 맞춤, 점수는 ‘균형 보기’를 눌렀을 때만 보임(화면에 띄워도 이름만)", "모둠 조건: 떼어 놓기 · 붙여 놓기(학급에 저장), 이름 두 개를 눌러 바꾸기 · 모둠 이름을 눌러 옮기기(조건을 어기면 경고), 늦게 온 학생 넣기, 명단 복사, 저장 · 지난 모둠 불러오기", "5.65 보완: 학생 정보에서 학번을 바꿀 때 평가 점수도 함께 옮겨지게", "자동 점검 추가: 수업 도구(타이머 · 뽑기 · 모둠 · 스타일)"]},
   {v:"5.65.0",date:"2026-10-28",items:["정기시험: 평가 · 과제에 ‘정기시험’(중간 · 기말고사) 종류 추가 — 시험일 · 만점 · 반영 비율 · 이의 신청 마감일, 미응시 체크(시험일 결석 학생 자동 반영)", "평가 점수: 수행평가 · 형성평가 · 정기시험에 학생별 점수 — ✏️ 직접 입력(바로 저장, 만점 밖은 빨간 표시) · 📋 붙여넣기(나이스 · 엑셀 · 구글 시트의 학번 · 이름 · 점수, 명단 순서대로 점수만도 가능) · 📄 엑셀 · CSV(점수 칸 고르기)", "점수 가져오기 미리보기: 맞은 학생 · 바뀌는 점수 · 못 맞춘 줄과 이유(명단에 없음 · 결시 · 만점 밖 · 같은 이름), 되돌리기, 여러 학급 한 번에(학번으로 학급마다 나눔), 학급별 입력 수 · 평균 · 최고 · 최저", "점수 확인 서명: 넣은 점수로 학생 서명을 바로 만듦(학생마다 자기 점수만, 이의 신청 마감 안내), 점수를 고치면 바뀐 학생만 반영하고 서명한 학생은 ‘다시 받아야 함’", "앱 잠금(PIN): 설정 → 보관 · 화면 · 정보 → 앱 잠금 — 숫자 4~6자리, 앱을 열 때 · 다른 앱에 다녀왔을 때(바로 · 1 · 5 · 15분 뒤) 잠금, 앱 전환 화면 가림, 5번 틀리면 잠시 대기, PIN은 이 기기에만(해시로) 저장", "백업에서 성적 빼기: 설정 → 백업의 ‘성적(평가 점수) 포함’을 끄면 백업 파일 · 코드 · 전체 백업에서 점수와 점수 확인 서명을 뺌, 이 백업을 불러와도 이 기기의 점수는 그대로", "자동 점검 추가: 정기시험 점수 · 가져오기 · 성적 뺀 백업 · 앱 잠금"]},
   {v:"5.64.0",date:"2026-10-27",items:["출석 체크 고치기: 출석 화면의 ‘✎ 날짜 · 시간 고치기’ 또는 고른 출석 체크 탭을 한 번 더 누르면 날짜 · 시간 · 수업 이름을 고침(출석 · 결석 · 출결 구분 · 연락 완료는 그대로 옮겨짐, 다른 요일로 옮기면 시간표 연결만 풀림)", "출석 체크 삭제는 확인 절차를 거침: 지워질 내용(날짜 · 출석 · 결석 · 연락 완료 · 출결 구분 · 시간표 연결)을 보여 주고 ‘확인했습니다’를 체크해야 삭제 단추가 켜짐, 잠긴 출석 체크는 삭제 불가", "삭제한 출석 체크는 30일 보관: 삭제 직후 ‘되돌리기’, 출석 화면 아래 ‘🗑 삭제한 출석 체크’에서 되살리기(기기 연동 · 백업에도 함께)", "고치기 · 삭제 · 되살리기는 연락(결석 학생), 오늘, 시간표 칸 표시, 출석 통계 · 나이스 요약, 기기 연동에 바로 반영", "자동 점검 추가: 출석 체크 고치기 · 삭제 확인 · 되살리기"]},
@@ -5727,7 +5731,7 @@ function wrEdit(id,isNew,orig){const r=recsAll().find(x=>x.id===id);if(!r)return
     <div class="wrpan" data-pan="fav" id="wrFav"></div>
     <div class="wrpan" data-pan="para">${WR_B.map(b=>`<button type="button" data-bt="${b[0]}" title="${b[1]}">${b[2]||"Aa"}<small>${b[1]}</small></button>`).join("")}</div>
     <div class="wrpan" data-pan="ins">${WR_O.map(o=>`<button type="button" data-bo="${o[0]}" title="${o[1]} 넣기">${o[2]}<small>${o[1]}</small></button>`).join("")}<button type="button" data-paste="1" title="붙여넣기">📋<small>붙여넣기</small></button></div>
-    <div class="wrpan" data-pan="tool"><button type="button" data-mv="-1" title="블록 위로">↑<small>위로</small></button><button type="button" data-mv="1" title="블록 아래로">↓<small>아래로</small></button><button type="button" data-bx="1" title="블록 지우기">⌫<small>블록 삭제</small></button><button type="button" data-fr="1" title="찾아 바꾸기">🔎<small>찾아 바꾸기</small></button><button type="button" data-ex="1" title="인쇄 · 내보내기 · 웹 공유">🖨<small>인쇄 · 공유</small></button></div></div>
+    <div class="wrpan" data-pan="tool"><button type="button" data-mv="-1" title="블록 위로">↑<small>위로</small></button><button type="button" data-mv="1" title="블록 아래로">↓<small>아래로</small></button><button type="button" data-bx="1" title="블록 지우기">⌫<small>블록 삭제</small></button><button type="button" data-sa="1" title="글 전체 선택 (Ctrl+A)">☑<small>전체 선택</small></button><button type="button" data-fr="1" title="찾아 바꾸기">🔎<small>찾아 바꾸기</small></button><button type="button" data-ex="1" title="인쇄 · 내보내기 · 웹 공유">🖨<small>인쇄 · 공유</small></button></div></div>
     <div class="wrfmt wrpan" id="wrFmt" data-pan="fmt" role="toolbar" aria-label="글자 꾸미기">${WR_F.map(f=>`<button type="button" data-fm="${f[0]}" title="${f[2]}" aria-label="${f[2]}">${f[1]}</button>`).join("")}</div></div>
     <div class="wred" id="wrEd"></div><div class="wrslash" id="wrSlash" hidden></div><div class="wrcnt" id="wrCnt" aria-live="polite"></div>
     <div class="shlb">증빙 · 첨부 <small class="note">이 기기에만 저장 (구글 연동으로 옮겨지지 않음)</small></div>
@@ -5864,11 +5868,11 @@ const WR_F=[["bold","<b>B</b>","굵게"],["italic","<i>I</i>","기울임"],["und
 const WR_TABS=[["fav","⭐","자주"],["para","¶","문단"],["ins","＋","넣기"],["fmt","가","꾸미기"],["tool","🧰","도구"]];
 const WR_TABK="att-app-wrtab",WR_FAVK="att-app-wrfav";
 const WR_FAV0=["bt:h2","bt:ul","bt:todo","bo:table","bo:img","fm:bold","fm:hi","fm:color"];
-const WR_ALIAS={"bt:p":"본문 보통 일반 문단","bt:h1":"제목 큰제목 헤딩","bt:h2":"소제목 중제목","bt:ul":"글머리 목록 점 불릿","bt:ol":"번호 목록 순서","bt:todo":"할일 체크리스트 체크","bt:quote":"인용 따옴표","bt:call":"강조 상자 박스 콜아웃","bt:pi":"포스트잇 메모 스티커","bt:hr":"구분선 가로줄 선",
+const WR_ALIAS={"sa:1":"전체 선택 모두 선택 전부 다 고르기 복사 ctrl+a","bt:p":"본문 보통 일반 문단","bt:h1":"제목 큰제목 헤딩","bt:h2":"소제목 중제목","bt:ul":"글머리 목록 점 불릿","bt:ol":"번호 목록 순서","bt:todo":"할일 체크리스트 체크","bt:quote":"인용 따옴표","bt:call":"강조 상자 박스 콜아웃","bt:pi":"포스트잇 메모 스티커","bt:hr":"구분선 가로줄 선",
  "bo:table":"표 테이블 칸","bo:img":"그림 사진 이미지","bo:ink":"손글씨 펜 필기","bo:draw":"도형 글상자 화살표 그리기","bo:math":"수식 공식 수학","bo:bm":"링크 카드 웹 주소 북마크","paste:1":"붙여넣기 클립보드",
  "fm:bold":"굵게 진하게 볼드","fm:italic":"기울임 이탤릭","fm:underline":"밑줄","fm:strikeThrough":"가운데줄 취소선","fm:subscript":"아래첨자","fm:superscript":"위첨자 제곱","fm:color":"글자색 색깔 빨강 파랑","fm:hi":"음영 형광펜 배경색 하이라이트","fm:shadow":"그림자","fm:clear":"서식 지우기 초기화","fm:fsz":"글자 크기 크게 작게","fm:lsp":"자간 글자 간격","fm:ff":"글꼴 폰트 명조","fm:link":"링크 하이퍼링크 주소","fm:math":"수식 넣기 공식","fm:para":"문단 간격 줄간격 정렬 들여쓰기","fm:nl":"새 문단 줄바꿈 엔터",
  "mv:-1":"위로 올리기 블록 이동","mv:1":"아래로 내리기 블록 이동","bx:1":"블록 삭제 지우기","fr:1":"찾아 바꾸기 검색","ex:1":"인쇄 공유 내보내기 pdf 워드 한글 웹 링크","hx:u":"되돌리기 실행 취소","hx:r":"다시 실행"};
-const WR_KA=["bt","bo","fm","paste","mv","bx","fr","ex","hx"],WR_GRP={bt:"문단",bo:"넣기",paste:"넣기",fm:"꾸미기",mv:"도구",bx:"도구",fr:"도구",ex:"도구",hx:"기본"};
+const WR_KA=["bt","bo","fm","paste","mv","bx","sa","fr","ex","hx"],WR_GRP={bt:"문단",bo:"넣기",paste:"넣기",fm:"꾸미기",mv:"도구",bx:"도구",sa:"도구",fr:"도구",ex:"도구",hx:"기본"};
 function wrKeyOf(b){for(const a of WR_KA)if(b.dataset[a]!=null)return a+":"+b.dataset[a];return""}
 function wrRealBtn(k){const i=k.indexOf(":"),a=k.slice(0,i),v=k.slice(i+1);const sel=`[data-${a}="${CSS.escape(v)}"]`;return a==="fm"?document.querySelector("#wrFmt "+sel):document.querySelector("#wrTool .wrpan:not(#wrFav) "+sel+",#wrTool .wrtabs "+sel)}
 function wrFavGet(){try{return JSON.parse(localStorage.getItem(WR_FAVK)||"{}")||{}}catch(e){return{}}}
@@ -5939,7 +5943,15 @@ function wrBlocks(r,focusId,caret){const ed=$("wrEd");if(!ed)return;if(!Array.is
     if(t==="bm")return wrBmEd(null,nb=>{insAt(curIdx(),[nb]);re(nb.id)});
     if(t==="img")return wrPickImgs(fs=>Promise.all(fs.map(wrImgBlock)).then(L=>{L=L.filter(Boolean);if(!L.length)return;const nx=insAt(curIdx(),L);re(nx.id,0);toast(`그림 ${L.length}개를 넣었습니다. 아래에 캡션을 쓰세요`)}));
     if(t==="ink"||t==="draw"){const nb={id:uid(),t:"draw",h:t==="ink"?500:600,items:[]};if(t==="ink")nb.ink=1;insAt(i,[nb]);re(nb.id);wrDrawEd(r,nb,true,()=>re(nb.id))}};
-  ed._ins=insObj;
+  ed._ins=insObj;ed._re=re;if(WRA&&WRA.r!==r)WRA=null;ed.classList.toggle("wrall",!!WRA);
+  ed.onkeydown=e=>{if(e.isComposing)return;const k=(e.key||"").toLowerCase(),mod=(e.ctrlKey||e.metaKey)&&!e.altKey;
+    if(!WRA){if(mod&&k==="a"&&!e.shiftKey){e.preventDefault();wrAllOn(r)}return}
+    if(mod&&k==="c"){e.preventDefault();return wrAllAct("c")}if(mod&&k==="x"){e.preventDefault();return wrAllAct("x")}if(mod&&k==="a"){e.preventDefault();return}
+    if(e.key==="Backspace"||e.key==="Delete"){e.preventDefault();return wrAllAct("d")}
+    if(!mod&&(e.key.length===1||e.key==="Process"||e.keyCode===229)){wrAllAct("t");return}
+    if(["Escape","ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Home","End","Tab"].includes(e.key)){if(e.key==="Escape")e.preventDefault();wrAllOff()}};
+  ed.onpaste=e=>{if(!WRA)return;e.preventDefault();const t=((e.clipboardData||{}).getData?e.clipboardData.getData("text/plain"):"")||"";wrAllAct("p",t)};
+  if(!ed._wa){ed._wa=1;ed.addEventListener("pointerdown",e=>{if(WRA&&!e.target.closest("#wrAllBar"))wrAllOff()},true)}
   r.blocks.forEach((b,i)=>{if(b.t!=="ol")n=0;else n++;const row=document.createElement("div");row.className="wb "+b.t;row.dataset.id=b.id;
     if(WR_OBJ.has(b.t)){row.addEventListener("pointerdown",()=>{ed.dataset.cur=b.id},true);row.addEventListener("focusin",()=>{ed.dataset.cur=b.id});ed.appendChild(row);
       if(b.t==="table")wrTableRow(r,b,i,row,re);else if(b.t==="img"){wrImgRow(r,b,i,row,re);wrApplyS(row,null,b.s)}else if(b.t==="math")wrMathRow(r,b,i,row,re);else if(b.t==="bm")wrBmRow(r,b,i,row,re);else wrDrawRow(r,b,i,row,re,insAt);return}
@@ -5988,7 +6000,8 @@ function wrBlocks(r,focusId,caret){const ed=$("wrEd");if(!ed)return;if(!Array.is
     row.appendChild(mk);row.appendChild(tx);ed.appendChild(row)});
   const add=document.createElement("button");add.type="button";add.className="wbadd";add.textContent="＋ 블록 추가";add.onclick=()=>{const nb={id:uid(),t:"p",x:""};r.blocks.push(nb);re(nb.id,0)};ed.appendChild(add);
   /* 도구 막대: 지금 블록 바꾸기 · 개체 넣기 · 옮기기 · 지우기 */
-  const tool=$("wrTool");if(tool)tool.querySelectorAll("button[data-bt],button[data-bo],button[data-hx],button[data-fr],button[data-ex],button[data-paste],button[data-mv],button[data-bx]").forEach(btn=>{btn.onmousedown=e=>e.preventDefault();btn.onclick=()=>{
+  const tool=$("wrTool");if(tool)tool.querySelectorAll("button[data-bt],button[data-bo],button[data-hx],button[data-fr],button[data-ex],button[data-paste],button[data-mv],button[data-bx],button[data-sa]").forEach(btn=>{btn.onmousedown=e=>e.preventDefault();btn.onclick=()=>{
+    if(btn.dataset.sa)return wrAllOn(r);
     if(btn.dataset.bo)return insObj(btn.dataset.bo);
     if(btn.dataset.hx)return wrHistGo(r,btn.dataset.hx==="u"?-1:1);
     if(btn.dataset.fr)return wrFindReplace(r);
@@ -6206,6 +6219,24 @@ function wrHistFlush(r){if(!WRH||WRH.r!==r)return;clearTimeout(WRH.t);const cur=
 function wrHistBtns(){const u=document.querySelector("#wrTool [data-hx='u']"),d=document.querySelector("#wrTool [data-hx='r']");if(u)u.disabled=!(WRH&&WRH.und.length);if(d)d.disabled=!(WRH&&WRH.red.length)}
 function wrHistGo(r,dir){if(!WRH||WRH.r!==r)return;wrHistFlush(r);const from=dir<0?WRH.und:WRH.red,to=dir<0?WRH.red:WRH.und;if(!from.length)return toast(dir<0?"되돌릴 것이 없습니다":"다시 할 것이 없습니다");
   to.push(WRH.last);const s=from.pop();r.blocks=JSON.parse(s);WRH.last=s;const ed=$("wrEd");wrTouch(r);wrBlocks(r,ed&&ed.dataset.cur);wrHistBtns();wrCount(r)}
+/* 5.67: 글 전체 선택 — 글쓰기는 문단(블록)마다 따로 편집되어 Ctrl+A · 전체 선택이 한 문단만 골랐습니다.
+   Ctrl+A(⌘A) 또는 🧰 도구 → ☑ 전체 선택: 글 전체를 골라 복사 · 잘라내기 · 지우기 · 바로 덮어 쓰기 · 붙여 넣기 */
+var WRA=null;
+function wrAllText(r){return(r.blocks||[]).map(b=>WR_TXT.has(b.t)?String(b.x||""):b.t==="table"?(b.rows||[]).map(x=>x.join("\t")).join("\n"):b.t==="img"?(b.cap||""):b.t==="math"?(b.tex||""):b.t==="hr"?"---":b.t==="bm"?[b.ti,b.u].filter(Boolean).join(" "):b.t==="draw"?(b.items||[]).filter(i=>i.t).map(i=>i.t).join("\n"):"").filter(x=>x!=="").join("\n")}
+function wrAllOn(r){const ed=$("wrEd");if(!ed)return;WRA={r};ed.classList.add("wrall");try{getSelection().removeAllRanges()}catch(e){}
+  let bar=$("wrAllBar");if(!bar){bar=document.createElement("div");bar.id="wrAllBar";bar.className="wrallbar";bar.setAttribute("role","status")}if(bar.nextElementSibling!==ed)ed.before(bar);
+  bar.hidden=false;bar.innerHTML=`<b>☑ 글 전체 선택 <small>${r.blocks.length}블록 · ${wrAllText(r).replace(/\s/g,"").length}자</small></b><span><button type="button" class="btn sm" data-wa="c">복사</button><button type="button" class="btn sm" data-wa="x">잘라내기</button><button type="button" class="btn sm bad" data-wa="d">지우기</button><button type="button" class="btn sm ghost" data-wa="o">해제</button></span>`;
+  bar.querySelectorAll("[data-wa]").forEach(b=>{b.onmousedown=e=>e.preventDefault();b.onclick=()=>wrAllAct(b.dataset.wa)});
+  ed.tabIndex=-1;try{ed.focus({preventScroll:true})}catch(e){}}
+function wrAllOff(){WRA=null;const ed=$("wrEd");if(ed)ed.classList.remove("wrall");const bar=$("wrAllBar");if(bar){bar.hidden=true;bar.innerHTML=""}}
+function wrAllAct(a,arg){if(!WRA)return;const r=WRA.r,ed=$("wrEd");if(!ed||!ed._re)return wrAllOff();
+  const txt=wrAllText(r),clear=(blocks,focusEnd)=>{wrHistFlush(r);r.blocks=blocks;wrAllOff();ed._re(blocks[blocks.length-1].id,focusEnd?9999:0);wrHistFlush(r);wrCount(r)};
+  if(a==="o")return wrAllOff();
+  if(a==="c"){copy(txt,`글 전체(${txt.replace(/\s/g,"").length}자)를 복사했습니다`);return}
+  if(a==="x"){copy(txt,"글 전체를 잘라 냈습니다 (↶ 되돌리기로 살림)");return clear([{id:uid(),t:"p",x:""}])}
+  if(a==="d"){clear([{id:uid(),t:"p",x:""}]);return toastUndo("글을 모두 지웠습니다",()=>wrHistGo(r,-1),6000)}
+  if(a==="t")return clear([{id:uid(),t:"p",x:""}],true);
+  if(a==="p"){const L=String(arg||"").replace(/\r/g,"").split("\n");return clear(L.map(l=>({id:uid(),t:"p",x:l})),true)}}
 /* 글자 수 */
 function wrBodyText(r){return(r.blocks||[]).map(b=>WR_TXT.has(b.t)?String(b.x||"").replace(/\$[^$]*\$/g,""):b.t==="table"?(b.rows||[]).map(x=>x.join(" ")).join("\n"):b.t==="img"?(b.cap||""):b.t==="draw"?(b.items||[]).filter(i=>i.t).map(i=>i.t).join("\n"):"").filter(Boolean).join("\n")}
 function wrCount(r){const el=$("wrCnt");if(!el)return;const t=wrBodyText(r),all=t.replace(/\n/g,"").length,ns=t.replace(/\s/g,"").length,w=(t.match(/\S+/g)||[]).length,p=(r.blocks||[]).filter(b=>WR_TXT.has(b.t)&&String(b.x||"").trim()).length;
@@ -8095,6 +8126,10 @@ function renderObs(){{const sc=$("stsCnt");if(sc){const n=D.roster.filter(([id])
   $("obsBar").innerHTML=obsTags().map((g,gi)=>`<div class="obg"><span class="obgn">${esc(g.g)}</span>${g.items.map(it=>`<button class="chip otag ${tone(it.t)}" type="button" data-k="${esc(it.k)}" aria-pressed="${arm===it.k}">${esc(it.l)}</button>`).join("")}</div>`).join("");
   $("obsHint").innerHTML=arm?`<b>‘${esc(tagOf(arm).l)}’</b> 선택됨 · 학생 이름을 누를 때마다 기록됩니다. 다시 누르면 선택이 풀립니다.`:"항목을 먼저 누르고 학생을 누르면 빠르게 체크됩니다. 학생 이름만 누르면 그 학생의 기록 창이 열립니다.";
   $("obsBar").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{if(obsLocked(selDate))return obsNudge();OBS.arm=OBS.arm===b.dataset.k?null:b.dataset.k;renderObs()});
+  /* 5.67: 고른 항목을 모두에게 넣기 · 모두에서 빼기 */
+  {const box=$("obsAll");if(box){if(!arm){box.hidden=true;box.innerHTML=""}else{const it=tagOf(arm),P=obsPresent(selDate),have=obsList().filter(r=>r.date===selDate&&r.tags&&r.tags[arm]).length;
+    box.hidden=false;box.innerHTML=`<button class="btn sm pri" type="button" id="obsAllOn" aria-label="‘${esc(it.l)}’ 모두에게 넣기">＋ 모두에게 넣기 (${P?`출석 ${P.length}명`:`전체 ${D.roster.length}명`})</button><button class="btn sm bad ghost" type="button" id="obsAllOff" aria-label="‘${esc(it.l)}’ 모두에서 빼기"${have?"":" disabled"}>－ 모두에서 빼기 (${have}명)</button>`;
+    $("obsAllOn").onclick=()=>obsAllSet(arm,true);$("obsAllOff").onclick=()=>obsAllSet(arm,false)}}}
   try{tsStrip()}catch(e){}try{renderTaskCard()}catch(e){}
   /* 학생 목록 */
   const L=$("obsList");
@@ -8106,6 +8141,12 @@ function renderObs(){{const sc=$("stsCnt");if(sc){const n=D.roster.filter(([id])
   L.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>obsSheet(b.dataset.e));
 }
 /* 관찰 기록 잠금: 날짜별로 잠그면 그 날 기록이 바뀌지 않습니다 (보기·복사·엑셀은 그대로) */
+function obsPresent(date){const ses=D.sessions.filter(s=>s.date===date&&sesOn(s)&&Object.values(s.p||{}).some(Boolean));if(!ses.length)return null;return D.roster.map(r=>r[0]).filter(id=>ses.some(s=>s.p[id]))}
+function obsAllSet(k,on){if(obsLocked(selDate))return obsNudge();const it=tagOf(k);if(!it)return;const date=selDate,bk=JSON.stringify(obsList().filter(r=>r.date===date));let n=0;
+  if(on){(obsPresent(date)||D.roster.map(r=>r[0])).forEach(sid=>{const r=obsRec(sid,date,true);if(!r.tags[k]){r.tags[k]=1;r.at=Date.now();n++}})}
+  else obsList().filter(r=>r.date===date&&r.tags&&r.tags[k]).forEach(r=>{delete r.tags[k];n++;cleanRec(r)});
+  if(!n)return toast(on?"모두 이미 들어 있습니다":"뺄 기록이 없습니다");save();renderObs();
+  toastUndo(on?`${n}명에게 ‘${it.l}’을(를) 넣었습니다`:`${n}명에게서 ‘${it.l}’을(를) 뺐습니다`,()=>{const keep=obsList().filter(r=>r.date!==date);D.obs=keep.concat(JSON.parse(bk));save();renderObs()},6000)}
 function obsLocked(date){return !!(D&&D.obsLock&&D.obsLock[date])}
 function obsNudge(){toast("잠긴 날짜의 관찰 기록입니다. 고치려면 위쪽 ‘잠금 해제’를 누르세요")}
 function quickTag(sid,k){
@@ -9359,10 +9400,10 @@ function todayLessons(date){
     try{ttPre(t).forEach(r=>{const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null;const src=preSrc(t,r.id);
       out.push({start:r.start,end:r.end,title:r.label,cl,s:cl?cl.data.sessions.find(x=>x.date===date&&x.src===src)||null:null,src,go:cl?()=>startPreAttendance(t,r,date,cl):null})})}catch(e){}
     ttRows(t,date).filter(r=>!r.lunch).forEach(r=>{const cg=chgAt(t,d,r.p,date),base=t.cells[d+"-"+r.p],c=cellAt(t,d,r.p,date);
-      if(!c){if(cg&&cg.type==="cancel"&&base)out.push({start:r.start,end:r.end,title:`${r.p}교시 ${base.subject||""}`.trim(),cancel:true,why:cg.reason||"휴강"});return}
+      if(!c){if(cg&&cg.type==="cancel"&&base)out.push({start:r.start,end:r.end,title:`${r.p}교시 ${base.subject||""}`.trim(),cancel:true,why:cg.reason||"휴강",menu:()=>changeSheet(t,{id:cg.id})});return}
       if(!c.subject&&!c.clsId&&!c.clsName)return;
       const cl=cellClass(c),info=cellSession(t,d,r.p,date);
-      out.push({start:r.start,end:r.end,title:`${r.p}교시 ${c.subject||""}`.trim(),room:c.room||"",cl,s:info&&info.s,src:`${t.id}:${d}:${r.p}`,chg:!!cg,go:cl?()=>startCellAttendance(t,d,r.p,date):()=>cellMenu(t,d,r.p,date)})});
+      out.push({start:r.start,end:r.end,title:`${r.p}교시 ${c.subject||""}`.trim(),room:c.room||"",cl,s:info&&info.s,src:`${t.id}:${d}:${r.p}`,chg:!!cg,go:cl?()=>startCellAttendance(t,d,r.p,date):()=>cellMenu(t,d,r.p,date),menu:()=>cellMenu(t,d,r.p,date)})});
   }
   try{todayActs(date).forEach(a=>out.push(a))}catch(e){}
   /* 시간표와 연결되지 않은 오늘 출석 체크 */
@@ -9434,7 +9475,7 @@ function renderToday(){
       st=`<span class="tdst ok">${x.s.lock?"🔒 ":""}출석 ${N-ab.length}/${N}</span>${ab.length?`<span class="tdst ab">결석 ${ab.length}${pend?` · 연락 전 ${pend}`:""}</span>`:""}`}
     else if(x.cl){st=x.end&&x.end<=now?`<span class="tdst miss">출석 체크 안 함</span>`:`<span class="tdst">체크 전</span>`}
     else st=`<span class="tdst">학급 연결 안 됨</span>`;
-    return `<button class="tdl${i===nowIdx?" now":""}${i===nextIdx?" next":""}${cls}" type="button" data-i="${i}"${x.go?"":" disabled"}><span class="tdt">${esc(x.start||"")}${x.end?`<small>${esc(x.end)}</small>`:""}</span><span class="tdn"><b>${esc(x.title)}</b><small>${x.cl?esc(clsName(x.cl.data)):""}${x.room?" · "+esc(x.room):""}${x.chg?" · 변동":""}${i===nowIdx?' · <em>지금 수업</em>':i===nextIdx?' · <em>다음 수업</em>':""}</small></span><span class="tdss">${st}</span></button>`}).join("");
+    return `<button class="tdl${i===nowIdx?" now":""}${i===nextIdx?" next":""}${cls}" type="button" data-i="${i}"${x.go||x.menu?"":" disabled"}><span class="tdt">${esc(x.start||"")}${x.end?`<small>${esc(x.end)}</small>`:""}</span><span class="tdn"><b>${esc(x.title)}</b><small>${x.cl?esc(clsName(x.cl.data)):""}${x.room?" · "+esc(x.room):""}${x.chg?" · 변동":""}${i===nowIdx?' · <em>지금 수업</em>':i===nextIdx?' · <em>다음 수업</em>':""}</small></span><span class="tdss">${st}</span></button>`}).join("");
   /* 연락할 학생 (오늘, 학급별) */
   const calls=[];perList().forEach(cl=>{let n=0,last=null;cl.data.sessions.filter(s=>s.date===date&&sesOn(s)).forEach(s=>{const p=sesAbs(cl,s).filter(([id])=>!isDone(s,id)).length;if(p){n+=p;last=s}});if(n)calls.push({cl,n,s:last})});
   /* 서명 마감 (7일 안 · 지난 것) */
@@ -9447,7 +9488,7 @@ function renderToday(){
     ${signs.length?`<div class="tdsec"><div class="shlb">서명 마감 <span class="shn">${signs.length}건 · 미서명 ${signs.reduce((a,x)=>a+x.left,0)}명</span></div>${signs.slice(0,TDX.sg?signs.length:2).map((x,i)=>`<button class="tdl sm" type="button" data-sg="${i}"><span class="tdn"><b>${esc(x.e.title)}</b><small>${esc(x.e.clsName||"")} · 마감 ${esc(fmtDate(x.e.due))}</small></span><span class="tdss"><span class="tdst ${x.e.due<date?"miss":"ab"}">${dd(x.e.due)}</span><span class="tdst">미서명 ${x.left}</span></span></button>`).join("")}${signs.length>2?`<button class="btn sm tdmore" type="button" id="tdSgMore">${TDX.sg?"접기":`서명 마감 ${signs.length-2}건 더 보기`}</button>`:""}</div>`:""}`;
   {const m=$("tdSgMore");if(m)m.onclick=()=>{TDX.sg=!TDX.sg;renderToday()}}
   try{promBox(box)}catch(e){}
-  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(x&&x.go)x.go()});
+  box.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(!x)return;if(x.menu)x.menu();else if(x.go)x.go()});
   box.querySelectorAll("[data-call]").forEach(b=>b.onclick=()=>{const c=calls[+b.dataset.call];S.active=c.cl.id;D=c.cl.data;selDate=date;selId=c.s.id;ctab="abs";save();show("call")});
   box.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{const x=signs[+b.dataset.sg];show("stat");const t=document.querySelector('#stabs .chip[data-t="eval"]');if(t)t.click();EVS.cur=x.e.id;renderEval();window.scrollTo(0,0)});
   const g=$("tdGoTT");if(g)g.onclick=()=>show("tt");
