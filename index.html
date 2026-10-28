@@ -1281,6 +1281,66 @@ html.tllock,html.tlcover{background:var(--bg)}
 .lkpad button:active{background:var(--tint)}.lkpad .lkfg,.lkpad .lkbs{border:0;background:none;font-size:.9375rem;font-weight:400;color:var(--muted)}.lkpad .lkbs{font-size:1.5rem}
 .lkfgt{text-align:left}.lkfgt p{color:var(--ink)}.lkfgt .fld{width:100%;margin:6px 0 12px}
 @media (prefers-reduced-motion:reduce){.lkdots.shake{animation:none}}
+/* 5.66 수업 도구 */
+html.ctopen,html.ctopen body{overflow:hidden}
+html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
+#ctool{position:fixed;inset:0;z-index:900;background:var(--ct-bg);color:var(--ct-ink);display:flex;justify-content:center;overflow:hidden;
+  --ct-bg:#f3f5f2;--ct-card:#fff;--ct-ink:#1d2621;--ct-mut:#69756e;--ct-line:#dde3de;--ct-acc:#24476b;--ct-accink:#fff;--ct-hl:#1d2621;--ct-seg:#e6eae6;--ct-big:clamp(64px,22vw,150px);--ct-name:clamp(52px,18vw,120px)}
+#ctool[hidden]{display:none}
+#ctool[data-th=chalk]{--ct-bg:#21402f;--ct-card:#2b4d3a;--ct-ink:#f2f0e6;--ct-mut:#b9c7b8;--ct-line:#4d6e5a;--ct-acc:#f2e7a8;--ct-accink:#21402f;--ct-hl:#fffbe8;--ct-seg:#1a3426;background:radial-gradient(ellipse at 30% 20%,#2a4c38 0,#21402f 60%,#1b3527 100%)}
+#ctool[data-th=chalk] .ctbig,#ctool[data-th=chalk] .ctname{text-shadow:0 0 1px #fff8,0 0 8px #fff3}
+#ctool[data-th=proj]{--ct-bg:#000;--ct-card:#111;--ct-ink:#fff;--ct-mut:#c4c4c4;--ct-line:#444;--ct-acc:#ffd600;--ct-accink:#000;--ct-hl:#ffd600;--ct-seg:#1c1c1c;--ct-big:clamp(80px,30vw,220px);--ct-name:clamp(60px,22vw,160px)}
+#ctool[data-th=proj] .ctnm{font-size:1.2rem}
+@media (prefers-color-scheme:dark){#ctool:not([data-th]),#ctool[data-th=card]{--ct-bg:#141917;--ct-card:#1c2320;--ct-ink:#e7ece8;--ct-mut:#9aa69f;--ct-line:#33403a;--ct-acc:#8fb4dc;--ct-accink:#10202f;--ct-hl:#e7ece8;--ct-seg:#222b27}}
+.ctin{width:100%;max-width:880px;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 12px);min-height:0}
+.cttop{display:flex;align-items:center;gap:8px}.ctti{flex:1;min-width:0}.ctti b{display:block;font-size:1rem}.ctti small{display:block;color:var(--ct-mut);font-size:.8125rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctx,.ctth{min-width:44px;height:44px;border-radius:12px;border:1px solid var(--ct-line);background:var(--ct-card);color:var(--ct-ink);font:inherit;padding:0 10px}.ctth{font-size:.8125rem}
+.cttabs{display:flex;gap:6px;margin:12px 0 10px;background:var(--ct-seg);padding:4px;border-radius:14px}
+.cttabs button{flex:1;min-height:44px;border:0;border-radius:11px;background:none;color:var(--ct-mut);font:inherit;font-weight:600}
+.cttabs button[aria-selected=true]{background:var(--ct-acc);color:var(--ct-accink)}
+.ctbody{flex:1;display:flex;flex-direction:column;min-height:0;overflow:auto;gap:10px}
+.ctmain{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:8px 0}
+.ctbig{font-size:min(var(--ct-big),34vh);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1;color:var(--ct-hl)}
+.ctbig.done{animation:ctfl 1s infinite}@keyframes ctfl{50%{opacity:.35}}
+.ctring{--p:1;width:min(72vw,52vh,340px);aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:conic-gradient(var(--ct-acc) calc(var(--p)*360deg),var(--ct-seg) 0)}
+.ctring::after{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--ct-bg)}#ctool[data-th=chalk] .ctring::after{background:#234431}
+.ctring .ctbig{position:relative;z-index:1;font-size:min(18vw,11vh,84px)}.ctring.done .ctbig{animation:ctfl 1s infinite}
+.ctsub{color:var(--ct-mut);font-size:.875rem;margin:0}.ctsub b{color:var(--ct-ink)}
+.ctchips,.ctopt,.ctsrc,.ctlate{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ctchips button,.ctopt button,.ctsrc button,.ctlate button,.ctseg button,.ctgl button{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--ct-line);background:var(--ct-card);color:var(--ct-ink);font:inherit;font-size:.9375rem}
+.ctchips button[aria-pressed=true],.ctopt button[aria-pressed=true],.ctsrc button[aria-pressed=true],.ctseg button[aria-pressed=true]{background:var(--ct-acc);color:var(--ct-accink);border-color:var(--ct-acc)}
+.ctopt button{font-size:.8125rem;min-height:40px;border-style:dashed}.ctsrc .ghost,.ctgl .ghost{border-style:dashed}
+.ctbtns{display:flex;gap:10px;width:100%;margin-top:auto;padding-top:6px}.ctbtns.col{flex-direction:column}
+.ctbtns button{flex:1;min-width:0;white-space:nowrap;padding:0 6px;min-height:56px;border-radius:16px;font:inherit;font-size:1.0625rem;font-weight:600;background:var(--ct-card);color:var(--ct-ink);border:1px solid var(--ct-line)}
+.ctbtns button.p{background:var(--ct-acc);color:var(--ct-accink);border-color:var(--ct-acc)}.ctbtns button:disabled{opacity:.5}
+.ctbtns #ctMore{flex:0 0 56px}
+.ctroll{color:var(--ct-mut);letter-spacing:.3em;min-height:1.4em}
+.ctcard{background:var(--ct-card);border:1px solid var(--ct-line);border-radius:22px;padding:24px 16px;width:100%;max-width:620px}
+.ctcard small{display:block;color:var(--ct-mut)}
+.ctname{font-size:min(var(--ct-name),26vh);font-weight:800;color:var(--ct-hl);line-height:1.15;word-break:keep-all;overflow-wrap:anywhere}.ctname.sm{font-size:clamp(24px,7vw,44px);font-weight:700;color:var(--ct-ink)}.ctname.dim{opacity:.55}
+.ctgset{display:flex;flex-direction:column;gap:8px;align-items:center}
+.ctseg{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.ctseg button{border-radius:12px;min-height:40px;font-size:.875rem}
+.ctstep{display:flex;align-items:center;gap:10px}.ctstep button{width:44px;height:44px;border-radius:50%;border:1px solid var(--ct-line);background:var(--ct-card);color:var(--ct-ink);font:inherit;font-size:1.25rem}.ctstep b{min-width:5.5em;text-align:center;font-size:1.0625rem}
+.ctsrc button{font-size:.8125rem;min-height:40px}.ctsrc .tkk{font-size:.625rem}
+.ctgl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;font-size:.875rem;color:var(--ct-mut)}.ctgl button{min-height:36px;font-size:.8125rem}
+.ctgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;align-content:start}
+.ctg{background:var(--ct-card);border:1px solid var(--ct-line);border-radius:16px;padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px}
+.ctg h3{display:flex;justify-content:space-between;align-items:center;margin:0 0 4px;font-size:.875rem;color:var(--ct-acc);min-height:32px;cursor:pointer}.ctg h3 em{font-style:normal;color:var(--ct-mut);font-weight:400;font-size:.75rem}
+.ctnm{text-align:left;border:0;background:none;color:var(--ct-ink);font:inherit;font-size:1.0625rem;font-weight:600;padding:4px 6px;border-radius:8px;min-height:36px}
+.ctnm.on{background:var(--ct-acc);color:var(--ct-accink)}
+.ctwarn{color:#c0392b;font-size:.875rem;margin:0}#ctool[data-th=chalk] .ctwarn,#ctool[data-th=proj] .ctwarn{color:#ffb4a8}
+.ctpop{position:absolute;inset:0;background:#0007;display:flex;align-items:flex-end;justify-content:center;z-index:2}.ctpop[hidden]{display:none}
+.ctpin{background:var(--ct-bg);color:var(--ct-ink);width:100%;max-width:640px;max-height:86vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px calc(env(safe-area-inset-bottom) + 16px);display:flex;flex-direction:column;gap:10px}
+.ctpin h2{font-size:1.125rem;margin:0}.ctpin h3{font-size:.9375rem;margin:6px 0 0}
+.ctlv{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px}
+.ctlv button{display:flex;justify-content:space-between;align-items:center;gap:6px;min-height:44px;padding:0 10px;border-radius:10px;border:1px solid var(--ct-line);background:var(--ct-card);color:var(--ct-ink);font:inherit}
+.ctlv .l1 b{color:#1f6a35}.ctlv .l2 b{color:#8a6d1a}.ctlv .l3 b{color:#a63f34}.ctlv .l0 b{color:var(--ct-mut)}
+.ctpick{display:flex;gap:8px}.ctpick select{flex:1;min-width:0;min-height:44px;border-radius:10px;border:1px solid var(--ct-line);background:var(--ct-card);color:var(--ct-ink);font:inherit;font-size:16px;padding:0 8px}
+.ctprs{display:flex;flex-direction:column;gap:6px}.ctpr{display:flex;align-items:center;gap:8px;border:1px solid var(--ct-line);border-radius:10px;padding:4px 4px 4px 10px;background:var(--ct-card)}.ctpr span{font-size:.75rem;color:var(--ct-mut);white-space:nowrap}.ctpr b{flex:1;min-width:0}.ctpr button{width:40px;height:40px;border:0;background:none;color:var(--ct-mut);font:inherit}
+.ctpill{position:fixed;right:12px;bottom:calc(var(--nav-h,50px) + env(safe-area-inset-bottom) + 12px);z-index:800;border:0;border-radius:999px;padding:10px 16px;background:var(--accent);color:#fff;font:inherit;font-weight:700;box-shadow:0 4px 14px #0003;min-height:44px}.ctpill[hidden]{display:none}.ctpill.done{background:#a63f34;animation:ctfl 1s infinite}
+.nhtl{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;min-height:44px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--card,var(--paper));color:var(--ink);font:inherit;font-size:.9375rem;font-weight:600}
+@media (orientation:landscape) and (max-height:500px){.ctin{padding-top:calc(env(safe-area-inset-top) + 6px)}.ctring{width:min(52vh,240px)}.ctring .ctbig{font-size:min(11vh,64px)}.cttabs{margin:6px 0}.cttabs button{min-height:38px}.ctmain{gap:8px;padding:0}.ctbtns button{min-height:44px}.ctx,.ctth{height:38px}}
+@media (prefers-reduced-motion:reduce){.ctbig.done,.ctring.done .ctbig,.ctpill.done{animation:none}}
 </style>
 </head>
 <body>
@@ -1396,7 +1456,7 @@ html.tllock,html.tlcover{background:var(--bg)}
       <div class="presets sesslots" id="sesSlots" hidden></div>
     </details>
     <div class="attbar">
-      <div class="attbtns"><button class="btn sm" id="allIn" type="button">전원 출석</button><button class="btn sm bad" id="allOut" type="button">전원 결석</button>
+      <div class="attbtns"><button class="btn sm" id="allIn" type="button">전원 출석</button><button class="btn sm bad" id="allOut" type="button">전원 결석</button><button class="btn sm" id="ctBtn" type="button" aria-label="수업 도구 (타이머 · 뽑기 · 모둠)">🧰 도구</button>
         <span class="vseg" role="group" aria-label="명단 보기"><button type="button" data-av="grid" aria-label="격자로 보기">▦</button><button type="button" data-av="list" aria-label="목록으로 보기">☰</button></span></div></div>
   </div>
   <div class="card noses" id="noSes" hidden>
@@ -1759,12 +1819,13 @@ html.tllock,html.tlcover{background:var(--bg)}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.65.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.66.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
 const AM_ITEMS=[["m","att","출석 체크","att"],["t","att","출석 통계","stat"],["m","obs","관찰 기록","obs"],["m","write","글쓰기","write"],["m","task","평가 · 과제","task"],["t","eval","학생 서명","sign"]];
 const VERSIONS=[
+  {v:"5.66.0",date:"2026-10-28",items:["수업 도구(🧰): 지금 수업 카드의 ‘🧰 수업 도구’ 또는 출석 화면의 ‘🧰 도구’ — 수업 중 화면 전체로 여는 타이머 · 발표자 뽑기 · 모둠 나누기", "화면 스타일 세 가지: 밝은 카드(앱과 같은 모양) · 칠판(교실 TV · 전자칠판) · 큰 글씨(프로젝터 · 멀리서) — 위쪽 🎨 단추로 바꾸고 기억, 가로 화면도 맞춤", "타이머: 1 · 3 · 5 · 10분, ‘수업 끝까지’(지금 수업 끝 시각), 잠깐 멈춤 · 다시 · ＋1분, 끝나면 소리 · 진동 · 깜빡임, 도구를 닫아도 화면 아래 작은 표시로 남은 시간", "발표자 뽑기: 오늘 출석한 학생만(출석 체크 전이면 명단 전체), 뽑힌 학생 빼기(모두 뽑히면 처음부터), ‘관찰 기록 적은 학생 먼저’, ✓ 발표함 → 관찰 기록 ‘발표함’에 바로 기록(되돌리기 가능), 넘기기 · 다시 뽑기", "모둠 나누기: 모둠 수 또는 모둠당 인원(남는 학생은 한 명씩 더 / 작은 모둠 하나), 출석한 학생 기준 미리 안내(예: 27명 → 4명 × 3모둠 + 5명 × 3모둠)", "성적 고르게: 평가 · 과제 점수(만점 대비 %, 여러 평가 평균) · 교사가 정한 상 · 중 · 하로 모둠 평균을 맞춤, 점수는 ‘균형 보기’를 눌렀을 때만 보임(화면에 띄워도 이름만)", "모둠 조건: 떼어 놓기 · 붙여 놓기(학급에 저장), 이름 두 개를 눌러 바꾸기 · 모둠 이름을 눌러 옮기기(조건을 어기면 경고), 늦게 온 학생 넣기, 명단 복사, 저장 · 지난 모둠 불러오기", "5.65 보완: 학생 정보에서 학번을 바꿀 때 평가 점수도 함께 옮겨지게", "자동 점검 추가: 수업 도구(타이머 · 뽑기 · 모둠 · 스타일)"]},
   {v:"5.65.0",date:"2026-10-28",items:["정기시험: 평가 · 과제에 ‘정기시험’(중간 · 기말고사) 종류 추가 — 시험일 · 만점 · 반영 비율 · 이의 신청 마감일, 미응시 체크(시험일 결석 학생 자동 반영)", "평가 점수: 수행평가 · 형성평가 · 정기시험에 학생별 점수 — ✏️ 직접 입력(바로 저장, 만점 밖은 빨간 표시) · 📋 붙여넣기(나이스 · 엑셀 · 구글 시트의 학번 · 이름 · 점수, 명단 순서대로 점수만도 가능) · 📄 엑셀 · CSV(점수 칸 고르기)", "점수 가져오기 미리보기: 맞은 학생 · 바뀌는 점수 · 못 맞춘 줄과 이유(명단에 없음 · 결시 · 만점 밖 · 같은 이름), 되돌리기, 여러 학급 한 번에(학번으로 학급마다 나눔), 학급별 입력 수 · 평균 · 최고 · 최저", "점수 확인 서명: 넣은 점수로 학생 서명을 바로 만듦(학생마다 자기 점수만, 이의 신청 마감 안내), 점수를 고치면 바뀐 학생만 반영하고 서명한 학생은 ‘다시 받아야 함’", "앱 잠금(PIN): 설정 → 보관 · 화면 · 정보 → 앱 잠금 — 숫자 4~6자리, 앱을 열 때 · 다른 앱에 다녀왔을 때(바로 · 1 · 5 · 15분 뒤) 잠금, 앱 전환 화면 가림, 5번 틀리면 잠시 대기, PIN은 이 기기에만(해시로) 저장", "백업에서 성적 빼기: 설정 → 백업의 ‘성적(평가 점수) 포함’을 끄면 백업 파일 · 코드 · 전체 백업에서 점수와 점수 확인 서명을 뺌, 이 백업을 불러와도 이 기기의 점수는 그대로", "자동 점검 추가: 정기시험 점수 · 가져오기 · 성적 뺀 백업 · 앱 잠금"]},
   {v:"5.64.0",date:"2026-10-27",items:["출석 체크 고치기: 출석 화면의 ‘✎ 날짜 · 시간 고치기’ 또는 고른 출석 체크 탭을 한 번 더 누르면 날짜 · 시간 · 수업 이름을 고침(출석 · 결석 · 출결 구분 · 연락 완료는 그대로 옮겨짐, 다른 요일로 옮기면 시간표 연결만 풀림)", "출석 체크 삭제는 확인 절차를 거침: 지워질 내용(날짜 · 출석 · 결석 · 연락 완료 · 출결 구분 · 시간표 연결)을 보여 주고 ‘확인했습니다’를 체크해야 삭제 단추가 켜짐, 잠긴 출석 체크는 삭제 불가", "삭제한 출석 체크는 30일 보관: 삭제 직후 ‘되돌리기’, 출석 화면 아래 ‘🗑 삭제한 출석 체크’에서 되살리기(기기 연동 · 백업에도 함께)", "고치기 · 삭제 · 되살리기는 연락(결석 학생), 오늘, 시간표 칸 표시, 출석 통계 · 나이스 요약, 기기 연동에 바로 반영", "자동 점검 추가: 출석 체크 고치기 · 삭제 확인 · 되살리기"]},
   {v:"5.63.0",date:"2026-10-27",items:["아래 메뉴 고정(아이폰 홈 화면 앱): 화면 끝까지 밀 때 화면이 출렁이며 아래 메뉴가 같이 위아래로 움직이던 것 막기, 메뉴를 따로 그려 스크롤할 때 흔들리지 않게, 키보드가 내려간 뒤 메뉴를 제자리로", "가로 넘침 막기 설정을 아이폰 최신 방식(clip)으로 정리"]},
@@ -1913,6 +1974,15 @@ function ctoNone(){const t=callTo();return t==="par"?"학부모 번호 없음":t
 function akClean(o,allow){if(!o||typeof o!=="object")return null;const r={};for(const k in o)if(allow.includes(o[k]))r[String(k).slice(0,20)]=o[k];return Object.keys(r).length?r:null}
 function cleanP(p){const o={};if(p&&typeof p==="object")for(const k in p)if(p[k])o[k]=true;return o}
 
+/* 5.66: 수업 도구 자료 — lv: 수준(1 상 · 2 중 · 3 하), ap: 떼어 놓기, tg: 붙여 놓기, g: 마지막 설정, last: 마지막 모둠 */
+function ctlNorm(c){if(!c||typeof c!=="object"||Array.isArray(c))return null;const o={},sid=x=>typeof x==="string"&&x.length<=20;
+  if(c.lv&&typeof c.lv==="object"){const lv={};for(const k in c.lv)if(sid(k)&&[1,2,3].includes(+c.lv[k]))lv[k]=+c.lv[k];if(Object.keys(lv).length)o.lv=lv}
+  ["ap","tg"].forEach(k=>{if(Array.isArray(c[k])){const a=c[k].filter(p=>Array.isArray(p)&&p.length===2&&sid(p[0])&&sid(p[1])&&p[0]!==p[1]).slice(0,60).map(p=>[p[0],p[1]]);if(a.length)o[k]=a}});
+  if(c.g&&typeof c.g==="object"){const g=c.g;o.g={m:g.m==="count"?"count":"size",n:Math.max(1,Math.min(20,+g.n||4)),rem:g.rem==="small"?"small":"spread",bal:g.bal==="score"?"score":"rand",src:Array.isArray(g.src)?g.src.filter(x=>typeof x==="string").slice(0,10):[]}}
+  if(c.last&&Array.isArray(c.last.groups)){const gs=c.last.groups.filter(Array.isArray).slice(0,20).map(a=>a.filter(sid).slice(0,40));if(gs.length)o.last={date:/^\d{4}-\d{2}-\d{2}$/.test(c.last.date||"")?c.last.date:"",at:+c.last.at||0,groups:gs}}
+  return Object.keys(o).length?o:null}
+function ctlMv(d,a,b){const c=d&&d.ctl;if(!c||a===b)return;if(c.lv&&a in c.lv){c.lv[b]=c.lv[a];delete c.lv[a]}["ap","tg"].forEach(k=>(c[k]||[]).forEach(p=>{if(p[0]===a)p[0]=b;if(p[1]===a)p[1]=b}));
+  if(c.last)c.last.groups.forEach(g=>{const i=g.indexOf(a);if(i>=0)g[i]=b})}
 function normalize(d){
   const f=fresh();
   f.cls=typeof d.cls==="string"?d.cls.slice(0,40):"";
@@ -1937,6 +2007,8 @@ function normalize(d){
   }
   /* 5.64: 삭제한 출석 체크 (30일 보관 · 되살리기) */
   if(Array.isArray(d.sesBin)){const lim=Date.now()-30*864e5;const b=d.sesBin.filter(x=>x&&x.s&&sesOk(x.s)&&+x.at>lim).slice(0,50).map(x=>({s:sesNorm(x.s),at:+x.at,...(x.why?{why:String(x.why).slice(0,60)}:{})}));if(b.length)f.sesBin=b}
+  /* 5.66: 수업 도구(모둠 조건 · 수준 · 마지막 모둠) */
+  {const c=ctlNorm(d.ctl);if(c)f.ctl=c}
   if(Array.isArray(d.sessions)){}else if(Array.isArray(d.rounds)){
     /* 예전 1~6차 기록을 날짜별 출석 체크로 옮깁니다 */
     const used=d.rounds.filter(r=>r&&(r.date||Object.values(r.p||{}).some(Boolean)));
@@ -2259,7 +2331,7 @@ $("lockBtn").onclick=()=>{const s=R();if(!s)return;
   else{s.lock=true;s.lockAt=Date.now();save();renderAll();toast("출석 체크를 잠갔습니다")}};
 $("allIn").onclick=()=>{const s=R();if(!s||s.lock)return;D.roster.forEach(([id])=>s.p[id]=true);save();renderAll()};
 $("allOut").onclick=()=>{const s=R();if(!s||s.lock)return;s.p={};save();renderAll()};
-$("sDel").onclick=()=>{const s=R();if(s)sesDelSheet(s)};$("sEdit").onclick=()=>{const s=R();if(s)sesEditSheet(s)};$("sesBinBtn").onclick=()=>sesBinSheet();
+$("ctBtn").onclick=()=>ctOpen(curClass());$("sDel").onclick=()=>{const s=R();if(s)sesDelSheet(s)};$("sEdit").onclick=()=>{const s=R();if(s)sesEditSheet(s)};$("sesBinBtn").onclick=()=>sesBinSheet();
 
 /* ---------- 연락 ---------- */
 var seq={key:"",i:0};
@@ -2796,7 +2868,7 @@ function editStudent(id){
       save();$("sheet").hidden=true;renderAll();return toast(`${name} 학생을 ‘${clsName(to)}’로 옮겼습니다. 이 학급의 출석 기록은 남습니다`);
     }
     if(nid!==id){D.sessions.forEach(s=>{if(s.p[id]){s.p[nid]=true;delete s.p[id]}["done","ak","ar"].forEach(k=>{if(s[k]&&id in s[k]){s[k][nid]=s[k][id];delete s[k][id]}})});{const cid=curClass().id;(S.evals||[]).forEach(ev=>{if(ev.clsId===cid&&Array.isArray(ev.stu))ev.stu.forEach(x=>{if(x.sid===id)x.sid=nid})})}(D.obs||[]).forEach(r=>{if(r.sid===id)r.sid=nid});delete D.phones[id];delete D.emails[id];PK.stu.sel.delete(id)}
-    if(D.low)delete D.low[id];if(low){D.low=D.low||{};D.low[nid]=1}if(nid!==id&&D.snote&&D.snote[id]){D.snote[nid]=D.snote[id];delete D.snote[id]}if(nid!==id&&D.sts&&D.sts[id]){D.sts[nid]=D.sts[id];delete D.sts[id]}if(nid!==id){const cid=curClass().id;(S.tasks||[]).forEach(t=>{[t.miss,t.ct].forEach(o=>{const m=o&&o[cid];if(m&&id in m){m[nid]=m[id];delete m[id]}})})}if(D.low&&!Object.keys(D.low).length)delete D.low;
+    if(D.low)delete D.low[id];if(low){D.low=D.low||{};D.low[nid]=1}if(nid!==id&&D.snote&&D.snote[id]){D.snote[nid]=D.snote[id];delete D.snote[id]}if(nid!==id&&D.sts&&D.sts[id]){D.sts[nid]=D.sts[id];delete D.sts[id]}if(nid!==id){const cid=curClass().id;(S.tasks||[]).forEach(t=>{[t.miss,t.ct,t.sc].forEach(o=>{const m=o&&o[cid];if(m&&id in m){m[nid]=m[id];delete m[id]}})});ctlMv(D,id,nid)}if(D.low&&!Object.keys(D.low).length)delete D.low;
     if(D.gph)delete D.gph[id];if(gpv.length){D.gph=D.gph||{};D.gph[nid]=gpv}else if(D.gph){delete D.gph[nid];if(!Object.keys(D.gph).length)delete D.gph}
     st[0]=nid;st[1]=name;if(ph)D.phones[nid]=ph;else delete D.phones[nid];if(em)D.emails[nid]=em;else delete D.emails[nid];
     sortRoster();save();$("sheet").hidden=true;renderAll();toast(name+" 학생 정보를 고쳤습니다");
@@ -4725,7 +4797,7 @@ function mvSid(d,a,b){if(a===b)return;const r=d.roster.find(x=>x[0]===a);if(r)r[
   (d.obs||[]).forEach(o=>{if(o.sid===a)o.sid=b});["phones","gph","emails","sts","cards","low","snote"].forEach(k=>{if(d[k]&&a in d[k]){d[k][b]=d[k][a];delete d[k][a]}});
   (d.tasks||[]).forEach(t=>{if(t.miss&&a in t.miss){t.miss[b]=t.miss[a];delete t.miss[a]}});
   {const cl=S.list.find(c=>c.data===d);if(cl)(S.tasks||[]).forEach(t=>{[t.miss,t.ct,t.sc].forEach(o=>{const m=o&&o[cl.id];if(m&&a in m){m[b]=m[a];delete m[a]}})})}
-  const U=d.sch&&d.sch.uids;if(U&&a in U){U[b]=U[a];delete U[a]}}
+  ctlMv(d,a,b);const U=d.sch&&d.sch.uids;if(U&&a in U){U[b]=U[a];delete U[a]}}
 /* 고른 것만 적용 (빠짐 → 학번 → 이름 · 연락처 → 들어옴 순서). 돌려주는 값: 더한 학생 수 */
 function rosApply(d,items){d.sch=d.sch||{};d.sch.uids=d.sch.uids||{};const U=d.sch.uids;let add=0,skip=0;const by=k=>items.filter(x=>x.k===k);
   by("out").forEach(x=>{d.roster=d.roster.filter(r=>r[0]!==x.sid);delete U[x.sid];delete d.phones[x.sid];if(d.emails)delete d.emails[x.sid];if(d.gph)delete d.gph[x.sid]});
@@ -7500,7 +7572,7 @@ $("ntBtn").onclick=()=>askNotify();
 const UNDO_KEY="att-app-undo";
 /* 5.65: 백업에서 성적(평가 점수 · 점수 확인 서명) 빼기 — 설정의 ‘성적 포함’을 끄면 */
 function bkNoGr(){try{return localStorage.getItem("att-app-bkgr")==="0"}catch(e){return false}}
-function stripGrades(o){o.tasks=(o.tasks||[]).map(t=>{if(!t||!t.sc)return t;const x={...t};delete x.sc;return x});o.evals=(o.evals||[]).filter(e=>((e&&e.kind)||"score")!=="score");o.noGrades=true;return o}
+function stripGrades(o){(o.classes||[]).forEach(c=>{if(c&&c.ctl&&c.ctl.lv){c.ctl={...c.ctl};delete c.ctl.lv}});o.tasks=(o.tasks||[]).map(t=>{if(!t||!t.sc)return t;const x={...t};delete x.sc;return x});o.evals=(o.evals||[]).filter(e=>((e&&e.kind)||"score")!=="score");o.noGrades=true;return o}
 function backupObj(){const o=backupObj0();return bkNoGr()?stripGrades(o):o}
 function backupObj0(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],sheets:S.sheets||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
 const verNum=v=>String(v||"0").split(".").map(n=>parseInt(n,10)||0).reduce((a,n,i)=>a+n*Math.pow(1000,2-i),0);
@@ -9007,7 +9079,7 @@ function mergeList(b,l,r,key,deep){
 }
 function mergeMap(b,l,r){b=b||{};l=l||{};r=r||{};const o={};new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{
   if(k in l&&k in r)o[k]=pick3(b[k],l[k],r[k]);else if(k in l){if(!(k in b)||J(l[k])!==J(b[k]))o[k]=l[k]}else if(!(k in b)||J(r[k])!==J(b[k]))o[k]=r[k]});return o}
-function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","gph","emails","teachers","msg","obsLock","sch","cards","low","snote","tasks","sesBin"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
+function mergeClass(b,l,r){b=b||{};const o={...l};["cls","roster","phones","gph","emails","teachers","msg","obsLock","sch","cards","low","snote","tasks","sesBin","ctl"].forEach(f=>{const v=pick3(b[f],l[f],r[f]);if(v===undefined)delete o[f];else o[f]=v});o.sessions=mergeList(b.sessions,l.sessions,r.sessions,"id",mergeSes);o.obs=mergeList(b.obs,l.obs,r.obs,"id");{const m=mergeMap(b.sts,l.sts,r.sts);if(Object.keys(m).length)o.sts=m;else delete o.sts}return o}
 function mergeData(b,l,r){b=b||{};const bt=b.tt||{};
   return{classes:mergeList(b.classes,l.classes,r.classes,"_id",mergeClass),staff:mergeList(b.staff,l.staff,r.staff,"id"),
     tt:{list:mergeList(bt.list,l.tt.list,r.tt.list,"id"),active:l.tt.active||r.tt.active,acal:mergeList(bt.acal,l.tt.acal||[],r.tt.acal||[],"g")},notes:mergeMap(b.notes,l.notes,r.notes),
@@ -9310,8 +9382,8 @@ function renderNowHero(){const els=document.querySelectorAll(".nowhero");if(!els
     if(dk===k)hide=true;
     if(view==="att"&&OBSmode()==="att"&&selDate===x.date&&x.s&&R()===x.s)hide=true;
     if(!hide){const N=x.cl.data.roster.length,pr=x.s?x.cl.data.roster.filter(([id])=>x.s.p[id]).length:0;
-      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button>`;
-      els.forEach(el=>{if(el.dataset.k!==k+html){el.dataset.k=k+html;el.innerHTML=html;el.querySelector("[data-nhgo]").onclick=()=>{x.go();try{if(OBS.mode!=="att")setAmode("att")}catch(e){}};el.querySelector("[data-nhx]").onclick=()=>{try{sessionStorage.setItem(NH_KEY,k)}catch(e){}renderNowHero()}}});
+      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button><button class="nhtl" type="button" data-nhtl>🧰 수업 도구 <small>타이머 · 뽑기 · 모둠</small></button>`;
+      els.forEach(el=>{if(el.dataset.k!==k+html){el.dataset.k=k+html;el.innerHTML=html;el.querySelector("[data-nhgo]").onclick=()=>{x.go();try{if(OBS.mode!=="att")setAmode("att")}catch(e){}};el.querySelector("[data-nhx]").onclick=()=>{try{sessionStorage.setItem(NH_KEY,k)}catch(e){}renderNowHero()};el.querySelector("[data-nhtl]").onclick=()=>ctOpen(x.cl)}});
     }}
   els.forEach(el=>{const v=el.closest(".view");el.hidden=hide||!v||v.hidden;if(hide){el.innerHTML="";el.dataset.k=""}});
 }
@@ -10273,6 +10345,181 @@ setTimeout(()=>{try{cheerCheck()}catch(e){}},1500);
   else if(uiPrefs().open==="last"){try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";if(!VW.includes(v0))v0="todo"}
   show(v0);
   if(go==="add")setTimeout(()=>{try{if($("sheet").hidden&&!(typeof wizNeeded==="function"&&wizNeeded()))$("tdAdd").click()}catch(e){}},400)}
+/* ===== 5.66: 수업 도구 — 타이머 · 발표자 뽑기 · 모둠 나누기 (화면 스타일: 밝은 카드 · 칠판 · 큰 글씨) =====
+   지금 수업 카드와 출석 체크 화면에서 엽니다. 출석한 학생만 쓰고(출석 체크 전이면 명단 전체),
+   발표함은 관찰 기록으로, 모둠은 학급의 ctl.last로 남습니다. 화면에는 이름만 — 점수는 ‘균형 보기’를 눌렀을 때만. */
+const CT={cl:null,tab:"tm",tm:{dur:300000,end:0,left:300000,run:false,done:false},pk:{},gp:null,sel:null,bal:false,iv:0,pop:""};
+const CT_TH=[["card","밝은 카드"],["chalk","칠판"],["proj","큰 글씨"]];
+function ctTheme(){let t="card";try{t=localStorage.getItem("att-app-ctth")||"card"}catch(e){}return CT_TH.some(x=>x[0]===t)?t:"card"}
+function ctCtl(cl){const d=cl.data;if(!d.ctl)d.ctl={};return d.ctl}
+function ctCtlClean(cl){const c=cl.data.ctl;if(c&&!Object.keys(c).some(k=>c[k]!=null&&(typeof c[k]!=="object"||Object.keys(c[k]).length)))delete cl.data.ctl}
+/* 오늘 출석한 학생 (가장 최근 출석 체크 기준) */
+function ctPool(cl){const d=cl.data,date=today(),ses=d.sessions.filter(s=>s.date===date&&sesOn(s)&&Object.values(s.p||{}).some(Boolean)).sort(byTime);
+  const s=ses[ses.length-1];if(!s)return{all:d.roster.slice(),on:d.roster.slice(),att:false};return{all:d.roster.slice(),on:d.roster.filter(([id])=>s.p[id]),att:true,s}}
+const ctName=(cl,sid)=>(cl.data.roster.find(r=>r[0]===sid)||[sid,sid])[1];
+function ctLesson(cl){try{const x=nowLesson();if(x&&x.cl===cl)return x}catch(e){}return null}
+function ctOpen(cl,tab){if(!cl)cl=curClass();if(!cl)return;if(!cl.data.roster.length)return toast("학생 명단을 먼저 넣어 주세요");
+  if(CT.cl!==cl){CT.gp=null;CT.sel=null;CT.bal=false}CT.cl=cl;if(tab)CT.tab=tab;CT.pop="";
+  let el=$("ctool");if(!el){el=document.createElement("div");el.id="ctool";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label","수업 도구");document.body.appendChild(el)}
+  el.hidden=false;document.documentElement.classList.add("ctopen");ctPaint();ctPill()}
+function ctClose(){const el=$("ctool");if(el){el.hidden=true;el.innerHTML=""}document.documentElement.classList.remove("ctopen");CT.pop="";ctPill()}
+function ctPaint(){const el=$("ctool");if(!el||el.hidden)return;const cl=CT.cl,P=ctPool(cl),L=ctLesson(cl),th=ctTheme();el.dataset.th=th;
+  const title=L?`${L.title} · `:"";
+  el.innerHTML=`<div class="ctin"><div class="cttop"><div class="ctti"><b>🧰 수업 도구</b><small>${esc(title)}${esc(clsName(cl.data))} · ${P.att?`출석 ${P.on.length}명`:`출석 체크 전 · 명단 ${P.all.length}명`}</small></div>
+      <button type="button" class="ctth" id="ctTh" aria-label="화면 스타일 바꾸기">🎨 ${esc((CT_TH.find(x=>x[0]===th)||CT_TH[0])[1])}</button><button type="button" class="ctx" id="ctX" aria-label="수업 도구 닫기">✕</button></div>
+    <div class="cttabs" role="tablist">${[["tm","⏱ 타이머"],["pk","🎯 뽑기"],["gp","👥 모둠"]].map(([k,l])=>`<button type="button" role="tab" data-ct="${k}" aria-selected="${CT.tab===k}">${l}</button>`).join("")}</div>
+    <div class="ctbody" id="ctBody"></div></div><div class="ctpop" id="ctPop" hidden></div>`;
+  $("ctX").onclick=ctClose;$("ctTh").onclick=()=>{const i=CT_TH.findIndex(x=>x[0]===th),n=CT_TH[(i+1)%CT_TH.length];try{localStorage.setItem("att-app-ctth",n[0])}catch(e){}ctPaint();toast(`‘${n[1]}’ 스타일로 바꿨습니다`)};
+  el.querySelectorAll("[data-ct]").forEach(b=>b.onclick=()=>{CT.tab=b.dataset.ct;CT.sel=null;ctPaint()});
+  if(CT.tab==="tm")ctTimer();else if(CT.tab==="pk")ctPick();else ctGroups();
+  if(CT.pop)ctPopPaint()}
+/* --- 타이머 --- */
+const ctFmt=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`};
+function ctLeft(){const t=CT.tm;return t.run?Math.max(0,t.end-Date.now()):t.left}
+function ctTick(){const t=CT.tm;if(t.run&&Date.now()>=t.end){t.run=false;t.left=0;t.done=true;ctRing()}
+  const b=$("ctBig");if(b){b.textContent=t.done?"끝!":ctFmt(ctLeft());const r=$("ctRing");if(r)r.style.setProperty("--p",String(t.dur?ctLeft()/t.dur:0))}
+  const pill=$("ctPill");if(pill&&!pill.hidden)pill.querySelector("b").textContent=t.done?"끝!":ctFmt(ctLeft());
+  if(!t.run&&!t.done){clearInterval(CT.iv);CT.iv=0}}
+function ctRun(){if(!CT.iv)CT.iv=setInterval(ctTick,250)}
+function ctRing(){try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300])}catch(e){}
+  try{const A=window.AudioContext||window.webkitAudioContext;if(A){const ac=CT.ac||(CT.ac=new A());[0,.35,.7].forEach(t0=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;o.connect(g);g.connect(ac.destination);g.gain.setValueAtTime(.0001,ac.currentTime+t0);g.gain.exponentialRampToValueAtTime(.4,ac.currentTime+t0+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+t0+.28);o.start(ac.currentTime+t0);o.stop(ac.currentTime+t0+.3)})}}catch(e){}
+  const el=$("ctool");if(el&&!el.hidden){if(CT.tab==="tm")ctPaint()}else toast("⏱ 타이머가 끝났습니다");ctPill()}
+function ctSet(ms){const t=CT.tm;t.dur=ms;t.left=ms;t.end=Date.now()+ms;t.done=false;t.run=true;try{const A=window.AudioContext||window.webkitAudioContext;if(A&&!CT.ac)CT.ac=new A();CT.ac&&CT.ac.resume&&CT.ac.resume()}catch(e){}ctRun();ctPaint()}
+function ctTimer(){const t=CT.tm,L=ctLesson(CT.cl);let endMin=0;if(L&&L.end){const[h,m]=L.end.split(":").map(Number),e=new Date();e.setHours(h,m,0,0);endMin=Math.floor((e-Date.now())/60000)}
+  const ring=ctTheme()!=="proj",p=t.dur?ctLeft()/t.dur:0;
+  $("ctBody").innerHTML=`<div class="ctmain">${ring?`<div class="ctring${t.done?" done":""}" id="ctRing" style="--p:${p}"><div class="ctbig" id="ctBig">${t.done?"끝!":ctFmt(ctLeft())}</div></div>`:`<div class="ctbig${t.done?" done":""}" id="ctBig">${t.done?"끝!":ctFmt(ctLeft())}</div>`}
+      <p class="ctsub">${t.done?"시간이 다 됐습니다":t.run?`${Math.round(t.dur/60000)}분 · 끝나면 소리와 진동`:t.left<t.dur?"잠깐 멈춤":"시간을 고르면 바로 시작합니다"}</p>
+      <div class="ctchips">${[1,3,5,10].map(m=>`<button type="button" data-tm="${m}" aria-pressed="${t.dur===m*60000&&(t.run||t.left<t.dur||t.done)}">${m}분</button>`).join("")}${endMin>0?`<button type="button" data-tm="${endMin}">수업 끝까지 (${endMin}분)</button>`:""}</div></div>
+    <div class="ctbtns"><button type="button" id="ctTmR">다시</button><button type="button" class="p" id="ctTmGo">${t.run?"❚❚ 잠깐 멈춤":t.done?"▶ 다시 시작":"▶ 시작"}</button><button type="button" id="ctTmP">＋1분</button></div>`;
+  $("ctBody").querySelectorAll("[data-tm]").forEach(b=>b.onclick=()=>ctSet(+b.dataset.tm*60000));
+  $("ctTmR").onclick=()=>{t.run=false;t.done=false;t.left=t.dur;ctPaint();ctPill()};
+  $("ctTmGo").onclick=()=>{if(t.run){t.left=Math.max(0,t.end-Date.now());t.run=false;ctPaint();ctPill();return}if(t.done||t.left<=0){ctSet(t.dur);return}t.end=Date.now()+t.left;t.run=true;ctRun();ctPaint()};
+  $("ctTmP").onclick=()=>{if(t.run)t.end+=60000;else{t.left+=60000;t.done=false}t.dur+=60000;ctPaint()};
+  if(t.run)ctRun()}
+/* 도구를 닫아도 타이머가 돌면 작은 표시 */
+function ctPill(){let p=$("ctPill");const t=CT.tm,on=(t.run||t.done)&&($("ctool")||{}).hidden!==false;
+  if(!p){p=document.createElement("button");p.type="button";p.id="ctPill";p.className="ctpill";p.innerHTML="⏱ <b></b>";p.onclick=()=>{if(CT.tm.done){CT.tm.done=false;CT.tm.left=CT.tm.dur}ctOpen(CT.cl||curClass(),"tm")};document.body.appendChild(p)}
+  p.hidden=!on||!CT.cl;if(!p.hidden){p.querySelector("b").textContent=t.done?"끝!":ctFmt(ctLeft());p.classList.toggle("done",!!t.done);if(t.run)ctRun()}}
+/* --- 발표자 뽑기 --- */
+function ctPkOpt(){try{return{ex:true,fair:false,...JSON.parse(localStorage.getItem("att-app-ctpk")||"{}")}}catch(e){return{ex:true,fair:false}}}
+function ctPkSt(){const k=CT.cl.id+"|"+today();if(!CT.pk[k])CT.pk[k]={done:[],cur:null,n:0};return CT.pk[k]}
+function ctObsN(cl,sid){const lim=addDays(today(),-30);return obsList(cl.data).filter(r=>r.sid===sid&&r.date>=lim&&(Object.keys(r.tags||{}).length||r.memo)).length}
+function ctPresTag(){const all=obsTags().flatMap(g=>g.items||[]);return(all.find(it=>it.l==="발표함")||all.find(it=>/발표/.test(it.l)&&it.t>=0)||null)}
+function ctPick(){const cl=CT.cl,P=ctPool(cl),st=ctPkSt(),o=ctPkOpt(),left=P.on.filter(([id])=>!st.done.includes(id));
+  $("ctBody").innerHTML=`<div class="ctmain"><div class="ctroll" id="ctRoll" aria-hidden="true">${st.cur?"":"· · ·"}</div>
+      <div class="ctcard" id="ctCard">${st.cur?`<small>오늘 ${st.n}번째</small><div class="ctname">${esc(ctName(cl,st.cur))}</div><small>${esc(st.cur)}</small>`:`<div class="ctname sm">누구 차례일까요?</div><small>${P.on.length}명 중에서 뽑습니다</small>`}</div>
+      <div class="ctopt"><button type="button" data-po="ex" aria-pressed="${o.ex}">${o.ex?"✓ ":""}뽑힌 학생 빼기${o.ex?` (남은 ${left.length}명)`:""}</button><button type="button" data-po="fair" aria-pressed="${o.fair}">${o.fair?"✓ ":""}관찰 기록 적은 학생 먼저</button></div>
+      ${P.att?"":`<p class="ctsub">오늘 출석 체크 전이라 명단 전체에서 뽑습니다</p>`}</div>
+    <div class="ctbtns">${st.cur?`<button type="button" id="ctSkip">넘기기</button><button type="button" id="ctAgain">다시 뽑기</button><button type="button" class="p" id="ctDid">✓ 발표함</button>`:`<button type="button" class="p" id="ctGo">🎯 뽑기</button>`}</div>`;
+  $("ctBody").querySelectorAll("[data-po]").forEach(b=>b.onclick=()=>{const x=ctPkOpt();x[b.dataset.po]=!x[b.dataset.po];try{localStorage.setItem("att-app-ctpk",JSON.stringify(x))}catch(e){}ctPick()});
+  const go=keep=>{if(st.cur&&keep)st.done.includes(st.cur)||st.done.push(st.cur);ctDraw()};
+  if($("ctGo"))$("ctGo").onclick=()=>ctDraw();if($("ctAgain"))$("ctAgain").onclick=()=>go(true);
+  if($("ctSkip"))$("ctSkip").onclick=()=>{const c=st.cur;st.cur=null;st.n=Math.max(0,st.n-1);ctDraw(c)};
+  if($("ctDid"))$("ctDid").onclick=()=>{const sid=st.cur;if(!sid)return;if(!st.done.includes(sid))st.done.push(sid);const d=cl.data,date=today();
+    if(d.obsLock&&d.obsLock[date]){toast("오늘 관찰 기록이 잠겨 있어 기록하지 못했습니다");st.cur=null;ctPick();return}
+    let r=obsList(d).find(x=>x.sid===sid&&x.date===date);if(!r){r={id:uid(),sid,date,tags:{},memo:"",at:Date.now()};obsList(d).push(r)}
+    const tg=ctPresTag();if(tg)r.tags[tg.k]=(r.tags[tg.k]||0)+1;else r.memo=(r.memo?r.memo+" ":"")+"발표함.";r.at=Date.now();save();
+    const nm=ctName(cl,sid);st.cur=null;ctPick();toastUndo(`${nm} · 관찰 기록에 ‘${tg?tg.l:"발표함"}’`,()=>{const x=obsList(d).find(y=>y.sid===sid&&y.date===date);if(x){if(tg&&x.tags[tg.k]){x.tags[tg.k]--;if(!x.tags[tg.k])delete x.tags[tg.k]}else if(!tg)x.memo=x.memo.replace(/\s?발표함\.$/,"");if(!Object.keys(x.tags).length&&!x.memo){const L=obsList(d);L.splice(L.indexOf(x),1)}save()}},5000)}}
+function ctDraw(skip){const cl=CT.cl,P=ctPool(cl),st=ctPkSt(),o=ctPkOpt();let C=P.on.map(r=>r[0]).filter(id=>!(o.ex&&st.done.includes(id))&&id!==skip);
+  if(!C.length){if(o.ex&&st.done.length){st.done=[];toast("모두 한 번씩 뽑혔습니다. 처음부터 다시 뽑습니다");C=P.on.map(r=>r[0]).filter(id=>id!==skip)}if(!C.length)C=P.on.map(r=>r[0])}
+  if(!C.length)return toast("뽑을 학생이 없습니다");
+  const w=C.map(id=>o.fair?1/(1+ctObsN(cl,id)):1),sum=w.reduce((a,b)=>a+b,0);let x=Math.random()*sum,pick=C[C.length-1];for(let i=0;i<C.length;i++){x-=w[i];if(x<=0){pick=C[i];break}}
+  st.cur=pick;st.n++;const R=$("ctRoll"),card=$("ctCard");const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches||C.length<2||window.__ctFast;
+  if(reduce){ctPick();return}
+  ["ctGo","ctAgain","ctSkip","ctDid"].forEach(i=>{if($(i))$(i).disabled=true});let k=0;const names=C.map(id=>ctName(cl,id));
+  const step=()=>{if(CT.tab!=="pk"||!$("ctRoll"))return;k++;const nm=names[Math.floor(Math.random()*names.length)];if(card)card.innerHTML=`<small>&nbsp;</small><div class="ctname dim">${esc(nm)}</div><small>&nbsp;</small>`;if(R)R.textContent="· · ·";
+    if(k<12)setTimeout(step,40+k*12);else ctPick()};step()}
+/* --- 모둠 나누기 --- */
+function ctG(){const c=ctCtl(CT.cl),g=c.g||{};return{m:g.m==="count"?"count":"size",n:Math.max(1,Math.min(20,+g.n||4)),rem:g.rem==="small"?"small":"spread",bal:g.bal==="score"?"score":"rand",src:Array.isArray(g.src)?g.src:[]}}
+function ctGSet(p){const c=ctCtl(CT.cl);c.g={...ctG(),...p};save()}
+function ctSizes(N,m,n,rem){if(N<=0)return[];if(m==="count"){const k=Math.min(n,N),b=Math.floor(N/k),r=N%k;return Array.from({length:k},(_,i)=>b+(i<r?1:0))}
+  const s=Math.min(n,N),g=Math.floor(N/s),r=N%s;if(!r)return Array(g).fill(s);if(rem==="small")return[...Array(g).fill(s),r];const a=Array(g).fill(s);for(let i=0;i<r;i++)a[i%g]++;return a}
+const ctSizeTxt=a=>{const m=new Map();a.forEach(x=>m.set(x,(m.get(x)||0)+1));return[...m].sort((x,y)=>y[0]-x[0]).map(([s,k])=>`${s}명 × ${k}모둠`).join(" + ")};
+/* 성적 근거: 평가 점수(만점 대비 %) · 상중하 */
+function ctSrcList(cl){return tasksAll().filter(t=>tkHasSc(t)&&t.cls.includes(cl.id)&&tkScStat(t,cl).n).sort(tkSort)}
+function ctScores(cl,ids){const g=ctG(),lv=(cl.data.ctl||{}).lv||{},T=g.src.filter(x=>x!=="lv").map(id=>tasksAll().find(t=>t.id===id)).filter(Boolean),useLv=g.src.includes("lv");
+  const raw={};ids.forEach(sid=>{const v=[];T.forEach(t=>{const o=((t.sc||{})[cl.id]||{})[sid];if(typeof o==="number")v.push(o/(+t.max||100)*100)});if(useLv&&lv[sid])v.push({1:85,2:60,3:35}[lv[sid]]);raw[sid]=v.length?v.reduce((a,b)=>a+b,0)/v.length:null});
+  const known=Object.values(raw).filter(v=>v!=null).sort((a,b)=>a-b),med=known.length?known[Math.floor(known.length/2)]:50;const out={};ids.forEach(sid=>{out[sid]=raw[sid]==null?med:raw[sid]});return{sc:out,known:known.length}}
+function ctCost(groups,sc,cl){const c=cl.data.ctl||{},where={};groups.forEach((g,i)=>g.forEach(s=>{where[s]=i}));let pen=0;
+  (c.ap||[]).forEach(([a,b])=>{if(a in where&&b in where&&where[a]===where[b])pen++});(c.tg||[]).forEach(([a,b])=>{if(a in where&&b in where&&where[a]!==where[b])pen++});
+  let v=0;if(sc){const ms=groups.map(g=>g.reduce((a,s)=>a+sc[s],0)/(g.length||1)),mu=ms.reduce((a,b)=>a+b,0)/ms.length;v=ms.reduce((a,m)=>a+(m-mu)*(m-mu),0)/ms.length}
+  return pen*1e6+v}
+function ctMake(cl,ids){const g=ctG(),sizes=ctSizes(ids.length,g.m,g.n,g.rem);if(!sizes.length)return[];const score=g.bal==="score"&&g.src.length?ctScores(cl,ids).sc:null;
+  let order=ids.slice();for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
+  const G=sizes.map(()=>[]);
+  if(score){order.sort((a,b)=>(score[b]+Math.random()*2)-(score[a]+Math.random()*2));let dir=1,i=0;order.forEach(s=>{let tries=0;while(G[i].length>=sizes[i]&&tries<G.length*2){i+=dir;if(i>=G.length){i=G.length-1;dir=-1}else if(i<0){i=0;dir=1}tries++}G[i].push(s);i+=dir;if(i>=G.length){i=G.length-1;dir=-1}else if(i<0){i=0;dir=1}})}
+  else{let k=0;sizes.forEach((n,i)=>{for(let j=0;j<n;j++)G[i].push(order[k++])})}
+  let cost=ctCost(G,score,cl);for(let it=0;it<4000&&G.length>1;it++){const a=Math.floor(Math.random()*G.length);let b=Math.floor(Math.random()*(G.length-1));if(b>=a)b++;const i=Math.floor(Math.random()*G[a].length),j=Math.floor(Math.random()*G[b].length);
+    [G[a][i],G[b][j]]=[G[b][j],G[a][i]];const c2=ctCost(G,score,cl);if(c2<=cost)cost=c2;else[G[a][i],G[b][j]]=[G[b][j],G[a][i]]}
+  return G}
+function ctWarn(cl,G){const c=cl.data.ctl||{},where={};G.forEach((g,i)=>g.forEach(s=>{where[s]=i}));const w=[];
+  (c.ap||[]).forEach(([a,b])=>{if(a in where&&b in where&&where[a]===where[b])w.push(`${ctName(cl,a)} · ${ctName(cl,b)}이(가) 같은 모둠`)});
+  (c.tg||[]).forEach(([a,b])=>{if(a in where&&b in where&&where[a]!==where[b])w.push(`${ctName(cl,a)} · ${ctName(cl,b)}이(가) 다른 모둠`)});return w}
+function ctGroups(){const cl=CT.cl,P=ctPool(cl),g=ctG(),ids=P.on.map(r=>r[0]),sizes=ctSizes(ids.length,g.m,g.n,g.rem),c=cl.data.ctl||{},src=ctSrcList(cl),nCond=(c.ap||[]).length+(c.tg||[]).length,G=CT.gp;
+  const rem=g.m==="size"&&ids.length%Math.min(g.n,ids.length||1);
+  const sc=G&&CT.bal&&g.bal==="score"&&g.src.length?ctScores(cl,G.flat()).sc:null,ms=sc?G.map(x=>x.reduce((a,s)=>a+sc[s],0)/(x.length||1)):null,warn=G?ctWarn(cl,G):[];
+  $("ctBody").innerHTML=`<div class="ctgset">
+      <div class="ctseg"><button type="button" data-gm="count" aria-pressed="${g.m==="count"}">모둠 수</button><button type="button" data-gm="size" aria-pressed="${g.m==="size"}">모둠당 인원</button></div>
+      <div class="ctstep"><button type="button" id="ctNm" aria-label="줄이기">−</button><b id="ctN">${g.n}${g.m==="count"?"모둠":"명씩"}</b><button type="button" id="ctNp" aria-label="늘리기">＋</button></div>
+      ${rem?`<div class="ctseg"><button type="button" data-gr="spread" aria-pressed="${g.rem==="spread"}">남는 학생은 한 명씩 더</button><button type="button" data-gr="small" aria-pressed="${g.rem==="small"}">작은 모둠 하나</button></div>`:""}
+      <div class="ctseg"><button type="button" data-gb="rand" aria-pressed="${g.bal==="rand"}">무작위</button><button type="button" data-gb="score" aria-pressed="${g.bal==="score"}">성적 고르게</button></div>
+      ${g.bal==="score"?`<div class="ctsrc">${src.map(t=>`<button type="button" data-gs="${esc(t.id)}" aria-pressed="${g.src.includes(t.id)}"><i class="tkk ${t.k}">${tkK(t)[1]}</i> ${esc(t.n)}</button>`).join("")}<button type="button" data-gs="lv" aria-pressed="${g.src.includes("lv")}">상 · 중 · 하 ${Object.keys(c.lv||{}).length?`(${Object.keys(c.lv).length}명)`:""}</button><button type="button" class="ghost" id="ctLv">상 · 중 · 하 정하기</button></div>
+        ${g.src.length?"":`<p class="ctsub">기준을 하나 이상 고르세요${src.length?"":" (점수가 들어간 평가가 없으면 상 · 중 · 하를 정해 쓰세요)"}</p>`}`:""}
+      <div class="ctgl"><span>${ids.length}명 → ${esc(ctSizeTxt(sizes))}</span><button type="button" class="ghost" id="ctCond">조건 ${nCond?nCond+"개":"정하기"}</button></div></div>
+    ${G?`<div class="ctgrid">${G.map((x,i)=>`<div class="ctg" data-gi="${i}"><h3><span>${i+1}모둠</span><em>${x.length}명${ms?` · 평균 ${Math.round(ms[i])}`:""}</em></h3>${x.map(s=>`<button type="button" class="ctnm${CT.sel===s?" on":""}" data-gn="${esc(s)}">${esc(ctName(cl,s))}</button>`).join("")}</div>`).join("")}</div>
+      ${warn.length?`<p class="ctwarn">⚠️ ${esc(warn.join(" · "))}</p>`:""}
+      ${ms?`<p class="ctsub">모둠 평균 차이 ±${Math.round((Math.max(...ms)-Math.min(...ms))/2*10)/10}점 (백분율)</p>`:""}
+      <p class="ctsub">${CT.sel?`<b>${esc(ctName(cl,CT.sel))}</b>: 바꿀 학생이나 옮길 모둠을 누르세요`:"이름을 누른 뒤 다른 학생(바꾸기)이나 모둠 이름(옮기기)을 누릅니다"}</p>`
+      :`<div class="ctmain"><p class="ctsub">${c.last?`지난 모둠: ${esc(c.last.date?fmtDate(c.last.date):"")} ${c.last.groups.length}모둠`:"설정을 고르고 나누기를 누르세요"}</p></div>`}
+    <div class="ctbtns">${G?`<button type="button" id="ctMore">⋯</button>${g.bal==="score"&&g.src.length?`<button type="button" id="ctBal" aria-pressed="${CT.bal}">${CT.bal?"균형 숨김":"균형 보기"}</button>`:""}<button type="button" id="ctSplit">↻ 다시</button><button type="button" class="p" id="ctSave">저장</button>`
+      :`${c.last?`<button type="button" id="ctLast">지난 모둠</button>`:""}<button type="button" class="p" id="ctSplit">👥 나누기</button>`}</div>`;
+  const B=$("ctBody");
+  B.querySelectorAll("[data-gm]").forEach(b=>b.onclick=()=>{ctGSet({m:b.dataset.gm,n:b.dataset.gm==="count"?Math.min(6,Math.max(2,Math.round(ids.length/4)||2)):4});ctGroups()});
+  B.querySelectorAll("[data-gr]").forEach(b=>b.onclick=()=>{ctGSet({rem:b.dataset.gr});ctGroups()});
+  B.querySelectorAll("[data-gb]").forEach(b=>b.onclick=()=>{ctGSet({bal:b.dataset.gb});CT.bal=false;ctGroups()});
+  B.querySelectorAll("[data-gs]").forEach(b=>b.onclick=()=>{const s=ctG().src.slice(),k=b.dataset.gs,i=s.indexOf(k);if(i>=0)s.splice(i,1);else s.push(k);ctGSet({src:s});ctGroups()});
+  $("ctNm").onclick=()=>{ctGSet({n:Math.max(g.m==="count"?2:2,g.n-1)});ctGroups()};$("ctNp").onclick=()=>{ctGSet({n:Math.min(g.m==="count"?Math.max(2,ids.length):Math.max(2,ids.length),g.n+1)});ctGroups()};
+  if($("ctLv"))$("ctLv").onclick=()=>{CT.pop="lv";ctPopPaint()};$("ctCond").onclick=()=>{CT.pop="cond";ctPopPaint()};
+  $("ctSplit").onclick=()=>{if(!ids.length)return toast("모둠으로 나눌 학생이 없습니다");if(g.bal==="score"&&!g.src.length)return toast("성적 기준을 하나 이상 고르세요");CT.gp=ctMake(cl,ids);CT.sel=null;ctGroups()};
+  if($("ctLast"))$("ctLast").onclick=()=>{const on=new Set(ids);CT.gp=c.last.groups.map(x=>x.filter(s=>on.has(s))).filter(x=>x.length);const got=new Set(CT.gp.flat()),miss=ids.filter(s=>!got.has(s));if(miss.length)toast(`지난 모둠에 없던 학생 ${miss.length}명은 ‘⋯ → 늦게 온 학생’으로 넣으세요`);ctGroups()};
+  if($("ctBal"))$("ctBal").onclick=()=>{CT.bal=!CT.bal;ctGroups()};
+  if($("ctSave"))$("ctSave").onclick=()=>{const k=ctCtl(cl);k.last={date:today(),at:Date.now(),groups:CT.gp.map(x=>x.slice())};save();toast(`${CT.gp.length}모둠을 저장했습니다 (다음에 ‘지난 모둠’으로 불러오기)`)};
+  if($("ctMore"))$("ctMore").onclick=()=>{CT.pop="more";ctPopPaint()};
+  B.querySelectorAll("[data-gn]").forEach(b=>b.onclick=e=>{e.stopPropagation();const s=b.dataset.gn;if(!CT.sel){CT.sel=s;return ctGroups()}if(CT.sel===s){CT.sel=null;return ctGroups()}
+    const G2=CT.gp,ai=G2.findIndex(x=>x.includes(CT.sel)),bi=G2.findIndex(x=>x.includes(s));if(ai===bi){CT.sel=s;return ctGroups()}
+    const i=G2[ai].indexOf(CT.sel),j=G2[bi].indexOf(s);G2[ai][i]=s;G2[bi][j]=CT.sel;CT.sel=null;ctGroups()});
+  B.querySelectorAll(".ctg h3").forEach(h=>h.onclick=()=>{if(!CT.sel)return;const gi=+h.parentElement.dataset.gi,G2=CT.gp,ai=G2.findIndex(x=>x.includes(CT.sel));if(ai===gi){CT.sel=null;return ctGroups()}
+    G2[ai].splice(G2[ai].indexOf(CT.sel),1);G2[gi].push(CT.sel);CT.sel=null;CT.gp=G2.filter(x=>x.length);ctGroups()})}
+/* 작은 창: 상중하 · 조건 · 더 보기 */
+function ctPopPaint(){const el=$("ctPop");if(!el)return;const cl=CT.cl,d=cl.data,c=d.ctl||{},close=()=>{CT.pop="";el.hidden=true;el.innerHTML="";if(CT.tab==="gp")ctGroups()};
+  el.hidden=false;let h="";
+  if(CT.pop==="lv"){const lv=c.lv||{};h=`<h2>상 · 중 · 하 정하기</h2><p class="ctsub">학생을 누를 때마다 상 → 중 → 하 → 없음. 교사만 보는 화면이며 학생 화면에는 나오지 않습니다.</p>
+      <div class="ctlv">${d.roster.map(([sid,n])=>`<button type="button" data-lv="${esc(sid)}" class="l${lv[sid]||0}"><span>${esc(n)}</span><b>${["—","상","중","하"][lv[sid]||0]}</b></button>`).join("")}</div>
+      <div class="ctbtns"><button type="button" id="ctLvClr">모두 지우기</button><button type="button" class="p" id="ctPopX">완료</button></div>`}
+  else if(CT.pop==="cond"){const opt=d.roster.map(([sid,n])=>`<option value="${esc(sid)}">${esc(n)} (${esc(sid)})</option>`).join(""),row=(k,p,i)=>`<div class="ctpr"><span>${k==="ap"?"↔ 떼어 놓기":"🤝 붙여 놓기"}</span><b>${esc(ctName(cl,p[0]))} · ${esc(ctName(cl,p[1]))}</b><button type="button" data-cx="${k}:${i}" aria-label="빼기">✕</button></div>`;
+    h=`<h2>모둠 조건</h2><p class="ctsub">떼어 놓을 학생은 다른 모둠으로, 붙여 놓을 학생(예: 도움이 필요한 학생과 짝꿍)은 같은 모둠으로 나눕니다. 이 학급에 저장됩니다.</p>
+      <div class="ctpick"><select id="ctA" aria-label="첫째 학생">${opt}</select><select id="ctB" aria-label="둘째 학생">${opt}</select></div>
+      <div class="ctbtns"><button type="button" id="ctAddAp">↔ 떼어 놓기 추가</button><button type="button" id="ctAddTg">🤝 붙여 놓기 추가</button></div>
+      <div class="ctprs">${(c.ap||[]).map((p,i)=>row("ap",p,i)).join("")}${(c.tg||[]).map((p,i)=>row("tg",p,i)).join("")||""}${!(c.ap||[]).length&&!(c.tg||[]).length?`<p class="ctsub">아직 조건이 없습니다.</p>`:""}</div>
+      <div class="ctbtns"><button type="button" class="p" id="ctPopX">완료</button></div>`}
+  else if(CT.pop==="more"){const inG=new Set((CT.gp||[]).flat()),late=d.roster.filter(([sid])=>!inG.has(sid));
+    h=`<h2>모둠 더 보기</h2>
+      <div class="ctbtns col"><button type="button" id="ctCopy">모둠 명단 복사</button></div>
+      <h3>＋ 늦게 온 학생 넣기</h3>${late.length?`<div class="ctlate">${late.map(([sid,n])=>`<button type="button" data-late="${esc(sid)}">${esc(n)}</button>`).join("")}</div><p class="ctsub">누르면 ${ctG().bal==="score"&&ctG().src.length?"평균이 가장 낮은":"사람이 가장 적은"} 모둠에 들어갑니다.</p>`:`<p class="ctsub">모든 학생이 모둠에 있습니다.</p>`}
+      <div class="ctbtns"><button type="button" class="p" id="ctPopX">닫기</button></div>`}
+  el.innerHTML=`<div class="ctpin">${h}</div>`;el.onclick=e=>{if(e.target===el)close()};$("ctPopX").onclick=close;
+  el.querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{const k=ctCtl(cl);k.lv=k.lv||{};const s=b.dataset.lv,v=((k.lv[s]||0)+1)%4;if(v)k.lv[s]=v;else delete k.lv[s];if(!Object.keys(k.lv).length)delete k.lv;ctCtlClean(cl);save();ctPopPaint()});
+  if($("ctLvClr"))$("ctLvClr").onclick=()=>{const k=ctCtl(cl);delete k.lv;ctCtlClean(cl);save();ctPopPaint()};
+  const add=k=>{const a=$("ctA").value,b=$("ctB").value;if(a===b)return toast("서로 다른 두 학생을 고르세요");const x=ctCtl(cl);x.ap=x.ap||[];x.tg=x.tg||[];
+    if([...x.ap,...x.tg].some(p=>(p[0]===a&&p[1]===b)||(p[0]===b&&p[1]===a)))return toast("이미 있는 조건입니다");x[k].push([a,b]);if(!x.ap.length)delete x.ap;if(!x.tg.length)delete x.tg;save();ctPopPaint()};
+  if($("ctAddAp"))$("ctAddAp").onclick=()=>add("ap");if($("ctAddTg"))$("ctAddTg").onclick=()=>add("tg");
+  el.querySelectorAll("[data-cx]").forEach(b=>b.onclick=()=>{const[k,i]=b.dataset.cx.split(":"),x=ctCtl(cl);(x[k]||[]).splice(+i,1);if(x[k]&&!x[k].length)delete x[k];ctCtlClean(cl);save();ctPopPaint()});
+  if($("ctCopy"))$("ctCopy").onclick=()=>copy(`[${clsName(d)}] 모둠 (${fmtDate(today())})\n`+CT.gp.map((x,i)=>`${i+1}모둠: ${x.map(s=>ctName(cl,s)).join(", ")}`).join("\n"),"모둠 명단을 복사했습니다");
+  el.querySelectorAll("[data-late]").forEach(b=>b.onclick=()=>{const s=b.dataset.late,G=CT.gp,g=ctG();let gi=0;
+    if(g.bal==="score"&&g.src.length){const sc=ctScores(cl,[...G.flat(),s]).sc;let best=1e9;G.forEach((x,i)=>{const m=x.reduce((a,y)=>a+sc[y],0)/(x.length||1)+x.length*.01;if(m<best){best=m;gi=i}})}
+    else{let best=1e9;G.forEach((x,i)=>{if(x.length<best){best=x.length;gi=i}})}
+    G[gi].push(s);toast(`${ctName(cl,s)} → ${gi+1}모둠`);ctPopPaint()})}
+document.addEventListener("keydown",e=>{const el=$("ctool");if(!el||el.hidden||e.key!=="Escape")return;if(CT.pop){CT.pop="";const p=$("ctPop");if(p){p.hidden=true;p.innerHTML=""}}else ctClose()});
 /* ===== 5.65: 앱 잠금 (PIN) — 성적 · 연락처가 든 기기를 남이 열어 보지 못하게 =====
    이 기기에만 저장(동기화 · 백업에 안 들어감). PIN 자체는 저장하지 않고 소금 친 해시만 둡니다.
    화면 잠금일 뿐 자료를 암호화하지는 않습니다 → 휴대폰 자체 잠금과 함께 쓰도록 안내합니다. */
