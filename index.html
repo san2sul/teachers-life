@@ -1445,6 +1445,16 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 .pninsf{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}.pninsf .row2{margin:6px 0 0}
 em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 5px;margin-left:5px;vertical-align:1px}
 .pndiff{margin:10px 0 4px;border-top:1px solid var(--line);padding-top:8px}.pndiff summary{font-weight:700;font-size:.875rem;cursor:pointer}.pndiff summary small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.pndiff p{font-size:.8125rem;margin:6px 0}
+
+/* 5.75 수업 관찰 격자 보기 */
+.obsvbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 0 6px}.obsvbar .note{margin:0;font-size:.8125rem}
+.list.ogrid{display:grid;gap:6px;padding:6px;background:transparent;box-shadow:none;border:0}
+.otile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:66px;padding:6px 3px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;text-align:center;transition:transform .08s}
+.otile:active{transform:scale(.96)}
+.otile .no{font-size:.75rem;line-height:1;color:var(--muted)}.otile .tnm{font-weight:700;font-size:.98rem;line-height:1.2;word-break:keep-all;overflow-wrap:anywhere}
+.otile .otgs{display:flex;flex-wrap:wrap;justify-content:center;gap:2px}.otile .otgs:empty{display:none}.otile .otgs i{font-style:normal;font-size:.625rem;font-weight:700;line-height:1.3;padding:0 4px;border-radius:6px;background:var(--tint);color:var(--muted)}
+.otile .otgs i.pos{background:#e2f3e9;color:#1f7a4d}.otile .otgs i.neg{background:#fbe5e1;color:#b03a2e}.otile .otgs i.memo{background:var(--accent-soft);color:var(--accent)}
+.otile.has{background:color-mix(in srgb,var(--accent-soft) 60%,var(--paper));border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
 </style>
 </head>
 <body>
@@ -1543,6 +1553,7 @@ em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;
       <div id="obsBar"></div><p class="note" id="obsHint"></p><div class="row2 obsall" id="obsAll" hidden></div><p class="note">항목 줄은 옆으로 밀어 더 볼 수 있습니다.</p>
       <div id="obsTsBox"></div></div>
     <section class="card tkcard" id="tkCard"></section>
+    <div class="obsvbar"><span class="note" id="obsVSum"></span><span class="vseg" role="group" aria-label="관찰 명단 보기"><button type="button" data-ov="grid" aria-label="격자로 보기">▦</button><button type="button" data-ov="list" aria-label="목록으로 보기">☰</button></span></div>
     <div class="list" id="obsList"></div>
     <section class="card" id="stsCard"><div class="hd"><h2>세특 초안</h2><span class="sub" id="stsCnt"></span></div>
       <p class="note">학생 이름 → <b>한눈에 보기 · 세특</b>에서 출결·관찰·서명을 모아 보고, 관찰 기록으로 세특 초안을 만들어 나이스 byte를 확인하며 고쳐 씁니다.</p>
@@ -1928,7 +1939,7 @@ em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.74.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.75.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1940,6 +1951,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.75.0",date:"2026-10-28",items:["수업 관찰 명단 보기를 출석부처럼 두 가지로: ▦ 격자(학생 칸 — 그 날 기록한 항목 · 메모 표시, 기록한 학생은 색으로) · ☰ 목록(예전 모양). 빠른 체크 항목을 고른 뒤 칸을 누르면 바로 넣고, 아니면 그 학생 기록 창. 고른 보기는 기억","자동 점검 추가: 수업 관찰 격자 · 목록 보기"]},
   {v:"5.74.0",date:"2026-10-28",items:["학급 정보 진도 칸에 ‘✎ 직접 입력’: 쪽수 · 활동 등을 자유롭게 쓰면 수업 메모의 진도로 저장되고, 차시 번호(1-3 · 1단원 3차시)나 차시 이름을 쓰면 진도표 차시와 이어짐(🔗 마침 · 반만), 칸을 벗어나면 이어진 차시를 이 수업 마침으로 기록","‘＋ 진도표에 없는 차시 넣기’: 계획에 없던 수업을 그 자리에서 진도표에 넣음(넣을 자리 고르기 · 이 수업 마침으로) — 진도표 · 현황 · 엑셀에 ‘추가’ 표시","계획과 비교: 학급 정보에 ‘계획(계획 날짜 또는 진도표 순서) ↔ 실제(이 수업)’를 나란히, 같으면 초록. 시간표 → 📘 진도에 ‘처음 계획과 비교’(추가 · 바뀜 · 빠짐, 처음 ○차시 → 지금 ○차시), 비교 기준을 지금 진도표로 바꾸기","진도표 엑셀에 ‘비고’ 열(추가한 차시와 날짜)","자동 점검 추가: 진도 직접 입력 · 진도표에 차시 넣기 · 계획 비교"]},
   {v:"5.73.1",date:"2026-10-28",items:["수업 도구 타이머: ‘다시’ 단추를 ‘↺ 초기화’로 — 멈추고 00:00으로 돌아감(시간을 더한 뒤에도 처음으로), 시간 단추를 고르면 새로 시작"]},
   {v:"5.73.0",date:"2026-10-28",items:["오늘 화면: 오른쪽 위 설정(⚙) 단추와 ‘＋ 일정 · 할 일’ 단추가 겹치던 것 고침 — 설정 단추를 36px 원으로 맞춤","수업 도구 타이머: 도는(또는 멈춘) 동안 시간 단추(1 · 3 · 5 · 10분)를 누르면 누를 때마다 그 시간만큼 늘어남(3분을 두 번 → 6분), 단추에 ‘＋3분’처럼 표시 · 늘어난 시간 알림. ‘↺ 초기화’(예전 ‘다시’)는 멈추고 00:00으로 돌아감 — 시간 단추를 고르면 새로 시작"]},
@@ -8393,13 +8405,20 @@ function renderObs(){{const sc=$("stsCnt");if(sc){const n=D.roster.filter(([id])
   /* 학생 목록 */
   const L=$("obsList");
   if(!D.roster.length){L.innerHTML=`<div class="empty">학생 명단이 비어 있습니다.</div>`;return}
-  const all=obsList();
+  const all=obsList(),OV=obsView();L.classList.toggle("grid",OV==="grid");L.classList.toggle("ogrid",OV==="grid");document.querySelectorAll("[data-ov]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.ov===OV)));
+  {const e=$("obsVSum");if(e)e.textContent=`${D.roster.length}명 · ${fmtShort(selDate)} 기록 ${recs.filter(r=>cnt(r)||r.memo).length}명${OBS.arm&&tagOf(OBS.arm)?` · ‘${tagOf(OBS.arm).l}’ 누르면 바로 넣기`:""}`}
+  /* 5.75: 격자 보기 — 출석부처럼 학생 칸. 빠른 체크 항목을 고른 뒤 누르면 바로 넣고, 아니면 그 학생 기록 창 */
+  if(OV==="grid"){L.innerHTML=D.roster.map(([id,name],i)=>{const r=recs.find(x=>x.sid===id),c=r?cnt(r):0,ks=r?Object.keys(r.tags||{}):[];
+      return`<button class="otile${r&&(c||r.memo)?" has":""}" type="button" data-s="${esc(id)}" aria-label="${esc(name)}${c?` 오늘 ${c}회`:""}"><span class="no">${i+1}</span><span class="tnm">${esc(name)}</span><span class="otgs">${ks.slice(0,2).map(k=>{const t=tagOf(k);return t?`<i class="${tone(t.t)}">${esc(t.l.slice(0,6))}${r.tags[k]>1?"×"+r.tags[k]:""}</i>`:""}).join("")}${ks.length>2?`<i>+${ks.length-2}</i>`:""}${r&&r.memo?`<i class="memo">메모</i>`:""}</span></button>`}).join("");
+    L.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const id=b.dataset.s;if(OBS.arm)quickTag(id,OBS.arm);else obsSheet(id)});return}
   L.innerHTML=D.roster.map(([id,name],i)=>{const r=recs.find(x=>x.sid===id),mine=all.filter(x=>x.sid===id),n=mine.length,tc=mine.reduce((a,x)=>a+cnt(x),0);
     return `<div class="orow${r?" has":""}"><button class="obtn" type="button" data-s="${esc(id)}"><span class="no">${i+1}</span><span class="onm">${esc(name)}${lowTag(id)}<small>${esc(id)}</small>${n?`<small class="ocnt">누적 ${tc}회 · ${n}일</small>`:""}</span><span class="opills">${tagPills(r,4)}${r&&r.memo?`<span class="opill memo">메모</span>`:""}${mediaPills(r)}</span></button><button class="btn sm oedit" type="button" data-e="${esc(id)}" aria-label="${esc(name)} 기록 열기">기록</button></div>`}).join("");
   L.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const id=b.dataset.s;if(OBS.arm)quickTag(id,OBS.arm);else obsSheet(id)});
   L.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>obsSheet(b.dataset.e));
 }
 /* 관찰 기록 잠금: 날짜별로 잠그면 그 날 기록이 바뀌지 않습니다 (보기·복사·엑셀은 그대로) */
+function obsView(){let v="";try{v=localStorage.getItem("att-app-obsview")||""}catch(e){}return v==="grid"?"grid":"list"}
+document.querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{try{localStorage.setItem("att-app-obsview",b.dataset.ov)}catch(e){}renderObs()});
 function obsPresent(date){const ses=D.sessions.filter(s=>s.date===date&&sesOn(s)&&Object.values(s.p||{}).some(Boolean));if(!ses.length)return null;return D.roster.map(r=>r[0]).filter(id=>ses.some(s=>s.p[id]))}
 function obsAllSet(k,on){if(obsLocked(selDate))return obsNudge();const it=tagOf(k);if(!it)return;const date=selDate,bk=JSON.stringify(obsList().filter(r=>r.date===date));let n=0;
   if(on){(obsPresent(date)||D.roster.map(r=>r[0])).forEach(sid=>{const r=obsRec(sid,date,true);if(!r.tags[k]){r.tags[k]=1;r.at=Date.now();n++}})}
