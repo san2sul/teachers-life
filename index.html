@@ -1434,6 +1434,17 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 .pnmk{margin:-4px 0 10px;font-size:.8125rem}
 .pnimp{color:var(--accent)}
 #ttPnBtn[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* 5.74 진도 직접 입력 · 계획 비교 */
+.pncmp{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 8px}.pncmp>div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 8px;min-width:0}
+.pncmp small{display:block;color:var(--muted);font-size:.6875rem}.pncmp b{display:block;font-size:.8125rem;font-weight:600;line-height:1.35}
+.pncmp>div.ok{border-color:#1f6a35}.pncmp>div.ok b{color:#1f6a35}.pncmp>div.df{border-color:var(--warn)}
+.pnfreew{margin:0 0 6px}.pnfreew .lb small{font-weight:400;color:var(--muted);font-size:.6875rem;display:block}
+.pnlk{display:flex;flex-direction:column;gap:4px;margin:4px 0}.pnlkr{display:flex;align-items:center;gap:8px;background:var(--paper);border-radius:10px;padding:4px 6px}.pnlkr span{flex:1;min-width:0;font-size:.8125rem}
+.pnnolk{margin:4px 0;font-size:.75rem}
+.pninsf{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}.pninsf .row2{margin:6px 0 0}
+em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 5px;margin-left:5px;vertical-align:1px}
+.pndiff{margin:10px 0 4px;border-top:1px solid var(--line);padding-top:8px}.pndiff summary{font-weight:700;font-size:.875rem;cursor:pointer}.pndiff summary small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.pndiff p{font-size:.8125rem;margin:6px 0}
 </style>
 </head>
 <body>
@@ -1917,7 +1928,7 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.73.1", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.74.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1929,6 +1940,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.74.0",date:"2026-10-28",items:["학급 정보 진도 칸에 ‘✎ 직접 입력’: 쪽수 · 활동 등을 자유롭게 쓰면 수업 메모의 진도로 저장되고, 차시 번호(1-3 · 1단원 3차시)나 차시 이름을 쓰면 진도표 차시와 이어짐(🔗 마침 · 반만), 칸을 벗어나면 이어진 차시를 이 수업 마침으로 기록","‘＋ 진도표에 없는 차시 넣기’: 계획에 없던 수업을 그 자리에서 진도표에 넣음(넣을 자리 고르기 · 이 수업 마침으로) — 진도표 · 현황 · 엑셀에 ‘추가’ 표시","계획과 비교: 학급 정보에 ‘계획(계획 날짜 또는 진도표 순서) ↔ 실제(이 수업)’를 나란히, 같으면 초록. 시간표 → 📘 진도에 ‘처음 계획과 비교’(추가 · 바뀜 · 빠짐, 처음 ○차시 → 지금 ○차시), 비교 기준을 지금 진도표로 바꾸기","진도표 엑셀에 ‘비고’ 열(추가한 차시와 날짜)","자동 점검 추가: 진도 직접 입력 · 진도표에 차시 넣기 · 계획 비교"]},
   {v:"5.73.1",date:"2026-10-28",items:["수업 도구 타이머: ‘다시’ 단추를 ‘↺ 초기화’로 — 멈추고 00:00으로 돌아감(시간을 더한 뒤에도 처음으로), 시간 단추를 고르면 새로 시작"]},
   {v:"5.73.0",date:"2026-10-28",items:["오늘 화면: 오른쪽 위 설정(⚙) 단추와 ‘＋ 일정 · 할 일’ 단추가 겹치던 것 고침 — 설정 단추를 36px 원으로 맞춤","수업 도구 타이머: 도는(또는 멈춘) 동안 시간 단추(1 · 3 · 5 · 10분)를 누르면 누를 때마다 그 시간만큼 늘어남(3분을 두 번 → 6분), 단추에 ‘＋3분’처럼 표시 · 늘어난 시간 알림. ‘↺ 초기화’(예전 ‘다시’)는 멈추고 00:00으로 돌아감 — 시간 단추를 고르면 새로 시작"]},
   {v:"5.72.0",date:"2026-10-28",items:["시간표 → 수업 칸(학급 정보)의 진도 칸: 진도표가 있으면 단원별 차시 목록으로 — 차시마다 마침 · 반만 · 안 함을 바로 기록, 다음 차시 · 지난 기록 날짜 · 이 수업 표시","진도 기록 연동: 학급 정보 · 출석부의 ‘오늘 할 차시’ · 시간표 📘 진도 현황이 같은 기록 — 어디서 고쳐도 모두 바뀜, 수업 메모의 진도 글도 기록한 차시로 자동","진도표가 없는 교과는 학급 정보에서 바로 ‘📘 진도표 만들기’ → 만들고 나면 그 수업 창으로 돌아와 기록","키보드가 올라와 입력하는 동안 아래 단추 줄을 숨기는 것을 글쓰기 창뿐 아니라 학급 정보 등 내용이 긴 모든 창에 — 입력 칸이 가려지지 않음","진도표의 학기 끝 날짜 = 시간표의 학기 종료일(시간 설정 · 학기) — 따로 넣지 않고, 시간표에서 바꾸면 남은 수업 계산도 바로 바뀜","진도표 고치기 · 링크 찾기: 한글이 제대로 입력되지 않던 것 고침(글을 칠 때 미리보기 · 목록만 다시 그림)","진도표 엑셀 양식 받기 · 채워 올리기: 단원 · 차시 · 계획 날짜 · 반마다 마침 · 반만(날짜 선택). 시간표 → 📘 진도 → ‘진도표 + 기록 (엑셀)’로 지금 진도표를 받아 고쳐 올리기, 내려받은 수업 진도 기록부도 올려서 기록 되살리기","오른쪽 위 설정(⚙) 단추의 원 배경을 앱 바탕색과 같게","도움말 · 앱 소개를 새 메뉴(오늘 · 시간표 · 출석 · 연락 · 기록)에 맞게 고침 — 장 제목과 경로, 화면마다 ⓘ 도움말이 여는 곳(평가 · 기록 · 학생 정보)","자동 점검 추가: 학급 정보 진도 목록(마침 · 반만 · 안 함) · 진도표 연동, 진도표 엑셀 양식 받기 · 채워 올리기 · 기록부 올리기"]},
@@ -10928,12 +10940,18 @@ function renderPn(){const el=$("ttProg");if(!el||typeof PN==="undefined"||!PN)re
         return`<div class="pnr"><b>${esc(c.data.cls||"학급")}</b><div class="pnb"><i style="width:${tot?Math.round(dn/tot*100):0}%"></i></div><small>${nx?esc(pnCode(nx)):"끝"} <span class="pnst ${k}">${esc(l)}</span></small></div>${short?`<p class="pnwarn">⚠ <b>${esc(c.data.cls||"학급")}</b>: 남은 수업 <b>${left}시간</b> · 남은 차시 <b>${need}</b> → <b>${short}차시 부족</b></p>`:""}`}).join("")}
       <p class="note">남은 수업은 시간표와 수업 변동(시험 · 휴업 · 휴강)을 빼고 학기 끝 날짜까지 셉니다.</p></section>
       <section class="card"><div class="hd"><h2>진도표</h2><span class="sub">${C.map((c,i)=>`<i class="pnlg" style="--o:${1-i*.25}">●</i>${esc(c.data.cls||"")}`).join(" ")}</span></div>
-      ${p.units.map((u,ui)=>`<div class="pnu">${esc(u.n)}</div>${u.ch.map((ch,ci)=>`<button type="button" class="pnc" data-pnc="${esc(ch.id)}"><i>${ci+1}</i><b>${esc(ch.t)}${ch.wk?` <small>${esc(fmtDate(ch.wk))}</small>`:""}</b><span class="pnd">${C.map((c,i)=>{const v=pnG(p,c)[ch.id];return`<span class="${v?v.st==="d"?"on":"half":""}" style="--o:${1-i*.25}" title="${esc(c.data.cls||"")}"></span>`}).join("")}</span></button>`).join("")}`).join("")}
+      ${p.units.map((u,ui)=>`<div class="pnu">${esc(u.n)}</div>${u.ch.map((ch,ci)=>`<button type="button" class="pnc" data-pnc="${esc(ch.id)}"><i>${ci+1}</i><b>${esc(ch.t)}${ch.add?`<em class="pnadd">추가</em>`:""}${ch.wk?` <small>${esc(fmtDate(ch.wk))}</small>`:""}</b><span class="pnd">${C.map((c,i)=>{const v=pnG(p,c)[ch.id];return`<span class="${v?v.st==="d"?"on":"half":""}" style="--o:${1-i*.25}" title="${esc(c.data.cls||"")}"></span>`}).join("")}</span></button>`).join("")}`).join("")}
+      ${(()=>{const D=pnDiff(p);if(!D||!(D.added.length||D.renamed.length||D.removed.length))return"";return`<details class="pndiff"><summary>처음 계획과 비교 <small>${esc(fmtDate(D.at))} ${D.n0}차시 → 지금 ${D.n1}차시 · 추가 ${D.added.length} · 바뀜 ${D.renamed.length} · 빠짐 ${D.removed.length}</small></summary>
+        ${D.added.length?`<p><b class="pnadd">추가</b> ${D.added.map(y=>`${esc(pnCode(y))} ${esc(y.c.t)}${y.c.add?` <small>(${esc(fmtDate(y.c.add))})</small>`:""}`).join(" · ")}</p>`:""}
+        ${D.renamed.length?`<p><b>바뀜</b> ${D.renamed.map(([y,o])=>`${esc(pnCode(y))} <s>${esc(o)}</s> → ${esc(y.c.t)}`).join(" · ")}</p>`:""}
+        ${D.removed.length?`<p><b>빠짐</b> ${D.removed.map(v=>`<s>${esc(v.t)}</s>`).join(" · ")}</p>`:""}
+        <button class="btn sm ghost" type="button" id="pnOrigReset">비교 기준을 지금 진도표로</button></details>`})()}
       <div class="row2"><button class="btn" type="button" id="pnEd">진도표 고치기</button><button class="btn" type="button" id="pnXl">수업 진도 기록부 (엑셀)</button><button class="btn" type="button" id="pnXp">진도표 + 기록 (엑셀 · 고쳐서 올리기)</button><button class="btn" type="button" id="pnShare">진도표 보내기</button></div></section>`}`;
   el.querySelectorAll("[data-pns]").forEach(b=>b.onclick=()=>{PN.subj=b.dataset.pns;try{localStorage.setItem("att-app-pnsubj",PN.subj)}catch(e){}renderPn()});
   $("pnNew").onclick=()=>pnEdit(null,subj,C);if($("pnMk"))$("pnMk").onclick=()=>pnEdit(null,subj,C);if($("pnEd"))$("pnEd").onclick=()=>pnEdit(p,subj,C);
   if($("pnXl"))$("pnXl").onclick=()=>pnExport(p,C);if($("pnXp"))$("pnXp").onclick=()=>pnXlPlan(p,p.subj,C);if($("pnShare"))$("pnShare").onclick=()=>pnSend(p);
-  el.querySelectorAll("[data-pnc]").forEach(b=>b.onclick=()=>pnChSheet(p,b.dataset.pnc,C))}
+  el.querySelectorAll("[data-pnc]").forEach(b=>b.onclick=()=>pnChSheet(p,b.dataset.pnc,C));
+  if($("pnOrigReset"))twoStep($("pnOrigReset"),"정말 바꾸기",()=>{delete p.orig;pnOrig(p);save();renderPn();toast("비교 기준을 지금 진도표로 바꿨습니다")})}
 /* 차시 하나: 반마다 마침 · 반만 · 안 함, 계획 날짜 */
 function pnChSheet(p,chId,C){const x=pnCh(p).find(y=>y.c.id===chId);if(!x)return;
   const paint=()=>{$("sheetBox").innerHTML=`<h2>${esc(pnLab(x))}</h2><p class="note">${esc(x.u.n)}</p>
@@ -10979,9 +10997,9 @@ function pnEdit(p,subj,C,after){const isNew=!p;let imp=null,txt=p?pnOutline(p):"
     $("skNo").onclick=()=>{$("sheet").hidden=true};
     if($("pnDel"))twoStep($("pnDel"),"정말 삭제",()=>{const bk=JSON.stringify(S.plans);S.plans=plansAll().filter(x=>x!==p);save();$("sheet").hidden=true;renderPn();toastUndo("진도표를 지웠습니다",()=>{S.plans=JSON.parse(bk);save();renderPn()},6000)});
     $("pnOk").onclick=()=>{subjV=$("pnS").value.trim();txt=$("pnTx").value;const U=pnParse(txt);if(!subjV)return toast("교과 이름을 넣어 주세요");if(!U.length)return toast("단원과 차시를 넣어 주세요");if(!sel.size)return toast("적용할 반을 하나 이상 고르세요");
-      const P=period(),old=p?p.units:[];const units=U.map((u,ui)=>{const ou=old[ui];return{id:ou?ou.id:uid(),n:u.n.slice(0,60),ch:u.ch.map((t,ci)=>{const oc=ou&&ou.ch[ci];return{id:oc?oc.id:uid(),t:String(t).slice(0,60),...(oc&&oc.wk?{wk:oc.wk}:{})}})}});
-      if(p){p.subj=subjV;p.units=units;p.cls=[...sel];delete p.end;const ids=new Set(pnCh(p).map(x=>x.c.id));Object.values(p.pg||{}).forEach(g=>Object.keys(g).forEach(k=>{if(!ids.has(k))delete g[k]}))}
-      else plansAll().push({id:uid(),subj:subjV,year:+P.year,term:P.term,cls:[...sel],units,pg:{}});
+      const P=period(),old=p?p.units:[];const units=U.map((u,ui)=>{const ou=old[ui];return{id:ou?ou.id:uid(),n:u.n.slice(0,60),ch:u.ch.map((t,ci)=>{const oc=ou&&ou.ch[ci];return{id:oc?oc.id:uid(),t:String(t).slice(0,60),...(oc&&oc.wk?{wk:oc.wk}:{}),...(oc&&oc.add?{add:oc.add}:{})}})}});
+      if(p){pnOrig(p);p.subj=subjV;p.units=units;p.cls=[...sel];delete p.end;const ids=new Set(pnCh(p).map(x=>x.c.id));Object.values(p.pg||{}).forEach(g=>Object.keys(g).forEach(k=>{if(!ids.has(k))delete g[k]}))}
+      else{plansAll().push({id:uid(),subj:subjV,year:+P.year,term:P.term,cls:[...sel],units,pg:{}});pnOrig(plansAll()[plansAll().length-1])}
       if(imp){const pl=p||plansAll()[plansAll().length-1];Object.entries(imp.wk).forEach(([pos,d])=>{const[ui,ci]=pos.split("-").map(Number),c=units[ui]&&units[ui].ch[ci];if(c)c.wk=d});
         Object.entries(imp.pg).forEach(([cid,g])=>{const cl=S.list.find(c=>c.id===cid);if(!cl)return;Object.entries(g).forEach(([pos,v])=>{const[ui,ci]=pos.split("-").map(Number),c=units[ui]&&units[ui].ch[ci];if(c)pnSet(pl,cl,c.id,v.st,v.d)})})}
       if(after){save();toast(`${subjV} 진도표를 ${p?"저장했습니다":"만들었습니다"}`);return after()}
@@ -11015,12 +11033,12 @@ function pnReadRows(rows,curU,year){rows=(rows||[]).map(r=>(r||[]).map(x=>x inst
     if(iW>=0){const d=pnYmd(r[iW],year);if(d)wk[pos]=d}cc.forEach(({i,cl})=>{const v=pnStOf(r[i],year);if(v)(pg[cl.id]=pg[cl.id]||{})[pos]=v})});
   const UU=U.filter(u=>u.ch.length);if(!UU.length)return{err:"단원 · 차시를 찾지 못했습니다. 양식의 열 이름(단원 · 차시)을 그대로 두세요"};
   return{txt:UU.map(u=>`# ${u.n}\n`+u.ch.join("\n")).join("\n"),wk:Object.keys(wk).length?wk:null,pg:Object.keys(pg).length?pg:null,subj}}
-function pnXlPlan(p,subj,C){const head=["단원","차시","계획 날짜 (선택)",...C.map(c=>clsName(c.data))],rows=[head];
+function pnXlPlan(p,subj,C){const head=["단원","차시","계획 날짜 (선택)",...C.map(c=>clsName(c.data)),"비고"],rows=[head];
   const SAMPLE=[["1. 단원 이름",["1차시 내용","2차시 내용","3차시 내용"]],["2. 단원 이름",["1차시 내용","2차시 내용"]]];
-  if(p)p.units.forEach(u=>u.ch.forEach((c,ci)=>rows.push([ci?"":u.n,c.t,c.wk||"",...C.map(cl=>{const v=pnG(p,cl)[c.id];return v?(v.st==="d"?"마침 ":"반만 ")+v.d:""})])));
-  else SAMPLE.forEach(([n,L])=>L.forEach((t,ci)=>rows.push([ci?"":n,t,"",...C.map(()=>"")])));
+  if(p)p.units.forEach(u=>u.ch.forEach((c,ci)=>rows.push([ci?"":u.n,c.t,c.wk||"",...C.map(cl=>{const v=pnG(p,cl)[c.id];return v?(v.st==="d"?"마침 ":"반만 ")+v.d:""}),c.add?"추가 "+c.add:""])));
+  else SAMPLE.forEach(([n,L])=>L.forEach((t,ci)=>rows.push([ci?"":n,t,"",...C.map(()=>""),""])));
   const name=(subj||"교과").replace(/\s+/g,""),guide=[["쓰는 법"],["1. ‘단원’ 칸은 그 단원의 첫 차시 줄에만 씁니다. 아래 줄의 단원 칸을 비우면 같은 단원으로 이어집니다."],["2. ‘차시’ 칸에 차시 내용을 한 줄에 하나씩 씁니다."],["3. ‘계획 날짜’는 선택입니다(예: 2026-03-05). 넣으면 계획 대비 앞섬 · 늦음을 봅니다."],["4. 반 칸에는 ‘마침’ 또는 ‘반만’을 씁니다. 날짜를 함께 쓰면(예: 마침 2026-10-21) 그 날짜로, 날짜가 없으면 올린 날로 기록합니다. 비우면 안 함."],["5. 다 채우면 앱의 진도표 만들기(고치기) → 📤 엑셀 · 진도표 파일 올리기로 넣습니다. 열 이름(단원 · 차시 · 반 이름)은 바꾸지 마세요."]];
-  xlOut(p?`수업진도표_${name}_${today().replace(/-/g,"")}.xlsx`:`수업진도표_양식_${name}.xlsx`,[{name:"진도표",title:`교과: ${subj||"(교과 이름)"} · 수업 진도표 (${p?p.year:period().year}학년도 ${p?p.term:period().term})`,rows,widths:[22,30,14,...C.map(()=>16)],text:[2,...C.map((_,i)=>3+i)]},{name:"쓰는 법",title:"수업 진도표 양식 쓰는 법",rows:guide,widths:[100],head:false}],p?"진도표 엑셀을 저장했습니다":"진도표 엑셀 양식을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))}
+  xlOut(p?`수업진도표_${name}_${today().replace(/-/g,"")}.xlsx`:`수업진도표_양식_${name}.xlsx`,[{name:"진도표",title:`교과: ${subj||"(교과 이름)"} · 수업 진도표 (${p?p.year:period().year}학년도 ${p?p.term:period().term})`,rows,widths:[22,30,14,...C.map(()=>16),14],text:[2,...C.map((_,i)=>3+i)]},{name:"쓰는 법",title:"수업 진도표 양식 쓰는 법",rows:guide,widths:[100],head:false}],p?"진도표 엑셀을 저장했습니다":"진도표 엑셀 양식을 저장했습니다").catch(e=>toast(e.message||"엑셀 파일을 만들지 못했습니다"))}
 /* --- 출석 체크 화면: 오늘 할 차시 --- */
 function pnOfSes(s,cl){if(!s||!cl)return null;const x=sesCellOf(s);let subj=x&&x.c&&x.c.subject;if(!subj){const L=plansAll().filter(p=>p.cls.includes(cl.id));const m=L.find(p=>String(s.label||"").includes(p.subj));subj=m&&m.subj}return subj?pnFind(subj,cl):null}
 function renderPnBar(s){const el=$("pnBar");if(!el)return;const cl=curClass(),p=pnOfSes(s,cl);if(!p||!pnCh(p).length){el.hidden=true;el.innerHTML="";return}
@@ -11043,19 +11061,61 @@ function pnNoteSync(p,cl,x){if(!x.k)return;const L=pnMineL(p,cl,x),g=pnG(p,cl),o
   const txt=L.map(y=>pnCode(y)+" "+y.c.t+(g[y.c.id].st==="h"?"(반만)":"")).join(", ").slice(0,120);
   if(txt)S.notes[x.k]={...o,progress:txt,pAuto:true,date:x.date,clsId:cl.id,cls:clsName(cl.data),subject:x.subj||p.subj,period:x.p,updated:Date.now()};
   else if(o.pAuto){const n={...o,progress:"",updated:Date.now()};delete n.pAuto;if(!n.memo&&!n.task&&!n.meet)delete S.notes[x.k];else S.notes[x.k]=n}}
-/* 5.72: 단원별 차시 목록 — 차시마다 마침 · 반만 · 안 함. 이 수업(날짜 · 출석 체크 · 시간표 칸)으로 기록되어 출석부 · 📘 진도 현황과 같이 움직임 */
-function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).filter(Boolean);let openU=null;
+/* 5.74: 처음 계획(진도표를 처음 만든 때) — 차시를 넣거나 진도표를 고치기 전에 한 번 저장해 두고 지금과 비교 */
+function pnOrig(p){if(!p.orig)p.orig={at:today(),u:p.units.map(u=>({id:u.id,n:u.n,ch:u.ch.map(c=>({id:c.id,t:c.t}))}))};return p.orig}
+function pnDiff(p){if(!p||!p.orig||!Array.isArray(p.orig.u))return null;const O=new Map();p.orig.u.forEach((u,ui)=>u.ch.forEach((c,ci)=>O.set(c.id,{t:c.t,ui,ci})));const cur=pnCh(p),ids=new Set(cur.map(x=>x.c.id));
+  const added=cur.filter(x=>!O.has(x.c.id)),renamed=cur.filter(x=>O.has(x.c.id)&&O.get(x.c.id).t!==x.c.t).map(x=>[x,O.get(x.c.id).t]),removed=[...O.entries()].filter(([id])=>!ids.has(id)).map(([,v])=>v);
+  return{added,renamed,removed,at:p.orig.at,n0:O.size,n1:cur.length}}
+function pnInsert(p,ui,after,t,date){pnOrig(p);const u=p.units[ui];if(!u)return null;const c={id:uid(),t:String(t).trim().slice(0,60),add:date||today()};u.ch.splice(Math.max(0,Math.min(u.ch.length,after+1)),0,c);return c}
+/* 직접 입력한 글에서 진도표 차시 찾기: 1-3 · 1단원 3차시 · 차시 이름 */
+function pnMatch(p,text){const t=String(text||""),L=pnCh(p),out=new Set(),at=(ui,ci)=>{const x=L.find(y=>y.ui===ui&&y.ci===ci);if(x)out.add(x)};
+  for(const m of t.matchAll(/(\d{1,2})\s*단원\s*(\d{1,2})\s*차시/g))at(+m[1]-1,+m[2]-1);
+  for(const m of t.matchAll(/(?:^|[^\d~])(\d{1,2})\s*-\s*(\d{1,2})(?![\d쪽p])/g))at(+m[1]-1,+m[2]-1);
+  L.forEach(x=>{const n=x.c.t.replace(/\s+/g,"");if(n.length>=2&&t.replace(/\s+/g,"").includes(n))out.add(x)});return[...out]}
+/* 5.72: 단원별 차시 목록 — 차시마다 마침 · 반만 · 안 함. 이 수업(날짜 · 출석 체크 · 시간표 칸)으로 기록되어 출석부 · 📘 진도 현황과 같이 움직임
+   5.74: ✎ 직접 입력(쪽수 · 활동 · 차시 번호나 이름 → 진도표와 이어짐), 진도표에 없는 차시 넣기, 계획 · 실제 비교 */
+function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).filter(Boolean);let openU=null;const o0=S.notes[x.k]||{};
+  el.innerHTML=`<div id="pnTop"></div>
+    <div class="pnfreew"><label class="lb" for="pnFree">✎ 직접 입력 <small>쪽수 · 활동 등. 차시 번호(1-3)나 차시 이름을 쓰면 진도표와 이어집니다</small><input class="fld" id="pnFree" autocomplete="off" placeholder="예: 1-3 뉴턴 법칙, 교과서 54~57쪽" value="${esc(o0.pAuto?"":o0.progress||"")}"></label><div id="pnLink"></div>
+      <div class="pninsf" id="pnInsF" hidden></div></div>
+    <div id="pnList"></div>`;
+  const fr=$("pnFree");
+  const recMine=()=>pnMineL(p,cl,x);
+  const ins=()=>{const f=$("pnInsF"),g=pnG(p,cl),mine=recMine(),last=mine.length?mine[mine.length-1]:pnCh(p).filter(y=>g[y.c.id]).pop(),nx=pnNext(p,cl);
+    const def=last?`${last.ui}|${last.ci}`:nx?`${nx.ui}|${nx.ci-1}`:`0|-1`;
+    f.hidden=false;f.innerHTML=`<label class="lb" for="pnInsT">진도표에 넣을 차시 이름<input class="fld" id="pnInsT" maxlength="60" value="${esc((fr.value||"").replace(/\d{1,2}\s*-\s*\d{1,2}/g,"").replace(/^[\s,·]+|[\s,·]+$/g,"").slice(0,60))}" placeholder="예: 실험 보충"></label>
+      <label class="lb" for="pnInsP">넣을 자리<select class="fld" id="pnInsP">${p.units.map((u,ui)=>`<optgroup label="${esc(u.n)}"><option value="${ui}|-1"${def===`${ui}|-1`?" selected":""}>${esc(u.n)} 맨 앞</option>${u.ch.map((c,ci)=>`<option value="${ui}|${ci}"${def===`${ui}|${ci}`?" selected":""}>${ui+1}-${ci+1} ${esc(c.t)} 다음</option>`).join("")}</optgroup>`).join("")}</select></label>
+      <label class="ck"><input type="checkbox" id="pnInsD" checked> 이 수업에서 마침으로 기록</label>
+      <div class="row2"><button class="btn sm" type="button" id="pnInsX">취소</button><button class="btn sm pri" type="button" id="pnInsOk">진도표에 넣기</button></div>`;
+    $("pnInsX").onclick=()=>{f.hidden=true;f.innerHTML=""};
+    $("pnInsOk").onclick=()=>{const t=$("pnInsT").value.trim();if(!t)return toast("차시 이름을 넣어 주세요");const[ui,ci]=$("pnInsP").value.split("|").map(Number);const c=pnInsert(p,ui,ci,t,x.date);if(!c)return;
+      if($("pnInsD").checked)pnSet(p,cl,c.id,"d",x.date,x.sid,x.k);pnNoteSync(p,cl,x);save();f.hidden=true;f.innerHTML="";openU=null;paint();link();const y=pnCh(p).find(z=>z.c===c);toast(`진도표에 ${pnCode(y)} ‘${c.t}’을 넣었습니다`)};
+    setTimeout(()=>{try{$("pnInsT").focus()}catch(_){}},50)};
+  const link=()=>{const L=pnMatch(p,fr.value),g=pnG(p,cl),el2=$("pnLink");if(!el2)return;
+    el2.innerHTML=(L.length?`<div class="pnlk">${L.map(y=>{const v=g[y.c.id];return`<div class="pnlkr"><span>🔗 <b>${esc(pnCode(y))}</b> ${esc(y.c.t)}</span><div class="seg3">${[["d","마침"],["h","반만"]].map(([k,l])=>`<button type="button" data-pc="${esc(y.c.id)}|${k}" aria-pressed="${(v?v.st:"")===k}">${l}</button>`).join("")}</div></div>`}).join("")}</div>`:fr.value.trim()?`<p class="note pnnolk">진도표의 차시와 이어지지 않았습니다. 차시 번호(예: 1-3)를 쓰거나, 진도표에 없는 내용이면 차시로 넣으세요.</p>`:"")
+      +`<button class="btn sm ghost" type="button" id="pnInsB">＋ 진도표에 없는 차시 넣기</button>`;
+    el2.querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>mark(b.dataset.pc));$("pnInsB").onclick=ins};
+  const mark=pc=>{const[id,k]=pc.split("|"),v=pnG(p,cl)[id];if((v?v.st:"")===k)return;
+    if(k&&v&&!(v.s&&v.s===x.sid)&&!(v.k&&v.k===x.k)&&v.d!==x.date)pnSet(p,cl,id,k,v.d,v.s,v.k);else pnSet(p,cl,id,k,x.date,x.sid,x.k);
+    pnNoteSync(p,cl,x);save();paint();link();const c=pnCh(p).find(y=>y.c.id===id);toast(`${pnCode(c)} ${k==="d"?"마침":k==="h"?"반만":"안 함"}으로 기록했습니다`)};
+  /* 직접 입력: 쓰는 대로 수업 메모의 진도로 저장, 칸을 벗어나면 이어진 차시를 이 수업 마침으로 */
+  let tm;fr.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{const o=S.notes[x.k]||{},v=fr.value.trim();
+      if(v)S.notes[x.k]={...o,progress:v.slice(0,120),date:x.date,clsId:cl.id,cls:clsName(cl.data),subject:x.subj||p.subj,period:x.p,updated:Date.now()},delete S.notes[x.k].pAuto;
+      else{S.notes[x.k]={...o,progress:"",pAuto:true,date:x.date,clsId:cl.id,cls:clsName(cl.data),subject:x.subj||p.subj,period:x.p,updated:Date.now()};pnNoteSync(p,cl,x)}
+      save();link()},250)};
+  fr.onchange=()=>{const g=pnG(p,cl),L=pnMatch(p,fr.value).filter(y=>!g[y.c.id]);if(!L.length)return;L.forEach(y=>pnSet(p,cl,y.c.id,"d",x.date,x.sid,x.k));save();paint();link();toast(`진도표 ${L.map(y=>pnCode(y)).join(", ")}을 이 수업 마침으로 이었습니다`)};
   const paint=()=>{const g=pnG(p,cl),mine=pnMineL(p,cl,x),mineIds=new Set(mine.map(y=>y.c.id)),nx=pnNext(p,cl),[sk,sl]=pnStatus(p,cl,C.length?C:[cl]),tot=pnCh(p).length,dn=pnDoneN(p,cl);
     if(!openU)openU=new Set(p.units.filter(u=>u.ch.some(c=>mineIds.has(c.id))||(nx&&nx.u===u)).map(u=>u.id));
-    el.innerHTML=`<div class="pnlh"><b>📘 진도 · ${esc(p.subj)}</b><span class="pnst ${sk}">${esc(sl)}</span><small>${dn}/${tot}차시</small></div>
-      <p class="pnls">${mine.length?`이 수업: <b>${mine.map(y=>esc(pnCode(y))+(g[y.c.id].st==="h"?" 반만":" 마침")).join(", ")}</b>`:nx?`다음 차시: <b>${esc(pnLab(nx))}</b>`:"진도표를 모두 마쳤습니다"}</p>
-      ${p.units.map((u,ui)=>{const ud=u.ch.filter(c=>g[c.id]&&g[c.id].st==="d").length,op=openU.has(u.id);return`<div class="pnud${op?" open":""}"><button type="button" class="pnuh" data-uo="${esc(u.id)}" aria-expanded="${op}"><span>${esc(u.n||(ui+1)+"단원")}</span><small class="${ud===u.ch.length&&u.ch.length?"ok":""}">${ud}/${u.ch.length}</small><i aria-hidden="true">›</i></button>
-        ${op?`<div class="pnul">${u.ch.map((c,ci)=>{const v=g[c.id],me=mineIds.has(c.id),st=v?v.st:"";return`<div class="pnrow${me?" me":""}${nx&&nx.c===c&&!v?" nx":""}"><i>${ci+1}</i><b>${esc(c.t)}<small>${v?(me?"이 수업":esc(fmtDate(v.d)))+" · "+(st==="d"?"마침":"반만"):nx&&nx.c===c?"다음 차시":""}</small></b><div class="seg3" role="group" aria-label="${esc(c.t)} 진도">${[["d","마침"],["h","반만"],["","안 함"]].map(([k,l])=>`<button type="button" data-pc="${esc(c.id)}|${k}" aria-pressed="${st===k}">${l}</button>`).join("")}</div></div>`}).join("")}</div>`:""}</div>`}).join("")}`;
-    el.querySelectorAll("[data-uo]").forEach(b=>b.onclick=()=>{const id=b.dataset.uo;openU.has(id)?openU.delete(id):openU.add(id);paint()});
-    el.querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{const[id,k]=b.dataset.pc.split("|"),v=pnG(p,cl)[id];if((v?v.st:"")===k)return;
-      if(k&&v&&!(v.s&&v.s===x.sid)&&!(v.k&&v.k===x.k)&&v.d!==x.date){/* 다른 날 기록한 차시는 상태만 바꾸고 날짜는 그대로 */pnSet(p,cl,id,k,v.d,v.s,v.k)}else pnSet(p,cl,id,k,x.date,x.sid,x.k);
-      pnNoteSync(p,cl,x);save();paint();const c=pnCh(p).find(y=>y.c.id===id);toast(`${pnCode(c)} ${k==="d"?"마침":k==="h"?"반만":"안 함"}으로 기록했습니다`)})};
-  paint()}
+    /* 계획: 계획 날짜가 이 날인 차시, 없으면 이 수업 전까지 기록 기준 다음 차시 */
+    const byWk=pnCh(p).filter(y=>y.c.wk===x.date),before=pnCh(p).find(y=>{const v=g[y.c.id];return!(v&&v.st==="d"&&!mineIds.has(y.c.id))}),plan=byWk.length?byWk:before?[before]:[];
+    const same=plan.length&&mine.length&&plan.every(y=>mineIds.has(y.c.id));
+    $("pnTop").innerHTML=`<div class="pnlh"><b>📘 진도 · ${esc(p.subj)}</b><span class="pnst ${sk}">${esc(sl)}</span><small>${dn}/${tot}차시</small></div>
+      <div class="pncmp"><div><small>계획${byWk.length?" (계획 날짜)":" (진도표 순서)"}</small><b>${plan.length?plan.map(y=>esc(pnCode(y)+" "+y.c.t)).join(", "):"—"}</b></div><div class="${mine.length?same?"ok":"df":""}"><small>실제 · 이 수업</small><b>${mine.length?mine.map(y=>esc(pnCode(y)+" "+y.c.t)+(g[y.c.id].st==="h"?" (반만)":"")).join(", "):"아직 기록 없음"}</b></div></div>`;
+    $("pnList").innerHTML=p.units.map((u,ui)=>{const ud=u.ch.filter(c=>g[c.id]&&g[c.id].st==="d").length,op=openU.has(u.id);return`<div class="pnud${op?" open":""}"><button type="button" class="pnuh" data-uo="${esc(u.id)}" aria-expanded="${op}"><span>${esc(u.n||(ui+1)+"단원")}</span><small class="${ud===u.ch.length&&u.ch.length?"ok":""}">${ud}/${u.ch.length}</small><i aria-hidden="true">›</i></button>
+        ${op?`<div class="pnul">${u.ch.map((c,ci)=>{const v=g[c.id],me=mineIds.has(c.id),st=v?v.st:"";return`<div class="pnrow${me?" me":""}${nx&&nx.c===c&&!v?" nx":""}"><i>${ci+1}</i><b>${esc(c.t)}${c.add?`<em class="pnadd">추가</em>`:""}<small>${v?(me?"이 수업":esc(fmtDate(v.d)))+" · "+(st==="d"?"마침":"반만"):nx&&nx.c===c?"다음 차시":""}</small></b><div class="seg3" role="group" aria-label="${esc(c.t)} 진도">${[["d","마침"],["h","반만"],["","안 함"]].map(([k,l])=>`<button type="button" data-pc="${esc(c.id)}|${k}" aria-pressed="${st===k}">${l}</button>`).join("")}</div></div>`}).join("")}</div>`:""}</div>`}).join("");
+    $("pnList").querySelectorAll("[data-uo]").forEach(b=>b.onclick=()=>{const id=b.dataset.uo;openU.has(id)?openU.delete(id):openU.add(id);paint()});
+    $("pnList").querySelectorAll("[data-pc]").forEach(b=>b.onclick=()=>{mark(b.dataset.pc)})};
+  paint();link()}
 /* 지금 수업 카드 · 학생 화면에 쓰는 짧은 표시 */
 function pnHint(cl,subj){const p=pnFind(subj,cl);if(!p)return"";const nx=pnNext(p,cl);return nx?`📘 ${pnCode(nx)}`:""}
 function pnMissed(cl,date){const out=[];plansAll().filter(p=>p.cls.includes(cl.id)).forEach(p=>{const g=pnG(p,cl);pnCh(p).forEach(x=>{const v=g[x.c.id];if(v&&v.d===date)out.push(`${p.subj} ${pnCode(x)} ${x.c.t}`)})});return out}
