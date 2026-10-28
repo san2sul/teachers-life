@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt","tip","font"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])})}catch(e){}</script>
+<script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt","tip","font"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])});if(localStorage.getItem("att-app-lock")){h.classList.add("tllock");setTimeout(function(){if(!document.getElementById("lockScr"))h.classList.remove("tllock")},6000)}}catch(e){}</script>
 <title>교사의 생활</title>
 <meta name="author" content="물리공작소">
 <meta name="theme-color" content="#24476b">
@@ -995,7 +995,7 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 .tsd i.tkab,.tkab{font-style:normal;font-size:.6875rem;font-weight:700;color:#fff;background:var(--absent);border-radius:6px;padding:1px 5px;margin-right:4px}.tkatt{background:var(--tint);border-radius:var(--r-m);padding:8px 10px;margin:0}
 .tktm{display:flex;flex-direction:column;gap:4px;margin:4px 0 8px}.tktm>b{font-size:.8125rem}.tkwarn{color:var(--absent);font-weight:700}.tkatt.warn{background:#fdecea;color:#7a2a20}
 .tkwr{display:flex;flex-direction:column}.tkwr+.tkwr{border-top:1px solid var(--line)}.tkwr>.tsrow{border-top:0!important}.tkwhy{display:flex;flex-wrap:wrap;gap:6px;padding:0 10px 8px 40px}.tkwhy .chip{min-height:30px;padding:0 10px;font-size:.78rem}.tkwhy .chip[aria-pressed=true]{color:#fff;border-color:transparent}.tkwhy .blank[aria-pressed=true]{background:#5b665f}.tkwhy .vol[aria-pressed=true]{background:#94680f}.tkwhy .long[aria-pressed=true]{background:var(--absent)}.tkwsum{display:flex;flex-wrap:wrap;gap:6px;margin:0}.tkwsum i{font-style:normal;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--tint)}.tkwbulk{flex-wrap:wrap;align-items:center;gap:6px}.tkwbulk>.note{flex:1 0 100%;margin:0}.tkwbulk>.btn{flex:0 0 auto;min-height:34px}
-.tklist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.tkrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;text-align:left;min-height:48px}.tkn{flex:1;min-width:0}.tkn b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tkn small{color:var(--muted)}.tkc{font-size:.8125rem;color:var(--muted);white-space:nowrap}.tkc.on{color:#a63f34;font-weight:700}.tkk{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;padding:1px 6px;border-radius:6px;white-space:nowrap;vertical-align:middle}.tkk.perf{background:#ece4fb;color:#5a2ea6}.tkk.hw{background:#e2eefb;color:#1d4b85}.tkk.form{background:#dcf3ee;color:#16655a}@media (prefers-color-scheme:dark){.tkk.perf{background:#33284a;color:#cdb8f5}.tkk.hw{background:#1f3550;color:#a9c8f2}.tkk.form{background:#1d3d38;color:#9fdccf}.tkc.on{color:#f0a49a}}.tkgrid{flex:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px;margin:8px 0}.tkt{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px;min-height:58px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;-webkit-user-select:none;user-select:none}.tkt .no{font-size:.6875rem;color:var(--muted)}.tkt small{font-size:.6875rem;min-height:1em}.tkt.m{background:#a63f34;border-color:#a63f34;color:#fff}.tkt.m .no{color:#fde2df}.tkt.l{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}.tsd i.ctd{background:#e2f3e5;color:#1f6a35}.tkcr{flex-wrap:wrap}.tkcr.done{background:var(--tint)}.tkcb{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.tkcd{display:block;color:#1f6a35!important}.tkcr .nop{display:block;color:var(--muted)}.tsd i.miss{background:#fde2df;color:#8f2a1f}.tsd i.late{background:var(--warn-soft);color:var(--warn)}.snovl .late{color:var(--muted)}.tsstrip{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tsstrip .chip b{margin-left:2px}.tsk{flex:none}.tshd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}.tshd>span{color:var(--muted);font-size:.875rem}.tsbt{margin-left:auto;display:flex;gap:6px}.otagt{font-size:1rem}.otagt.neg{color:var(--bad,#a63f34)}.otagt.pos{color:var(--accent)}.tslist{flex:none;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}.tslist.off{opacity:.92}.tsrow{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:44px;border-bottom:1px solid var(--line);cursor:pointer}.tsrow:last-child{border-bottom:0}.tsrow input{width:22px;height:22px;flex:none}.tsn{flex:1;min-width:0}.tsn small{color:var(--muted)}.tsd{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;font-size:.75rem;color:var(--muted)}.tsd i{font-style:normal;background:var(--tint);border-radius:6px;padding:1px 5px}.sntag{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;line-height:1.5;padding:0 5px;margin-left:4px;border-radius:6px;vertical-align:middle;white-space:nowrap;background:var(--tint);color:var(--ink)}.sntag.warn{background:#fde2df;color:#8f2a1f}.sntag.prom{background:#dceafc;color:#1d4b85}.sntag.note{background:#e2f3e5;color:#1f6a35}@media (prefers-color-scheme:dark){.sntag.warn{background:#4a2420;color:#f3b5ac}.sntag.prom{background:#1f3550;color:#a9c8f2}.sntag.note{background:#1f3b27;color:#a6dcb3}}.st.tile .sntag{margin:2px 1px 0}.snl{display:block;font-size:.75rem;color:var(--muted);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.snadd{display:flex;gap:6px;margin:8px 0}.snadd .fld{flex:1;min-width:0}.snrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}.snrow>span{flex:1;min-width:0}.snrow small{display:block;color:var(--muted)}.snrow.done b{text-decoration:line-through;color:var(--muted)}.snhd{display:flex;justify-content:space-between;align-items:center;gap:8px}.snsec{padding:8px 0}.cheerq{margin:10px 0 4px;font-size:.875rem;color:var(--muted)}.lowtag{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;line-height:1.5;padding:0 5px;margin-left:5px;border-radius:6px;background:var(--warn-soft);color:var(--warn);vertical-align:middle;white-space:nowrap}.st.tile .lowtag{display:block;width:max-content;margin:2px auto 0}.termnote{margin:0 0 10px}.termnote span{display:block}.cheerwx{font-size:.9375rem;line-height:1.6;margin:6px 0;opacity:.95}.lowl .chk{min-height:40px}.hcard{border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;margin:8px 0;background:var(--paper)}.hch{font-size:.875rem;margin-bottom:4px}.hcm{white-space:pre-wrap;margin:6px 0;font-size:.9375rem}.cdr textarea{margin:2px 0 6px 30px;width:calc(100% - 30px)}.lgt{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px}.lgp>summary{min-height:44px;font-size:.875rem;color:var(--ink)}.rosd{display:flex;flex-direction:column;padding:0 0 4px 22px}.rosd .chk{min-height:36px;font-weight:400;font-size:.875rem}.rosd small{color:var(--muted)}.chk>span{flex:1;min-width:0}.schk>.chk b{margin-left:4px;color:var(--accent)}
+.tklist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.tkrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;text-align:left;min-height:48px}.tkn{flex:1;min-width:0}.tkn b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tkn small{color:var(--muted)}.tkc{font-size:.8125rem;color:var(--muted);white-space:nowrap}.tkc.on{color:#a63f34;font-weight:700}.tkk{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;padding:1px 6px;border-radius:6px;white-space:nowrap;vertical-align:middle}.tkk.perf{background:#ece4fb;color:#5a2ea6}.tkk.hw{background:#e2eefb;color:#1d4b85}.tkk.form{background:#dcf3ee;color:#16655a}.tkk.exam{background:#fbe8d4;color:#8a4a12}.tkscb{border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;margin:8px 0;background:var(--tint)}.tkscl{display:flex;flex-direction:column;gap:2px}.tkscl small{color:var(--muted)}.tkscb .row2{margin-top:8px}.tksg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin:6px 0 10px}.tksr{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:var(--r-m);padding:4px 4px 4px 10px;background:var(--paper)}.tksr>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tksr small{color:var(--muted)}.tksi{width:76px;flex:none;text-align:right;margin:0;min-height:40px}.tksi.bad{border-color:#a63f34;background:#fde2df}.tkprev{margin:8px 0}.tkprev .bad{color:#a63f34}.tkbad div{display:flex;flex-direction:column;padding:4px 0;border-bottom:1px solid var(--line)}.tkbad small{color:var(--muted)}@media (prefers-color-scheme:dark){.tkk.exam{background:#4a3320;color:#f3cfa6}.tkk.perf{background:#33284a;color:#cdb8f5}.tkk.hw{background:#1f3550;color:#a9c8f2}.tkk.form{background:#1d3d38;color:#9fdccf}.tkc.on{color:#f0a49a}}.tkgrid{flex:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px;margin:8px 0}.tkt{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px;min-height:58px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;-webkit-user-select:none;user-select:none}.tkt .no{font-size:.6875rem;color:var(--muted)}.tkt small{font-size:.6875rem;min-height:1em}.tkt.m{background:#a63f34;border-color:#a63f34;color:#fff}.tkt.m .no{color:#fde2df}.tkt.l{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}.tsd i.ctd{background:#e2f3e5;color:#1f6a35}.tkcr{flex-wrap:wrap}.tkcr.done{background:var(--tint)}.tkcb{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.tkcd{display:block;color:#1f6a35!important}.tkcr .nop{display:block;color:var(--muted)}.tsd i.miss{background:#fde2df;color:#8f2a1f}.tsd i.late{background:var(--warn-soft);color:var(--warn)}.snovl .late{color:var(--muted)}.tsstrip{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tsstrip .chip b{margin-left:2px}.tsk{flex:none}.tshd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}.tshd>span{color:var(--muted);font-size:.875rem}.tsbt{margin-left:auto;display:flex;gap:6px}.otagt{font-size:1rem}.otagt.neg{color:var(--bad,#a63f34)}.otagt.pos{color:var(--accent)}.tslist{flex:none;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}.tslist.off{opacity:.92}.tsrow{display:flex;align-items:center;gap:10px;padding:8px 10px;min-height:44px;border-bottom:1px solid var(--line);cursor:pointer}.tsrow:last-child{border-bottom:0}.tsrow input{width:22px;height:22px;flex:none}.tsn{flex:1;min-width:0}.tsn small{color:var(--muted)}.tsd{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;font-size:.75rem;color:var(--muted)}.tsd i{font-style:normal;background:var(--tint);border-radius:6px;padding:1px 5px}.sntag{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;line-height:1.5;padding:0 5px;margin-left:4px;border-radius:6px;vertical-align:middle;white-space:nowrap;background:var(--tint);color:var(--ink)}.sntag.warn{background:#fde2df;color:#8f2a1f}.sntag.prom{background:#dceafc;color:#1d4b85}.sntag.note{background:#e2f3e5;color:#1f6a35}@media (prefers-color-scheme:dark){.sntag.warn{background:#4a2420;color:#f3b5ac}.sntag.prom{background:#1f3550;color:#a9c8f2}.sntag.note{background:#1f3b27;color:#a6dcb3}}.st.tile .sntag{margin:2px 1px 0}.snl{display:block;font-size:.75rem;color:var(--muted);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.snadd{display:flex;gap:6px;margin:8px 0}.snadd .fld{flex:1;min-width:0}.snrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}.snrow>span{flex:1;min-width:0}.snrow small{display:block;color:var(--muted)}.snrow.done b{text-decoration:line-through;color:var(--muted)}.snhd{display:flex;justify-content:space-between;align-items:center;gap:8px}.snsec{padding:8px 0}.cheerq{margin:10px 0 4px;font-size:.875rem;color:var(--muted)}.lowtag{display:inline-block;font-style:normal;font-size:.6875rem;font-weight:700;line-height:1.5;padding:0 5px;margin-left:5px;border-radius:6px;background:var(--warn-soft);color:var(--warn);vertical-align:middle;white-space:nowrap}.st.tile .lowtag{display:block;width:max-content;margin:2px auto 0}.termnote{margin:0 0 10px}.termnote span{display:block}.cheerwx{font-size:.9375rem;line-height:1.6;margin:6px 0;opacity:.95}.lowl .chk{min-height:40px}.hcard{border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;margin:8px 0;background:var(--paper)}.hch{font-size:.875rem;margin-bottom:4px}.hcm{white-space:pre-wrap;margin:6px 0;font-size:.9375rem}.cdr textarea{margin:2px 0 6px 30px;width:calc(100% - 30px)}.lgt{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 8px}.lgp>summary{min-height:44px;font-size:.875rem;color:var(--ink)}.rosd{display:flex;flex-direction:column;padding:0 0 4px 22px}.rosd .chk{min-height:36px;font-weight:400;font-size:.875rem}.rosd small{color:var(--muted)}.chk>span{flex:1;min-width:0}.schk>.chk b{margin-left:4px;color:var(--accent)}
 .schk details>summary{cursor:pointer;color:var(--muted);font-size:.8125rem;min-height:32px;display:flex;align-items:center}
 .schkl{display:flex;flex-direction:column;gap:0;padding:4px 0 4px 28px}.schkl .chk{min-height:36px;font-size:.875rem}
 #v-school header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
@@ -1269,6 +1269,18 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
 .dzone{margin-top:16px;padding:12px;border:1px solid var(--absent);border-radius:var(--r-m);background:var(--bg)}.dzone>b{color:var(--absent)}
 .delsum{display:flex;flex-direction:column;gap:6px;background:var(--bg);border-radius:var(--r-m);padding:10px 12px;margin:8px 0}.delsum>div{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.delsum span{color:var(--muted);font-size:.85rem}.delsum b{text-align:right}
 .binrow{justify-content:center}.binlist{display:flex;flex-direction:column;gap:6px;margin:8px 0}.binrow2{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:var(--r-m);padding:8px 10px}.binrow2>span{flex:1;min-width:0;display:flex;flex-direction:column}.binrow2 small{color:var(--muted)}
+/* 5.65 앱 잠금 */
+html.tllock body>*:not(#lockScr),html.tlcover body>*:not(#lockScr){visibility:hidden!important}
+html.tllock,html.tlcover{background:var(--bg)}
+#lockScr{position:fixed;inset:0;z-index:2147483000;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 16px);visibility:visible!important;overflow:auto}
+#lockScr[hidden]{display:none}
+.lkin{width:100%;max-width:340px;text-align:center}.lockic{display:flex;justify-content:center;font-size:2rem;line-height:1.2}.lkin h2{margin:6px 0 4px;font-size:1.25rem}.lkin p{color:var(--muted);min-height:1.4em;margin:4px 0 12px}
+.lkdots{display:flex;justify-content:center;gap:14px;margin:8px 0 22px}.lkdots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent)}.lkdots i.on{background:var(--accent)}
+.lkdots.shake{animation:lkshake .35s}@keyframes lkshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.lkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:280px;margin:0 auto}.lkpad button{height:64px;border-radius:50%;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:1.5rem;font-weight:600;touch-action:manipulation}
+.lkpad button:active{background:var(--tint)}.lkpad .lkfg,.lkpad .lkbs{border:0;background:none;font-size:.9375rem;font-weight:400;color:var(--muted)}.lkpad .lkbs{font-size:1.5rem}
+.lkfgt{text-align:left}.lkfgt p{color:var(--ink)}.lkfgt .fld{width:100%;margin:6px 0 12px}
+@media (prefers-reduced-motion:reduce){.lkdots.shake{animation:none}}
 </style>
 </head>
 <body>
@@ -1691,6 +1703,7 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
     <div id="stoMeter"></div>
     <p class="note">백업 파일(.json)에는 모든 학급의 명단, 연락처, 출석 기록, 교직원 연락처, 시간표, 수업 메모, 일정, 평가, 글이 들어 있습니다. 사진 · 녹음 같은 첨부는 아래 <b>전체 백업</b>에만 들어갑니다.</p>
     <div class="row2"><button class="btn pri" id="backupFile" type="button">백업 파일 저장</button><button class="btn" id="backup" type="button">백업 코드 복사</button></div>
+    <label class="chk" for="bkGr"><input type="checkbox" id="bkGr" checked><span>성적(평가 점수) 포함 <small>끄면 평가 점수와 점수 확인 서명을 뺀 백업을 만듭니다. 그 백업을 불러와도 이 기기의 점수는 지워지지 않습니다.</small></span></label>
     <div class="row2"><label class="btn filebtn" for="restoreFile">백업 파일 불러오기<input type="file" id="restoreFile" accept=".json,.txt,.tlbak,application/json,text/plain,application/octet-stream"></label></div>
     <div class="fbk"><b>📦 새 기기로 옮기기</b> <small>사진 · 동영상 · 녹음 · 첨부까지 모두 담은 전체 백업 (.tlbak)</small>
       <div class="row2"><button class="btn" id="fullBk" type="button">전체 백업 파일 만들기</button></div>
@@ -1701,6 +1714,7 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
   </details>
   <details class="card" id="d-arc"><summary>학년도 마감 · 보관 <span class="sub" id="arcTag"></span></summary><div id="arcBody"></div></details>
   <details class="card" id="d-cheer"><summary>응원 메시지 · 음악 <span class="sub" id="cheerTag"></span></summary><div id="cheerBody"></div></details>
+  <details class="card" id="d-lock"><summary>앱 잠금 (PIN) <span class="sub" id="lockTag"></span></summary><div id="lockBody"></div></details>
   <details class="card" id="d-ui"><summary>화면 · 글자 크기 (기기 맞춤)</summary>
     <p class="devinfo" id="uiDev"></p>
     <p class="note">기본은 ‘자동’입니다. 쓰는 기기의 화면 크기에 맞춰 칸 크기와 배치가 바뀝니다. 이 설정은 기기마다 따로 저장됩니다.</p>
@@ -1745,12 +1759,13 @@ nav.bottom{-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-backf
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.64.0", APP_DATE="2026-10-27", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.65.0", APP_DATE="2026-10-28", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
 const AM_ITEMS=[["m","att","출석 체크","att"],["t","att","출석 통계","stat"],["m","obs","관찰 기록","obs"],["m","write","글쓰기","write"],["m","task","평가 · 과제","task"],["t","eval","학생 서명","sign"]];
 const VERSIONS=[
+  {v:"5.65.0",date:"2026-10-28",items:["정기시험: 평가 · 과제에 ‘정기시험’(중간 · 기말고사) 종류 추가 — 시험일 · 만점 · 반영 비율 · 이의 신청 마감일, 미응시 체크(시험일 결석 학생 자동 반영)", "평가 점수: 수행평가 · 형성평가 · 정기시험에 학생별 점수 — ✏️ 직접 입력(바로 저장, 만점 밖은 빨간 표시) · 📋 붙여넣기(나이스 · 엑셀 · 구글 시트의 학번 · 이름 · 점수, 명단 순서대로 점수만도 가능) · 📄 엑셀 · CSV(점수 칸 고르기)", "점수 가져오기 미리보기: 맞은 학생 · 바뀌는 점수 · 못 맞춘 줄과 이유(명단에 없음 · 결시 · 만점 밖 · 같은 이름), 되돌리기, 여러 학급 한 번에(학번으로 학급마다 나눔), 학급별 입력 수 · 평균 · 최고 · 최저", "점수 확인 서명: 넣은 점수로 학생 서명을 바로 만듦(학생마다 자기 점수만, 이의 신청 마감 안내), 점수를 고치면 바뀐 학생만 반영하고 서명한 학생은 ‘다시 받아야 함’", "앱 잠금(PIN): 설정 → 보관 · 화면 · 정보 → 앱 잠금 — 숫자 4~6자리, 앱을 열 때 · 다른 앱에 다녀왔을 때(바로 · 1 · 5 · 15분 뒤) 잠금, 앱 전환 화면 가림, 5번 틀리면 잠시 대기, PIN은 이 기기에만(해시로) 저장", "백업에서 성적 빼기: 설정 → 백업의 ‘성적(평가 점수) 포함’을 끄면 백업 파일 · 코드 · 전체 백업에서 점수와 점수 확인 서명을 뺌, 이 백업을 불러와도 이 기기의 점수는 그대로", "자동 점검 추가: 정기시험 점수 · 가져오기 · 성적 뺀 백업 · 앱 잠금"]},
   {v:"5.64.0",date:"2026-10-27",items:["출석 체크 고치기: 출석 화면의 ‘✎ 날짜 · 시간 고치기’ 또는 고른 출석 체크 탭을 한 번 더 누르면 날짜 · 시간 · 수업 이름을 고침(출석 · 결석 · 출결 구분 · 연락 완료는 그대로 옮겨짐, 다른 요일로 옮기면 시간표 연결만 풀림)", "출석 체크 삭제는 확인 절차를 거침: 지워질 내용(날짜 · 출석 · 결석 · 연락 완료 · 출결 구분 · 시간표 연결)을 보여 주고 ‘확인했습니다’를 체크해야 삭제 단추가 켜짐, 잠긴 출석 체크는 삭제 불가", "삭제한 출석 체크는 30일 보관: 삭제 직후 ‘되돌리기’, 출석 화면 아래 ‘🗑 삭제한 출석 체크’에서 되살리기(기기 연동 · 백업에도 함께)", "고치기 · 삭제 · 되살리기는 연락(결석 학생), 오늘, 시간표 칸 표시, 출석 통계 · 나이스 요약, 기기 연동에 바로 반영", "자동 점검 추가: 출석 체크 고치기 · 삭제 확인 · 되살리기"]},
   {v:"5.63.0",date:"2026-10-27",items:["아래 메뉴 고정(아이폰 홈 화면 앱): 화면 끝까지 밀 때 화면이 출렁이며 아래 메뉴가 같이 위아래로 움직이던 것 막기, 메뉴를 따로 그려 스크롤할 때 흔들리지 않게, 키보드가 내려간 뒤 메뉴를 제자리로", "가로 넘침 막기 설정을 아이폰 최신 방식(clip)으로 정리"]},
   {v:"5.62.0",date:"2026-10-27",items:["아래 메뉴를 다섯 개로: 오늘 · 시간표 · 출석·기록 · 연락 · 설정(오늘을 맨 왼쪽으로, ‘출석’을 ‘출석·기록’으로)", "‘평가·통계’를 출석·기록에 합침: 출석·기록 위쪽에 여섯 칸 메뉴(3 × 2, 아이콘) — 출석 체크 · 출석 통계 · 관찰 기록 · 글쓰기 · 평가 · 과제 · 학생 서명. 어느 칸에서든 한 번에 오가고, 지금 칸은 진한 색, 서명 · 통계 화면에도 같은 메뉴", "도움말의 ‘평가·통계 → …’ 길 안내를 ‘출석·기록 → 학생 서명 · 출석 통계’로", "자동 점검 추가: 아래 메뉴 · 출석·기록 여섯 칸"]},
@@ -4709,7 +4724,7 @@ function mvSid(d,a,b){if(a===b)return;const r=d.roster.find(x=>x[0]===a);if(r)r[
   d.sessions.forEach(s=>{if(s.p&&a in s.p){s.p[b]=s.p[a];delete s.p[a]}if(s.done&&typeof s.done==="object"&&a in s.done){s.done[b]=s.done[a];delete s.done[a]}});
   (d.obs||[]).forEach(o=>{if(o.sid===a)o.sid=b});["phones","gph","emails","sts","cards","low","snote"].forEach(k=>{if(d[k]&&a in d[k]){d[k][b]=d[k][a];delete d[k][a]}});
   (d.tasks||[]).forEach(t=>{if(t.miss&&a in t.miss){t.miss[b]=t.miss[a];delete t.miss[a]}});
-  {const cl=S.list.find(c=>c.data===d);if(cl)(S.tasks||[]).forEach(t=>{[t.miss,t.ct].forEach(o=>{const m=o&&o[cl.id];if(m&&a in m){m[b]=m[a];delete m[a]}})})}
+  {const cl=S.list.find(c=>c.data===d);if(cl)(S.tasks||[]).forEach(t=>{[t.miss,t.ct,t.sc].forEach(o=>{const m=o&&o[cl.id];if(m&&a in m){m[b]=m[a];delete m[a]}})})}
   const U=d.sch&&d.sch.uids;if(U&&a in U){U[b]=U[a];delete U[a]}}
 /* 고른 것만 적용 (빠짐 → 학번 → 이름 · 연락처 → 들어옴 순서). 돌려주는 값: 더한 학생 수 */
 function rosApply(d,items){d.sch=d.sch||{};d.sch.uids=d.sch.uids||{};const U=d.sch.uids;let add=0,skip=0;const by=k=>items.filter(x=>x.k===k);
@@ -5239,14 +5254,14 @@ function tsSheet(k,sc){const items=obsTags().flatMap(g=>g.items);if(!items.lengt
    출석 → 평가 · 과제(공통): 만들기 · 고치기 · 삭제 · 학급 배분 · 학급별 체크.
    학급 관찰 기록: 그 학급에 배분된 것만 보이고 체크 · 일괄 관리. 그 학급에서 만들면 그 학급에만 배분, 지우면 그 학급에서만 빠짐(다른 학급 자료는 그대로).
    5.41 학급별 자료(학급의 tasks)는 처음 열 때 공통 자료로 옮깁니다. */
-const TK_K=[["perf","수행평가","미참여"],["form","형성평가","미참여"],["hw","과제","미제출"]];
+const TK_K=[["perf","수행평가","미참여"],["form","형성평가","미참여"],["exam","정기시험","미응시"],["hw","과제","미제출"]];
 const tkK=t=>TK_K.find(x=>x[0]===t.k)||TK_K[2];
 function tasksAll(){if(!Array.isArray(S.tasks))S.tasks=[];let moved=0;
   S.list.forEach(c=>{const l=c.data.tasks;if(!Array.isArray(l)||!l.length)return;l.forEach(t=>{if(!t||!t.n)return;let g=S.tasks.find(x=>x.id===t.id);
-      if(!g){g={id:String(t.id||uid()),k:["perf","form","hw"].includes(t.k)?t.k:"hw",n:String(t.n).slice(0,40),due:t.due||"",cls:[],miss:{},at:t.at||new Date().toISOString()};S.tasks.push(g)}
+      if(!g){g={id:String(t.id||uid()),k:["perf","form","exam","hw"].includes(t.k)?t.k:"hw",n:String(t.n).slice(0,40),due:t.due||"",cls:[],miss:{},at:t.at||new Date().toISOString()};S.tasks.push(g)}
       if(!g.cls.includes(c.id))g.cls.push(c.id);g.miss[c.id]={...(t.miss||{}),...(g.miss[c.id]||{})};moved++});delete c.data.tasks});
   if(moved)try{save()}catch(e){}
-  S.tasks.forEach(t=>{if(!Array.isArray(t.cls))t.cls=[];if(!t.miss||typeof t.miss!=="object")t.miss={}});return S.tasks}
+  S.tasks.forEach(t=>{if(t.sc&&(typeof t.sc!=="object"||Array.isArray(t.sc)))delete t.sc;if(!Array.isArray(t.cls))t.cls=[];if(!t.miss||typeof t.miss!=="object")t.miss={}});return S.tasks}
 const tkCls=t=>t.cls.map(id=>S.list.find(c=>c.id===id)).filter(Boolean);
 function tasksOf(cl){return tasksAll().filter(t=>t.cls.includes(cl.id))}
 function tkMap(t,cl){t.miss=t.miss||{};return t.miss[cl.id]=t.miss[cl.id]||{}}
@@ -5322,30 +5337,32 @@ function renderTtTasks(){const el=$("ttTasks");if(!el)return;tkAttSync();const c
   el.querySelectorAll("[data-tk]").forEach(b=>{b.onclick=()=>tkHub(b.dataset.tk);const t=tasksAll().find(x=>x.id===b.dataset.tk);if(t)tkSwipe(b,t,null)})}
 function tkRefresh(){try{renderTaskCard()}catch(e){}try{renderTtTasks()}catch(e){}}
 /* 만들기 · 고치기. cl이 있으면 학급 관찰 기록에서 (그 학급만) */
-function tkEdit(t,cl){const isNew=!t;let k=t?t.k:"perf";let tmSel=JSON.parse(JSON.stringify((t&&t.tm)||{})),tmDate=t?t.due||"":(selDate||today());const pool=perList().length?perList():S.list;let sel=new Set(t?t.cls:cl?[cl.id]:[]);
+function tkEdit(t,cl){const isNew=!t;let k=t?t.k:"perf";let mx=t&&t.max||100,wv=t&&t.w||"",ob=t&&t.obj||"";let tmSel=JSON.parse(JSON.stringify((t&&t.tm)||{})),tmDate=t?t.due||"":(selDate||today());const pool=perList().length?perList():S.list;let sel=new Set(t?t.cls:cl?[cl.id]:[]);
   const shared=!!(t&&cl&&t.cls.length>1);
   const paint=()=>{$("sheetBox").innerHTML=`<h2>${isNew?"새 평가 · 과제":"고치기"}${cl?` <span class="sub">${esc(cl.data.cls)}</span>`:""}</h2>
     ${shared?`<p class="note">여러 학급이 함께 쓰는 평가 · 과제입니다. 이름 · 날짜 · 학급은 위쪽 <b>평가 · 과제</b>(공통)에서 고칩니다. 여기서는 이 학급에서만 뺄 수 있습니다.</p>`:`
     <div class="presets" id="tkK">${TK_K.map(x=>`<button class="chip" type="button" data-k="${x[0]}" aria-pressed="${x[0]===k}">${x[1]}</button>`).join("")}</div>
-    <label class="lb" for="tkN">${k==="hw"?"과제명":"평가명"}<input class="fld" id="tkN" maxlength="40" placeholder="${k==="hw"?"예: 3단원 학습지":k==="form"?"예: 2단원 확인 퀴즈":"예: 1차 실험 보고서 발표"}" value="${esc(t?t.n:"")}"></label>
-    <label class="lb" for="tkD">${k==="hw"?"제출 마감일":"평가일"}<input class="fld" id="tkD" type="date" value="${esc(tmDate)}"></label>
+    <label class="lb" for="tkN">${k==="hw"?"과제명":"평가명"}<input class="fld" id="tkN" maxlength="40" placeholder="${k==="hw"?"예: 3단원 학습지":k==="form"?"예: 2단원 확인 퀴즈":k==="exam"?"예: 2학기 중간고사":"예: 1차 실험 보고서 발표"}" value="${esc(t?t.n:"")}"></label>
+    <label class="lb" for="tkD">${k==="hw"?"제출 마감일":k==="exam"?"시험일":"평가일"}<input class="fld" id="tkD" type="date" value="${esc(tmDate)}"></label>
+    ${k==="hw"?"":`<div class="range tkscf"><label class="lb" for="tkMax">만점<input class="fld" id="tkMax" type="number" inputmode="decimal" min="1" max="1000" step="any" value="${esc(String(mx))}"></label><label class="lb" for="tkW">반영 비율 %<input class="fld" id="tkW" type="number" inputmode="decimal" min="0" max="100" step="any" placeholder="선택 · 예: 30" value="${esc(String(wv))}"></label></div>
+    ${k==="exam"?`<label class="lb" for="tkObj">이의 신청 마감일 <small>(선택 · 점수 확인 서명에 함께 안내)</small><input class="fld" id="tkObj" type="date" value="${esc(ob)}"></label>`:""}`}
     ${cl?"":`<div class="shlb">실시할 학급 <button class="btn sm ghost" type="button" id="tkAllC">모두</button></div><div class="presets" id="tkC">${pool.map(c=>`<button class="chip" type="button" data-c="${esc(c.id)}" aria-pressed="${sel.has(c.id)}">${esc(c.data.cls||"학급")}</button>`).join("")||`<p class="note">학급이 없습니다.</p>`}</div>`}
     <div id="tkTm"></div>
     <label class="chk"><input type="checkbox" id="tkAtt"${t&&t.noAtt?"":" checked"}><span>출석 결석 자동 반영 <small>(${k==="hw"?"마감일":"평가일"} 출석 체크에서 결석한 학생 → ${k==="hw"?"미제출":"미참여"})</small></span></label>`}
     <div class="row2">${isNew?"":`<button class="btn bad ghost" type="button" id="tkDel">${cl?(shared?"이 학급에서 빼기":"삭제"):"삭제"}</button>`}<button class="btn" type="button" id="skNo">취소</button>${shared?"":`<button class="btn pri" type="button" id="tkOk">${isNew?"만들기":"저장"}</button>`}</div>`;
     const box=$("sheetBox");
-    box.querySelectorAll("#tkK [data-k]").forEach(b=>b.onclick=()=>{const n=$("tkN").value,d=$("tkD").value,a=$("tkAtt").checked;k=b.dataset.k;paint();$("tkN").value=n;$("tkD").value=d;$("tkAtt").checked=a;paintTm()});
+    box.querySelectorAll("#tkK [data-k]").forEach(b=>b.onclick=()=>{const n=$("tkN").value,d=$("tkD").value,a=$("tkAtt").checked;if($("tkMax")){mx=$("tkMax").value;wv=$("tkW").value}if($("tkObj"))ob=$("tkObj").value;k=b.dataset.k;paint();$("tkN").value=n;$("tkD").value=d;$("tkAtt").checked=a;paintTm()});
     if($("tkD"))$("tkD").onchange=()=>paintTm();paintTm();
     box.querySelectorAll("#tkC [data-c]").forEach(b=>b.onclick=()=>{if(sel.has(b.dataset.c))sel.delete(b.dataset.c);else sel.add(b.dataset.c);b.setAttribute("aria-pressed",String(sel.has(b.dataset.c)));paintTm()});
     if($("tkAllC"))$("tkAllC").onclick=()=>{const all=pool.every(c=>sel.has(c.id));sel=new Set(all?[]:pool.map(c=>c.id));box.querySelectorAll("#tkC [data-c]").forEach(b=>b.setAttribute("aria-pressed",String(sel.has(b.dataset.c))));paintTm()};
     $("skNo").onclick=()=>{if(isNew)$("sheet").hidden=true;else if(cl)tkSheet(t.id,cl.id);else tkHub(t.id)};
     if($("tkOk"))$("tkOk").onclick=()=>{const n=$("tkN").value.trim().slice(0,40),d=$("tkD").value;if(!n)return toast(k==="hw"?"과제명을 적어 주세요":"평가명을 적어 주세요");
       const cls=cl?[cl.id]:[...sel];if(!cls.length)return toast("실시할 학급을 하나 이상 골라 주세요");const due=/^\d{4}-\d{2}-\d{2}$/.test(d)?d:"",noAtt=!$("tkAtt").checked;
-      const tmOut={};cls.forEach(id=>{if(tmSel[id])tmOut[id]={...(tmSel[id].p?{p:tmSel[id].p}:{}),time:tmSel[id].time,l:tmSel[id].l}});
-      if(isNew){const x={id:uid(),k,n,due,cls,miss:{},at:new Date().toISOString()};if(noAtt)x.noAtt=true;if(Object.keys(tmOut).length)x.tm=tmOut;tasksAll().push(x);tkAttSync();save();tkRefresh();
+      const scf=tkScF(k);if(scf.err)return toast(scf.err);const tmOut={};cls.forEach(id=>{if(tmSel[id])tmOut[id]={...(tmSel[id].p?{p:tmSel[id].p}:{}),time:tmSel[id].time,l:tmSel[id].l}});
+      if(isNew){const x={id:uid(),k,n,due,cls,miss:{},at:new Date().toISOString()};tkScPut(x,scf);if(noAtt)x.noAtt=true;if(Object.keys(tmOut).length)x.tm=tmOut;tasksAll().push(x);tkAttSync();save();tkRefresh();
         if(cl||cls.length===1)tkSheet(x.id,cls[0]);else tkHub(x.id);toast(`‘${n}’을(를) 만들었습니다${cls.length>1?` (${cls.length}개 학급)`:""}`)}
       else{const gone=t.cls.filter(id=>!cls.includes(id)&&Object.keys((t.miss||{})[id]||{}).length);
-        const apply=()=>{t.k=k;t.n=n;t.due=due;if(noAtt)t.noAtt=true;else delete t.noAtt;if(cl){t.tm=t.tm||{};if(tmOut[cl.id])t.tm[cl.id]=tmOut[cl.id];else delete t.tm[cl.id]}else t.tm=tmOut;if(t.tm&&!Object.keys(t.tm).length)delete t.tm;if(!cl){t.cls=cls;Object.keys(t.miss||{}).forEach(id=>{if(!cls.includes(id))delete t.miss[id]})}save();tkRefresh();if(cl)tkSheet(t.id,cl.id);else tkHub(t.id)};
+        const apply=()=>{t.k=k;t.n=n;t.due=due;tkScPut(t,scf);if(noAtt)t.noAtt=true;else delete t.noAtt;if(cl){t.tm=t.tm||{};if(tmOut[cl.id])t.tm[cl.id]=tmOut[cl.id];else delete t.tm[cl.id]}else t.tm=tmOut;if(t.tm&&!Object.keys(t.tm).length)delete t.tm;if(!cl){t.cls=cls;Object.keys(t.miss||{}).forEach(id=>{if(!cls.includes(id))delete t.miss[id]})}save();tkRefresh();if(cl)tkSheet(t.id,cl.id);else tkHub(t.id)};
         if(gone.length)ask(`<h2>학급 빼기</h2><p class="note">${esc(gone.map(id=>(S.list.find(c=>c.id===id)||{data:{}}).data.cls||"학급").join(", "))}의 체크 기록도 함께 지워집니다.</p>`,"빼고 저장",apply);else apply()}};
     if($("tkDel"))twoStep($("tkDel"),cl&&shared?"정말 이 학급에서 빼기":"정말 삭제",()=>{const bk=JSON.stringify(S.tasks);
       if(cl&&t.cls.length>1){t.cls=t.cls.filter(id=>id!==cl.id);delete t.miss[cl.id]}else S.tasks=S.tasks.filter(x=>x!==t);
@@ -5364,10 +5381,11 @@ function tkEdit(t,cl){const isNew=!t;let k=t?t.k:"perf";let tmSel=JSON.parse(JSO
 function tkHub(id){tkAttSync();const t=tasksAll().find(x=>x.id===id);if(!t)return;const k=tkK(t),C=tkCls(t);
   $("sheetBox").innerHTML=`<h2><i class="tkk ${t.k}">${k[1]}</i> ${esc(t.n)} <span class="sub">${t.due?esc(fmtDateW(t.due)):""}</span></h2>
     <p class="note">학급을 누르면 그 학급의 ${k[2]} 학생을 체크하고 한 번에 관리합니다. 각 학급 관찰 기록에도 똑같이 나옵니다.</p>
-    <div class="tklist">${C.map(c=>{const m=tkSt(t,c,"m").length,l=tkSt(t,c,"l").length;return`<button class="tkrow" type="button" data-hc="${esc(c.id)}"><span class="tkn"><b>${esc(c.data.cls||"학급")}</b><small>${c.data.roster.length}명</small></span><span class="tkc${m?" on":""}">${m?`${k[2]} ${m}명`:"모두 냄"}${l?` · 늦게 ${l}`:""}</span></button>`}).join("")||`<p class="note">배분된 학급이 없습니다. ‘고치기’에서 학급을 고르세요.</p>`}</div>
+    <div class="tklist">${C.map(c=>{const m=tkSt(t,c,"m").length,l=tkSt(t,c,"l").length;return`<button class="tkrow" type="button" data-hc="${esc(c.id)}"><span class="tkn"><b>${esc(c.data.cls||"학급")}</b><small>${c.data.roster.length}명${tkHasSc(t)?` · 점수 ${tkScStat(t,c).n}명${tkScStat(t,c).n?` · 평균 ${tkScStat(t,c).avg}`:""}`:""}</small></span><span class="tkc${m?" on":""}">${m?`${k[2]} ${m}명`:"모두 냄"}${l?` · 늦게 ${l}`:""}</span></button>`}).join("")||`<p class="note">배분된 학급이 없습니다. ‘고치기’에서 학급을 고르세요.</p>`}</div>
+    ${tkHasSc(t)&&C.length?`<div class="row2"><button class="btn" type="button" id="hbSc">📊 점수 넣기 · 가져오기 (${C.length>1?"모든 학급 한 번에":"이 학급"})</button></div>`:""}
     <div class="row2"><button class="btn pri" type="button" id="hbCt">${k[2]} 학생 모두 연락하기</button></div>
     <div class="row2"><button class="btn" type="button" id="hbCp">전체 명단 복사</button><button class="btn" type="button" id="hbEdit">고치기 · 학급 배분</button><button class="btn" type="button" id="skNo">닫기</button></div>`;
-  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("hbEdit").onclick=()=>tkEdit(t,null);$("hbCt").onclick=()=>tkContact(t.id,t.cls,null,()=>tkHub(t.id));
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("hbEdit").onclick=()=>tkEdit(t,null);$("hbCt").onclick=()=>tkContact(t.id,t.cls,null,()=>tkHub(t.id));if($("hbSc"))$("hbSc").onclick=()=>tkScore(t.id,t.cls,()=>tkHub(t.id));
   $("sheetBox").querySelectorAll("[data-hc]").forEach(b=>b.onclick=()=>tkSheet(t.id,b.dataset.hc,()=>tkHub(t.id)));
   $("hbCp").onclick=()=>{const lines=C.flatMap(c=>{const m=tkMap(t,c);return c.data.roster.filter(([s])=>m[s]).map(([s,nm])=>`${c.data.cls} ${s} ${nm}${m[s]==="l"?" (늦게 냄)":tkWhyOf(t,c,s)?` (${tkWhyL(tkWhyOf(t,c,s))})`:""}`)});if(!lines.length)return toast(`${k[2]} 학생이 없습니다`);copy(`[${k[1]}] ${t.n} ${k[2]}\n`+lines.join("\n"),`${lines.length}명 명단을 복사했습니다`)}}
 /* 한 학급 체크 · 일괄 관리 */
@@ -5377,6 +5395,7 @@ function tkSheet(id,clId,back){tkAttSync();const t=tasksAll().find(x=>x.id===id)
     <p class="note">${k[2]} 학생을 누르세요. 다시 누르면 풀립니다. 아래에서 모아 보고 한 번에 넣고 뺄 수 있습니다.</p>
     ${t.noAtt||!t.due?"":(()=>{const I=tkSesInfo(t,cl);return I.amb?`<p class="note tkatt warn">⚠️ ${esc(fmtDate(t.due))}에 이 학급 수업이 ${I.amb}번 있습니다. <b>이름 · 날짜 고치기</b>에서 평가한 <b>수업 시간</b>을 정하면 그 수업의 출석 체크에서 결석한 학생이 자동으로 ${k[2]}로 들어갑니다.</p>`
       :`<p class="note tkatt">🔗 ${esc(fmtDate(t.due))} ${I.tm?`<b>${esc(tkTmL(I.tm))}</b> `:""}출석 체크에서 <b>결석</b>한 학생은 자동으로 ${k[2]}로 표시됩니다(‘결석’ 표시). 학생을 직접 고치면 그 학생은 출석과 따로 관리되고, 여기서 고쳐도 출석 체크는 바뀌지 않습니다.${I.wait?" <small>(이 수업의 출석 체크가 아직 없습니다)</small>":""}</p>`})()}
+    ${tkScBox(t,cl)}
     <div class="tkgrid">${d.roster.map(([sid,name],i)=>`<button type="button" class="tkt ${st(sid)==="m"?"m":st(sid)==="l"?"l":""}" data-tg="${esc(sid)}"><span class="no">${i+1}</span><b>${esc(name)}</b><small>${st(sid)==="m"?(tkWhyOf(t,cl,sid)?tkWhyL(tkWhyOf(t,cl,sid),2):tkAuto(t,cl,sid)?"결석":k[2]):st(sid)==="l"?"늦게 냄":""}</small></button>`).join("")}</div>
     <div class="tshd"><b class="otagt neg">${k[2]} · 늦게 냄</b> <span>${tkSt(t,cl,"m").length}명 · ${tkSt(t,cl,"l").length}명</span><span class="tsbt"><button class="btn sm" type="button" id="tkAllOn">모두 선택</button><button class="btn sm" type="button" id="tkCp">명단 복사</button></span></div>
     ${(()=>{const c=TK_WHY.map(w=>[w,ON.filter(([sid])=>st(sid)==="m"&&tkWhyOf(t,cl,sid)===w[0]).length]).filter(x=>x[1]);return c.length?`<p class="tkwsum">${c.map(([w,n])=>`<i class="tkw ${w[0]}">${w[1]} ${n}</i>`).join("")}</p>`:""})()}
@@ -5400,6 +5419,7 @@ function tkSheet(id,clId,back){tkAttSync();const t=tasksAll().find(x=>x.id===id)
   if($("tkLateSel"))$("tkLateSel").onclick=()=>{const ids=sel("on");if(!ids.length)return toast("학생을 골라 주세요");undoable(`${ids.length}명을 ‘늦게 냄’으로 표시했습니다`,()=>{tkTouch(t,cl,ids);ids.forEach(s=>{M[s]="l";tkWhySet(t,cl,s,"")})})};
   if($("tkAdd"))$("tkAdd").onclick=()=>{const ids=sel("off");if(!ids.length)return toast("넣을 학생을 골라 주세요");undoable(`${ids.length}명을 ${k[2]}으로 넣었습니다`,()=>{tkTouch(t,cl,ids);ids.forEach(s=>{M[s]="m"})})};
   if($("tkSms"))$("tkSms").onclick=()=>{const ids=sel("on");tkContact(id,[clId],ids.length?ids:null,()=>tkSheet(id,clId,back))};
+  if($("tkScB"))$("tkScB").onclick=()=>tkScore(id,[clId],()=>tkSheet(id,clId,back));if($("tkSgB"))$("tkSgB").onclick=()=>tkSign(id,clId,()=>tkSheet(id,clId,back));
   $("tkEditB").onclick=()=>back?tkEdit(t,null):tkEdit(t,cl);$("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true}}
 function tkStudents(cl){tkAttSync();const d=cl.data,T=tasksOf(cl).sort((a,b)=>(a.due||"").localeCompare(b.due||"")),R=d.roster.map(([sid,name])=>({sid,name,m:T.filter(t=>tkMap(t,cl)[sid]==="m"),l:T.filter(t=>tkMap(t,cl)[sid]==="l")})).filter(x=>x.m.length||x.l.length).sort((a,b)=>b.m.length-a.m.length||b.l.length-a.l.length);
   $("sheetBox").innerHTML=`<h2>학생별 모아 보기 <span class="sub">${esc(d.cls)} · 평가 · 과제 ${T.length}개</span></h2>
@@ -5408,6 +5428,108 @@ function tkStudents(cl){tkAttSync();const d=cl.data,T=tasksOf(cl).sort((a,b)=>(a
     <div class="row2">${R.length?`<button class="btn" type="button" id="tkStCp">명단 복사</button>`:""}<button class="btn" type="button" id="skNo">닫기</button></div>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
   if($("tkStCp"))$("tkStCp").onclick=()=>copy(`[${d.cls}] 평가 · 과제 미참여 · 미제출\n`+R.map(x=>`${x.sid} ${x.name}: ${[...x.m.map(t=>t.n+(tkWhyOf(t,cl,x.sid)?`(${tkWhyL(tkWhyOf(t,cl,x.sid))})`:"")),...x.l.map(t=>t.n+"(늦게)")].join(", ")}`).join("\n"),"명단을 복사했습니다")}
+
+/* ===== 5.65: 평가 · 과제 점수 — 수행평가 · 형성평가 · 정기시험에 학생별 점수 (직접 입력 · 붙여넣기 · 엑셀), 점수 확인 서명 =====
+   자료: t.max(만점) · t.w(반영 비율 %) · t.obj(이의 신청 마감, 정기시험) · t.sc = {학급 id:{학번:점수}}
+   성적은 민감 정보: 화면에 띄우는 곳(수업 도구 · 미리보기)에는 쓰지 않고, 백업에서 뺄 수 있습니다. */
+const tkHasSc=t=>t&&t.k!=="hw";
+function tkScF(k){if(k==="hw")return{};const mx=$("tkMax")?parseFloat($("tkMax").value):100,w=$("tkW")?String($("tkW").value).trim():"",ob=$("tkObj")?$("tkObj").value:"";
+  if(!(mx>0&&mx<=1000))return{err:"만점은 1~1000 사이 숫자로 넣어 주세요"};if(w!==""&&!(+w>=0&&+w<=100))return{err:"반영 비율은 0~100 사이로 넣어 주세요"};
+  return{max:Math.round(mx*100)/100,w:w===""?"":Math.round(+w*100)/100,obj:k==="exam"&&/^\d{4}-\d{2}-\d{2}$/.test(ob)?ob:""}}
+function tkScPut(t,f){if(t.k==="hw"){delete t.max;delete t.w;delete t.obj;return}t.max=f.max||100;if(f.w!==""&&f.w!=null)t.w=f.w;else delete t.w;if(f.obj)t.obj=f.obj;else delete t.obj}
+function tkScOf(t,cl){const m=((t.sc||{})[cl.id])||{};const o={};cl.data.roster.forEach(([sid])=>{const v=m[sid];if(typeof v==="number"&&isFinite(v))o[sid]=v});return o}
+const tkNum=v=>{const x=Math.round(v*100)/100;return String(x)};
+function tkScStat(t,cl){const o=tkScOf(t,cl),v=Object.values(o);if(!v.length)return{n:0};const sum=v.reduce((a,b)=>a+b,0);return{n:v.length,avg:Math.round(sum/v.length*10)/10,hi:Math.max(...v),lo:Math.min(...v)}}
+function tkScLine(t,cl){const s=tkScStat(t,cl),mx=+t.max||100;return`${s.n}/${cl.data.roster.length}명 입력${s.n?` · 평균 ${s.avg} · 최고 ${tkNum(s.hi)} · 최저 ${tkNum(s.lo)}`:""} · ${tkNum(mx)}점 만점${t.w!=null&&t.w!==""?` · 반영 ${tkNum(+t.w)}%`:""}`}
+function tkScBox(t,cl){if(!tkHasSc(t))return"";const s=tkScStat(t,cl);
+  return`<div class="tkscb"><div class="tkscl"><b>📊 점수</b><small id="tkScL">${esc(tkScLine(t,cl))}</small>${t.obj?`<small>이의 신청 마감 ${esc(fmtDateW(t.obj))}</small>`:""}</div>
+    <div class="row2"><button class="btn" type="button" id="tkScB">${s.n?"점수 고치기 · 가져오기":"점수 넣기 (직접 · 붙여넣기 · 엑셀)"}</button>${s.n?`<button class="btn" type="button" id="tkSgB">점수 확인 서명 받기</button>`:""}</div></div>`}
+/* 붙여넣기 · 엑셀 줄 → 학생 맞추기 */
+function tkScMatch(entries,C,max){
+  const byId=new Map(),byName=new Map();C.forEach(cl=>cl.data.roster.forEach(([sid,name])=>{byId.set(String(sid),{cl,sid,name});const k=String(name).replace(/\s/g,"");byName.set(k,byName.has(k)?null:{cl,sid,name})}));
+  const ok=[],bad=[],seen=new Set();
+  entries.forEach(e=>{const idk=String(e.id||"").replace(/\s/g,""),dg=idk.replace(/\D/g,"");let hit=(idk&&byId.get(idk))||(dg&&byId.get(dg))||null;
+    if(!hit&&e.name){const h=byName.get(String(e.name).replace(/\s/g,""));if(h)hit=h;else if(h===null)return bad.push({raw:e.raw,why:"이름이 같은 학생이 여럿 (학번을 넣어 주세요)"})}
+    if(!hit)return bad.push({raw:e.raw,why:"명단에 없는 학생"});
+    const sv=String(e.v==null?"":e.v).trim(),v=parseFloat(sv.replace(/[^\d.\-]/g,""));
+    if(!sv||!/\d/.test(sv)||isNaN(v))return bad.push({raw:e.raw,why:`${hit.name}: 점수 없음${sv?` (‘${sv}’)`:""}`});
+    if(v<0||v>max)return bad.push({raw:e.raw,why:`${hit.name}: ${tkNum(v)}점은 0~${tkNum(max)}점 밖`});
+    const key=hit.cl.id+"|"+hit.sid;if(seen.has(key))return bad.push({raw:e.raw,why:`${hit.name}: 두 번 나옴 (뒤의 줄은 건너뜀)`});seen.add(key);
+    ok.push({...hit,v:Math.round(v*100)/100})});
+  return{ok,bad}}
+function tkScParse(text,C){
+  const lines=String(text||"").replace(/\r/g,"").split("\n").map(x=>x.trim()).filter(Boolean);
+  const isNum=x=>/^-?\d+(\.\d+)?$/.test(String(x).trim());
+  /* 명단 순서대로 점수만 붙여 넣은 경우 (한 학급, 줄 수 = 학생 수) */
+  if(C.length===1&&lines.length===C[0].data.roster.length&&lines.every(l=>isNum(l)||/^(결시|결석|미응시|-)$/.test(l)))
+    return C[0].data.roster.map(([sid,name],i)=>({id:sid,name,v:lines[i],raw:`${name} ${lines[i]}`}));
+  const ids=new Set(),names=new Set();C.forEach(cl=>cl.data.roster.forEach(([sid,n])=>{ids.add(String(sid));names.add(String(n).replace(/\s/g,""))}));
+  return lines.map(raw=>{const cells=(/[\t,]/.test(raw)?raw.split(/[\t,]/):raw.split(/\s+/)).map(x=>x.trim()).filter(x=>x!=="");
+    const ii=cells.findIndex(c=>ids.has(c.replace(/\D/g,""))&&/^\d+$/.test(c.replace(/\s/g,"")));const ni=cells.findIndex(c=>names.has(c.replace(/\s/g,"")));
+    let vi=-1;for(let j=cells.length-1;j>=0;j--){if(j===ii||j===ni)continue;if(isNum(cells[j])||/^(결시|결석|미응시)$/.test(cells[j])){vi=j;break}}
+    return{id:ii>=0?cells[ii]:"",name:ni>=0?cells[ni]:"",v:vi>=0?cells[vi]:"",raw}}).filter(e=>e.id||e.name||e.v)}
+/* 점수 넣기 시트: 직접 입력 · 붙여넣기 · 엑셀 */
+const TKS={mode:""};
+function tkScore(id,clIds,back){const t=tasksAll().find(x=>x.id===id);if(!t)return;const C=(clIds||t.cls).map(c=>S.list.find(x=>x.id===c)).filter(c=>c&&t.cls.includes(c.id));if(!C.length)return;
+  const max=+t.max||100,k=tkK(t);let mode=TKS.mode||(C.length===1?"hand":"paste"),res=null,grid=null,col=-1;
+  const sc=cl=>{t.sc=t.sc||{};return t.sc[cl.id]=t.sc[cl.id]||{}};
+  const prevHTML=()=>{if(!res)return"";const chg=res.ok.filter(o=>((t.sc||{})[o.cl.id]||{})[o.sid]!==o.v).length;
+    return`<div class="tkprev"><p class="ttsum">맞음 <b>${res.ok.length}명</b> · 새로 넣거나 바뀜 ${chg}명${res.bad.length?` · <span class="bad">못 맞춤 ${res.bad.length}줄</span>`:""}</p>
+      ${res.ok.length?`<div class="tblw"><table class="tbl"><thead><tr>${C.length>1?"<th>학급</th>":""}<th>학번</th><th>이름</th><th>점수</th></tr></thead><tbody>${res.ok.slice(0,8).map(o=>{const old=((t.sc||{})[o.cl.id]||{})[o.sid];return`<tr>${C.length>1?`<td>${esc(o.cl.data.cls||"")}</td>`:""}<td>${esc(o.sid)}</td><td>${esc(o.name)}</td><td>${typeof old==="number"&&old!==o.v?`<s>${tkNum(old)}</s> → `:""}<b>${tkNum(o.v)}</b></td></tr>`}).join("")}${res.ok.length>8?`<tr><td colspan="${C.length>1?4:3}">… 외 ${res.ok.length-8}명</td></tr>`:""}</tbody></table></div>`:""}
+      ${res.bad.length?`<details class="tkbad"${res.ok.length?"":" open"}><summary>못 맞춘 줄 ${res.bad.length}개 (넣지 않음)</summary>${res.bad.slice(0,30).map(b=>`<div><b>${esc(b.why)}</b><small>${esc(String(b.raw).slice(0,60))}</small></div>`).join("")}</details>`:""}
+      ${res.ok.length?`<div class="row2"><button class="btn pri" type="button" id="tkScGo">${res.ok.length}명 점수 넣기</button></div><p class="note">파일 · 붙여넣은 내용에 없는 학생의 점수는 그대로 둡니다.</p>`:""}</div>`};
+  const paint=()=>{const y=$("sheetBox").scrollTop;
+    $("sheetBox").innerHTML=`<h2>점수 넣기 <span class="sub"><i class="tkk ${t.k}">${k[1]}</i> ${esc(t.n)} · ${C.length===1?esc(C[0].data.cls||"학급"):`${C.length}개 학급`} · ${tkNum(max)}점 만점</span></h2>
+      <div class="presets" id="tkScM">${[["hand","✏️ 직접 입력"],["paste","📋 붙여넣기"],["file","📄 엑셀 · CSV"]].map(([m,l])=>`<button class="chip" type="button" data-m="${m}" aria-pressed="${mode===m}">${l}</button>`).join("")}</div>
+      ${mode==="hand"?`<p class="note">칸에 점수를 쓰면 바로 저장됩니다. 지우면 점수가 빠집니다. 다음 칸으로는 키보드의 ‘다음’ · Enter로 넘어갑니다.</p>
+        ${C.map(cl=>{const m=sc(cl);return`${C.length>1?`<div class="shlb">${esc(cl.data.cls||"학급")}</div>`:""}<div class="tksg">${cl.data.roster.map(([sid,name],i)=>`<label class="tksr"><span><small>${i+1}</small> ${esc(name)}</span><input class="fld tksi" data-c="${esc(cl.id)}" data-s="${esc(sid)}" type="text" inputmode="decimal" enterkeyhint="next" autocomplete="off" value="${typeof m[sid]==="number"?tkNum(m[sid]):""}" aria-label="${esc(name)} 점수"></label>`).join("")}</div>`}).join("")}`
+      :mode==="paste"?`<p class="note">나이스 · 엑셀 · 구글 시트에서 <b>학번 · 이름 · 점수</b> 칸을 복사해 붙여 넣으세요. 학번으로 먼저 맞추고, 없으면 이름으로 맞춥니다.${C.length===1?" 명단 순서대로 <b>점수만</b> 붙여 넣어도 됩니다.":""}</p>
+        <textarea class="fld" id="tkPs" rows="6" placeholder="10101	홍길동	87&#10;10102	김영희	92.5"></textarea>
+        <div class="row2"><button class="btn" type="button" id="tkPsGo">읽어 보기</button></div>${prevHTML()}`
+      :`<p class="note">성적 일람표 · 전표 파일을 고르세요. 첫 줄 근처에 <b>학번 · 이름</b> 칸이 있으면 됩니다. 점수 칸은 아래에서 고릅니다.</p>
+        <div class="row2"><label class="btn filebtn" for="tkFi">${ICON.file}파일 고르기<input type="file" id="tkFi" accept=".xlsx,.xls,.xlsm,.csv,.txt"></label></div>
+        ${grid?`<p class="note">${esc(grid.name)} · ‘${esc(grid.sheet)}’ 시트</p><div class="shlb">점수로 쓸 칸</div><div class="presets" id="tkCol">${grid.dt.cols.filter(c=>c.filled).map(c=>`<button class="chip" type="button" data-j="${c.j}" aria-pressed="${c.j===col}">${esc(c.label)}</button>`).join("")||`<span class="note">점수 칸을 찾지 못했습니다.</span>`}</div>${prevHTML()}`:""}`}
+      <div class="row2"><button class="btn" type="button" id="skNo">${back?"뒤로":"닫기"}</button></div>`;
+    $("sheet").hidden=false;$("sheetBox").scrollTop=y;const box=$("sheetBox");
+    box.querySelectorAll("#tkScM [data-m]").forEach(b=>b.onclick=()=>{mode=TKS.mode=b.dataset.m;res=null;paint()});
+    box.querySelectorAll(".tksi").forEach((inp,i,all)=>{let tm=null;
+      inp.oninput=()=>{const cl=S.list.find(c=>c.id===inp.dataset.c),m=sc(cl),s=inp.dataset.s,raw=inp.value.trim(),v=parseFloat(raw);
+        if(!raw){delete m[s];inp.classList.remove("bad")}else if(!/^-?\d*\.?\d+$/.test(raw)||v<0||v>max){inp.classList.add("bad");return}else{inp.classList.remove("bad");m[s]=Math.round(v*100)/100}
+        clearTimeout(tm);tm=setTimeout(()=>{save();tkRefresh()},400)};
+      inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const nx=all[i+1];if(nx)nx.focus();else inp.blur()}}});
+    if($("tkPsGo"))$("tkPsGo").onclick=()=>{const tx=$("tkPs").value;if(!tx.trim())return toast("붙여 넣은 내용이 없습니다");res=tkScMatch(tkScParse(tx,C),C,max);paint();$("tkPs").value=tx};
+    if($("tkFi"))$("tkFi").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;let g;try{g=await readGrid(f)}catch(err){return toast(err.message||"파일을 읽지 못했습니다")}
+      grid={...g,name:f.name};const cs=g.dt.cols.filter(c=>c.filled);const pick=cs.find(c=>/총점|합계|원점수|^점수|총계|성적/.test(c.label.replace(/\s/g,"")))||cs[cs.length-1];col=pick?pick.j:-1;run();paint()};
+    box.querySelectorAll("#tkCol [data-j]").forEach(b=>b.onclick=()=>{col=+b.dataset.j;run();paint()});
+    if($("tkScGo"))$("tkScGo").onclick=()=>{const bk=JSON.stringify(t.sc||{});res.ok.forEach(o=>{sc(o.cl)[o.sid]=o.v});const n=res.ok.length;save();tkRefresh();res=null;
+      toastUndo(`${n}명의 점수를 넣었습니다`,()=>{t.sc=JSON.parse(bk);save();tkRefresh();if(!$("sheet").hidden&&$("tkScM"))paint()},6000);if(back)back();else paint()};
+    $("skNo").onclick=()=>{save();tkRefresh();if(back)back();else $("sheet").hidden=true}};
+  const run=()=>{if(!grid||col<0){res=null;return}const dt=grid.dt;res=tkScMatch(dt.data.map(d=>({id:dt.idc>=0?d.r[dt.idc]:"",name:dt.nmc>=0?d.r[dt.nmc]:"",v:d.r[col],raw:d.r.filter(Boolean).slice(0,4).join(" ")})),C,max)};
+  paint()}
+/* 점수 확인 서명: 학생 서명(수행평가 점수 확인)으로 만들고, 이미 있으면 점수를 다시 반영 */
+function tkSign(id,clId,back){const t=tasksAll().find(x=>x.id===id),cl=S.list.find(c=>c.id===clId);if(!t||!cl)return;const o=tkScOf(t,cl),sids=cl.data.roster.filter(([s])=>s in o);
+  if(!sids.length)return toast("점수가 들어간 학생이 없습니다");const max=+t.max||100,colL=`점수 (${tkNum(max)}점 만점)`;
+  const ex=evals().find(e=>e.tk===t.id&&e.clsId===cl.id);
+  if(ex){const ch=[];sids.forEach(([sid,name])=>{let st=ex.stu.find(x=>x.sid===sid);const v=[tkNum(o[sid])];
+      if(!st){st={sid,name,email:(cl.data.emails||{})[sid]||"",row:0,vals:v,tok:rndTok(),h:fnv(JSON.stringify(v)),sentAt:0,sig:null};ex.stu.push(st);ch.push(name);return}
+      if(JSON.stringify(st.vals)!==JSON.stringify(v)){st.vals=v;st.ed={0:1};st.h=fnv(JSON.stringify(v));ch.push(name)}});
+    ask(`<h2>점수 확인 서명</h2><p class="note">‘${esc(ex.title)}’ 서명 받기가 이미 있습니다. ${ch.length?`바뀐 점수 <b>${ch.length}명</b>(${esc(ch.slice(0,5).join(", "))}${ch.length>5?" 외":""})을 반영합니다. 이미 서명한 학생은 <b>다시 받아야 함</b>으로 바뀝니다.`:"바뀐 점수가 없습니다."}</p>`,ch.length?"반영하고 열기":"열기",()=>{save();EVS.cur=ex.id;$("sheet").hidden=true;show("stat");setStab("eval");renderEval();if(ch.length)toast(`${ch.length}명의 점수를 서명 받기에 반영했습니다`)});return}
+  const y=period(),obj=t.obj||"";
+  $("sheetBox").innerHTML=`<h2>점수 확인 서명 받기 <span class="sub"><i class="tkk ${t.k}">${tkK(t)[1]}</i> ${esc(t.n)} · ${esc(cl.data.cls||"학급")}</span></h2>
+    <p class="note">점수가 있는 학생 <b>${sids.length}명</b>에게 자기 점수만 보이는 서명 링크를 보냅니다. ${sids.length<cl.data.roster.length?`점수가 없는 ${cl.data.roster.length-sids.length}명은 빠집니다.`:""}</p>
+    <div class="range"><label class="lb" for="tsgD">서명 마감일<input class="fld" type="date" id="tsgD"></label></div>
+    <label class="lb" for="tsgN">학생에게 전할 말<textarea class="fld" id="tsgN" rows="3"></textarea></label>
+    <label class="lb" for="tsgR">서명을 회신 받을 내 이메일<input class="fld" id="tsgR" type="email" inputmode="email" spellcheck="false" placeholder="teacher@example.com"></label>
+    <p class="warn" id="tsgE" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">${back?"뒤로":"취소"}</button><button class="btn pri" type="button" id="tsgOk">만들기</button></div>`;
+  $("sheet").hidden=false;$("tsgD").value=obj||addDays(today(),3);$("tsgR").value=(G&&G.email)||localStorage.getItem("att-app-reply")||"";
+  $("tsgN").value=obj?`점수에 이의가 있으면 ${fmtDateW(obj)}까지 서명하지 말고 선생님께 말씀해 주세요.`:"점수에 이의가 있으면 서명하지 말고 선생님께 먼저 말씀해 주세요.";
+  $("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true};
+  $("tsgOk").onclick=()=>{const reply=$("tsgR").value.trim();if(!isEmail(reply)){$("tsgE").textContent="회신 받을 이메일을 넣어 주세요.";$("tsgE").hidden=false;return}
+    try{localStorage.setItem("att-app-reply",reply)}catch(e){}
+    const d=cl.data,ev={id:uid(),manual:true,tk:t.id,kind:"score",agree:"",title:t.n,year:+y.year,term:y.term,clsId:cl.id,clsName:clsName(d),created:Date.now(),due:$("tsgD").value,reply,note:$("tsgN").value.trim(),cols:[colL],colIdx:[],file:{name:"(앱에서 입력)",b64:""},table:null,
+      stu:sids.map(([sid,name])=>{const vals=[tkNum(o[sid])];return{sid,name,email:(d.emails||{})[sid]||"",row:0,vals,tok:rndTok(),h:fnv(JSON.stringify(vals)),sentAt:0,sig:null}})};
+    evals().unshift(ev);EVS.cur=ev.id;save();$("sheet").hidden=true;show("stat");setStab("eval");renderEval();toast(`‘${t.n}’ 점수 확인 서명 받기를 만들었습니다. 학생에게 보내세요`)}}
 
 /* ===== 5.42: 평가 · 과제 미참여 · 미제출 학생 연락 — 문자(한 명씩 이름 넣어 / 한꺼번에) · 전화 · 이메일, 연락한 학생 표시 ===== */
 const TKC={late:false};
@@ -7376,7 +7498,11 @@ $("ntBtn").onclick=()=>askNotify();
 
 /* ---------- 백업 저장 · 이전 버전 백업 불러오기 ---------- */
 const UNDO_KEY="att-app-undo";
-function backupObj(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],sheets:S.sheets||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
+/* 5.65: 백업에서 성적(평가 점수 · 점수 확인 서명) 빼기 — 설정의 ‘성적 포함’을 끄면 */
+function bkNoGr(){try{return localStorage.getItem("att-app-bkgr")==="0"}catch(e){return false}}
+function stripGrades(o){o.tasks=(o.tasks||[]).map(t=>{if(!t||!t.sc)return t;const x={...t};delete x.sc;return x});o.evals=(o.evals||[]).filter(e=>((e&&e.kind)||"score")!=="score");o.noGrades=true;return o}
+function backupObj(){const o=backupObj0();return bkNoGr()?stripGrades(o):o}
+function backupObj0(){return{v:3,app:APP_NAME,appVersion:APP_VERSION,savedAt:new Date().toISOString(),evals:S.evals||[],obsTags:S.obsTags,tasks:S.tasks||[],recs:S.recs||[],links:S.links||[],sheets:S.sheets||[],classes:S.list.map(c=>({...c.data,_id:c.id})),staff:S.staff,tt:S.tt,notes:S.notes,events:S.events}}
 const verNum=v=>String(v||"0").split(".").map(n=>parseInt(n,10)||0).reduce((a,n,i)=>a+n*Math.pow(1000,2-i),0);
 /* 어떤 버전의 백업이든 같은 모양으로 맞춥니다 */
 function readBackup(p){
@@ -7403,6 +7529,7 @@ function readBackup(p){
   if(classes.some(c=>c.msg===OLD_MSG))conv.push("결석 문자 문구의 {차시}를 {시간}으로 바꿉니다");
   if(classes.some(c=>(c.teachers||[]).length)&&!ver)conv.push("인솔교사는 수업 교사로 옮겨집니다");
   if(!p.tt)conv.push("이 백업에는 시간표가 없습니다. 지금 시간표는 그대로 둡니다");
+  if(p.noGrades)conv.push("성적(점수)을 뺀 백업입니다. 이 기기에 있는 평가 점수 · 점수 확인 서명은 그대로 둡니다");
   if(ver&&verNum(ver)>verNum(APP_VERSION))conv.push(`이 백업은 더 새 버전(${ver})에서 만들었습니다. 일부 내용이 빠질 수 있으니 앱을 먼저 새로 올려 주세요`);
   const n=classes.map(c=>normalize(c));
   const cnt={classes:n.length,students:n.reduce((a,c)=>a+c.roster.length,0),checks:n.reduce((a,c)=>a+c.sessions.length,0),teachers:n.reduce((a,c)=>a+c.teachers.length,0),
@@ -7415,11 +7542,13 @@ function afterLoad(msg){initTT();initEv();if(!S.list.some(c=>c.id===S.active))S.
 function arcFromBackup(p){if(!p||!Array.isArray(p.archives))return;p.archives.forEach(A=>{if(A&&A.kind==="teachers-life-archive")kvGet("arc:"+A.year).then(v=>{if(!v)return arcStore(A).then(()=>{try{renderArc()}catch(e){}})}).catch(()=>{})})}
 function restoreReplace(b){
   snapshot();
-  const p=b.raw,used=new Set();
+  const p=b.raw,used=new Set(),old=S;
   const list=b.classes.map(x=>{let id=x._id&&!used.has(String(x._id))?String(x._id):uid();used.add(id);return{id,data:normalize(x)}});
   if(!list.length)list.push({id:uid(),data:fresh()});
   S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[],sheets:Array.isArray(p.sheets)?p.sheets.filter(x=>x&&x.id&&x.t&&Array.isArray(x.items)):(S.sheets||[])};
   mergeStaff(p.staff);
+  if(p.noGrades){const ot=new Map((old.tasks||[]).map(t=>[t&&t.id,t]));S.tasks.forEach(t=>{const o=ot.get(t.id);if(o&&o.sc)t.sc=o.sc});
+    (old.evals||[]).filter(e=>e&&((e.kind||"score")==="score")&&!S.evals.some(x=>x.id===e.id)).forEach(e=>S.evals.push(e))}
   arcFromBackup(p);
   afterLoad("백업 내용으로 바꿨습니다");
 }
@@ -7588,6 +7717,7 @@ async function fbkOpen(f,H){const ask=H.head.enc;const run=async pw=>{try{const 
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};$("fbOk").onclick=()=>{$("fbOk").disabled=true;run($("fbPw").value)}}
 $("fullBk").onclick=fbkSheet;
 $("backupFile").onclick=saveBackupFile;
+$("bkGr").checked=!bkNoGr();$("bkGr").onchange=e=>{try{localStorage.setItem("att-app-bkgr",e.target.checked?"1":"0")}catch(err){}toast(e.target.checked?"백업에 성적을 넣습니다":"앞으로 만드는 백업에서 성적을 뺍니다")};
 $("restoreFile").onchange=async e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;e.target.value="";
   try{const H=await fbkHead(f).catch(err=>{throw err});if(H)return fbkOpen(f,H);
@@ -10143,6 +10273,82 @@ setTimeout(()=>{try{cheerCheck()}catch(e){}},1500);
   else if(uiPrefs().open==="last"){try{v0=localStorage.getItem("att-app-view")||(S.tt.list.length?"tt":"att")}catch(e){}if(v0==="tt"&&!S.tt.list.length)v0="att";if(!VW.includes(v0))v0="todo"}
   show(v0);
   if(go==="add")setTimeout(()=>{try{if($("sheet").hidden&&!(typeof wizNeeded==="function"&&wizNeeded()))$("tdAdd").click()}catch(e){}},400)}
+/* ===== 5.65: 앱 잠금 (PIN) — 성적 · 연락처가 든 기기를 남이 열어 보지 못하게 =====
+   이 기기에만 저장(동기화 · 백업에 안 들어감). PIN 자체는 저장하지 않고 소금 친 해시만 둡니다.
+   화면 잠금일 뿐 자료를 암호화하지는 않습니다 → 휴대폰 자체 잠금과 함께 쓰도록 안내합니다. */
+const LOCK_KEY="att-app-lock",LOCK_ST="att-app-lockst";
+function lockCfg(){try{const o=JSON.parse(localStorage.getItem(LOCK_KEY)||"null");return o&&o.h&&o.s?o:null}catch(e){return null}}
+async function lockHash(pin,salt){const msg=salt+"|"+pin;
+  try{if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(msg));return"s:"+[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}}catch(e){}
+  let h=msg;for(let i=0;i<2000;i++)h=fnv(h+i)+h.slice(0,40);return"f:"+fnv(h)+fnv(h+"x")}
+const LK={on:false,hidAt:0,buf:"",busy:false};
+function lockState(){try{return JSON.parse(localStorage.getItem(LOCK_ST)||"{}")}catch(e){return{}}}
+function lockStateSet(o){try{localStorage.setItem(LOCK_ST,JSON.stringify(o))}catch(e){}}
+function lockShow(){const c=lockCfg();if(!c){lockHide();return}LK.on=true;LK.buf="";
+  let el=$("lockScr");if(!el){el=document.createElement("div");el.id="lockScr";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label","앱 잠금");document.body.appendChild(el)}
+  el.hidden=false;document.documentElement.classList.add("tllock");try{document.activeElement&&document.activeElement.blur()}catch(e){}
+  el.innerHTML=`<div class="lkin"><div class="lockic">🔒</div><h2>${esc(APP_NAME)}</h2><p id="lkMsg">PIN ${c.n||4}자리를 눌러 주세요</p>
+    <div class="lkdots" id="lkDots" aria-hidden="true">${Array.from({length:c.n||4},()=>"<i></i>").join("")}</div>
+    <div class="lkpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-d="${n}">${n}</button>`).join("")}<button type="button" class="lkfg" id="lkForgot">잊었어요</button><button type="button" data-d="0">0</button><button type="button" class="lkbs" id="lkBs" aria-label="지우기">⌫</button></div></div>`;
+  el.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>lockKey(b.dataset.d));$("lkBs").onclick=()=>lockKey("bs");$("lkForgot").onclick=lockForgot;lockPaint()}
+function lockHide(){LK.on=false;const el=$("lockScr");if(el){el.hidden=true;el.innerHTML=""}document.documentElement.classList.remove("tllock")}
+function lockWait(){const st=lockState();return st.until&&st.until>Date.now()?Math.ceil((st.until-Date.now())/1000):0}
+function lockPaint(){const c=lockCfg();if(!c||!$("lkDots"))return;$("lkDots").querySelectorAll("i").forEach((d,i)=>d.classList.toggle("on",i<LK.buf.length));const w=lockWait();
+  if(w){$("lkMsg").textContent=`여러 번 틀려 ${w}초 뒤에 다시 할 수 있습니다`;clearTimeout(LK.tw);LK.tw=setTimeout(lockPaint,1000)}}
+async function lockKey(d){const c=lockCfg();if(!c||LK.busy)return;if(lockWait())return lockPaint();
+  if(d==="bs"){LK.buf=LK.buf.slice(0,-1);return lockPaint()}if(LK.buf.length>=(c.n||4))return;LK.buf+=d;lockPaint();
+  if(LK.buf.length<(c.n||4))return;LK.busy=true;const h=await lockHash(LK.buf,c.s);LK.busy=false;
+  if(h===c.h){lockStateSet({});lockHide();return}
+  const st=lockState();st.f=(st.f||0)+1;if(st.f>=5){st.until=Date.now()+Math.min(300,30*Math.pow(2,Math.floor(st.f/5)-1))*1000}lockStateSet(st);
+  LK.buf="";const dots=$("lkDots");if(dots){dots.classList.remove("shake");void dots.offsetWidth;dots.classList.add("shake")}
+  $("lkMsg").textContent=st.f>=5?"":`PIN이 맞지 않습니다 (${st.f}번 틀림)`;lockPaint()}
+function lockForgot(){const el=$("lockScr");if(!el)return;
+  el.innerHTML=`<div class="lkin lkfgt"><h2>PIN을 잊었을 때</h2><p>PIN은 이 기기에만 있어 다시 찾을 수 없습니다. <b>이 기기의 교사의 생활 자료를 모두 지우고</b> 새로 시작한 뒤, <b>백업 파일</b>을 불러오거나 <b>구글 드라이브 동기화</b>를 다시 연결해 자료를 되찾으세요.</p>
+    <p>지우려면 아래 칸에 <b>모두 지우기</b>를 쓰세요.</p><input class="fld" id="lkWipeT" autocomplete="off" placeholder="모두 지우기">
+    <div class="row2"><button class="btn" type="button" id="lkBack">돌아가기</button><button class="btn bad" type="button" id="lkWipe" disabled>이 기기 자료 모두 지우기</button></div></div>`;
+  $("lkWipeT").oninput=e=>{$("lkWipe").disabled=e.target.value.replace(/\s/g,"")!=="모두지우기"};$("lkBack").onclick=lockShow;
+  $("lkWipe").onclick=()=>{$("lkWipe").disabled=true;$("lkWipe").textContent="지우는 중…";
+    try{Object.keys(localStorage).filter(k=>/^(att-app|tl-)/.test(k)).forEach(k=>localStorage.removeItem(k))}catch(e){}
+    try{const r=indexedDB.deleteDatabase("teachers-life-media");r.onsuccess=r.onerror=r.onblocked=()=>setTimeout(()=>location.reload(),300)}catch(e){location.reload()}
+    setTimeout(()=>location.reload(),2500)}}
+/* 다른 앱으로 갔다 오면: 정한 시간이 지났으면 잠그고, 앱 전환 화면에는 내용을 가립니다 */
+document.addEventListener("visibilitychange",()=>{const c=lockCfg();if(!c)return;
+  if(document.hidden){LK.hidAt=Date.now();document.documentElement.classList.add("tlcover")}
+  else{document.documentElement.classList.remove("tlcover");if(!LK.on&&LK.hidAt&&Date.now()-LK.hidAt>=(+c.m||0)*60000+(c.m?0:3000))lockShow();LK.hidAt=0}});
+document.addEventListener("keydown",e=>{if(!LK.on)return;if(/^\d$/.test(e.key)){e.preventDefault();lockKey(e.key)}else if(e.key==="Backspace"){e.preventDefault();lockKey("bs")}},true);
+/* 설정 → 앱 잠금 */
+const LOCK_M=[[0,"바로"],[1,"1분 뒤"],[5,"5분 뒤"],[15,"15분 뒤"]];
+function renderLockSet(){const el=$("lockBody");if(!el)return;const c=lockCfg();$("lockTag").textContent=c?"켜짐":"꺼짐";
+  el.innerHTML=c?`<p class="note" data-keep>앱을 열 때와 다른 앱에 다녀왔을 때 PIN ${c.n||4}자리를 묻습니다. 앱 전환 화면에서도 내용이 가려집니다.</p>
+      <div class="shlb">다른 앱에 다녀온 뒤 잠그기</div><div class="presets" id="lkM">${LOCK_M.map(([m,l])=>`<button class="chip" type="button" data-m="${m}" aria-pressed="${(+c.m||0)===m}">${l}</button>`).join("")}</div>
+      <div class="row2"><button class="btn" type="button" id="lkNow">지금 잠그기</button><button class="btn" type="button" id="lkChg">PIN 바꾸기</button><button class="btn bad ghost" type="button" id="lkOff">잠금 끄기</button></div>`
+    :`<p class="note" data-keep>성적 · 연락처 · 관찰 기록이 든 앱을 다른 사람이 열어 보지 못하게 PIN을 겁니다. PIN은 이 기기에만 저장되고 백업 · 동기화에 들어가지 않습니다.</p>
+      <div class="row2"><button class="btn pri" type="button" id="lkSet">PIN 정하기</button></div>`;
+  el.insertAdjacentHTML("beforeend",`<p class="note" data-keep>앱 화면을 가리는 잠금입니다. 휴대폰 자체 화면 잠금(지문 · 얼굴 · 비밀번호)도 꼭 함께 켜 두세요.</p>`);
+  if($("lkSet"))$("lkSet").onclick=()=>lockSetSheet(false);if($("lkChg"))$("lkChg").onclick=()=>lockSetSheet(true);if($("lkNow"))$("lkNow").onclick=lockShow;
+  el.querySelectorAll("#lkM [data-m]").forEach(b=>b.onclick=()=>{const o=lockCfg();if(!o)return;o.m=+b.dataset.m;try{localStorage.setItem(LOCK_KEY,JSON.stringify(o))}catch(e){}renderLockSet();toast(`다른 앱에 다녀오면 ${b.textContent} 잠급니다`)});
+  if($("lkOff"))$("lkOff").onclick=()=>lockAskOld(()=>{try{localStorage.removeItem(LOCK_KEY);localStorage.removeItem(LOCK_ST)}catch(e){}renderLockSet();$("sheet").hidden=true;toast("앱 잠금을 껐습니다")})}
+function lockAskOld(ok){const c=lockCfg();if(!c)return ok();
+  $("sheetBox").innerHTML=`<h2>지금 PIN 확인</h2><label class="lb" for="lkOld">지금 쓰는 PIN<input class="fld" id="lkOld" type="password" inputmode="numeric" autocomplete="off" maxlength="6"></label><p class="warn" id="lkOE" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="lkOOk">확인</button></div>`;
+  $("sheet").hidden=false;setTimeout(()=>$("lkOld").focus(),60);$("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("lkOOk").onclick=async()=>{const h=await lockHash($("lkOld").value.trim(),c.s);if(h!==c.h){$("lkOE").textContent="PIN이 맞지 않습니다";$("lkOE").hidden=false;return}ok()}}
+function lockSetSheet(chg){const go=()=>{
+    $("sheetBox").innerHTML=`<h2>${chg?"PIN 바꾸기":"앱 잠금 PIN 정하기"}</h2><p class="note">숫자 4~6자리. 생일 · 전화번호 · 1234처럼 짐작하기 쉬운 숫자는 피하세요.</p>
+      <label class="lb" for="lkP1">새 PIN<input class="fld" id="lkP1" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6"></label>
+      <label class="lb" for="lkP2">한 번 더<input class="fld" id="lkP2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6"></label>
+      <p class="warn">PIN을 잊으면 이 기기의 자료를 지우고 백업에서 되살려야 합니다. 먼저 <b>백업 파일</b>을 저장해 두세요.</p><p class="warn" id="lkPE" hidden></p>
+      <div class="row2"><button class="btn" type="button" id="skNo">취소</button><button class="btn pri" type="button" id="lkPOk">저장</button></div>`;
+    $("sheet").hidden=false;setTimeout(()=>$("lkP1").focus(),60);$("skNo").onclick=()=>{$("sheet").hidden=true};
+    $("lkPOk").onclick=async()=>{const a=$("lkP1").value.trim(),b=$("lkP2").value.trim(),err=m=>{$("lkPE").textContent=m;$("lkPE").hidden=false};
+      if(!/^\d{4,6}$/.test(a))return err("PIN은 숫자 4~6자리로 정해 주세요");if(a!==b)return err("두 번 쓴 PIN이 서로 다릅니다");
+      if(/^(\d)\1+$/.test(a)||"0123456789".includes(a)||"9876543210".includes(a))return err("같은 숫자나 연속된 숫자는 쓸 수 없습니다");
+      const s=rndTok()+rndTok(),old=lockCfg(),o={v:1,s,h:await lockHash(a,s),n:a.length,m:old?+old.m||0:0};
+      try{localStorage.setItem(LOCK_KEY,JSON.stringify(o));localStorage.removeItem(LOCK_ST)}catch(e){return err("이 기기에 저장하지 못했습니다")}
+      $("sheet").hidden=true;renderLockSet();toast(chg?"PIN을 바꿨습니다":"앱 잠금을 켰습니다. 다음에 앱을 열 때 PIN을 묻습니다")}};
+  if(chg)lockAskOld(go);else go()}
+try{$("d-lock").addEventListener("toggle",()=>{if($("d-lock").open)safe("앱 잠금",renderLockSet)});renderLockSet()}catch(e){}
+if(lockCfg())lockShow();else document.documentElement.classList.remove("tllock");
 setInterval(()=>{if(view==="tt"&&$("sheet").hidden)renderTT()},60000);
 handleHash();
 window.addEventListener("hashchange",handleHash);
