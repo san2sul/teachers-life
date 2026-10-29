@@ -1471,7 +1471,9 @@ html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
 .flpill[hidden]{display:none}.flpill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.flpill b{font-variant-numeric:tabular-nums;color:var(--accent)}.flpill.warn{outline:2px solid var(--warn)}
 .flsteps{display:flex;flex-direction:column;gap:4px;margin:8px 0}.flsr{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:var(--tint)}.flsr.on{background:var(--accent-soft);outline:1.5px solid var(--accent)}.flsr.dn{opacity:.55}
 .flst{font-variant-numeric:tabular-nums;font-size:.75rem;color:var(--muted);width:3em;flex:none}.flsr b{flex:1;min-width:0;font-size:.9375rem}.flsr b small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.flsm{font-size:.8125rem;white-space:nowrap}.flsm small{color:var(--muted)}
-.flsb{display:flex;gap:4px}.flsb .btn{min-width:38px;padding:0 6px}.flfix,.flb{font-size:.625rem;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 5px;vertical-align:1px}
+.fltb{display:flex;width:max-content;align-items:center;gap:4px;margin-top:4px;min-height:34px;padding:0 10px;border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:999px;background:var(--paper);color:var(--accent);font:inherit;font-size:.8125rem;font-weight:700}
+.flbtns .fltool{flex:1 1 100%}
+.flsb{display:flex;gap:4px}.flsb .flbkb{min-width:0;padding:0 10px;white-space:nowrap}.flsb .btn{min-width:38px;padding:0 6px}.flfix,.flb{font-size:.625rem;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:1px 5px;vertical-align:1px}
 .flpick{display:flex;flex-direction:column;gap:6px;margin:8px 0}.flpr{text-align:left;border:1.5px solid var(--line);border-radius:var(--r-m);background:var(--paper);color:var(--ink);font:inherit;padding:10px 12px}.flpr[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}.flpr b{display:block;font-size:.9375rem}.flpr small{color:var(--muted);font-size:.75rem}
 .flmr{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.flmr>div{flex:1;min-width:0}.flmr b{display:block;font-size:.9375rem}.flmr small{color:var(--muted);font-size:.75rem}
 .fleds{display:flex;flex-direction:column;gap:6px;margin:8px 0}.fled{background:var(--tint);border-radius:var(--r-m);padding:8px}
@@ -1492,6 +1494,10 @@ html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
 .flsteps.off{opacity:.5}
 .fldemo{background:var(--tint);border-radius:var(--r-m);padding:8px;margin:6px 0}.fldemo .flbtns{display:none}.fldmt{font-size:.75rem;color:var(--muted);margin:0 0 4px}
 .flsc{margin:4px 0}
+.flcap{display:flex;flex-direction:column;gap:2px;font-size:.8125rem;margin:6px 0}.flcap .ok{color:#1f6a35}.flcap .no{color:var(--warn)}
+.obnow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}.obnr{display:inline-flex;align-items:center;gap:2px;border-radius:999px;padding:2px 2px 2px 10px;background:var(--tint);font-size:.875rem}
+.obnr.pos{background:#e2f3e9;color:#1f7a4d}.obnr.neg{background:#fbe5e1;color:#b03a2e}.obnr b{font-weight:700;margin-right:2px}
+.obx{min-width:36px;min-height:34px;border:0;border-radius:999px;background:var(--paper);color:var(--ink);font:inherit;font-size:.8125rem;font-weight:700;margin-left:2px}
 .flsubrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:10px 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:.875rem}.flsubrow span{flex:1 1 14em}.flsubrow .fld{flex:1 1 12em;margin:0;min-height:40px}
 em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 .flowset.off{color:var(--muted);border-color:var(--line)}
@@ -1979,7 +1985,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.78.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.79.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1991,6 +1997,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.79.0",date:"2026-10-29",items:["수업 흐름 ‹ 이전: 앞 단계로 돌아가 지금부터 다시(남은 계획 시간, 없으면 2분). ⋯ 창에서 지난 단계마다 ↩ 돌아가기, 돌아간 뒤 그 단계 시간 −1 · ＋1","수업 흐름 알림 소리 · 진동을 확실하게: 화면을 처음 누를 때 소리를 미리 켜 둠(소리가 막히지 않게), 또렷한 세 음 차임(효과음처럼 크게 · 단계가 바뀌면 두 번), 소리가 막히면 예비 재생기로, 아이폰처럼 진동이 안 되는 기기는 ‘진동’ 알림도 소리로. ⋯ 창에 ‘🔈 소리 준비됨 · 📳 진동 됨’ 표시, 🔔 알림 시험은 소리까지","수업 흐름의 ‘⏱ 타이머 열기’ 등이 누를 수 없는 글씨였던 것을 단추로: 지금 수업 카드(지금 단계에 도구가 있으면)와 수업 흐름 창(단계마다)에서 눌러 바로 열기 — 타이머는 그 단계 남은 시간으로 맞춰짐(▶ 시작으로 시작)","🔔 알림 시험 뒤 창을 닫아도 다시 열리던 것 · 알림 시험 뒤 미리 돌려 보기가 사라지던 것 고침","수업 관찰: 잘못 누른 항목만 빼기 — 학생 기록 창 위쪽에 그 날 기록한 항목마다 −1 · ✕ (바로 저장 · 되돌리기). 전체 삭제는 ‘이 날 기록 모두 삭제’로 이름을 분명하게","도움말 맨 앞에 ‘0. 앱 사용 순서 한눈에’: 처음 한 번 준비 → 매일 아침 → 수업 시작 → 수업 중 → 수업 뒤 → 필요할 때 → 주 · 학기 정리 순서로 단계마다 할 일 · 메뉴 경로 · 자세한 설명 바로가기. 앱 소개 페이지도 최신 기능과 ‘하루에 이렇게 씁니다’로 고침","자동 점검 추가: 수업 흐름 이전 단계 · 돌아가기 · 알림 소리 · 진동, 수업 관찰 잘못 누른 항목만 빼기"]},
   {v:"5.78.0",date:"2026-10-29",items:["수업 흐름 미리 확인: 오늘 수업 목록마다 ⏱ 표시(틀 이름 · 꺼짐 · 흐름 정하기), 시간표 → 수업 칸 창에도 ‘⏱ 수업 흐름’ — 수업 전에도 쓸 틀과 단계마다 시각을 봄","▶ 미리 돌려 보기(1분 = 1초): 지금 수업 카드가 어떻게 바뀌고 언제 알리는지 미리 봄 · 🔔 알림 시험: 휴대폰에서 진동 · 소리가 나는지 확인","켜기 · 끄기: 수업 전이든 수업 중이든 그 수업만 켜고 끔(다른 수업은 그대로), 꺼 둔 수업은 ‘꺼짐’으로 표시","틀 고를 때 어디에 쓸지: 이 수업만 · 이 차시(진도표 차시) · 교과 기본. 진도표에 차시별 틀 ⏱ 표시, 진도 현황에서 교과 기본 틀 바로 바꾸기","이 수업만 고치기: 단계 · 시간을 이 수업에만(원래 틀은 그대로, 내 틀로도 저장 가능) · 틀 고치기(그 틀을 쓰는 모든 수업) — 수업 중에도 바로 반영","수업마다 정한 수업 흐름(켜기/끄기 · 고른 틀 · 고친 단계 · 조정)을 휴대폰과 컴퓨터가 함께 씀(구글 연동 · 백업)","자동 점검 추가: 수업 흐름 미리 확인 · 켜기/끄기 · 이 수업만 고치기 · 차시별 틀"]},
   {v:"5.77.0",date:"2026-10-29",items:["⏱ 수업 흐름: 도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 두면 지금 수업 카드에 지금 단계 · 남은 시간 · 진행 막대 · 다음 단계를 보여 줌(카드가 안 보일 때는 아래 작은 ⏱ 표시)","단계 끝나기 1분 전 · 단계가 바뀔 때 알림(화면 깜빡임 · 진동 · 소리, 단계마다 고름), 도구를 정해 둔 단계는 시작할 때 타이머(그 단계 시간) · 발표자 뽑기 · 모둠 나누기를 열어 줌, 흐름이 도는 동안 화면 켜 두기","기본 틀(3단계 · 5단계 · 실험 수업 · 모둠 활동 수업 — 수업 시간에 맞춰 늘이고 줄임)과 직접 설계한 틀: 단계 이름 · 시간 · 할 일 메모 · 알림 · 함께 열 도구 · 꼭 지킬 단계, 합계 확인 · 수업 시간에 맞추기, 기본 틀 복사해 고치기, 틀 파일 주고받기","적용: 이 수업에서 고른 틀 → 진도표 차시에 붙인 틀 → 교과 기본 틀. 시간표 수업 시작 시각에 맞춰 저절로 시작, ‘지금부터 다시 시작’ · 흐름 끄기","시간이 밀릴 때: ＋2분 · 다음 단계 · 단계마다 −1/＋1분, 수업 끝을 넘으면 경고 → ‘남은 단계 줄여 맞추기’(꼭 지킬 단계는 그대로)","자동 점검 추가: 수업 흐름(틀 · 지금 단계 · 알림 · 밀림 맞추기 · 직접 설계)"]},
   {v:"5.76.1",date:"2026-10-29",items:["타이머 안내 문구를 알기 쉽게: ‘6분 준비됨 — ＋분 단추로 시간 더하기, ▶ 시작으로 출발’처럼 시간 더하기(＋분 단추)와 시작(▶ 시작)을 나눠서"]},
@@ -8500,13 +8507,14 @@ function obsSheet(sid,date){
     <div class="row2"><button class="btn" type="button" id="obAll">한눈에 보기 · 세특 초안${(stsOf(sid)||{}).t?" ✓":""}</button></div>
     <div class="obsn" id="obSn"></div>
     <div class="range"><label class="lb" for="obDate">기록 날짜 (비우면 오늘)<input class="fld" type="date" id="obDate"></label></div>
+    <div id="obNow"></div>
     <div id="obTags"></div>
     <label class="lb" for="obMemo">메모<textarea class="fld" id="obMemo" rows="3" placeholder="예: 실험 설계에서 변인 통제를 스스로 제안함"></textarea></label>
     <div class="medsec"><div class="shlb">사진 · 동영상 · 녹음 <small>찍은 파일은 이 기기에만 저장됩니다</small></div>
       <div class="medbtns" id="obMedBtns"><button class="btn sm" type="button" data-cap="photo">📷 사진 찍기</button><button class="btn sm" type="button" data-cap="video">🎥 동영상 찍기</button><button class="btn sm" type="button" data-cap="audio">🎙 녹음</button><button class="btn sm" type="button" data-cap="pick">🖼 앨범·파일</button></div>
       <div class="medgrid" id="obMed"></div></div>
     <div class="presets" id="obQuick">${["발표 내용이 논리적임","모둠 활동을 이끎","질문이 깊이 있음","실험을 꼼꼼히 기록함","개별 지도 필요"].map(x=>`<button class="chip" type="button">${esc(x)}</button>`).join("")}</div>
-    <div class="row2">${r0?`<button class="btn bad" type="button" id="obDel">이 날 기록 삭제${recMedia(r0).length?" (사진·녹음 포함)":""}</button>`:""}<button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="obOk">저장</button></div>
+    <div class="row2">${r0?`<button class="btn bad ghost" type="button" id="obDel">이 날 기록 모두 삭제${recMedia(r0).length?" (사진·녹음 포함)":""}</button>`:""}<button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="obOk">저장</button></div>
     ${hist.length?`<h3 class="sh3">누적 ${hist.length}일</h3><div class="opills wrap">${Object.entries(sum).sort((a,b)=>b[1]-a[1]).map(([k,n])=>{const t=tagOf(k);return t?`<span class="opill ${tone(t.t)}">${esc(t.l)} ${n}</span>`:""}).join("")}</div>
       <div class="ohist">${hist.map(h=>`<button class="ohrow" type="button" data-d="${esc(h.date)}"><b>${esc(fmtDateW(h.date))}</b><span class="opills">${tagPills(h)}${mediaPills(h)}</span>${h.memo?`<small>${esc(h.memo)}</small>`:""}</button>`).join("")}</div>
       <div class="row2"><button class="btn" type="button" id="obCopy">누적 기록 복사 (세특 작성용)</button></div>`:""}`;
@@ -8514,7 +8522,13 @@ function obsSheet(sid,date){
   try{paintMedia(sid,date);wireMediaButtons(sid,()=>$("obDate")&&$("obDate").value||today())}catch(e){reportErr("관찰 사진·녹음",e)}
   const lk=obsLocked(date);
   if(lk){$("obMemo").readOnly=true;$("obQuick").hidden=true;$("obOk").hidden=true;if($("obDel"))$("obDel").hidden=true;$("obTags").insertAdjacentHTML("beforebegin",`<p class="lockbar lockedbar">🔒 ${esc(fmtDateW(date))} 기록은 잠겨 있어 볼 수만 있습니다. 관찰 기록 화면의 ‘잠금 해제’로 풀 수 있습니다.</p>`)}
-  const paint=()=>{$("obTags").innerHTML=obsTags().map(g=>`<div class="obg"><span class="obgn">${esc(g.g)}</span>${g.items.map(it=>`<button class="chip otag ${tone(it.t)}" type="button" data-k="${esc(it.k)}" aria-pressed="${!!tags[it.k]}">${esc(it.l)}${tags[it.k]>1?" ×"+tags[it.k]:""}</button>`).join("")}</div>`).join("");
+  /* 5.79: 잘못 누른 항목만 빼기 — 이 날 기록한 항목마다 −1 · ✕ (바로 저장, 되돌리기 가능) */
+  const fix=(k,all)=>{if(obsLocked(date))return obsNudge();const it=tagOf(k),bk={...tags};if(!tags[k])return;if(all||tags[k]<=1)delete tags[k];else tags[k]--;
+    let r=obsRec(sid,date,!!Object.keys(tags).length);if(r){r.tags={...tags};if(!r.memo)r.memo="";cleanRec(r)}save();renderObs();paint();
+    toastUndo(`${st[1]}: ‘${it?it.l:k}’ ${all||!bk[k]||bk[k]<=1?"뺐습니다":"1회 뺐습니다"}`,()=>{Object.keys(tags).forEach(q=>delete tags[q]);Object.assign(tags,bk);const r2=obsRec(sid,date,true);r2.tags={...bk};if(r2.memo==null)r2.memo="";r2.at=Date.now();save();renderObs();if(!$("sheet").hidden&&$("obNow"))paint()})};
+  const paintNow=()=>{const ks=Object.keys(tags).filter(k=>tags[k]>0);$("obNow").innerHTML=ks.length?`<div class="shlb">${esc(fmtDateW(date))}에 기록한 항목 <small class="note">잘못 누른 것만 빼세요</small></div><div class="obnow">${ks.map(k=>{const t=tagOf(k);return`<span class="obnr ${t?tone(t.t):""}"><b>${esc(t?t.l:k)}${tags[k]>1?` ×${tags[k]}`:""}</b>${obsLocked(date)?"":`${tags[k]>1?`<button type="button" class="obx" data-dec="${esc(k)}" aria-label="${esc(t?t.l:k)} 1회 빼기">−1</button>`:""}<button type="button" class="obx" data-rmk="${esc(k)}" aria-label="${esc(t?t.l:k)} 빼기">✕</button>`}</span>`}).join("")}</div>`:"";
+    $("obNow").querySelectorAll("[data-dec]").forEach(b=>b.onclick=()=>fix(b.dataset.dec,false));$("obNow").querySelectorAll("[data-rmk]").forEach(b=>b.onclick=()=>fix(b.dataset.rmk,true))};
+  const paint=()=>{paintNow();$("obTags").innerHTML=obsTags().map(g=>`<div class="obg"><span class="obgn">${esc(g.g)}</span>${g.items.map(it=>`<button class="chip otag ${tone(it.t)}" type="button" data-k="${esc(it.k)}" aria-pressed="${!!tags[it.k]}">${esc(it.l)}${tags[it.k]>1?" ×"+tags[it.k]:""}</button>`).join("")}</div>`).join("");
     $("obTags").querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{if(obsLocked(date))return obsNudge();const k=b.dataset.k;if(tags[k])delete tags[k];else tags[k]=1;paint()})};
   paint();
   $("obQuick").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const m=$("obMemo");m.value=(m.value.trim()?m.value.trim()+" ":"")+b.textContent;m.focus()});
@@ -11233,16 +11247,21 @@ function flowBoxHTML(st){if(!st)return"";const{F,cur,i,steps}=st,tot=st.fin-st.s
     <div class="flh"><span class="fln">${st.before?`⏱ 곧 시작 · ${esc(F.f.steps[0].n)}`:cur?`⏱ ${i+1}/${steps.length} <b>${esc(cur.s.n)}</b>`:"⏱ 수업 흐름 끝"}</span><span class="flt" data-fltime>${st.before?flowFmt(st.st-st.now):cur?flowFmt(st.left):""}</span></div>
     <div class="flbar">${seg}</div>
     <div class="flsub">${cur&&cur.s.memo?`<span>📝 ${esc(cur.s.memo)}</span>`:""}${nx?`<span>다음 · ${esc(nx.s.n)} ${Math.round(nx.d/60000)}분</span>`:cur?`<span>마지막 단계</span>`:`<span>남은 수업 ${flowFmt(st.end-st.now)}</span>`}${warn?`<span class="flw">⚠ 수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</div>
-    <div class="flbtns">${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 단계 ›</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
+    <div class="flbtns">${cur&&cur.s.tool?`<button type="button" class="btn sm fltool" data-fltool>${esc(FL_TOOL[cur.s.tool])} 열기</button>`:""}${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${(i>0||i<0&&!st.before)?`<button type="button" class="btn sm" data-flprev aria-label="이전 단계로">‹ 이전</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 ›</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
+/* 5.79: 이전 단계로 돌아가기 — 그 단계를 지금부터 다시(남은 계획 시간, 없으면 2분), 뒤 단계들은 그만큼 뒤로 */
+function flowBack(x,j){const st=flowState(x);if(!st)return;if(j==null)j=st.i<0?st.steps.length-1:st.i-1;if(j<0||!st.steps[j])return;const o=st.steps[j],base=Math.max(60000,(+o.s.m||0)*60000),R=Math.max(120000,Math.round((base-o.d)/60000)*60000),now=Date.now();
+  if(st.i>=0&&j>st.i)return;flowAdj(x,o.s.id,now+R-o.b);FLA.prev[flowKey(x)]=j;toast(`${o.s.n}(으)로 돌아갑니다 · ${Math.round(R/60000)}분`);flowTick(1)}
 function flowWire(el,x){const q=s=>el.querySelector(s);
   if(q("[data-flplus]"))q("[data-flplus]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,120000);toast(`${st.cur.s.n} ＋2분 · 다음 단계가 2분 뒤로`);flowTick(1)}};
+  if(q("[data-flprev]"))q("[data-flprev]").onclick=()=>flowBack(x);
+  if(q("[data-fltool]"))q("[data-fltool]").onclick=()=>{const st=flowState(x);if(st&&st.cur)flowTool(x,st.i)};
   if(q("[data-flnext]"))q("[data-flnext]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,-(st.cur.b-st.now));FLA.prev[flowKey(x)]=st.i;flowTick(1);flowStepStart(x,st.i+1)}};
   if(q("[data-flfit]"))q("[data-flfit]").onclick=()=>{const r=flowFit(x);toast(r>0?`남은 단계를 ${Math.ceil(r/60000)}분 줄여 수업 끝에 맞췄습니다`:"줄일 수 있는 단계가 없습니다(꼭 지킬 단계만 남음)");flowTick(1)};
   if(q("[data-flmore]"))q("[data-flmore]").onclick=()=>flowSheet(x);
   if(q("[data-flpick]"))q("[data-flpick]").onclick=()=>flowPick(x)}
 /* 1초마다: 지금 수업 카드 · 작은 표시를 고치고, 단계 끝나기 1분 전 · 단계가 바뀔 때 알림 */
 var FLA={prev:{},pre:{},wl:null};
-function flowTick(force){let x=null;try{x=nowLesson()}catch(e){}const st=x?flowState(x):null;
+function flowTick(force){if(force)try{if(view==="todo")renderToday()}catch(e){}let x=null;try{x=nowLesson()}catch(e){}const st=x?flowState(x):null;
   document.querySelectorAll("[data-flow]").forEach(el=>{if(!x||!st){el.dataset.sig="";el.hidden=!x;if(!x){el.innerHTML="";return}const off=!!(flowRunAll()[flowKey(x)]||{}).off,want=off?"off":"set";if(el.dataset.fl!==want||!el.querySelector("[data-flpick]")){el.dataset.fl=want;el.innerHTML=off?`<button type="button" class="flowset off" data-flpick>⏱ 이 수업은 수업 흐름 꺼짐 <small>눌러서 켜기 · 바꾸기</small></button>`:`<button type="button" class="flowset" data-flpick>⏱ 수업 흐름 정하기 <small>도입 · 전개 · 정리 시간 알림</small></button>`;el.querySelector("[data-flpick]").onclick=()=>off?flowSheet(x):flowPick(x)}return}
     el.dataset.fl="";
     const sig=[st.F.f.id,st.i,st.over>15000,st.before,JSON.stringify((st.F.run||{}).adj||{})].join("|");
@@ -11254,13 +11273,38 @@ function flowTick(force){let x=null;try{x=nowLesson()}catch(e){}const st=x?flowS
   const k=flowKey(x),pv=FLA.prev[k];
   if(pv==null){FLA.prev[k]=st.i;return}
   if(pv!==st.i){FLA.prev[k]=st.i;if(st.i>pv)flowStepStart(x,st.i,st)}
-  else if(st.left<=60000&&st.cur.d>90000&&!FLA.pre[k+"|"+st.i]){FLA.pre[k+"|"+st.i]=1;const nx=st.steps[st.i+1];flowAlert(st.cur.s.al,`${st.cur.s.n} 1분 남음${nx?` · 다음 ${nx.s.n}`:""}`)}}
+  else if(st.left<=60000&&st.cur.d>90000&&!FLA.pre[k+"|"+st.i]){FLA.pre[k+"|"+st.i]=1;const nx=st.steps[st.i+1];flowAlert(st.cur.s.al,`${st.cur.s.n} 1분 남음${nx?` · 다음 ${nx.s.n}`:""}`,"pre")}}
+/* 5.79: 단계 도구 열기 — 타이머는 그 단계 남은 시간(지금 단계) 또는 단계 시간으로 맞춰서(시작은 ▶ 시작) */
+function flowTool(x,i){const st=flowState(x,null,true),o=st&&st.steps[i];if(!o||!o.s.tool)return;if(!x.cl)return toast("학급이 연결된 수업에서 열 수 있습니다");
+  if(o.s.tool==="tm"){const left=st.i===i&&!st.before?o.b-Date.now():o.d,ms=Math.max(60000,Math.round(left/60000)*60000);Object.assign(CT.tm,{run:false,done:false,dur:ms,left:ms,end:0,sel:true})}
+  if(!$("sheet").hidden)$("sheet").hidden=true;try{ctOpen(x.cl,o.s.tool)}catch(e){toast("수업 도구를 열지 못했습니다")}}
 function flowStepStart(x,i,st){st=st||flowState(x);const o=st&&st.steps[i];if(!o)return;flowAlert(o.s.al,`${o.s.n} 시작 · ${Math.round(o.d/60000)}분`);
-  if(o.s.tool&&x.cl){const el=$("ctool");if(!el||el.hidden){if(o.s.tool==="tm"){const ms=Math.max(60000,Math.round((o.b-Date.now())/60000)*60000);Object.assign(CT.tm,{run:false,done:false,dur:ms,left:ms,end:0,sel:true})}try{ctOpen(x.cl,o.s.tool)}catch(e){}}}}
-function flowAlert(al,msg){al=al||"vib";document.documentElement.classList.add("flowflash");setTimeout(()=>document.documentElement.classList.remove("flowflash"),1800);
-  if(al!=="quiet")try{navigator.vibrate&&navigator.vibrate([160,90,160])}catch(e){}
-  if(al==="snd")try{const A=window.AudioContext||window.webkitAudioContext;if(A){const ac=CT.ac||(CT.ac=new A());ac.resume&&ac.resume();[0,.22].forEach(t=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.setValueAtTime(.0001,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.18,ac.currentTime+t+.02);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+t+.18);o.connect(g).connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+.2)})}}catch(e){}
-  if(msg)toast("⏱ "+msg);window.__flowAlerts=(window.__flowAlerts||[]).concat([[al,msg]])}
+  if(o.s.tool&&x.cl){const el=$("ctool");if((!el||el.hidden)&&$("sheet").hidden)flowTool(x,i)}}
+/* 5.79: 수업 흐름 알림 — 소리 · 진동이 확실히 나게
+   · 브라우저는 화면을 한 번 누른 뒤에만 소리를 낼 수 있어, 아무 곳이나 처음 누를 때 소리를 미리 켜 둠(무음 소리 + 예비 재생기)
+   · 압축기를 거친 또렷한 세 음 차임(효과음과 같은 크게), Web Audio가 막히면 예비 재생기(WAV)로
+   · 아이폰처럼 진동을 못 하는 기기는 ‘진동’도 소리로 대신 */
+var FLAU={el:null,elOk:false,url:""};
+function flCanVib(){try{return typeof navigator.vibrate==="function"&&!/iPhone|iPad|iPod/.test(navigator.userAgent)}catch(e){return false}}
+function flWav(){if(FLAU.url)return FLAU.url;const R=22050,N=Math.round(R*1.3),b=new ArrayBuffer(44+N*2),v=new DataView(b),w=(o,t)=>{for(let k=0;k<t.length;k++)v.setUint8(o+k,t.charCodeAt(k))};
+  w(0,"RIFF");v.setUint32(4,36+N*2,true);w(8,"WAVE");w(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,R,true);v.setUint32(28,R*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,N*2,true);
+  const notes=[[0,1046.5],[.2,1318.5],[.4,1568]];for(let n=0;n<N;n++){const t=n/R;let x=0;notes.forEach(([a,f])=>{if(t>=a){const u=t-a;x+=Math.sin(2*Math.PI*f*u)*Math.exp(-u*4.2)*.33+Math.sin(4*Math.PI*f*u)*Math.exp(-u*7)*.08}});v.setInt16(44+n*2,Math.max(-1,Math.min(1,x))*32000,true)}
+  try{FLAU.url=URL.createObjectURL(new Blob([b],{type:"audio/wav"}))}catch(e){}return FLAU.url}
+function flAudioUnlock(){const ac=ctAC();try{if(ac){const s=ac.createBufferSource();s.buffer=ac.createBuffer(1,1,22050);s.connect(ac.destination);s.start(0)}}catch(e){}
+  try{if(!FLAU.el){FLAU.el=new Audio(flWav());FLAU.el.preload="auto";FLAU.el.setAttribute("playsinline","")}if(!FLAU.elOk){const el=FLAU.el;el.muted=true;const pr=el.play();if(pr&&pr.then)pr.then(()=>{el.pause();el.currentTime=0;el.muted=false;FLAU.elOk=true}).catch(()=>{el.muted=false})}}catch(e){}}
+["pointerdown","touchend","keydown"].forEach(ev=>document.addEventListener(ev,()=>{try{const ac=CT.ac;if(!ac||ac.state!=="running"||!FLAU.elOk)flAudioUnlock()}catch(e){}},{capture:true,passive:true}));
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)try{CT.ac&&CT.ac.state!=="running"&&CT.ac.resume()}catch(e){}});
+function flCapHTML(){return`<p class="flcap"><span class="${flSoundOk()?"ok":"no"}">🔈 소리 ${flSoundOk()?"준비됨":"— 화면을 한 번 누르면 켜짐"}</span><span class="${flCanVib()?"ok":"no"}">📳 진동 ${flCanVib()?"됨":"— 이 기기(아이폰 등)는 웹 앱 진동을 막아 두어 ‘진동’ 알림도 소리로 알림"}</span></p>`}
+function flSoundOk(){const ac=CT.ac;return!!((ac&&ac.state==="running")||FLAU.elOk)}
+function flChime(rep){let ok=false;const ac=ctAC();
+  if(ac&&ac.state==="running"){try{const bus=ctBus(ac),t0=ac.currentTime+.02;for(let r=0;r<rep;r++)[[0,1046.5],[.2,1318.5],[.4,1568]].forEach(([a,f])=>{const t=t0+r*.9+a;[[f,.55],[f*2,.12]].forEach(([fr,g0])=>{const o=ac.createOscillator(),g=ac.createGain();o.type="sine";o.frequency.value=fr;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(g0,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+.75);o.connect(g);g.connect(bus);o.start(t);o.stop(t+.8)})});ok=true}catch(e){}}
+  if(!ok&&FLAU.el){try{const el=FLAU.el;el.muted=false;el.volume=1;el.currentTime=0;const pr=el.play();ok=true;if(rep>1)setTimeout(()=>{try{el.currentTime=0;el.play()}catch(_){}},950);if(pr&&pr.catch)pr.catch(()=>{})}catch(e){}}
+  return ok}
+function flowAlert(al,msg,kind){al=al||"vib";const start=kind!=="pre";document.documentElement.classList.add("flowflash");setTimeout(()=>document.documentElement.classList.remove("flowflash"),2200);
+  let vib=false,snd=false;
+  if(al!=="quiet"&&flCanVib())try{vib=!!navigator.vibrate(start?[400,150,400,150,400]:[250,120,250])}catch(e){}
+  if(al==="snd"||(al==="vib"&&!flCanVib()))snd=flChime(start?2:1);
+  if(msg)toast("⏱ "+msg);window.__flowAlerts=(window.__flowAlerts||[]).concat([[al,msg,{vib,snd,kind:start?"start":"pre"}]])}
 /* 흐름이 도는 동안 화면이 꺼지지 않게 */
 function flowWake(on){try{if(on&&!FLA.wl&&navigator.wakeLock&&!document.hidden){FLA.wl=1;navigator.wakeLock.request("screen").then(w=>{FLA.wl=w;w.addEventListener&&w.addEventListener("release",()=>{if(FLA.wl===w)FLA.wl=null})}).catch(()=>{FLA.wl=null})}else if(!on&&FLA.wl&&FLA.wl.release){FLA.wl.release();FLA.wl=null}}catch(e){}}
 setInterval(()=>{if(!document.hidden)try{flowTick()}catch(e){}},1000);
@@ -11281,15 +11325,19 @@ function flowSheet(x,back){let demo=null;const close=()=>{if(demo){clearInterval
       ${!F?`<p class="note">이 수업에 쓸 틀이 없습니다. 틀을 고르면 ${live?"바로":"수업 시작 시각에"} 시작합니다.</p><div class="row2"><button class="btn pri" type="button" id="flChg">틀 고르기</button></div>`
       :`<div class="flcur${off?" off":""}"><div><small>${esc(flowSrcL(F,x))}</small><b>${esc(F.f.n)}</b><small>${F.f.steps.length}단계 · 합계 ${Math.round((st.fin-st.st)/60000)}분${st.over>15000?` · <span class="flw">수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</small></div></div>
       <div class="flacts"><button class="btn sm" type="button" id="flChg">틀 바꾸기</button><button class="btn sm" type="button" id="flMine">이 수업만 고치기</button><button class="btn sm" type="button" id="flTpl">${F.f.custom||String(F.f.id).startsWith("b:")?"내 틀로 저장해 고치기":"틀 고치기"}</button></div>
-      <div class="flsteps${off?" off":""}">${st.steps.map((o,j)=>{const on=live&&!off&&j===st.i,ctl=live&&!off&&st.i>=0&&j>=st.i;return`<div class="flsr${on?" on":live&&!off&&(j<st.i||st.i<0)?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}${o.s.tool?`<small>${esc(FL_TOOL[o.s.tool])} 열기</small>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(run.adj&&run.adj[o.s.id])?` <small>(${run.adj[o.s.id]>0?"＋":""}${Math.round(run.adj[o.s.id]/60000)})</small>`:""}</span>${ctl?`<span class="flsb"><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button></span>`:""}</div>`}).join("")}</div>
+      <div class="flsteps${off?" off":""}">${st.steps.map((o,j)=>{const on=live&&!off&&j===st.i,ctl=live&&!off,past=live&&!off&&(st.i<0||j<st.i);return`<div class="flsr${on?" on":live&&!off&&(j<st.i||st.i<0)?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}${o.s.tool?`<button type="button" class="fltb" data-fltl="${j}">${esc(FL_TOOL[o.s.tool])} 열기</button>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(run.adj&&run.adj[o.s.id])?` <small>(${run.adj[o.s.id]>0?"＋":""}${Math.round(run.adj[o.s.id]/60000)})</small>`:""}</span>${ctl?`<span class="flsb">${past?`<button type="button" class="btn sm flbkb" data-flbk="${j}" aria-label="${esc(o.s.n)}(으)로 돌아가기">↩ 돌아가기</button>`:`<button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button>`}</span>`:""}</div>`}).join("")}</div>
+      ${live&&!off?`<p class="note">지난 단계는 <b>↩ 돌아가기</b>로 그 단계를 지금부터 다시 하고, 돌아간 뒤에는 −1 · ＋1로 그 단계 시간을 고칩니다. 뒤 단계는 그만큼 밀리거나 당겨집니다.</p>`:""}
       ${live&&!off?`<div class="row2">${st.over>15000?`<button class="btn pri" type="button" id="flFit">남은 단계 줄여 수업 끝에 맞추기</button>`:""}<button class="btn" type="button" id="flNow">지금부터 다시 시작</button></div>`:""}
       <div class="shlb">미리 확인</div><div class="fldemo" id="flDemo" hidden></div>
       <div class="row2"><button class="btn" type="button" id="flSim">▶ 미리 돌려 보기 <small>1분 = 1초</small></button><button class="btn" type="button" id="flBell">🔔 알림 시험</button></div>
+      ${flCapHTML()}
       <p class="note">${off?"꺼 두면 이 수업에서는 알리지 않습니다. 다른 수업은 그대로입니다.":live?"단계 끝나기 1분 전과 단계가 바뀔 때 알립니다.":`수업 시작 시각(${esc(x.start)})에 저절로 시작합니다. 휴대폰에서 진동 · 소리가 나는지 ‘알림 시험’으로 미리 확인하세요.`}</p>`}
       <div class="row2"><button class="btn ghost" type="button" id="flMgr">틀 관리</button><button class="btn pri" type="button" id="skNo">${back?"돌아가기":"닫기"}</button></div>`;
     $("sheet").hidden=false;$("skNo").onclick=close;
     $("sheetBox").querySelectorAll("[data-flsw]").forEach(b=>b.onclick=()=>{const v=b.dataset.flsw==="off";flowSet(x,{off:v||null});FLA.prev[flowKey(x)]=null;toast(v?"이 수업은 수업 흐름을 껐습니다":"이 수업에 수업 흐름을 켰습니다");paint();flowTick(1)});
     $("sheetBox").querySelectorAll("[data-fla]").forEach(b=>b.onclick=()=>{const[id,ms]=b.dataset.fla.split("|");flowAdj(x,id,+ms);paint();flowTick(1)});
+    $("sheetBox").querySelectorAll("[data-flbk]").forEach(b=>b.onclick=()=>{flowBack(x,+b.dataset.flbk);paint()});
+    $("sheetBox").querySelectorAll("[data-fltl]").forEach(b=>b.onclick=e=>{e.stopPropagation();flowTool(x,+b.dataset.fltl)});
     if($("flFit"))$("flFit").onclick=()=>{const r=flowFit(x);toast(r>0?`${Math.ceil(r/60000)}분 줄여 맞췄습니다`:"줄일 수 있는 단계가 없습니다");paint();flowTick(1)};
     if($("flNow"))$("flNow").onclick=()=>{flowSet(x,{st:Date.now(),adj:null});FLA.prev[flowKey(x)]=null;toast("지금부터 첫 단계를 시작합니다");paint();flowTick(1)};
     $("flChg").onclick=()=>flowPick(x,()=>flowSheet(x,back));
@@ -11297,11 +11345,11 @@ function flowSheet(x,back){let demo=null;const close=()=>{if(demo){clearInterval
     if($("flTpl"))$("flTpl").onclick=()=>{const F=flowOf(x,true),own=!F.f.custom&&!String(F.f.id).startsWith("b:");
       if(own)flowEdit(flowsAll().find(f=>f.id===F.f.id),()=>flowSheet(x,back),false,{note:"이 틀을 쓰는 모든 수업에 바뀐 내용이 적용됩니다"});
       else flowEdit({n:F.f.n.replace(/\s*\(.*\)$/,"").replace(/ · 이 수업$/,"")+" (내 틀)",steps:F.f.steps.map(s=>({...s,id:uid()}))},id=>{if(id)flowSet(x,{fid:id,fs:null,fn:null});flowSheet(x,back)},true)};
-    if($("flBell"))$("flBell").onclick=()=>{const F=flowOf(x,true),al=(F&&F.f.steps.some(s=>s.al==="snd"))?"snd":"vib";flowAlert(al,"알림 시험 · 진동"+(al==="snd"?" · 소리":"")+"이 났나요? 안 나면 휴대폰 무음 · 진동 설정을 확인하세요")};
+    if($("flBell"))$("flBell").onclick=()=>{flAudioUnlock();setTimeout(()=>{flowAlert("snd",`알림 시험 · ${flCanVib()?"진동과 ":""}소리가 났나요? 안 나면 휴대폰 소리(미디어 음량)를 올리세요`);setTimeout(()=>{const c=$("sheetBox").querySelector(".flcap");if(c)c.outerHTML=flCapHTML()},600)},120)};
     if($("flSim"))$("flSim").onclick=()=>{if(demo){clearInterval(demo.t);demo=null;$("flDemo").hidden=true;$("flSim").innerHTML="▶ 미리 돌려 보기 <small>1분 = 1초</small>";return}
       const st0=flowState(x,new Date(x.date+"T"+x.start+":00").getTime(),true);if(!st0)return;const box=$("flDemo"),t0=Date.now(),A=st0.st;let pi=-2,pre={};box.hidden=false;$("flSim").innerHTML="■ 멈추기";
       demo={t:setInterval(()=>{const vnow=A+(Date.now()-t0)*60,s2=flowState(x,vnow,true);if(!s2)return;box.innerHTML=`<div class="fldmt">미리 보기 · ${fmtHM(vnow)}</div>`+flowBoxHTML(s2);
-        if(pi!==-2&&s2.i!==pi&&s2.i>=0)flowAlert(s2.cur.s.al,`(미리 보기) ${s2.cur.s.n} 시작`);if(s2.cur&&s2.left<=60000&&s2.cur.d>90000&&!pre[s2.i]){pre[s2.i]=1;flowAlert(s2.cur.s.al,`(미리 보기) ${s2.cur.s.n} 1분 남음`)}pi=s2.i;
+        if(pi!==-2&&s2.i!==pi&&s2.i>=0)flowAlert(s2.cur.s.al,`(미리 보기) ${s2.cur.s.n} 시작`);if(s2.cur&&s2.left<=60000&&s2.cur.d>90000&&!pre[s2.i]){pre[s2.i]=1;flowAlert(s2.cur.s.al,`(미리 보기) ${s2.cur.s.n} 1분 남음`,"pre")}pi=s2.i;
         if(s2.i<0){clearInterval(demo.t);demo=null;$("flSim").innerHTML="▶ 다시 돌려 보기 <small>1분 = 1초</small>";box.innerHTML+=`<p class="note">미리 보기를 마쳤습니다.</p>`}},250)}};
     $("flMgr").onclick=()=>flowMgr(()=>flowSheet(x,back))};paint()}
 var fmtHM=ms=>{const d=new Date(ms);return`${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`};

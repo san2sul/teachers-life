@@ -20,7 +20,7 @@ main{max-width:min(47.5rem,100%);margin:0 auto;padding:16px 16px 60px;display:fl
 .hero h1{margin:0;font-size:1.35rem}.hero p{margin:6px 0 0;opacity:.9;font-size:.92rem}
 nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
 nav.toc b{display:block;margin-bottom:6px}
-nav.toc ol{margin:0;padding-left:1.4em;columns:2;column-gap:20px;font-size:.92rem}
+nav.toc ol{margin:0;padding-left:0;list-style:none;columns:2;column-gap:20px;font-size:.92rem}nav.toc .tn{display:inline-block;min-width:2.2em;color:var(--muted);font-variant-numeric:tabular-nums}nav.toc li{break-inside:avoid}
 @media (max-width:520px){nav.toc ol{columns:1}}
 nav.toc a{color:var(--accent);text-decoration:none}
 section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:6px 18px 14px}
@@ -41,14 +41,78 @@ mark{background:#ffe08a;color:inherit;border-radius:3px}
 .foot{text-align:center;color:var(--muted);font-size:.8rem}
 @media print{.top,nav.toc{display:none}section{break-inside:avoid-page;border:0}}
 .menutbl td:first-child,.menutbl th:first-child{white-space:nowrap;font-weight:700;vertical-align:top}.tabs-desc{margin:6px 0;padding-left:18px}.tabs-desc li{margin:4px 0}
+.guide{display:flex;flex-direction:column;gap:10px;margin:8px 0}
+.gstage{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.gstage>h3{margin:0;padding:9px 14px;background:var(--soft);color:var(--accent);font-size:1rem;display:flex;align-items:center;gap:8px}.gstage>h3 small{font-weight:400;color:var(--muted);font-size:.8rem}
+.gsteps{list-style:none;margin:0;padding:6px 12px 10px;counter-reset:g}
+.gsteps>li{counter-increment:g;position:relative;padding:8px 0 8px 38px;border-top:1px dashed var(--line);margin:0}.gsteps>li:first-child{border-top:0}
+.gsteps>li::before{content:counter(g);position:absolute;left:0;top:9px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.gsteps b.gt{display:block;font-size:.98rem}.gsteps p{margin:2px 0;font-size:.92rem}.gsteps .gm{font-size:.82rem}.gsteps .gm a{color:var(--accent);font-weight:700;text-decoration:none}
+.gday{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:6px;margin:6px 0 2px}.gday div{background:var(--bg);border-radius:10px;padding:6px 10px;font-size:.85rem}.gday b{display:block;color:var(--accent)}
 </style>
 </head>
 <body>
 <div class="top"><input type="search" id="q" placeholder="도움말 찾기 (예: 서명, 잠금, 동기화)" aria-label="도움말 찾기"><button type="button" id="prt">인쇄</button><button type="button" id="cls" hidden>닫기</button></div>
 <main>
-  <div class="hero"><h1>교사의 생활 도움말</h1><p id="heroV">출석·시간표·연락·일정·수행평가 서명·관찰 기록을 한 앱에서. 처음 쓰는 분은 1번부터 차례로 읽어 보세요.</p></div>
+  <div class="hero"><h1>교사의 생활 도움말</h1><p id="heroV">출석 · 시간표 · 진도 · 수업 흐름 · 수업 관찰 · 평가와 서명 · 연락 · 생활 기록을 한 앱에서. 처음 쓰는 분은 <b>0. 앱 사용 순서</b>부터 보세요.</p></div>
   <nav class="toc" id="toc"><b>목차</b><ol id="tocL"></ol></nav>
   <div class="empty hide" id="none">찾는 내용이 없습니다. 다른 낱말로 찾아보세요.</div>
+
+<section id="guide" data-since="5.79"><h2>0. 앱 사용 순서 한눈에</h2>
+<p>아래 메뉴는 <b>오늘 · 시간표 · 출석 · 연락 · 기록</b> 다섯 가지이고, 설정은 오른쪽 위 <b>⚙</b>입니다. 선생님의 하루 흐름대로 <b>처음 한 번 준비 → 매일 아침 → 수업 시작 → 수업 중 → 수업 뒤 → 필요할 때 → 주 · 학기 정리</b> 순서로 정리했습니다. 단계마다 ‘자세히’를 누르면 그 기능 설명으로 갑니다.</p>
+<div class="gday"><div><b>오늘</b>하루 수업 · 할 일 · 연락할 학생 · 지금 수업</div><div><b>시간표</b>시간표 · 수업 칸 · 📘 진도</div><div><b>출석</b>출석부 · 수업 관찰 · 출석 통계</div><div><b>연락</b>결석 학생 · 골라 연락 · 교직원 · 직접 입력</div><div><b>기록</b>평가 · 생활/업무/일상 기록 · 학생 정보</div></div>
+<div class="guide">
+
+<div class="gstage"><h3>① 처음 한 번 준비 <small>학기 초 15~30분</small></h3><ol class="gsteps">
+<li><b class="gt">앱 열고 홈 화면에 추가</b><p>아이폰은 Safari → 공유(□↑) → 홈 화면에 추가, 안드로이드는 Chrome → ⋮ → 앱 설치. 처음 열면 이름 → 학년도 · 학기 → 학급과 명단 → 시간표를 한 화면씩 안내합니다.</p><p class="gm"><a href="#start">자세히 · 1장</a></p></li>
+<li><b class="gt">사용 교사 이름 · 학년도 · 학기</b><p><span class="path">⚙ 설정 → 사용 교사</span>, <span class="path">⚙ 설정 → 적용 기간 (학년도 · 학기)</span>. 출력물에 이름이 들어가고, 학기를 바꾸면 그 학기 학급 · 시간표로 바뀝니다.</p><p class="gm"><a href="#me">4-0장</a> · <a href="#period">4-1장</a></p></li>
+<li><b class="gt">학급 · 학생 명단 · 연락처</b><p><span class="path">⚙ 설정 → 학생 명단 · 연락처</span>(학급 이름은 <span class="path">학급 정보 · 문자 문구</span>)에 ‘10101 김가람’처럼 붙여 넣거나 엑셀로 가져옵니다. 학생 · 학부모 전화번호를 넣어 두면 결석 연락이 한 번에 됩니다.</p><p class="gm"><a href="#set">자세히 · 4장</a></p></li>
+<li><b class="gt">시간표 넣기 · 학기 시작일 · 종료일</b><p><span class="path">시간표 → ＋ 새로</span> 뒤 칸을 눌러 과목 · 학급을 넣거나 컴시간 화면 캡처 · 엑셀로 한 번에 넣습니다. <span class="path">시간표 → 시간 설정 · 학기</span>에 <b>학기 종료일</b>을 넣어 두면 진도의 남은 수업을 정확히 셉니다.</p><p class="gm"><a href="#tt">자세히 · 8장</a></p></li>
+<li><b class="gt">교과마다 진도표 만들기</b><p><span class="path">시간표 → 📘 진도 → 진도표 만들기</span>. ‘1. 힘과 운동 6’처럼 단원 이름과 차시 수를 한 줄씩 쓰거나, <b>📥 엑셀 양식</b>을 받아 채워 올립니다.</p><p class="gm"><a href="#progress">자세히 · 진도 관리</a> · <a href="#pnxl">진도표 엑셀</a></p></li>
+<li><b class="gt">수업 흐름 기본 틀 정하기 (선택)</b><p><span class="path">시간표 → 📘 진도</span> 아래 ‘수업 흐름 기본 틀’에서 교과마다 고르거나, <span class="path">⏱ 수업 흐름 틀 → ＋ 새 틀</span>로 도입 · 전개 · 정리 시간을 직접 설계합니다. 특별한 차시는 진도표에서 차시를 눌러 따로 붙입니다.</p><p class="gm"><a href="#flow">자세히 · 수업 흐름</a></p></li>
+<li><b class="gt">휴대폰 · 컴퓨터 함께 쓰기 · 백업</b><p><span class="path">⚙ 설정 → 구글 로그인 · 기기 연동</span>을 켜면 두 기기가 같은 자료를 씁니다. 켜지 않으면 가끔 <b>백업 파일 저장</b>을 해 두세요.</p><p class="gm"><a href="#sync">자세히 · 2장</a> · <a href="#backup">13장</a></p></li>
+</ol></div>
+
+<div class="gstage"><h3>② 매일 아침 <small>1분</small></h3><ol class="gsteps">
+<li><b class="gt">오늘 화면 훑기</b><p><b>오늘</b> 화면에 오늘 수업과 출석 체크 상태, 연락할 결석 학생, 서명 마감, 할 일 · 일정이 모입니다.</p><p class="gm"><a href="#todo">자세히 · 10장</a></p></li>
+<li><b class="gt">오늘 수업의 수업 흐름 미리 보기</b><p>오늘 수업마다 붙은 <b>⏱ 표시</b>를 누르면 그 수업에 쓸 틀과 단계마다 시각이 보입니다. 이 수업에 맞지 않으면 <b>끄기</b>, 다른 틀이면 <b>틀 바꾸기</b>, 이번만 다르면 <b>이 수업만 고치기</b>. 처음이라면 <b>🔔 알림 시험</b>으로 소리를 확인하세요.</p><p class="gm"><a href="#flow">자세히 · 수업 흐름</a></p></li>
+</ol></div>
+
+<div class="gstage"><h3>③ 수업 시작 <small>교실에 들어가서</small></h3><ol class="gsteps">
+<li><b class="gt">지금 수업 카드 → 출석 체크</b><p>수업 시간에 앱을 열면 맨 위에 <b>지금 수업</b> 카드가 나옵니다. 누르면 그 반 출석부가 열리고, 결석한 학생 칸만 눌러 바꾼 뒤 <b>잠그기</b>.</p><p class="gm"><a href="#att">자세히 · 5장</a></p></li>
+<li><b class="gt">수업 흐름 확인</b><p>수업 시작 시각에 맞춰 흐름이 저절로 시작합니다. 늦게 시작했으면 카드의 <b>⋯ → 지금부터 다시 시작</b>. 흐름이 도는 동안 화면이 꺼지지 않으니 교탁에 세워 두세요.</p><p class="gm"><a href="#flow">자세히</a></p></li>
+<li><b class="gt">오늘 할 차시 확인</b><p>출석부에 <b>📘 오늘 할 차시</b>가 나옵니다(진도표가 있을 때).</p><p class="gm"><a href="#progress">자세히</a></p></li>
+</ol></div>
+
+<div class="gstage"><h3>④ 수업 중</h3><ol class="gsteps">
+<li><b class="gt">수업 흐름 따라가기</b><p>카드에 지금 단계 · 남은 시간 · 다음 단계가 나오고, 단계 끝나기 1분 전과 바뀔 때 소리 · 진동으로 알립니다. 시간이 더 필요하면 <b>＋2분</b>, 넘어가려면 <b>다음 ›</b>, 되돌아가려면 <b>‹ 이전</b>. 수업 끝을 넘으면 <b>남은 단계 줄여 맞추기</b>.</p><p class="gm"><a href="#flow">자세히</a></p></li>
+<li><b class="gt">수업 도구</b><p>카드의 <b>🧰 수업 도구</b>로 타이머 · 발표자 뽑기 · 모둠 나누기. 도구를 정해 둔 흐름 단계는 시작할 때 저절로 열립니다.</p><p class="gm"><a href="#ctool">자세히</a></p></li>
+<li><b class="gt">수업 관찰 빠르게 체크</b><p><span class="path">출석 → 수업 관찰</span>에서 빠른 체크 항목(적극 참여 등)을 고른 뒤 학생 칸을 누르면 바로 들어갑니다. ▦ 격자 · ☰ 목록으로 보기를 바꿉니다. 잘못 눌렀으면 학생 기록 창 위쪽에서 그 항목만 <b>−1 · ✕</b>.</p><p class="gm"><a href="#obs">자세히 · 6장</a></p></li>
+<li><b class="gt">수업 끝나기 전 진도 기록</b><p>출석부의 📘 오늘 할 차시에서 <b>✓ 마침 · 반만</b>. 또는 <span class="path">시간표 → 수업 칸</span>의 진도 목록에서 차시마다 마침 · 반만 · 안 함.</p><p class="gm"><a href="#pncell">자세히</a></p></li>
+</ol></div>
+
+<div class="gstage"><h3>⑤ 수업 뒤 <small>쉬는 시간 · 공강</small></h3><ol class="gsteps">
+<li><b class="gt">결석 학생 연락</b><p><span class="path">연락 → 결석 학생</span>에서 학생 · 학부모에게 이름이 들어간 문자를 차례로 보내고 <b>✓ 연락 완료</b>.</p><p class="gm"><a href="#call">자세히 · 7장</a></p></li>
+<li><b class="gt">수업 메모 · 진도 정리</b><p><span class="path">시간표 → 수업 칸</span>에서 <b>✎ 직접 입력</b>(쪽수 · 활동, 1-3처럼 쓰면 진도표와 이어짐), 수업 메모 · 과제 · 면담 약속. 계획에 없던 수업은 <b>＋ 진도표에 없는 차시 넣기</b>. 위쪽에서 계획과 실제를 비교합니다.</p><p class="gm"><a href="#pnfree">자세히</a></p></li>
+</ol></div>
+
+<div class="gstage"><h3>⑥ 필요할 때</h3><ol class="gsteps">
+<li><b class="gt">평가 만들고 점수 넣기</b><p><span class="path">기록 → 평가 → 평가 점수 → ＋ 평가 만들기</span>: 종류 · 학급 → 미응시 · 미제출 → 점수(엑셀 붙여넣기 가능).</p><p class="gm"><a href="#tkflow">자세히 · 평가 3단계</a></p></li>
+<li><b class="gt">학생 자필 서명 받기</b><p><span class="path">기록 → 평가 → 학생 서명</span>: 점수 확인 · 동의서 등에 서명을 받고 서명 전표를 엑셀 · PDF로.</p><p class="gm"><a href="#eval">자세히 · 11장</a></p></li>
+<li><b class="gt">생활 · 상담 · 업무 기록</b><p><span class="path">기록 → 기록</span>의 생활 기록(상담 · 학교생활), 업무 기록, 일상 기록. 사진 · 녹음을 붙이고 다른 선생님께 전달합니다.</p><p class="gm"><a href="#lifelog">자세히</a> · <a href="#write">6-1장</a></p></li>
+<li><b class="gt">한 학생을 모아 보기</b><p><span class="path">기록 → 학생 정보</span>에서 찾거나, 출석부에서 학생 칸을 <b>길게 누르면</b> 출석 · 관찰 · 평가 · 상담이 날짜순으로 모인 학생 화면이 열립니다.</p><p class="gm"><a href="#stuview">자세히</a></p></li>
+<li><b class="gt">교직원 · 학부모 골라 연락</b><p><span class="path">연락 → 골라 연락 · 교직원 연락 · 직접 입력</span>.</p><p class="gm"><a href="#call">자세히 · 7장</a></p></li>
+</ol></div>
+
+<div class="gstage"><h3>⑦ 주 · 월 · 학기 정리</h3><ol class="gsteps">
+<li><b class="gt">진도 현황 · 남은 수업</b><p><span class="path">시간표 → 📘 진도</span>: 반별 진도 막대, 늦은 반, 남은 수업 시간이 모자라면 경고. <b>처음 계획과 비교</b>로 추가 · 바뀐 차시를 봅니다. 수업 진도 기록부는 엑셀로.</p><p class="gm"><a href="#progress">자세히</a></p></li>
+<li><b class="gt">출석 통계 · 나이스 요약</b><p><span class="path">출석 → 출석 통계</span>: 기간별 출석률, 결석 많은 학생, 나이스 입력용 출결 요약.</p><p class="gm"><a href="#stat">자세히 · 12장</a></p></li>
+<li><b class="gt">세특 초안</b><p><span class="path">출석 → 수업 관찰 → 학생 → 한눈에 보기 · 세특</span>에서 관찰 기록으로 초안을 만들고 나이스 byte를 확인합니다.</p><p class="gm"><a href="#obs">자세히 · 6장</a></p></li>
+<li><b class="gt">백업</b><p><span class="path">⚙ 설정 → 백업 · 저장 공간</span>에서 백업 파일 저장(성적 · 상담 기록을 빼고 저장도 가능). 학년도가 끝나면 <span class="path">⚙ 설정 → 학년도 마감 · 보관</span>.</p><p class="gm"><a href="#backup">자세히 · 13장</a></p></li>
+</ol></div>
+</div>
+<div class="tip">화면마다 오른쪽 위 <b>ⓘ 도움말</b>을 누르면 그 화면 설명으로 바로 옵니다. 위쪽 찾기 칸에 ‘진도’, ‘서명’, ‘수업 흐름’처럼 쓰면 관련 설명만 모아 봅니다.</div>
+</section>
 
 <section id="start" data-since="1.0"><h2>1. 처음 시작하기</h2>
 <div class="tip"><b>처음 설정 안내 (5.16)</b>: 처음 앱을 열면 <b>선생님 이름 → 학년도·학기 → 학급과 학생 명단 → 시간표</b>를 한 화면씩 안내합니다. 명단은 ‘10101 김가람’처럼 붙여 넣거나 엑셀·CSV로 가져오고, ‘1 김가람’처럼 번호와 이름만 적으면 학급 이름(예: 1학년 3반)으로 학번(10301)을 만들어 줍니다. 다른 기기에서 쓰던 자료가 있으면 첫 화면 아래 ‘구글 계정에서’ 또는 ‘백업 파일에서’를 누르세요. 다시 보려면 <span class="path">설정 → 나와 계정 → 처음 설정 안내</span>.</div>
@@ -71,6 +135,7 @@ mark{background:#ffe08a;color:inherit;border-radius:3px}
 <tr><td>출석</td><td>수업 시간에 하는 일. 맨 위 <b>학급 이름</b>을 눌러 학급을 바꿉니다. 위쪽 세 단추로 오갑니다.
 <ul class="tabs-desc">
 <li><b>출석부</b>: <b>‹ 날짜 ›</b>로 날짜를 옮기고 시간 · 교과를 정해 <b>＋ 출석 체크 시작</b>. 학생 칸을 누르면 <b>출석 ↔ 결석</b>, <b>전원 출석 / 전원 결석</b>, ▦(격자) · ☰(목록) 보기, <b>잠그기</b>, <b>🧰 도구</b>(타이머 · 뽑기 · 모둠). 학생 칸을 <b>길게 누르면</b> 그 학생의 <a href="#stuview">학생 정보</a>로 갑니다.</li>
+<li><b>잘못 누른 관찰 빼기 (5.79)</b>: 학생 기록 창 위쪽 ‘○월 ○일에 기록한 항목’에서 항목마다 <b>−1</b>(여러 번 누른 것 1회만) · <b>✕</b>(그 항목만)로 뺍니다. 바로 저장되고 ‘되돌리기’로 되살립니다. 그 날 기록 전체를 지우는 것은 맨 아래 ‘이 날 기록 모두 삭제’입니다.</li>
 <li><b>수업 관찰</b>: 출석부처럼 <b>▦(격자) · ☰(목록)</b>으로 명단 보기를 바꿉니다(5.75, 격자는 학생 칸에 그 날 기록한 항목 표시). 학생을 누르거나 <b>빠른 체크</b>로 관찰 항목(적극 참여 · 과제 미제출 등)을 붙이고, 고른 항목을 <b>모두에게 넣기 · 모두에서 빼기</b>. 글 · 사진 · 녹음, <b>한눈에 보기 · 세특</b>, 엑셀 받기.</li>
 <li><b>출석 통계</b>: 기간 · 학급별 출석률, 결석 많은 학생, 나이스 입력용 출결 요약, 엑셀 · 메일로 받기.</li>
 </ul></td></tr>
@@ -192,7 +257,9 @@ mark{background:#ffe08a;color:inherit;border-radius:3px}
 <li><b>미리 확인 (5.78)</b>: <b>오늘 수업</b> 목록의 ⏱ 표시나 <span class="path">시간표 → 수업 칸 → ⏱ 수업 흐름</span>을 누르면 수업 전에도 그 수업에 쓸 틀과 단계마다 시각을 봅니다. <b>▶ 미리 돌려 보기</b>(1분 = 1초)로 지금 수업 카드가 어떻게 바뀌고 언제 알리는지 보고, <b>🔔 알림 시험</b>으로 휴대폰에서 진동 · 소리가 나는지 확인합니다.</li>
 <li><b>켜기 · 끄기</b>: 같은 창 맨 위 <b>켜기 / 끄기</b>로 수업 전이든 수업 중이든 그 수업만 켜고 끕니다(다른 수업은 그대로). 꺼 둔 수업은 오늘 수업 · 시간표 칸 · 지금 수업 카드에 ‘꺼짐’으로 보입니다.</li>
 <li><b>바꾸기 · 고치기</b>: <b>틀 바꾸기</b>(다른 틀로), <b>이 수업만 고치기</b>(단계 · 시간을 이 수업에만 — 원래 틀은 그대로, ‘내 틀로도 저장’ 가능), <b>틀 고치기</b>(그 틀을 쓰는 모든 수업에 적용, 기본 틀은 내 틀로 저장해 고침). 수업 중에도 그대로 쓸 수 있고, 바꾸면 지금 수업 카드가 바로 따라 바뀝니다. 수업마다 정한 것은 휴대폰과 컴퓨터가 함께 씁니다(구글 연동).</li>
-<li><b>수업 중</b>: 시간표의 수업 시작 시각에 맞춰 저절로 시작합니다(늦게 시작했으면 ⋯ → 지금부터 다시 시작). 지금 수업 카드에 단계 · 남은 시간 · 진행 막대 · 다음 단계가 나오고, 출석 체크 화면처럼 카드가 안 보일 때는 아래 작은 ⏱ 표시로 보입니다. 단계 끝나기 <b>1분 전</b>과 <b>단계가 바뀔 때</b> 알리고, 도구를 정해 둔 단계가 시작되면 그 도구가 열립니다(타이머는 그 단계 시간으로 맞춰짐). 흐름이 도는 동안에는 화면이 꺼지지 않게 합니다.</li>
+<li><b>수업 중</b>: 시간표의 수업 시작 시각에 맞춰 저절로 시작합니다(늦게 시작했으면 ⋯ → 지금부터 다시 시작). 지금 수업 카드에 단계 · 남은 시간 · 진행 막대 · 다음 단계가 나오고, 출석 체크 화면처럼 카드가 안 보일 때는 아래 작은 ⏱ 표시로 보입니다. 단계 끝나기 <b>1분 전</b>과 <b>단계가 바뀔 때</b> 알리고, 도구를 정해 둔 단계가 시작되면 그 도구가 열립니다(타이머는 그 단계 시간으로 맞춰짐). 이미 진행 중인 단계라면 카드의 <b>⏱ 타이머 열기</b>(또는 🎯 · 👥) 단추나 ⋯ 창의 단계별 열기 단추로 엽니다. 흐름이 도는 동안에는 화면이 꺼지지 않게 합니다.</li>
+<li><b>이전 단계로 (5.79)</b>: 지금 수업 카드의 <b>‹ 이전</b>을 누르면 앞 단계를 지금부터 다시 합니다(남은 계획 시간, 없으면 2분). ⋯ 창에서는 지난 단계마다 <b>↩ 돌아가기</b>로 그 단계로 돌아가고, 돌아간 뒤 −1 · ＋1로 그 단계 시간을 고칩니다. 뒤 단계는 그만큼 밀리거나 당겨집니다.</li>
+<li><b>알림 소리 · 진동 (5.79)</b>: 브라우저는 화면을 한 번 누른 뒤에만 소리를 낼 수 있어, 앱을 열고 아무 곳이나 한 번 누르면 소리가 준비됩니다(⋯ 창에 ‘🔈 소리 준비됨’). 소리는 또렷한 세 음 차임으로, 단계가 바뀔 때는 두 번 울립니다. 아이폰은 웹 앱 진동을 막아 두어 ‘진동’ 알림도 소리로 알립니다. 휴대폰 미디어 음량을 올려 두고, 수업 전에 <b>🔔 알림 시험</b>으로 확인하세요.</li>
 <li><b>시간이 밀릴 때</b>: <b>＋2분</b>을 누르면 뒤 단계가 그만큼 밀리고, 수업 끝을 넘으면 경고가 나옵니다. <b>남은 단계 줄여 맞추기</b>를 누르면 꼭 지킬 단계(예: 정리)는 그대로 두고 나머지를 줄여 수업 끝에 맞춥니다. <b>다음 단계 ›</b>로 바로 넘어가고, ⋯ 창에서 단계마다 −1 · ＋1분으로 고칩니다.</li>
 <li>휴대폰 화면이 꺼지거나 다른 앱을 쓰는 동안에는 알림이 늦을 수 있습니다. 교탁에 세워 두거나 교실 컴퓨터에 띄워 두고 쓰세요.</li></ul></div>
 <div class="tip" id="ctool"><b>5.66 수업 도구 (타이머 · 발표자 뽑기 · 모둠 나누기)</b>: 수업 시간에 앱을 열면 나오는 <b>지금 수업</b> 카드의 <b>🧰 수업 도구</b>, 또는 출석 체크 화면의 <b>🧰 도구</b>를 누르면 화면 전체로 열립니다. 교실 TV · 프로젝터에 띄워 쓰기 좋게 글씨가 큽니다.
@@ -697,7 +764,7 @@ var vn=function(v){return String(v||"0").split(".").map(function(n){return parse
 var seen="";try{seen=(host&&host.seen)||localStorage.getItem("att-app-helpseen")||""}catch(e){}
 /* 목차 */
 var secs=[].slice.call(document.querySelectorAll("main section"));
-$("tocL").innerHTML=secs.map(function(s){var h=s.querySelector("h2");return '<li><a href="#'+s.id+'">'+h.textContent.replace(/^\d+\.\s*/,"")+'</a></li>'}).join("");
+$("tocL").innerHTML=secs.map(function(s){var h=s.querySelector("h2");var t=h.textContent.trim(),m=t.match(/^(\d+(?:-\d+)?)\.\s*/);return '<li><a href="#'+s.id+'">'+(m?'<span class="tn">'+m[1]+'</span>':'<span class="tn">·</span>')+t.replace(/^\d+(?:-\d+)?\.\s*/,"").replace(/<[^>]*>/g,"")+'</a></li>'}).join("");
 /* 새로 바뀐 부분 표시: 마지막으로 본 버전 이후에 바뀐 절 */
 if(seen)secs.forEach(function(s){if(vn(s.dataset.since)>vn(seen)){var h=s.querySelector("h2");h.insertAdjacentHTML("beforeend",' <span class="new">새로 바뀜</span>')}});
 /* 버전 기록 (앱에서 받아 옴) */
