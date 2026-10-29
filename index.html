@@ -542,6 +542,10 @@ html[data-lay="one"] .wrap{max-width:720px}
 .crow .head .who{flex:1 1 auto}
 .btn.dbtn{border:1.5px solid var(--line);background:var(--paper);min-height:38px;padding:0 12px;font-size:.84rem;flex:0 0 auto;width:auto;white-space:nowrap}
 .btn.dbtn.ok2{border-color:var(--present);color:var(--present);background:var(--paper)}
+.cbulk{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 10px;margin:0 0 10px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-m)}.cbulk .chk{margin:0;font-size:.875rem}.cbulk .cbn{flex:1 1 auto;font-size:.8125rem;color:var(--muted)}.cbulk .cbb{display:flex;gap:6px}.cbulk .btn:disabled{opacity:.45}
+.cbulk+.crow{border-top:0;padding-top:0}
+.cpick{display:flex;align-items:center;flex:0 0 auto;padding:4px 2px;cursor:pointer}.cpick input{width:20px;height:20px;margin:0;accent-color:var(--accent)}
+.crow .dbtns{display:flex;gap:6px;flex:0 0 auto;align-items:center}.btn.dbtn.dx{color:var(--muted)}.dtag.dx{color:var(--muted)}.crow.skip .who small{color:var(--muted)}
 .badge.dn{background:var(--accent-soft);color:var(--accent)}
 .dtag{display:inline-block;margin-left:6px;font-size:.75rem;font-weight:700;color:var(--present);font-family:inherit}
 .crow{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px dashed var(--line)}
@@ -1167,7 +1171,7 @@ body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
 .nowgo{flex:1;min-width:0;display:flex;align-items:center;gap:10px;text-align:left;border:2px solid var(--present);background:var(--present-soft,var(--bg));color:var(--ink);border-radius:var(--r-m);padding:12px 14px;font:inherit;cursor:pointer;min-height:64px}
 .nowgo .nhd{width:12px;height:12px;border-radius:50%;background:var(--present);flex:none;animation:nhp 1.6s infinite}
 @keyframes nhp{50%{opacity:.35}}
-.nowgo .nht{flex:1;min-width:0}.nowgo .nht b{display:block;font-size:1.05rem}.nowgo .nht small{display:block;color:var(--muted);font-size:.8rem}
+.nowgo .nht{flex:1;min-width:0}.nowgo .nht b{display:block;font-size:1.05rem}.nowgo .nht small{display:block;color:var(--muted);font-size:.8rem;word-break:keep-all}
 .nowgo .nha{flex:none;font-weight:700;color:var(--present);white-space:nowrap}
 .nhx{flex:none;width:44px;border:1px solid var(--line);background:var(--card,var(--paper));border-radius:var(--r-m);color:var(--muted);font:inherit;cursor:pointer}
 .abgo{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--warn-soft,var(--bg));border-radius:var(--r-m);padding:10px;margin-bottom:8px;font-size:.88rem}
@@ -1436,6 +1440,8 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 #ttPnBtn[aria-pressed="true"]{background:var(--accent);color:#fff}
 
 /* 5.74 진도 직접 입력 · 계획 비교 */
+.pnprev{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:6px 10px;margin:6px 0;min-width:0}.pnprev small{display:block;color:var(--muted);font-size:.75rem}.pnprev b{display:block;font-size:.875rem;font-weight:600;line-height:1.4}.pnprev .pnpm{display:block;font-size:.8125rem;color:var(--muted);line-height:1.4;margin-top:2px;white-space:pre-wrap}
+.tdl .tdn small.tdpn{display:flex;flex-wrap:wrap;gap:0 6px;color:var(--ink,inherit);font-size:.8125rem;margin-top:2px}.tdpn .tdpv{color:var(--muted)}.tdpn .tdpt{font-weight:600}
 .pncmp{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 8px}.pncmp>div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 8px;min-width:0}
 .pncmp small{display:block;color:var(--muted);font-size:.6875rem}.pncmp b{display:block;font-size:.8125rem;font-weight:600;line-height:1.35}
 .pncmp>div.ok{border-color:#1f6a35}.pncmp>div.ok b{color:#1f6a35}.pncmp>div.df{border-color:var(--warn)}
@@ -1659,7 +1665,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
   <div id="c-abs" class="view-sub" hidden>
     <section class="card" id="bulk"></section>
     <section class="card"><div class="hd"><h2>결석 학생</h2><span class="badge" id="abCount"></span></div><div id="abList"></div>
-      <p class="note" style="margin-top:10px">연락을 마친 학생은 ‘✓ 연락 완료’를 누르세요. 출결은 결석 그대로 저장되고, 연락 알림(아래 연락 버튼의 숫자)과 한꺼번에 보내기에서만 빠집니다.</p></section>
+      <p class="note" style="margin-top:10px">연락을 마친 학생은 ‘✓ 연락 완료’, 연락할 필요가 없는 학생(미리 알린 체험학습 · 병원 등)은 ‘연락 제외’를 누르세요. 출결은 결석 그대로 저장되고, 연락 알림(아래 연락 버튼의 숫자)과 한꺼번에 보내기에서만 빠집니다.</p></section>
     <section class="card" id="abDoneBox" hidden><div class="hd"><h2>연락 완료</h2><span class="badge dn" id="abDoneCnt"></span></div><div id="abDone"></div></section>
   </div>
 
@@ -1987,7 +1993,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.80.3", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.81.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1999,6 +2005,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.81.0",date:"2026-10-29",items:["지난 시간 진도 함께 보기: 오늘 수업 목록 · 지금 수업 단추 · 출석부 진도 칸 · 학급 정보(시간표 → 수업 칸)에 그 반 그 교과의 바로 전 수업 진도(차시 · 반만 여부)와 지난 수업 메모를 오늘 할 차시와 함께 보여 줌. 진도표가 없으면 수업 메모의 진도 글로","결석 학생 연락: 학생마다 ‘✓ 연락 완료’ 옆에 ‘연락 제외’ 단추(미리 알린 체험학습 · 병원 등 연락할 필요가 없을 때). 눌러도 연락 버튼의 빨간 숫자 · 오늘 화면 연락할 학생 · 한꺼번에 보내기에서 빠지고, 출결은 결석 그대로. 여러 명을 골라(□ 모두 고르기) 한꺼번에 연락 완료 · 연락 제외, ‘남은 N명 모두 제외’, ‘제외 취소’도 있음"]},
   {v:"5.80.3",date:"2026-10-29",items:["수업 흐름 틀 만들기: 단계 시간(분) 칸을 자판을 띄우지 않는 고르기 목록으로 바꿈 — 숫자 칸을 거치면 컴퓨터(윈도우)·아이폰에서 한글 입력이 영문으로 바뀌던 문제. 이제 틀 이름 → 단계 이름 → 다음 단계로 옮겨 가도, ‘＋ 단계 넣기’를 눌러도 한글 상태가 이어짐"]},
   {v:"5.80.2",date:"2026-10-29",items:["수업 흐름 틀 만들기: ‘＋ 단계 넣기’를 누를 때 단계 칸에 있으면 그 단계 바로 다음 줄에, 아니면 맨 끝에 넣음(새 단계 칸에 바로 커서). 입력칸을 한국어 입력으로(안드로이드 등에서 한글 자판, 아이폰은 마지막에 쓴 자판을 따름)"]},
   {v:"5.80.1",date:"2026-10-29",items:["출석부: 화면을 밀어 올리면 날짜 아래 출석 체크 시간 줄(11:00 3교시 · ＋ 체크 추가)이 화면 위에 걸려 따라오던 것 — 이제 화면과 함께 올라감"]},
@@ -2145,7 +2152,7 @@ function today(){return ymd(new Date())}
 function nowHM(){const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}`}
 function addDays(s,n){const[y,m,d]=s.split("-").map(Number);return ymd(new Date(y,m-1,d+n))}
 const sesOk=s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"");
-function sesNorm(s){return {id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{}),...(s.edAt?{edAt:+s.edAt}:{})}}
+function sesNorm(s){return {id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(cleanDx(s.dx,s.done)?{dx:cleanDx(s.dx,s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{}),...(s.edAt?{edAt:+s.edAt}:{})}}
 function fresh(){return{v:3,cls:"",roster:[],phones:{},emails:{},teachers:[],msg:DEFAULT_MSG,sessions:[]}}
 const EMAIL_RE=/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/;
 function isEmail(v){return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(String(v||"").trim())}
@@ -2335,7 +2342,10 @@ function absent(){const s=R();return s&&sesOn(s)?D.roster.filter(([id])=>!s.p[id
 /* 결석생 중 아직 연락하지 않은 학생 (출석 기록은 그대로 두고 연락 완료만 따로 표시) */
 function isDone(s,id){return !!(s&&s.done&&s.done[id])}
 function pending(){const s=R();return absent().filter(([id])=>!isDone(s,id))}
-function setDone(s,ids,on){if(!s)return;if(!s.done)s.done={};ids.forEach(id=>{if(on)s.done[id]=Date.now();else delete s.done[id]});if(!Object.keys(s.done).length)delete s.done;save();renderCall();renderNav();if(view==="att")renderAtt()}
+/* 5.81: 연락 제외 — 연락할 필요가 없는 학생. 연락 완료처럼 연락 알림 숫자 · 한꺼번에 보내기에서 빠지고, 표시만 ‘연락 제외’ (s.dx) */
+function isSkip(s,id){return !!(s&&s.dx&&s.dx[id]&&isDone(s,id))}
+function cleanDx(o,done){if(!o||typeof o!=="object"||!done)return null;const r={};for(const k in o)if(o[k]&&done[k])r[k]=1;return Object.keys(r).length?r:null}
+function setDone(s,ids,on,skip){if(!s)return;if(!s.done)s.done={};if(!s.dx)s.dx={};ids.forEach(id=>{if(on){s.done[id]=Date.now();if(skip)s.dx[id]=1;else delete s.dx[id]}else{delete s.done[id];delete s.dx[id]}});if(!Object.keys(s.done).length)delete s.done;if(!Object.keys(s.dx).length)delete s.dx;save();renderCall();renderNav();if(view==="att")renderAtt()}
 const DOW="일월화수목금토";
 function dow(d){const[y,m,dd]=d.split("-").map(Number);return DOW[new Date(y,m-1,dd).getDay()]}
 function fmtDate(d){if(!d)return"";const[y,m,dd]=d.split("-").map(Number);return `${m}월 ${dd}일`}
@@ -2489,7 +2499,7 @@ function renderAtt(){try{snAllPaint()}catch(e){}try{renderSesBin()}catch(e){}
     const row=document.createElement("div");row.className="st"+(on?" on":"")+(AV==="grid"?" tile":"");row.setAttribute("role","switch");row.setAttribute("aria-checked",on);row.tabIndex=0;
     row.setAttribute("aria-label",`${name} ${sesName(s)} ${on?"출석":"결석"}`);
     if(AV==="grid")row.innerHTML=`<span class="no">${i+1}</span><span class="tnm">${esc(name)}${lowTag(id)}</span><span class="tst">${on?"출석":""}${on?"":!isDone(s,id)?((s.ak||{})[id]||"결석"):((s.ak||{})[id]||"결석")+" · 연락됨"}</span>`;
-    else row.innerHTML=`<span class="no">${i+1}</span><span class="nm">${esc(name)}${lowTag(id)}${snLine(id)}<small>${esc(id)}${!on&&isDone(s,id)?' <b class="dtag">연락 완료</b>':""}</small><span class="dots">${dots}<span class="n">${selDate===today()?"오늘":"이날"} ${n}/${list.length}</span></span></span>
+    else row.innerHTML=`<span class="no">${i+1}</span><span class="nm">${esc(name)}${lowTag(id)}${snLine(id)}<small>${esc(id)}${!on&&isDone(s,id)?(isSkip(s,id)?' <b class="dtag dx">연락 제외</b>':' <b class="dtag">연락 완료</b>'):""}</small><span class="dots">${dots}<span class="n">${selDate===today()?"오늘":"이날"} ${n}/${list.length}</span></span></span>
       <span class="sw"><span class="knob"></span><span class="lab">${on?"출석":((s.ak||{})[id]||"결석")}</span></span>`;
     const tg=()=>{if(s.lock){lockNudge();return}if(s.p[id])delete s.p[id];else{s.p[id]=true;if(s.ak)delete s.ak[id];if(s.ar)delete s.ar[id]}save();renderAtt();renderNav()};
     {let lt=null,lf=false,lx=0,ly=0;row.addEventListener("pointerdown",e=>{lf=false;lx=e.clientX;ly=e.clientY;clearTimeout(lt);lt=setTimeout(()=>{lf=true;try{navigator.vibrate&&navigator.vibrate(30)}catch(_){}const rm=()=>document.removeEventListener("click",sw,true),sw=ev=>{ev.preventDefault();ev.stopPropagation();rm()};document.addEventListener("click",sw,true);document.addEventListener("pointerup",()=>setTimeout(rm,80),{once:true,capture:true});setTimeout(rm,3000);stuOpen(curClass(),id)},600)});
@@ -2549,7 +2559,7 @@ function renderCall(){
   if(seq.key!==k)seq={key:k,i:0};
   const nx=ready[seq.i];
   B.innerHTML=`<h2>한꺼번에 보내기</h2>${ctoHTML()}
-    <p class="note">결석 ${ab.length}명${fin.length?` 중 연락 완료 ${fin.length}명을 빼고, 남은 ${todo.length}명`:""} 중 ${callTo()==="par"?"학부모 번호가":"번호가"} 있는 ${ready.length}명에게 보낼 수 있습니다.</p>
+    <p class="note">결석 ${ab.length}명${fin.length?` 중 ${fin.some(([id])=>isSkip(s0,id))?"연락 완료 · 제외":"연락 완료"} ${fin.length}명을 빼고, 남은 ${todo.length}명`:""} 중 ${callTo()==="par"?"학부모 번호가":"번호가"} 있는 ${ready.length}명에게 보낼 수 있습니다.</p>
     <div class="row2">
       <button class="btn ok${nx?"":" off"}" id="bNext" type="button">${ICON.sms}${nx?`한 명씩 보내기 ${seq.i+1}/${ready.length} · ${esc(nx[1])}`:(ready.length?"한 명씩 보내기 완료 · 처음부터":"한 명씩 보내기")}</button>
     </div>
@@ -2576,13 +2586,14 @@ function renderCall(){
   else if(!todo.length){L.innerHTML=`<div class="empty">결석 학생 ${ab.length}명 모두 연락을 마쳤습니다.</div>`}
   const fmtT=t=>{const d=new Date(t);return `${pad(d.getHours())}:${pad(d.getMinutes())}`};
   const mkRow=([id,name],done)=>{
-    const num=digits(D.phones[id]),off=num.length<8;
-    const row=document.createElement("div");row.className="crow"+(done?" done":"");
-    row.innerHTML=`<div class="head"><span class="who">${esc(name)}<small>${off?(gpOf(id).length?"학생 번호 없음":"번호 없음 · 설정에서 입력"):"학생 "+esc(D.phones[id])}${done?` · ${fmtT(s0.done[id])} 연락 완료`:""}</small></span>
-        <button class="btn dbtn${done?"":" ok2"}" type="button" data-a="done" aria-pressed="${done}">${done?"완료 취소":"✓ 연락 완료"}</button></div>
+    const num=digits(D.phones[id]),off=num.length<8,sk=done&&isSkip(s0,id);
+    const row=document.createElement("div");row.className="crow"+(done?" done":"")+(sk?" skip":"");
+    row.innerHTML=`<div class="head">${done?"":`<label class="cpick" title="${esc(name)} 고르기"><input type="checkbox" data-pick="${esc(id)}" aria-label="${esc(name)} 고르기"></label>`}<span class="who">${esc(name)}<small>${off?(gpOf(id).length?"학생 번호 없음":"번호 없음 · 설정에서 입력"):"학생 "+esc(D.phones[id])}${done?` · ${fmtT(s0.done[id])} ${sk?"연락 제외":"연락 완료"}`:""}</small></span>
+        <span class="dbtns"><button class="btn dbtn${done?"":" ok2"}" type="button" data-a="done" aria-pressed="${done}">${done?(sk?"제외 취소":"완료 취소"):"✓ 연락 완료"}</button>${done?"":`<button class="btn dbtn dx" type="button" data-a="skip" title="연락할 필요가 없는 학생 — 연락 알림에서 뺌">연락 제외</button>`}</span></div>
       ${done||!gpOf(id).length?"":`<div class="gpline">${gpOf(id).map((g,gi)=>`<span class="gpw">${esc(g.r)} <small>${esc(g.p)}</small></span><button class="btn sm ok" type="button" data-gt="${gi}">${ICON.tel}전화</button><button class="btn sm pri" type="button" data-gs="${gi}">${ICON.sms}문자</button>`).join("")}</div>`}
       ${done?"":`<div class="row2"><button class="btn ok${off?" off":""}" type="button" data-a="tel">${ICON.tel}전화</button><button class="btn pri${off?" off":""}" type="button" data-a="sms">${ICON.sms}문자</button><button class="btn" type="button" data-a="copy">문구 복사</button>${D.emails[id]?`<button class="btn" type="button" data-a="mail">${ICON.mail}메일</button>`:""}</div>`}`;
     row.querySelector('[data-a=done]').onclick=()=>{setDone(s0,[id],!done);toast(done?`${name} 학생을 다시 연락할 목록에 넣었습니다`:`${name} 학생 연락 완료 · 출결은 결석 그대로입니다`)};
+    const sb=row.querySelector('[data-a=skip]');if(sb)sb.onclick=()=>{try{rl("contact",{how:"skip"})}catch(e){}setDone(s0,[id],true,true);toast(`${name} 학생은 연락하지 않음(연락 제외) · 출결은 결석 그대로입니다`)};
     if(!done){
       row.querySelector('[data-a=tel]').onclick=()=>{if(off)return need(name,id);go("tel:"+num)};
       row.querySelector('[data-a=sms]').onclick=()=>{if(off)return need(name,id);go(smsHref([num],fill(D.msg,name)))};
@@ -2593,11 +2604,19 @@ function renderCall(){
     }
     return row;
   };
+  /* 5.81: 여러 명 골라 한꺼번에 연락 완료 · 연락 제외 */
+  if(todo.length>1){const bar=document.createElement("div");bar.className="cbulk";bar.id="cBulk";
+    bar.innerHTML=`<label class="chk"><input type="checkbox" id="pickAll"> 모두 고르기</label><span class="cbn" id="pickN">학생을 골라 한꺼번에</span><span class="cbb"><button class="btn sm" type="button" id="pickDone" disabled>✓ 연락 완료</button><button class="btn sm" type="button" id="pickSkip" disabled>연락 제외</button></span>`;L.appendChild(bar)}
   todo.forEach(r=>L.appendChild(mkRow(r,false)));
-  if(todo.length>1){const b=document.createElement("div");b.className="row2";b.style.marginTop="10px";b.innerHTML=`<button class="btn" type="button" id="doneAll">남은 ${todo.length}명 모두 연락 완료</button>`;L.appendChild(b);twoStep(b.firstChild,"정말 모두 완료",()=>{setDone(s0,todo.map(r=>r[0]),true);toast(`${todo.length}명을 연락 완료로 표시했습니다`)})}
-  const F=$("abDone");F.innerHTML="";$("abDoneBox").hidden=!fin.length;$("abDoneCnt").textContent=fin.length+"명";
+  if(todo.length>1){const picked=()=>[...L.querySelectorAll("[data-pick]:checked")].map(i=>i.dataset.pick);
+    const upd=()=>{const n=picked().length;$("pickN").textContent=n?`고른 ${n}명`:"학생을 골라 한꺼번에";$("pickDone").disabled=!n;$("pickSkip").disabled=!n;$("pickDone").textContent=n?`✓ ${n}명 연락 완료`:"✓ 연락 완료";$("pickSkip").textContent=n?`${n}명 연락 제외`:"연락 제외";const a=$("pickAll");a.checked=n===todo.length;a.indeterminate=n>0&&n<todo.length};
+    L.querySelectorAll("[data-pick]").forEach(i=>i.onchange=upd);$("pickAll").onchange=e=>{L.querySelectorAll("[data-pick]").forEach(i=>i.checked=e.target.checked);upd()};
+    $("pickDone").onclick=()=>{const ids=picked();if(!ids.length)return;setDone(s0,ids,true);toast(`${ids.length}명을 연락 완료로 표시했습니다`)};
+    $("pickSkip").onclick=()=>{const ids=picked();if(!ids.length)return;try{rl("contact",{how:"skip",n:ids.length})}catch(e){}setDone(s0,ids,true,true);toast(`${ids.length}명을 연락 제외로 표시했습니다 · 출결은 결석 그대로입니다`)}}
+  if(todo.length>1){const b=document.createElement("div");b.className="row2";b.style.marginTop="10px";b.innerHTML=`<button class="btn" type="button" id="doneAll">남은 ${todo.length}명 모두 완료</button><button class="btn" type="button" id="skipAll">남은 ${todo.length}명 모두 제외</button>`;L.appendChild(b);twoStep($("doneAll"),"정말 모두 완료",()=>{setDone(s0,todo.map(r=>r[0]),true);toast(`${todo.length}명을 연락 완료로 표시했습니다`)});twoStep($("skipAll"),"정말 모두 제외",()=>{setDone(s0,todo.map(r=>r[0]),true,true);toast(`${todo.length}명을 연락 제외로 표시했습니다`)})}
+  const F=$("abDone");F.innerHTML="";$("abDoneBox").hidden=!fin.length;{const nx=fin.filter(([id])=>isSkip(s0,id)).length;$("abDoneCnt").textContent=nx&&nx<fin.length?`완료 ${fin.length-nx} · 제외 ${nx}`:fin.length+"명";const h=$("abDoneBox").querySelector("h2");if(h)h.textContent=nx?(nx===fin.length?"연락 제외":"연락 완료 · 제외"):"연락 완료"}
   fin.forEach(r=>F.appendChild(mkRow(r,true)));
-  if(fin.length>1){const b=document.createElement("div");b.className="row2";b.style.marginTop="10px";b.innerHTML=`<button class="btn" type="button">모두 완료 취소</button>`;F.appendChild(b);twoStep(b.firstChild,"정말 모두 취소",()=>{setDone(s0,fin.map(r=>r[0]),false);toast("모두 다시 연락할 목록에 넣었습니다")})}
+  if(fin.length>1){const b=document.createElement("div");b.className="row2";b.style.marginTop="10px";b.innerHTML=`<button class="btn" type="button">모두 ${fin.some(([id])=>isSkip(s0,id))?"완료 · 제외":"완료"} 취소</button>`;F.appendChild(b);twoStep(b.firstChild,"정말 모두 취소",()=>{setDone(s0,fin.map(r=>r[0]),false);toast("모두 다시 연락할 목록에 넣었습니다")})}
   // teachers
   const T=$("tcList");T.innerHTML="";
   $("tcSub").textContent=clsName();if(!D.teachers.length)T.innerHTML=`<div class="empty">등록된 수업 교사가 없습니다. 설정 → ‘수업 교사’에서 추가하세요.</div>`;
@@ -5080,7 +5099,7 @@ function rosLabel(x){const n=`${x.name||(x.s&&x.s.name)||""}`;switch(x.k){
   case"gp":return`<b>학부모 연락처</b> ${esc(n)} ${x.old?"바뀜":"새로"}`;
   case"em":return`<b>이메일</b> ${esc(n)} ${x.old?"바뀜":"새로"}`}return""}
 function mvSid(d,a,b){if(a===b)return;const r=d.roster.find(x=>x[0]===a);if(r)r[0]=b;
-  d.sessions.forEach(s=>{if(s.p&&a in s.p){s.p[b]=s.p[a];delete s.p[a]}if(s.done&&typeof s.done==="object"&&a in s.done){s.done[b]=s.done[a];delete s.done[a]}});
+  d.sessions.forEach(s=>{if(s.p&&a in s.p){s.p[b]=s.p[a];delete s.p[a]}if(s.done&&typeof s.done==="object"&&a in s.done){s.done[b]=s.done[a];delete s.done[a]}if(s.dx&&typeof s.dx==="object"&&a in s.dx){s.dx[b]=s.dx[a];delete s.dx[a]}});
   (d.obs||[]).forEach(o=>{if(o.sid===a)o.sid=b});["phones","gph","emails","sts","cards","low","snote"].forEach(k=>{if(d[k]&&a in d[k]){d[k][b]=d[k][a];delete d[k][a]}});
   (d.tasks||[]).forEach(t=>{if(t.miss&&a in t.miss){t.miss[b]=t.miss[a];delete t.miss[a]}});
   {const cl=S.list.find(c=>c.data===d);if(cl)(S.tasks||[]).forEach(t=>{[t.miss,t.ct,t.sc].forEach(o=>{const m=o&&o[cl.id];if(m&&a in m){m[b]=m[a];delete m[a]}})})}
@@ -7767,7 +7786,7 @@ function memoHTML(t,d,p,date,c,cl){
   const n=S.notes[noteKey(t,d,p,date)]||{},pv=prevNote(cl,c.subject,date),pl=cl&&c.subject?pnFind(c.subject,cl):null,hasPl=!!(pl&&pnCh(pl).length);
   return `<div class="memo">
     <h3>수업 메모장 <span class="sub">${fmtDateW(date)}</span></h3>
-    ${pv?`<p class="note prev">지난 수업(${fmtShort(pv.date)}) 진도: <b>${esc(pv.progress)}</b></p>`:""}
+    ${hasPl?"":(()=>{try{return lessonPrevHTML(lessonPrev(cl,c.subject,date,{k:noteKey(t,d,p,date)}))}catch(e){return pv?`<p class="note prev">지난 수업(${fmtShort(pv.date)}) 진도: <b>${esc(pv.progress)}</b></p>`:""}})()}
     ${hasPl?`<div class="pnles" id="mnPn"></div>`:`<label class="lb" for="mnProg">진도<input class="fld" id="mnProg" placeholder="예: 3단원 2차시, 교과서 54~57쪽" autocomplete="off"></label>${cl&&c.subject?`<button class="btn sm ghost pnmk" type="button" id="mnPnMk">📘 ${esc(c.subject)} 진도표 만들기 — 단원 · 차시를 눌러 기록</button>`:""}`}
     <label class="lb" for="mnMemo">수업 메모<textarea class="fld" id="mnMemo" rows="3" placeholder="수업 중 있었던 일, 다음 시간에 할 것"></textarea></label>
     <label class="lb" for="mnTask">과제<input class="fld" id="mnTask" placeholder="예: 활동지 3번까지, 다음 시간 제출" autocomplete="off"></label>
@@ -9487,7 +9506,7 @@ const pick3=(b,l,r)=>J(l)===J(b)?r:l;
 /* 출석 체크 하나를 두 기기에서 동시에 고쳐도 학생별로 합칩니다 (한쪽 기기의 체크가 통째로 덮이지 않게) */
 function mergeSes(b,l,r){b=b||{};if(J(l)===J(r))return l;
   const out={...pick3(b,l,r)};
-  ["p","done","ak","ar"].forEach(k=>{const B=b[k]||{},L=l[k]||{},R=r[k]||{},m={};
+  ["p","done","dx","ak","ar"].forEach(k=>{const B=b[k]||{},L=l[k]||{},R=r[k]||{},m={};
     new Set([...Object.keys(B),...Object.keys(L),...Object.keys(R)]).forEach(id=>{const v=J(L[id])===J(B[id])?R[id]:L[id];if(v!==undefined&&v!==null&&v!==false)m[id]=v});
     if(k==="p"||Object.keys(m).length)out[k]=m;else delete out[k]});
   ["date","time","label","lock","lockAt","slot","manual","src","off","offWhy"].forEach(f=>{const v=J(l[f])===J(b[f])?r[f]:l[f];if(v===undefined)delete out[f];else out[f]=v});
@@ -9806,7 +9825,7 @@ function renderNowHero(){const els=document.querySelectorAll(".nowhero");if(!els
     if(dk===k)hide=true;
     if(view==="att"&&OBSmode()==="att"&&selDate===x.date&&x.s&&R()===x.s)hide=true;
     if(!hide){const N=x.cl.data.roster.length,pr=x.s?x.cl.data.roster.filter(([id])=>x.s.p[id]).length:0;
-      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}${(()=>{try{const h=pnHint(x.cl,String(x.title||"").replace(/^\d+교시\s*/,""));return h?" · "+h:""}catch(e){return""}})()}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button><button class="nhtl" type="button" data-nhtl>🧰 수업 도구 <small>타이머 · 뽑기 · 모둠</small></button><div class="flowwrap" data-flow></div>`;
+      const html=`<button class="nowgo" type="button" data-nhgo><span class="nhd"></span><span class="nht"><em>지금 수업 · ${esc(x.start)}~${esc(x.end)}</em><b>${esc(x.title)}</b><small>${esc(clsName(x.cl.data))}${x.s?` · 출석 ${pr}/${N}`:""}${(()=>{try{const h=pnHint(x.cl,String(x.title||"").replace(/^\d+교시\s*/,""),x.date,{sid:x.s?x.s.id:"",k:x.src?x.src+":"+x.date:""});return h?" · "+h:""}catch(e){return""}})()}</small></span><span class="nha">${x.s?"출석 이어서 ›":"출석 체크 ›"}</span></button><button class="nhx" type="button" data-nhx aria-label="지금 수업 단추 닫기">✕</button><button class="nhtl" type="button" data-nhtl>🧰 수업 도구 <small>타이머 · 뽑기 · 모둠</small></button><div class="flowwrap" data-flow></div>`;
       els.forEach(el=>{if(el.dataset.k!==k+html){el.dataset.k=k+html;el.innerHTML=html;el.querySelector("[data-nhgo]").onclick=()=>{x.go();try{if(OBS.mode!=="att")setAmode("att")}catch(e){}};el.querySelector("[data-nhx]").onclick=()=>{try{sessionStorage.setItem(NH_KEY,k)}catch(e){}renderNowHero()};el.querySelector("[data-nhtl]").onclick=()=>ctOpen(x.cl)}});
     }}
   els.forEach(el=>{const v=el.closest(".view");el.hidden=hide||!v||v.hidden;if(hide){el.innerHTML="";el.dataset.k=""}});
@@ -9833,8 +9852,8 @@ function sesCellOf(s){const m=String(s&&s.src||"").match(/^(.+):(\d):(\d+)$/);if
 function renderSesMemo(s){const el=$("sesMemo");if(!el)return;const x=sesCellOf(s);if(!x){el.hidden=true;el.innerHTML="";el.dataset.k="";return}
   el.hidden=false;const n=S.notes[x.k]||{};
   if(el.dataset.k!==x.k){el.dataset.k=x.k;
-    const pv=(()=>{try{return prevNote(curClass(),x.c.subject,s.date)}catch(e){return null}})();
-    el.innerHTML=`<div class="smh"><b>📝 ${x.p}교시 수업 메모</b><button class="btn sm" type="button" id="smMore">과제 · 면담까지</button></div>${pv?`<p class="note">지난 수업(${esc(fmtShort(pv.date))}) 진도: <b>${esc(pv.progress)}</b></p>`:""}
+    const pv=(()=>{try{const cl=curClass(),pl=pnOfSes(s,cl);if(pl&&pnCh(pl).length)return"";/* 진도표가 있으면 위 진도 칸에 지난 시간이 나옴 */return lessonPrevHTML(lessonPrev(cl,x.c.subject,s.date,{sid:s.id,k:x.k}))}catch(e){return""}})();
+    el.innerHTML=`<div class="smh"><b>📝 ${x.p}교시 수업 메모</b><button class="btn sm" type="button" id="smMore">과제 · 면담까지</button></div>${pv}
       <input class="fld" id="smProg" placeholder="진도 (예: 3단원 2차시)" autocomplete="off" aria-label="진도"><input class="fld" id="smMemo" placeholder="한 줄 메모 (다음 시간에 할 것 등)" autocomplete="off" aria-label="수업 메모"><p class="note" id="smSaved">입력하면 바로 저장됩니다.</p>`;
     let tm;const put=()=>{const o=S.notes[x.k]||{},v={progress:$("smProg").value.trim(),memo:$("smMemo").value.trim(),task:o.task||"",meet:o.meet||""};
       if(!v.progress&&!v.memo&&!v.task&&!v.meet)delete S.notes[x.k];else S.notes[x.k]={...o,...v,date:s.date,clsId:curClass().id,cls:clsName(),subject:x.c.subject||"",period:x.p,updated:Date.now()};
@@ -9859,7 +9878,7 @@ function renderToday(){
       st=`<span class="tdst ok">${x.s.lock?"🔒 ":""}출석 ${N-ab.length}/${N}</span>${ab.length?`<span class="tdst ab">결석 ${ab.length}${pend?` · 연락 전 ${pend}`:""}</span>`:""}`}
     else if(x.cl){st=x.end&&x.end<=now?`<span class="tdst miss">출석 체크 안 함</span>`:`<span class="tdst">체크 전</span>`}
     else st=`<span class="tdst">학급 연결 안 됨</span>`;
-    return `<button class="tdl${i===nowIdx?" now":""}${i===nextIdx?" next":""}${cls}" type="button" data-i="${i}"${x.go||x.menu?"":" disabled"}><span class="tdt">${esc(x.start||"")}${x.end?`<small>${esc(x.end)}</small>`:""}</span><span class="tdn"><b>${esc(x.title)}</b><small>${x.cl?esc(clsName(x.cl.data)):""}${x.room?" · "+esc(x.room):""}${x.chg?" · 변동":""}${i===nowIdx?' · <em>지금 수업</em>':i===nextIdx?' · <em>다음 수업</em>':""}</small>${flowChip(x,date,i)}</span><span class="tdss">${st}</span></button>`}).join("");
+    return `<button class="tdl${i===nowIdx?" now":""}${i===nextIdx?" next":""}${cls}" type="button" data-i="${i}"${x.go||x.menu?"":" disabled"}><span class="tdt">${esc(x.start||"")}${x.end?`<small>${esc(x.end)}</small>`:""}</span><span class="tdn"><b>${esc(x.title)}</b><small>${x.cl?esc(clsName(x.cl.data)):""}${x.room?" · "+esc(x.room):""}${x.chg?" · 변동":""}${i===nowIdx?' · <em>지금 수업</em>':i===nextIdx?' · <em>다음 수업</em>':""}</small>${(()=>{try{return lessonPnLine(x,date)}catch(e){return""}})()}${flowChip(x,date,i)}</span><span class="tdss">${st}</span></button>`}).join("");
   /* 연락할 학생 (오늘, 학급별) */
   const calls=[];perList().forEach(cl=>{let n=0,last=null;cl.data.sessions.filter(s=>s.date===date&&sesOn(s)).forEach(s=>{const p=sesAbs(cl,s).filter(([id])=>!isDone(s,id)).length;if(p){n+=p;last=s}});if(n)calls.push({cl,n,s:last})});
   /* 서명 마감 (7일 안 · 지난 것) */
@@ -11157,10 +11176,10 @@ function pnXlPlan(p,subj,C){const head=["단원","차시","계획 날짜 (선택
 function pnOfSes(s,cl){if(!s||!cl)return null;const x=sesCellOf(s);let subj=x&&x.c&&x.c.subject;if(!subj){const L=plansAll().filter(p=>p.cls.includes(cl.id));const m=L.find(p=>String(s.label||"").includes(p.subj));subj=m&&m.subj}return subj?pnFind(subj,cl):null}
 function renderPnBar(s){const el=$("pnBar");if(!el)return;const cl=curClass(),p=pnOfSes(s,cl);if(!p||!pnCh(p).length){el.hidden=true;el.innerHTML="";return}
   const cx0=sesCellOf(s),K=cx0?cx0.k:"",isMine=v=>!!v&&(v.s===s.id||(!!K&&v.k===K)),g=pnG(p,cl),mine=pnCh(p).filter(x=>isMine(g[x.c.id])),nx=pnNext(p,cl),C=p.cls.map(id=>S.list.find(c=>c.id===id)).filter(Boolean),[k,l]=pnStatus(p,cl,C.length?C:[cl]);
-  const last=pnCh(p).filter(x=>g[x.c.id]&&!isMine(g[x.c.id])).sort((a,b)=>String(g[b.c.id].d).localeCompare(String(g[a.c.id].d)))[0];
-  el.hidden=false;el.innerHTML=mine.length?`<div class="pnt">📘 이 수업 진도 · ${esc(p.subj)}</div><div class="pnn">✓ ${mine.map(x=>esc(pnLab(x))+(g[x.c.id].st==="h"?" (반만)":"")).join(", ")}</div><div class="row2"><button class="btn sm" type="button" id="pnUndo">되돌리기</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`
-    :nx?`<div class="pnt">📘 오늘 할 차시 · ${esc(p.subj)} <span class="pnst ${k}">${esc(l)}</span></div><div class="pnn">${esc(pnLab(nx))}</div>
-      <div class="row2"><button class="btn sm pri" type="button" id="pnDone">✓ 마침</button><button class="btn sm" type="button" id="pnHalf">반만 함</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>${last?`<p class="note">지난 시간(${esc(fmtDate(g[last.c.id].d))}): ${esc(pnCode(last))} ${g[last.c.id].st==="h"?"반만":"마침"}</p>`:""}`
+  const PV=(()=>{try{return lessonPrevHTML(lessonPrev(cl,p.subj,s.date,{sid:s.id,k:K}))}catch(e){return""}})();
+  el.hidden=false;el.innerHTML=mine.length?`<div class="pnt">📘 이 수업 진도 · ${esc(p.subj)}</div>${PV}<div class="pnn">✓ ${mine.map(x=>esc(pnLab(x))+(g[x.c.id].st==="h"?" (반만)":"")).join(", ")}</div><div class="row2"><button class="btn sm" type="button" id="pnUndo">되돌리기</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`
+    :nx?`<div class="pnt">📘 오늘 할 차시 · ${esc(p.subj)} <span class="pnst ${k}">${esc(l)}</span></div>${PV}<div class="pnn">${esc(pnLab(nx))}</div>
+      <div class="row2"><button class="btn sm pri" type="button" id="pnDone">✓ 마침</button><button class="btn sm" type="button" id="pnHalf">반만 함</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`
     :`<div class="pnt">📘 ${esc(p.subj)} 진도표를 모두 마쳤습니다</div><div class="row2"><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`;
   const sync=()=>{try{if(cx0){pnNoteSync(p,cl,{date:s.date,sid:s.id,k:K,subj:cx0.c.subject||p.subj,p:cx0.p});const pe=$("smProg");if(pe&&document.activeElement!==pe)pe.value=(S.notes[K]||{}).progress||""}}catch(e){}};
   const mark=(x,st)=>{pnSet(p,cl,x.c.id,st,s.date,s.id,K);sync();save();renderPnBar(s);toast(`${pnCode(x)} ${st==="h"?"반만 함":"마침"}으로 기록했습니다`)};
@@ -11223,7 +11242,7 @@ function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).fi
     /* 계획: 계획 날짜가 이 날인 차시, 없으면 이 수업 전까지 기록 기준 다음 차시 */
     const byWk=pnCh(p).filter(y=>y.c.wk===x.date),before=pnCh(p).find(y=>{const v=g[y.c.id];return!(v&&v.st==="d"&&!mineIds.has(y.c.id))}),plan=byWk.length?byWk:before?[before]:[];
     const same=plan.length&&mine.length&&plan.every(y=>mineIds.has(y.c.id));
-    $("pnTop").innerHTML=`<div class="pnlh"><b>📘 진도 · ${esc(p.subj)}</b><span class="pnst ${sk}">${esc(sl)}</span><small>${dn}/${tot}차시</small></div>
+    $("pnTop").innerHTML=`<div class="pnlh"><b>📘 진도 · ${esc(p.subj)}</b><span class="pnst ${sk}">${esc(sl)}</span><small>${dn}/${tot}차시</small></div>${(()=>{try{return lessonPrevHTML(lessonPrev(cl,x.subj||p.subj,x.date,{sid:x.sid,k:x.k}))}catch(e){return""}})()}
       <div class="pncmp"><div><small>계획${byWk.length?" (계획 날짜)":" (진도표 순서)"}</small><b>${plan.length?plan.map(y=>esc(pnCode(y)+" "+y.c.t)).join(", "):"—"}</b></div><div class="${mine.length?same?"ok":"df":""}"><small>실제 · 이 수업</small><b>${mine.length?mine.map(y=>esc(pnCode(y)+" "+y.c.t)+(g[y.c.id].st==="h"?" (반만)":"")).join(", "):"아직 기록 없음"}</b></div></div>`;
     $("pnList").innerHTML=p.units.map((u,ui)=>{const ud=u.ch.filter(c=>g[c.id]&&g[c.id].st==="d").length,op=openU.has(u.id);return`<div class="pnud${op?" open":""}"><button type="button" class="pnuh" data-uo="${esc(u.id)}" aria-expanded="${op}"><span>${esc(u.n||(ui+1)+"단원")}</span><small class="${ud===u.ch.length&&u.ch.length?"ok":""}">${ud}/${u.ch.length}</small><i aria-hidden="true">›</i></button>
         ${op?`<div class="pnul">${u.ch.map((c,ci)=>{const v=g[c.id],me=mineIds.has(c.id),st=v?v.st:"";return`<div class="pnrow${me?" me":""}${nx&&nx.c===c&&!v?" nx":""}"><i>${ci+1}</i><b>${esc(c.t)}${c.add?`<em class="pnadd">추가</em>`:""}<small>${v?(me?"이 수업":esc(fmtDate(v.d)))+" · "+(st==="d"?"마침":"반만"):nx&&nx.c===c?"다음 차시":""}</small></b><div class="seg3" role="group" aria-label="${esc(c.t)} 진도">${[["d","마침"],["h","반만"],["","안 함"]].map(([k,l])=>`<button type="button" data-pc="${esc(c.id)}|${k}" aria-pressed="${st===k}">${l}</button>`).join("")}</div></div>`}).join("")}</div>`:""}</div>`}).join("");
@@ -11523,7 +11542,28 @@ function renderRlSet(){const el=$("rlBody");if(!el)return;const on=rlOn(),L=rlAl
 document.addEventListener("click",e=>{if(!rlOn())return;const t=e.target&&e.target.closest&&e.target.closest("[data-flplus],[data-flnext],[data-flprev],[data-flfit],[data-fla],[data-flbk],[data-flsw],#flNow,#flFit,#flUse,#flSim,#flBell,[data-fltool],[data-fltl],#flMine,#flTpl,#flChg");if(!t)return;
   const a=t.matches("[data-flplus]")?"＋2분":t.matches("[data-flnext]")?"다음":t.matches("[data-flprev]")?"이전":t.matches("[data-flfit],#flFit")?"남은 단계 맞추기":t.matches("[data-fla]")?(t.dataset.fla.endsWith("|-60000")?"−1분":"＋1분"):t.matches("[data-flbk]")?"돌아가기":t.matches("[data-flsw]")?(t.dataset.flsw==="off"?"끄기":"켜기"):t.id==="flNow"?"지금부터 다시":t.id==="flUse"?"틀 고름":t.id==="flSim"?"미리 돌려 보기":t.id==="flBell"?"알림 시험":t.matches("[data-fltool],[data-fltl]")?"도구 열기":t.id==="flMine"?"이 수업만 고치기":t.id==="flTpl"?"틀 고치기":"틀 바꾸기";rl("flow",{a})},true);
 /* 지금 수업 카드 · 학생 화면에 쓰는 짧은 표시 */
-function pnHint(cl,subj){const p=pnFind(subj,cl);if(!p)return"";const nx=pnNext(p,cl);return nx?`📘 ${pnCode(nx)}`:""}
+function pnHint(cl,subj,date,x){const p=pnFind(subj,cl);if(!p)return"";const T=lessonToday(cl,subj,date||today(),x||{}),P=lessonPrev(cl,subj,date||today(),x||{});
+  return T?`📘 ${T.done?"✓ ":"오늘 "}${T.code}${P&&P.code?` · 지난 ${P.code}`:""}`:""}
+/* 5.81: 지난 시간 진도 — 이 학급 · 교과에서 이 수업 바로 전에 기록한 차시(진도표), 없으면 수업 메모의 진도. 지난 수업 메모도 함께 */
+function lessonKP(k){const a=String(k||"").split(":");return +a[2]||0}
+function lessonPrev(cl,subj,date,x){if(!cl||!subj||!date)return null;x=x||{};let r=null;
+  try{const p=pnFind(subj,cl);if(p&&pnCh(p).length){const g=pnG(p,cl),kp=lessonKP(x.k),mine=v=>(x.sid&&v.s===x.sid)||(x.k&&v.k===x.k);
+    const ord=v=>v.d+"|"+String(lessonKP(v.k)).padStart(2,"0");
+    const L=pnCh(p).filter(y=>{const v=g[y.c.id];return v&&v.d&&!mine(v)&&(v.d<date||(v.d===date&&kp&&v.k&&lessonKP(v.k)<kp))});
+    if(L.length){const top=L.reduce((a,y)=>{const o=ord(g[y.c.id]);return o>a?o:a},"");const M=L.filter(y=>ord(g[y.c.id])===top);
+      r={d:g[M[0].c.id].d,code:M.map(y=>pnCode(y)+(g[y.c.id].st==="h"?" 반만":"")).join(", "),txt:M.map(y=>pnCode(y)+" "+y.c.t+(g[y.c.id].st==="h"?" (반만)":"")).join(", "),pl:1}}}}catch(e){}
+  let nt=null;Object.values(S.notes||{}).forEach(n=>{if(n.clsId===cl.id&&n.subject===subj&&(n.progress||n.memo)&&(n.date<date||(n.date===date&&x.k&&n.period&&lessonKP(x.k)&&+n.period<lessonKP(x.k)))&&(!nt||n.date>nt.date||(n.date===nt.date&&+n.period>+nt.period)))nt=n});
+  if(!r&&nt&&nt.progress)r={d:nt.date,code:"",txt:nt.progress,pl:0};
+  if(nt&&nt.memo&&(!r||nt.date>=r.d)){r=r||{d:nt.date,code:"",txt:"",pl:0};r.memo=nt.memo;r.md=nt.date}
+  return r}
+function lessonPrevHTML(P){if(!P||!(P.txt||P.memo))return"";return`<div class="pnprev" data-pnprev><small>↶ 지난 시간 · ${esc(fmtDate(P.d))}</small>${P.txt?`<b>${esc(P.txt)}</b>`:""}${P.memo?`<span class="pnpm">📝 ${esc(P.memo)}</span>`:""}</div>`}
+/* 오늘 이 수업 진도: 이 수업에 기록한 차시(✓), 없으면 다음 차시 */
+function lessonToday(cl,subj,date,x){try{const p=pnFind(subj,cl);if(!p||!pnCh(p).length)return null;const g=pnG(p,cl),M=(x&&(x.sid||x.k))?pnMineL(p,cl,x):[];
+  if(M.length)return{done:1,code:M.map(y=>pnCode(y)).join(", "),txt:M.map(y=>pnCode(y)+" "+y.c.t+(g[y.c.id].st==="h"?" (반만)":"")).join(", ")};
+  const nx=pnNext(p,cl);return nx?{done:0,code:pnCode(nx),txt:pnCode(nx)+" "+nx.c.t}:null}catch(e){return null}}
+function lessonPnLine(x,date){if(!x||x.cancel||x.act||!x.cl||!/교시/.test(x.title||""))return"";const subj=String(x.title||"").replace(/^\d+교시\s*/,"").trim();if(!subj)return"";
+  const k=x.src?x.src+":"+date:"",y={sid:x.s?x.s.id:"",k},T=lessonToday(x.cl,subj,date,y),P=lessonPrev(x.cl,subj,date,y);if(!T&&!P)return"";
+  return`<small class="tdpn">${P&&(P.txt||P.memo)?`<span class="tdpv">지난 ${esc(fmtShort(P.d))} · ${esc(P.pl?P.code:P.txt||"메모: "+P.memo)}</span>`:""}${T?`<span class="tdpt">${P&&(P.txt||P.memo)?"→ ":"📘 "}${T.done?"✓ ":"오늘 "}${esc(T.txt)}</span>`:""}</small>`}
 function pnMissed(cl,date){const out=[];plansAll().filter(p=>p.cls.includes(cl.id)).forEach(p=>{const g=pnG(p,cl);pnCh(p).forEach(x=>{const v=g[x.c.id];if(v&&v.d===date)out.push(`${p.subj} ${pnCode(x)} ${x.c.t}`)})});return out}
 /* ===== 5.65: 앱 잠금 (PIN) — 성적 · 연락처가 든 기기를 남이 열어 보지 못하게 =====
    이 기기에만 저장(동기화 · 백업에 안 들어감). PIN 자체는 저장하지 않고 소금 친 해시만 둡니다.
