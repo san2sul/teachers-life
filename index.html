@@ -2010,7 +2010,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.82.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.82.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2022,6 +2022,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.82.1",date:"2026-10-29",items:["연수용 체험 모드에 QR 코드: 설정 → 연수용 체험 모드 → QR 코드(앱 배포와 같은 방식, 이미지 저장 가능). 연수 화면에 띄우면 참여 선생님이 휴대폰 카메라로 찍어 바로 체험 모드로 엽니다"]},
   {v:"5.82.0",date:"2026-10-29",items:["연수용 체험 모드: 설정 → 연수용 체험 모드 → 🧪 체험 모드 시작(또는 앱 주소 뒤 ?practice). 실제 자료와 완전히 따로 저장되는 가상 학급 두 개(학생 · 가짜 전화번호) · 월~금 시간표 · 과학 진도표와 지난 수업 기록 · 수업 흐름(3단계) · 가상 교직원 12명 · 수업 교사가 든 앱이 열림. 화면 위 띠의 ‘↺ 처음으로’로 가상 자료를 처음 상태로, ‘체험 끝내기’(또는 앱 · 창 닫기)로 원래 자료로. 체험 중에는 구글 연동을 쓰지 않음","수업 메모장 · 출석부 진도의 ‘↶ 지난 시간’을 큰 칸 대신 계획 · 실제 이 수업(오늘 할 차시) 아래 작고 옅은 한 줄로 — 계획 · 실제 진도가 먼저 눈에 들어오게. 5.81에서 진도표 만들기 미리보기 칸 모양이 함께 바뀌던 것도 바로잡음"]},
   {v:"5.81.0",date:"2026-10-29",items:["지난 시간 진도 함께 보기: 오늘 수업 목록 · 지금 수업 단추 · 출석부 진도 칸 · 학급 정보(시간표 → 수업 칸)에 그 반 그 교과의 바로 전 수업 진도(차시 · 반만 여부)와 지난 수업 메모를 오늘 할 차시와 함께 보여 줌. 진도표가 없으면 수업 메모의 진도 글로","결석 학생 연락: 학생마다 ‘✓ 연락 완료’ 옆에 ‘연락 제외’ 단추(미리 알린 체험학습 · 병원 등 연락할 필요가 없을 때). 눌러도 연락 버튼의 빨간 숫자 · 오늘 화면 연락할 학생 · 한꺼번에 보내기에서 빠지고, 출결은 결석 그대로. 여러 명을 골라(□ 모두 고르기) 한꺼번에 연락 완료 · 연락 제외, ‘남은 N명 모두 제외’, ‘제외 취소’도 있음"]},
   {v:"5.80.3",date:"2026-10-29",items:["수업 흐름 틀 만들기: 단계 시간(분) 칸을 자판을 띄우지 않는 고르기 목록으로 바꿈 — 숫자 칸을 거치면 컴퓨터(윈도우)·아이폰에서 한글 입력이 영문으로 바뀌던 문제. 이제 틀 이름 → 단계 이름 → 다음 단계로 옮겨 가도, ‘＋ 단계 넣기’를 눌러도 한글 상태가 이어짐"]},
@@ -2293,14 +2294,18 @@ function practiceUI(){const on=!!window.TL_PRACTICE,bar=document.getElementById(
   if(tag)tag.textContent=on?"체험 중":"";
   if(body){const url=location.origin+location.pathname+"?practice";
     body.innerHTML=on?`<p class="note"><b>지금은 체험 모드입니다.</b> 가상 학급 두 개(체험 1학년 1반 · 2반)로 마음껏 눌러 보세요. 실제 자료는 따로 저장되어 그대로이고, 구글 연동은 꺼져 있습니다.</p>
-      <div class="row2"><button class="btn" type="button" id="pracReset2">↺ 처음으로</button><button class="btn pri" type="button" id="pracEnd2">체험 끝내기</button></div>`
+      <div class="row2"><button class="btn" type="button" id="pracReset2">↺ 처음으로</button><button class="btn pri" type="button" id="pracEnd2">체험 끝내기</button></div>
+      <div class="row2"><button class="btn" type="button" id="pracLink">안내 주소 복사</button><button class="btn" type="button" id="pracQr" aria-expanded="false">QR 코드</button></div><div id="pracQrBox" class="qrbox" hidden></div>`
      :`<p class="note">연수 · 연습용으로, <b>실제 자료와 완전히 따로 저장되는</b> 가상 학급(학생 · 시간표 · 진도표 · 지난 수업 기록)이 든 앱을 엽니다. 체험 중에 고치거나 지워도 실제 자료는 그대로이고, ‘처음으로’를 누르면 가상 자료가 처음 상태로 돌아갑니다. ‘체험 끝내기’를 누르거나 앱(창)을 닫으면 원래 자료로 돌아옵니다.</p>
-      <div class="row2"><button class="btn pri" type="button" id="pracGo">🧪 체험 모드 시작</button><button class="btn" type="button" id="pracLink">안내 주소 복사</button></div>
-      <p class="note">연수 안내 주소: <b>${esc(url)}</b> — 이 주소로 열면 바로 체험 모드입니다.</p>`;
+      <div class="row2"><button class="btn pri" type="button" id="pracGo">🧪 체험 모드 시작</button></div>
+      <div class="row2"><button class="btn" type="button" id="pracLink">안내 주소 복사</button><button class="btn" type="button" id="pracQr" aria-expanded="false">QR 코드</button></div><div id="pracQrBox" class="qrbox" hidden></div>
+      <p class="note">연수 안내 주소: <b>${esc(url)}</b> — 이 주소나 QR 코드로 열면 바로 체험 모드입니다. 연수 화면에 QR 코드를 띄우면 참여 선생님이 휴대폰 카메라로 찍어 바로 엽니다.</p>`;
     const q=id=>document.getElementById(id);
     if(q("pracGo"))q("pracGo").onclick=()=>practiceStart();
     if(q("pracLink"))q("pracLink").onclick=()=>copy(`교사의 생활 연수 체험 주소입니다. 실제 자료와 따로 저장되는 가상 학급으로 연습합니다.\n${url}`,"연수 안내 주소를 복사했습니다");
     if(q("pracEnd2"))q("pracEnd2").onclick=()=>practiceEnd();
+    /* 5.82.1: 앱 배포처럼 체험 주소 QR — 연수 화면에 띄워 휴대폰 카메라로 바로 체험 모드 */
+    if(q("pracQr"))q("pracQr").onclick=()=>drawQR(q("pracQrBox"),url,APP_NAME+" 연수용 체험 모드",APP_NAME.replace(/\s+/g,"")+"_체험모드_QR").then(()=>q("pracQr").setAttribute("aria-expanded",!q("pracQrBox").hidden));
     if(q("pracReset2"))twoStep(q("pracReset2"),"정말 처음으로",()=>practiceReset())}}
 setTimeout(()=>{try{practiceUI()}catch(e){}},0);
 let D=S.list.find(c=>c.id===S.active).data;
