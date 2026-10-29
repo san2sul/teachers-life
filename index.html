@@ -1987,7 +1987,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.80.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.80.2", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1999,6 +1999,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.80.2",date:"2026-10-29",items:["수업 흐름 틀 만들기: ‘＋ 단계 넣기’를 누를 때 단계 칸에 있으면 그 단계 바로 다음 줄에, 아니면 맨 끝에 넣음(새 단계 칸에 바로 커서). 입력칸을 한국어 입력으로(안드로이드 등에서 한글 자판, 아이폰은 마지막에 쓴 자판을 따름)"]},
   {v:"5.80.1",date:"2026-10-29",items:["출석부: 화면을 밀어 올리면 날짜 아래 출석 체크 시간 줄(11:00 3교시 · ＋ 체크 추가)이 화면 위에 걸려 따라오던 것 — 이제 화면과 함께 올라감"]},
   {v:"5.80.0",date:"2026-10-29",items:["연구용 사용 기록(⚙ 설정, 기본 꺼짐): 출석 체크 시작→잠금 시간 · 연락 · 진도 기록 · 수업 관찰 넣기/빼기 · 수업 흐름 조작과 수업별 단계 계획 대 실제 시간 · 화면 · 도구 사용을 학생 이름 · 학번 없이 이 기기에만 기록, 무작위 참여 ID","사용성 설문(SUS) 10문항을 앱 안에서 — 점수(0~100) 자동 계산","연구 기록 엑셀(요약 · 출석 체크 · 연락 · 진도 기록 · 수업 관찰 · 수업 흐름(수업별) · 수업 흐름 조작 · 화면 · 도구 · 사용성 설문 · 원자료), 연구 기록 모두 지우기","아이폰에서 수업 흐름 알림 소리가 처음 한 번만 나고 그 뒤로는 안 나던 것 고침: 화면을 누를 때 소리 재생기를 깨워 두고 알림마다 같은 재생기로 차임을 재생(미리 돌려 보기 · 수업 중 알림 모두), 막히면 Web Audio를 다시 깨워서","⚙ 설정 → 앱 배포의 ‘주소 · 설치 안내’ 문구를 새 메뉴 · 기능에 맞게: 설치(아이폰 · 안드로이드 · 컴퓨터), 처음 한 번 순서, 아래 메뉴, 자료와 개인정보, 도움말 ‘0. 앱 사용 순서’","자동 점검 추가: 연구용 사용 기록 · 사용성 설문 · 엑셀(학생 정보 없음)"]},
   {v:"5.79.2",date:"2026-10-29",items:["시간표의 ‘진도’ 단추에서 📘 아이콘만 뺌(모양 · 고른 표시 색은 그대로)"]},
@@ -11429,13 +11430,14 @@ function flowClean(f){return{id:f.id||uid(),n:String(f.n||"내 수업 흐름").t
 /* 틀 설계: 단계 이름 · 시간 · 메모 · 알림 · 함께 열 도구 · 꼭 지킬 단계 */
 function flowEdit(f0,done,copy,opt){opt=opt||{};const LX=opt.lesson,isNew=!f0||copy||!f0.id;const W=flowClean(f0?JSON.parse(JSON.stringify(f0)):{n:"",steps:[{n:"도입",m:5},{n:"전개",m:Math.max(1,flowLen()-15)},{n:"정리",m:10,fix:true}]});if(isNew)W.id=uid();if(!f0||!f0.n)W.n="";const L=LX?(Math.round(toMin(LX.end)-toMin(LX.start))||flowLen()):flowLen();
   const sumP=()=>{const t=flowSum(W),el=$("flSum");if(el){el.textContent=t===L?`합계 ${t}분 · 수업 ${L}분에 딱 맞음 ✓`:t>L?`합계 ${t}분 · 수업 ${L}분보다 ${t-L}분 넘침`:`합계 ${t}분 · 수업 ${L}분보다 ${L-t}분 모자람`;el.className="flsum "+(t===L?"ok":"df")}};
+  let lastRow=-1;
   const paint=()=>{$("sheetBox").innerHTML=`<h2>${LX?`이 수업만 고치기 <span class="sub">${esc(LX.title)} · ${esc(LX.start)}~${esc(LX.end)}</span>`:isNew?"수업 흐름 틀 만들기":"수업 흐름 틀 고치기"}</h2>
     ${LX?`<p class="note">이 수업에만 적용됩니다. 원래 틀은 바뀌지 않습니다.</p>`:opt.note?`<p class="note">${esc(opt.note)}</p>`:""}
-    <label class="lb" for="flN">${LX?"이름":"틀 이름"}<input class="fld" id="flN" maxlength="40" value="${esc(W.n)}" placeholder="예: 3학년 실험 · 발표 수업"></label>
-    <div class="fleds">${W.steps.map((s,j)=>`<div class="fled" data-j="${j}"><div class="fler"><span class="flno">${j+1}</span><input class="fld" data-k="n" value="${esc(s.n)}" maxlength="30" aria-label="${j+1}단계 이름" placeholder="단계 이름"><input class="fld flm" data-k="m" type="number" inputmode="numeric" min="1" max="180" value="${s.m}" aria-label="${j+1}단계 시간(분)"><span class="flu">분</span>
+    <label class="lb" for="flN">${LX?"이름":"틀 이름"}<input class="fld" id="flN" lang="ko" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="40" value="${esc(W.n)}" placeholder="예: 3학년 실험 · 발표 수업"></label>
+    <div class="fleds">${W.steps.map((s,j)=>`<div class="fled" data-j="${j}"><div class="fler"><span class="flno">${j+1}</span><input class="fld" data-k="n" lang="ko" autocapitalize="off" autocorrect="off" spellcheck="false" value="${esc(s.n)}" maxlength="30" aria-label="${j+1}단계 이름" placeholder="단계 이름 (예: 활동)"><input class="fld flm" data-k="m" type="number" inputmode="numeric" min="1" max="180" value="${s.m}" aria-label="${j+1}단계 시간(분)"><span class="flu">분</span>
         <button type="button" class="btn sm ghost" data-mv="-1" aria-label="위로"${j?"":" disabled"}>▲</button><button type="button" class="btn sm ghost" data-mv="1" aria-label="아래로"${j<W.steps.length-1?"":" disabled"}>▼</button><button type="button" class="btn sm ghost" data-rm aria-label="이 단계 빼기"${W.steps.length>1?"":" disabled"}>✕</button></div>
         <details class="flopt"><summary>${[s.memo?"📝 메모":"",s.tool?FLT()[s.tool]:"",FLAL()[s.al],s.fix?"꼭 지킴":""].filter(Boolean).join(" · ")||"자세히"}</summary>
-          <input class="fld" data-k="memo" maxlength="80" value="${esc(s.memo||"")}" placeholder="이 단계에서 할 일 (예: 활동지 2번까지)" aria-label="${j+1}단계 메모">
+          <input class="fld" data-k="memo" lang="ko" autocapitalize="off" spellcheck="false" maxlength="80" value="${esc(s.memo||"")}" placeholder="이 단계에서 할 일 (예: 활동지 2번까지)" aria-label="${j+1}단계 메모">
           <div class="flor"><label>알림<select class="fld" data-k="al">${Object.entries(FLAL()).map(([k,l])=>`<option value="${k}"${s.al===k?" selected":""}>${l}</option>`).join("")}</select></label><label>시작할 때 열 도구<select class="fld" data-k="tool">${Object.entries(FLT()).map(([k,l])=>`<option value="${k}"${s.tool===k?" selected":""}>${l}</option>`).join("")}</select></label></div>
           <label class="chk"><input type="checkbox" data-k="fix"${s.fix?" checked":""}> 꼭 지킬 단계 (시간이 밀려도 줄이지 않음)</label></details></div>`).join("")}</div>
     <p class="flsum" id="flSum"></p>
@@ -11448,7 +11450,13 @@ function flowEdit(f0,done,copy,opt){opt=opt||{};const LX=opt.lesson,isNew=!f0||c
       row.querySelectorAll("[data-k]").forEach(inp=>{const k=inp.dataset.k;const h=()=>{if(k==="m"){s.m=Math.max(1,Math.min(180,parseInt(inp.value,10)||1));sumP()}else if(k==="fix")s.fix=inp.checked;else s[k]=inp.value};inp.oninput=h;inp.onchange=h});
       row.querySelectorAll("[data-mv]").forEach(b=>b.onclick=()=>{const t=j+(+b.dataset.mv);if(t<0||t>=W.steps.length)return;[W.steps[j],W.steps[t]]=[W.steps[t],W.steps[j]];paint()});
       row.querySelector("[data-rm]").onclick=()=>{if(W.steps.length<2)return;W.steps.splice(j,1);paint()}});
-    $("flAdd").onclick=()=>{const k=Math.max(0,W.steps.length-1);W.steps.splice(k,0,{id:uid(),n:"활동",m:5,memo:"",al:"vib",tool:"",fix:false});paint();setTimeout(()=>{try{$("sheetBox").querySelector(`.fled[data-j="${k}"] [data-k=n]`).select()}catch(_){}},30)};
+    /* 5.80.2: 단계 칸에 커서가 있으면 그 단계 바로 다음 줄에, 아니면 맨 끝에 */
+    const rowNow=()=>{const a=document.activeElement,r=a&&a.closest&&a.closest(".fled");return r?+r.dataset.j:-1};let addAt=null;
+    $("flAdd").addEventListener("pointerdown",()=>{const j=rowNow();addAt=j>=0?j+1:W.steps.length},true);
+    $("sheetBox").querySelectorAll(".fled").forEach(r=>r.addEventListener("focusin",()=>{lastRow=+r.dataset.j}));
+    $("flN").addEventListener("focusin",()=>{lastRow=-1});
+    $("flAdd").onclick=()=>{let k=addAt!=null?addAt:(lastRow>=0&&document.activeElement===$("flAdd")?lastRow+1:W.steps.length);addAt=null;lastRow=-1;k=Math.max(0,Math.min(W.steps.length,k));
+      W.steps.splice(k,0,{id:uid(),n:"",m:5,memo:"",al:"vib",tool:"",fix:false});paint();setTimeout(()=>{try{const i=$("sheetBox").querySelector(`.fled[data-j="${k}"] [data-k=n]`);i.focus();i.scrollIntoView({block:"center"})}catch(_){}},30);toast(`${k+1}번째 단계를 넣었습니다`)};
     $("flFit2").onclick=()=>{const t=flowSum(W);if(t===L)return toast("이미 딱 맞습니다");const fx=W.steps.filter(s=>s.fix).reduce((a,s)=>a+s.m,0),fl=W.steps.filter(s=>!s.fix);if(!fl.length||L-fx<fl.length)return toast("꼭 지킬 단계만으로 수업 시간을 넘습니다");
       const tf=t-fx;let acc=0;fl.forEach((s,i)=>{const m=i===fl.length-1?Math.max(1,L-fx-acc):Math.max(1,Math.round(s.m*(L-fx)/tf));acc+=m;s.m=m});paint();toast(`수업 ${L}분에 맞췄습니다`)};
     $("skNo").onclick=()=>{done&&done()};
