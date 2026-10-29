@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>/* 5.82 연수용 체험 모드: 이 창(탭)에서만 실제 자료와 다른 저장 공간(tlprac:)을 씀 — 앱 주소?practice 또는 설정에서 시작 */
+(function(){try{var q=location.search,ss=sessionStorage;if(/[?&]practice=0(&|$)/.test(q))ss.removeItem("tl-practice");else if(/[?&]practice(=1)?(&|$)/.test(q))ss.setItem("tl-practice","1");
+if(/[?&]practice/.test(q)){try{history.replaceState(null,"",location.pathname+location.search.replace(/[?&]practice(=[01])?/,"").replace(/^&/,"?")+location.hash)}catch(e){}}
+if(ss.getItem("tl-practice")!=="1")return;window.TL_PRACTICE=1;var P="tlprac:",SP=Storage.prototype,g=SP.getItem,st=SP.setItem,rm=SP.removeItem;
+var m=function(o,k){return o===window.localStorage&&typeof k==="string"&&/^(att-app|tl-)/.test(k)?P+k:k};
+SP.getItem=function(k){return g.call(this,m(this,k))};SP.setItem=function(k,v){return st.call(this,m(this,k),v)};SP.removeItem=function(k){return rm.call(this,m(this,k))};
+var F=window.IDBFactory&&IDBFactory.prototype;if(F){var op=F.open,dl=F.deleteDatabase,n=function(x){return x==="teachers-life-media"?x+"-practice":x};F.open=function(a,b){return b===undefined?op.call(this,n(a)):op.call(this,n(a),b)};F.deleteDatabase=function(a){return dl.call(this,n(a))}}
+document.documentElement.classList.add("tlprac")}catch(e){}})();</script>
 <script>try{var u=JSON.parse(localStorage.getItem("att-app-ui")||"{}"),h=document.documentElement;["fs","lay","nav","tt","tip","font"].forEach(function(k){if(u[k])h.setAttribute("data-"+k,u[k])});if(localStorage.getItem("att-app-lock")){h.classList.add("tllock");setTimeout(function(){if(!document.getElementById("lockScr"))h.classList.remove("tllock")},6000)}}catch(e){}</script>
 <title>교사의 생활</title>
 <meta name="author" content="물리공작소">
@@ -510,6 +518,13 @@ html[data-lay="one"] .wrap{max-width:720px}
 .evs em{font-style:normal;font-weight:700;color:var(--accent)}.evs em.nw{color:var(--muted)}.evs em.stl{color:var(--absent)}
 .evrow.ok .who{color:var(--present)}
 .evb{flex-wrap:wrap}.evb .btn{flex:1 1 auto}
+.pracbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:calc(6px + env(safe-area-inset-top,0px)) 12px 6px;background:#7a4b0c;color:#fff8ec;font-size:.875rem;font-weight:700}
+.pracbar[hidden]{display:none}.pracbar small{font-weight:500;opacity:.9}.pracbar .prb{display:flex;gap:6px;flex:0 0 auto}
+.pracbar button{appearance:none;border:1px solid #fff8ec66;background:#fff8ec1f;color:#fff8ec;border-radius:999px;padding:4px 10px;font:inherit;font-size:.8125rem;cursor:pointer;min-height:32px}
+.pracbar #pracEnd{background:#fff8ec;color:#5c3d0e;border-color:#fff8ec}
+html.tlprac .topbtns{top:calc(52px + env(safe-area-inset-top,0px))}
+@media (min-width:1px){html.tlprac:not([data-lay="one"]) .ttside{top:60px}}
+@media (max-width:420px){.pracbar small{display:none}}
 .topbtns{position:absolute;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:25;display:flex;gap:6px;align-items:center}
 .helpbtn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--paper);color:var(--accent);border-radius:999px;padding:4px 10px;font:inherit;font-size:.75rem;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .wrap>header.top{margin-top:24px}
@@ -1440,7 +1455,7 @@ html.ctopen .toast,html.ctopen #toast,html.ctopen #utoast{z-index:950}
 #ttPnBtn[aria-pressed="true"]{background:var(--accent);color:#fff}
 
 /* 5.74 진도 직접 입력 · 계획 비교 */
-.pnprev{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:6px 10px;margin:6px 0;min-width:0}.pnprev small{display:block;color:var(--muted);font-size:.75rem}.pnprev b{display:block;font-size:.875rem;font-weight:600;line-height:1.4}.pnprev .pnpm{display:block;font-size:.8125rem;color:var(--muted);line-height:1.4;margin-top:2px;white-space:pre-wrap}
+.pnlast{margin:2px 0 6px;font-size:.75rem;line-height:1.5;color:var(--muted);min-width:0}.pnlast .pnlk{font-weight:600}.pnlast .pnpm{white-space:normal}
 .tdl .tdn small.tdpn{display:flex;flex-wrap:wrap;gap:0 6px;color:var(--ink,inherit);font-size:.8125rem;margin-top:2px}.tdpn .tdpv{color:var(--muted)}.tdpn .tdpt{font-weight:600}
 .pncmp{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 8px}.pncmp>div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:6px 8px;min-width:0}
 .pncmp small{display:block;color:var(--muted);font-size:.6875rem}.pncmp b{display:block;font-size:.8125rem;font-weight:600;line-height:1.35}
@@ -1511,6 +1526,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 </style>
 </head>
 <body>
+<div class="pracbar" id="pracBar" hidden role="status"><span class="prt">🧪 연수용 체험 모드<small> · 실제 자료와 따로 저장됩니다</small></span><span class="prb"><button type="button" id="pracReset">↺ 처음으로</button><button type="button" id="pracEnd">체험 끝내기</button></span></div>
 
 <!-- 시간표 -->
 <main class="wrap view" id="v-tt" hidden>
@@ -1947,6 +1963,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
   </details>
   <details class="card" id="d-arc"><summary>학년도 마감 · 보관 <span class="sub" id="arcTag"></span></summary><div id="arcBody"></div></details>
   <details class="card" id="d-cheer"><summary>응원 메시지 · 음악 <span class="sub" id="cheerTag"></span></summary><div id="cheerBody"></div></details>
+  <details class="card" id="d-prac"><summary>연수용 체험 모드 <span class="sub" id="pracTag"></span></summary><div id="pracBody"></div></details>
   <details class="card" id="d-rl"><summary>연구용 사용 기록 <span class="sub" id="rlTag"></span></summary><div id="rlBody"></div></details>
   <details class="card" id="d-lock"><summary>앱 잠금 (PIN) <span class="sub" id="lockTag"></span></summary><div id="lockBody"></div></details>
   <details class="card" id="d-ui"><summary>화면 · 글자 크기 (기기 맞춤)</summary>
@@ -1993,7 +2010,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.81.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.82.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2005,6 +2022,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.82.0",date:"2026-10-29",items:["연수용 체험 모드: 설정 → 연수용 체험 모드 → 🧪 체험 모드 시작(또는 앱 주소 뒤 ?practice). 실제 자료와 완전히 따로 저장되는 가상 학급 두 개(학생 · 가짜 전화번호) · 월~금 시간표 · 과학 진도표와 지난 수업 기록 · 수업 흐름(3단계) · 가상 교직원 12명 · 수업 교사가 든 앱이 열림. 화면 위 띠의 ‘↺ 처음으로’로 가상 자료를 처음 상태로, ‘체험 끝내기’(또는 앱 · 창 닫기)로 원래 자료로. 체험 중에는 구글 연동을 쓰지 않음","수업 메모장 · 출석부 진도의 ‘↶ 지난 시간’을 큰 칸 대신 계획 · 실제 이 수업(오늘 할 차시) 아래 작고 옅은 한 줄로 — 계획 · 실제 진도가 먼저 눈에 들어오게. 5.81에서 진도표 만들기 미리보기 칸 모양이 함께 바뀌던 것도 바로잡음"]},
   {v:"5.81.0",date:"2026-10-29",items:["지난 시간 진도 함께 보기: 오늘 수업 목록 · 지금 수업 단추 · 출석부 진도 칸 · 학급 정보(시간표 → 수업 칸)에 그 반 그 교과의 바로 전 수업 진도(차시 · 반만 여부)와 지난 수업 메모를 오늘 할 차시와 함께 보여 줌. 진도표가 없으면 수업 메모의 진도 글로","결석 학생 연락: 학생마다 ‘✓ 연락 완료’ 옆에 ‘연락 제외’ 단추(미리 알린 체험학습 · 병원 등 연락할 필요가 없을 때). 눌러도 연락 버튼의 빨간 숫자 · 오늘 화면 연락할 학생 · 한꺼번에 보내기에서 빠지고, 출결은 결석 그대로. 여러 명을 골라(□ 모두 고르기) 한꺼번에 연락 완료 · 연락 제외, ‘남은 N명 모두 제외’, ‘제외 취소’도 있음"]},
   {v:"5.80.3",date:"2026-10-29",items:["수업 흐름 틀 만들기: 단계 시간(분) 칸을 자판을 띄우지 않는 고르기 목록으로 바꿈 — 숫자 칸을 거치면 컴퓨터(윈도우)·아이폰에서 한글 입력이 영문으로 바뀌던 문제. 이제 틀 이름 → 단계 이름 → 다음 단계로 옮겨 가도, ‘＋ 단계 넣기’를 눌러도 한글 상태가 이어짐"]},
   {v:"5.80.2",date:"2026-10-29",items:["수업 흐름 틀 만들기: ‘＋ 단계 넣기’를 누를 때 단계 칸에 있으면 그 단계 바로 다음 줄에, 아니면 맨 끝에 넣음(새 단계 칸에 바로 커서). 입력칸을 한국어 입력으로(안드로이드 등에서 한글 자판, 아이폰은 마지막에 쓴 자판을 따름)"]},
@@ -2221,6 +2239,45 @@ function normalize(d){
   }
   return f;
 }
+/* 5.82: 연수용 체험 모드 — 가상 학급 두 개 · 시간표(월~금 모든 교시) · 과학 진도표 · 지난 수업 기록을 만듦. 이름 · 번호는 모두 가짜 */
+function practiceSeed(){
+  const pd=n=>String(n).padStart(2,"0"),Y=d=>`${d.getFullYear()}-${pd(d.getMonth()+1)}-${pd(d.getDate())}`,now=new Date(),td=Y(now);
+  const mo=now.getMonth()+1,year=mo<=2?now.getFullYear()-1:now.getFullYear(),term=mo>=3&&mo<=8?"1학기":"2학기";
+  const from=term==="1학기"?`${year}-03-02`:`${year}-08-17`,to=term==="1학기"?`${year}-08-31`:`${year+1}-02-28`;
+  const N1="김가람 이나래 박다솜 최라온 정마루 한바다 윤사랑 오아름 강보람 조새봄 장하늘 임솔비 신누리 서다온 권하람 황미르 안소담 송이든 류해솔 홍가온".split(" ");
+  const N2="고은별 문지안 배하린 백도윤 남시우 노유나 심재윤 양서진 원채아 전하준 탁예린 허윤슬 변지호 염소율 주다인 진이안 차한결 표가윤".split(" ");
+  const mk=(id,cls,base,names,ph)=>({id,data:{v:3,cls,year,term,roster:names.map((n,i)=>[String(base+i+1),n]),phones:Object.fromEntries(names.map((n,i)=>[String(base+i+1),`010-0000-${ph}${pd(i+1)}`])),emails:{},teachers:[],msg:"안녕하세요, {학급} 담임입니다. {이름} 학생의 {날짜} {시간} 출석이 확인되지 않아 연락드립니다. (연수 체험용 문구)",sessions:[]}});
+  const c1=mk("pc1","체험 1학년 1반",10100,N1,"01"),c2=mk("pc2","체험 1학년 2반",10200,N2,"02");
+  /* 가상 교직원(연락 → 교직원 연락) · 학급별 수업 교사 — 번호는 모두 010-0000-9xxx 가짜 */
+  const SF=[["가교장","교장","",""],["나교감","교감","",""],["다교무","교무부장","교무부","국어"],["라연구","연구부장","연구부","수학"],["마생활","생활지도부장","학생생활부","체육"],["바학년","1학년 부장","1학년부","영어"],["사담임","1학년 2반 담임","1학년부","사회"],["아보건","보건교사","보건실",""],["자상담","전문상담교사","상담실",""],["차행정","행정실장","행정실",""],["카정보","정보부장","정보부","정보"],["타사서","사서교사","도서관",""]];
+  const staff=SF.map(([name,role,dept,subj],i)=>({id:"pst"+(i+1),name,role,dept,phone:`010-0000-9${pd(i+1)}0`,...(subj?{subj}:{}),year,term}));
+  c1.data.teachers=[["바학년","1학년 1반 담임 · 영어"],["다교무","국어"],["라연구","수학"],["마생활","체육"]].map(([n,r],i)=>({id:"ptc1"+i,name:n,role:r,phone:staff.find(x=>x.name===n).phone}));
+  c2.data.teachers=[["사담임","1학년 2반 담임 · 사회"],["다교무","국어"],["라연구","수학"],["카정보","정보"]].map(([n,r],i)=>({id:"ptc2"+i,name:n,role:r,phone:staff.find(x=>x.name===n).phone}));
+  /* 시간표: 월 · 수 · 금은 홀수 교시 1반 · 짝수 교시 2반, 화 · 목은 반대 → 언제 열어도 ‘지금 수업’이 있음 */
+  const cells={};for(let d=0;d<5;d++)for(let q=1;q<=7;q++){const one=(q%2===1)===(d%2===0);cells[`${d}-${q}`]={subject:"과학",clsId:one?"pc1":"pc2",clsName:"",room:"과학실"}}
+  const st=q=>{let m=9*60+(q-1)*60;if(q>=5)m+=50;return`${pd(Math.floor(m/60))}:${pd(m%60)}`};
+  const tt={id:"pt1",from,to,year,term,start:"09:00",classMin:50,breakMin:10,lunchMin:60,cells,adj:{},days:{},chg:[],pre:[]};
+  const units=[["1. 과학과 인류의 지속가능한 삶",["과학의 본성","과학과 기술","지속가능한 삶"]],["2. 물질의 구성",["원소","원자와 분자","이온","물질의 표현"]],["3. 힘과 운동",["힘의 표현","중력","마찰력","탄성력","운동의 기술"]],["4. 열",["온도와 열","열의 이동","비열과 열팽창"]]]
+    .map(([n,ch],ui)=>({id:"pu"+(ui+1),n,ch:ch.map((t,ci)=>({id:`pa${ui+1}${ci+1}`,t}))}));
+  const chs=units.flatMap(u=>u.ch),pg={pc1:{},pc2:{}},notes={};
+  /* 지난 학교 날 6일: 반마다 그날 첫 수업에 출석 체크 · 진도 기록(1반이 한 차시 앞섬, 가장 최근은 반만) */
+  const days=[];{const d=new Date(now);while(days.length<6){d.setDate(d.getDate()-1);const w=d.getDay();if(w>=1&&w<=5)days.unshift(new Date(d))}}
+  days.forEach((d,i)=>{const date=Y(d),dw=d.getDay()-1;
+    [[c1,"pc1",i],[c2,"pc2",i-1]].forEach(([c,cid,ci])=>{const q=[1,2,3,4,5,6,7].find(q=>cells[`${dw}-${q}`].clsId===cid),src=`pt1:${dw}:${q}`,k=`${src}:${date}`;
+      const R=c.data.roster,ab=[R[(i*3+1)%R.length][0],...(i%2?[R[(i*5+4)%R.length][0]]:[])],P={},done={};R.forEach(([id])=>{if(!ab.includes(id))P[id]=true});ab.forEach(id=>done[id]=d.getTime()+36e5);
+      c.data.sessions.push({id:`ps${cid}${i}`,date,time:st(q),label:`${q}교시 과학`,p:P,src,done});
+      if(ci>=0&&chs[ci]){const last=i===days.length-1;pg[cid][chs[ci].id]={st:last?"h":"d",d:date,k};
+        const ui=units.findIndex(u=>u.ch.includes(chs[ci])),cn=units[ui].ch.indexOf(chs[ci]);
+        notes[k]={progress:`${ui+1}-${cn+1} ${chs[ci].t}${last?" (반만)":""}`,pAuto:true,memo:last?(cid==="pc1"?"다음 시간 실험 보고서 걷기":"모둠 발표 2모둠부터"):"",date,clsId:cid,cls:c.data.cls,subject:"과학",period:q,updated:d.getTime()}}})});
+  const st0={active:"pc1",list:[c1,c2],staff,tt:{list:[tt],active:"pt1"},notes,events:[{id:"pe1",date:td,start:"16:40",end:"17:10",cat:"학생 면담",title:"체험: 김가람 학부모 상담",memo:"연수 체험용 일정",clsId:"pc1",alarm:10,important:false,done:false}],evals:[],tasks:[],recs:[],
+    plans:[{id:"ppl1",subj:"과학",year,term,cls:["pc1","pc2"],end:to,units,pg}],flowSub:{"과학":"b:3"},period:{year,term}};
+  localStorage.setItem(KEY2,JSON.stringify(st0));
+  ["att-app-setup","att-app-helpseen"].forEach(k=>localStorage.setItem(k,"1"));localStorage.setItem("att-app-lastver",APP_VERSION);localStorage.setItem("att-app-view","todo");
+}
+function practiceReset(){try{Object.keys(localStorage).filter(k=>k.startsWith("tlprac:")).forEach(k=>localStorage.removeItem(k))}catch(e){}
+  try{const r=indexedDB.deleteDatabase("teachers-life-media");r.onsuccess=r.onerror=r.onblocked=()=>setTimeout(()=>location.reload(),200)}catch(e){location.reload()}}
+function practiceStart(){try{sessionStorage.setItem("tl-practice","1")}catch(e){return toast("이 브라우저에서는 체험 모드를 쓸 수 없습니다")}try{save()}catch(e){}location.reload()}
+function practiceEnd(){try{sessionStorage.removeItem("tl-practice")}catch(e){}location.reload()}
 /* 여러 학급: {active, list:[{id, data}]} */
 function loadStore(){
   try{const st=JSON.parse(localStorage.getItem(KEY2)||"null");
@@ -2228,7 +2285,24 @@ function loadStore(){
   const first={id:uid(),data:load()};
   return {active:first.id,list:[first],staff:[]};
 }
+try{if(window.TL_PRACTICE&&!localStorage.getItem(KEY2))practiceSeed()}catch(e){console.warn("practice seed",e)}
 let S=loadStore();
+/* 5.82: 체험 모드 띠 · 설정 칸 */
+function practiceUI(){const on=!!window.TL_PRACTICE,bar=document.getElementById("pracBar"),body=document.getElementById("pracBody"),tag=document.getElementById("pracTag");
+  if(bar){bar.hidden=!on;if(on){document.getElementById("pracEnd").onclick=()=>practiceEnd();const r=document.getElementById("pracReset");r.onclick=()=>{if(r.dataset.arm){practiceReset();return}r.dataset.arm="1";r.textContent="정말 처음으로";setTimeout(()=>{r.dataset.arm="";r.textContent="↺ 처음으로"},3000)}}}
+  if(tag)tag.textContent=on?"체험 중":"";
+  if(body){const url=location.origin+location.pathname+"?practice";
+    body.innerHTML=on?`<p class="note"><b>지금은 체험 모드입니다.</b> 가상 학급 두 개(체험 1학년 1반 · 2반)로 마음껏 눌러 보세요. 실제 자료는 따로 저장되어 그대로이고, 구글 연동은 꺼져 있습니다.</p>
+      <div class="row2"><button class="btn" type="button" id="pracReset2">↺ 처음으로</button><button class="btn pri" type="button" id="pracEnd2">체험 끝내기</button></div>`
+     :`<p class="note">연수 · 연습용으로, <b>실제 자료와 완전히 따로 저장되는</b> 가상 학급(학생 · 시간표 · 진도표 · 지난 수업 기록)이 든 앱을 엽니다. 체험 중에 고치거나 지워도 실제 자료는 그대로이고, ‘처음으로’를 누르면 가상 자료가 처음 상태로 돌아갑니다. ‘체험 끝내기’를 누르거나 앱(창)을 닫으면 원래 자료로 돌아옵니다.</p>
+      <div class="row2"><button class="btn pri" type="button" id="pracGo">🧪 체험 모드 시작</button><button class="btn" type="button" id="pracLink">안내 주소 복사</button></div>
+      <p class="note">연수 안내 주소: <b>${esc(url)}</b> — 이 주소로 열면 바로 체험 모드입니다.</p>`;
+    const q=id=>document.getElementById(id);
+    if(q("pracGo"))q("pracGo").onclick=()=>practiceStart();
+    if(q("pracLink"))q("pracLink").onclick=()=>copy(`교사의 생활 연수 체험 주소입니다. 실제 자료와 따로 저장되는 가상 학급으로 연습합니다.\n${url}`,"연수 안내 주소를 복사했습니다");
+    if(q("pracEnd2"))q("pracEnd2").onclick=()=>practiceEnd();
+    if(q("pracReset2"))twoStep(q("pracReset2"),"정말 처음으로",()=>practiceReset())}}
+setTimeout(()=>{try{practiceUI()}catch(e){}},0);
 let D=S.list.find(c=>c.id===S.active).data;
 try{stampPeriods()}catch(e){}
 let selDate=today(), selId=null;
@@ -9440,7 +9514,7 @@ function loadGIS(){
 function gisReady(){return !!(window.google&&google.accounts&&google.accounts.oauth2)}
 /* 로그인 창은 버튼을 누른 그 순간에 열어야 브라우저가 막지 않습니다. 구글 로그인 스크립트는 미리 불러 둡니다 */
 function gPreload(){if(gClientId()&&appOnline()&&!gisReady())loadGIS().then(()=>{GS.gisErr="";renderSync()}).catch(e=>{GS.gisErr="구글 로그인 서버(accounts.google.com)에 연결하지 못했습니다. 학교 인터넷에서 막혔을 수 있습니다. 휴대폰 데이터(LTE·5G)나 다른 인터넷으로 다시 해 보세요.";renderSync()})}
-function gLogin(after,opt){opt=opt||{};
+function gLogin(after,opt){opt=opt||{};if(window.TL_PRACTICE)return toast("체험 모드에서는 구글 연동을 쓰지 않습니다. 체험을 끝낸 뒤 연결하세요");
   const cid=gClientId();if(!cid)return toast("먼저 구글 클라이언트 ID를 넣어 주세요");
   if(!appOnline())return toast("구글 로그인은 인터넷(https) 주소로 연 앱에서만 됩니다");
   if(!gisReady()){toast("구글 로그인을 준비하는 중입니다. 잠시 뒤 한 번 더 눌러 주세요");loadGIS().then(()=>{GS.gisErr="";renderSync();toast("준비됐습니다. 로그인 버튼을 다시 눌러 주세요")}).catch(e=>{GS.gisErr="구글 로그인 서버(accounts.google.com)에 연결하지 못했습니다. 학교 인터넷에서 막혔을 수 있습니다. 휴대폰 데이터(LTE·5G)나 다른 인터넷으로 다시 해 보세요.";GS.err=GS.gisErr;renderSync();toast(GS.gisErr)});return}
@@ -11177,8 +11251,8 @@ function pnOfSes(s,cl){if(!s||!cl)return null;const x=sesCellOf(s);let subj=x&&x
 function renderPnBar(s){const el=$("pnBar");if(!el)return;const cl=curClass(),p=pnOfSes(s,cl);if(!p||!pnCh(p).length){el.hidden=true;el.innerHTML="";return}
   const cx0=sesCellOf(s),K=cx0?cx0.k:"",isMine=v=>!!v&&(v.s===s.id||(!!K&&v.k===K)),g=pnG(p,cl),mine=pnCh(p).filter(x=>isMine(g[x.c.id])),nx=pnNext(p,cl),C=p.cls.map(id=>S.list.find(c=>c.id===id)).filter(Boolean),[k,l]=pnStatus(p,cl,C.length?C:[cl]);
   const PV=(()=>{try{return lessonPrevHTML(lessonPrev(cl,p.subj,s.date,{sid:s.id,k:K}))}catch(e){return""}})();
-  el.hidden=false;el.innerHTML=mine.length?`<div class="pnt">📘 이 수업 진도 · ${esc(p.subj)}</div>${PV}<div class="pnn">✓ ${mine.map(x=>esc(pnLab(x))+(g[x.c.id].st==="h"?" (반만)":"")).join(", ")}</div><div class="row2"><button class="btn sm" type="button" id="pnUndo">되돌리기</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`
-    :nx?`<div class="pnt">📘 오늘 할 차시 · ${esc(p.subj)} <span class="pnst ${k}">${esc(l)}</span></div>${PV}<div class="pnn">${esc(pnLab(nx))}</div>
+  el.hidden=false;el.innerHTML=mine.length?`<div class="pnt">📘 이 수업 진도 · ${esc(p.subj)}</div><div class="pnn">✓ ${mine.map(x=>esc(pnLab(x))+(g[x.c.id].st==="h"?" (반만)":"")).join(", ")}</div>${PV}<div class="row2"><button class="btn sm" type="button" id="pnUndo">되돌리기</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`
+    :nx?`<div class="pnt">📘 오늘 할 차시 · ${esc(p.subj)} <span class="pnst ${k}">${esc(l)}</span></div><div class="pnn">${esc(pnLab(nx))}</div>${PV}
       <div class="row2"><button class="btn sm pri" type="button" id="pnDone">✓ 마침</button><button class="btn sm" type="button" id="pnHalf">반만 함</button><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`
     :`<div class="pnt">📘 ${esc(p.subj)} 진도표를 모두 마쳤습니다</div><div class="row2"><button class="btn sm" type="button" id="pnMore">다른 차시</button></div>`;
   const sync=()=>{try{if(cx0){pnNoteSync(p,cl,{date:s.date,sid:s.id,k:K,subj:cx0.c.subject||p.subj,p:cx0.p});const pe=$("smProg");if(pe&&document.activeElement!==pe)pe.value=(S.notes[K]||{}).progress||""}}catch(e){}};
@@ -11242,8 +11316,8 @@ function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).fi
     /* 계획: 계획 날짜가 이 날인 차시, 없으면 이 수업 전까지 기록 기준 다음 차시 */
     const byWk=pnCh(p).filter(y=>y.c.wk===x.date),before=pnCh(p).find(y=>{const v=g[y.c.id];return!(v&&v.st==="d"&&!mineIds.has(y.c.id))}),plan=byWk.length?byWk:before?[before]:[];
     const same=plan.length&&mine.length&&plan.every(y=>mineIds.has(y.c.id));
-    $("pnTop").innerHTML=`<div class="pnlh"><b>📘 진도 · ${esc(p.subj)}</b><span class="pnst ${sk}">${esc(sl)}</span><small>${dn}/${tot}차시</small></div>${(()=>{try{return lessonPrevHTML(lessonPrev(cl,x.subj||p.subj,x.date,{sid:x.sid,k:x.k}))}catch(e){return""}})()}
-      <div class="pncmp"><div><small>계획${byWk.length?" (계획 날짜)":" (진도표 순서)"}</small><b>${plan.length?plan.map(y=>esc(pnCode(y)+" "+y.c.t)).join(", "):"—"}</b></div><div class="${mine.length?same?"ok":"df":""}"><small>실제 · 이 수업</small><b>${mine.length?mine.map(y=>esc(pnCode(y)+" "+y.c.t)+(g[y.c.id].st==="h"?" (반만)":"")).join(", "):"아직 기록 없음"}</b></div></div>`;
+    $("pnTop").innerHTML=`<div class="pnlh"><b>📘 진도 · ${esc(p.subj)}</b><span class="pnst ${sk}">${esc(sl)}</span><small>${dn}/${tot}차시</small></div>
+      <div class="pncmp"><div><small>계획${byWk.length?" (계획 날짜)":" (진도표 순서)"}</small><b>${plan.length?plan.map(y=>esc(pnCode(y)+" "+y.c.t)).join(", "):"—"}</b></div><div class="${mine.length?same?"ok":"df":""}"><small>실제 · 이 수업</small><b>${mine.length?mine.map(y=>esc(pnCode(y)+" "+y.c.t)+(g[y.c.id].st==="h"?" (반만)":"")).join(", "):"아직 기록 없음"}</b></div></div>${(()=>{try{return lessonPrevHTML(lessonPrev(cl,x.subj||p.subj,x.date,{sid:x.sid,k:x.k}))}catch(e){return""}})()}`;
     $("pnList").innerHTML=p.units.map((u,ui)=>{const ud=u.ch.filter(c=>g[c.id]&&g[c.id].st==="d").length,op=openU.has(u.id);return`<div class="pnud${op?" open":""}"><button type="button" class="pnuh" data-uo="${esc(u.id)}" aria-expanded="${op}"><span>${esc(u.n||(ui+1)+"단원")}</span><small class="${ud===u.ch.length&&u.ch.length?"ok":""}">${ud}/${u.ch.length}</small><i aria-hidden="true">›</i></button>
         ${op?`<div class="pnul">${u.ch.map((c,ci)=>{const v=g[c.id],me=mineIds.has(c.id),st=v?v.st:"";return`<div class="pnrow${me?" me":""}${nx&&nx.c===c&&!v?" nx":""}"><i>${ci+1}</i><b>${esc(c.t)}${c.add?`<em class="pnadd">추가</em>`:""}<small>${v?(me?"이 수업":esc(fmtDate(v.d)))+" · "+(st==="d"?"마침":"반만"):nx&&nx.c===c?"다음 차시":""}</small></b><div class="seg3" role="group" aria-label="${esc(c.t)} 진도">${[["d","마침"],["h","반만"],["","안 함"]].map(([k,l])=>`<button type="button" data-pc="${esc(c.id)}|${k}" aria-pressed="${st===k}">${l}</button>`).join("")}</div></div>`}).join("")}</div>`:""}</div>`}).join("");
     $("pnList").querySelectorAll("[data-uo]").forEach(b=>b.onclick=()=>{const id=b.dataset.uo;openU.has(id)?openU.delete(id):openU.add(id);paint()});
@@ -11556,7 +11630,7 @@ function lessonPrev(cl,subj,date,x){if(!cl||!subj||!date)return null;x=x||{};let
   if(!r&&nt&&nt.progress)r={d:nt.date,code:"",txt:nt.progress,pl:0};
   if(nt&&nt.memo&&(!r||nt.date>=r.d)){r=r||{d:nt.date,code:"",txt:"",pl:0};r.memo=nt.memo;r.md=nt.date}
   return r}
-function lessonPrevHTML(P){if(!P||!(P.txt||P.memo))return"";return`<div class="pnprev" data-pnprev><small>↶ 지난 시간 · ${esc(fmtDate(P.d))}</small>${P.txt?`<b>${esc(P.txt)}</b>`:""}${P.memo?`<span class="pnpm">📝 ${esc(P.memo)}</span>`:""}</div>`}
+function lessonPrevHTML(P){if(!P||!(P.txt||P.memo))return"";return`<p class="pnlast" data-pnprev><span class="pnlk">↶ 지난 시간 ${esc(fmtShort(P.d))}</span>${P.txt?` <span>${esc(P.txt)}</span>`:""}${P.memo?` <span class="pnpm">· 📝 ${esc(P.memo)}</span>`:""}</p>`}
 /* 오늘 이 수업 진도: 이 수업에 기록한 차시(✓), 없으면 다음 차시 */
 function lessonToday(cl,subj,date,x){try{const p=pnFind(subj,cl);if(!p||!pnCh(p).length)return null;const g=pnG(p,cl),M=(x&&(x.sid||x.k))?pnMineL(p,cl,x):[];
   if(M.length)return{done:1,code:M.map(y=>pnCode(y)).join(", "),txt:M.map(y=>pnCode(y)+" "+y.c.t+(g[y.c.id].st==="h"?" (반만)":"")).join(", ")};
