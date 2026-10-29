@@ -1985,7 +1985,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.79.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.79.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -1997,6 +1997,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.79.1",date:"2026-10-29",items:["오늘 화면으로 앱을 열 때 ‘화면 일부를 그리지 못했습니다 (FL_BASE.find)’ 오류가 나던 것 고침 — 수업 흐름 틀을 쓰는 중이면 앱이 켜질 때 오늘 수업 목록이 틀 정보보다 먼저 그려져 생긴 문제","자동 점검 추가: 수업 흐름 자료가 있을 때 오늘 · 시간표 · 출석 · 연락 화면 어디로 시작해도 오류 없음"]},
   {v:"5.79.0",date:"2026-10-29",items:["수업 흐름 ‹ 이전: 앞 단계로 돌아가 지금부터 다시(남은 계획 시간, 없으면 2분). ⋯ 창에서 지난 단계마다 ↩ 돌아가기, 돌아간 뒤 그 단계 시간 −1 · ＋1","수업 흐름 알림 소리 · 진동을 확실하게: 화면을 처음 누를 때 소리를 미리 켜 둠(소리가 막히지 않게), 또렷한 세 음 차임(효과음처럼 크게 · 단계가 바뀌면 두 번), 소리가 막히면 예비 재생기로, 아이폰처럼 진동이 안 되는 기기는 ‘진동’ 알림도 소리로. ⋯ 창에 ‘🔈 소리 준비됨 · 📳 진동 됨’ 표시, 🔔 알림 시험은 소리까지","수업 흐름의 ‘⏱ 타이머 열기’ 등이 누를 수 없는 글씨였던 것을 단추로: 지금 수업 카드(지금 단계에 도구가 있으면)와 수업 흐름 창(단계마다)에서 눌러 바로 열기 — 타이머는 그 단계 남은 시간으로 맞춰짐(▶ 시작으로 시작)","🔔 알림 시험 뒤 창을 닫아도 다시 열리던 것 · 알림 시험 뒤 미리 돌려 보기가 사라지던 것 고침","수업 관찰: 잘못 누른 항목만 빼기 — 학생 기록 창 위쪽에 그 날 기록한 항목마다 −1 · ✕ (바로 저장 · 되돌리기). 전체 삭제는 ‘이 날 기록 모두 삭제’로 이름을 분명하게","도움말 맨 앞에 ‘0. 앱 사용 순서 한눈에’: 처음 한 번 준비 → 매일 아침 → 수업 시작 → 수업 중 → 수업 뒤 → 필요할 때 → 주 · 학기 정리 순서로 단계마다 할 일 · 메뉴 경로 · 자세한 설명 바로가기. 앱 소개 페이지도 최신 기능과 ‘하루에 이렇게 씁니다’로 고침","자동 점검 추가: 수업 흐름 이전 단계 · 돌아가기 · 알림 소리 · 진동, 수업 관찰 잘못 누른 항목만 빼기"]},
   {v:"5.78.0",date:"2026-10-29",items:["수업 흐름 미리 확인: 오늘 수업 목록마다 ⏱ 표시(틀 이름 · 꺼짐 · 흐름 정하기), 시간표 → 수업 칸 창에도 ‘⏱ 수업 흐름’ — 수업 전에도 쓸 틀과 단계마다 시각을 봄","▶ 미리 돌려 보기(1분 = 1초): 지금 수업 카드가 어떻게 바뀌고 언제 알리는지 미리 봄 · 🔔 알림 시험: 휴대폰에서 진동 · 소리가 나는지 확인","켜기 · 끄기: 수업 전이든 수업 중이든 그 수업만 켜고 끔(다른 수업은 그대로), 꺼 둔 수업은 ‘꺼짐’으로 표시","틀 고를 때 어디에 쓸지: 이 수업만 · 이 차시(진도표 차시) · 교과 기본. 진도표에 차시별 틀 ⏱ 표시, 진도 현황에서 교과 기본 틀 바로 바꾸기","이 수업만 고치기: 단계 · 시간을 이 수업에만(원래 틀은 그대로, 내 틀로도 저장 가능) · 틀 고치기(그 틀을 쓰는 모든 수업) — 수업 중에도 바로 반영","수업마다 정한 수업 흐름(켜기/끄기 · 고른 틀 · 고친 단계 · 조정)을 휴대폰과 컴퓨터가 함께 씀(구글 연동 · 백업)","자동 점검 추가: 수업 흐름 미리 확인 · 켜기/끄기 · 이 수업만 고치기 · 차시별 틀"]},
   {v:"5.77.0",date:"2026-10-29",items:["⏱ 수업 흐름: 도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 두면 지금 수업 카드에 지금 단계 · 남은 시간 · 진행 막대 · 다음 단계를 보여 줌(카드가 안 보일 때는 아래 작은 ⏱ 표시)","단계 끝나기 1분 전 · 단계가 바뀔 때 알림(화면 깜빡임 · 진동 · 소리, 단계마다 고름), 도구를 정해 둔 단계는 시작할 때 타이머(그 단계 시간) · 발표자 뽑기 · 모둠 나누기를 열어 줌, 흐름이 도는 동안 화면 켜 두기","기본 틀(3단계 · 5단계 · 실험 수업 · 모둠 활동 수업 — 수업 시간에 맞춰 늘이고 줄임)과 직접 설계한 틀: 단계 이름 · 시간 · 할 일 메모 · 알림 · 함께 열 도구 · 꼭 지킬 단계, 합계 확인 · 수업 시간에 맞추기, 기본 틀 복사해 고치기, 틀 파일 주고받기","적용: 이 수업에서 고른 틀 → 진도표 차시에 붙인 틀 → 교과 기본 틀. 시간표 수업 시작 시각에 맞춰 저절로 시작, ‘지금부터 다시 시작’ · 흐름 끄기","시간이 밀릴 때: ＋2분 · 다음 단계 · 단계마다 −1/＋1분, 수업 끝을 넘으면 경고 → ‘남은 단계 줄여 맞추기’(꼭 지킬 단계는 그대로)","자동 점검 추가: 수업 흐름(틀 · 지금 단계 · 알림 · 밀림 맞추기 · 직접 설계)"]},
@@ -11021,7 +11022,7 @@ function renderPn(){const el=$("ttProg");if(!el||typeof PN==="undefined"||!PN)re
       ${C.map(c=>{const dn=pnDoneN(p,c),nx=pnNext(p,c),[k,l]=pnStatus(p,c,C),left=pnLeft(p,c),need=tot-dn,short=left!=null&&need>left?need-left:0;
         return`<div class="pnr"><b>${esc(c.data.cls||"학급")}</b><div class="pnb"><i style="width:${tot?Math.round(dn/tot*100):0}%"></i></div><small>${nx?esc(pnCode(nx)):"끝"} <span class="pnst ${k}">${esc(l)}</span></small></div>${short?`<p class="pnwarn">⚠ <b>${esc(c.data.cls||"학급")}</b>: 남은 수업 <b>${left}시간</b> · 남은 차시 <b>${need}</b> → <b>${short}차시 부족</b></p>`:""}`}).join("")}
       <p class="note">남은 수업은 시간표와 수업 변동(시험 · 휴업 · 휴강)을 빼고 학기 끝 날짜까지 셉니다.</p>
-      <div class="flsubrow"><span>⏱ ${esc(subj)} 수업 흐름 기본 틀: <b>${flowSubs()[subj]?esc((flowById(flowSubs()[subj])||{n:"(없음)"}).n):"정하지 않음"}</b>${pnCh(p).some(y=>y.c.flow)?` · 차시별 틀 ${pnCh(p).filter(y=>y.c.flow).length}개`:""}</span><select class="fld" id="flSubSel" aria-label="${esc(subj)} 기본 수업 흐름"><option value="">(쓰지 않음)</option>${[...FL_BASE,...flowsAll()].map(f=>`<option value="${esc(f.id)}"${flowSubs()[subj]===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></div></section>
+      <div class="flsubrow"><span>⏱ ${esc(subj)} 수업 흐름 기본 틀: <b>${flowSubs()[subj]?esc((flowById(flowSubs()[subj])||{n:"(없음)"}).n):"정하지 않음"}</b>${pnCh(p).some(y=>y.c.flow)?` · 차시별 틀 ${pnCh(p).filter(y=>y.c.flow).length}개`:""}</span><select class="fld" id="flSubSel" aria-label="${esc(subj)} 기본 수업 흐름"><option value="">(쓰지 않음)</option>${[...FLB(),...flowsAll()].map(f=>`<option value="${esc(f.id)}"${flowSubs()[subj]===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></div></section>
       <section class="card"><div class="hd"><h2>진도표</h2><span class="sub">${C.map((c,i)=>`<i class="pnlg" style="--o:${1-i*.25}">●</i>${esc(c.data.cls||"")}`).join(" ")}</span></div>
       ${p.units.map((u,ui)=>`<div class="pnu">${esc(u.n)}</div>${u.ch.map((ch,ci)=>`<button type="button" class="pnc" data-pnc="${esc(ch.id)}"><i>${ci+1}</i><b>${esc(ch.t)}${ch.add?`<em class="pnadd">추가</em>`:""}${ch.flow?`<em class="pnfl" title="이 차시의 수업 흐름: ${esc((flowById(ch.flow)||{n:""}).n)}">⏱</em>`:""}${ch.wk?` <small>${esc(fmtDate(ch.wk))}</small>`:""}</b><span class="pnd">${C.map((c,i)=>{const v=pnG(p,c)[ch.id];return`<span class="${v?v.st==="d"?"on":"half":""}" style="--o:${1-i*.25}" title="${esc(c.data.cls||"")}"></span>`}).join("")}</span></button>`).join("")}`).join("")}
       ${(()=>{const D=pnDiff(p);if(!D||!(D.added.length||D.renamed.length||D.removed.length))return"";return`<details class="pndiff"><summary>처음 계획과 비교 <small>${esc(fmtDate(D.at))} ${D.n0}차시 → 지금 ${D.n1}차시 · 추가 ${D.added.length} · 바뀜 ${D.renamed.length} · 빠짐 ${D.removed.length}</small></summary>
@@ -11042,7 +11043,7 @@ function pnChSheet(p,chId,C){const x=pnCh(p).find(y=>y.c.id===chId);if(!x)return
     ${C.map(c=>{const v=pnG(p,c)[chId];return`<div class="pncl"><b>${esc(c.data.cls||"학급")}</b><div class="seg2 sm">${[["d","마침"],["h","반만"],["","안 함"]].map(([k,l])=>`<button type="button" data-pk="${esc(c.id)}|${k}" aria-pressed="${(v?v.st:"")===k}">${l}</button>`).join("")}</div><small>${v?esc(fmtDate(v.d)):""}</small></div>`}).join("")}
     <label class="lb" for="pnWk">계획 날짜 (선택 · 계획 대비 앞섬 · 늦음을 봄)<input class="fld" id="pnWk" type="date" value="${esc(x.c.wk||"")}"></label>
     <label class="lb" for="pnT">차시 이름<input class="fld" id="pnT" value="${esc(x.c.t)}" maxlength="60"></label>
-    <label class="lb" for="pnFl">⏱ 이 차시의 수업 흐름 <small class="note">(비우면 교과 기본 틀)</small><select class="fld" id="pnFl"><option value="">(교과 기본 틀${flowSubs()[p.subj]?` · ${esc((flowById(flowSubs()[p.subj])||{n:""}).n)}`:" 없음"})</option>${[...FL_BASE,...flowsAll()].map(f=>`<option value="${esc(f.id)}"${x.c.flow===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></label>
+    <label class="lb" for="pnFl">⏱ 이 차시의 수업 흐름 <small class="note">(비우면 교과 기본 틀)</small><select class="fld" id="pnFl"><option value="">(교과 기본 틀${flowSubs()[p.subj]?` · ${esc((flowById(flowSubs()[p.subj])||{n:""}).n)}`:" 없음"})</option>${[...FLB(),...flowsAll()].map(f=>`<option value="${esc(f.id)}"${x.c.flow===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></label>
     <div class="row2"><button class="btn" type="button" id="pnFlM">⏱ 수업 흐름 틀 관리</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
     $("sheet").hidden=false;$("sheetBox").querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{const[cid,k]=b.dataset.pk.split("|"),c=S.list.find(q=>q.id===cid);pnSet(p,c,chId,k,today());save();paint()});
     $("pnWk").onchange=e=>{const v=e.target.value;if(/^\d{4}-\d{2}-\d{2}$/.test(v))x.c.wk=v;else delete x.c.wk;save()};$("pnT").oninput=e=>{x.c.t=e.target.value.trim().slice(0,60)||x.c.t;save()};
@@ -11205,16 +11206,18 @@ function pnLesson(el,p,cl,x){const C=p.cls.map(id=>S.list.find(c=>c.id===id)).fi
 /* ===== 5.77: 수업 흐름 — 도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 두고, 수업 중 지금 단계 · 남은 시간을 알려 줌
    틀: 기본 틀(앱에 들어 있음) + 선생님이 직접 설계한 틀 S.flows=[{id,n,steps:[{id,n,m,memo,al:"quiet"|"vib"|"snd",tool:""|"tm"|"pk"|"gp",fix}]}]
    적용: 진도표 차시의 틀(c.flow) > 교과 기본 틀(S.flowSub[교과]) · 수업마다 바꾼 틀(이 기기, att-app-flowrun) */
-var FL_BASE=[{id:"b:3",n:"3단계 (도입 · 전개 · 정리)",b:1,steps:[["도입",5,"",""],["전개",35,"",""],["정리",10,"",1]]},
+/* 5.79.1: 앱이 켜질 때 오늘 화면이 먼저 그려져도 쓸 수 있게 함수로(호이스팅) */
+function FLB(){return FLB.v||(FLB.v=[{id:"b:3",n:"3단계 (도입 · 전개 · 정리)",b:1,steps:[["도입",5,"",""],["전개",35,"",""],["정리",10,"",1]]},
   {id:"b:5",n:"5단계 (동기 유발 · 개념 · 활동 · 공유 · 정리)",b:1,steps:[["동기 유발",5,"",""],["개념 학습",15,"",""],["활동",15,"tm",""],["발표 · 공유",10,"pk",""],["정리",5,"",1]]},
   {id:"b:exp",n:"실험 수업",b:1,steps:[["도입 · 안전 교육",5,"",""],["실험 설명",8,"",""],["실험",22,"tm",""],["결과 정리",10,"",""],["정리",5,"",1]]},
   {id:"b:grp",n:"모둠 활동 수업",b:1,steps:[["도입",5,"",""],["모둠 구성",3,"gp",""],["모둠 활동",25,"tm",""],["발표",10,"pk",""],["정리",7,"",1]]}]
-  .map(f=>({...f,steps:f.steps.map(([n,m,tool,fix],i)=>({id:f.id+"-"+i,n,m,tool,fix:!!fix,al:"vib",memo:""}))}));
-var FL_TOOL={"":"없음",tm:"⏱ 타이머",pk:"🎯 발표자 뽑기",gp:"👥 모둠 나누기"},FL_AL={quiet:"화면만",vib:"진동",snd:"진동 + 소리"};
+  .map(f=>({...f,steps:f.steps.map(([n,m,tool,fix],i)=>({id:f.id+"-"+i,n,m,tool,fix:!!fix,al:"vib",memo:""}))})))}
+function FLT(){return FLT.v||(FLT.v={"":"없음",tm:"⏱ 타이머",pk:"🎯 발표자 뽑기",gp:"👥 모둠 나누기"})}
+function FLAL(){return FLAL.v||(FLAL.v={quiet:"화면만",vib:"진동",snd:"진동 + 소리"})}
 function flowsAll(){if(!Array.isArray(S.flows))S.flows=[];return S.flows}
 function flowSubs(){if(!S.flowSub||typeof S.flowSub!=="object")S.flowSub={};return S.flowSub}
 function flowLen(){const t=TT();return(t&&+t.classMin)||50}
-function flowById(id,len){if(!id)return null;const b=FL_BASE.find(f=>f.id===id);if(b){/* 기본 틀은 수업 시간(분)에 맞춰 늘이거나 줄임 */const L=len||flowLen(),tot=b.steps.reduce((a,s)=>a+s.m,0);if(L===tot)return b;let acc=0;const st=b.steps.map((s,i)=>{const m=i===b.steps.length-1?Math.max(1,L-acc):Math.max(1,Math.round(s.m*L/tot));acc+=m;return{...s,m}});return{...b,steps:st}}
+function flowById(id,len){if(!id)return null;const b=FLB().find(f=>f.id===id);if(b){/* 기본 틀은 수업 시간(분)에 맞춰 늘이거나 줄임 */const L=len||flowLen(),tot=b.steps.reduce((a,s)=>a+s.m,0);if(L===tot)return b;let acc=0;const st=b.steps.map((s,i)=>{const m=i===b.steps.length-1?Math.max(1,L-acc):Math.max(1,Math.round(s.m*L/tot));acc+=m;return{...s,m}});return{...b,steps:st}}
   return flowsAll().find(f=>f.id===id)||null}
 function flowSum(f){return(f&&f.steps||[]).reduce((a,s)=>a+(+s.m||0),0)}
 /* 5.78: 수업마다 정한 것(켜기/끄기 · 고른 틀 · 이 수업만 고친 단계 · 조정)은 S.flowRun에 — 휴대폰 · 컴퓨터가 함께 씀. 지난 수업은 7일 뒤 지움 */
@@ -11247,20 +11250,20 @@ function flowBoxHTML(st){if(!st)return"";const{F,cur,i,steps}=st,tot=st.fin-st.s
     <div class="flh"><span class="fln">${st.before?`⏱ 곧 시작 · ${esc(F.f.steps[0].n)}`:cur?`⏱ ${i+1}/${steps.length} <b>${esc(cur.s.n)}</b>`:"⏱ 수업 흐름 끝"}</span><span class="flt" data-fltime>${st.before?flowFmt(st.st-st.now):cur?flowFmt(st.left):""}</span></div>
     <div class="flbar">${seg}</div>
     <div class="flsub">${cur&&cur.s.memo?`<span>📝 ${esc(cur.s.memo)}</span>`:""}${nx?`<span>다음 · ${esc(nx.s.n)} ${Math.round(nx.d/60000)}분</span>`:cur?`<span>마지막 단계</span>`:`<span>남은 수업 ${flowFmt(st.end-st.now)}</span>`}${warn?`<span class="flw">⚠ 수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</div>
-    <div class="flbtns">${cur&&cur.s.tool?`<button type="button" class="btn sm fltool" data-fltool>${esc(FL_TOOL[cur.s.tool])} 열기</button>`:""}${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${(i>0||i<0&&!st.before)?`<button type="button" class="btn sm" data-flprev aria-label="이전 단계로">‹ 이전</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 ›</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
+    <div class="flbtns">${cur&&cur.s.tool?`<button type="button" class="btn sm fltool" data-fltool>${esc(FLT()[cur.s.tool])} 열기</button>`:""}${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${(i>0||i<0&&!st.before)?`<button type="button" class="btn sm" data-flprev aria-label="이전 단계로">‹ 이전</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 ›</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
 /* 5.79: 이전 단계로 돌아가기 — 그 단계를 지금부터 다시(남은 계획 시간, 없으면 2분), 뒤 단계들은 그만큼 뒤로 */
 function flowBack(x,j){const st=flowState(x);if(!st)return;if(j==null)j=st.i<0?st.steps.length-1:st.i-1;if(j<0||!st.steps[j])return;const o=st.steps[j],base=Math.max(60000,(+o.s.m||0)*60000),R=Math.max(120000,Math.round((base-o.d)/60000)*60000),now=Date.now();
-  if(st.i>=0&&j>st.i)return;flowAdj(x,o.s.id,now+R-o.b);FLA.prev[flowKey(x)]=j;toast(`${o.s.n}(으)로 돌아갑니다 · ${Math.round(R/60000)}분`);flowTick(1)}
+  if(st.i>=0&&j>st.i)return;flowAdj(x,o.s.id,now+R-o.b);FLAs().prev[flowKey(x)]=j;toast(`${o.s.n}(으)로 돌아갑니다 · ${Math.round(R/60000)}분`);flowTick(1)}
 function flowWire(el,x){const q=s=>el.querySelector(s);
   if(q("[data-flplus]"))q("[data-flplus]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,120000);toast(`${st.cur.s.n} ＋2분 · 다음 단계가 2분 뒤로`);flowTick(1)}};
   if(q("[data-flprev]"))q("[data-flprev]").onclick=()=>flowBack(x);
   if(q("[data-fltool]"))q("[data-fltool]").onclick=()=>{const st=flowState(x);if(st&&st.cur)flowTool(x,st.i)};
-  if(q("[data-flnext]"))q("[data-flnext]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,-(st.cur.b-st.now));FLA.prev[flowKey(x)]=st.i;flowTick(1);flowStepStart(x,st.i+1)}};
+  if(q("[data-flnext]"))q("[data-flnext]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,-(st.cur.b-st.now));FLAs().prev[flowKey(x)]=st.i;flowTick(1);flowStepStart(x,st.i+1)}};
   if(q("[data-flfit]"))q("[data-flfit]").onclick=()=>{const r=flowFit(x);toast(r>0?`남은 단계를 ${Math.ceil(r/60000)}분 줄여 수업 끝에 맞췄습니다`:"줄일 수 있는 단계가 없습니다(꼭 지킬 단계만 남음)");flowTick(1)};
   if(q("[data-flmore]"))q("[data-flmore]").onclick=()=>flowSheet(x);
   if(q("[data-flpick]"))q("[data-flpick]").onclick=()=>flowPick(x)}
 /* 1초마다: 지금 수업 카드 · 작은 표시를 고치고, 단계 끝나기 1분 전 · 단계가 바뀔 때 알림 */
-var FLA={prev:{},pre:{},wl:null};
+function FLAs(){return FLAs.v||(FLAs.v={prev:{},pre:{},wl:null})}
 function flowTick(force){if(force)try{if(view==="todo")renderToday()}catch(e){}let x=null;try{x=nowLesson()}catch(e){}const st=x?flowState(x):null;
   document.querySelectorAll("[data-flow]").forEach(el=>{if(!x||!st){el.dataset.sig="";el.hidden=!x;if(!x){el.innerHTML="";return}const off=!!(flowRunAll()[flowKey(x)]||{}).off,want=off?"off":"set";if(el.dataset.fl!==want||!el.querySelector("[data-flpick]")){el.dataset.fl=want;el.innerHTML=off?`<button type="button" class="flowset off" data-flpick>⏱ 이 수업은 수업 흐름 꺼짐 <small>눌러서 켜기 · 바꾸기</small></button>`:`<button type="button" class="flowset" data-flpick>⏱ 수업 흐름 정하기 <small>도입 · 전개 · 정리 시간 알림</small></button>`;el.querySelector("[data-flpick]").onclick=()=>off?flowSheet(x):flowPick(x)}return}
     el.dataset.fl="";
@@ -11270,10 +11273,10 @@ function flowTick(force){if(force)try{if(view==="todo")renderToday()}catch(e){}l
   let pill=$("flPill");const heroOn=[...document.querySelectorAll(".nowhero")].some(h=>!h.hidden&&h.querySelector("[data-flowbox]"));
   if(st&&st.cur&&!heroOn&&!st.before){if(!pill){pill=document.createElement("button");pill.type="button";pill.id="flPill";pill.className="flpill";document.body.appendChild(pill)}pill.hidden=false;pill.classList.toggle("warn",st.over>15000);pill.innerHTML=`⏱ <span>${esc(st.cur.s.n)}</span> <b>${flowFmt(st.left)}</b>`;pill.onclick=()=>flowSheet(x)}else if(pill)pill.hidden=true;
   if(!st||!st.cur||st.before){flowWake(false);return}flowWake(true);
-  const k=flowKey(x),pv=FLA.prev[k];
-  if(pv==null){FLA.prev[k]=st.i;return}
-  if(pv!==st.i){FLA.prev[k]=st.i;if(st.i>pv)flowStepStart(x,st.i,st)}
-  else if(st.left<=60000&&st.cur.d>90000&&!FLA.pre[k+"|"+st.i]){FLA.pre[k+"|"+st.i]=1;const nx=st.steps[st.i+1];flowAlert(st.cur.s.al,`${st.cur.s.n} 1분 남음${nx?` · 다음 ${nx.s.n}`:""}`,"pre")}}
+  const k=flowKey(x),pv=FLAs().prev[k];
+  if(pv==null){FLAs().prev[k]=st.i;return}
+  if(pv!==st.i){FLAs().prev[k]=st.i;if(st.i>pv)flowStepStart(x,st.i,st)}
+  else if(st.left<=60000&&st.cur.d>90000&&!FLAs().pre[k+"|"+st.i]){FLAs().pre[k+"|"+st.i]=1;const nx=st.steps[st.i+1];flowAlert(st.cur.s.al,`${st.cur.s.n} 1분 남음${nx?` · 다음 ${nx.s.n}`:""}`,"pre")}}
 /* 5.79: 단계 도구 열기 — 타이머는 그 단계 남은 시간(지금 단계) 또는 단계 시간으로 맞춰서(시작은 ▶ 시작) */
 function flowTool(x,i){const st=flowState(x,null,true),o=st&&st.steps[i];if(!o||!o.s.tool)return;if(!x.cl)return toast("학급이 연결된 수업에서 열 수 있습니다");
   if(o.s.tool==="tm"){const left=st.i===i&&!st.before?o.b-Date.now():o.d,ms=Math.max(60000,Math.round(left/60000)*60000);Object.assign(CT.tm,{run:false,done:false,dur:ms,left:ms,end:0,sel:true})}
@@ -11306,9 +11309,9 @@ function flowAlert(al,msg,kind){al=al||"vib";const start=kind!=="pre";document.d
   if(al==="snd"||(al==="vib"&&!flCanVib()))snd=flChime(start?2:1);
   if(msg)toast("⏱ "+msg);window.__flowAlerts=(window.__flowAlerts||[]).concat([[al,msg,{vib,snd,kind:start?"start":"pre"}]])}
 /* 흐름이 도는 동안 화면이 꺼지지 않게 */
-function flowWake(on){try{if(on&&!FLA.wl&&navigator.wakeLock&&!document.hidden){FLA.wl=1;navigator.wakeLock.request("screen").then(w=>{FLA.wl=w;w.addEventListener&&w.addEventListener("release",()=>{if(FLA.wl===w)FLA.wl=null})}).catch(()=>{FLA.wl=null})}else if(!on&&FLA.wl&&FLA.wl.release){FLA.wl.release();FLA.wl=null}}catch(e){}}
+function flowWake(on){try{if(on&&!FLAs().wl&&navigator.wakeLock&&!document.hidden){FLAs().wl=1;navigator.wakeLock.request("screen").then(w=>{FLAs().wl=w;w.addEventListener&&w.addEventListener("release",()=>{if(FLAs().wl===w)FLAs().wl=null})}).catch(()=>{FLAs().wl=null})}else if(!on&&FLAs().wl&&FLAs().wl.release){FLAs().wl.release();FLAs().wl=null}}catch(e){}}
 setInterval(()=>{if(!document.hidden)try{flowTick()}catch(e){}},1000);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden){FLA.wl=null;setTimeout(()=>{try{flowTick(1)}catch(e){}},200)}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){FLAs().wl=null;setTimeout(()=>{try{flowTick(1)}catch(e){}},200)}});
 /* 5.78: 오늘 수업 목록 · 시간표 칸에서 수업 흐름을 미리 확인 */
 function flowChip(x,date,i){if(!x||x.cancel||x.act||!x.cl||!x.start||!x.end||!/교시/.test(x.title||""))return"";const y={...x,date},run=flowRunAll()[flowKey(y)]||{},F=flowOf(y,true);
   return`<span class="tdfl${run.off?" off":F?"":" none"}" data-flk="${i}" role="button" aria-label="수업 흐름 확인 · 바꾸기">⏱ ${run.off?"흐름 꺼짐":F?esc(F.f.n.replace(/\s*\(.*\)$/,"")):"흐름 정하기"}</span>`}
@@ -11325,7 +11328,7 @@ function flowSheet(x,back){let demo=null;const close=()=>{if(demo){clearInterval
       ${!F?`<p class="note">이 수업에 쓸 틀이 없습니다. 틀을 고르면 ${live?"바로":"수업 시작 시각에"} 시작합니다.</p><div class="row2"><button class="btn pri" type="button" id="flChg">틀 고르기</button></div>`
       :`<div class="flcur${off?" off":""}"><div><small>${esc(flowSrcL(F,x))}</small><b>${esc(F.f.n)}</b><small>${F.f.steps.length}단계 · 합계 ${Math.round((st.fin-st.st)/60000)}분${st.over>15000?` · <span class="flw">수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</small></div></div>
       <div class="flacts"><button class="btn sm" type="button" id="flChg">틀 바꾸기</button><button class="btn sm" type="button" id="flMine">이 수업만 고치기</button><button class="btn sm" type="button" id="flTpl">${F.f.custom||String(F.f.id).startsWith("b:")?"내 틀로 저장해 고치기":"틀 고치기"}</button></div>
-      <div class="flsteps${off?" off":""}">${st.steps.map((o,j)=>{const on=live&&!off&&j===st.i,ctl=live&&!off,past=live&&!off&&(st.i<0||j<st.i);return`<div class="flsr${on?" on":live&&!off&&(j<st.i||st.i<0)?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}${o.s.tool?`<button type="button" class="fltb" data-fltl="${j}">${esc(FL_TOOL[o.s.tool])} 열기</button>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(run.adj&&run.adj[o.s.id])?` <small>(${run.adj[o.s.id]>0?"＋":""}${Math.round(run.adj[o.s.id]/60000)})</small>`:""}</span>${ctl?`<span class="flsb">${past?`<button type="button" class="btn sm flbkb" data-flbk="${j}" aria-label="${esc(o.s.n)}(으)로 돌아가기">↩ 돌아가기</button>`:`<button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button>`}</span>`:""}</div>`}).join("")}</div>
+      <div class="flsteps${off?" off":""}">${st.steps.map((o,j)=>{const on=live&&!off&&j===st.i,ctl=live&&!off,past=live&&!off&&(st.i<0||j<st.i);return`<div class="flsr${on?" on":live&&!off&&(j<st.i||st.i<0)?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}${o.s.tool?`<button type="button" class="fltb" data-fltl="${j}">${esc(FLT()[o.s.tool])} 열기</button>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(run.adj&&run.adj[o.s.id])?` <small>(${run.adj[o.s.id]>0?"＋":""}${Math.round(run.adj[o.s.id]/60000)})</small>`:""}</span>${ctl?`<span class="flsb">${past?`<button type="button" class="btn sm flbkb" data-flbk="${j}" aria-label="${esc(o.s.n)}(으)로 돌아가기">↩ 돌아가기</button>`:`<button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button>`}</span>`:""}</div>`}).join("")}</div>
       ${live&&!off?`<p class="note">지난 단계는 <b>↩ 돌아가기</b>로 그 단계를 지금부터 다시 하고, 돌아간 뒤에는 −1 · ＋1로 그 단계 시간을 고칩니다. 뒤 단계는 그만큼 밀리거나 당겨집니다.</p>`:""}
       ${live&&!off?`<div class="row2">${st.over>15000?`<button class="btn pri" type="button" id="flFit">남은 단계 줄여 수업 끝에 맞추기</button>`:""}<button class="btn" type="button" id="flNow">지금부터 다시 시작</button></div>`:""}
       <div class="shlb">미리 확인</div><div class="fldemo" id="flDemo" hidden></div>
@@ -11334,12 +11337,12 @@ function flowSheet(x,back){let demo=null;const close=()=>{if(demo){clearInterval
       <p class="note">${off?"꺼 두면 이 수업에서는 알리지 않습니다. 다른 수업은 그대로입니다.":live?"단계 끝나기 1분 전과 단계가 바뀔 때 알립니다.":`수업 시작 시각(${esc(x.start)})에 저절로 시작합니다. 휴대폰에서 진동 · 소리가 나는지 ‘알림 시험’으로 미리 확인하세요.`}</p>`}
       <div class="row2"><button class="btn ghost" type="button" id="flMgr">틀 관리</button><button class="btn pri" type="button" id="skNo">${back?"돌아가기":"닫기"}</button></div>`;
     $("sheet").hidden=false;$("skNo").onclick=close;
-    $("sheetBox").querySelectorAll("[data-flsw]").forEach(b=>b.onclick=()=>{const v=b.dataset.flsw==="off";flowSet(x,{off:v||null});FLA.prev[flowKey(x)]=null;toast(v?"이 수업은 수업 흐름을 껐습니다":"이 수업에 수업 흐름을 켰습니다");paint();flowTick(1)});
+    $("sheetBox").querySelectorAll("[data-flsw]").forEach(b=>b.onclick=()=>{const v=b.dataset.flsw==="off";flowSet(x,{off:v||null});FLAs().prev[flowKey(x)]=null;toast(v?"이 수업은 수업 흐름을 껐습니다":"이 수업에 수업 흐름을 켰습니다");paint();flowTick(1)});
     $("sheetBox").querySelectorAll("[data-fla]").forEach(b=>b.onclick=()=>{const[id,ms]=b.dataset.fla.split("|");flowAdj(x,id,+ms);paint();flowTick(1)});
     $("sheetBox").querySelectorAll("[data-flbk]").forEach(b=>b.onclick=()=>{flowBack(x,+b.dataset.flbk);paint()});
     $("sheetBox").querySelectorAll("[data-fltl]").forEach(b=>b.onclick=e=>{e.stopPropagation();flowTool(x,+b.dataset.fltl)});
     if($("flFit"))$("flFit").onclick=()=>{const r=flowFit(x);toast(r>0?`${Math.ceil(r/60000)}분 줄여 맞췄습니다`:"줄일 수 있는 단계가 없습니다");paint();flowTick(1)};
-    if($("flNow"))$("flNow").onclick=()=>{flowSet(x,{st:Date.now(),adj:null});FLA.prev[flowKey(x)]=null;toast("지금부터 첫 단계를 시작합니다");paint();flowTick(1)};
+    if($("flNow"))$("flNow").onclick=()=>{flowSet(x,{st:Date.now(),adj:null});FLAs().prev[flowKey(x)]=null;toast("지금부터 첫 단계를 시작합니다");paint();flowTick(1)};
     $("flChg").onclick=()=>flowPick(x,()=>flowSheet(x,back));
     if($("flMine"))$("flMine").onclick=()=>{const F=flowOf(x,true);flowEdit({n:F.f.custom?F.f.n:F.f.n.replace(/\s*\(.*\)$/,"")+" · 이 수업",steps:F.f.steps.map(s=>({...s}))},()=>flowSheet(x,back),true,{lesson:x})};
     if($("flTpl"))$("flTpl").onclick=()=>{const F=flowOf(x,true),own=!F.f.custom&&!String(F.f.id).startsWith("b:");
@@ -11352,11 +11355,11 @@ function flowSheet(x,back){let demo=null;const close=()=>{if(demo){clearInterval
         if(pi!==-2&&s2.i!==pi&&s2.i>=0)flowAlert(s2.cur.s.al,`(미리 보기) ${s2.cur.s.n} 시작`);if(s2.cur&&s2.left<=60000&&s2.cur.d>90000&&!pre[s2.i]){pre[s2.i]=1;flowAlert(s2.cur.s.al,`(미리 보기) ${s2.cur.s.n} 1분 남음`,"pre")}pi=s2.i;
         if(s2.i<0){clearInterval(demo.t);demo=null;$("flSim").innerHTML="▶ 다시 돌려 보기 <small>1분 = 1초</small>";box.innerHTML+=`<p class="note">미리 보기를 마쳤습니다.</p>`}},250)}};
     $("flMgr").onclick=()=>flowMgr(()=>flowSheet(x,back))};paint()}
-var fmtHM=ms=>{const d=new Date(ms);return`${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`};
+function fmtHM(ms){const d=new Date(ms);return`${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`}
 function flowStepsTxt(f){return f.steps.map(s=>`${s.n} ${s.m}`).join(" · ")}
 /* 틀 고르기 — 어디에 쓸지(이 수업만 · 이 차시 · 교과 기본) */
 function flowPick(x,back){const subj=flowSubjOf(x),cur=flowOf(x,true),p=(()=>{try{return pnFind(subj,x.cl)}catch(e){return null}})(),nx=p&&pnNext(p,x.cl),len=Math.round(toMin(x.end)-toMin(x.start))||flowLen();
-  const all=[...FL_BASE,...flowsAll()];let sel=cur&&!cur.f.custom?cur.f.id:(flowSubs()[subj]||""),sc=flowSubs()[subj]?"run":"subj";
+  const all=[...FLB(),...flowsAll()];let sel=cur&&!cur.f.custom?cur.f.id:(flowSubs()[subj]||""),sc=flowSubs()[subj]?"run":"subj";
   const paint=()=>{$("sheetBox").innerHTML=`<h2>⏱ 수업 흐름 틀 고르기 <span class="sub">${esc(x.title)} · ${len}분</span></h2>
     <div class="flpick">${all.map(f=>{const g=flowById(f.id,len);return`<button type="button" class="flpr" data-fp="${esc(f.id)}" aria-pressed="${sel===f.id}"><b>${esc(f.n)}${f.b?` <small class="flb">기본</small>`:""}</b><small>${esc(flowStepsTxt(g))}${!f.b&&flowSum(g)!==len?` · 합계 ${flowSum(g)}분`:""}</small></button>`}).join("")}</div>
     <div class="shlb">어디에 쓸까요?</div>
@@ -11371,13 +11374,13 @@ function flowPick(x,back){const subj=flowSubjOf(x),cur=flowOf(x,true),p=(()=>{tr
     $("flUse").onclick=()=>{if(!sel)return;const run=flowRunAll()[flowKey(x)]||{};
       if(sc==="run")flowSet(x,{fid:sel,fs:null,fn:null,off:null,adj:null,st:run.st||null});
       else{flowSet(x,{fid:null,fs:null,fn:null,off:null,adj:null});if(sc==="ch"&&nx)nx.c.flow=sel;else flowSubs()[subj]=sel;save()}
-      FLA.prev[flowKey(x)]=null;toast(sc==="run"?"이 수업에 쓸 틀을 정했습니다":sc==="ch"?`진도표 ${pnCode(nx)} 차시에 틀을 붙였습니다`:`${subj} 기본 틀을 정했습니다`);flowTick(1);done()}};paint()}
+      FLAs().prev[flowKey(x)]=null;toast(sc==="run"?"이 수업에 쓸 틀을 정했습니다":sc==="ch"?`진도표 ${pnCode(nx)} 차시에 틀을 붙였습니다`:`${subj} 기본 틀을 정했습니다`);flowTick(1);done()}};paint()}
 /* 틀 관리: 기본 틀 · 내 틀 · 교과 기본 틀 · 파일로 주고받기 */
-function flowMgr(back){const paint=()=>{const subs=[...pnSubjects().keys()],all=[...FL_BASE,...flowsAll()];
+function flowMgr(back){const paint=()=>{const subs=[...pnSubjects().keys()],all=[...FLB(),...flowsAll()];
     $("sheetBox").innerHTML=`<h2>⏱ 수업 흐름 틀</h2><p class="note">도입 · 전개 · 정리처럼 수업 단계를 시간으로 나눠 둡니다. 수업 시간이 되면 지금 수업 카드에 지금 단계와 남은 시간이 나오고, 단계 끝나기 1분 전과 단계가 바뀔 때 알려 줍니다.</p>
       <div class="shlb">내가 만든 틀</div>${flowsAll().length?flowsAll().map(f=>`<div class="flmr"><div><b>${esc(f.n)}</b><small>${esc(flowStepsTxt(f))} · 합계 ${flowSum(f)}분</small></div><button class="btn sm" type="button" data-fe="${esc(f.id)}">고치기</button><button class="btn sm ghost" type="button" data-fs="${esc(f.id)}" aria-label="보내기">보내기</button></div>`).join(""):`<p class="note">아직 없습니다. 기본 틀을 복사해 고치거나 새로 만드세요.</p>`}
       <div class="row2"><button class="btn pri" type="button" id="flNew2">＋ 새 틀 만들기</button><label class="btn filebtn" for="flFi">📄 틀 파일 넣기<input type="file" id="flFi" accept=".json"></label></div>
-      <div class="shlb">기본 틀 <small class="note">복사해서 내 틀로 고칠 수 있습니다</small></div>${FL_BASE.map(f=>`<div class="flmr"><div><b>${esc(f.n)}</b><small>${esc(flowStepsTxt(flowById(f.id)))}</small></div><button class="btn sm" type="button" data-fc="${esc(f.id)}">복사해 고치기</button></div>`).join("")}
+      <div class="shlb">기본 틀 <small class="note">복사해서 내 틀로 고칠 수 있습니다</small></div>${FLB().map(f=>`<div class="flmr"><div><b>${esc(f.n)}</b><small>${esc(flowStepsTxt(flowById(f.id)))}</small></div><button class="btn sm" type="button" data-fc="${esc(f.id)}">복사해 고치기</button></div>`).join("")}
       ${subs.length?`<div class="shlb">교과 기본 틀 <small class="note">진도표 차시에 붙인 틀이 있으면 그 틀이 먼저</small></div>${subs.map(su=>`<label class="lb flsubl">${esc(su)}<select class="fld" data-fsub="${esc(su)}"><option value="">(쓰지 않음)</option>${all.map(f=>`<option value="${esc(f.id)}"${flowSubs()[su]===f.id?" selected":""}>${esc(f.n)}</option>`).join("")}</select></label>`).join("")}`:""}
       <div class="row2"><button class="btn pri" type="button" id="skNo">${back?"돌아가기":"닫기"}</button></div>`;
     $("sheet").hidden=false;$("skNo").onclick=()=>{if(back)back();else $("sheet").hidden=true;flowTick(1)};
@@ -11388,7 +11391,7 @@ function flowMgr(back){const paint=()=>{const subs=[...pnSubjects().keys()],all=
     $("sheetBox").querySelectorAll("[data-fsub]").forEach(sl=>sl.onchange=()=>{const su=sl.dataset.fsub;if(sl.value)flowSubs()[su]=sl.value;else delete flowSubs()[su];save();toast(`${su} 기본 틀을 ${sl.value?"정했습니다":"뺐습니다"}`)});
     $("flFi").onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;try{const o=JSON.parse(await f.text());if(!o||o.k!=="tlflow"||!Array.isArray(o.steps)||!o.steps.length)throw new Error("수업 흐름 틀 파일이 아닙니다");
         flowsAll().push(flowClean({id:uid(),n:String(o.n||"받은 틀"),steps:o.steps}));save();paint();toast(`‘${o.n||"받은 틀"}’ 틀을 넣었습니다`)}catch(err){toast(err.message||"파일을 읽지 못했습니다")}}};paint()}
-function flowClean(f){return{id:f.id||uid(),n:String(f.n||"내 수업 흐름").trim().slice(0,40)||"내 수업 흐름",steps:(f.steps||[]).map(s=>({id:s.id||uid(),n:String(s.n||"단계").trim().slice(0,30)||"단계",m:Math.max(1,Math.min(180,Math.round(+s.m||1))),memo:String(s.memo||"").slice(0,80),al:FL_AL[s.al]?s.al:"vib",tool:FL_TOOL[s.tool]!=null?s.tool:"",fix:!!s.fix})).slice(0,20)}}
+function flowClean(f){return{id:f.id||uid(),n:String(f.n||"내 수업 흐름").trim().slice(0,40)||"내 수업 흐름",steps:(f.steps||[]).map(s=>({id:s.id||uid(),n:String(s.n||"단계").trim().slice(0,30)||"단계",m:Math.max(1,Math.min(180,Math.round(+s.m||1))),memo:String(s.memo||"").slice(0,80),al:FLAL()[s.al]?s.al:"vib",tool:FLT()[s.tool]!=null?s.tool:"",fix:!!s.fix})).slice(0,20)}}
 /* 틀 설계: 단계 이름 · 시간 · 메모 · 알림 · 함께 열 도구 · 꼭 지킬 단계 */
 function flowEdit(f0,done,copy,opt){opt=opt||{};const LX=opt.lesson,isNew=!f0||copy||!f0.id;const W=flowClean(f0?JSON.parse(JSON.stringify(f0)):{n:"",steps:[{n:"도입",m:5},{n:"전개",m:Math.max(1,flowLen()-15)},{n:"정리",m:10,fix:true}]});if(isNew)W.id=uid();if(!f0||!f0.n)W.n="";const L=LX?(Math.round(toMin(LX.end)-toMin(LX.start))||flowLen()):flowLen();
   const sumP=()=>{const t=flowSum(W),el=$("flSum");if(el){el.textContent=t===L?`합계 ${t}분 · 수업 ${L}분에 딱 맞음 ✓`:t>L?`합계 ${t}분 · 수업 ${L}분보다 ${t-L}분 넘침`:`합계 ${t}분 · 수업 ${L}분보다 ${L-t}분 모자람`;el.className="flsum "+(t===L?"ok":"df")}};
@@ -11397,9 +11400,9 @@ function flowEdit(f0,done,copy,opt){opt=opt||{};const LX=opt.lesson,isNew=!f0||c
     <label class="lb" for="flN">${LX?"이름":"틀 이름"}<input class="fld" id="flN" maxlength="40" value="${esc(W.n)}" placeholder="예: 3학년 실험 · 발표 수업"></label>
     <div class="fleds">${W.steps.map((s,j)=>`<div class="fled" data-j="${j}"><div class="fler"><span class="flno">${j+1}</span><input class="fld" data-k="n" value="${esc(s.n)}" maxlength="30" aria-label="${j+1}단계 이름" placeholder="단계 이름"><input class="fld flm" data-k="m" type="number" inputmode="numeric" min="1" max="180" value="${s.m}" aria-label="${j+1}단계 시간(분)"><span class="flu">분</span>
         <button type="button" class="btn sm ghost" data-mv="-1" aria-label="위로"${j?"":" disabled"}>▲</button><button type="button" class="btn sm ghost" data-mv="1" aria-label="아래로"${j<W.steps.length-1?"":" disabled"}>▼</button><button type="button" class="btn sm ghost" data-rm aria-label="이 단계 빼기"${W.steps.length>1?"":" disabled"}>✕</button></div>
-        <details class="flopt"><summary>${[s.memo?"📝 메모":"",s.tool?FL_TOOL[s.tool]:"",FL_AL[s.al],s.fix?"꼭 지킴":""].filter(Boolean).join(" · ")||"자세히"}</summary>
+        <details class="flopt"><summary>${[s.memo?"📝 메모":"",s.tool?FLT()[s.tool]:"",FLAL()[s.al],s.fix?"꼭 지킴":""].filter(Boolean).join(" · ")||"자세히"}</summary>
           <input class="fld" data-k="memo" maxlength="80" value="${esc(s.memo||"")}" placeholder="이 단계에서 할 일 (예: 활동지 2번까지)" aria-label="${j+1}단계 메모">
-          <div class="flor"><label>알림<select class="fld" data-k="al">${Object.entries(FL_AL).map(([k,l])=>`<option value="${k}"${s.al===k?" selected":""}>${l}</option>`).join("")}</select></label><label>시작할 때 열 도구<select class="fld" data-k="tool">${Object.entries(FL_TOOL).map(([k,l])=>`<option value="${k}"${s.tool===k?" selected":""}>${l}</option>`).join("")}</select></label></div>
+          <div class="flor"><label>알림<select class="fld" data-k="al">${Object.entries(FLAL()).map(([k,l])=>`<option value="${k}"${s.al===k?" selected":""}>${l}</option>`).join("")}</select></label><label>시작할 때 열 도구<select class="fld" data-k="tool">${Object.entries(FLT()).map(([k,l])=>`<option value="${k}"${s.tool===k?" selected":""}>${l}</option>`).join("")}</select></label></div>
           <label class="chk"><input type="checkbox" data-k="fix"${s.fix?" checked":""}> 꼭 지킬 단계 (시간이 밀려도 줄이지 않음)</label></details></div>`).join("")}</div>
     <p class="flsum" id="flSum"></p>
     <div class="row2"><button class="btn" type="button" id="flAdd">＋ 단계 넣기</button><button class="btn" type="button" id="flFit2">수업 ${L}분에 맞추기</button></div>
@@ -11417,7 +11420,7 @@ function flowEdit(f0,done,copy,opt){opt=opt||{};const LX=opt.lesson,isNew=!f0||c
     $("skNo").onclick=()=>{done&&done()};
     if($("flDel"))twoStep($("flDel"),"정말 삭제",()=>{S.flows=flowsAll().filter(f=>f.id!==W.id);Object.keys(flowSubs()).forEach(k=>{if(flowSubs()[k]===W.id)delete flowSubs()[k]});save();toast("틀을 지웠습니다");done&&done()});
     $("flOk").onclick=()=>{W.n=($("flN").value||"").trim();if(!W.n)return toast("틀 이름을 넣어 주세요");const c=flowClean(W);
-      if(LX){flowSet(LX,{fs:c.steps,fn:c.n,fid:null,off:null});FLA.prev[flowKey(LX)]=null;if($("flAlso")&&$("flAlso").checked){flowsAll().push({...flowClean({...c,id:uid()}),n:c.n.replace(/ · 이 수업$/,"")});save()}toast("이 수업에만 고친 흐름을 적용했습니다");flowTick(1);return done&&done()}const i=flowsAll().findIndex(f=>f.id===c.id);if(i>=0)flowsAll()[i]=c;else flowsAll().push(c);save();toast(`‘${c.n}’ 틀을 저장했습니다 (${c.steps.length}단계 · ${flowSum(c)}분)`);done&&done(c.id)}};paint()}
+      if(LX){flowSet(LX,{fs:c.steps,fn:c.n,fid:null,off:null});FLAs().prev[flowKey(LX)]=null;if($("flAlso")&&$("flAlso").checked){flowsAll().push({...flowClean({...c,id:uid()}),n:c.n.replace(/ · 이 수업$/,"")});save()}toast("이 수업에만 고친 흐름을 적용했습니다");flowTick(1);return done&&done()}const i=flowsAll().findIndex(f=>f.id===c.id);if(i>=0)flowsAll()[i]=c;else flowsAll().push(c);save();toast(`‘${c.n}’ 틀을 저장했습니다 (${c.steps.length}단계 · ${flowSum(c)}분)`);done&&done(c.id)}};paint()}
 
 /* 지금 수업 카드 · 학생 화면에 쓰는 짧은 표시 */
 function pnHint(cl,subj){const p=pnFind(subj,cl);if(!p)return"";const nx=pnNext(p,cl);return nx?`📘 ${pnCode(nx)}`:""}
