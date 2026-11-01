@@ -567,7 +567,7 @@ html.tlprac .topbtns{top:calc(52px + env(safe-area-inset-top,0px))}
 .dtag{display:inline-block;margin-left:6px;font-size:.75rem;font-weight:700;color:var(--present);font-family:inherit}
 .crow{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px dashed var(--line)}
 .crow:first-of-type{border-top:0;padding-top:0}
-.crow .head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.crow .head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.crow .head .dbtns{margin-left:auto}.nowr{white-space:nowrap}
 .hd{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .badge{font-family:var(--f-num);font-size:.8125rem;border-radius:999px;padding:2px 10px;background:var(--absent-soft);color:var(--absent)}
 .empty{text-align:center;color:var(--muted);padding:18px 8px;font-size:.92rem}
@@ -856,7 +856,7 @@ table.ttg.widecol th.tcol{width:3.9rem}
 .cheerbtns .btn{min-height:50px}
 .cheeroff{appearance:none;border:0;background:none;color:var(--muted);font:inherit;font-size:.8125rem;text-decoration:underline;cursor:pointer;align-self:center;padding:6px}
 .moods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-.moods button{appearance:none;border:0;background:var(--tint);border-radius:var(--r-m);padding:8px 2px;font:inherit;font-size:.8125rem;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.moods button{word-break:keep-all;text-align:center;appearance:none;border:0;background:var(--tint);border-radius:var(--r-m);padding:8px 2px;font:inherit;font-size:.8125rem;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 .moods button span{font-size:1.5rem;line-height:1.2}
 .moods button[aria-pressed="true"]{background:var(--accent-soft);box-shadow:inset 0 0 0 2px var(--accent)}
 .cplay small{opacity:.7;font-weight:400}.cplay .ps{display:none}.cplay.playing .pl{display:none}.cplay.playing .ps{display:inline}
@@ -1094,7 +1094,7 @@ foreignObject{overflow:visible}
 .wov{position:fixed;inset:0;z-index:45;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
 .wovb{background:var(--paper);color:var(--ink);width:100%;max-width:min(46rem,100vw);max-height:92dvh;overflow:auto;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
 @media (min-width:760px){.wov{align-items:center}.wovb{border-radius:16px}}
-body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}
+body:has(.wov) .toast,body:has(.wov) .utoast{z-index:55}body.utshow .newbar{display:none}
 .wmpal{display:flex;flex-wrap:wrap;gap:4px}.wmpal button{min-width:40px;min-height:36px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:.9rem;cursor:pointer}
 #wmT{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95rem}.wmprev{min-height:56px;padding:10px;border-radius:10px;background:var(--tint);overflow-x:auto;text-align:center}
 .wpal{position:fixed;z-index:210;display:flex;flex-wrap:wrap;gap:6px;max-width:260px;padding:8px;background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.83.3", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.83.4", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.83.4",date:"2026-11-02",items:["생활 · 상담 기록에 학생만 넣고 아무것도 쓰지 않고 닫으면 빈 글로 보고 저장하지 않음(상담 횟수가 잘못 늘지 않음). 주제 없는 상담의 제목이 ‘상담 상담’으로 겹쳐 보이던 것 고침", "연락 → 결석 학생 카드의 학생 전화번호가 두 줄로 끊기지 않게(좁으면 연락 완료 · 연락 제외 단추가 아래 줄로)", "되돌리기 알림이 떠 있는 동안 아래 백업 알림 띠를 잠시 숨겨 서로 가리지 않음(알림이 닫히면 다시 보임). 짧은 알림도 아래 알림 띠 위에 뜸", "아침 인사 기분 단추의 ‘마음이 무거워요’가 낱말 중간에서 줄바꿈되지 않게"]},
   {v:"5.83.3",date:"2026-11-01",items:["기록 목록 오른쪽 ‘전달’ 단추를 뺌 — 글을 왼쪽으로 밀면 나오는 전달 · 삭제로(컴퓨터는 마우스로 끌어 밀기)", "생활 · 상담 기록을 쓰다가 ‘학생 화면 전체 보기’로 들어가면 맨 위에 ‘‹ 쓰던 기록으로’ 단추 — 누르면 쓰던 기록 창으로 그대로 돌아옴"]},
   {v:"5.83.2",date:"2026-11-01",items:["수업 관찰 빠른 체크: 항목을 고른 채 넣은 학생 칸에 바로 −1 단추(격자 보기는 칸 오른쪽 위, 목록 보기는 ‘기록’ 옆) — 학생 창에 들어가지 않고 잘못 누른 것을 바로 뺌(되돌리기 가능)", "언제 · 어느 학습에서: 자동으로 붙은 시각 · 수업 상황을 ✎로 고치고, 시각 기록이 없는 지난 기록에도 ＋ 시각 · 수업 넣기 — 그날 이 학급 수업(교시 · 그 수업에 기록한 진도)과 수업 흐름 단계 › 세부 과정을 골라 넣거나 직접 씀", "메모에 ‘📚 수업 골라 넣기’: 지난 날짜 기록에도 그날 수업 · 단계를 골라 메모에 넣음"]},
   {v:"5.83.1",date:"2026-11-01",items:["수업 관찰 기록 창의 ‘📍 지금 수업 넣기’: 오늘 이 학급 수업이 없거나 아직 수업 전이면 단추를 흐리게 두고 이유를 보여 줌(예전에는 아무것도 안 보였음)", "관찰 기록 창 ‘○월 ○일에 기록한 항목’: 한 번만 넣은 항목에도 −1 단추, 안내 ‘−1 한 번 빼기 · ✕ 그 항목 모두 빼기’"]},
@@ -2470,7 +2471,7 @@ function smsHref(nums,body){
   return `sms:${list.join(";")}${b?"?body="+b:""}`;
 }
 function go(href){if(Array.isArray(window.__goSpy)){window.__goSpy.push(href);return}window.location.href=href}
-let toastT;function toast(t){const el=$("toast");el.textContent=t;el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2400)}
+let toastT;function toast(t){const el=$("toast");el.textContent=t;el.hidden=false;try{const nb=[...document.querySelectorAll(".newbar")].filter(x=>x.getClientRects().length>0&&getComputedStyle(x).visibility!=="hidden"&&getComputedStyle(x).display!=="none");const top=nb.length?Math.min(...nb.map(x=>x.getBoundingClientRect().top)):0;el.style.bottom=top?(innerHeight-top+8)+"px":""}catch(_){}clearTimeout(toastT);toastT=setTimeout(()=>el.hidden=true,2400)}
 async function copy(text,okMsg){
   try{await navigator.clipboard.writeText(text);toast(okMsg||"복사했습니다");return true}
   catch(e){
@@ -2690,7 +2691,7 @@ function renderCall(){
   const mkRow=([id,name],done)=>{
     const num=digits(D.phones[id]),off=num.length<8,sk=done&&isSkip(s0,id);
     const row=document.createElement("div");row.className="crow"+(done?" done":"")+(sk?" skip":"");
-    row.innerHTML=`<div class="head">${done?"":`<label class="cpick" title="${esc(name)} 고르기"><input type="checkbox" data-pick="${esc(id)}" aria-label="${esc(name)} 고르기"></label>`}<span class="who">${esc(name)}<small>${off?(gpOf(id).length?"학생 번호 없음":"번호 없음 · 설정에서 입력"):"학생 "+esc(D.phones[id])}${done?` · ${fmtT(s0.done[id])} ${sk?"연락 제외":"연락 완료"}`:""}</small></span>
+    row.innerHTML=`<div class="head">${done?"":`<label class="cpick" title="${esc(name)} 고르기"><input type="checkbox" data-pick="${esc(id)}" aria-label="${esc(name)} 고르기"></label>`}<span class="who">${esc(name)}<small>${off?(gpOf(id).length?"학생 번호 없음":"번호 없음 · 설정에서 입력"):`<span class="nowr">학생 ${esc(D.phones[id])}</span>`}${done?` · ${fmtT(s0.done[id])} ${sk?"연락 제외":"연락 완료"}`:""}</small></span>
         <span class="dbtns"><button class="btn dbtn${done?"":" ok2"}" type="button" data-a="done" aria-pressed="${done}">${done?(sk?"제외 취소":"완료 취소"):"✓ 연락 완료"}</button>${done?"":`<button class="btn dbtn dx" type="button" data-a="skip" title="연락할 필요가 없는 학생 — 연락 알림에서 뺌">연락 제외</button>`}</span></div>
       ${done||!gpOf(id).length?"":`<div class="gpline">${gpOf(id).map((g,gi)=>`<span class="gpw">${esc(g.r)} <small>${esc(g.p)}</small></span><button class="btn sm ok" type="button" data-gt="${gi}">${ICON.tel}전화</button><button class="btn sm pri" type="button" data-gs="${gi}">${ICON.sms}문자</button>`).join("")}</div>`}
       ${done?"":`<div class="row2"><button class="btn ok${off?" off":""}" type="button" data-a="tel">${ICON.tel}전화</button><button class="btn pri${off?" off":""}" type="button" data-a="sms">${ICON.sms}문자</button><button class="btn" type="button" data-a="copy">문구 복사</button>${D.emails[id]?`<button class="btn" type="button" data-a="mail">${ICON.mail}메일</button>`:""}</div>`}`;
@@ -2761,7 +2762,7 @@ function stuItems(cl,sid){const d=cl.data,out=[],nm=x=>x;
     if(typeof v==="number"){const st=tkScStat(t,cl);out.push({k:"ev",d:t.due||String(t.at).slice(0,10),t:"",ti:`${t.n} ${tkNum(v)}점`,sub:`${k[1]} · ${tkNum(+t.max||100)}점 만점 · 반 평균 ${st.avg}`,go:()=>tkSheet(t.id,cl.id,()=>stuOpen(cl,sid))})}
     if(m)out.push({k:"ev",d:t.due||String(t.at).slice(0,10),t:"",ti:`${t.n} · ${m==="l"?"늦게 냄":k[2]}`,sub:k[1]+(tkWhyOf(t,cl,sid)?` · ${tkWhyL(tkWhyOf(t,cl,sid))}`:""),go:()=>tkSheet(t.id,cl.id,()=>stuOpen(cl,sid))})});
   evals().filter(e=>e.clsId===cl.id).forEach(e=>{const x=(e.stu||[]).find(y=>y.sid===sid);if(!x)return;const st=stState(x);out.push({k:"sign",d:new Date(e.created||0).toISOString().slice(0,10),t:"",ti:`${e.title} 서명`,sub:st==="ok"?"서명함":st==="stale"?"다시 받아야 함":"서명 안 함",go:()=>{EVS.cur=e.id;show("stat");setStab("eval")}})});
-  stuRecs(cl,sid).forEach(r=>{const c=wrSub(r)==="cns",cn=r.cns||{};out.push({k:c?"cns":"life",d:String(r.at||"").slice(0,10),t:String(r.at||"").slice(11,16),ti:c?`${(cn.tp||[]).join(" · ")||"상담"} 상담${cn.how?` (${(CNS_HOW.find(x=>x[0]===cn.how)||[])[1]||""}${cn.who&&cn.who!=="stu"?" · "+(CNS_WHO.find(x=>x[0]===cn.who)||[])[1]:""})`:""}`:(wrFirst(r).slice(0,40)||"학교생활 기록"),
+  stuRecs(cl,sid).forEach(r=>{const c=wrSub(r)==="cns",cn=r.cns||{};out.push({k:c?"cns":"life",d:String(r.at||"").slice(0,10),t:String(r.at||"").slice(11,16),ti:c?`${(cn.tp||[]).length?cn.tp.join(" · ")+" 상담":"상담"}${cn.how?` (${(CNS_HOW.find(x=>x[0]===cn.how)||[])[1]||""}${cn.who&&cn.who!=="stu"?" · "+(CNS_WHO.find(x=>x[0]===cn.who)||[])[1]:""})`:""}`:(wrFirst(r).slice(0,40)||"학교생활 기록"),
     sub:c?[cn.act?`후속: ${cn.act}`:"",cn.next?`다음 ${fmtDate(cn.next.slice(0,10))}`:"",wrFirst(r).slice(0,50)].filter(Boolean).join(" · "):(r.place||""),go:()=>wrEdit(r.id)})});
   snAll(sid,d).forEach(n=>{out.push({k:"memo",d:String(n.at||"").slice(0,10),t:"",ti:`${(SN_K.find(x=>x[0]===n.k)||[])[1]||"메모"}: ${n.t}`,sub:n.k==="prom"&&n.done?"지킴":"",go:()=>snSheet(sid,cl,()=>stuOpen(cl,sid))})});
   return out.sort((a,b)=>(b.d+b.t).localeCompare(a.d+a.t))}
@@ -6225,7 +6226,7 @@ function wrEdit(id,isNew,orig){const r=recsAll().find(x=>x.id===id);if(!r)return
     if(k==="audio")return recordAudio((file,dur)=>got(file,"audio",dur));
     if(k==="file"){const inp=document.createElement("input");inp.type="file";inp.multiple=true;inp.style.display="none";inp.onchange=()=>{[...(inp.files||[])].forEach(fl=>got(fl,/^image\//.test(fl.type)?"photo":/^video\//.test(fl.type)?"video":/^audio\//.test(fl.type)?"audio":"file",0));inp.remove()};document.body.appendChild(inp);inp.click();return}
     pickMedia(k,(file)=>got(file,k,0))});
-  $("skNo").onclick=()=>{clearTimeout(WR_SAVE);const empty=!wrPlain(r).split("\n").slice(2).join("").trim()&&!(r.media||[]).length&&!(r.stus||[]).some(s=>s.name||s.sid)&&!(r.meet&&r.meet.name);
+  $("skNo").onclick=()=>{clearTimeout(WR_SAVE);const cn=r.cns||{},cnsHas=wrSub(r)==="cns"&&((cn.tp||[]).length||String(cn.act||"").trim()||cn.next);/* 5.83.4: 학생만 넣고 아무것도 안 쓴 생활 · 상담 기록도 빈 글로 */const empty=!wrPlain({...r,stus:[]}).split("\n").slice(2).join("").trim()&&!(r.media||[]).length&&!cnsHas&&!(r.meet&&r.meet.name);
     if(empty){S.recs=recsAll().filter(x=>x!==r);toast("빈 글은 저장하지 않았습니다")}save();$("sheet").hidden=true;renderWrite()};
   if($("wrShareB"))$("wrShareB").onclick=()=>{clearTimeout(WR_SAVE);save();if(wrSub(r)==="cns")return ask(`<h2>상담 기록 전달</h2><p class="note">상담 기록은 민감한 개인 정보입니다. 꼭 필요한 선생님께만, 필요한 내용만 전달하세요.</p>`,"전달하기",()=>wrShare(r.id,reopen));wrShare(r.id,reopen)};
   $("wrCancel").onclick=()=>{clearTimeout(WR_SAVE);const o=JSON.parse(orig),keep=new Set((o.media||[]).map(m=>m.id).concat(wrBlkMedia(o))),added=(r.media||[]).filter(m=>!keep.has(m.id)).concat(wrBlkMedia(r).filter(id=>!keep.has(id)).map(id=>({id})));
@@ -8693,10 +8694,10 @@ function quickUntag(sid,k){if(!k)return;if(obsLocked(selDate))return obsNudge();
   toastUndo(`${st?st[1]:sid}: ‘${t?t.l:k}’ 1회 뺐습니다`,()=>{const x=obsRec(sid,selDate,true);x.tags[k]=(x.tags[k]||0)+1;x.lg=lgBk;if(!x.lg.length)delete x.lg;x.at=Date.now();save();renderObs()})}
 function toastUndo(msg,undo,ms){
   let t=$("utoast");if(!t){t=document.createElement("div");t.id="utoast";t.className="utoast";document.body.appendChild(t)}
-  t.innerHTML=`<span>${esc(msg)}</span><button type="button">되돌리기</button>`;t.hidden=false;
+  t.innerHTML=`<span>${esc(msg)}</span><button type="button">되돌리기</button>`;t.hidden=false;document.body.classList.add("utshow");
   /* 5.30: 아래쪽 알림 줄(새 버전 안내 등)이 떠 있으면 그 위에 띄워 '되돌리기'가 가려지지 않게 */
   const lift=()=>{const nb=[...document.querySelectorAll(".newbar")].filter(x=>!x.hidden&&x.getClientRects().length>0&&getComputedStyle(x).visibility!=="hidden");const top=nb.length?Math.min(...nb.map(x=>x.getBoundingClientRect().top)):0;t.style.bottom=top?(innerHeight-top+8)+"px":""};
-  lift();clearInterval(t._l);t._l=setInterval(()=>{if(t.hidden)return clearInterval(t._l);lift()},250);
+  lift();clearInterval(t._l);t._l=setInterval(()=>{if(t.hidden){document.body.classList.remove("utshow");return clearInterval(t._l)}lift()},250);
   clearTimeout(t._h);t._h=setTimeout(()=>{t.hidden=true},ms||3500);
   t.querySelector("button").onclick=()=>{t.hidden=true;undo()};
 }
