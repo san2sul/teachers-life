@@ -50,6 +50,8 @@ document.documentElement.classList.add("tlprac")}catch(e){}})();</script>
   --accent:#8fb4dc; --accent-soft:#1f2c3a; --track:#3a4640; color-scheme:dark}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
+/* 5.82.3: 휴대폰 맨 위 상태 표시줄(시계 · 배터리) 칸 — 화면을 내리면 내용 · 도움말 · 설정 단추가 그 뒤로 비쳐 겹치던 것을 바탕색으로 가림 */
+body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:35;pointer-events:none}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;font-variant-numeric:tabular-nums;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px))}
@@ -2011,7 +2013,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.82.2", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.82.3", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2023,6 +2025,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.82.3",date:"2026-11-01",items:["휴대폰 맨 위 상태 표시줄(시계 · 배터리) 칸: 화면을 내리면 앱 내용과 도움말 · 다시 로그인 · 설정 단추가 그 뒤로 비쳐 겹쳐 보이던 것 — 그 칸을 앱 바탕색으로 가림"]},
   {v:"5.82.2",date:"2026-11-01",items:["사용성 설문 결과 보내기: 설문을 마치면 바로 ‘결과 보내기’ 창 — 참여 ID · 날짜 · 점수 · 10문항 답을 한 줄 코드로 문자 · 메일 · 공유(카톡 등) · 복사(받을 사람 전화번호 · 이메일은 기억). 설정 → 연구용 사용 기록 → 📤 설문 결과 보내기로 다시 보낼 수 있음. 받는 쪽은 📥 받은 설문 결과 모으기에 받은 글을 통째로 붙여 넣으면 결과 줄만 골라(중복 · 체험 모드 결과 제외) 평균을 보여 주고 엑셀(요약 · 결과 · 전후 변화 · 문항)로 저장"]},
   {v:"5.82.1",date:"2026-10-29",items:["연수용 체험 모드에 QR 코드: 설정 → 연수용 체험 모드 → QR 코드(앱 배포와 같은 방식, 이미지 저장 가능). 연수 화면에 띄우면 참여 선생님이 휴대폰 카메라로 찍어 바로 체험 모드로 엽니다"]},
   {v:"5.82.0",date:"2026-10-29",items:["연수용 체험 모드: 설정 → 연수용 체험 모드 → 🧪 체험 모드 시작(또는 앱 주소 뒤 ?practice). 실제 자료와 완전히 따로 저장되는 가상 학급 두 개(학생 · 가짜 전화번호) · 월~금 시간표 · 과학 진도표와 지난 수업 기록 · 수업 흐름(3단계) · 가상 교직원 12명 · 수업 교사가 든 앱이 열림. 화면 위 띠의 ‘↺ 처음으로’로 가상 자료를 처음 상태로, ‘체험 끝내기’(또는 앱 · 창 닫기)로 원래 자료로. 체험 중에는 구글 연동을 쓰지 않음","수업 메모장 · 출석부 진도의 ‘↶ 지난 시간’을 큰 칸 대신 계획 · 실제 이 수업(오늘 할 차시) 아래 작고 옅은 한 줄로 — 계획 · 실제 진도가 먼저 눈에 들어오게. 5.81에서 진도표 만들기 미리보기 칸 모양이 함께 바뀌던 것도 바로잡음"]},
