@@ -1528,7 +1528,7 @@ html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
 .flsw{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 10px;padding-right:46px;font-weight:700}.flsw .seg2{margin:0;min-width:10em}
 .flcur{background:var(--tint);border-radius:var(--r-m);padding:10px 12px}.flcur small{display:block;color:var(--muted);font-size:.75rem}.flcur b{display:block;font-size:1rem}.flcur.off{opacity:.6}
 .flacts{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.flacts .btn{flex:1 1 auto}
-.flsteps.off{opacity:.5}.mvgo{width:100%;margin:8px 0;justify-content:center}.mvgo small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.mvg{display:flex;flex-direction:column;gap:4px;margin:8px 0}.mvc{background:var(--tint);border-radius:var(--r-m);padding:10px 12px}.mvr{display:flex;gap:8px}.mvr input{flex:1 1 60%;min-width:0}.mvr select{flex:1 1 40%;min-width:0}.mvopts{display:flex;flex-direction:column;gap:6px;margin:6px 0}.mvo{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--r-m);background:var(--paper)}.mvo:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}.mvo:has(input:disabled){opacity:.55}.mvo input{margin-top:3px;width:20px;height:20px;flex:none}.mvo small{display:block;color:var(--muted);font-size:.8125rem}.mvi{margin:6px 0 0;font-size:.875rem;color:var(--muted)}.mvarr{text-align:center;font-size:1.3rem;color:var(--accent);line-height:1}.flend{color:var(--ink)}.flend b{font-variant-numeric:tabular-nums}.flowbox .flgo{flex:1 1 100%;min-height:48px;font-size:1.05rem}.flpz{color:var(--warn);font-weight:700}.flbtns .btn{white-space:nowrap}.flendl{margin:8px 0 4px;font-size:.9375rem}.flendl b{font-size:1.1rem}.flowbox.stop{opacity:.85}
+.flsteps.off{opacity:.5}.mvgo{width:100%;margin:8px 0;justify-content:center}.mvgo small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.mvg{display:flex;flex-direction:column;gap:4px;margin:8px 0}.mvc{background:var(--tint);border-radius:var(--r-m);padding:10px 12px}.mvr{display:flex;gap:8px}.mvr input{flex:1 1 60%;min-width:0}.mvr select{flex:1 1 40%;min-width:0}.actdays .chip{min-width:44px}.actdays #actAll{margin-left:auto}.mvopts{display:flex;flex-direction:column;gap:6px;margin:6px 0}.mvo{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--r-m);background:var(--paper)}.mvo:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}.mvo:has(input:disabled){opacity:.55}.mvo input{margin-top:3px;width:20px;height:20px;flex:none}.mvo small{display:block;color:var(--muted);font-size:.8125rem}.mvi{margin:6px 0 0;font-size:.875rem;color:var(--muted)}.mvarr{text-align:center;font-size:1.3rem;color:var(--accent);line-height:1}.flend{color:var(--ink)}.flend b{font-variant-numeric:tabular-nums}.flowbox .flgo{flex:1 1 100%;min-height:48px;font-size:1.05rem}.flpz{color:var(--warn);font-weight:700}.flbtns .btn{white-space:nowrap}.flendl{margin:8px 0 4px;font-size:.9375rem}.flendl b{font-size:1.1rem}.flowbox.stop{opacity:.85}
 .fldemo{background:var(--tint);border-radius:var(--r-m);padding:8px;margin:6px 0}.fldemo .flbtns{display:none}.fldmt{font-size:.75rem;color:var(--muted);margin:0 0 4px}
 .flsc{margin:4px 0}
 .flcap{display:flex;flex-direction:column;gap:2px;font-size:.8125rem;margin:6px 0}.flcap .ok{color:#1f6a35}.flcap .no{color:var(--warn)}
@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.85.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.85.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.85.1",date:"2026-11-02",items:["시간표 고정 활동(1교시 이전 · 점심시간 · 방과 후 · 아침활동 등): ‘월~금 모두 같은 활동으로’ 체크 상자를 요일 단추(월 · 화 · 수 · 목 · 금 · 월~금 모두)로 바꿈 — 작은 체크 상자가 키보드가 올라와 있을 때 눌리지 않아 월요일에만 들어가던 문제 고침. 저장 단추에 넣을 요일 표시(예: 저장 · 월~금)", "다시 열면 같은 활동이 있는 요일이 골라져 있고, 요일을 빼고 저장하면 그 요일에서 지움. ‘지금: 월 조례 · 화 조례 …’로 요일마다 넣은 활동 표시, 고른 요일만 지우기","여러 날(기간) 일정 · 할 일이 시간표(주간 · 3일 · 하루 보기)의 1교시 이전 · 아침활동 · 점심시간 · 방과 후 칸과 중요 표시에 기간의 날마다 보이게(전에는 시작한 날에만 보이고 오늘 화면 · 날짜 창에만 날마다 보였음)"]},
   {v:"5.85.0",date:"2026-11-02",items:["수업 옮기기 · 교체: 시간표 칸 → 수업 변동 → 수업 변경 → ‘↪ 다른 날짜 · 교시로 옮기기 · 교체’에서 옮기기 전(원래 날짜 · 교시)과 옮긴 뒤(새 날짜 · 교시)를 고르면 그 수업을 새 자리에 배치(원래 자리는 휴강 표시). 새 자리에 다른 수업이 있으면 고름: 맞바꾸기 · 그 수업은 휴강(대체) · 그 수업은 또 다른 날짜 · 교시로(연쇄 이동)", "옮기거나 바꾼 수업의 출석 체크 · 수업 메모 · 진도표 기록 · 수업 흐름도 새 자리로 함께 옮김. 옮긴 칸 → 수업 변동 → 이동 취소(또는 수업 변동 목록에서 밀어 삭제)하면 모두 원래대로. 시간표 칸에 ‘이동’ · ‘교체’ 표시"]},
   {v:"5.84.0",date:"2026-11-02",items:["수업 흐름 ▶ 시작: 수업 시각이 되어도 바로 돌지 않고, 지금 수업 카드의 ▶ 시작을 눌러야 첫 단계부터 시작(교실 사정으로 늦게 시작해도 맞게). 시작 전에는 ‘지금 시작하면 끝 예상 HH:MM(수업 끝 HH:MM)’을 보여 줌. 예전처럼 수업 시각에 저절로 시작하려면 수업 흐름 창(⋯)의 ‘시작 방법: 수업 시각에’", "⏸ 일시 정지 · ▶ 이어서: 멈춘 동안 남은 시간이 줄지 않고 알림도 쉼, 이어서 하면 멈춘 만큼 뒤 단계가 밀림. ■ 정지(되돌리기 가능) · ↺ 처음부터 다시", "끝 예상 시각 자동 계산: 진행 중 카드와 수업 흐름 창에 ‘끝 예상 HH:MM’ — 늦게 시작 · ＋2분 · 다음 › · 일시 정지가 바로 반영되고, 수업 끝을 넘으면 ⚠와 ‘남은 단계 줄여 맞추기’"]},
   {v:"5.83.7",date:"2026-11-02",items:["아이폰 녹음 창에 ‘🎙 음성 메모 열기(단축어)’: 단축어 앱에 음성 메모를 여는 단축어(기본 이름 ‘교사녹음’)를 한 번 만들어 두면 누를 때마다 음성 메모가 열림. 만드는 법을 녹음 창 안 ‘처음 한 번: 단축어 만들기’에, 다른 이름으로 만들었으면 그 칸에서 고침(이 기기에 기억). 돌아오면 ‘녹음 파일 붙이기’가 앞에 나옴"]},
@@ -4130,13 +4131,13 @@ function renderTT(){try{renderTermNote()}catch(e){}
   const ti=days.indexOf(td);
   const liveKey=ti>=0?(dayRows[ti].find(r=>nowM>=toMin(r.start)&&nowM<toMin(r.end))||{}).key:null;
   const wideCol=ttPre(t).some(r=>r.label.replace(/\s/g,"").length>3)||!ttPre(t).length||Object.keys(t.acts||{}).some(k=>k.startsWith("pre|"));
-  let h=`<table class="ttg${ttEdit?" editing":""}${wideCol?" widecol":""}${tt3On()?" d3":""}"${tt3On()?` data-w="${tt3Start()}"`:""}${ti>=0?` data-tc="${ti}"`:""}><thead><tr><th class="tcol"></th>${days.map((d,i)=>`<th class="${d===td?"today":""}"><button class="dbtn${special[i]?" sp":""}" type="button" data-date="${d}" aria-label="${fmtDateW(d)} 시간 바꾸기">${DAYS[i]}<small>${fmtShort(d)}</small>${special[i]?`<em>${esc(t.days[d].note||"시간 변경")}</em>`:""}${dayChg(t,d)?`<em class="dc">${esc(dayChg(t,d).reason||"수업 변동")}</em>`:""}${S.events.some(e=>e.date===d&&e.important)?'<i class="imp-dot" title="중요 일정"></i>':""}</button></th>`).join("")}</tr></thead><tbody>`;
+  let h=`<table class="ttg${ttEdit?" editing":""}${wideCol?" widecol":""}${tt3On()?" d3":""}"${tt3On()?` data-w="${tt3Start()}"`:""}${ti>=0?` data-tc="${ti}"`:""}><thead><tr><th class="tcol"></th>${days.map((d,i)=>`<th class="${d===td?"today":""}"><button class="dbtn${special[i]?" sp":""}" type="button" data-date="${d}" aria-label="${fmtDateW(d)} 시간 바꾸기">${DAYS[i]}<small>${fmtShort(d)}</small>${special[i]?`<em>${esc(t.days[d].note||"시간 변경")}</em>`:""}${dayChg(t,d)?`<em class="dc">${esc(dayChg(t,d).reason||"수업 변동")}</em>`:""}${S.events.some(e=>evOn(e,d)&&e.important)?'<i class="imp-dot" title="중요 일정"></i>':""}</button></th>`).join("")}</tr></thead><tbody>`;
   if(ttEdit)h+=`<tr class="preadd"><td colspan="6"><button class="btn sm" type="button" id="preAdd">＋ 1교시 이전 시간 추가 (아침활동 · 조례 등)</button></td></tr>`;
   if(!ttPre(t).length||Object.keys(t.acts||{}).some(k=>k.startsWith("pre|"))){const w0=slotTime(t,days[0],"pre");if(w0)h+=`<tr class="prer gen"><th class="tcol"><span class="aft"><b>1교시 전</b><small>~${dayRows[0][0].start}</small></span></th>`+days.map((d,i)=>`<td><button class="lc pre${d===td?" today":""}" type="button" data-date="${d}" data-slot="pre" aria-label="${fmtDateW(d)} 1교시 이전">${gapCellHTML(t,"pre",d,'<span class="plus">＋</span>')}</button></td>`).join("")+"</tr>"}
   ttPre(t).forEach(r=>{
     const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null,src=preSrc(t,r.id);
     h+=`<tr class="prer"><th class="tcol"><button class="tbtn pre" type="button" data-pre="${esc(r.id)}" aria-label="${esc(r.label)} 시간 고치기"><b>${esc(r.label)}</b><small>${r.start}<br>${r.end}</small></button></th>`+days.map((d,i)=>{
-      const ses=cl?cl.data.sessions.find(x=>x.date===d&&x.src===src):null,n=S.events.filter(e=>e.date===d&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).length;
+      const ses=cl?cl.data.sessions.find(x=>x.date===d&&x.src===src):null,n=S.events.filter(e=>evOn(e,d)&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).length;
       const ck=ses?`<i class="ck${cl.data.roster.filter(([id])=>ses.p[id]).length<cl.data.roster.length?" ab":""}">${cl.data.roster.filter(([id])=>ses.p[id]).length}/${cl.data.roster.length}</i>`:"";
       return `<td><button class="lc pre${d===td?" today":""}" type="button" data-date="${d}" data-pre="${esc(r.id)}" aria-label="${fmtDateW(d)} ${esc(r.label)}">${cl?`<span class="pcl">${esc(clsName(cl.data))}</span>`:""}${ck}${gapCellHTML(t,r.key,d,cl?"":`<span>${r.len}분</span>`)}</button></td>`}).join("")+"</tr>";
   });
@@ -4144,7 +4145,7 @@ function renderTT(){try{renderTermNote()}catch(e){}
     const tbtn=`<button class="tbtn${r.adj?" adj":""}" type="button" data-k="${r.key}" aria-label="${r.label} 시간 조정"><b>${r.lunch?"점심":r.label}</b><small>${r.start}<br>${r.end}</small></button>`;
     if(r.lunch){
       h+=`<tr class="lunch${liveKey==="lunch"?" live":""}"><th class="tcol">${tbtn}</th>`;
-      h+=days.map((d,i)=>{const lr=dayRows[i][ri];const n=S.events.filter(e=>e.date===d&&e.start>=lr.start&&e.start<lr.end).length;return `<td><button class="lc${special[i]?" spc":""}" type="button" data-date="${d}" data-slot="lunch" aria-label="${fmtDateW(d)} 점심시간 일정">${gapCellHTML(t,"lunch",d,special[i]?`<span>${lr.start}~</span>`:`<span>${lr.len}분</span>`)}</button></td>`}).join("");
+      h+=days.map((d,i)=>{const lr=dayRows[i][ri];const n=S.events.filter(e=>evOn(e,d)&&e.start>=lr.start&&e.start<lr.end).length;return `<td><button class="lc${special[i]?" spc":""}" type="button" data-date="${d}" data-slot="lunch" aria-label="${fmtDateW(d)} 점심시간 일정">${gapCellHTML(t,"lunch",d,special[i]?`<span>${lr.start}~</span>`:`<span>${lr.len}분</span>`)}</button></td>`}).join("");
       h+="</tr>";return;
     }
     h+=`<tr${liveKey===r.key?' class="live"':""}><th class="tcol">${tbtn}</th>`;
@@ -4163,7 +4164,7 @@ function renderTT(){try{renderTermNote()}catch(e){}
     });
     h+="</tr>";
   });
-  h+=`<tr class="after"><th class="tcol"><span class="aft"><b>방과 후</b><small>${rows[rows.length-1].end}~</small></span></th>`+days.map((d,i)=>{const lastEnd=dayRows[i][dayRows[i].length-1].end;const n=S.events.filter(e=>e.date===d&&e.start>=lastEnd).length;return `<td><button class="lc" type="button" data-date="${d}" data-slot="after" aria-label="${fmtDateW(d)} 방과 후 일정">${gapCellHTML(t,"after",d,'<span class="plus">＋</span>')}</button></td>`}).join("")+"</tr>";
+  h+=`<tr class="after"><th class="tcol"><span class="aft"><b>방과 후</b><small>${rows[rows.length-1].end}~</small></span></th>`+days.map((d,i)=>{const lastEnd=dayRows[i][dayRows[i].length-1].end;const n=S.events.filter(e=>evOn(e,d)&&e.start>=lastEnd).length;return `<td><button class="lc" type="button" data-date="${d}" data-slot="after" aria-label="${fmtDateW(d)} 방과 후 일정">${gapCellHTML(t,"after",d,'<span class="plus">＋</span>')}</button></td>`}).join("")+"</tr>";
   h+="</tbody></table>";
   if(ttDayOn())h=ttDayHTML(t,days,ttDay,td,nowM);
   $("ttGrid").innerHTML=h;try{renderTtSide()}catch(e){}
@@ -4219,7 +4220,7 @@ function preEdit(t,id){
 function preMenu(t,id,date){
   const r=ttPre(t).find(x=>x.id===id);if(!r)return;
   const cl=r.clsId?S.list.find(c=>c.id===r.clsId):null,src=preSrc(t,id),ses=cl?cl.data.sessions.find(x=>x.date===date&&x.src===src):null;
-  const evs=S.events.filter(e=>e.date===date&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).sort(evSort);
+  const evs=S.events.filter(e=>evOn(e,date)&&(e.slot===r.key||(!e.slot&&e.start>=r.start&&e.start<r.end))).sort(evSort);
   const PL=perList();
   $("sheetBox").innerHTML=`<h2>${esc(r.label)} <span class="sub">${fmtDateW(date)} ${r.start}~${r.end}</span></h2>
     <div class="evlist">${evs.length?evs.map(e=>evItemHTML(e,false)).join(""):`<div class="empty">이 시간에 등록된 일정이 없습니다.</div>`}</div>
@@ -10054,7 +10055,7 @@ function gapKeyOf(t,date,hm){
 function gapEvents(t,key,date){
   const w=slotTime(t,date,key);if(!w)return[];
   const rows=ttRows(t,date),first=rows[0].start,last=rows[rows.length-1].end;
-  return S.events.filter(e=>e.date===date&&(e.slot===key||(!e.slot||!slotTime(t,date,e.slot))&&(key==="pre"?e.start<first:key==="after"?e.start>=last:e.start>=w.start&&e.start<w.end))).sort(evSort);
+  return S.events.filter(e=>evOn(e,date)&&(e.slot===key||(!e.slot||!slotTime(t,date,e.slot))&&(key==="pre"?e.start<first:key==="after"?e.start>=last:e.start>=w.start&&e.start<w.end))).sort(evSort);
 }
 function gapCellHTML(t,key,date,fallback){
   const a=actAt(t,key,date),ev=gapEvents(t,key,date);
@@ -10063,20 +10064,33 @@ function gapCellHTML(t,key,date,fallback){
 /* 고정 활동 고르기 (매주 같은 요일) */
 function actSectionHTML(t,key,date){
   const d=wdOf(date),a=(t.acts||{})[key+"|"+d];
-  return `<div class="actsec"><div class="shlb">매주 ${DAYS[d]}요일 고정 활동 <small>${esc(ttName(t))} 시간표</small></div>
+  return `<div class="actsec"><div class="shlb">매주 고정 활동 <small>${esc(ttName(t))} 시간표</small></div>
     <div class="presets" id="actQ">${ACT_QUICK.map(([n])=>`<button class="chip" type="button" data-n="${esc(n)}" aria-pressed="${!!a&&a.n===n}">${esc(n)}</button>`).join("")}</div>
     <div class="actrow"><input class="fld" id="actN" placeholder="직접 입력 (예: 3학년 진학 상담)" value="${esc(a&&!ACT_QUICK.some(([n])=>n===a.n)?a.n:"")}" maxlength="20" autocomplete="off"><select class="fld" id="actC" aria-label="분류">${EV_CATS.map(c=>`<option${(a?a.c:"교무 업무")===c?" selected":""}>${c}</option>`).join("")}</select></div>
-    <label class="chk" for="actAll"><input type="checkbox" id="actAll"> 월~금 모두 같은 활동으로</label>
-    <div class="row2"><button class="btn" type="button" id="actDel"${a?"":" hidden"}>고정 활동 지우기</button><button class="btn pri" type="button" id="actOk">고정 활동 저장</button></div></div>`;
+    <div class="lb">넣을 요일 <small>(여러 요일을 고를 수 있음)</small></div>
+    <div class="presets actdays" id="actDays">${[0,1,2,3,4].map(x=>`<button class="chip" type="button" data-wd="${x}">${DAYS[x]}</button>`).join("")}<button class="chip" type="button" id="actAll">월~금 모두</button></div>
+    <p class="note sm" id="actNow"></p>
+    <div class="row2"><button class="btn" type="button" id="actDel"${[0,1,2,3,4].some(x=>(t.acts||{})[key+"|"+x])?"":" hidden"}>고른 요일 지우기</button><button class="btn pri" type="button" id="actOk">저장</button></div></div>`;
 }
 function wireActSection(t,key,date,done){
   const d=wdOf(date);let pick=((t.acts||{})[key+"|"+d]||{}).n||"";
   $("actQ").querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{pick=b.dataset.n;$("actN").value="";const q=ACT_QUICK.find(([n])=>n===pick);if(q)$("actC").value=q[1];$("actQ").querySelectorAll("[data-n]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
   $("actN").oninput=()=>{if($("actN").value.trim()){pick="";$("actQ").querySelectorAll("[data-n]").forEach(x=>x.setAttribute("aria-pressed","false"))}};
-  $("actOk").onclick=()=>{const n=($("actN").value.trim()||pick).slice(0,20);if(!n)return toast("활동을 고르거나 적어 주세요");
-    const A=actsOf(t),ds=$("actAll").checked?[0,1,2,3,4]:[d];ds.forEach(x=>{A[key+"|"+x]={n,c:$("actC").value}});save();renderTT();renderAll();
-    toast(`${ds.length>1?"월~금":DAYS[d]+"요일"} ${slotTime(t,date,key).label}에 ‘${n}’을(를) 고정 활동으로 넣었습니다`);done&&done()};
-  $("actDel").onclick=()=>{const A=actsOf(t);if($("actAll").checked)[0,1,2,3,4].forEach(x=>delete A[key+"|"+x]);else delete A[key+"|"+d];save();renderTT();renderAll();toast("고정 활동을 지웠습니다");done&&done()};
+  /* 5.85.1: 요일을 단추로 고름(전에는 작은 체크 상자 ‘월~금 모두’ — 키보드가 올라와 있을 때 누른 것이 안 들어가 월요일에만 저장되는 일이 있었음).
+     처음에는 지금 활동과 같은 활동이 들어 있는 요일(없으면 이 요일)이 골라져 있음. 고른 요일에 넣고, 같은 활동이던 요일을 빼면 그 요일에서는 지움 */
+  const A0=t.acts||{},cur=A0[key+"|"+d],sameDays=cur?[0,1,2,3,4].filter(x=>A0[key+"|"+x]&&A0[key+"|"+x].n===cur.n):[d],sel=new Set(sameDays);
+  const dl=()=>{const a=[...sel].sort();return a.length===5?"월~금":a.map(x=>DAYS[x]).join(" · ")};
+  const paintD=()=>{$("actDays").querySelectorAll("[data-wd]").forEach(b=>b.setAttribute("aria-pressed",String(sel.has(+b.dataset.wd))));$("actAll").setAttribute("aria-pressed",String(sel.size===5));
+    $("actOk").textContent=sel.size?`저장 · ${dl()}`:"요일을 고르세요";$("actOk").disabled=!sel.size;$("actDel").textContent=sel.size?`${dl()} 지우기`:"고른 요일 지우기";
+    const have=[0,1,2,3,4].filter(x=>A0[key+"|"+x]).map(x=>`${DAYS[x]} ${A0[key+"|"+x].n}`);$("actNow").textContent=have.length?`지금: ${have.join(" · ")}`:"아직 넣은 고정 활동이 없습니다"};
+  $("actDays").querySelectorAll("[data-wd]").forEach(b=>b.onclick=()=>{const x=+b.dataset.wd;sel.has(x)?sel.delete(x):sel.add(x);paintD()});
+  $("actAll").onclick=()=>{if(sel.size===5){sel.clear();sel.add(d)}else[0,1,2,3,4].forEach(x=>sel.add(x));paintD()};paintD();
+  $("actOk").onclick=()=>{const n=($("actN").value.trim()||pick).slice(0,20);if(!n)return toast("활동을 고르거나 적어 주세요");if(!sel.size)return toast("넣을 요일을 고르세요");
+    const A=actsOf(t),ds=[...sel].sort();ds.forEach(x=>{A[key+"|"+x]={n,c:$("actC").value}});
+    if(cur)sameDays.filter(x=>!sel.has(x)).forEach(x=>{if(A[key+"|"+x]&&A[key+"|"+x].n===cur.n)delete A[key+"|"+x]});
+    save();renderTT();renderAll();
+    toast(`${dl()} ${slotTime(t,date,key).label}에 ‘${n}’을(를) 고정 활동으로 넣었습니다`);done&&done()};
+  $("actDel").onclick=()=>{const A=actsOf(t),ds=[...sel];if(!ds.length)return toast("지울 요일을 고르세요");const lb=dl();ds.forEach(x=>delete A[key+"|"+x]);save();renderTT();renderAll();toast(`${lb} 고정 활동을 지웠습니다`);done&&done()};
 }
 function gapMenu(t,key,date){
   const w=slotTime(t,date,key);if(!w)return;const ev=gapEvents(t,key,date),ns=noSchool(t,date);
