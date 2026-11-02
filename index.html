@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.83.4", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.83.6", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,8 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.83.6",date:"2026-11-02",items:["녹음 창에 ‘📱 녹음 앱 열기’(안드로이드): 휴대폰 녹음(음성 녹음) 앱을 바로 열고, 녹음 뒤 이 앱으로 돌아오면 ‘녹음 파일 붙이기 — 방금 녹음한 파일 고르기’가 앞에 나옴. 아이폰은 웹 앱에서 음성 메모를 바로 열 수 없어 음성 메모 → 공유 → ‘파일에 저장’ 뒤 붙이는 방법을 녹음 창에 안내"]},
+  {v:"5.83.5",date:"2026-11-02",items:["녹음: ‘휴대폰 녹음 앱’으로 붙일 때 동영상 촬영 앱이 열리던 것 고침 — 이제 파일 고르기로 열려 녹음 앱으로 녹음한 파일을 고름(아이폰은 음성 메모 → 공유 → ‘파일에 저장’ 뒤 고르기, 녹음 창에 방법 안내). 앱 안 녹음을 지원하지 않는 브라우저(카카오톡 · 네이버 안에서 연 화면 등)는 동영상 앱으로 넘기지 않고 녹음 창에 이유와 방법을 보여 줌"]},
   {v:"5.83.4",date:"2026-11-02",items:["생활 · 상담 기록에 학생만 넣고 아무것도 쓰지 않고 닫으면 빈 글로 보고 저장하지 않음(상담 횟수가 잘못 늘지 않음). 주제 없는 상담의 제목이 ‘상담 상담’으로 겹쳐 보이던 것 고침", "연락 → 결석 학생 카드의 학생 전화번호가 두 줄로 끊기지 않게(좁으면 연락 완료 · 연락 제외 단추가 아래 줄로)", "되돌리기 알림이 떠 있는 동안 아래 백업 알림 띠를 잠시 숨겨 서로 가리지 않음(알림이 닫히면 다시 보임). 짧은 알림도 아래 알림 띠 위에 뜸", "아침 인사 기분 단추의 ‘마음이 무거워요’가 낱말 중간에서 줄바꿈되지 않게"]},
   {v:"5.83.3",date:"2026-11-01",items:["기록 목록 오른쪽 ‘전달’ 단추를 뺌 — 글을 왼쪽으로 밀면 나오는 전달 · 삭제로(컴퓨터는 마우스로 끌어 밀기)", "생활 · 상담 기록을 쓰다가 ‘학생 화면 전체 보기’로 들어가면 맨 위에 ‘‹ 쓰던 기록으로’ 단추 — 누르면 쓰던 기록 창으로 그대로 돌아옴"]},
   {v:"5.83.2",date:"2026-11-01",items:["수업 관찰 빠른 체크: 항목을 고른 채 넣은 학생 칸에 바로 −1 단추(격자 보기는 칸 오른쪽 위, 목록 보기는 ‘기록’ 옆) — 학생 창에 들어가지 않고 잘못 누른 것을 바로 뺌(되돌리기 가능)", "언제 · 어느 학습에서: 자동으로 붙은 시각 · 수업 상황을 ✎로 고치고, 시각 기록이 없는 지난 기록에도 ＋ 시각 · 수업 넣기 — 그날 이 학급 수업(교시 · 그 수업에 기록한 진도)과 수업 흐름 단계 › 세부 과정을 골라 넣거나 직접 씀", "메모에 ‘📚 수업 골라 넣기’: 지난 날짜 기록에도 그날 수업 · 단계를 골라 메모에 넣음"]},
@@ -8813,26 +8815,36 @@ async function addMedia(sid,date,t,file,dur){
 function pickMedia(kind,onFile){
   const inp=document.createElement("input");inp.type="file";inp.style.display="none";
   inp.accept=kind==="photo"?"image/*":kind==="video"?"video/*":kind==="audio"?"audio/*":"image/*,video/*,audio/*";
-  if(kind!=="pick")inp.setAttribute("capture",kind==="photo"?"environment":kind==="video"?"environment":"user");
+  /* 5.83.5: 녹음 파일은 capture 없이 — capture를 붙이면 아이폰 · 일부 안드로이드가 동영상 촬영을 엶 */if(kind==="photo"||kind==="video")inp.setAttribute("capture","environment");
   if(kind==="pick")inp.multiple=true;
   inp.onchange=()=>{const fs=[...(inp.files||[])];inp.remove();fs.forEach(f=>onFile(f,/^video\//.test(f.type)?"video":/^audio\//.test(f.type)?"audio":"photo"))};
   document.body.appendChild(inp);inp.click();
 }
 /* 앱 안에서 녹음 (마이크) */
+const IS_AND=/Android/i.test(navigator.userAgent);
+const REC_APP_HOW=()=>isIOS?"아이폰: 홈 화면에서 <b>음성 메모</b> 앱으로 녹음 → 녹음 누르고 ⋯ → 공유 → <b>‘파일에 저장’</b> → 이 앱으로 돌아와 <b>녹음 파일 붙이기</b>로 그 파일을 고릅니다. (아이폰은 웹 앱에서 음성 메모를 바로 열 수 없습니다)":IS_AND?"<b>녹음 앱 열기</b>로 녹음(음성 녹음) 앱을 열어 녹음 · 저장하고 이 앱으로 돌아와 <b>녹음 파일 붙이기</b>로 그 파일을 고릅니다.":"휴대폰 <b>녹음(음성 녹음)</b> 앱으로 녹음한 뒤 여기서 <b>녹음 파일 붙이기</b>로 그 파일을 고릅니다.";
+/* 5.83.6: 안드로이드는 녹음 앱을 바로 엶(RECORD_SOUND). 돌아오면 ‘녹음 파일 붙이기’를 앞세움 */
+function recAppOpen(ov){let left=false;const vis=()=>{if(document.hidden){left=true;return}if(left){document.removeEventListener("visibilitychange",vis);const a=ov.querySelector("#recApp"),n=ov.querySelector("#recN");if(a){a.className="btn pri";a.textContent="녹음 파일 붙이기 — 방금 녹음한 파일 고르기"}if(n){n.className="note";n.innerHTML="녹음을 마쳤으면 <b>녹음 파일 붙이기</b>를 눌러 방금 저장한 녹음 파일을 고르세요."}}};
+  document.addEventListener("visibilitychange",vis);
+  try{location.href="intent:#Intent;action=android.provider.MediaStore.RECORD_SOUND;end"}catch(e){}
+  setTimeout(()=>{if(!left){document.removeEventListener("visibilitychange",vis);toast("녹음 앱을 열지 못했습니다. 휴대폰에서 녹음 앱을 직접 열어 녹음한 뒤 ‘녹음 파일 붙이기’를 누르세요")}},2500)}
+const IN_APP_BR=()=>/KAKAOTALK|NAVER\(inapp|Instagram|FBAN|FBAV|Line\/|DaumApps|everytimeApp|; wv\)/i.test(navigator.userAgent);
 function recordAudio(onDone){
-  if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder)){toast("이 브라우저는 앱 안 녹음을 지원하지 않아 녹음 앱을 엽니다");return pickMedia("audio",(f)=>onDone(f,0))}
+  const can=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&window.MediaRecorder);
   const ov=document.createElement("div");ov.className="medov";ov.setAttribute("role","dialog");ov.setAttribute("aria-label","녹음");
   ov.innerHTML=`<div class="medbox2"><h3>🎙 녹음</h3><p class="rectime" id="recT">0:00</p><p class="note" id="recN">‘녹음 시작’을 누르면 마이크 권한을 묻습니다. 최대 15분.</p>
     <div class="row2"><button class="btn" type="button" id="recX">취소</button><button class="btn pri" type="button" id="recGo">녹음 시작</button></div>
-    <button class="btn sm ghost" type="button" id="recApp">휴대폰 녹음 앱으로 녹음하기 ›</button></div>`;
+    ${IS_AND&&!isIOS?`<button class="btn sm" type="button" id="recOpen">📱 녹음 앱 열기</button>`:""}<button class="btn sm" type="button" id="recApp">녹음 파일 붙이기 (휴대폰 녹음 앱) ›</button><p class="note sm" id="recHow">${REC_APP_HOW()}</p></div>`;
   document.body.appendChild(ov);
   let rec=null,stream=null,chunks=[],t0=0,tm=null,cancel=false;
   const stopAll=()=>{clearInterval(tm);try{stream&&stream.getTracks().forEach(x=>x.stop())}catch(e){}};
   const close=()=>{stopAll();ov.remove()};
   ov.querySelector("#recX").onclick=()=>{cancel=true;try{rec&&rec.state!=="inactive"&&rec.stop()}catch(e){}close()};
   /* 5.83: 앱 안 녹음이 막히는 기기(마이크 권한 · 형식)는 휴대폰 녹음 앱으로 — 녹음 파일이 그대로 붙음 */
+  if(ov.querySelector("#recOpen"))ov.querySelector("#recOpen").onclick=()=>{try{rec&&rec.state!=="inactive"&&(cancel=true,rec.stop())}catch(e){}recAppOpen(ov)};
   ov.querySelector("#recApp").onclick=()=>{cancel=true;try{rec&&rec.state!=="inactive"&&rec.stop()}catch(e){}close();pickMedia("audio",f=>onDone(f,0))};
-  const fail=msg=>{stopAll();rec=null;const n=ov.querySelector("#recN"),b=ov.querySelector("#recGo"),a=ov.querySelector("#recApp");n.innerHTML=msg;n.className="warn";b.textContent="다시 시도";b.disabled=false;b.classList.remove("bad");a.className="btn pri";a.textContent="휴대폰 녹음 앱으로 녹음하기"};
+  const fail=msg=>{stopAll();rec=null;const n=ov.querySelector("#recN"),b=ov.querySelector("#recGo"),a=ov.querySelector("#recApp");n.innerHTML=msg;n.className="warn";b.textContent="다시 시도";b.disabled=false;b.classList.remove("bad");a.className="btn pri";a.textContent="녹음 파일 붙이기 (휴대폰 녹음 앱)"};
+  if(!can){fail(IN_APP_BR()?"카카오톡 · 네이버 등 다른 앱 안에서 열린 화면이라 앱 안 녹음을 쓸 수 없습니다. 오른쪽 위 ⋯ → <b>다른 브라우저(Chrome · Safari)로 열기</b>, 또는 홈 화면의 교사의 생활 앱으로 여세요.":"이 브라우저는 앱 안 녹음을 지원하지 않습니다. 브라우저를 최신으로 업데이트하거나, 아래 녹음 파일 붙이기를 쓰세요.");const g=ov.querySelector("#recGo");g.disabled=true;g.textContent="녹음 시작"}
   ov.querySelector("#recGo").onclick=async()=>{
     const b=ov.querySelector("#recGo");
     if(rec&&rec.state==="recording"){b.disabled=true;rec.stop();return}
