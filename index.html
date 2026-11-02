@@ -1528,7 +1528,7 @@ html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
 .flsw{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 10px;padding-right:46px;font-weight:700}.flsw .seg2{margin:0;min-width:10em}
 .flcur{background:var(--tint);border-radius:var(--r-m);padding:10px 12px}.flcur small{display:block;color:var(--muted);font-size:.75rem}.flcur b{display:block;font-size:1rem}.flcur.off{opacity:.6}
 .flacts{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.flacts .btn{flex:1 1 auto}
-.flsteps.off{opacity:.5}
+.flsteps.off{opacity:.5}.mvgo{width:100%;margin:8px 0;justify-content:center}.mvgo small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}.mvg{display:flex;flex-direction:column;gap:4px;margin:8px 0}.mvc{background:var(--tint);border-radius:var(--r-m);padding:10px 12px}.mvr{display:flex;gap:8px}.mvr input{flex:1 1 60%;min-width:0}.mvr select{flex:1 1 40%;min-width:0}.mvopts{display:flex;flex-direction:column;gap:6px;margin:6px 0}.mvo{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--r-m);background:var(--paper)}.mvo:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}.mvo:has(input:disabled){opacity:.55}.mvo input{margin-top:3px;width:20px;height:20px;flex:none}.mvo small{display:block;color:var(--muted);font-size:.8125rem}.mvi{margin:6px 0 0;font-size:.875rem;color:var(--muted)}.mvarr{text-align:center;font-size:1.3rem;color:var(--accent);line-height:1}.flend{color:var(--ink)}.flend b{font-variant-numeric:tabular-nums}.flowbox .flgo{flex:1 1 100%;min-height:48px;font-size:1.05rem}.flpz{color:var(--warn);font-weight:700}.flbtns .btn{white-space:nowrap}.flendl{margin:8px 0 4px;font-size:.9375rem}.flendl b{font-size:1.1rem}.flowbox.stop{opacity:.85}
 .fldemo{background:var(--tint);border-radius:var(--r-m);padding:8px;margin:6px 0}.fldemo .flbtns{display:none}.fldmt{font-size:.75rem;color:var(--muted);margin:0 0 4px}
 .flsc{margin:4px 0}
 .flcap{display:flex;flex-direction:column;gap:2px;font-size:.8125rem;margin:6px 0}.flcap .ok{color:#1f6a35}.flcap .no{color:var(--warn)}
@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.83.7", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.85.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,8 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.85.0",date:"2026-11-02",items:["수업 옮기기 · 교체: 시간표 칸 → 수업 변동 → 수업 변경 → ‘↪ 다른 날짜 · 교시로 옮기기 · 교체’에서 옮기기 전(원래 날짜 · 교시)과 옮긴 뒤(새 날짜 · 교시)를 고르면 그 수업을 새 자리에 배치(원래 자리는 휴강 표시). 새 자리에 다른 수업이 있으면 고름: 맞바꾸기 · 그 수업은 휴강(대체) · 그 수업은 또 다른 날짜 · 교시로(연쇄 이동)", "옮기거나 바꾼 수업의 출석 체크 · 수업 메모 · 진도표 기록 · 수업 흐름도 새 자리로 함께 옮김. 옮긴 칸 → 수업 변동 → 이동 취소(또는 수업 변동 목록에서 밀어 삭제)하면 모두 원래대로. 시간표 칸에 ‘이동’ · ‘교체’ 표시"]},
+  {v:"5.84.0",date:"2026-11-02",items:["수업 흐름 ▶ 시작: 수업 시각이 되어도 바로 돌지 않고, 지금 수업 카드의 ▶ 시작을 눌러야 첫 단계부터 시작(교실 사정으로 늦게 시작해도 맞게). 시작 전에는 ‘지금 시작하면 끝 예상 HH:MM(수업 끝 HH:MM)’을 보여 줌. 예전처럼 수업 시각에 저절로 시작하려면 수업 흐름 창(⋯)의 ‘시작 방법: 수업 시각에’", "⏸ 일시 정지 · ▶ 이어서: 멈춘 동안 남은 시간이 줄지 않고 알림도 쉼, 이어서 하면 멈춘 만큼 뒤 단계가 밀림. ■ 정지(되돌리기 가능) · ↺ 처음부터 다시", "끝 예상 시각 자동 계산: 진행 중 카드와 수업 흐름 창에 ‘끝 예상 HH:MM’ — 늦게 시작 · ＋2분 · 다음 › · 일시 정지가 바로 반영되고, 수업 끝을 넘으면 ⚠와 ‘남은 단계 줄여 맞추기’"]},
   {v:"5.83.7",date:"2026-11-02",items:["아이폰 녹음 창에 ‘🎙 음성 메모 열기(단축어)’: 단축어 앱에 음성 메모를 여는 단축어(기본 이름 ‘교사녹음’)를 한 번 만들어 두면 누를 때마다 음성 메모가 열림. 만드는 법을 녹음 창 안 ‘처음 한 번: 단축어 만들기’에, 다른 이름으로 만들었으면 그 칸에서 고침(이 기기에 기억). 돌아오면 ‘녹음 파일 붙이기’가 앞에 나옴"]},
   {v:"5.83.6",date:"2026-11-02",items:["녹음 창에 ‘📱 녹음 앱 열기’(안드로이드): 휴대폰 녹음(음성 녹음) 앱을 바로 열고, 녹음 뒤 이 앱으로 돌아오면 ‘녹음 파일 붙이기 — 방금 녹음한 파일 고르기’가 앞에 나옴. 아이폰은 웹 앱에서 음성 메모를 바로 열 수 없어 음성 메모 → 공유 → ‘파일에 저장’ 뒤 붙이는 방법을 녹음 창에 안내"]},
   {v:"5.83.5",date:"2026-11-02",items:["녹음: ‘휴대폰 녹음 앱’으로 붙일 때 동영상 촬영 앱이 열리던 것 고침 — 이제 파일 고르기로 열려 녹음 앱으로 녹음한 파일을 고름(아이폰은 음성 메모 → 공유 → ‘파일에 저장’ 뒤 고르기, 녹음 창에 방법 안내). 앱 안 녹음을 지원하지 않는 브라우저(카카오톡 · 네이버 안에서 연 화면 등)는 동영상 앱으로 넘기지 않고 녹음 창에 이유와 방법을 보여 줌"]},
@@ -4156,7 +4158,7 @@ function renderTT(){try{renderTermNote()}catch(e){}
       let badge="";
       if(info&&info.s){const n=info.cl.data.roster.length,pr=info.cl.data.roster.filter(([id])=>info.s.p[id]).length;badge=`<i class="ck${pr<n?" ab":""}">${pr}/${n}</i>`}
       const mm=hasNote(t,d,r.p,date)?'<i class="mm">메모</i>':"";
-      const cgb=cg?`<i class="cgb">${cg.act?"행사":cg.sw!=null?"교체":cg.type==="add"?"보강":"변경"}</i>`:"";
+      const cgb=cg?`<i class="cgb">${cg.mv?(mvMode(mvPair(cg))==="swap"?"교체":mvMode(mvPair(cg))==="repl"&&cg.mv==="b"?"대체":"이동"):cg.act?"행사":cg.sw!=null?"교체":cg.type==="add"?"보강":"변경"}</i>`:"";
       h+=`<td><button class="tc${nowCell?" now":""}${special[d]?" spc":""}${cg?" chg":""}" type="button" data-d="${d}" data-p="${r.p}">${tm}${cgb}<b>${esc(c.subject||"—")}</b><span>${esc(cl?clsName(cl.data):(c.clsName||""))}</span><span class="rm">${esc(c.room)}</span>${badge}${mm}</button></td>`;
     });
     h+="</tr>";
@@ -4317,7 +4319,7 @@ function editCell(t,d,p){
 /* ---------- 수업 변동 (1회 또는 기간, 학사일정 반영) ---------- */
 const CHG_TYPES=[["change","수업 변경"],["cancel","휴강·결강"],["add","보강·추가 수업"]];
 const CHG_REASONS=["중간고사","기말고사","체육대회","현장체험학습","학교 행사","수업 교체","보강","출장","연수","재량휴업일","기타"];
-function normChg(list){return(Array.isArray(list)?list:[]).filter(c=>c&&/^\d{4}-\d{2}-\d{2}$/.test(c.from||"")).map(c=>({id:String(c.id||uid()),scope:c.scope==="day"?"day":"cell",d:Math.max(0,Math.min(4,+c.d||0)),p:Math.max(1,Math.min(7,+c.p||1)),from:c.from,to:/^\d{4}-\d{2}-\d{2}$/.test(c.to||"")&&c.to>=c.from?c.to:c.from,type:["change","cancel","add"].includes(c.type)?c.type:"change",subject:String(c.subject||""),clsId:String(c.clsId||""),clsName:String(c.clsName||""),room:String(c.room||""),reason:String(c.reason||""),created:+c.created||0,...(c.g?{g:String(c.g)}:{}),...(c.act?{act:true}:{}),...(c.sw!=null&&c.sw!==""&&+c.sw>=0&&+c.sw<=4?{sw:+c.sw}:{}),...(c.wk?{wk:true}:{})}))}
+function normChg(list){return(Array.isArray(list)?list:[]).filter(c=>c&&/^\d{4}-\d{2}-\d{2}$/.test(c.from||"")).map(c=>({id:String(c.id||uid()),scope:c.scope==="day"?"day":"cell",d:Math.max(0,Math.min(4,+c.d||0)),p:Math.max(1,Math.min(7,+c.p||1)),from:c.from,to:/^\d{4}-\d{2}-\d{2}$/.test(c.to||"")&&c.to>=c.from?c.to:c.from,type:["change","cancel","add"].includes(c.type)?c.type:"change",subject:String(c.subject||""),clsId:String(c.clsId||""),clsName:String(c.clsName||""),room:String(c.room||""),reason:String(c.reason||""),created:+c.created||0,...(c.g?{g:String(c.g)}:{}),...(c.act?{act:true}:{}),...(c.sw!=null&&c.sw!==""&&+c.sw>=0&&+c.sw<=4?{sw:+c.sw}:{}),...(c.wk?{wk:true}:{}),...(["a","b","c"].includes(c.mv)?{mv:c.mv}:{})}))}
 const wdOf=date=>{const[y,m,dd]=date.split("-").map(Number);return(new Date(y,m-1,dd).getDay()+6)%7};
 /* 이 날짜·교시에 걸린 변동 (나중에 만든 것이 우선) */
 function chgAt(t,d,p,date){
@@ -4338,14 +4340,104 @@ function cellAt(t,d,p,date){
   return{subject:c.subject||(base&&base.subject)||"",clsId:c.clsId||(c.clsName?"":(base&&base.clsId)||""),clsName:c.clsName||(base&&base.clsName)||"",room:c.room||(base&&base.room)||""};
 }
 function countDates(from,to,d){let n=0;for(let x=from;x<=to&&n<400;x=addDays(x,1))if(d==null||wdOf(x)===d)n++;return n}
-function chgLabel(c){return(CHG_TYPES.find(x=>x[0]===c.type)||[,""])[1]}
+function chgLabel(c){if(c.mv){const m=mvMode(mvPair(c));return MV_L[m]||"수업 이동"}return(CHG_TYPES.find(x=>x[0]===c.type)||[,""])[1]}
+/* 5.85: 수업 옮기기 — 한 수업을 다른 날짜 · 교시로. 옮겨 갈 자리에 수업이 있으면 고름: 맞바꾸기 · 그 수업 휴강 · 그 수업을 또 다른 날짜 · 교시로
+   같은 g로 묶은 변동(mv a = 원래 자리, b = 옮겨 간 자리, c = 밀려난 수업이 간 자리). 출석 체크 · 수업 메모 · 진도표 기록 · 수업 흐름도 함께 옮김 */
+const MV_L={swap:"수업 교체",move:"수업 이동",repl:"수업 대체",chain:"수업 이동(연쇄)"};
+function mvPair(c){if(!c||!c.g||!c.mv)return null;const L=S.tt.list.flatMap(t=>(t.chg||[]).filter(x=>x.g===c.g&&x.mv));return{a:L.find(x=>x.mv==="a"),b:L.find(x=>x.mv==="b"),c:L.find(x=>x.mv==="c")}}
+function mvMode(q){if(!q||!q.a||!q.b)return"";if(q.c)return"chain";if(q.a.type==="change")return"swap";return q.b.type==="change"?"repl":"move"}
+const mvSlot=c=>c?{date:c.from,d:c.d,p:c.p}:null;
+function mvTxt(o){return`${fmtDateW(o.date)} ${o.p}교시`}
+/* 여러 자리의 기록을 한꺼번에 옮김: pairs = [[from, to], ...] (자리끼리 돌려 바꾸기) */
+function mvApply(t,pairs){let n=0;const nk=o=>noteKey(t,o.d,o.p,o.date),sk=o=>`${t.id}:${o.d}:${o.p}`,fr=(()=>{try{return flowRunAll()}catch(e){return{}}})();S.notes=S.notes||{};
+  const snap=pairs.map(([f])=>({note:S.notes[nk(f)],pg:[],ses:[],flow:fr[f.date+"|"+sk(f)]}));
+  pairs.forEach(([f],i)=>{(S.plans||[]).forEach(pl=>Object.values(pl.pg||{}).forEach(g=>Object.values(g).forEach(e=>{if(e&&e.k===nk(f))snap[i].pg.push(e)})));
+    S.list.forEach(cl=>cl.data.sessions.forEach(x=>{if(x.date===f.date&&x.src===sk(f))snap[i].ses.push(x)}))});
+  pairs.forEach(([f])=>{delete S.notes[nk(f)];delete fr[f.date+"|"+sk(f)]});
+  pairs.forEach(([,to],i)=>{const v=snap[i],r=ttRows(t,to.date).find(z=>z.p===to.p);
+    if(v.note){S.notes[nk(to)]={...v.note,date:to.date,period:to.p};n++}
+    v.pg.forEach(e=>{e.k=nk(to);e.d=to.date;n++});
+    v.ses.forEach(x=>{x.date=to.date;x.src=sk(to);if(r)x.time=r.start;if(x.label)x.label=String(x.label).replace(/^\d+교시/,to.p+"교시");n++});
+    if(v.flow)fr[to.date+"|"+sk(to)]=v.flow});
+  return n}
+function mvSwap(t,A,B){return mvApply(t,[[A,B],[B,A]])}
+/* 이 자리에 남은 기록(출석 체크 · 메모 · 진도표) 수 — 그 수업을 휴강으로 대체할 수 있는지 */
+function mvRecs(t,o){const k=noteKey(t,o.d,o.p,o.date),s=`${t.id}:${o.d}:${o.p}`;let n=S.notes&&S.notes[k]?1:0;
+  (S.plans||[]).forEach(pl=>Object.values(pl.pg||{}).forEach(g=>Object.values(g).forEach(e=>{if(e&&e.k===k)n++})));S.list.forEach(cl=>cl.data.sessions.forEach(x=>{if(x.date===o.date&&x.src===s)n++}));return n}
+function mvFwd(t,q){const A=mvSlot(q.a),B=mvSlot(q.b),C=q.c&&mvSlot(q.c);return C?[[A,B],[B,C],[C,A]]:[[A,B],[B,A]]}
+function mvInv(p){return p.map(([f,to])=>[to,f])}
+/* 옮기기 취소: 묶인 변동을 지우고 기록을 원래 자리로. 되돌리기 함수를 돌려줌 */
+function mvCancel(t,c){const q=mvPair(c);if(!q||!q.a||!q.b)return()=>{};const keep=[q.a,q.b,q.c].filter(Boolean),fw=mvFwd(t,q);
+  t.chg=(t.chg||[]).filter(x=>x.g!==c.g);mvApply(t,mvInv(fw));
+  return()=>{t.chg=(t.chg||[]).concat(keep);mvApply(t,fw)}}
+function mvSheet(t,o){/* o: {date,p} 원래 수업 */
+  const reasons=["수업 교체","출장","연수","학교 행사","보강","기타"],P=[1,2,3,4,5,6,7].map(p=>`<option value="${p}">${p}교시</option>`).join("");let mode="swap";
+  $("sheetBox").innerHTML=`<h2>수업 옮기기 · 교체</h2>
+    <p class="note">한 수업을 다른 날짜 · 교시로 옮깁니다. 출석 체크 · 수업 메모 · 진도 기록도 함께 옮겨집니다.</p>
+    <div class="mvg"><div class="mvc"><div class="lb">옮기기 전 (원래 수업)</div><div class="mvr"><input class="fld" type="date" id="mvAd" aria-label="원래 수업 날짜"><select class="fld" id="mvAp" aria-label="원래 수업 교시">${P}</select></div><p class="mvi" id="mvAi"></p></div>
+    <div class="mvarr" aria-hidden="true">↓</div>
+    <div class="mvc"><div class="lb">옮긴 뒤 (새 날짜 · 교시)</div><div class="mvr"><input class="fld" type="date" id="mvBd" aria-label="옮겨 갈 날짜"><select class="fld" id="mvBp" aria-label="옮겨 갈 교시">${P}</select></div><p class="mvi" id="mvBi"></p></div></div>
+    <div id="mvOpt" hidden><div class="lb" id="mvOptL"></div><div class="mvopts" role="radiogroup">
+      <label class="mvo"><input type="radio" name="mvm" value="swap"><span><b>맞바꾸기</b><small id="mvOs"></small></span></label>
+      <label class="mvo"><input type="radio" name="mvm" value="repl"><span><b>그 수업은 휴강(취소)</b><small id="mvOr"></small></span></label>
+      <label class="mvo"><input type="radio" name="mvm" value="chain"><span><b>그 수업은 다른 날짜 · 교시로</b><small>아래에서 그 수업이 들어갈 자리를 고릅니다</small></span></label></div>
+      <div class="mvc" id="mvCbox" hidden><div class="lb">그 수업이 들어갈 자리</div><div class="mvr"><input class="fld" type="date" id="mvCd" aria-label="밀려난 수업의 날짜"><select class="fld" id="mvCp" aria-label="밀려난 수업의 교시">${P}</select></div><p class="mvi" id="mvCi"></p></div>
+      <p class="note sm">옮기기 자체를 그만두려면 <b>닫기</b>를 누르세요.</p></div>
+    <p class="ttsum" id="mvSum"></p>
+    <label class="lb" for="mvWhy">사유<input class="fld" id="mvWhy" list="dlMvWhy" placeholder="예: 수업 교체, 출장" autocomplete="off"></label><datalist id="dlMvWhy">${reasons.map(x=>`<option value="${x}">`).join("")}</datalist>
+    <p class="warn" id="mvErr" hidden></p>
+    <div class="row2"><button class="btn" type="button" id="skNo">닫기</button><button class="btn pri" type="button" id="mvOk">시간표에 배치</button></div>`;
+  $("sheet").hidden=false;$("mvAd").value=o.date;$("mvAp").value=String(o.p||1);$("mvBd").value=o.date;$("mvBp").value=String(Math.min(7,(o.p||1)+1));$("mvCd").value=o.date;$("mvCp").value=String(Math.min(7,(o.p||1)+2));
+  const desc=c=>c?[c.subject,cellClass(c)?clsName(cellClass(c).data):c.clsName,c.room].filter(Boolean).join(" · "):"";
+  const slot=(d,p)=>{const x={date:$(d).value,p:+$(p).value};x.d=x.date?wdOf(x.date):0;return x};
+  const ok=x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)&&x.d<=4&&ttRows(t,x.date).some(r=>r.p===x.p);
+  const same=(x,y)=>x.date===y.date&&x.p===y.p;
+  const read=()=>{const A=slot("mvAd","mvAp"),B=slot("mvBd","mvBp"),C=slot("mvCd","mvCp");
+    const ca=ok(A)?cellAt(t,A.d,A.p,A.date):null,cb=ok(B)?cellAt(t,B.d,B.p,B.date):null,cc=ok(C)?cellAt(t,C.d,C.p,C.date):null,occ=!isEmptyCell(cb),bRec=occ&&ok(B)?mvRecs(t,B):0;
+    let m=occ?mode:"move",err="";
+    if(!ok(A))err="원래 수업의 날짜 · 교시를 확인하세요(주말이나 없는 교시).";else if(isEmptyCell(ca))err=`${mvTxt(A)}에는 수업이 없습니다.`;else if(!ok(B))err="옮겨 갈 날짜 · 교시를 확인하세요(주말이나 없는 교시).";else if(same(A,B))err="같은 자리입니다. 다른 날짜나 교시를 고르세요.";
+    else if(m==="repl"&&bRec)err=`그 자리의 수업에 이미 출석 · 메모 · 진도 기록(${bRec}개)이 있어 휴강으로 바꿀 수 없습니다. 맞바꾸기나 다른 자리로 옮기기를 고르세요.`;
+    else if(m==="chain"){if(!ok(C))err="그 수업이 들어갈 날짜 · 교시를 확인하세요.";else if(same(C,A)||same(C,B))err="그 수업이 들어갈 자리는 두 자리와 달라야 합니다(원래 자리로 가려면 맞바꾸기).";else if(!isEmptyCell(cc))err=`${mvTxt(C)}에는 이미 수업(${desc(cc)})이 있습니다. 빈 시간을 고르세요.`}
+    return{A,B,C,ca,cb,cc,err,m,occ,bRec}};
+  const paint=()=>{const r=read();$("mvAi").textContent=r.ca&&!isEmptyCell(r.ca)?desc(r.ca):"수업 없음";$("mvBi").textContent=r.occ?`${desc(r.cb)} 수업이 있음`:"빈 시간";
+    $("mvOpt").hidden=!r.occ||!!(!ok(r.A)||isEmptyCell(r.ca)||same(r.A,r.B));
+    if(r.occ){$("mvOptL").textContent=`${mvTxt(r.B)}의 ${desc(r.cb)} 수업은 어떻게 할까요?`;$("mvOs").textContent=`그 수업은 ${ok(r.A)?mvTxt(r.A):"원래 자리"}로`;$("mvOr").textContent=r.bRec?`기록 ${r.bRec}개가 있어 고를 수 없음`:"그 날 그 수업은 열리지 않음(휴강 표시)";
+      $("mvOpt").querySelectorAll("[name=mvm]").forEach(i=>{i.checked=i.value===mode;if(i.value==="repl")i.disabled=!!r.bRec});$("mvCbox").hidden=mode!=="chain";$("mvCi").textContent=ok(r.C)?(isEmptyCell(r.cc)?"빈 시간":`${desc(r.cc)} 수업이 있음`):""}
+    const tA=ok(r.A)?mvTxt(r.A):"",tB=ok(r.B)?mvTxt(r.B):"";
+    $("mvSum").innerHTML=r.err?`<span class="warn">${esc(r.err)}</span>`:r.m==="swap"?`<b>교체</b> · ${esc(tA)} ${esc(desc(r.ca))} ↔ ${esc(tB)} ${esc(desc(r.cb))}`:r.m==="repl"?`<b>대체</b> · ${esc(tA)} ${esc(desc(r.ca))} → ${esc(tB)} (그 자리의 ${esc(desc(r.cb))}는 휴강, 원래 자리는 빈 시간)`:r.m==="chain"?`<b>이동</b> · ${esc(tA)} ${esc(desc(r.ca))} → ${esc(tB)}, 그 자리의 ${esc(desc(r.cb))} → ${esc(mvTxt(r.C))} (원래 자리는 빈 시간)`:`<b>이동</b> · ${esc(tA)} ${esc(desc(r.ca))} → ${esc(tB)} (원래 자리는 빈 시간)`;
+    $("mvOk").disabled=!!r.err};
+  ["mvAd","mvAp","mvBd","mvBp","mvCd","mvCp"].forEach(id=>{$(id).oninput=paint;$(id).onchange=paint});
+  $("mvOpt").querySelectorAll("[name=mvm]").forEach(i=>i.onchange=()=>{if(i.checked){mode=i.value;paint();if(mode==="chain")setTimeout(()=>{try{$("mvCbox").scrollIntoView({block:"center",behavior:"smooth"})}catch(e){}},50)}});paint();
+  $("skNo").onclick=()=>{$("sheet").hidden=true};
+  $("mvOk").onclick=()=>{const r=read();if(r.err){$("mvErr").textContent=r.err;$("mvErr").hidden=false;return}
+    const g="mv"+uid(),why=$("mvWhy").value.trim(),now=Date.now(),cls=c=>({subject:c.subject||"",clsId:(cellClass(c)||{}).id||c.clsId||"",clsName:cellClass(c)?"":(c.clsName||""),room:c.room||""}),off={type:"cancel",subject:"",clsId:"",clsName:"",room:""};
+    const at=(o,mv,extra,rs)=>({id:g+mv,g,mv,scope:"cell",d:o.d,p:o.p,from:o.date,to:o.date,created:now+"abc".indexOf(mv),reason:why||rs,...extra});
+    const tB=`${fmtDate(r.B.date)} ${r.B.p}교시`,tA=`${fmtDate(r.A.date)} ${r.A.p}교시`,L=[];
+    if(r.m==="swap"){L.push(at(r.A,"a",{type:"change",act:true,...cls(r.cb)},"수업 교체"),at(r.B,"b",{type:"change",act:true,...cls(r.ca)},"수업 교체"))}
+    else if(r.m==="repl"){L.push(at(r.A,"a",off,`수업 이동 → ${tB}`),at(r.B,"b",{type:"change",act:true,...cls(r.ca)},`수업 대체 ← ${tA} · ${desc(r.cb)} 휴강`))}
+    else if(r.m==="chain"){L.push(at(r.A,"a",off,`수업 이동 → ${tB}`),at(r.B,"b",{type:"change",act:true,...cls(r.ca)},`수업 이동 ← ${tA}`),at(r.C,"c",{type:isEmptyCell(t.cells[r.C.d+"-"+r.C.p])?"add":"change",act:true,...cls(r.cb)},`수업 이동 ← ${tB}`))}
+    else{L.push(at(r.A,"a",off,`수업 이동 → ${tB}`),at(r.B,"b",{type:"add",act:true,...cls(r.ca)},`수업 이동 ← ${tA}`))}
+    if(!t.chg)t.chg=[];t.chg.push(...L);const q={a:L[0],b:L[1],c:L[2]};const n=mvApply(t,r.m==="repl"?[[r.A,r.B]]:mvFwd(t,q));save();$("sheet").hidden=true;renderAll();
+    toast(`${MV_L[r.m]}: ${mvTxt(r.A)} ${r.m==="swap"?"↔":"→"} ${mvTxt(r.B)}${r.m==="chain"?` · ${desc(r.cb)} → ${mvTxt(r.C)}`:r.m==="repl"?` · ${desc(r.cb)} 휴강`:""} 시간표에 배치했습니다${n?` · 출석 · 진도 기록 ${n}개 함께 옮김`:""}`)}}
+function mvInfoSheet(t,c){const q=mvPair(c);if(!q||!q.a||!q.b)return;const A=mvSlot(q.a),B=mvSlot(q.b),m=mvMode(q);
+  const desc=x=>[x.subject,cellClass(x)?clsName(cellClass(x).data):x.clsName].filter(Boolean).join(" · ");
+  const rows=m==="swap"?`<div class="mvc"><b>${esc(mvTxt(A))}</b> ↔ <b>${esc(mvTxt(B))}</b><p class="mvi">${esc(desc(q.b))}은(는) ${esc(mvTxt(B))}로, ${esc(desc(q.a))}은(는) ${esc(mvTxt(A))}로</p></div>`
+    :`<div class="mvc"><div class="lb">옮긴 수업</div><b>${esc(mvTxt(A))} → ${esc(mvTxt(B))}</b><p class="mvi">${esc(desc(q.b))}</p></div>${m==="chain"?`<div class="mvc"><div class="lb">밀려난 수업</div><b>${esc(mvTxt(B))} → ${esc(mvTxt(mvSlot(q.c)))}</b><p class="mvi">${esc(desc(q.c))}</p></div>`:m==="repl"?`<p class="note">${esc(mvTxt(B))}에 있던 수업은 휴강(대체)했습니다.</p>`:""}`;
+  $("sheetBox").innerHTML=`<h2>${esc(MV_L[m]||"수업 이동")}</h2><div class="mvg">${rows}</div>
+    ${q.a.reason?`<p class="note">사유: ${esc(q.a.reason)}</p>`:""}<p class="note">바꾸려면 취소하고 다시 옮기세요. 취소하면 출석 · 진도 기록도 원래 자리로 돌아갑니다.</p>
+    <div class="row2"><button class="btn bad" type="button" id="mvDel">이동 취소(원래대로)</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
+  $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
+  twoStep($("mvDel"),"정말 취소",()=>{const back=mvCancel(t,c);save();$("sheet").hidden=true;renderAll();toastUndo("수업 이동을 취소하고 원래 시간표로 되돌렸습니다",()=>{back();save();renderAll()},6000)})}
 function chgWhen(c){
+  if(c.mv){const q=mvPair(c),m=mvMode(q);if(m){return`${mvTxt(mvSlot(q.a))} ${m==="swap"?"↔":"→"} ${mvTxt(mvSlot(q.b))}${m==="chain"?` · 밀린 수업 → ${mvTxt(mvSlot(q.c))}`:m==="repl"?" · 그 자리 수업 휴강":""}`}}
   const span=c.from===c.to?fmtDateW(c.from):`${fmtDate(c.from)} ~ ${fmtDate(c.to)}`;
   return c.scope==="day"?`${span} 모든 수업`:`${span}${c.from===c.to?"":` 매주 ${DAYS[c.d]}요일`} ${c.p}교시${c.from===c.to?"":` (${countDates(c.from,c.to,c.d)}회)`}`;
 }
 function changeSheet(t,o){
   /* o: {d,p,date} 새 변동 | {id} 기존 변동 | {scope:"day",date} 하루 전체 */
   let c=o.id?(t.chg||[]).find(x=>x.id===o.id):null;
+  if(c&&c.mv)return mvInfoSheet(t,c);
+  if(!c&&o.id==null&&o.scope!=="day"&&o.date){const cg0=chgAt(t,o.d,o.p,o.date);if(cg0&&cg0.mv)return mvInfoSheet(t,cg0)}
   const isNew=!c;
   if(!c){const base=o.scope==="day"?null:t.cells[o.d+"-"+o.p];
     c={id:uid(),scope:o.scope||"cell",d:o.scope==="day"?wdOf(o.date):o.d,p:o.p||1,from:o.date,to:o.date,type:o.scope==="day"?"cancel":(isEmptyCell(base)?"add":"change"),subject:base?base.subject:"",clsId:base?base.clsId:"",clsName:base?base.clsName:"",room:base?base.room:"",reason:"",created:Date.now()}}
@@ -4354,6 +4446,7 @@ function changeSheet(t,o){
   $("sheetBox").innerHTML=`<h2>${title}</h2>
     ${v.scope==="cell"?`<p class="note">고정 시간표: ${isEmptyCell(base)?"빈 칸":esc([base.subject,cellClass(base)?clsName(cellClass(base).data):base.clsName,base.room].filter(Boolean).join(" · "))}</p>`:`<p class="note">이 기간 동안 모든 교시에 적용합니다. 시험·행사·휴업일처럼 하루 전체 수업이 바뀔 때 쓰세요.</p>`}
     <div class="presets" id="cgType">${CHG_TYPES.filter(([k])=>v.scope==="cell"||k==="cancel").map(([k,l])=>`<button class="chip" type="button" data-t="${k}">${l}</button>`).join("")}</div>
+    ${v.scope==="cell"&&isNew&&!isEmptyCell(cellAt(t,v.d,v.p,v.from))?`<button class="btn mvgo" type="button" id="cgMv">↪ 다른 날짜 · 교시로 옮기기 · 교체 <small>출석 · 진도 함께</small></button>`:""}
     <div class="presets" id="cgOnce"><button class="chip" type="button" data-o="1">이번 한 번만</button><button class="chip" type="button" data-o="0">기간 정하기</button></div>
     <div class="range" id="cgRange"><label class="lb" for="cgFrom">시작일<input class="fld" type="date" id="cgFrom"></label><label class="lb" for="cgTo">종료일<input class="fld" type="date" id="cgTo"></label></div>
     <p class="ttsum" id="cgCount"></p>
@@ -4373,7 +4466,7 @@ function changeSheet(t,o){
   let type=v.type,once=v.from===v.to;
   $("cgFrom").value=v.from;$("cgTo").value=v.to;$("cgSub").value=v.subject;$("cgRoom").value=v.room;$("cgWhy").value=v.reason;
   const cl=cellClass(v);$("cgCls").value=cl?cl.id:"";
-  const paint=()=>{
+  let paint=()=>{
     $("cgType").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===type));
     $("cgOnce").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.o==="1")===once));
     $("cgBody").hidden=type==="cancel";
@@ -4385,6 +4478,8 @@ function changeSheet(t,o){
     $("cgCount").textContent=v.scope==="day"?`${f===to?fmtDateW(f):`${fmtDate(f)}~${fmtDate(to)}`} 모든 수업 · ${n}일`:once?`${fmtDateW(f)} ${v.p}교시 한 번`:`${fmtDate(f)}~${fmtDate(to)} 매주 ${DAYS[v.d]}요일 ${v.p}교시 · ${n}회`;
   };
   $("cgType").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{type=b.dataset.t;paint()});
+  if($("cgMv"))$("cgMv").onclick=()=>mvSheet(t,{date:$("cgFrom").value||v.from,p:v.p});
+  {const mb=$("cgMv");if(mb){const sh=()=>{mb.hidden=type!=="change"};const op=paint;paint=()=>{op();sh()};sh()}}
   $("cgOnce").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{once=b.dataset.o==="1";if(!once&&$("cgTo").value===$("cgFrom").value)$("cgTo").value=addDays($("cgFrom").value,v.scope==="day"?2:28);paint()});
   $("cgFrom").oninput=paint;$("cgTo").oninput=paint;paint();
   $("skNo").onclick=()=>{$("sheet").hidden=true};
@@ -4405,11 +4500,11 @@ function changeSheet(t,o){
 }
 function renderChgList(t){
   const L=$("ttChgList");if(!L)return;
-  const l=(t.chg||[]).slice().sort((a,b)=>a.from.localeCompare(b.from));
+  const l=(t.chg||[]).filter(c=>!c.mv||c.mv==="a").slice().sort((a,b)=>a.from.localeCompare(b.from));
   const td=today();
   L.innerHTML=l.length?l.map(c=>`<button class="prow" type="button" data-cg="${esc(c.id)}"><span class="pn">${esc(chgLabel(c))}${c.reason?` · ${esc(c.reason)}`:""}${c.to<td?'<em style="color:var(--muted)">지난 변동</em>':""}<small>${esc(chgWhen(c))}${c.type!=="cancel"?` → ${esc([c.subject,c.clsName,c.room].filter(Boolean).join(" · "))}`:""}</small></span><span class="pe">수정</span></button>`).join(""):`<div class="empty">등록된 수업 변동이 없습니다.<br>시간표 칸이나 요일을 눌러 ‘수업 변동’을 넣으세요.</div>`;
   L.querySelectorAll("[data-cg]").forEach(b=>{b.onclick=()=>changeSheet(t,{id:b.dataset.cg});const c=(t.chg||[]).find(y=>y.id===b.dataset.cg);
-    if(c)swipeDel(b,{acts:[{k:"edit",l:"수정",fn:()=>changeSheet(t,{id:c.id})}],del:()=>{b.remove();swRemove(`‘${chgLabel(c)}’ 변동을`,()=>swOut(t.chg,c),()=>renderTT())}})});
+    if(c)swipeDel(b,{acts:[{k:"edit",l:c.mv?"보기":"수정",fn:()=>changeSheet(t,{id:c.id})}],del:()=>{b.remove();swRemove(`‘${chgLabel(c)}’ 변동을`,()=>c.mv?mvCancel(t,c):swOut(t.chg,c),()=>renderTT())}})});
   $("ttChgCnt").textContent=l.filter(c=>c.to>=td).length?`예정 ${l.filter(c=>c.to>=td).length}개`:"";
 }
 
@@ -10685,7 +10780,7 @@ function ttDayHTML(t,days,di,td,nowM){
     const cl=cellClass(c),info=cellSession(t,d,r.p,date);let st="";
     if(info&&info.s){const n=info.cl.data.roster.length,ab=sesAbs(info.cl,info.s).length;st=sesOn(info.s)?`<em class="${ab?"ab":"ok"}">출석 ${n-ab}/${n}${ab?` · 결석 ${ab}`:""}</em>`:`<em class="ab">${esc(sesOff(info.s))}</em>`}
     else if(cl)st=date<td||(date===td&&nowM>=toMin(r.end))?`<em class="ab">체크 안 함</em>`:`<em>체크 전</em>`;
-    const tags=[cg?(cg.act?"행사":cg.sw!=null?"교체":cg.type==="add"?"보강":"변경"):"",hasNote(t,d,r.p,date)?"메모":""].filter(Boolean).map(x=>`<i class="dtag">${x}</i>`).join("");
+    const tags=[cg?(cg.mv?(mvMode(mvPair(cg))==="swap"?"교체":mvMode(mvPair(cg))==="repl"&&cg.mv==="b"?"대체":"이동"):cg.act?"행사":cg.sw!=null?"교체":cg.type==="add"?"보강":"변경"):"",hasNote(t,d,r.p,date)?"메모":""].filter(Boolean).map(x=>`<i class="dtag">${x}</i>`).join("");
     h+=`<button class="tc drow${live?" now":""}${cg?" chg":""}" type="button" data-d="${d}" data-p="${r.p}">${tm}<span class="dbody"><b>${esc(c.subject||"—")}${tags}</b><small>${esc(cl?clsName(cl.data):(c.clsName||""))}${c.room?" · "+esc(c.room):""}</small></span>${st}</button>`;
   });
   try{const last=rows[rows.length-1].end;h+=`<button class="lc drow dgap" type="button" data-date="${date}" data-slot="after"><span class="dtm"><b>방과 후</b><small>${last}~</small></span><span class="dbody">${gapCellHTML(t,"after",date,'<span class="dmuted">＋ 활동 · 일정 넣기</span>')}</span></button>`}catch(e){}
@@ -11488,10 +11583,22 @@ function flowOf(x,any){if(!x)return null;const run=flowRunAll()[flowKey(x)];if(r
   let id=run&&run.fid,src="run";if(!id){try{const subj=flowSubjOf(x),p=pnFind(subj,x.cl);const nx=p&&pnNext(p,x.cl);if(nx&&nx.c.flow){id=nx.c.flow;src="ch"}}catch(e){}}
   if(!id){id=flowSubs()[flowSubjOf(x)];src="subj"}const f=flowById(id,len);return f?{f,src,run:run||null,len}:null}
 /* 지금 어느 단계인지: 시작 시각(수업 시작 또는 ‘지금 시작’) + 단계 시간(＋ 조정) */
-function flowState(x,now,any){const F=flowOf(x,any);if(!F)return null;now=now||Date.now();const run=F.run||{},adj=run.adj||{};
-  const st=run.st||new Date(x.date+"T"+x.start+":00").getTime(),end=new Date(x.date+"T"+x.end+":00").getTime();
-  let t=st;const S2=F.f.steps.map(s=>{const d=Math.max(30000,(+s.m||0)*60000+(adj[s.id]||0)),o={s,a:t,b:t+d,d};t+=d;return o});
-  const i=S2.findIndex(o=>now<o.b),cur=i<0?null:S2[i];return{F,x,st,end,steps:S2,i,cur,left:cur?cur.b-now:0,fin:t,over:t-end,now,before:now<st}}
+/* 5.84: 시작 방법 — 기본은 ‘▶ 시작’을 눌러야 시작(교실 사정으로 늦게 시작해도 맞게). 설정에서 ‘수업 시각에 저절로’도 고름 */
+function flowAuto(){return!!(S.flowCfg&&S.flowCfg.auto)}
+/* 지금 어느 단계인지: 시작 시각(▶ 시작 · 수업 시작 · ‘지금 시작’) + 단계 시간(＋ 조정) + 일시 정지한 시간. 끝 예상 = 마지막 단계 끝(멈춰 있는 동안은 그만큼 뒤로) */
+function flowState(x,now,any){const F=flowOf(x,any);if(!F)return null;const real=now||Date.now();const run=F.run||{},adj=run.adj||{},end=new Date(x.date+"T"+x.end+":00").getTime();
+  const st0=run.st||(flowAuto()||now?new Date(x.date+"T"+x.start+":00").getTime():0);
+  const mk=a=>{let t=a;const S2=F.f.steps.map(s=>{const d=Math.max(30000,(+s.m||0)*60000+(adj[s.id]||0)),o={s,a:t,b:t+d,d};t+=d;return o});return{S2,t}};
+  if(!st0){/* 아직 시작 전(▶ 시작을 기다림): 지금 시작하면의 단계 시각 */const{S2,t}=mk(real);return{F,x,st:real,end,steps:S2,i:-1,cur:null,left:0,fin:t,over:t-end,now:real,before:true,wait:true}}
+  const pt=+run.pt||0,pz=run.pz?+run.pz:0,eff=pz?Math.min(pz,real):real,{S2,t}=mk(st0+pt);
+  if(run.stop){return{F,x,st:st0,end,steps:S2,i:-1,cur:null,left:0,fin:+run.stop,over:+run.stop-end,now:eff,before:false,stopped:+run.stop}}
+  const i=S2.findIndex(o=>eff<o.b),cur=i<0?null:S2[i],fin=t+(pz?real-pz:0);return{F,x,st:st0+pt,st0,end,steps:S2,i,cur,left:cur?cur.b-eff:0,fin,over:fin-end,now:eff,before:eff<st0+pt,paused:pz?pz:0}}
+function flowGo(x,act){const k=flowKey(x),r=flowRunAll()[k]||{},now=Date.now();
+  if(act==="start"){flowSet(x,{st:now,pt:null,pz:null,stop:null,adj:null});FLAs().prev[k]=0;flowTick(1);flowStepStart(x,0);return}
+  if(act==="pause"){if(!r.pz)flowSet(x,{pz:now});toast("⏸ 일시 정지 · 끝 예상 시각이 멈춘 만큼 늦어집니다");flowTick(1);return}
+  if(act==="resume"){if(r.pz)flowSet(x,{pt:(+r.pt||0)+(now-r.pz),pz:null});toast("▶ 이어서 진행합니다");flowTick(1);return}
+  if(act==="stop"){const bk={...r};flowSet(x,{stop:now,pz:null});flowTick(1);toastUndo("■ 수업 흐름을 정지했습니다",()=>{flowRunPut(k,bk);flowTick(1)});return}
+  if(act==="reset"){flowSet(x,{st:flowAuto()?now:null,pt:null,pz:null,stop:null,adj:null});FLAs().prev[k]=flowAuto()?0:null;flowTick(1);if(flowAuto())flowStepStart(x,0)}}
 function flowFmt(ms){ms=Math.max(0,Math.round(ms/1000));return`${Math.floor(ms/60)}:${String(ms%60).padStart(2,"0")}`}
 function flowAdj(x,sid,ms){const k=flowKey(x),o=flowRunAll()[k]||{};o.adj=o.adj||{};o.adj[sid]=(o.adj[sid]||0)+ms;flowRunPut(k,o)}
 function flowSet(x,patch){const k=flowKey(x),o={...(flowRunAll()[k]||{}),...patch};Object.keys(o).forEach(q=>{if(o[q]==null)delete o[q]});flowRunPut(k,Object.keys(o).length?o:null)}
@@ -11499,18 +11606,24 @@ function flowSet(x,patch){const k=flowKey(x),o={...(flowRunAll()[k]||{}),...patc
 function flowFit(x){const st=flowState(x);if(!st||st.over<=15000)return 0;let need=st.over;const cand=st.steps.filter((o,j)=>j>=Math.max(0,st.i)&&!o.s.fix).map(o=>({o,room:Math.max(0,(o===st.cur?o.b-st.now:o.d)-60000)}));const room=cand.reduce((a,c)=>a+c.room,0);if(!room)return-1;
   const k=flowKey(x),run=flowRunAll()[k]||{};run.adj=run.adj||{};cand.forEach(c=>{const cut=Math.round(Math.min(c.room,need*c.room/room)/1000)*1000;run.adj[c.o.s.id]=(run.adj[c.o.s.id]||0)-cut});flowRunPut(k,run);return Math.min(need,room)}
 function flowBoxHTML(st){if(!st)return"";const{F,cur,i,steps}=st,tot=st.fin-st.st;
+  const endL=`끝 예상 <b data-flfin>${fmtHM(st.fin)}</b> <small>(수업 끝 ${fmtHM(st.end)})</small>`;
+  if(st.wait)return`<div class="flowbox wait${st.over>15000?" warn":""}" data-flowbox><div class="flh"><span class="fln">⏱ ${esc(F.f.n.replace(/\s*\(.*\)$/,""))} · ${steps.length}단계 ${Math.round((st.fin-st.st)/60000)}분</span></div>
+    <div class="flsub"><span>첫 단계 · ${esc(steps[0].s.n)} ${Math.round(steps[0].d/60000)}분</span><span class="flend">지금 시작하면 ${endL}</span>${st.over>15000?`<span class="flw">⚠ 수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</div>
+    <div class="flbtns"><button type="button" class="btn pri flgo" data-flgo="start">▶ 시작</button>${st.over>15000?`<button type="button" class="btn sm" data-flfit>단계 줄여 맞추기</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`;
+  if(st.stopped)return`<div class="flowbox stop" data-flowbox><div class="flh"><span class="fln">■ 수업 흐름 정지 · ${fmtHM(st.stopped)}</span></div>
+    <div class="flbtns"><button type="button" class="btn sm" data-flgo="reset">↺ 처음부터 다시</button><button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`;
   const seg=steps.map((o,j)=>`<i class="${j<i||i<0?"dn":j===i?"on":""}" style="flex:${o.d}"></i>`).join("");
   const nx=i>=0?steps[i+1]:null,warn=st.over>15000;
   return`<div class="flowbox${warn?" warn":""}" data-flowbox>
-    <div class="flh"><span class="fln">${st.before?`⏱ 곧 시작 · ${esc(F.f.steps[0].n)}`:cur?`⏱ ${i+1}/${steps.length} <b>${esc(cur.s.n)}</b>`:"⏱ 수업 흐름 끝"}</span><span class="flt" data-fltime>${st.before?flowFmt(st.st-st.now):cur?flowFmt(st.left):""}</span></div>
+    <div class="flh"><span class="fln">${st.paused?"⏸ ":""}${st.before?`⏱ 곧 시작 · ${esc(F.f.steps[0].n)}`:cur?`⏱ ${i+1}/${steps.length} <b>${esc(cur.s.n)}</b>`:"⏱ 수업 흐름 끝"}${st.paused?` <small class="flpz">일시 정지</small>`:""}</span><span class="flt" data-fltime>${st.before?flowFmt(st.st-st.now):cur?flowFmt(st.left):""}</span></div>
     <div class="flbar">${seg}</div>
     ${(()=>{const sb=cur&&!st.before?flowSubAt(cur,st.now):null;return sb?`<div class="flsubln"><span>▸ ${sb.j+1}/${sb.n} <b>${esc(sb.u.n)}</b>${sb.u.al?" 🔔":""}</span><span class="flsubt" data-flsubt>${flowFmt(sb.b-st.now)}</span>${sb.nx?`<span class="flsubx">다음 · ${esc(sb.nx.n)}</span>`:""}</div>`:""})()}
-    <div class="flsub">${cur&&cur.s.memo?`<span>📝 ${esc(cur.s.memo)}</span>`:""}${nx?`<span>다음 · ${esc(nx.s.n)} ${Math.round(nx.d/60000)}분</span>`:cur?`<span>마지막 단계</span>`:`<span>남은 수업 ${flowFmt(st.end-st.now)}</span>`}${warn?`<span class="flw">⚠ 수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</div>
-    <div class="flbtns">${cur&&cur.s.tool?`<button type="button" class="btn sm fltool" data-fltool>${esc(FLT()[cur.s.tool])} 열기</button>`:""}${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${(i>0||i<0&&!st.before)?`<button type="button" class="btn sm" data-flprev aria-label="이전 단계로">‹ 이전</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 ›</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
+    <div class="flsub">${cur&&cur.s.memo?`<span>📝 ${esc(cur.s.memo)}</span>`:""}${nx?`<span>다음 · ${esc(nx.s.n)} ${Math.round(nx.d/60000)}분</span>`:cur?`<span>마지막 단계</span>`:`<span>남은 수업 ${flowFmt(st.end-st.now)}</span>`}${cur?`<span class="flend">${endL}</span>`:""}${warn?`<span class="flw">⚠ 수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</div>
+    <div class="flbtns">${cur&&cur.s.tool?`<button type="button" class="btn sm fltool" data-fltool>${esc(FLT()[cur.s.tool])} 열기</button>`:""}${warn?`<button type="button" class="btn sm pri" data-flfit>남은 단계 줄여 맞추기</button>`:""}${(i>0||i<0&&!st.before)?`<button type="button" class="btn sm" data-flprev aria-label="이전 단계로">‹ 이전</button>`:""}${cur?`<button type="button" class="btn sm" data-flplus>＋2분</button><button type="button" class="btn sm" data-flnext>다음 ›</button>`:""}${cur&&!st.before?(st.paused?`<button type="button" class="btn sm pri" data-flgo="resume">▶ 이어서</button>`:`<button type="button" class="btn sm" data-flgo="pause">⏸ 일시 정지</button>`)+`<button type="button" class="btn sm" data-flgo="stop">■ 정지</button>`:""}<button type="button" class="btn sm ghost" data-flmore>⋯</button></div></div>`}
 /* 5.79: 이전 단계로 돌아가기 — 그 단계를 지금부터 다시(남은 계획 시간, 없으면 2분), 뒤 단계들은 그만큼 뒤로 */
-function flowBack(x,j){const st=flowState(x);if(!st)return;if(j==null)j=st.i<0?st.steps.length-1:st.i-1;if(j<0||!st.steps[j])return;const o=st.steps[j],base=Math.max(60000,(+o.s.m||0)*60000),R=Math.max(120000,Math.round((base-o.d)/60000)*60000),now=Date.now();
+function flowBack(x,j){const st=flowState(x);if(!st)return;if(j==null)j=st.i<0?st.steps.length-1:st.i-1;if(j<0||!st.steps[j])return;const o=st.steps[j],base=Math.max(60000,(+o.s.m||0)*60000),R=Math.max(120000,Math.round((base-o.d)/60000)*60000),now=st.now;
   if(st.i>=0&&j>st.i)return;flowAdj(x,o.s.id,now+R-o.b);FLAs().prev[flowKey(x)]=j;toast(`${o.s.n}(으)로 돌아갑니다 · ${Math.round(R/60000)}분`);flowTick(1)}
-function flowWire(el,x){const q=s=>el.querySelector(s);
+function flowWire(el,x){const q=s=>el.querySelector(s);el.querySelectorAll("[data-flgo]").forEach(b=>b.onclick=()=>flowGo(x,b.dataset.flgo));
   if(q("[data-flplus]"))q("[data-flplus]").onclick=()=>{const st=flowState(x);if(st&&st.cur){flowAdj(x,st.cur.s.id,120000);toast(`${st.cur.s.n} ＋2분 · 다음 단계가 2분 뒤로`);flowTick(1)}};
   if(q("[data-flprev]"))q("[data-flprev]").onclick=()=>flowBack(x);
   if(q("[data-fltool]"))q("[data-fltool]").onclick=()=>{const st=flowState(x);if(st&&st.cur)flowTool(x,st.i)};
@@ -11524,12 +11637,12 @@ function flowTick(force){if(force)try{if(view==="todo")renderToday()}catch(e){}l
   document.querySelectorAll("[data-flow]").forEach(el=>{if(!x||!st){el.dataset.sig="";el.hidden=!x;if(!x){el.innerHTML="";return}const off=!!(flowRunAll()[flowKey(x)]||{}).off,want=off?"off":"set";if(el.dataset.fl!==want||!el.querySelector("[data-flpick]")){el.dataset.fl=want;el.innerHTML=off?`<button type="button" class="flowset off" data-flpick>⏱ 이 수업은 수업 흐름 꺼짐 <small>눌러서 켜기 · 바꾸기</small></button>`:`<button type="button" class="flowset" data-flpick>⏱ 수업 흐름 정하기 <small>도입 · 전개 · 정리 시간 알림</small></button>`;el.querySelector("[data-flpick]").onclick=()=>off?flowSheet(x):flowPick(x)}return}
     el.dataset.fl="";
     const sb0=st.cur&&!st.before?flowSubAt(st.cur,st.now):null;
-    const sig=[st.F.f.id,st.i,st.over>15000,st.before,JSON.stringify((st.F.run||{}).adj||{}),sb0?sb0.j:-1].join("|");
-    if(force||el.dataset.sig!==sig){el.dataset.sig=sig;el.innerHTML=flowBoxHTML(st);flowWire(el,x)}else{const t=el.querySelector("[data-fltime]");if(t)t.textContent=st.before?flowFmt(st.st-st.now):st.cur?flowFmt(st.left):"";const u=el.querySelector("[data-flsubt]");if(u&&sb0)u.textContent=flowFmt(sb0.b-st.now)}el.hidden=false});
+    const sig=[st.F.f.id,st.i,st.over>15000,st.before,JSON.stringify((st.F.run||{}).adj||{}),sb0?sb0.j:-1,st.wait?"w":"",st.paused?"p":"",st.stopped?"s":"",(st.F.run||{}).pt||0].join("|");
+    if(force||el.dataset.sig!==sig){el.dataset.sig=sig;el.innerHTML=flowBoxHTML(st);flowWire(el,x)}else{const t=el.querySelector("[data-fltime]");if(t)t.textContent=st.wait?"":st.before?flowFmt(st.st-st.now):st.cur?flowFmt(st.left):"";const u=el.querySelector("[data-flsubt]");if(u&&sb0)u.textContent=flowFmt(sb0.b-st.now);const fe=el.querySelector("[data-flfin]");if(fe)fe.textContent=fmtHM(st.fin)}el.hidden=false});
   /* 지금 수업 카드가 안 보일 때(출석 체크 중 등) 아래 작은 표시 */
   let pill=$("flPill");const heroOn=[...document.querySelectorAll(".nowhero")].some(h=>!h.hidden&&h.querySelector("[data-flowbox]"));
-  if(st&&st.cur&&!heroOn&&!st.before){if(!pill){pill=document.createElement("button");pill.type="button";pill.id="flPill";pill.className="flpill";document.body.appendChild(pill)}pill.hidden=false;pill.classList.toggle("warn",st.over>15000);pill.innerHTML=`⏱ <span>${esc(st.cur.s.n)}</span> <b>${flowFmt(st.left)}</b>`;pill.onclick=()=>flowSheet(x)}else if(pill)pill.hidden=true;
-  if(!st||!st.cur||st.before){flowWake(false);return}flowWake(true);try{rlFlowPend(x)}catch(e){}
+  if(st&&st.cur&&!heroOn&&!st.before){if(!pill){pill=document.createElement("button");pill.type="button";pill.id="flPill";pill.className="flpill";document.body.appendChild(pill)}pill.hidden=false;pill.classList.toggle("warn",st.over>15000);pill.innerHTML=`${st.paused?"⏸":"⏱"} <span>${esc(st.cur.s.n)}</span> <b>${flowFmt(st.left)}</b>`;pill.onclick=()=>flowSheet(x)}else if(pill)pill.hidden=true;
+  if(!st||!st.cur||st.before){flowWake(false);return}flowWake(true);if(st.paused)return;try{rlFlowPend(x)}catch(e){}
   const k=flowKey(x),pv=FLAs().prev[k];
   if(pv==null){FLAs().prev[k]=st.i;return}
   /* 5.83: 세부 과정이 바뀔 때 — 알림을 고른 세부 과정만 알림(첫 세부 과정은 단계 시작 알림과 같아 뺌) */
@@ -11596,21 +11709,25 @@ function flowSheet(x,back){let demo=null;const close=()=>{if(demo){clearInterval
       ${!F?`<p class="note">이 수업에 쓸 틀이 없습니다. 틀을 고르면 ${live?"바로":"수업 시작 시각에"} 시작합니다.</p><div class="row2"><button class="btn pri" type="button" id="flChg">틀 고르기</button></div>`
       :`<div class="flcur${off?" off":""}"><div><small>${esc(flowSrcL(F,x))}</small><b>${esc(F.f.n)}</b><small>${F.f.steps.length}단계 · 합계 ${Math.round((st.fin-st.st)/60000)}분${st.over>15000?` · <span class="flw">수업 끝을 ${Math.ceil(st.over/60000)}분 넘음</span>`:""}</small></div></div>
       <div class="flacts"><button class="btn sm" type="button" id="flChg">틀 바꾸기</button><button class="btn sm" type="button" id="flMine">이 수업만 고치기</button><button class="btn sm" type="button" id="flTpl">${F.f.custom||String(F.f.id).startsWith("b:")?"내 틀로 저장해 고치기":"틀 고치기"}</button></div>
-      <div class="flsteps${off?" off":""}">${st.steps.map((o,j)=>{const on=live&&!off&&j===st.i,ctl=live&&!off,past=live&&!off&&(st.i<0||j<st.i);return`<div class="flsr${on?" on":live&&!off&&(j<st.i||st.i<0)?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}${(o.s.subs||[]).length?`<small class="flsubs2">${(()=>{const sb=on?flowSubAt(o,Date.now()):null;return o.s.subs.map((u,q)=>`<span class="${sb&&sb.j===q?"on":""}">${esc(u.n)} ${u.m}분${u.al?" 🔔":""}</span>`).join("")})()}</small>`:""}${o.s.tool?`<button type="button" class="fltb" data-fltl="${j}">${esc(FLT()[o.s.tool])} 열기</button>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(run.adj&&run.adj[o.s.id])?` <small>(${run.adj[o.s.id]>0?"＋":""}${Math.round(run.adj[o.s.id]/60000)})</small>`:""}</span>${ctl?`<span class="flsb">${past?`<button type="button" class="btn sm flbkb" data-flbk="${j}" aria-label="${esc(o.s.n)}(으)로 돌아가기">↩ 돌아가기</button>`:`<button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button>`}</span>`:""}</div>`}).join("")}</div>
+      <div class="flsteps${off?" off":""}">${st.steps.map((o,j)=>{const run2=live&&!off&&!st.wait&&!st.stopped,on=run2&&j===st.i,ctl=run2,past=run2&&(st.i<0||j<st.i);return`<div class="flsr${on?" on":run2&&(j<st.i||st.i<0)?" dn":""}"><span class="flst">${fmtHM(o.a)}</span><b>${esc(o.s.n)}${o.s.fix?` <small class="flfix">꼭 지킴</small>`:""}${o.s.memo?`<small>${esc(o.s.memo)}</small>`:""}${(o.s.subs||[]).length?`<small class="flsubs2">${(()=>{const sb=on?flowSubAt(o,Date.now()):null;return o.s.subs.map((u,q)=>`<span class="${sb&&sb.j===q?"on":""}">${esc(u.n)} ${u.m}분${u.al?" 🔔":""}</span>`).join("")})()}</small>`:""}${o.s.tool?`<button type="button" class="fltb" data-fltl="${j}">${esc(FLT()[o.s.tool])} 열기</button>`:""}</b><span class="flsm">${Math.round(o.d/60000)}분${(run.adj&&run.adj[o.s.id])?` <small>(${run.adj[o.s.id]>0?"＋":""}${Math.round(run.adj[o.s.id]/60000)})</small>`:""}</span>${ctl?`<span class="flsb">${past?`<button type="button" class="btn sm flbkb" data-flbk="${j}" aria-label="${esc(o.s.n)}(으)로 돌아가기">↩ 돌아가기</button>`:`<button type="button" class="btn sm" data-fla="${esc(o.s.id)}|-60000" aria-label="1분 줄이기">−1</button><button type="button" class="btn sm" data-fla="${esc(o.s.id)}|60000" aria-label="1분 늘리기">＋1</button>`}</span>`:""}</div>`}).join("")}</div>
       ${live&&!off?`<p class="note">지난 단계는 <b>↩ 돌아가기</b>로 그 단계를 지금부터 다시 하고, 돌아간 뒤에는 −1 · ＋1로 그 단계 시간을 고칩니다. 뒤 단계는 그만큼 밀리거나 당겨집니다.</p>`:""}
-      ${live&&!off?`<div class="row2">${st.over>15000?`<button class="btn pri" type="button" id="flFit">남은 단계 줄여 수업 끝에 맞추기</button>`:""}<button class="btn" type="button" id="flNow">지금부터 다시 시작</button></div>`:""}
+      ${live&&!off?`<p class="flendl">${st.wait?"지금 시작하면 ":st.stopped?"정지함 · ":""}끝 예상 <b>${fmtHM(st.fin)}</b> · 수업 끝 ${fmtHM(st.end)}${st.paused?" · ⏸ 일시 정지 중":""}</p><div class="row2 flctl">${st.wait?`<button class="btn pri" type="button" data-flgo="start">▶ 시작</button>`:st.stopped?`<button class="btn" type="button" data-flgo="reset">↺ 처음부터 다시</button>`:`${st.paused?`<button class="btn pri" type="button" data-flgo="resume">▶ 이어서</button>`:`<button class="btn" type="button" data-flgo="pause">⏸ 일시 정지</button>`}<button class="btn" type="button" data-flgo="stop">■ 정지</button>`}</div>
+      <div class="row2">${st.over>15000?`<button class="btn pri" type="button" id="flFit">남은 단계 줄여 수업 끝에 맞추기</button>`:""}${st.wait?"":`<button class="btn" type="button" id="flNow">지금부터 다시 시작</button>`}</div>`:""}
+      <div class="flsw"><span>시작 방법 <small>(모든 수업)</small></span><div class="seg2 sm" role="group" aria-label="수업 흐름 시작 방법"><button type="button" data-flam="btn" aria-pressed="${!flowAuto()}">▶ 단추로</button><button type="button" data-flam="auto" aria-pressed="${flowAuto()}">수업 시각에</button></div></div>
       <div class="shlb">미리 확인</div><div class="fldemo" id="flDemo" hidden></div>
       <div class="row2"><button class="btn" type="button" id="flSim">▶ 미리 돌려 보기 <small>1분 = 1초</small></button><button class="btn" type="button" id="flBell">🔔 알림 시험</button></div>
       ${flCapHTML()}
-      <p class="note">${off?"꺼 두면 이 수업에서는 알리지 않습니다. 다른 수업은 그대로입니다.":live?"단계 끝나기 1분 전과 단계가 바뀔 때 알립니다.":`수업 시작 시각(${esc(x.start)})에 저절로 시작합니다. 휴대폰에서 진동 · 소리가 나는지 ‘알림 시험’으로 미리 확인하세요.`}</p>`}
+      <p class="note">${off?"꺼 두면 이 수업에서는 알리지 않습니다. 다른 수업은 그대로입니다.":live?"단계 끝나기 1분 전과 단계가 바뀔 때 알립니다.":`${flowAuto()?`수업 시작 시각(${esc(x.start)})에 저절로 시작합니다`:"수업 시간에 지금 수업 카드의 <b>▶ 시작</b>을 누르면 시작합니다"}. 휴대폰에서 진동 · 소리가 나는지 ‘알림 시험’으로 미리 확인하세요.`}</p>`}
       <div class="row2"><button class="btn ghost" type="button" id="flMgr">틀 관리</button><button class="btn pri" type="button" id="skNo">${back?"돌아가기":"닫기"}</button></div>`;
     $("sheet").hidden=false;$("skNo").onclick=close;
     $("sheetBox").querySelectorAll("[data-flsw]").forEach(b=>b.onclick=()=>{const v=b.dataset.flsw==="off";flowSet(x,{off:v||null});FLAs().prev[flowKey(x)]=null;toast(v?"이 수업은 수업 흐름을 껐습니다":"이 수업에 수업 흐름을 켰습니다");paint();flowTick(1)});
+    $("sheetBox").querySelectorAll("[data-flgo]").forEach(b=>b.onclick=()=>{flowGo(x,b.dataset.flgo);paint()});
+    $("sheetBox").querySelectorAll("[data-flam]").forEach(b=>b.onclick=()=>{const a=b.dataset.flam==="auto";S.flowCfg={...(S.flowCfg||{}),auto:a||undefined};if(!a)delete S.flowCfg.auto;save();toast(a?"수업 시작 시각에 저절로 시작합니다":"▶ 시작을 눌러야 시작합니다");paint();flowTick(1)});
     $("sheetBox").querySelectorAll("[data-fla]").forEach(b=>b.onclick=()=>{const[id,ms]=b.dataset.fla.split("|");flowAdj(x,id,+ms);paint();flowTick(1)});
     $("sheetBox").querySelectorAll("[data-flbk]").forEach(b=>b.onclick=()=>{flowBack(x,+b.dataset.flbk);paint()});
     $("sheetBox").querySelectorAll("[data-fltl]").forEach(b=>b.onclick=e=>{e.stopPropagation();flowTool(x,+b.dataset.fltl)});
     if($("flFit"))$("flFit").onclick=()=>{const r=flowFit(x);toast(r>0?`${Math.ceil(r/60000)}분 줄여 맞췄습니다`:"줄일 수 있는 단계가 없습니다");paint();flowTick(1)};
-    if($("flNow"))$("flNow").onclick=()=>{flowSet(x,{st:Date.now(),adj:null});FLAs().prev[flowKey(x)]=null;toast("지금부터 첫 단계를 시작합니다");paint();flowTick(1)};
+    if($("flNow"))$("flNow").onclick=()=>{flowSet(x,{st:Date.now(),adj:null,pt:null,pz:null,stop:null});FLAs().prev[flowKey(x)]=null;toast("지금부터 첫 단계를 시작합니다");paint();flowTick(1)};
     $("flChg").onclick=()=>flowPick(x,()=>flowSheet(x,back));
     if($("flMine"))$("flMine").onclick=()=>{const F=flowOf(x,true);flowEdit({n:F.f.custom?F.f.n:F.f.n.replace(/\s*\(.*\)$/,"")+" · 이 수업",steps:F.f.steps.map(s=>({...s}))},()=>flowSheet(x,back),true,{lesson:x})};
     if($("flTpl"))$("flTpl").onclick=()=>{const F=flowOf(x,true),own=!F.f.custom&&!String(F.f.id).startsWith("b:");
@@ -11816,8 +11933,8 @@ function renderRlSet(){const el=$("rlBody");if(!el)return;const on=rlOn(),L=rlAl
   $("rlSus").onclick=rlSus;$("rlXl").onclick=rlExport;$("rlCol").onclick=rlSusCollect;$("rlSend").onclick=()=>rlSusSend(rlAll().filter(r=>r.k==="sus"),"설문 결과 보내기");
   if(!$("rlDel").disabled)twoStep($("rlDel"),"정말 모두 지우기",()=>{try{localStorage.removeItem("att-app-rlog");localStorage.removeItem("att-app-rlfp")}catch(e){}renderRlSet();toast("연구 기록을 모두 지웠습니다")})}
 /* 수업 흐름 · 관찰 단추 누르기를 한곳에서 기록 */
-document.addEventListener("click",e=>{if(!rlOn())return;const t=e.target&&e.target.closest&&e.target.closest("[data-flplus],[data-flnext],[data-flprev],[data-flfit],[data-fla],[data-flbk],[data-flsw],#flNow,#flFit,#flUse,#flSim,#flBell,[data-fltool],[data-fltl],#flMine,#flTpl,#flChg");if(!t)return;
-  const a=t.matches("[data-flplus]")?"＋2분":t.matches("[data-flnext]")?"다음":t.matches("[data-flprev]")?"이전":t.matches("[data-flfit],#flFit")?"남은 단계 맞추기":t.matches("[data-fla]")?(t.dataset.fla.endsWith("|-60000")?"−1분":"＋1분"):t.matches("[data-flbk]")?"돌아가기":t.matches("[data-flsw]")?(t.dataset.flsw==="off"?"끄기":"켜기"):t.id==="flNow"?"지금부터 다시":t.id==="flUse"?"틀 고름":t.id==="flSim"?"미리 돌려 보기":t.id==="flBell"?"알림 시험":t.matches("[data-fltool],[data-fltl]")?"도구 열기":t.id==="flMine"?"이 수업만 고치기":t.id==="flTpl"?"틀 고치기":"틀 바꾸기";rl("flow",{a})},true);
+document.addEventListener("click",e=>{if(!rlOn())return;const t=e.target&&e.target.closest&&e.target.closest("[data-flgo],[data-flam],[data-flplus],[data-flnext],[data-flprev],[data-flfit],[data-fla],[data-flbk],[data-flsw],#flNow,#flFit,#flUse,#flSim,#flBell,[data-fltool],[data-fltl],#flMine,#flTpl,#flChg");if(!t)return;
+  const a=t.matches("[data-flgo]")?({start:"시작",pause:"일시 정지",resume:"이어서",stop:"정지",reset:"처음부터 다시"}[t.dataset.flgo]||"시작"):t.matches("[data-flam]")?(t.dataset.flam==="auto"?"시작 방법: 수업 시각":"시작 방법: 단추"):t.matches("[data-flplus]")?"＋2분":t.matches("[data-flnext]")?"다음":t.matches("[data-flprev]")?"이전":t.matches("[data-flfit],#flFit")?"남은 단계 맞추기":t.matches("[data-fla]")?(t.dataset.fla.endsWith("|-60000")?"−1분":"＋1분"):t.matches("[data-flbk]")?"돌아가기":t.matches("[data-flsw]")?(t.dataset.flsw==="off"?"끄기":"켜기"):t.id==="flNow"?"지금부터 다시":t.id==="flUse"?"틀 고름":t.id==="flSim"?"미리 돌려 보기":t.id==="flBell"?"알림 시험":t.matches("[data-fltool],[data-fltl]")?"도구 열기":t.id==="flMine"?"이 수업만 고치기":t.id==="flTpl"?"틀 고치기":"틀 바꾸기";rl("flow",{a})},true);
 /* 지금 수업 카드 · 학생 화면에 쓰는 짧은 표시 */
 function pnHint(cl,subj,date,x){const p=pnFind(subj,cl);if(!p)return"";const T=lessonToday(cl,subj,date||today(),x||{}),P=lessonPrev(cl,subj,date||today(),x||{});
   return T?`📘 ${T.done?"✓ ":"오늘 "}${T.code}${P&&P.code?` · 지난 ${P.code}`:""}`:""}
