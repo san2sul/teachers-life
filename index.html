@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.88.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.88.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.88.1",date:"2026-11-03",items:["결석 학생 연락에서 ‘연락 제외’한 학생이 출석부(격자 보기) 칸에 ‘연락됨’으로 보이던 것 고침 — ‘결석 · 연락 제외’로 표시(목록 보기는 이미 ‘연락 제외’)"]},
   {v:"5.88.0",date:"2026-11-03",items:["출석 체크 시각 기록: 출석부 학생 칸을 누른 시각을 칸에 표시(격자: 칸 아래 HH:MM, 목록: ‘HH:MM 결석 체크’). 결석 구분(지각 · 조퇴 등) · 전원 출석 · 전원 결석도 학생마다 시각을 남김", "출석부 위 ‘🕒 기록’: 그 출석 체크에서 누른 기록을 초 단위로(최근 것부터, 학생 · 출석/결석) — 출결 확인이 필요할 때 보여 줄 수 있음. 휴대폰 · 컴퓨터를 함께 쓰면 기록을 합쳐 보관"]},
   {v:"5.87.2",date:"2026-11-03",items:["출석부 학생 칸을 길게 눌러(또는 오늘 · 시간표 · 기록 등 다른 화면에서) 학생 정보로 들어가면 맨 위에 ‘‹ 출석(으)로’처럼 돌아가는 단추 — 누르면 보던 화면 · 위치로 돌아감(전에는 학생 목록으로만 갈 수 있었음)"]},
   {v:"5.87.1",date:"2026-11-03",items:["수업 메모의 진도 목록에서 누른 차시가 ‘실제 · 이 수업’ 진도에 반영되지 않던 것 고침: 다른 날 수업에 기록된 차시(반만 · 마침)를 이 수업 메모에서 누르면 그 기록을 이 수업 진도로 옮김(되돌리기 가능). 이미 눌린 상태로 보이는 차시를 다시 눌러도 이 수업으로"]},
@@ -2612,7 +2613,7 @@ function renderAtt(){try{snAllPaint()}catch(e){}try{renderSesBin()}catch(e){}
     if(list.length>MAXD)dots+=`<span class="n">…</span>`;
     const row=document.createElement("div");row.className="st"+(on?" on":"")+(AV==="grid"?" tile":"");row.setAttribute("role","switch");row.setAttribute("aria-checked",on);row.tabIndex=0;
     row.setAttribute("aria-label",`${name} ${sesName(s)} ${on?"출석":"결석"}`);
-    if(AV==="grid")row.innerHTML=`<span class="no">${i+1}</span><span class="tnm">${esc(name)}${lowTag(id)}</span><span class="tst">${on?"출석":""}${on?"":!isDone(s,id)?((s.ak||{})[id]||"결석"):((s.ak||{})[id]||"결석")+" · 연락됨"}</span>${(s.tm||{})[id]?`<span class="ttm">${attHM(s.tm[id])}</span>`:""}`;
+    if(AV==="grid")row.innerHTML=`<span class="no">${i+1}</span><span class="tnm">${esc(name)}${lowTag(id)}</span><span class="tst">${on?"출석":""}${on?"":!isDone(s,id)?((s.ak||{})[id]||"결석"):((s.ak||{})[id]||"결석")+(isSkip(s,id)?" · 연락 제외":" · 연락됨")}</span>${(s.tm||{})[id]?`<span class="ttm">${attHM(s.tm[id])}</span>`:""}`;
     else row.innerHTML=`<span class="no">${i+1}</span><span class="nm">${esc(name)}${lowTag(id)}${snLine(id)}<small>${esc(id)}${(s.tm||{})[id]?` · <span class="ttm2">${attHM(s.tm[id])} ${on?"출석":"결석"} 체크</span>`:""}${!on&&isDone(s,id)?(isSkip(s,id)?' <b class="dtag dx">연락 제외</b>':' <b class="dtag">연락 완료</b>'):""}</small><span class="dots">${dots}<span class="n">${selDate===today()?"오늘":"이날"} ${n}/${list.length}</span></span></span>
       <span class="sw"><span class="knob"></span><span class="lab">${on?"출석":((s.ak||{})[id]||"결석")}</span></span>`;
     const tg=()=>{if(s.lock){lockNudge();return}if(s.p[id]){delete s.p[id];attStamp(s,id,"결석")}else{s.p[id]=true;if(s.ak)delete s.ak[id];if(s.ar)delete s.ar[id];attStamp(s,id,"출석")}save();renderAtt();renderNav()};
