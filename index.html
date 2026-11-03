@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.90.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.90.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.90.1",date:"2026-11-03",items:["출석 체크 시각 · 🕒 체크 기록(5.88)이 앱을 다시 열면 사라지던 것 고침 — 앱을 열 때 출석 체크 자료를 정리하는 과정에서 새 항목이 빠지고 있었음(자료 점검에서 발견)"]},
   {v:"5.90.0",date:"2026-11-03",items:["진도 기록 기본값을 ‘직접 입력’으로: 교사가 출석부 📘에서 그 수업의 차시를 고름. 자동 기록은 진도 현황에서 켤 때만(5.88~5.89에서 고르지 않고 자동이던 것은 직접 입력으로 돌림)", "수업마다 따로 남는 진도 기록: 한 차시를 두 수업에 나눠 하면(월 반만 → 수 마침) 두 수업 기록이 모두 남음. 현황 · 다음 차시는 가장 최근 기록, 수업 진도 기록부(엑셀)에는 수업마다 한 줄. 진도 목록의 마침 · 반만 · 안 함은 그 수업 기록만 바꾸고 다른 날 기록은 글로 보임. 예전 기록은 그대로", "진도 현황에 ‘수업별 진도 기록’ 표: 한 주의 이 교과 수업을 반 · 날짜마다 한 줄씩, ‘✓ 계획 차시 마침’(되돌리기) · ‘고치기’(수업 메모와 같은 진도 목록)로 한 곳에서 기록 · 조정, ‹ › 주 이동"]},
   {v:"5.89.0",date:"2026-11-03",items:["출석부에서 진도 기록 · 고치기: 출석 체크 화면 📘 줄의 ‘진도 펼치기 ▾’를 누르면 수업 메모와 같은 진도 목록(계획 · 실제 비교, 차시마다 마침 · 반만 · 안 함, ✎ 직접 입력, 진도표에 없는 차시 넣기, ↺ 바로잡기, ↪ 이 수업으로)이 출석부 안에 펼쳐짐. 펼침 상태는 이 기기에 기억, ‘진도 접기 ▴’로 짧은 줄(✓ 마침 · 반만 함)로", "진도표가 있는 수업은 출석부 수업 메모의 ‘진도’ 칸을 📘 진도로 합침(같은 내용을 두 곳에서 따로 고치지 않게)", "수업 메모 창과 출석부의 진도 목록을 함께 열어도 서로 섞이지 않게 고침"]},
   {v:"5.88.1",date:"2026-11-03",items:["결석 학생 연락에서 ‘연락 제외’한 학생이 출석부(격자 보기) 칸에 ‘연락됨’으로 보이던 것 고침 — ‘결석 · 연락 제외’로 표시(목록 보기는 이미 ‘연락 제외’)"]},
@@ -2209,7 +2210,7 @@ function today(){return ymd(new Date())}
 function nowHM(){const d=new Date();return `${pad(d.getHours())}:${pad(d.getMinutes())}`}
 function addDays(s,n){const[y,m,d]=s.split("-").map(Number);return ymd(new Date(y,m-1,d+n))}
 const sesOk=s=>s&&typeof s==="object"&&/^\d{4}-\d{2}-\d{2}$/.test(s.date||"");
-function sesNorm(s){return {id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(cleanDx(s.dx,s.done)?{dx:cleanDx(s.dx,s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{}),...(s.edAt?{edAt:+s.edAt}:{})}}
+function sesNorm(s){return {id:String(s.id||uid()),date:s.date,time:/^\d{2}:\d{2}$/.test(s.time||"")?s.time:"",label:String(s.label||""),p:cleanP(s.p),...(s.lock?{lock:true,lockAt:+s.lockAt||0}:{}),...(s.src?{src:String(s.src)}:{}),...(s.slot?{slot:String(s.slot)}:{}),...(s.manual?{manual:true}:{}),...(s.off?{off:true,offWhy:String(s.offWhy||"휴강").slice(0,10)}:{}),...(cleanDone(s.done)?{done:cleanDone(s.done)}:{}),...(cleanDx(s.dx,s.done)?{dx:cleanDx(s.dx,s.done)}:{}),...(akClean(s.ak,AK_K)?{ak:akClean(s.ak,AK_K)}:{}),...(akClean(s.ar,AK_R)?{ar:akClean(s.ar,AK_R)}:{}),...(s.edAt?{edAt:+s.edAt}:{}),...(s.tm&&typeof s.tm==="object"&&Object.keys(s.tm).length?{tm:Object.fromEntries(Object.entries(s.tm).filter(([k,v])=>k&&+v>0).map(([k,v])=>[String(k),+v]))}:{}),...(Array.isArray(s.lg)&&s.lg.length?{lg:s.lg.filter(x=>Array.isArray(x)&&x[0]&&+x[2]>0).map(x=>[String(x[0]),String(x[1]||"").slice(0,10),+x[2]]).slice(-400)}:{})}}
 function fresh(){return{v:3,cls:"",roster:[],phones:{},emails:{},teachers:[],msg:DEFAULT_MSG,sessions:[]}}
 const EMAIL_RE=/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/;
 function isEmail(v){return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(String(v||"").trim())}
