@@ -1657,7 +1657,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
       <div class="presets sesslots" id="sesSlots" hidden></div>
     </details>
     <div class="attbar">
-      <div class="attbtns"><button class="btn sm" id="allIn" type="button">전원 출석</button><button class="btn sm bad" id="allOut" type="button">전원 결석</button><button class="btn sm" id="attLog" type="button" aria-label="출석 체크 기록(누른 시각)">🕒 기록</button><button class="btn sm" id="ctBtn" type="button" aria-label="수업 도구 (타이머 · 뽑기 · 모둠)">🧰 도구</button>
+      <div class="attbtns"><button class="btn sm" id="allIn" type="button">전원 출석</button><button class="btn sm bad" id="allOut" type="button">전원 결석</button><button class="btn sm" id="attLog" type="button" aria-label="앱 조작 기록(누른 시각 · 공식 증빙 아님)">🕒 기록</button><button class="btn sm" id="ctBtn" type="button" aria-label="수업 도구 (타이머 · 뽑기 · 모둠)">🧰 도구</button>
         <span class="vseg" role="group" aria-label="명단 보기"><button type="button" data-av="grid" aria-label="격자로 보기">▦</button><button type="button" data-av="list" aria-label="목록으로 보기">☰</button></span></div></div>
     <div class="pnbar" id="pnBar" hidden></div>
   </div>
@@ -2026,7 +2026,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.91.0", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.91.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2038,6 +2038,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.91.1",date:"2026-11-03",items:["수업 맞바꾸기를 하면 진도 기록이 꼬이던 것 고침(새 연계 검사에서 발견): 다른 반 수업과 맞바꾸면 그 반의 진도 기록이 옮겨지지 않았고, 한 차시를 두 수업에 나눠 한 반에서 그 두 수업을 맞바꾸면 두 기록이 한 수업으로 겹쳤음 — 이제 모든 자리를 다 옮긴 뒤 한 번에 정리", "백업 파일로 ‘바꾸기’를 하면 교직원 연락처가 새 번호로 다시 만들어져, 기기 연동 때 같은 사람이 둘로 겹칠 수 있던 것 고침(새 보존 검사에서 발견)", "🕒 출석 기록을 ‘앱 조작 기록’으로: 앱에서 누른 시각(이 기기 시계 기준)이며 실제 출결 확인 시각과 다를 수 있고 공식 출결 증빙이 아님을 안내(공식 출결은 나이스)", "자동 시험 2개 추가: 자료 보존 검사(실제와 비슷한 자료 전체를 저장 → 다시 열기 → 백업 → 복원 → 다른 기기 동기화 → 두 기기 합치기까지 통째로 비교) · 나눠 한 차시 진도 × 수업 옮기기 · 맞바꾸기 · 취소"]},
   {v:"5.91.0",date:"2026-11-03",items:["안정화 1차(논리 점검 보고서 ‘높음’ + 자료 점검): 학사일정의 여러 날 행사가 끝날까지 기간 일정으로 들어가 그 기간 날마다 보임(전에 넣은 ‘(~날짜)’ 행사도 저절로 바뀜)", "백업 알림 띠가 출석 칸을 가리지 않도록 출석부를 쓰는 동안에는 띄우지 않고, 벗어난 뒤에 보여 줌", "시간표 칸 메모의 진도: 진도 목록 대신 이 수업 진도 요약과 ‘출석부에서 기록’ · ‘진도 현황에서 고치기’ 바로가기(기록은 출석부, 모아 고치기는 진도 현황)", "출석부 ‘진도 펼치기’는 아래에서 올라오는 창으로 — 출석 칸을 밀어내지 않고 늘 접힌 채 시작", "직접 쓴 진도 글에 이 수업에 기록된 차시가 없으면 알림 + ‘기록대로 글 바꾸기’(되돌리기 가능)", "학년도 보관에 진도표(진도 기록 포함) · 과제를 함께 옮기고, 수업 흐름 틀은 사본만, 생활 기록은 ‘함께 보관’을 켤 때만", "기분 일기 · 문구 템플릿 · 과제 안내 템플릿 · 보고 있는 기간도 구글 동기화와 백업 파일에 들어감(학교 관리 원본 · 사진 · 녹음은 계속 그 기기에만)", "안정화 2차(보통): 수업 설정을 한 곳에 — ⚙ 설정 → 수업(진도 기록 · 수업 흐름 시작 · 화면 켜 두기 · 녹음 단축어 이름), 진도 현황 · 수업 흐름 창의 ‘⚙ 수업 설정’으로 바로", "오늘 화면: ‘지금 수업’ 카드가 보이면 오늘 수업 목록의 그 줄은 짧게(진도 · 흐름은 카드에서), 할 일 보내기 · 알림 확인은 접어 둠(알림 켜짐 · 꺼짐 표시)", "시간표 칸 메모에 ‘출석부 수업 메모와 같은 기록’ 안내", "학생 창: 출석부 · 오늘 · 시간표 · 쓰던 기록에서 학생을 열면 화면을 옮기지 않고 그 위에 학생 창 — 닫으면 보던 화면 · 위치 · 쓰던 글 그대로(아래 메뉴는 그대로)", "지우기 방식 하나로: 되돌릴 수 있는 지우기는 한 번 눌러 바로 지우고 아래 ‘되돌리기’(8초), 되돌릴 수 없는 것(초기화 · 파일 · 학교 원본 · 코드 등)만 두 번 누르기", "숨은 동작 안내: 밀기 · 길게 누르기를 처음 한 번 화면 아래에 💡로 알려 줌, 컴퓨터에서는 목록 줄을 오른쪽 클릭해도 밀기 단추가 열림", "안정화 3차(낮음): 용어 정리 — 두 수업 자리 바꾸기는 ‘맞바꾸기’, 학사일정은 ‘요일 바꾸기’(예전 양식의 ‘요일 교체’도 읽음), 창 안에서 돌아가는 단추는 ‘‹ 이전으로’, 진도의 자유 글 칸은 ‘✎ 글로 쓰기’"]},
   {v:"5.90.1",date:"2026-11-03",items:["출석 체크 시각 · 🕒 체크 기록(5.88)이 앱을 다시 열면 사라지던 것 고침 — 앱을 열 때 출석 체크 자료를 정리하는 과정에서 새 항목이 빠지고 있었음(자료 점검에서 발견)"]},
   {v:"5.90.0",date:"2026-11-03",items:["진도 기록 기본값을 ‘직접 입력’으로: 교사가 출석부 📘에서 그 수업의 차시를 고름. 자동 기록은 진도 현황에서 켤 때만(5.88~5.89에서 고르지 않고 자동이던 것은 직접 입력으로 돌림)", "수업마다 따로 남는 진도 기록: 한 차시를 두 수업에 나눠 하면(월 반만 → 수 마침) 두 수업 기록이 모두 남음. 현황 · 다음 차시는 가장 최근 기록, 수업 진도 기록부(엑셀)에는 수업마다 한 줄. 진도 목록의 마침 · 반만 · 안 함은 그 수업 기록만 바꾸고 다른 날 기록은 글로 보임. 예전 기록은 그대로", "진도 현황에 ‘수업별 진도 기록’ 표: 한 주의 이 교과 수업을 반 · 날짜마다 한 줄씩, ‘✓ 계획 차시 마침’(되돌리기) · ‘고치기’(수업 메모와 같은 진도 목록)로 한 곳에서 기록 · 조정, ‹ › 주 이동"]},
@@ -4386,9 +4387,12 @@ function mvApply(t,pairs){let n=0;const nk=o=>noteKey(t,o.d,o.p,o.date),sk=o=>`$
   pairs.forEach(([f])=>{delete S.notes[nk(f)];delete fr[f.date+"|"+sk(f)]});
   pairs.forEach(([,to],i)=>{const v=snap[i],r=ttRows(t,to.date).find(z=>z.p===to.p);
     if(v.note){S.notes[nk(to)]={...v.note,date:to.date,period:to.p};n++}
-    v.pg.forEach(e=>{e.k=nk(to);e.d=to.date;n++});if(v.pg.length)(S.plans||[]).forEach(pl=>Object.values(pl.pg||{}).forEach(g=>Object.keys(g).forEach(ch=>{const q=pnPack(pnEnts(g[ch]));if(q)g[ch]=q})));
+    v.pg.forEach(e=>{e.k=nk(to);e.d=to.date;n++});
     v.ses.forEach(x=>{x.date=to.date;x.src=sk(to);if(r)x.time=r.start;if(x.label)x.label=String(x.label).replace(/^\d+교시/,to.p+"교시");n++});
     if(v.flow)fr[to.date+"|"+sk(to)]=v.flow});
+  /* 5.91.1: 진도 기록은 모든 자리를 다 옮긴 뒤 한 번에 다시 정리 — 전에는 자리마다 정리하면서 기록을 새로 만들어,
+     맞바꾸기에서 두 번째 자리의 기록이 옮겨지지 않거나(다른 반) 두 기록이 한 수업으로 겹쳤음(같은 반 · 한 차시를 나눠 한 경우) */
+  if(snap.some(v=>v.pg.length))(S.plans||[]).forEach(pl=>Object.values(pl.pg||{}).forEach(g=>Object.keys(g).forEach(ch=>{const q=pnPack(pnEnts(g[ch]));if(q)g[ch]=q})));
   return n}
 function mvSwap(t,A,B){return mvApply(t,[[A,B],[B,A]])}
 /* 이 자리에 남은 기록(출석 체크 · 메모 · 진도표) 수 — 그 수업을 휴강으로 대체할 수 있는지 */
@@ -8293,8 +8297,9 @@ function restoreReplace(b){
   const p=b.raw,used=new Set(),old=S;
   const list=b.classes.map(x=>{let id=x._id&&!used.has(String(x._id))?String(x._id):uid();used.add(id);return{id,data:normalize(x)}});
   if(!list.length)list.push({id:uid(),data:fresh()});
-  S={active:list[0].id,list,staff:[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],plans:Array.isArray(p.plans)?p.plans.filter(x=>x&&x.id&&x.subj):(S.plans||[]),flows:Array.isArray(p.flows)?p.flows.filter(x=>x&&x.id&&Array.isArray(x.steps)):(S.flows||[]),flowSub:p.flowSub&&typeof p.flowSub==="object"?p.flowSub:(S.flowSub||{}),flowRun:p.flowRun&&typeof p.flowRun==="object"?p.flowRun:(S.flowRun||{}),flowCfg:p.flowCfg&&typeof p.flowCfg==="object"?p.flowCfg:(S.flowCfg||{}),pnCfg:p.pnCfg&&typeof p.pnCfg==="object"?p.pnCfg:(S.pnCfg||{}),pnAuto:p.pnAuto&&typeof p.pnAuto==="object"?p.pnAuto:(S.pnAuto||{}),links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[],sheets:Array.isArray(p.sheets)?p.sheets.filter(x=>x&&x.id&&x.t&&Array.isArray(x.items)):(S.sheets||[])};
-  mergeStaff(p.staff);
+  S={active:list[0].id,list,staff:Array.isArray(p.staff)?p.staff.filter(x=>x&&x.name).map(x=>({...x,id:String(x.id||uid())})):[],tt:p.tt||{list:[],active:""},notes:p.notes&&typeof p.notes==="object"?{...p.notes}:{},events:Array.isArray(p.events)?p.events.slice():[],evals:Array.isArray(p.evals)?p.evals.slice():[],obsTags:p.obsTags||undefined,tasks:Array.isArray(p.tasks)?p.tasks.filter(t=>t&&t.id&&t.n&&Array.isArray(t.cls)):[],recs:Array.isArray(p.recs)?p.recs.filter(r=>r&&r.id&&r.k):[],plans:Array.isArray(p.plans)?p.plans.filter(x=>x&&x.id&&x.subj):(S.plans||[]),flows:Array.isArray(p.flows)?p.flows.filter(x=>x&&x.id&&Array.isArray(x.steps)):(S.flows||[]),flowSub:p.flowSub&&typeof p.flowSub==="object"?p.flowSub:(S.flowSub||{}),flowRun:p.flowRun&&typeof p.flowRun==="object"?p.flowRun:(S.flowRun||{}),flowCfg:p.flowCfg&&typeof p.flowCfg==="object"?p.flowCfg:(S.flowCfg||{}),pnCfg:p.pnCfg&&typeof p.pnCfg==="object"?p.pnCfg:(S.pnCfg||{}),pnAuto:p.pnAuto&&typeof p.pnAuto==="object"?p.pnAuto:(S.pnAuto||{}),links:Array.isArray(p.links)?p.links.filter(x=>x&&x.id&&x.u):[],sheets:Array.isArray(p.sheets)?p.sheets.filter(x=>x&&x.id&&x.t&&Array.isArray(x.items)):(S.sheets||[])};
+  /* 5.91.1: 백업으로 바꾸기는 교직원도 그대로(전에는 새 번호로 다시 만들어 동기화 때 둘로 겹칠 수 있었음) */
+
   if(p.noGrades){const ot=new Map((old.tasks||[]).map(t=>[t&&t.id,t]));S.tasks.forEach(t=>{const o=ot.get(t.id);if(o&&o.sc)t.sc=o.sc});
     (old.evals||[]).filter(e=>e&&((e.kind||"score")==="score")&&!S.evals.some(x=>x.id===e.id)).forEach(e=>S.evals.push(e))}
   if(p.noCns){(old.recs||[]).filter(r=>r&&r.k==="stu"&&r.sub==="cns"&&!S.recs.some(x=>x.id===r.id)).forEach(r=>S.recs.push(r));(old.events||[]).filter(e=>e&&String(e.id||"").startsWith("cns_")&&!S.events.some(x=>x.id===e.id)).forEach(e=>S.events.push(e))}
@@ -9877,8 +9882,8 @@ function mergeSes(b,l,r){b=b||{};if(J(l)===J(r))return l;
 function attStamp(s,id,st){const t=Date.now();s.tm=s.tm||{};s.tm[id]=t;(s.lg=s.lg||[]).push([id,st,t]);if(s.lg.length>400)s.lg=s.lg.slice(-400)}
 function attHM(t,sec){const d=new Date(t);return`${pad(d.getHours())}:${pad(d.getMinutes())}${sec?":"+pad(d.getSeconds()):""}`}
 function attLogSheet(s){const nm=id=>(D.roster.find(r=>r[0]===id)||[,id])[1],L=(s.lg||[]).slice().reverse();
-  $("sheetBox").innerHTML=`<h2>🕒 출석 체크 기록 <span class="sub">${esc(sesName(s))}</span></h2>
-    <p class="note">학생 칸을 누른 시각을 초 단위로 남깁니다(이 기기 시계 기준). 나중에 출결 확인이 필요할 때 보여 줄 수 있습니다.</p>
+  $("sheetBox").innerHTML=`<h2>🕒 앱 조작 기록 <span class="sub">${esc(sesName(s))}</span></h2>
+    <p class="note">앱에서 학생 칸을 <b>누른 시각</b>을 초 단위로 남긴 것입니다(이 기기 시계 기준). 실제로 출결을 확인한 시각과 다를 수 있고, 기기 시계나 자료를 바꾸면 달라질 수 있어 <b>공식 출결 증빙이 아닙니다</b>. 공식 출결은 나이스 기록을 따릅니다. 수업 중 출결을 다시 떠올릴 때 참고로 쓰세요.</p>
     ${L.length?`<div class="attlog">${L.map(([id,st,t])=>`<div class="attlr"><span class="t">${(()=>{const d=new Date(t),ld=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;return ld===s.date?"":esc(fmtShort(ld))+" "})()}${attHM(t,1)}</span><b>${esc(nm(id))}</b><span class="st ${st==="출석"?"ok":"no"}">${esc(st)}</span></div>`).join("")}</div>`:`<div class="empty">아직 체크 기록이 없습니다.</div>`}
     <div class="row2"><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true}}
