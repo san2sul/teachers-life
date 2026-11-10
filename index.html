@@ -1000,7 +1000,7 @@ html[data-font="pre"] body{letter-spacing:-.005em}
 /* 5.30: 오늘 탭 숫자 칸 누르기 */
 .kpib{font:inherit;color:inherit;text-align:left;cursor:pointer;position:relative;min-height:72px}
 .kpib i{font-style:normal;font-size:.75rem;color:var(--accent);font-weight:700;margin-top:2px}
-.kpib:active{transform:scale(.98)}
+.kpib:active{transform:scale(.98)}.kpib[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent);background:var(--accent-soft)}
 .kpil{display:flex;flex-direction:column;max-height:58vh;overflow-y:auto;overflow-x:hidden;border-radius:var(--r-m);background:var(--paper)}
 .kpil .td{background:var(--paper)}
 /* 5.30: 되돌리기 알림은 아래 알림 줄과 같은 너비로 (글자가 세 줄로 접히지 않게) */
@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.93.2", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.93.3", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.93.3",date:"2026-11-10",items:["오늘 화면 ‘할 일 · 일정’: 숫자 칸(오늘 할 일 · 지난 미완료 · 남은 할 일)을 누르면 아래에서 따로 창이 올라오던 것을 없애고, 바로 아래 목록이 그 칸의 것으로 바뀜(누른 칸 테두리 표시 · 위 ‘오늘’ 칩과 같은 상태). 목록 · 완료 · 고치기 · 조건이 한 곳에", "숫자 칸에는 할 일이 있는데 아래 목록에 ‘조건에 맞는 할 일이 없습니다’만 나오던 것: 분류 · ‘중요한 것만’ 조건 때문에 숨겨진 수를 알려 주고 ‘조건 풀고 모두 보기’ 단추", "‘지난 미완료’를 누르면 지난 할 일 묶음을 펼친 채로 보여 줌"]},
   {v:"5.93.2",date:"2026-11-10",items:["기록(생활 기록 등) 글 블록에서 Enter로 다음 줄로 넘어갈 때 키보드가 닫혔다 열리며 영어로 돌아가던 것 줄임: 다시 그리는 동안 입력이 끊기지 않게 함", "모든 한글 입력 칸(글 블록 · 제목 · 장소 · 메모 · 수업 흐름 단계 이름 등)에 한국어 표시(lang=ko). 이메일 · 주소 · 번호 · 코드 칸은 그대로 영어 · 숫자", "수업 흐름 단계 이름 · 메모 칸에서 자동 고침 · 맞춤법 끔을 없앰(한글 입력이 다른 칸과 같게)", "동기화: 기록 창(생활 기록 등)을 열어 둔 채로 써도 몇 초 뒤 이 기기 변경을 드라이브에 올림(전에는 창을 닫을 때까지 미뤘음)", "동기화: 앱을 닫거나 다른 탭 · 앱으로 갈 때 쓰던 기록을 바로 저장하고 올림(3초 기다리지 않음) — 컴퓨터에서 쓰고 곧바로 브라우저를 닫아도 휴대폰으로 감", "동기화: 구글 로그인 시간(1시간)이 지나 동기화가 멈추면 앱을 열 때 · 돌아올 때 위에 ‘동기화가 멈춤 · 다시 로그인’ 띠(이 기기 기록이 아직 안 올라갔는지도 알려 줌)", "동기화: 창이 열려 있어 다른 기기 변경을 아직 합치지 않았으면 위 표시가 ‘동기화됨’ 대신 ‘창을 닫으면 받음’", "첨부 파일까지 보내기: 글(생활 기록 등)을 학생 · 교직원에게 문자 · 이메일로 전달할 때 첨부가 있으면 보내는 방법을 고름 — 전에는 문자 · 메일 링크에 파일을 붙일 수 없어 ‘첨부: …’ 목록만 갔음", "· 📤 메일 앱 · 문자 · 카톡 앱에 첨부해서 보내기(휴대폰 공유): 글과 실제 파일이 함께 들어가고, 받는 사람 주소 · 번호는 미리 복사해 둠", "· 📧 Gmail로 첨부까지 바로 보내기(Gmail 보내기를 켠 기기): 받는 사람마다 한 통씩, 파일을 붙여 바로 보냄(25MB까지)", "· 파일 공유가 안 되는 컴퓨터: 첨부를 내려받고 메일 창을 열어 끌어다 놓아 붙임 · ‘첨부 없이 글만’도 고를 수 있음"]},
   {v:"5.93.1",date:"2026-11-09",items:["오늘 화면 ‘지금 수업’ 카드에서 틀 이름이 ‘3단계’일 때 ‘3단계 · 3단계 · 시작 전’으로 겹쳐 보이던 것 고침", "도움말: 수업 흐름 ▶ 시작 · ‹ 이전 · 타이머 열기 · 🧰 수업 도구 · 지금 수업 카드 설명을 5.93 구조(오늘=안내, 출석부=수업 진행)에 맞게 고침"]},
   {v:"5.93.0",date:"2026-11-09",items:["역할 나누기 — 오늘 화면은 안내(보기 · 가기), 출석부는 수업 진행(출석 · 수업 흐름 · 관찰 · 진도), 시간표는 계획 · 설정", "오늘 화면 ‘지금 수업’ 카드는 안내만: 출석 현황 · 지금 수업 흐름 단계 · 진도 안내를 보여 주고 ‘수업 열기 ›’로 그 수업의 출석부로 감(▶ ⏸ ■ · 수업 도구 단추는 출석부에만)", "수업 흐름 창 맨 위에 지금 흐름 상자(남은 시간 · ＋2분 · 이전 · 다음 · ⏸ ■). 상자에서 고치면 아래 단계 목록도 바로 바뀌고, 같은 단추가 두 번 나오지 않음", "수업 흐름 줄을 출석부에 늘 보이게: 지금 수업 시간이 아니어도 보고 있는 출석 체크의 수업 흐름을 맨 위 한 줄에 미리 보기(점선)로. 틀이 없으면 ‘⏱ 수업 흐름 정하기’, 꺼 둔 수업이면 ‘켜기’. ▶ 시작은 수업 시간에만", "고침: 출석부 화면으로 앱을 열 때 지난번에 보던 학급이 그대로 열려, 맨 위 지금 수업(학급 · 수업 흐름 · 진도)과 출석부 학급이 따로 놀던 문제 — 앱을 열 때와 10분 넘게 다른 앱을 쓰다 돌아올 때 지금 수업 학급 · 출석 체크로 맞춤", "고침: 학생 창에서 다른 반 학생을 보고 닫으면 보던 출석 체크까지 그대로 돌아옴", "작은 표시(⏱ 알약)를 누르면 출석부로 감"]},
@@ -8578,11 +8579,14 @@ function todoItems(){
   return out.sort((a,b)=>(a.date+(a.time||"99")).localeCompare(b.date+(b.time||"99")));
 }
 function tdRange(){const t=today();if(TD.range==="today")return[t,t];if(TD.range==="week")return[mondayOf(t),addDays(mondayOf(t),6)];if(TD.range==="month")return[t,addDays(t,30)];return["",""]}
-function todoFiltered(){
-  const[a,b]=tdRange(),t=today();
+function todoFiltered(o){
+  const[a,b]=tdRange(),t=today(),cat=o&&o.free?"":TD.cat,imp=o&&o.free?false:TD.imp;
   return todoItems().filter(x=>{
-    if(TD.cat&&x.cat!==TD.cat&&!(TD.cat==="수업 메모"&&(x.kind==="task"||x.kind==="meet")))return false;
-    if(TD.imp&&!x.important)return false;
+    if(cat&&x.cat!==cat&&!(cat==="수업 메모"&&(x.kind==="task"||x.kind==="meet")))return false;
+    if(imp&&!x.important)return false;
+    /* 5.93.3: 숫자 칸(오늘 할 일 · 지난 미완료)을 누르면 아래 목록이 그 칸과 같은 것만 */
+    if(TD.only==="today")return x.date===t&&(TD.showDone||!x.done);
+    if(TD.only==="over")return !x.done&&x.date<t;
     if(!TD.showDone&&x.done)return false;
     const overdue=!x.done&&x.date<t;
     if(a&&x.date<a&&!overdue)return false;
@@ -8610,9 +8614,15 @@ function renderTodo(){
   const list=todoFiltered(),all=todoItems(),t=today();
   const open=all.filter(x=>!x.done),overdue=open.filter(x=>x.date<t).length,todayN=open.filter(x=>x.date===t).length;
   $("tdSum").innerHTML=`<button class="kpi kpib" type="button" data-kpi="today"><span>오늘 할 일</span><b>${todayN}</b><i>보기 ›</i></button><button class="kpi kpib" type="button" data-kpi="over"><span>지난 미완료</span><b class="${overdue?"a":""}">${overdue}</b><i>보기 ›</i></button><button class="kpi kpib" type="button" data-kpi="open"><span>남은 할 일</span><b>${open.length}</b><i>보기 ›</i></button>`;
-  $("tdSum").querySelectorAll("[data-kpi]").forEach(b=>b.onclick=()=>kpiSheet(b.dataset.kpi));
+  /* 5.93.3: 숫자 칸은 따로 창을 띄우지 않고, 바로 아래 목록을 그 칸의 것으로 바꿈(목록 · 조건이 한 곳) */
+  if(TD.only==="over")TDX.over=true;const kOn=TD.only||(TD.range==="all"?"open":"");
+  $("tdSum").querySelectorAll("[data-kpi]").forEach(b=>{b.setAttribute("aria-pressed",String(b.dataset.kpi===kOn));const iv=b.querySelector("i");if(iv)iv.textContent=b.dataset.kpi===kOn?"아래 목록 ▾":"보기 ›";
+    b.onclick=()=>{const k=b.dataset.kpi;if(k==="today"){TD.only="today"}else if(k==="over"){TD.only="over";TDX.over=true}else{TD.only="";TD.range="all"}saveTD();renderTodo();setTimeout(()=>{const l=$("tdList");if(l)l.scrollIntoView({behavior:"smooth",block:"start"})},50)}});
+  document.querySelectorAll("#tdRange .chip").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.r==="today"?TD.only==="today":!TD.only&&b.dataset.r===TD.range)));
   const L=$("tdList");
-  if(!list.length){L.innerHTML=`<div class="empty">${all.length?"조건에 맞는 할 일이 없습니다. 위에서 기간이나 분류를 바꿔 보세요.":"아직 기록된 일정이 없습니다.<br>‘＋ 할 일 추가’나 시간표에서 일정을 넣어 보세요."}</div>`;}
+  if(!list.length){const hid=(TD.cat||TD.imp)?todoFiltered({free:true}).length:0,why=[TD.cat?`분류 ‘${esc(TD.cat)}’`:"",TD.imp?"‘중요한 것만’":""].filter(Boolean).join(" · ");
+    L.innerHTML=`<div class="empty">${hid?`이 목록에 할 일이 <b>${hid}개</b> 있지만 ${why} 조건 때문에 숨겨져 있습니다.<br><button class="btn sm" type="button" id="tdFree">조건 풀고 모두 보기</button>`:!all.length?"아직 기록된 일정이 없습니다.<br>‘＋ 할 일 추가’나 시간표에서 일정을 넣어 보세요.":TD.only==="today"?"오늘 할 일이 없습니다.":TD.only==="over"?"밀린 할 일이 없습니다. 잘하셨어요!":"이 기간에는 할 일이 없습니다. 위에서 ‘전체’를 눌러 보세요."}</div>`;
+    const fr=$("tdFree");if(fr)fr.onclick=()=>{TD.cat="";TD.imp=false;saveTD();renderTodo()}}
   else{
     let h="";
     GROUPS.forEach(g=>{let items=list.filter(x=>groupOf(x)===g);if(!items.length)return;
@@ -8723,7 +8733,7 @@ $("tdMail").onclick=()=>{
 };
 $("tdCopy").onclick=()=>copy(todoText(),"할 일 목록을 복사했습니다");
 $("tdAdd").onclick=()=>addPlan(today());
-document.querySelectorAll("#tdRange .chip").forEach(b=>b.onclick=()=>{TD.range=b.dataset.r;saveTD();renderTodo()});
+document.querySelectorAll("#tdRange .chip").forEach(b=>b.onclick=()=>{TD.range=b.dataset.r;TD.only=b.dataset.r==="today"?"today":"";saveTD();renderTodo()});
 $("tdImp").onchange=e=>{TD.imp=e.target.checked;saveTD();renderTodo()};
 $("tdDone").onchange=e=>{TD.showDone=e.target.checked;saveTD();renderTodo()};
 $("alAllow").onclick=()=>{askNotify();setTimeout(renderTodo,1500)};
