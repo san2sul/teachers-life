@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.93.3", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.93.4", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.93.4",date:"2026-11-10",items:["고침: 시간표 칸 · 오늘 화면 수업 줄에서 ‘출석 체크 이어서 하기’(또는 출석 시작)를 누르면, 마지막에 기록 메뉴를 썼을 때 그 반 출석부가 아니라 기록 화면이 열리던 것 — 이제 늘 그 반 출석부로", "같은 문제: 날짜별 출석 표의 날짜 · 출결 알림 띠의 ‘열기’도 출석부로"]},
   {v:"5.93.3",date:"2026-11-10",items:["오늘 화면 ‘할 일 · 일정’: 숫자 칸(오늘 할 일 · 지난 미완료 · 남은 할 일)을 누르면 아래에서 따로 창이 올라오던 것을 없애고, 바로 아래 목록이 그 칸의 것으로 바뀜(누른 칸 테두리 표시 · 위 ‘오늘’ 칩과 같은 상태). 목록 · 완료 · 고치기 · 조건이 한 곳에", "숫자 칸에는 할 일이 있는데 아래 목록에 ‘조건에 맞는 할 일이 없습니다’만 나오던 것: 분류 · ‘중요한 것만’ 조건 때문에 숨겨진 수를 알려 주고 ‘조건 풀고 모두 보기’ 단추", "‘지난 미완료’를 누르면 지난 할 일 묶음을 펼친 채로 보여 줌"]},
   {v:"5.93.2",date:"2026-11-10",items:["기록(생활 기록 등) 글 블록에서 Enter로 다음 줄로 넘어갈 때 키보드가 닫혔다 열리며 영어로 돌아가던 것 줄임: 다시 그리는 동안 입력이 끊기지 않게 함", "모든 한글 입력 칸(글 블록 · 제목 · 장소 · 메모 · 수업 흐름 단계 이름 등)에 한국어 표시(lang=ko). 이메일 · 주소 · 번호 · 코드 칸은 그대로 영어 · 숫자", "수업 흐름 단계 이름 · 메모 칸에서 자동 고침 · 맞춤법 끔을 없앰(한글 입력이 다른 칸과 같게)", "동기화: 기록 창(생활 기록 등)을 열어 둔 채로 써도 몇 초 뒤 이 기기 변경을 드라이브에 올림(전에는 창을 닫을 때까지 미뤘음)", "동기화: 앱을 닫거나 다른 탭 · 앱으로 갈 때 쓰던 기록을 바로 저장하고 올림(3초 기다리지 않음) — 컴퓨터에서 쓰고 곧바로 브라우저를 닫아도 휴대폰으로 감", "동기화: 구글 로그인 시간(1시간)이 지나 동기화가 멈추면 앱을 열 때 · 돌아올 때 위에 ‘동기화가 멈춤 · 다시 로그인’ 띠(이 기기 기록이 아직 안 올라갔는지도 알려 줌)", "동기화: 창이 열려 있어 다른 기기 변경을 아직 합치지 않았으면 위 표시가 ‘동기화됨’ 대신 ‘창을 닫으면 받음’", "첨부 파일까지 보내기: 글(생활 기록 등)을 학생 · 교직원에게 문자 · 이메일로 전달할 때 첨부가 있으면 보내는 방법을 고름 — 전에는 문자 · 메일 링크에 파일을 붙일 수 없어 ‘첨부: …’ 목록만 갔음", "· 📤 메일 앱 · 문자 · 카톡 앱에 첨부해서 보내기(휴대폰 공유): 글과 실제 파일이 함께 들어가고, 받는 사람 주소 · 번호는 미리 복사해 둠", "· 📧 Gmail로 첨부까지 바로 보내기(Gmail 보내기를 켠 기기): 받는 사람마다 한 통씩, 파일을 붙여 바로 보냄(25MB까지)", "· 파일 공유가 안 되는 컴퓨터: 첨부를 내려받고 메일 창을 열어 끌어다 놓아 붙임 · ‘첨부 없이 글만’도 고를 수 있음"]},
   {v:"5.93.1",date:"2026-11-09",items:["오늘 화면 ‘지금 수업’ 카드에서 틀 이름이 ‘3단계’일 때 ‘3단계 · 3단계 · 시작 전’으로 겹쳐 보이던 것 고침", "도움말: 수업 흐름 ▶ 시작 · ‹ 이전 · 타이머 열기 · 🧰 수업 도구 · 지금 수업 카드 설명을 5.93 구조(오늘=안내, 출석부=수업 진행)에 맞게 고침"]},
@@ -3976,7 +3977,7 @@ function renderStat(){
   // 일자별
   $("byDay").innerHTML=`<h2>일자별</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>날짜</th><th class="n">체크</th><th class="n">결석</th><th>결석 학생</th></tr></thead><tbody>${
     R0.dayList.map(d=>{const names=[...d.names.values()];return `<tr class="click" data-date="${d.date}"><td class="nw">${fmtShort(d.date)} (${dow(d.date)})</td><td class="n">${d.checks}</td><td class="n">${d.slots-d.pres}</td><td class="names">${names.length?names.map(e=>esc((multi?e.cls+" ":"")+e.name)+(e.n>1?`<small>×${e.n}</small>`:"")).join(", "):`<span class="muted">없음</span>`}</td></tr>`}).join("")}</tbody></table></div><p class="note">날짜를 누르면 그날 출석 화면으로 갑니다.</p>`;
-  $("byDay").querySelectorAll("tr[data-date]").forEach(tr=>tr.onclick=()=>{selDate=tr.dataset.date;selId=null;show("att")});
+  $("byDay").querySelectorAll("tr[data-date]").forEach(tr=>tr.onclick=()=>{selDate=tr.dataset.date;selId=null;/* 5.93.4 출석으로 갈 때는 기록 · 관찰이 아니라 출석부로 */OBS.mode="att";try{localStorage.setItem("att-app-amode","att")}catch(e){}show("att")});
   // 학생별
   let list=R0.students.slice();
   if(ST.onlyAbs)list=list.filter(s=>s.abs>0);
@@ -4299,7 +4300,7 @@ function startPreAttendance(t,r,date,cl){
   let s=D.sessions.find(x=>x.date===date&&x.src===src);
   if(!s){s={id:uid(),date,time:r.start,label:r.label,p:{},src,slot:r.key};D.sessions.push(s);toast(`${clsName()} ${r.label} 출석 체크를 시작합니다`)}
   if(OBS)OBS.mode="att";try{localStorage.setItem("att-app-amode","att")}catch(e){}
-  selDate=date;selId=s.id;save();show("att");
+  selDate=date;selId=s.id;save();/* 5.93.4 출석으로 갈 때는 기록 · 관찰이 아니라 출석부로 */OBS.mode="att";try{localStorage.setItem("att-app-amode","att")}catch(e){}show("att");
 }
 function emptyMenu(t,d,p,date){
   const r=ttRows(t,date).find(x=>x.p===p);
@@ -4342,7 +4343,7 @@ function startCellAttendance(t,d,p,date){
   let s=D.sessions.find(x=>x.date===date&&x.src===src);
   if(!s){const lo=looseSes(cl,t,p,date);if(lo){s=lo;s.src=src;if(!s.label)s.label=`${p}교시${c.subject?" "+c.subject:""}`}}
   if(!s){s={id:uid(),date,time:r.start,label:`${p}교시${c.subject?" "+c.subject:""}`,p:{},src};D.sessions.push(s);toast(`${clsName()} ${p}교시 출석 체크를 시작합니다`)}
-  selDate=date;selId=s.id;save();show("att");
+  selDate=date;selId=s.id;save();/* 5.93.4 출석으로 갈 때는 기록 · 관찰이 아니라 출석부로 */OBS.mode="att";try{localStorage.setItem("att-app-amode","att")}catch(e){}show("att");
 }
 function editCell(t,d,p){
   const k=d+"-"+p,c=t.cells[k]||{subject:"",clsId:"",clsName:"",room:""},cl=cellClass(c),r=ttRows(t).find(x=>x.p===p);
@@ -5642,7 +5643,7 @@ function checkClassAlarm(){try{const min=clsAlMin();if(!min)return;const d=today
       const cl=cellClass(c),nm=cellName(c),title=`곧 ${r.label} 수업 · ${r.start} 시작`,body=[c.subject,nm,c.room,`${st-now}분 뒤`].filter(Boolean).join(" · ");
       pushNote(title,body,"cls-"+k);const bar=$("alarmBar");
       bar.innerHTML=`<b>수업 알림 · ${esc(title)}</b><span>${esc(body)}</span>${cl?`<button class="btn" type="button" id="abOpen">출석 열기</button>`:""}<button class="btn" type="button" id="abX" aria-label="닫기">닫기</button>`;bar.hidden=false;
-      if(cl)$("abOpen").onclick=()=>{bar.hidden=true;S.active=cl.id;D=cl.data;selId=null;save();show("att")};$("abX").onclick=()=>{bar.hidden=true};break}}}catch(e){}}
+      if(cl)$("abOpen").onclick=()=>{bar.hidden=true;S.active=cl.id;D=cl.data;selId=null;save();/* 5.93.4 출석으로 갈 때는 기록 · 관찰이 아니라 출석부로 */OBS.mode="att";try{localStorage.setItem("att-app-amode","att")}catch(e){}show("att")};$("abX").onclick=()=>{bar.hidden=true};break}}}catch(e){}}
 setInterval(checkClassAlarm,20000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(checkClassAlarm,500)});setTimeout(checkClassAlarm,3000);
 function icsLocal(date,hm){return date.replace(/-/g,"")+"T"+hm.replace(":","")+"00"}
 async function clsIcs(){const t=perTT()||TT();if(!t)return toast("시간표가 없습니다");if(!isYMD(t.to))return toast("시간 설정 · 학기에서 학기 종료일을 먼저 넣어 주세요");
