@@ -540,7 +540,7 @@ html.tlprac .topbtns{top:calc(52px + env(safe-area-inset-top,0px))}
 .newbar .go{background:#fff;color:var(--accent)}.newbar .x{background:transparent;color:#fff;opacity:.8}
 .gspill{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:4px 10px;font:inherit;font-size:.75rem;font-weight:700;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .gspill svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
-.gspill[data-s="ok"]{color:var(--present)}.gspill[data-s="sync"],.gspill[data-s="dirty"]{color:var(--accent)}.gspill[data-s="login"],.gspill[data-s="err"]{color:var(--absent);border-color:var(--absent)}
+.gspill[data-s="ok"]{color:var(--present)}.gspill[data-s="sync"],.gspill[data-s="dirty"],.gspill[data-s="wait"]{color:var(--accent)}.gspill[data-s="login"],.gspill[data-s="err"]{color:var(--absent);border-color:var(--absent)}
 .gbtn{background:#fff;color:#1f1f1f;border:1px solid #747775;font-weight:600}
 .gbtn svg{width:18px;height:18px}
 .accts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -1501,7 +1501,7 @@ em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;
 .flh{display:flex;align-items:baseline;gap:8px}.fln{flex:1;min-width:0;font-size:.875rem;color:var(--muted)}.fln b{color:var(--ink);font-size:1.0625rem}.flt{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.5rem;color:var(--accent)}
 .flbar{display:flex;gap:3px;height:8px;margin:8px 0 6px}.flbar i{display:block;border-radius:4px;background:var(--tint)}.flbar i.dn{background:color-mix(in srgb,var(--accent) 35%,var(--tint))}.flbar i.on{background:var(--accent)}
 .flsub{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.8125rem;color:var(--muted)}.flw{color:var(--warn);font-weight:700}
-.flsheetnow [data-flmore]{display:none!important}#sheetBox .flsheetnow~.flctl{display:none}.flbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.flbtns .btn{flex:1 1 0;min-width:0}.flbtns [data-flfit]{flex:1 1 100%}.flbtns [data-flmore]{flex:0 0 44px}
+.wsatt{display:flex;flex-direction:column;gap:8px}.wsatt .btn{width:100%}.flsheetnow [data-flmore]{display:none!important}#sheetBox .flsheetnow~.flctl{display:none}.flbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.flbtns .btn{flex:1 1 0;min-width:0}.flbtns [data-flfit]{flex:1 1 100%}.flbtns [data-flmore]{flex:0 0 44px}
 html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
 @keyframes flfl{50%{background:var(--accent);color:#fff}}
 .flpill{position:fixed;left:12px;bottom:calc(var(--nav-h,50px) + env(safe-area-inset-bottom) + 12px);z-index:790;border:0;border-radius:999px;padding:10px 14px;background:var(--paper);color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.18);font:inherit;font-size:.875rem;display:flex;gap:6px;align-items:center;max-width:62vw}
@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.93.1", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.93.2", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.93.2",date:"2026-11-10",items:["기록(생활 기록 등) 글 블록에서 Enter로 다음 줄로 넘어갈 때 키보드가 닫혔다 열리며 영어로 돌아가던 것 줄임: 다시 그리는 동안 입력이 끊기지 않게 함", "모든 한글 입력 칸(글 블록 · 제목 · 장소 · 메모 · 수업 흐름 단계 이름 등)에 한국어 표시(lang=ko). 이메일 · 주소 · 번호 · 코드 칸은 그대로 영어 · 숫자", "수업 흐름 단계 이름 · 메모 칸에서 자동 고침 · 맞춤법 끔을 없앰(한글 입력이 다른 칸과 같게)", "동기화: 기록 창(생활 기록 등)을 열어 둔 채로 써도 몇 초 뒤 이 기기 변경을 드라이브에 올림(전에는 창을 닫을 때까지 미뤘음)", "동기화: 앱을 닫거나 다른 탭 · 앱으로 갈 때 쓰던 기록을 바로 저장하고 올림(3초 기다리지 않음) — 컴퓨터에서 쓰고 곧바로 브라우저를 닫아도 휴대폰으로 감", "동기화: 구글 로그인 시간(1시간)이 지나 동기화가 멈추면 앱을 열 때 · 돌아올 때 위에 ‘동기화가 멈춤 · 다시 로그인’ 띠(이 기기 기록이 아직 안 올라갔는지도 알려 줌)", "동기화: 창이 열려 있어 다른 기기 변경을 아직 합치지 않았으면 위 표시가 ‘동기화됨’ 대신 ‘창을 닫으면 받음’", "첨부 파일까지 보내기: 글(생활 기록 등)을 학생 · 교직원에게 문자 · 이메일로 전달할 때 첨부가 있으면 보내는 방법을 고름 — 전에는 문자 · 메일 링크에 파일을 붙일 수 없어 ‘첨부: …’ 목록만 갔음", "· 📤 메일 앱 · 문자 · 카톡 앱에 첨부해서 보내기(휴대폰 공유): 글과 실제 파일이 함께 들어가고, 받는 사람 주소 · 번호는 미리 복사해 둠", "· 📧 Gmail로 첨부까지 바로 보내기(Gmail 보내기를 켠 기기): 받는 사람마다 한 통씩, 파일을 붙여 바로 보냄(25MB까지)", "· 파일 공유가 안 되는 컴퓨터: 첨부를 내려받고 메일 창을 열어 끌어다 놓아 붙임 · ‘첨부 없이 글만’도 고를 수 있음"]},
   {v:"5.93.1",date:"2026-11-09",items:["오늘 화면 ‘지금 수업’ 카드에서 틀 이름이 ‘3단계’일 때 ‘3단계 · 3단계 · 시작 전’으로 겹쳐 보이던 것 고침", "도움말: 수업 흐름 ▶ 시작 · ‹ 이전 · 타이머 열기 · 🧰 수업 도구 · 지금 수업 카드 설명을 5.93 구조(오늘=안내, 출석부=수업 진행)에 맞게 고침"]},
   {v:"5.93.0",date:"2026-11-09",items:["역할 나누기 — 오늘 화면은 안내(보기 · 가기), 출석부는 수업 진행(출석 · 수업 흐름 · 관찰 · 진도), 시간표는 계획 · 설정", "오늘 화면 ‘지금 수업’ 카드는 안내만: 출석 현황 · 지금 수업 흐름 단계 · 진도 안내를 보여 주고 ‘수업 열기 ›’로 그 수업의 출석부로 감(▶ ⏸ ■ · 수업 도구 단추는 출석부에만)", "수업 흐름 창 맨 위에 지금 흐름 상자(남은 시간 · ＋2분 · 이전 · 다음 · ⏸ ■). 상자에서 고치면 아래 단계 목록도 바로 바뀌고, 같은 단추가 두 번 나오지 않음", "수업 흐름 줄을 출석부에 늘 보이게: 지금 수업 시간이 아니어도 보고 있는 출석 체크의 수업 흐름을 맨 위 한 줄에 미리 보기(점선)로. 틀이 없으면 ‘⏱ 수업 흐름 정하기’, 꺼 둔 수업이면 ‘켜기’. ▶ 시작은 수업 시간에만", "고침: 출석부 화면으로 앱을 열 때 지난번에 보던 학급이 그대로 열려, 맨 위 지금 수업(학급 · 수업 흐름 · 진도)과 출석부 학급이 따로 놀던 문제 — 앱을 열 때와 10분 넘게 다른 앱을 쓰다 돌아올 때 지금 수업 학급 · 출석 체크로 맞춤", "고침: 학생 창에서 다른 반 학생을 보고 닫으면 보던 출석 체크까지 그대로 돌아옴", "작은 표시(⏱ 알약)를 누르면 출석부로 감"]},
   {v:"5.92.3",date:"2026-11-09",items:["수업 흐름 한 줄을 단계 단추로: 출석부 · 수업 관찰 맨 위 한 줄에 단계(도입 · 전개 · 정리 …)가 단추로 나란히 — 지금 단계는 남은 시간과 함께 진하게, 지난 단계는 흐리게, 남은 단계와 분이 바로 보임", "기본은 ▶ 시작을 누르면 저절로 진행, 단계 단추를 누르면 그 단계로 바로 들어감(앞으로 · 뒤로 모두)", "남은 수업 시간에 맞춰 남은 단계를 저절로 줄임: 늦게 시작하거나 단계를 건너뛰거나 멈췄다 이어서 할 때, 끝 예상이 수업 끝을 넘으면 ‘꼭 지킬 단계’를 뺀 남은 단계를 비율대로 줄임", "자세한 수업 흐름 창은 줄 끝의 ⋯ 또는 지금 단계 단추를 누르면 열림"]},
@@ -6337,7 +6338,7 @@ function wrCnsEv(r){const c=r.cns||{},id="cns_"+r.id,i=S.events.findIndex(e=>e.i
   if(i>=0)S.events[i]={...S.events[i],...e,done:S.events[i].done};else S.events.push(e)}
 /* --- 쓰기 (양식 + 블록 편집기 + 증빙) --- */
 let WR_SAVE=null;
-function wrTouch(r){r.uAt=new Date().toISOString();clearTimeout(WR_SAVE);WR_SAVE=setTimeout(()=>{save();try{renderWrite()}catch(e){}try{wrCount(r)}catch(e){}},400);try{wrHistTick(r)}catch(e){}}
+function wrTouch(r){r.uAt=new Date().toISOString();clearTimeout(WR_SAVE);WR_SAVE=setTimeout(()=>{WR_SAVE=null;save();try{renderWrite()}catch(e){}try{wrCount(r)}catch(e){}},400);try{wrHistTick(r)}catch(e){}}
 function wrEdit(id,isNew,orig){const r=recsAll().find(x=>x.id===id);if(!r)return;if(r.k==="notes")return wrNotesEd(id,isNew,orig);if(r.k==="survey")return wrSurveyEd(id,isNew,orig);if(r.k==="form")return wrFormEd(id,isNew,orig);const K=wrK(r);orig=orig||JSON.stringify(r);const reopen=()=>wrEdit(id,isNew,orig);
   const f=(lab,idn,val,ph,type)=>`<label class="lb" for="${idn}">${lab}<input class="fld" id="${idn}" ${type?`type="${type}"`:""} value="${esc(val||"")}" placeholder="${esc(ph||"")}" autocomplete="off"></label>`;
   let head="";
@@ -6561,7 +6562,15 @@ function wrImgSrc(img,mid){if(!mid)return;if(WRURL.has(mid)){img.src=WRURL.get(m
 function wrTableFrom(dt){const h=dt.getData&&dt.getData("text/html");if(h&&/<table/i.test(h)){const t=document.createElement("template");t.innerHTML=h;const tb=t.content.querySelector("table");if(tb){const rows=[...tb.rows].slice(0,100).map(tr=>[...tr.cells].slice(0,20).map(td=>String(td.innerText||td.textContent||"").replace(/\s+/g," ").trim().slice(0,500)));const w=Math.max(...rows.map(r=>r.length));if(rows.length&&w)return rows.map(r=>r.concat(Array(w-r.length).fill("")))}}
   const p=(dt.getData&&dt.getData("text/plain"))||"";if(/\t/.test(p)&&/\n/.test(p.trim())){const rows=p.replace(/\r/g,"").replace(/\n$/,"").split("\n").slice(0,100).map(l=>l.split("\t").slice(0,20).map(x=>x.trim().slice(0,500)));const w=Math.max(...rows.map(r=>r.length));if(w>1)return rows.map(r=>r.concat(Array(w-r.length).fill("")))}return null}
 /* 블록 편집기 */
-function wrBlocks(r,focusId,caret){const ed=$("wrEd");if(!ed)return;if(!Array.isArray(r.blocks)||!r.blocks.length)r.blocks=[{id:uid(),t:"p",x:""}];ed.innerHTML="";let n=0,cur=focusId||null;ed._r=r;wrDocStyle(ed,r.st);
+/* 5.93.2: 블록을 다시 그릴 때 입력 중인 칸이 사라져 키보드가 닫혔다 열리며 영어로 돌아가던 것 — 그동안 보이지 않는 칸이 포커스를 잡아 키보드를 그대로 둠 */
+function kbKeep(){let k=$("kbKeep");if(!k){k=document.createElement("textarea");k.id="kbKeep";k.lang="ko";k.tabIndex=-1;k.setAttribute("aria-hidden","true");k.style.cssText="position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;font-size:16px;border:0;padding:0;resize:none;pointer-events:none";document.body.appendChild(k)}try{k.focus({preventScroll:true})}catch(e){}return k}
+const KB_EN=/^(email|url|tel|number|password|date|time|datetime-local|month|week|color|range|file|checkbox|radio|hidden)$/;
+function kbKo(t){if(!t||t.lang||!t.matches)return;if(t.isContentEditable){t.lang="ko";return}
+  if(!t.matches("input,textarea"))return;if(t.tagName==="INPUT"&&KB_EN.test(t.type||"text"))return;
+  if(/^(numeric|decimal|email|tel|url|none)$/.test(t.inputMode||"")||t.matches(".code,[autocapitalize=characters],#gsCid,#wmT"))return;t.lang="ko"}
+document.addEventListener("focusin",e=>{try{kbKo(e.target)}catch(_){}},true);
+document.addEventListener("pointerdown",e=>{try{const t=e.target&&e.target.closest&&e.target.closest("input,textarea,[contenteditable]");if(t)kbKo(t)}catch(_){}},true);
+function wrBlocks(r,focusId,caret){const ed=$("wrEd");if(!ed)return;const ae=document.activeElement,fb=focusId&&Array.isArray(r.blocks)&&r.blocks.find(b=>b.id===focusId),kk=fb&&!WR_OBJ.has(fb.t)&&fb.t!=="hr"&&ae&&ae.classList&&ae.classList.contains("wbt")&&ed.contains(ae)?kbKeep():null;if(kk)setTimeout(()=>{if(document.activeElement===kk)kk.blur()},0);if(!Array.isArray(r.blocks)||!r.blocks.length)r.blocks=[{id:uid(),t:"p",x:""}];ed.innerHTML="";let n=0,cur=focusId||null;ed._r=r;wrDocStyle(ed,r.st);
   const re=(fid,pos)=>{wrTouch(r);wrBlocks(r,fid,pos)};
   const insAt=(i,nbs)=>{const cb=r.blocks[i];if(cb&&cb.t==="p"&&!cb.x&&!cb.h)r.blocks.splice(i,1,...nbs);else r.blocks.splice(i+1,0,...nbs);const k=r.blocks.indexOf(nbs[nbs.length-1]);if(!r.blocks[k+1]||WR_OBJ.has(r.blocks[k+1].t)||r.blocks[k+1].t==="hr")r.blocks.splice(k+1,0,{id:uid(),t:"p",x:""});return r.blocks[k+1]};
   const curIdx=()=>{const i=r.blocks.findIndex(x=>x.id===ed.dataset.cur);return i<0?r.blocks.length-1:i};
@@ -6586,7 +6595,7 @@ function wrBlocks(r,focusId,caret){const ed=$("wrEd");if(!ed)return;if(!Array.is
     if(b.t==="hr"){row.innerHTML=`<hr><button type="button" class="wbx" aria-label="구분선 지우기">×</button>`;row.querySelector(".wbx").onclick=()=>{r.blocks.splice(i,1);re(r.blocks[Math.max(0,i-1)]&&r.blocks[Math.max(0,i-1)].id)};ed.appendChild(row);return}
     const mk=document.createElement("span");mk.className="wbm";if(b.t==="ul")mk.textContent="•";else if(b.t==="ol")mk.textContent=n+".";else if(b.t==="call")mk.textContent="💡";else if(b.t==="pi"){const pc=PI_C.includes(b.pc)?b.pc:PI_C[0];row.style.setProperty("--pic",pc);mk.innerHTML=`<button type="button" class="wpic" aria-label="포스트잇 색 바꾸기" title="색 바꾸기" style="background:${pc}"></button>`;mk.firstChild.onmousedown=e=>e.preventDefault();mk.firstChild.onclick=()=>{const k=(PI_C.indexOf(PI_C.includes(b.pc)?b.pc:PI_C[0])+1)%PI_C.length;b.pc=PI_C[k];row.style.setProperty("--pic",b.pc);mk.firstChild.style.background=b.pc;wrTouch(r)}}else if(b.t==="todo"){mk.innerHTML=`<input type="checkbox" ${b.c?"checked":""} aria-label="할 일 완료">`;mk.firstChild.onchange=e=>{b.c=e.target.checked;row.classList.toggle("done",b.c);wrTouch(r)}}
     if(b.t==="todo"&&b.c)row.classList.add("done");
-    const tx=document.createElement("div");tx.className="wbt";tx.contentEditable="true";tx.spellcheck=true;tx.innerHTML=wrHtml(b);wrMathPaint(tx);tx.dataset.ph=i===0&&r.blocks.length===1?"여기에 쓰세요. ‘/’로 블록 바꾸기":({h1:"제목",h2:"소제목",ul:"목록",ol:"목록",todo:"할 일",quote:"인용",call:"강조할 내용",pi:"포스트잇에 쓸 말"}[b.t]||"");wrApplyS(row,tx,b.s);
+    const tx=document.createElement("div");tx.className="wbt";tx.contentEditable="true";tx.spellcheck=true;tx.lang="ko";tx.innerHTML=wrHtml(b);wrMathPaint(tx);tx.dataset.ph=i===0&&r.blocks.length===1?"여기에 쓰세요. ‘/’로 블록 바꾸기":({h1:"제목",h2:"소제목",ul:"목록",ol:"목록",todo:"할 일",quote:"인용",call:"강조할 내용",pi:"포스트잇에 쓸 말"}[b.t]||"");wrApplyS(row,tx,b.s);
     tx.onfocus=()=>{cur=b.id;ed.dataset.cur=b.id};
     const sync=()=>{b.x=wrPlainEl(tx);const h=wrSan(tx.innerHTML);if(wrRich(h))b.h=h;else delete b.h;if(tx.textContent===""&&!tx.querySelector(".wmath")&&tx.innerHTML!=="")tx.innerHTML=""};
     /* 엔터가 막히지 않고 문단으로 들어간 경우(일부 휴대폰 자판 · 한글 조합 중): 그 자리에서 문단을 나눔 */
@@ -6641,7 +6650,7 @@ function wrBlocks(r,focusId,caret){const ed=$("wrEd");if(!ed)return;if(!Array.is
     if(btn.dataset.mv){const j=i+ +btn.dataset.mv;if(j<0||j>=r.blocks.length)return;[r.blocks[i],r.blocks[j]]=[r.blocks[j],r.blocks[i]];return re(b.id,9999)}
     if(btn.dataset.bx){r.blocks.splice(i,1);if(!r.blocks.length)r.blocks.push({id:uid(),t:"p",x:""});return re((r.blocks[Math.max(0,i-1)]||{}).id,9999)}}});
   const fm=$("wrFmt");if(fm)fm.querySelectorAll("[data-fm]").forEach(btn=>{btn.onpointerdown=e=>e.preventDefault();btn.onmousedown=e=>e.preventDefault();btn.onclick=()=>wrFmt(btn.dataset.fm,null,btn)});
-  if(cur){ed.dataset.cur=cur;const el=ed.querySelector(`[data-id="${cur}"] .wbt`);if(el)wrSetCaret(el,caret==null?wrUnits(el):caret);
+  if(cur){ed.dataset.cur=cur;const el=ed.querySelector(`[data-id="${cur}"] .wbt`);if(el)wrSetCaret(el,caret==null?wrUnits(el):caret);if(kk&&document.activeElement===kk)kk.blur();
     else{const cell=WRT.id===cur&&ed.querySelector(`[data-id="${cur}"] [data-r="${WRT.r}"][data-c="${WRT.c}"]`);if(cell){cell.focus();const s=getSelection(),rg=document.createRange();rg.selectNodeContents(cell);rg.collapse(false);s.removeAllRanges();s.addRange(rg)}}}}
 /* 붙여넣기 단추 (클립보드 읽기 — 브라우저가 허락을 물을 수 있음) */
 async function wrPasteBtn(r,insAt,curIdx,re){if(!navigator.clipboard||!navigator.clipboard.read){toast("이 브라우저는 단추로 붙여넣기를 할 수 없습니다. 글 칸을 길게 눌러 ‘붙여넣기’ 하세요");return}
@@ -7583,8 +7592,27 @@ function rcPick(kind,onOk,o){o=o||{};const stu=kind==="stu",L=stu?rcStu():rcStaf
   if($b("#rcQ"))$b("#rcQ").oninput=e=>{q=e.target.value.trim();paintL()};paintF();paintL();
   $b("#rcX").onclick=()=>ov._close();$b("#rcOk").onclick=()=>{const out=[...sel.values()];ov._close();if(out.length)onOk(out)}}
 const rcLine=x=>[x.nm,x.ph?fmtPhone(x.ph):"",x.em||""].filter(Boolean).join(" ");
+/* 5.93.2: 첨부까지 보내는 방법 고르기 */
+function wsAttHTML(ch,files,t){const mail=ch==="mail",F=files||[],tot=F.reduce((x,f)=>x+f.size,0),can=!!(F.length&&navigator.canShare&&navigator.share&&(()=>{try{return navigator.canShare({files:F})}catch(e){return false}})());
+  const who=mail?t.em.join(", "):t.ph.map(fmtPhone).join(", ");
+  return`<div class="svbox wsatt"><b>📎 첨부 ${F.length}개${tot?` · ${fmtSize(tot)}`:""} — ${mail?"이메일":"문자"}로 보내기</b><div class="note">${F.map(f=>esc(f.name)).join(" · ")}</div>
+    <p class="note">${mail?"메일 링크(mailto)":"문자 링크(sms)"}로는 파일을 붙일 수 없어 방법을 고릅니다.</p>${F.length?"":`<p class="warn">이 기기에는 첨부 파일이 없습니다(다른 기기에서 붙인 첨부는 그 기기에만 저장됨). 첨부를 넣은 기기에서 보내거나 글만 보내세요.</p>`}
+    ${mail&&gmailOn()?`<button class="btn pri" type="button" data-wa="gmail">📧 Gmail로 첨부까지 바로 보내기 (${t.em.length}명${t.em.length>1?" · 한 명씩":""})</button>`:""}
+    <button class="btn${mail&&gmailOn()?"":" pri"}" type="button" data-wa="app">${can?`📤 ${mail?"메일 앱":"문자 · 카톡 앱"}에 첨부해서 보내기`:mail?"⬇ 첨부 내려받고 메일 창 열기":"⬇ 첨부 내려받기"}</button>
+    <p class="note">${can?`보낼 앱(메일 · 메시지 · 카카오톡 등)을 고르면 글과 파일이 함께 들어갑니다. 받는 사람(${esc(who)})은 미리 복사해 두니 그 앱의 받는 사람 칸에 붙여 넣으세요.`:mail?"이 기기는 파일을 다른 앱으로 넘길 수 없어, 첨부를 내려받은 뒤 메일 창을 엽니다. 내려받은 파일을 메일 창에 끌어다 놓으세요.":"이 기기는 문자에 파일을 붙일 수 없습니다. 휴대폰에서 보내거나 이메일을 쓰세요."}</p>
+    <button class="btn ghost" type="button" data-wa="plain">첨부 없이 글만 ${mail?"메일 앱으로":"문자로"}</button>
+    <button class="btn ghost" type="button" data-wa="back">‹ 이전으로</button></div>`}
+async function fileB64(f){const u=new Uint8Array(await f.arrayBuffer());let s="";for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s).replace(/.{1,76}/g,"$&\r\n")}
+async function gmailSendAtt(to,subj,text,files){const b="tl"+Math.random().toString(36).slice(2),q=x=>`=?UTF-8?B?${utf8b64(x)}?=`;
+  const L=[`To: ${to}`,`Subject: ${q(subj)}`,"MIME-Version: 1.0",`Content-Type: multipart/mixed; boundary="${b}"`,"",`--${b}`,"Content-Type: text/plain; charset=UTF-8","Content-Transfer-Encoding: base64","",utf8b64(text).replace(/.{1,76}/g,"$&\r\n")];
+  for(const f of files){L.push(`--${b}`,`Content-Type: ${f.type||"application/octet-stream"}; name="${q(f.name)}"`,`Content-Disposition: attachment; filename="${q(f.name)}"`,"Content-Transfer-Encoding: base64","",await fileB64(f))}
+  L.push(`--${b}--`,"");
+  return gApi("https://gmail.googleapis.com/upload/gmail/v1/users/me/messages/send?uploadType=media",{method:"POST",headers:{"Content-Type":"message/rfc822"},body:L.join("\r\n")})}
 /* 전달하기 (글): 받는 사람 = 교직원 · 학생에서 찾기 + 직접 입력 */
-function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;const sel=[];let to="";
+function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;const sel=[];let to="",ch=null,FILES=null;
+  /* 5.93.2: 첨부 파일 — 문자 · 메일 링크(sms: · mailto:)에는 파일을 붙일 수 없어, 첨부가 있으면 보내는 방법을 고름 */
+  const getFiles=async()=>{if(FILES)return FILES;const files=[];try{for(const id of wrBlkMedia(r)){const bl=await mGet(id);if(bl)files.push(new File([bl],`그림_${files.length+1}.${/png/.test(bl.type)?"png":"jpg"}`,{type:bl.type||"image/jpeg"}))}for(const m of (r.media||[])){const bl=await mGet(m.id);if(bl)files.push(new File([bl],m.name||`${(MEDIA_T[m.t]||{l:"첨부"}).l}_${files.length+1}.${/png/.test(bl.type)?"png":/jpe?g/.test(bl.type)?"jpg":/webm/.test(bl.type)?"webm":/mp4/.test(bl.type)?(m.t==="audio"?"m4a":"mp4"):/pdf/.test(bl.type)?"pdf":"bin"}`,{type:bl.type}))}}catch(e){}return FILES=files};
+  const nAtt=()=>(r.media||[]).length+wrBlkMedia(r).length;if(nAtt())getFiles();
   const paint=()=>{$("sheetBox").innerHTML=`<h2>전달하기 <span class="sub">${esc(wrK(r)[1])} · ${esc(wrTitle(r))}</span></h2>
       <div class="shlb">받는 사람 <small class="note">${sel.length?sel.length+"명":""}</small></div>
       ${sel.length?`<div class="presets rcsel">${sel.map((x,i)=>`<span class="chip rcc">${x.k==="stu"?"🧑‍🎓":"👩‍🏫"} <b>${esc(x.nm)}</b> <small>${esc(x.ph?fmtPhone(x.ph):x.em||"연락처 없음")}</small><button type="button" data-rx="${i}" aria-label="${esc(x.nm)} 빼기">×</button></span>`).join("")}</div>`:""}
@@ -7592,8 +7620,8 @@ function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;cons
       <div class="wrrowf"><input class="fld" id="wsTo" list="wsToL" placeholder="직접 입력: 번호 · 메일 (여러 명은 쉼표로)" value="${esc(to)}" autocomplete="off"><datalist id="wsToL">${dsRecent().map(x=>`<option value="${esc(dsShow(x))}">`).join("")}</datalist></div>
       ${r.k==="stu"&&sel.some(x=>x.k==="stu")?`<p class="warn">학생 기록을 학생에게 보냅니다. 다른 학생의 이름 · 내용이 들어 있지 않은지 확인하세요.</p>`:""}
       <details class="wsprev"><summary>보낼 내용 보기</summary><pre>${esc(wrPlain(r,true))}</pre></details>
-      <div class="medbtns"><button class="btn" type="button" data-wsh="sms">💬 문자</button><button class="btn" type="button" data-wsh="tel">📞 전화</button><button class="btn" type="button" data-wsh="mail">✉️ 이메일</button><button class="btn pri" type="button" data-wsh="share">📤 공유하기${(r.media||[]).length?" (첨부 포함)":""}</button></div>
-      <p class="note">문자 · 이메일에는 글 내용이 들어가고, 사진 등 첨부는 ‘공유하기’로 함께 보낼 수 있습니다(휴대폰에 따라 다름). 여러 명에게 문자를 보내면 단체 문자가 됩니다. 전달한 기록이 글에 남습니다.</p>
+      ${ch?wsAttHTML(ch,FILES,(()=>{const p=dsParse(to);return{ph:[...new Set(sel.map(x=>x.ph).filter(x=>x&&x.length>=8).concat(p.ph))],em:[...new Set(sel.map(x=>x.em).filter(Boolean).concat(p.em))]}})()):""}<div class="medbtns"${ch?" hidden":""}><button class="btn" type="button" data-wsh="sms">💬 문자</button><button class="btn" type="button" data-wsh="tel">📞 전화</button><button class="btn" type="button" data-wsh="mail">✉️ 이메일</button><button class="btn pri" type="button" data-wsh="share">📤 공유하기${(r.media||[]).length?" (첨부 포함)":""}</button></div>
+      <p class="note">${nAtt()?`📎 첨부 ${nAtt()}개: 문자 · 이메일을 누르면 <b>첨부까지 보내는 방법</b>을 고릅니다(Gmail로 바로 · 메일 · 문자 · 카톡 앱에 첨부). `:""}문자 · 이메일에는 글 내용이 들어가고, 사진 등 첨부는 ‘공유하기’로도 함께 보낼 수 있습니다(휴대폰에 따라 다름). 여러 명에게 문자를 보내면 단체 문자가 됩니다. 전달한 기록이 글에 남습니다.</p>
       ${(r.sent||[]).length?`<div class="shlb">전달 기록</div><div class="schlog">${r.sent.slice().reverse().slice(0,8).map(x=>`<div><small>${esc(fmtDT(x.at))}</small> ${esc(x.to||"")} · ${esc({sms:"문자",tel:"전화",mail:"이메일",share:"공유"}[x.how]||x.how)}</div>`).join("")}</div>`:""}
       <div class="row2"><button class="btn" type="button" id="skNo">${back?"뒤로":"닫기"}</button></div>`;
     const box=$("sheetBox");$("wsTo").oninput=e=>{to=e.target.value};
@@ -7602,12 +7630,26 @@ function wrShare(id,back){const r=recsAll().find(x=>x.id===id);if(!r)return;cons
     $("wsPS").onclick=()=>rcPick("staff",add,{title:"전달할 교직원 찾기"});$("wsPU").onclick=()=>rcPick("stu",add,{title:"전달할 학생 찾기"});
     const tgt=()=>{const p=dsParse(to);if(to.trim())dsRemember(to);const ph=[...new Set(sel.map(x=>x.ph).filter(x=>x&&x.length>=8).concat(p.ph))],em=[...new Set(sel.map(x=>x.em).filter(Boolean).concat(p.em))];
       return{ph,em,name:sel.map(x=>x.nm).concat(p.ph.map(fmtPhone),p.em).join(", ").slice(0,60),any:sel.length||p.ph.length||p.em.length}};
+    box.querySelectorAll("[data-wa]").forEach(b=>b.onclick=async()=>{const a=b.dataset.wa,t=tgt(),txt=wrPlain(r,true),files=FILES||await getFiles(),subj=`[${wrK(r)[1]}] ${wrTitle(r)}`,mail=ch==="mail";
+      if(a==="back"){ch=null;return paint()}
+      if(a==="plain"){ch=null;if(mail){log("mail",t.name);go(`mailto:${t.em.map(encodeURIComponent).join(",")}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(txt)}`)}else{log("sms",t.name);go(smsHref(t.ph,txt))}return paint()}
+      if(a==="gmail"){const tot=files.reduce((x,f)=>x+f.size,0);if(tot>24*1024*1024)return toast(`첨부가 ${fmtSize(tot)}로 Gmail 한도(25MB)를 넘습니다. ‘메일 앱에 첨부’로 나눠 보내세요`);
+        return gmailReady(async()=>{let ok=0,fail=[];for(const em of t.em){toast(`Gmail로 보내는 중… ${ok+fail.length+1}/${t.em.length}`);try{await gmailSendAtt(em,subj,txt,files);ok++}catch(e){fail.push(em);if(e.auth||/403/.test(e.message)){toast(/403/.test(e.message)?"Gmail API가 꺼져 있거나 권한이 없습니다":"다시 로그인이 필요합니다");break}}}
+          if(ok){log("mail",t.name+` · 첨부 ${files.length}개(Gmail)`)}toast(fail.length?`${ok}명 보냄 · 못 보냄: ${fail.join(", ")}`:`${ok}명에게 첨부 ${files.length}개와 함께 Gmail로 보냈습니다`);ch=null;paint()})}
+      if(a==="app"){const who=mail?t.em.join(", "):t.ph.map(fmtPhone).join(", ");
+        if(files.length&&navigator.canShare&&navigator.share&&navigator.canShare({files})){try{if(who&&navigator.clipboard)navigator.clipboard.writeText(who).catch(()=>{})}catch(e){}
+          try{await navigator.share({title:subj,text:txt,files});log(ch,t.name+` · 첨부 ${files.length}개`);toast(who?"받는 사람 주소를 복사해 두었습니다 · 그 앱의 받는 사람 칸에 붙여 넣으세요":"공유했습니다");ch=null;paint()}catch(e){if(!(e&&e.name==="AbortError"))toast("이 기기에서는 파일을 함께 보낼 수 없습니다")}return}
+        /* 컴퓨터 등 파일 공유가 안 되는 기기: 첨부를 내려받고 메일 창을 엶 → 메일 창에 끌어다 놓기 */
+        files.forEach((f,i)=>setTimeout(()=>{const x=document.createElement("a");x.href=URL.createObjectURL(f);x.download=f.name;document.body.appendChild(x);x.click();setTimeout(()=>{URL.revokeObjectURL(x.href);x.remove()},3000)},i*400));
+        if(mail){log("mail",t.name+` · 첨부 ${files.length}개(내려받아 첨부)`);setTimeout(()=>go(`mailto:${t.em.map(encodeURIComponent).join(",")}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(txt)}`),files.length*400+300);toast(`첨부 ${files.length}개를 내려받았습니다. 열린 메일 창에 끌어다 놓아 붙이세요`)}
+        else toast(`이 기기에서는 문자에 파일을 붙일 수 없어 첨부 ${files.length}개를 내려받았습니다. 휴대폰에서 보내거나 메일로 보내세요`);ch=null;paint()}});
     const log=(how,who)=>{r.sent=(r.sent||[]).concat([{at:Date.now(),how,to:String(who||"").slice(0,60)}]).slice(-30);save();renderWrite()};
     box.querySelectorAll("[data-wsh]").forEach(b=>b.onclick=async()=>{const how=b.dataset.wsh,t=tgt(),txt=wrPlain(r,true);
       if(how==="share"){let files=[];try{for(const id of wrBlkMedia(r)){const bl=await mGet(id);if(bl)files.push(new File([bl],`그림_${files.length+1}.jpg`,{type:bl.type||"image/jpeg"}))}for(const m of (r.media||[])){const bl=await mGet(m.id);if(bl)files.push(new File([bl],m.name||`${(MEDIA_T[m.t]||{l:"첨부"}).l}_${files.length+1}.${/png/.test(bl.type)?"png":/jpe?g/.test(bl.type)?"jpg":/webm/.test(bl.type)?"webm":/mp4/.test(bl.type)?(m.t==="audio"?"m4a":"mp4"):"bin"}`,{type:bl.type}))}}catch(e){}
         const data={title:wrTitle(r),text:txt,...(files.length&&navigator.canShare&&navigator.canShare({files})?{files}:{})};
         if(navigator.share){try{await navigator.share(data);log("share",t.name);toast("공유했습니다")}catch(e){if(!(e&&e.name==="AbortError"))copy(txt,"공유할 수 없어 내용을 복사했습니다")}}else{copy(txt,"내용을 복사했습니다. 붙여 넣어 보내세요");log("share","복사")}return}
       if(!t.any)return toast("받는 사람을 찾아 고르거나 번호 · 메일을 적어 주세요");
+      if((how==="sms"||how==="mail")&&nAtt()){if(how==="sms"&&!t.ph.length)return toast("고른 사람의 휴대폰 번호가 없습니다");if(how==="mail"&&!t.em.length)return toast("고른 사람의 이메일 주소가 없습니다");await getFiles();ch=how;return paint()}
       if(how==="sms"){if(!t.ph.length)return toast("고른 사람의 휴대폰 번호가 없습니다");log("sms",t.name);go(smsHref(t.ph,txt))}
       else if(how==="tel"){if(!t.ph.length)return toast("고른 사람의 휴대폰 번호가 없습니다");if(t.ph.length>1)toast("전화는 첫 사람에게 겁니다");log("tel",t.name);go("tel:"+t.ph[0])}
       else{if(!t.em.length)return toast("고른 사람의 이메일 주소가 없습니다");log("mail",t.name);go(`mailto:${t.em.map(encodeURIComponent).join(",")}?subject=${encodeURIComponent(`[${wrK(r)[1]}] ${wrTitle(r)}`)}&body=${encodeURIComponent(txt)}`)}
@@ -9965,12 +10007,15 @@ async function gPush(str,id){const obj={kind:"teachers-life-sync",v:1,app:APP_NA
 async function gSync(why){
   if(!G.on||!gClientId())return;
   try{if(FILES_READY)await FILES_READY}catch(e){}
-  if(!gTokenOk()){GS.msg="";renderSyncPill();return}
+  if(!gTokenOk()){GS.msg="";renderSyncPill();gExpBar(why);return}
   if(GS.busy){GS.pend=true;return}
-  if(!$("sheet").hidden&&why!=="login"&&why!=="now"){clearTimeout(GS.timer);GS.timer=setTimeout(()=>gSync("later"),5000);return}
+  /* 5.93.3: 창(기록 쓰기 등)이 열려 있어도 이 기기 변경은 올림 — 다른 기기 변경을 받아 합치는 일만 창을 닫은 뒤로 미룸 */
+  const shOpen=!$("sheet").hidden&&why!=="login"&&why!=="now";if(!shOpen)GS.wait=false;
+  if(shOpen&&(GS.wait||(!gDirty()&&why!=="tick"&&why!=="show"&&why!=="open"))){renderSyncPill();clearTimeout(GS.timer);GS.timer=setTimeout(()=>gSync("later"),5000);return}
   GS.busy=true;GS.err="";renderSyncPill("sync");
   try{
     const f=await gFind();
+    if(shOpen&&f&&!(G.ver&&String(f.version)===G.ver)){GS.busy=false;GS.wait=true;clearTimeout(GS.timer);GS.timer=setTimeout(()=>gSync("later"),5000);renderSyncPill();return}
     let local=syncData(),lstr=JSON.stringify(local),lh=gHash(lstr);
     if(!f){await gPush(lstr,null);GS.msg="드라이브에 처음 저장했습니다"}
     else if(G.ver&&String(f.version)===G.ver){
@@ -10005,6 +10050,13 @@ function firstLinkSheet(local,rd,f,remote){
   $("flRemote").onclick=()=>run(async()=>{snapshot();applyData(rd);G.fileId=f.id;G.ver=String(f.version);gSetBase(JSON.stringify(syncData()));gSave();toast("드라이브 자료로 바꿨습니다")});
   twoStep($("flLocal"),"정말 덮어쓰기",()=>run(async()=>{await gPush(JSON.stringify(local),f.id);toast("이 기기 자료로 드라이브를 덮어썼습니다")}));
 }
+/* 5.93.3: 로그인 1시간이 지나 동기화가 멈췄을 때 눈에 띄게 알림(앱을 열 때 · 돌아올 때, 그 밖에는 10분에 한 번) */
+function gExpBar(why){try{if(!G.on||G.auto===false||window.TL_PRACTICE||!gClientId()||document.querySelector(".newbar.gsexp"))return;
+  if(why!=="open"&&why!=="show"&&GS.expAt&&Date.now()-GS.expAt<600000)return;GS.expAt=Date.now();
+  storeBar(gDirty()?"구글 로그인 시간(1시간)이 지나 동기화가 멈췄습니다. 이 기기에서 쓴 기록이 아직 다른 기기로 가지 않았습니다.":"구글 로그인 시간(1시간)이 지나 동기화가 멈췄습니다. 다른 기기에서 쓴 기록을 받으려면 다시 로그인하세요.","다시 로그인",()=>gLogin(),"gsexp")}catch(e){}}
+/* 5.93.3: 앱을 닫거나 다른 앱으로 갈 때, 쓰던 기록을 바로 저장하고 올림(3초 기다리지 않음) */
+function gFlush(){try{if(typeof WR_SAVE!=="undefined"&&WR_SAVE){clearTimeout(WR_SAVE);WR_SAVE=null;save()}}catch(e){}
+  try{if(G.on&&G.auto!==false&&gTokenOk()&&gDirty()){clearTimeout(GS.timer);gSync("hide")}}catch(e){}}
 /* 저장할 때마다 몇 초 뒤 자동으로 올립니다 */
 function gTouch(){try{if(GS.applying||!G.on||G.auto===false)return;clearTimeout(GS.timer);GS.timer=setTimeout(()=>gSync("save"),3000);renderSyncPill()}catch(e){}}
 function gDirty(){try{return G.on&&G.hash&&gHash(JSON.stringify(syncData()))!==G.hash}catch(e){return false}}
@@ -10016,9 +10068,9 @@ function renderSyncPill(state){
   if(!p){p=document.createElement("button");p.id="gsPill";p.type="button";p.className="gspill";{const tb=$("topBtns"),g=tb.querySelector(".setb");if(g)tb.insertBefore(p,g);else tb.appendChild(p)}
     p.onclick=()=>{if(!gTokenOk())gLogin();else gSync("now")}}
   p.hidden=false;
-  const st=state||(GS.busy?"sync":!gTokenOk()?"login":GS.err?"err":gDirty()?"dirty":"ok");
+  const st=state||(GS.busy?"sync":!gTokenOk()?"login":GS.err?"err":GS.wait?"wait":gDirty()?"dirty":"ok");
   p.dataset.s=st;
-  p.innerHTML=`<svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z"/></svg>${{sync:"동기화 중",login:"다시 로그인",err:"동기화 오류",dirty:"올릴 내용 있음",ok:"동기화됨"}[st]}`;
+  p.innerHTML=`<svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z"/></svg>${{sync:"동기화 중",login:"다시 로그인",err:"동기화 오류",wait:"창을 닫으면 받음",dirty:"올릴 내용 있음",ok:"동기화됨"}[st]}`;
   p.setAttribute("aria-label","구글 동기화: "+p.textContent);
 }
 function renderSync(){
@@ -10105,7 +10157,7 @@ function gHelp(){
 function gHash2(){const m=location.hash.match(/^#g=([^&]+)/);if(!m)return false;const v=decodeURIComponent(m[1]);history.replaceState(null,"",appUrl());
   if(/\.apps\.googleusercontent\.com$/.test(v)){G.clientId=v;gSave();show("set");renderSync();{const d=$("d-sync");if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:"start",behavior:"smooth"}),60)}}toast("구글 로그인 설정을 넣었습니다. ‘Google 계정으로 로그인’을 누르세요")}return true}
 gHash2();window.addEventListener("hashchange",gHash2);
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){gPreload();if(G.on&&G.auto!==false)gSync("show")}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){gPreload();if(G.on&&G.auto!==false)gSync("show")}else gFlush()});window.addEventListener("pagehide",()=>gFlush());
 setInterval(()=>{if(document.visibilityState==="visible"&&G.on&&G.auto!==false&&gTokenOk())gSync("tick")},60000);
 safe("구글 로그인",renderSync);try{gPreload()}catch(e){reportErr("구글 로그인 준비",e)}if(G.on&&G.auto!==false)setTimeout(()=>gSync("open"),800);
 
@@ -12096,15 +12148,15 @@ function flowEdit(f0,done,copy,opt){opt=opt||{};const LX=opt.lesson,isNew=!f0||c
   const subSum=(row,s)=>{const e=row.querySelector("[data-subsum]");if(!e)return;const L2=s.subs||[],t=L2.reduce((a,u)=>a+(+u.m||0),0);e.textContent=L2.length?(t===+s.m?`세부 과정 합계 ${t}분 = 단계 ${s.m}분 ✓`:t<s.m?`세부 과정 합계 ${t}분 · 마지막 세부 과정이 단계 끝(${s.m}분)까지 이어집니다`:`세부 과정 합계 ${t}분이 단계 ${s.m}분보다 깁니다 — 단계가 끝나면 다음 단계로 넘어갑니다`):"단계 안을 더 나누고 싶을 때만 넣으세요. 예: 도입 → 인사 · 출석 확인 · 전차시 확인 · 이번 차시 안내"};
   const paint=()=>{$("sheetBox").innerHTML=`<h2>${LX?`이 수업만 고치기 <span class="sub">${esc(LX.title)} · ${esc(LX.start)}~${esc(LX.end)}</span>`:isNew?"수업 흐름 틀 만들기":"수업 흐름 틀 고치기"}</h2>
     ${LX?`<p class="note">이 수업에만 적용됩니다. 원래 틀은 바뀌지 않습니다.</p>`:opt.note?`<p class="note">${esc(opt.note)}</p>`:""}
-    <label class="lb" for="flN">${LX?"이름":"틀 이름"}<input class="fld" id="flN" lang="ko" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="40" value="${esc(W.n)}" placeholder="예: 3학년 실험 · 발표 수업"></label>
-    <div class="fleds">${W.steps.map((s,j)=>`<div class="fled" data-j="${j}"><div class="fler"><span class="flno">${j+1}</span><input class="fld" data-k="n" lang="ko" autocapitalize="off" autocorrect="off" spellcheck="false" value="${esc(s.n)}" maxlength="30" aria-label="${j+1}단계 이름" placeholder="단계 이름 (예: 활동)"><select class="fld flm" data-k="m" aria-label="${j+1}단계 시간(분)">${[...new Set([...Array.from({length:60},(_,q)=>q+1),70,80,90,100,120,150,180,+s.m])].sort((a,b)=>a-b).map(v=>`<option value="${v}"${+s.m===v?" selected":""}>${v}</option>`).join("")}</select><span class="flu">분</span>
+    <label class="lb" for="flN">${LX?"이름":"틀 이름"}<input class="fld" id="flN" lang="ko" maxlength="40" value="${esc(W.n)}" placeholder="예: 3학년 실험 · 발표 수업"></label>
+    <div class="fleds">${W.steps.map((s,j)=>`<div class="fled" data-j="${j}"><div class="fler"><span class="flno">${j+1}</span><input class="fld" data-k="n" lang="ko" value="${esc(s.n)}" maxlength="30" aria-label="${j+1}단계 이름" placeholder="단계 이름 (예: 활동)"><select class="fld flm" data-k="m" aria-label="${j+1}단계 시간(분)">${[...new Set([...Array.from({length:60},(_,q)=>q+1),70,80,90,100,120,150,180,+s.m])].sort((a,b)=>a-b).map(v=>`<option value="${v}"${+s.m===v?" selected":""}>${v}</option>`).join("")}</select><span class="flu">분</span>
         <button type="button" class="btn sm ghost" data-mv="-1" aria-label="위로"${j?"":" disabled"}>▲</button><button type="button" class="btn sm ghost" data-mv="1" aria-label="아래로"${j<W.steps.length-1?"":" disabled"}>▼</button><button type="button" class="btn sm ghost" data-rm aria-label="이 단계 빼기"${W.steps.length>1?"":" disabled"}>✕</button></div>
         <details class="flopt"${OPEN.has(s.id)?" open":""}><summary>${[s.memo?"📝 메모":"",(s.subs||[]).length?`세부 ${(s.subs||[]).length}`:"",s.tool?FLT()[s.tool]:"",FLAL()[s.al],s.fix?"꼭 지킴":""].filter(Boolean).join(" · ")||"자세히"}</summary>
-          <input class="fld" data-k="memo" lang="ko" autocapitalize="off" spellcheck="false" maxlength="80" value="${esc(s.memo||"")}" placeholder="이 단계에서 할 일 (예: 활동지 2번까지)" aria-label="${j+1}단계 메모">
+          <input class="fld" data-k="memo" lang="ko" maxlength="80" value="${esc(s.memo||"")}" placeholder="이 단계에서 할 일 (예: 활동지 2번까지)" aria-label="${j+1}단계 메모">
           <div class="flor"><label>알림<select class="fld" data-k="al">${Object.entries(FLAL()).map(([k,l])=>`<option value="${k}"${s.al===k?" selected":""}>${l}</option>`).join("")}</select></label><label>시작할 때 열 도구<select class="fld" data-k="tool">${Object.entries(FLT()).map(([k,l])=>`<option value="${k}"${s.tool===k?" selected":""}>${l}</option>`).join("")}</select></label></div>
           <label class="chk"><input type="checkbox" data-k="fix"${s.fix?" checked":""}> 꼭 지킬 단계 (시간이 밀려도 줄이지 않음)</label>
           <div class="flsubs"><div class="shlb">세부 과정 <small>(선택) 단계 안의 순서 · 알림은 고른 것만</small></div>
-            ${(s.subs||[]).map((u,q)=>`<div class="flsr2" data-q="${q}"><span class="flno">${j+1}-${q+1}</span><input class="fld" data-sk="n" lang="ko" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30" value="${esc(u.n)}" placeholder="세부 과정 (예: 출석 확인)" aria-label="${j+1}단계 ${q+1}번째 세부 과정"><select class="fld flm" data-sk="m" aria-label="세부 과정 시간(분)">${Array.from({length:60},(_,v)=>v+1).map(v=>`<option value="${v}"${+u.m===v?" selected":""}>${v}</option>`).join("")}</select><span class="flu">분</span><select class="fld flal" data-sk="al" aria-label="세부 과정 알림"><option value=""${u.al?"":" selected"}>알림 없음</option><option value="vib"${u.al==="vib"?" selected":""}>🔔 진동</option><option value="snd"${u.al==="snd"?" selected":""}>🔔 진동 + 소리</option></select><button type="button" class="btn sm ghost" data-sx aria-label="이 세부 과정 빼기">✕</button></div>`).join("")}
+            ${(s.subs||[]).map((u,q)=>`<div class="flsr2" data-q="${q}"><span class="flno">${j+1}-${q+1}</span><input class="fld" data-sk="n" lang="ko" maxlength="30" value="${esc(u.n)}" placeholder="세부 과정 (예: 출석 확인)" aria-label="${j+1}단계 ${q+1}번째 세부 과정"><select class="fld flm" data-sk="m" aria-label="세부 과정 시간(분)">${Array.from({length:60},(_,v)=>v+1).map(v=>`<option value="${v}"${+u.m===v?" selected":""}>${v}</option>`).join("")}</select><span class="flu">분</span><select class="fld flal" data-sk="al" aria-label="세부 과정 알림"><option value=""${u.al?"":" selected"}>알림 없음</option><option value="vib"${u.al==="vib"?" selected":""}>🔔 진동</option><option value="snd"${u.al==="snd"?" selected":""}>🔔 진동 + 소리</option></select><button type="button" class="btn sm ghost" data-sx aria-label="이 세부 과정 빼기">✕</button></div>`).join("")}
             <div class="flsug">${FLSUG(s.n).filter(t=>!(s.subs||[]).some(u=>u.n===t)).map(t=>`<button type="button" class="chip" data-sadd="${esc(t)}">＋ ${esc(t)}</button>`).join("")}<button type="button" class="chip" data-sadd="">＋ 직접 쓰기</button></div>
             <p class="note flsubsum" data-subsum></p></div></details></div>`).join("")}</div>
     <p class="flsum" id="flSum"></p>
