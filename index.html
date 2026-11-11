@@ -1501,7 +1501,7 @@ em.pnadd,b.pnadd{font-style:normal;font-size:.625rem;font-weight:700;color:#fff;
 .flh{display:flex;align-items:baseline;gap:8px}.fln{flex:1;min-width:0;font-size:.875rem;color:var(--muted)}.fln b{color:var(--ink);font-size:1.0625rem}.flt{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.5rem;color:var(--accent)}
 .flbar{display:flex;gap:3px;height:8px;margin:8px 0 6px}.flbar i{display:block;border-radius:4px;background:var(--tint)}.flbar i.dn{background:color-mix(in srgb,var(--accent) 35%,var(--tint))}.flbar i.on{background:var(--accent)}
 .flsub{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.8125rem;color:var(--muted)}.flw{color:var(--warn);font-weight:700}
-.wsatt{display:flex;flex-direction:column;gap:8px}.wsatt .btn{width:100%}.flsheetnow [data-flmore]{display:none!important}#sheetBox .flsheetnow~.flctl{display:none}.flbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.flbtns .btn{flex:1 1 0;min-width:0}.flbtns [data-flfit]{flex:1 1 100%}.flbtns [data-flmore]{flex:0 0 44px}
+.tcev{display:block;font-size:.72em;line-height:1.2;margin-top:2px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.cevl{display:flex;flex-direction:column;gap:4px;margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:12px}.cev{display:block;text-align:left;background:none;border:0;padding:6px 2px;font:inherit;color:inherit;border-top:1px dashed var(--line)}.cev:first-of-type{border-top:0}.cev.done{opacity:.55;text-decoration:line-through}.cev small{color:var(--muted)}.wsatt{display:flex;flex-direction:column;gap:8px}.wsatt .btn{width:100%}.flsheetnow [data-flmore]{display:none!important}#sheetBox .flsheetnow~.flctl{display:none}.flbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.flbtns .btn{flex:1 1 0;min-width:0}.flbtns [data-flfit]{flex:1 1 100%}.flbtns [data-flmore]{flex:0 0 44px}
 html.flowflash .flowbox,html.flowflash .flpill{animation:flfl .45s 3}
 @keyframes flfl{50%{background:var(--accent);color:#fff}}
 .flpill{position:fixed;left:12px;bottom:calc(var(--nav-h,50px) + env(safe-area-inset-bottom) + 12px);z-index:790;border:0;border-radius:999px;padding:10px 14px;background:var(--paper);color:var(--ink);box-shadow:0 4px 14px rgba(0,0,0,.18);font:inherit;font-size:.875rem;display:flex;gap:6px;align-items:center;max-width:62vw}
@@ -2027,7 +2027,7 @@ em.pnfl{font-style:normal;font-size:.75rem;margin-left:4px}
 (()=>{
 "use strict";
 const $=id=>document.getElementById(id);
-const APP_NAME="교사의 생활", APP_VERSION="5.93.4", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
+const APP_NAME="교사의 생활", APP_VERSION="5.93.5", APP_DATE="2026-10-29", APP_MAKER="물리공작소";
 const OFFICIAL_URL="https://san2sul.github.io/teachers-life/";
 function isOfficial(){try{const h=location.hostname,pr=location.protocol;if(pr==="file:")return true;if(h==="san2sul.github.io")return location.pathname.startsWith("/teachers-life");return h==="localhost"||h==="127.0.0.1"||h==="[::1]"||/\.(test|localhost)$/.test(h)}catch(e){return true}}
 const AM_ICON={stu:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',att:'<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/>',stat:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',obs:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',write:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',task:'<path d="M9 5h11M9 12h11M9 19h11"/><path d="M4 5h.01M4 12h.01M4 19h.01"/>',sign:'<path d="M3 17c3-4 5-9 7-9s-1 8 2 8 3-4 5-4 2 3 4 3"/><path d="M3 21h18"/>'};
@@ -2039,6 +2039,7 @@ const AM_SEC=[{k:"ev",l:"평가",ic:"task",subs:[["m","task","평가 점수"],["
   {k:"rec",l:"기록",ic:"write",subs:[["w","stu","생활 기록"],["w","meet","업무 기록"],["w","day","일상 기록"]]},
   {k:"stu",l:"학생 정보",ic:"stu",subs:[["s","stu","학생 정보"]]}];
 const VERSIONS=[
+  {v:"5.93.5",date:"2026-11-11",items:["시간표 칸에서 일정 넣기: 빈 칸(공강 · 수업 없는 정규 시간)을 누르면 ‘📅 이 시간에 일정 넣기 (학생 면담 · 상담 등)’가 맨 앞 — 그 날짜 · 그 교시 시간이 미리 채워진 일정 창(분류: 학생 면담)", "수업 칸 창에도 ‘📅 이 시간에 일정 넣기’(그 학급이 미리 골라짐) — 출석 · 수업 변동 단추는 그대로", "칸 창에 ‘이 시간 일정’ 목록 · 눌러서 고치기, 시간표 칸에도 📅 일정 표시(1개면 제목, 여러 개면 수)"]},
   {v:"5.93.4",date:"2026-11-10",items:["고침: 시간표 칸 · 오늘 화면 수업 줄에서 ‘출석 체크 이어서 하기’(또는 출석 시작)를 누르면, 마지막에 기록 메뉴를 썼을 때 그 반 출석부가 아니라 기록 화면이 열리던 것 — 이제 늘 그 반 출석부로", "같은 문제: 날짜별 출석 표의 날짜 · 출결 알림 띠의 ‘열기’도 출석부로"]},
   {v:"5.93.3",date:"2026-11-10",items:["오늘 화면 ‘할 일 · 일정’: 숫자 칸(오늘 할 일 · 지난 미완료 · 남은 할 일)을 누르면 아래에서 따로 창이 올라오던 것을 없애고, 바로 아래 목록이 그 칸의 것으로 바뀜(누른 칸 테두리 표시 · 위 ‘오늘’ 칩과 같은 상태). 목록 · 완료 · 고치기 · 조건이 한 곳에", "숫자 칸에는 할 일이 있는데 아래 목록에 ‘조건에 맞는 할 일이 없습니다’만 나오던 것: 분류 · ‘중요한 것만’ 조건 때문에 숨겨진 수를 알려 주고 ‘조건 풀고 모두 보기’ 단추", "‘지난 미완료’를 누르면 지난 할 일 묶음을 펼친 채로 보여 줌"]},
   {v:"5.93.2",date:"2026-11-10",items:["기록(생활 기록 등) 글 블록에서 Enter로 다음 줄로 넘어갈 때 키보드가 닫혔다 열리며 영어로 돌아가던 것 줄임: 다시 그리는 동안 입력이 끊기지 않게 함", "모든 한글 입력 칸(글 블록 · 제목 · 장소 · 메모 · 수업 흐름 단계 이름 등)에 한국어 표시(lang=ko). 이메일 · 주소 · 번호 · 코드 칸은 그대로 영어 · 숫자", "수업 흐름 단계 이름 · 메모 칸에서 자동 고침 · 맞춤법 끔을 없앰(한글 입력이 다른 칸과 같게)", "동기화: 기록 창(생활 기록 등)을 열어 둔 채로 써도 몇 초 뒤 이 기기 변경을 드라이브에 올림(전에는 창을 닫을 때까지 미뤘음)", "동기화: 앱을 닫거나 다른 탭 · 앱으로 갈 때 쓰던 기록을 바로 저장하고 올림(3초 기다리지 않음) — 컴퓨터에서 쓰고 곧바로 브라우저를 닫아도 휴대폰으로 감", "동기화: 구글 로그인 시간(1시간)이 지나 동기화가 멈추면 앱을 열 때 · 돌아올 때 위에 ‘동기화가 멈춤 · 다시 로그인’ 띠(이 기기 기록이 아직 안 올라갔는지도 알려 줌)", "동기화: 창이 열려 있어 다른 기기 변경을 아직 합치지 않았으면 위 표시가 ‘동기화됨’ 대신 ‘창을 닫으면 받음’", "첨부 파일까지 보내기: 글(생활 기록 등)을 학생 · 교직원에게 문자 · 이메일로 전달할 때 첨부가 있으면 보내는 방법을 고름 — 전에는 문자 · 메일 링크에 파일을 붙일 수 없어 ‘첨부: …’ 목록만 갔음", "· 📤 메일 앱 · 문자 · 카톡 앱에 첨부해서 보내기(휴대폰 공유): 글과 실제 파일이 함께 들어가고, 받는 사람 주소 · 번호는 미리 복사해 둠", "· 📧 Gmail로 첨부까지 바로 보내기(Gmail 보내기를 켠 기기): 받는 사람마다 한 통씩, 파일을 붙여 바로 보냄(25MB까지)", "· 파일 공유가 안 되는 컴퓨터: 첨부를 내려받고 메일 창을 열어 끌어다 놓아 붙임 · ‘첨부 없이 글만’도 고를 수 있음"]},
@@ -4212,14 +4213,15 @@ function renderTT(){try{renderTermNote()}catch(e){}
       const c=cellAt(t,d,r.p,date),cg=chgAt(t,d,r.p,date),dr=dayRows[d][ri];
       const nowCell=date===td&&liveKey===r.key;
       const tm=special[d]?`<span class="tmx">${dr.start}<br>~${dr.end}</span>`:"";
+      const evs=cellEvList(date,dr),evb=evs.length?`<span class="tcev">📅${evs.length>1?evs.length:` ${esc((evs[0].title||"일정").slice(0,8))}`}</span>`:"";
       if(cg&&cg.type==="cancel"&&!(cg.scope==="day"&&isEmptyCell(t.cells[d+"-"+r.p]))){const b0=t.cells[d+"-"+r.p];h+=`<td><button class="tc cancel" type="button" data-d="${d}" data-p="${r.p}" aria-label="${DAYS[d]} ${r.label} 휴강">${tm}${!isEmptyCell(b0)?`<s>${esc(b0.subject||"수업")}</s>`:""}<b>휴강</b><span>${esc(cg.reason||"")}</span></button></td>`;return}
-      if(!c||(!c.subject&&!c.clsId&&!c.clsName&&!c.room)){h+=`<td><button class="tc empty${nowCell?" now":""}${special[d]?" spc":""}" type="button" data-d="${d}" data-p="${r.p}" aria-label="${DAYS[d]} ${r.label} 비어 있음">${tm}${ttEdit?"＋":""}</button></td>`;return}
+      if(!c||(!c.subject&&!c.clsId&&!c.clsName&&!c.room)){h+=`<td><button class="tc empty${nowCell?" now":""}${special[d]?" spc":""}" type="button" data-d="${d}" data-p="${r.p}" aria-label="${DAYS[d]} ${r.label} 비어 있음${evs.length?` · 일정 ${evs.length}개`:""}">${tm}${ttEdit?"＋":""}${evb}</button></td>`;return}
       const cl=cellClass(c),info=cellSession(t,d,r.p,date);
       let badge="";
       if(info&&info.s){const n=info.cl.data.roster.length,pr=info.cl.data.roster.filter(([id])=>info.s.p[id]).length;badge=`<i class="ck${pr<n?" ab":""}">${pr}/${n}</i>`}
       const mm=hasNote(t,d,r.p,date)?'<i class="mm">메모</i>':"";
       const cgb=cg?`<i class="cgb">${cg.mv?(mvMode(mvPair(cg))==="swap"?"맞바꿈":mvMode(mvPair(cg))==="repl"&&cg.mv==="b"?"대체":"이동"):cg.act?"행사":cg.sw!=null?"요일":cg.type==="add"?"보강":"변경"}</i>`:"";
-      h+=`<td><button class="tc${nowCell?" now":""}${special[d]?" spc":""}${cg?" chg":""}" type="button" data-d="${d}" data-p="${r.p}">${tm}${cgb}<b>${esc(c.subject||"—")}</b><span>${esc(cl?clsName(cl.data):(c.clsName||""))}</span><span class="rm">${esc(c.room)}</span>${badge}${mm}</button></td>`;
+      h+=`<td><button class="tc${nowCell?" now":""}${special[d]?" spc":""}${cg?" chg":""}" type="button" data-d="${d}" data-p="${r.p}">${tm}${cgb}<b>${esc(c.subject||"—")}</b><span>${esc(cl?clsName(cl.data):(c.clsName||""))}</span><span class="rm">${esc(c.room)}</span>${badge}${mm}${evb}</button></td>`;
     });
     h+="</tr>";
   });
@@ -4304,11 +4306,18 @@ function startPreAttendance(t,r,date,cl){
 }
 function emptyMenu(t,d,p,date){
   const r=ttRows(t,date).find(x=>x.p===p);
-  $("sheetBox").innerHTML=`<h2>${DAYS[d]}요일 ${p}교시 <span class="sub">${fmtDateW(date)} ${r.start}~${r.end}</span></h2><p class="note">빈 시간입니다.</p>
-    <div class="row2" style="flex-direction:column"><button class="btn pri" type="button" id="emAdd">이번만 수업 넣기 (보강·추가 수업)</button><button class="btn" type="button" id="emFix">고정 시간표에 넣기 (매주)</button><button class="btn" type="button" id="skNo">닫기</button></div>`;
+  $("sheetBox").innerHTML=`<h2>${DAYS[d]}요일 ${p}교시 <span class="sub">${fmtDateW(date)} ${r.start}~${r.end}</span></h2><p class="note">빈 시간(공강)입니다.</p>${cellEvHTML(date,r)}
+    <div class="row2" style="flex-direction:column"><button class="btn pri" type="button" id="cmEv">📅 이 시간에 일정 넣기 (학생 면담 · 상담 등)</button><button class="btn" type="button" id="emAdd">이번만 수업 넣기 (보강·추가 수업)</button><button class="btn" type="button" id="emFix">고정 시간표에 넣기 (매주)</button><button class="btn" type="button" id="skNo">닫기</button></div>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true};
   $("emAdd").onclick=()=>changeSheet(t,{d,p,date});$("emFix").onclick=()=>editCell(t,d,p);
+  wireCellEv(date,r,null,()=>emptyMenu(t,d,p,date));
 }
+/* 5.93.5: 시간표 칸에서 그 시간 일정 보기 · 넣기 (공강 · 수업 없는 정규 시간에 학생 면담 등) */
+function cellEvList(date,r){return S.events.filter(e=>evOn(e,date)&&e.start&&e.start>=r.start&&e.start<r.end).sort((a,b)=>a.start.localeCompare(b.start))}
+function cellEvHTML(date,r){const L=cellEvList(date,r);return L.length?`<div class="cevl"><b>이 시간 일정 ${L.length}개</b>${L.map(e=>`<button class="cev${e.done?" done":""}" type="button" data-cev="${esc(e.id)}"><span>${esc(e.start)}${e.end?"~"+esc(e.end):""}</span> <b>${esc(e.title||"(제목 없음)")}</b> <small>${esc(e.cat||"")}</small></button>`).join("")}</div>`:""}
+function wireCellEv(date,r,cl,back){
+  const b=$("cmEv");if(b)b.onclick=()=>{save();editEvent(null,{date,start:r.start,end:r.end,cat:"학생 면담",clsId:cl?cl.id:"",alarm:10});};
+  document.querySelectorAll("#sheetBox [data-cev]").forEach(x=>x.onclick=()=>{const e=S.events.find(y=>y.id===x.dataset.cev);if(e){editEvent(e)}})}
 function cellMenu(t,d,p,date){
   const cg=chgAt(t,d,p,date);
   const c=cellAt(t,d,p,date),cl=cellClass(c),r=ttRows(t,date).find(x=>x.p===p),info=cellSession(t,d,p,date);
@@ -4323,10 +4332,11 @@ function cellMenu(t,d,p,date){
     </div>
     ${cl&&c.subject?flowCellHTML(flowCellX(t,d,p,date,c,cl)):""}
     ${memoHTML(t,d,p,date,c,cl)}
-    <div class="row2" style="flex-direction:column"><button class="btn" type="button" id="cmChg">${cg&&cg.scope==="cell"?"수업 변동 고치기·취소":"수업 변동 (휴강·맞바꾸기·장소 변경)"}</button></div>
+    ${cellEvHTML(date,r)}
+    <div class="row2" style="flex-direction:column"><button class="btn" type="button" id="cmEv">📅 이 시간에 일정 넣기 (학생 면담 등)</button><button class="btn" type="button" id="cmChg">${cg&&cg.scope==="cell"?"수업 변동 고치기·취소":"수업 변동 (휴강·맞바꾸기·장소 변경)"}</button></div>
     <div class="row2"><button class="btn" type="button" id="cmEdit">고정 칸 고치기</button><button class="btn pri" type="button" id="skNo">닫기</button></div>`;
   $("sheet").hidden=false;$("skNo").onclick=()=>{$("sheet").hidden=true;save();renderTT()};
-  wireMemo(t,d,p,date,c,cl);
+  wireMemo(t,d,p,date,c,cl);wireCellEv(date,r,cl,()=>cellMenu(t,d,p,date));
   if($("cmFl"))$("cmFl").onclick=()=>{save();flowSheet(flowCellX(t,d,p,date,c,cl),()=>cellMenu(t,d,p,date))};
   $("cmEdit").onclick=()=>editCell(t,d,p);
   $("cmChg").onclick=()=>{save();changeSheet(t,cg&&cg.scope==="cell"?{id:cg.id}:{d,p,date})};
